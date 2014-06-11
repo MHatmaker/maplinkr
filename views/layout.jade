@@ -1,0 +1,27 @@
+doctype
+html(ng-app="MasherApp")
+    head
+        meta(charset='utf8')
+        base(href='/')
+        title Mashover Viewer
+        block stylesblock
+            link(rel='stylesheet', href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
+            link(rel='stylesheet', href='/stylesheets/esri.css')
+            link(rel='stylesheet', href='/stylesheets/SearchGrid.css')
+            link(rel='stylesheet', href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dgrid/css/dgrid.css')
+            link(rel='stylesheet', href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dgrid/css/skins/nihilo.css')
+            link(rel='stylesheet', href='/stylesheets/layout.css')
+        block scriptsblock
+            script(src='/javascripts/lib/jquery.js') 
+            script(src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/')
+            script(src='/javascripts/lib/djConfig.js')
+            script(src='/javascripts/lib/DocDomain.js')
+            script(src='http://js.pusherapp.com/1.10/pusher.min.js')
+            script(src='/javascripts/lib/StompSetup.js')
+            script(src='/javascripts/lib/StartupArcGIS.js')
+            script(src='/javascripts/lib/SearchGrid.js')
+            script(src='/javascripts/lib/SearchGridMap.js')
+        
+    body
+        block content
+    
