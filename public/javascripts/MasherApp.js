@@ -16,7 +16,7 @@ String.format = function() {
     return theString;
 };
 
-var MasherApp = angular.module("MasherApp", ['ngRoute', 'ui.bootstrap'])
+var MasherApp = angular.module("MasherApp", ['$scope', 'ngRoute', 'ui.bootstrap'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     console.debug('MasherApp module route provider');
     var isCollapsed = false;
@@ -48,11 +48,7 @@ var MasherCtrl = function ($scope) {
   // alert('MasherCtrl - initialize some tabs');
   $scope.isCollapsed = false;
   console.log("init with isCollapsed = " + $scope.isCollapsed);
-};
  
-var TabsCtrl = function ($scope) {
-  console.debug('TabsCtrl - initialize some tabs');
-  // alert('MasherCtrl - initialize some tabs');
   var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
     
   $scope.tabs = [

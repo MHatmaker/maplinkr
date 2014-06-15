@@ -13,20 +13,20 @@ block append scriptsblock
 block content
         
     div(ng-controller="MasherCtrl")
-        button(ng-click = "clickMe()")
-            img.svg-menu(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg") 
-            Documents Menu (Show/Hide)
+        div(ng-click="isCollapsed = !isCollapsed")
+            img.svg-menu(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg", align = "left")
+            p Show/Hide
                 
         div(collapse="isCollapsed")
             div(class="background", style="background: url(stylesheets/images/bigmasher.png); background-size: 100% 100%;")
                 div(class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #000000;")
                     p Synchronizing Maps From a Variety of Map Systems
-            div(ng-controller="TabsCtrl")
+            div
                 ul
-                li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab({{tab.url}})}")
-                    {{tab.title}} 
-                #mainView
-                    div(ng-include 'src="currentTab.content"')
+                    li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab({{tab.url}})}")
+                        {{tab.title}} 
+            #mainView
+                div(ng-include 'src="currentTab.content"')
                 
                         
     div(ng-view)
