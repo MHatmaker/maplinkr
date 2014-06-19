@@ -12,14 +12,16 @@ block content
                 div(class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #000000;")
                     p Synchronizing Maps From a Variety of Map Systems
                     
-            
-            div(ng-controller="TabsCtrl")
-                ul
-                    li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
-                        div(ng-click="onClickTab(tab)"){{tab.title}} 
-        //                
+                div(style="background:rgba(255,255,255,0.99); background-color: #ffffff;")
+                    div(ng-controller="TabsCtrl")
+                        ul
+                            li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
+                                div(ng-click="onClickTab(tab)"){{tab.title}} 
+                        
             #mainView
-                div(ng-include=" '{{ currentTab.content }}' ")
+                {{currentTab.url}}
+            //
+                div(ng-include="currentTab.content")
                 
 //                        
     div(ng-view)
