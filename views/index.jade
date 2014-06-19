@@ -1,15 +1,5 @@
 extends layout
 
-block append stylesblock
-    link(rel='stylesheet', href='/stylesheets/tabstyles.css')
-    
-block append scriptsblock
-    script(src='/javascripts/lib/angular/angular.js')
-    script(src='/javascripts/lib/angular/angular-route.js')
-    script(src='/javascripts/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')    
-    script(src='/javascripts/MasherApp.js')
-
-        
 block content
         
     div(ng-controller="MasherCtrl")
@@ -18,17 +8,20 @@ block content
             p Show/Hide
                 
         div(collapse="isCollapsed")
-            div(class="background", style="background: url(stylesheets/images/bigmasher.png); background-size: 100% 100%;")
+            .background
                 div(class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #000000;")
                     p Synchronizing Maps From a Variety of Map Systems
-            div
+                    
+            
+            div(ng-controller="TabsCtrl")
                 ul
-                    li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab({{tab.url}})}")
-                        {{tab.title}} 
+                    li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
+                        div(ng-click="onClickTab(tab)"){{tab.title}} 
+        //                
             #mainView
-                div(ng-include 'src="currentTab.content"')
+                div(ng-include=" '{{ currentTab.content }}' ")
                 
-                        
+//                        
     div(ng-view)
         
         

@@ -16,22 +16,25 @@ String.format = function() {
     return theString;
 };
 
-var MasherApp = angular.module("MasherApp", ['$scope', 'ngRoute', 'ui.bootstrap'])
+var MasherApp = angular.module("MasherApp", ['ngRoute', 'ui.bootstrap'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     console.debug('MasherApp module route provider');
     var isCollapsed = false;
+     
     $routeProvider.
       when('/', {
         templateUrl: 'index',
         // templateUrl: '/partials/index',
-        controller: MasherCtrl, reloadOnSearch: true
+        controller: MasherApp.MasherCtrl, reloadOnSearch: true
       }).
       otherwise({
           redirectTo: '/'
-      });
-    console.debug('html5Mode')
+      }); 
+      
+    console.debug('html5Mode');
     //alert('html5Mode before');
     $locationProvider.html5Mode(true);
+    
     console.debug('html5Mode again')
     //alert('html5Mode after');
    }
@@ -43,11 +46,19 @@ var MasherApp = angular.module("MasherApp", ['$scope', 'ngRoute', 'ui.bootstrap'
     }
 
 
-var MasherCtrl = function ($scope) {
+// var MasherCtrl = function ($scope) {
+MasherApp.controller('MasherCtrl', ['$scope', function ($scope) {
   console.debug('MasherCtrl - initialize collapsed bool');
   // alert('MasherCtrl - initialize some tabs');
   $scope.isCollapsed = false;
+  $scope.currentTab = null;
   console.log("init with isCollapsed = " + $scope.isCollapsed);
+}]);
+  
+  
+// var TabsCtrl = function ($scope) {
+MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
+  console.debug('TabsCtrl - initialize tabs');
  
   var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
     
@@ -94,16 +105,20 @@ var MasherCtrl = function ($scope) {
       disabled: false
     }
   ];
-   $scope.currentTab = $scope.tabs[0].url; //'googlemaptab.tpl.html';
-   console.log("currentTab - url initialized to " + $scope.currentTab);
+   $scope.currentTab = $scope.tabs[0]; //'googlemaptab.tpl.html';
+   $scope.$parent.currentTab = $scope.currentTab;
+   console.log("currentTab - url initialized to " + $scope.currentTab.url);
 
-    $scope.onClickTab = function (tab) {
-        alert("clicked on " + tab.url);
-        $scope.currentTab = tab.url;
-        console.debug("clicked on " + tab.url);
+    $scope.onClickTab = function (tb) {
+        //alert("clicked on " + tb.url);
+        $scope.currentTab =$scope.$parent.currentTab = tb;
+        console.debug("clicked on " + tb.url);
     }
     
     $scope.isActiveTab = function(tabUrl) {
-        return tabUrl == $scope.currentTab;
+        //console.debug("set active tab testing " + tabUrl);
+        return tabUrl == $scope.currentTab.url;
     }
-};
+   console.log("onClickTab and isActiveTab defined ");
+   
+}]);

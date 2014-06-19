@@ -11,8 +11,9 @@ html(ng-app="MasherApp")
             link(rel='stylesheet', href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dgrid/css/dgrid.css')
             link(rel='stylesheet', href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dgrid/css/skins/nihilo.css')
             link(rel='stylesheet', href='/stylesheets/layout.css')
+            link(rel='stylesheet', href='/stylesheets/tabstyles.css')
+            
         block scriptsblock
-            script(src='/javascripts/lib/jquery.js') 
             script(src='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/')
             script(src='/javascripts/lib/djConfig.js')
             script(src='/javascripts/lib/DocDomain.js')
@@ -21,6 +22,10 @@ html(ng-app="MasherApp")
             script(src='/javascripts/lib/StartupArcGIS.js')
             script(src='/javascripts/lib/SearchGrid.js')
             script(src='/javascripts/lib/SearchGridMap.js')
+            script(src='/javascripts/lib/angular/angular.js')
+            script(src='/javascripts/lib/angular/angular-route.js')
+            script(src='/javascripts/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
+            script(src='/javascripts/MasherApp.js')
         
     body
         block content
