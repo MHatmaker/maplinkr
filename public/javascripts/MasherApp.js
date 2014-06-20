@@ -1,9 +1,11 @@
 'use strict';
 
 String.format = function() {
+    console.debug("lets format something");
     // The string containing the format items (e.g. "{0}")
     // will and always has to be the first argument.
     var theString = arguments[0];
+    console.debug(arguments[0]);
     
     // start with the second argument (i = 1)
     for (var i = 1; i < arguments.length; i++) {
@@ -64,9 +66,8 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
     
   $scope.tabs = [
     { title:'Google Maps', 
-      content:'a Google map', 
+      content: String.format(contentsText, 'a Google map', 'google map content'),
  /*       
-      //String.Format(contentsText, 'a Google map', 'google map content'),
       ref: "http://localhost:8080/googlemap",
       refLabel: "Web Site with Google Maps Embedded...",
       imgSrc: "stylesheets/images/googlemap.png",
@@ -77,9 +78,8 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
       disabled: false
     },
     { title:'Leaflet/Cloudmade Maps', 
-      content:'a Leaflet/Cloudmade map',
+      content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
  /* 
-      //String.Format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
       ref: "http://localhost:8080/leaflet}",
       refLabel: "Web Site with Leaflet/Cloudmade Maps Embedded...",
       imgSrc:  "stylesheets/images/Leaflet.png",
@@ -91,9 +91,8 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
       disabled: false
     },
     { title:'ArcGIS Web Maps', 
-      content:'an ArcGIS Web Map',
+      content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
      /*  
-      // String.Format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
       ref: "http://localhost:8080/arcgis",
       refLabel: "Web Site with ArcGIS Web Maps Embedded...",
       imgSrc: "stylesheets/images/arcgis.png",

@@ -19,9 +19,11 @@ block content
                                 div(ng-click="onClickTab(tab)"){{tab.title}} 
                         
             #mainView
-                {{currentTab.url}}
-            //
-                div(ng-include="currentTab.content")
+                {{currentTab.content}}
+                br
+                br
+                a(href="{{currentTab.url}}") 
+                    {{currentTab.title}}
                 
 //                        
     div(ng-view)
