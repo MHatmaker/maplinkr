@@ -1,34 +1,17 @@
 extends ./MapPageBase
 
-    block append stylesblock
-        link(rel='')
     block append scriptsblock
-            script(src='../static/js/proj4js.js')
+            script(src='javascripts/lib/proj4js.js')
+            script(src='/javascripts/lib/StartupArcGIS.js')
             
 		
-	  <div id="idWindowSelectionDialog" data-dojo-type="dijit.Dialog" title="Select Destination Window" style="width:500px;height:120px;">
-            <div id="idDialogContainer">
-                <div class="dijitDialogPaneContentArea" id="idDialogText"></div>
+	  div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
+            div(id="idDialogContainer")
+                div(class="dijitDialogPaneContentArea" id="idDialogText")
   
-                <div class="dijitDialogPaneActionBar">
-                    <button
-                        dojoType="dijit.form.Button"
-                        type="submit"
-                        id="idDialogButtonSameWindow"
-                    >This Window</button>
-                    <button
-                        dojoType="dijit.form.Button"
-                        type="submit"
-                        id="idDialogButtonNewWindow"
-                    >New Window</button>
-                    <button
-                        dojoType="dijit.form.Button"
-                        type="button"
-                        onClick="dijit.byId('idWindowSelectionDialog').onCancel();"
-                        id="idDialogButtonCancel"
-                    >Cancel</button>
-                </div>
-            </div>
-	  </div>
+                div(class="dijitDialogPaneActionBar")
+                    button(dojoType="dijit.form.Button" type="submit", id="idDialogButtonSameWindow")This Window
+                    button(dojoType="dijit.form.Button", type="submit", id="idDialogButtonNewWindow")New Window
+                    button(dojoType="dijit.form.Button", type="button", onClick="dijit.byId('idWindowSelectionDialog').onCancel();", id="idDialogButtonCancel")Cancel
 
     

@@ -73,7 +73,7 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
       imgSrc: "stylesheets/images/googlemap.png",
       imgAlt: "Google Map",
        */
-      url: " '/views/partials/googlemaptab.tpl.jade' ",
+      url: " '/views/partials/GoogleMap.jade' ",
       active: true,
       disabled: false
     },
@@ -85,7 +85,7 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
       imgSrc:  "stylesheets/images/Leaflet.png",
       imgAlt: "Leaflet/Cloudmade Maps",
        */
-      url: " '/views/partials/leafletmaptab.tpl.jade' ",
+      url: " '/views/partials/Leaflet.jade' ",
        
       active: false,
       disabled: false
@@ -98,7 +98,7 @@ MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
       imgSrc: "stylesheets/images/arcgis.png",
       imgAlt: "ArcGIS Web Maps",
        */
-      url: " '/views/partials/arcgismaptab.tpl.jade' ",
+      url: " '/views/partials/ArcGIS.jade' ",
        
       active: false,
       disabled: false
