@@ -18,106 +18,53 @@ String.format = function() {
     return theString;
 };
 
-var MasherApp = angular.module("MasherApp", ['ngRoute', 'ui.bootstrap'])
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    console.debug('MasherApp module route provider');
-    var isCollapsed = false;
-     
-    $routeProvider.
-      when('/', {
-        templateUrl: 'index',
-        // templateUrl: '/partials/index',
-        controller: MasherApp.MasherCtrl, reloadOnSearch: true
-      }).
-      otherwise({
-          redirectTo: '/'
-      }); 
-      
-    console.debug('html5Mode');
-    //alert('html5Mode before');
-    $locationProvider.html5Mode(true);
+(function() {
+    'use strict';
     
-    console.debug('html5Mode again')
-    //alert('html5Mode after');
-   }
-]);
-
-   var clickMe = function(){
-        alert('clicked');
-        isCollapsed = !isCollapsed
-    }
-
-
-// var MasherCtrl = function ($scope) {
-MasherApp.controller('MasherCtrl', ['$scope', function ($scope) {
-  console.debug('MasherCtrl - initialize collapsed bool');
-  // alert('MasherCtrl - initialize some tabs');
-  $scope.isCollapsed = false;
-  $scope.currentTab = null;
-  console.log("init with isCollapsed = " + $scope.isCollapsed);
-}]);
-  
-  
-// var TabsCtrl = function ($scope) {
-MasherApp.controller('TabsCtrl', ['$scope', function ($scope) {
-  console.debug('TabsCtrl - initialize tabs');
- 
-  var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
+    var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
+    //locationPath =  "./";
+    console.log(locationPath);
     
-  $scope.tabs = [
-    { title:'Google Maps', 
-      content: String.format(contentsText, 'a Google map', 'google map content'),
- /*       
-      ref: "http://localhost:8080/googlemap",
-      refLabel: "Web Site with Google Maps Embedded...",
-      imgSrc: "stylesheets/images/googlemap.png",
-      imgAlt: "Google Map",
-       */
-      url: " '/views/partials/GoogleMap.jade' ",
-      active: true,
-      disabled: false
-    },
-    { title:'Leaflet/Cloudmade Maps', 
-      content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
- /* 
-      ref: "http://localhost:8080/leaflet}",
-      refLabel: "Web Site with Leaflet/Cloudmade Maps Embedded...",
-      imgSrc:  "stylesheets/images/Leaflet.png",
-      imgAlt: "Leaflet/Cloudmade Maps",
-       */
-      url: " '/views/partials/Leaflet.jade' ",
-       
-      active: false,
-      disabled: false
-    },
-    { title:'ArcGIS Web Maps', 
-      content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
-     /*  
-      ref: "http://localhost:8080/arcgis",
-      refLabel: "Web Site with ArcGIS Web Maps Embedded...",
-      imgSrc: "stylesheets/images/arcgis.png",
-      imgAlt: "ArcGIS Web Maps",
-       */
-      url: " '/views/partials/ArcGIS.jade' ",
-       
-      active: false,
-      disabled: false
-    }
-  ];
-   $scope.currentTab = $scope.tabs[0]; //'googlemaptab.tpl.html';
-   $scope.$parent.currentTab = $scope.currentTab;
-   console.log("currentTab - url initialized to " + $scope.currentTab.url);
-
-    $scope.onClickTab = function (tb) {
-        //alert("clicked on " + tb.url);
-        $scope.currentTab =$scope.$parent.currentTab = tb;
-        console.debug("clicked on " + tb.url);
-    }
+    define('angular', function () {
+        if (angular) {
+            return angular;
+        }
+        return {};
+    });
     
-    $scope.isActiveTab = function(tabUrl) {
-        //console.debug("set active tab testing " + tabUrl);
-        return tabUrl == $scope.currentTab.url;
-    }
-   console.log("onClickTab and isActiveTab defined ");
-   
-}]);
+    require({
+        async: true,
+        aliases: [['text', 'dojo/text']],
+        packages: [{
+            name: 'controllers',
+            location: locationPath + 'javascripts/controllers'
+        }, 
+        {
+            name: 'javascripts',
+            location: locationPath + 'javascripts'
+        },
+        { 
+            name: 'dojo',
+            location: '//ajax.googleapis.com/ajax/libs/dojo/1.9.3/'
+        }
+        ]
+    });
+
+    require([
+        "dojo",
+        // "dojo/dom", // "dojo/domReady!",
+        // 'dojo/ready',
+        'dojo/domReady!',
+        'javascripts/bootstrap'
+    ], function(ready, bootstrap) {
+        console.debug('call ready');
+        console.log(ready);
+        console.log(dom);
+        ready(function (dom) {
+            console.info('start the bootstrapper');
+            console.debug(bootstrap);
+            bootstrap.start();
+        });
+    });
+
+}).call(this);

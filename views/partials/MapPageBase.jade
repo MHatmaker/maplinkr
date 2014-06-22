@@ -1,7 +1,7 @@
 extends ./layout
 
-    #mapWindow( data-dojo-type="dijit.layout.BorderContainer",        data-dojo-props="design:'sidebar',gutters:false" style="width:80%; height: 90%;")
+    #mapWindow(ng-controller="MapCtrl", data-dojo-type="dijit.layout.BorderContainer",        data-dojo-props="design:'sidebar',gutters:false" style="width:80%; height: 90%;")
         #map(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region:'center'")
-			img#loadingImg(src="../static/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+			img#loadingImg(src="../styles/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 		
     
