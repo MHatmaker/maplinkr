@@ -42,25 +42,27 @@ String.format = function() {
         {
             name: 'javascripts',
             location: locationPath + 'javascripts'
-        },
+        }/* ,
         { 
             name: 'dojo',
             location: '//ajax.googleapis.com/ajax/libs/dojo/1.9.3/'
-        }
+        } */
         ]
     });
 
     require([
-        "dojo",
-        // "dojo/dom", // "dojo/domReady!",
+        // "dojo",
+        "dojo/domReady",
         // 'dojo/ready',
-        'dojo/domReady!',
+        // 'dojo/domReady',
+        // 'ready!',
+        // "dojo/dom", 
         'javascripts/bootstrap'
-    ], function(ready, bootstrap) {
+    ], function(domReady, bootstrap) {
         console.debug('call ready');
-        console.log(ready);
-        console.log(dom);
-        ready(function (dom) {
+        console.log(domReady);
+        // console.log(dom);
+        domReady(function () {
             console.info('start the bootstrapper');
             console.debug(bootstrap);
             bootstrap.start();
