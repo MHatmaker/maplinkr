@@ -123,6 +123,7 @@ urls = (
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
         self.routes['/'] = routesJade.index;
+        //self.routes['partials/SystemSelector'] = routesJade.partials;
         self.routes['/partials/:name'] = routesJade.partials;
 
         // self.routes['/'] = function(req, res) {

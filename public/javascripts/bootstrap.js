@@ -21,14 +21,14 @@
                  
                 $routeProvider.
                   when('/', {
-                    templateUrl: 'index',
+                    templateUrl: 'partials/SystemSelector.jade',
                     // templateUrl: '/partials/index',
                     controller: MasherApp.MasherCtrl, reloadOnSearch: true
                   }).
                   when('/views/partials/:id', {
-                    templateUrl: '/views/partials/',
+                    templateUrl: 'partials/',
                     // templateUrl: '/partials/index',
-                    controller: MasherApp.MasherCtrl, reloadOnSearch: true
+                    controller: MasherApp.MapCtrl, reloadOnSearch: true
                   }).
                   otherwise({
                       redirectTo: '/'

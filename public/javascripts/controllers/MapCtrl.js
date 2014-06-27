@@ -22,15 +22,32 @@
             return new Map(elem, mapConfigs());
         }
 
-        function MapCtrl($scope) {
+        function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing");
             $scope.map = mapGen('map');
             console.debug($scope.map);
+            
+            var tmpltName = $routeParams.id;
+            console.log(tmpltName);
+            /* 
+            $http.get('/partials/' + tmpltName)
+                .then(function(results){
+                    //Success;
+                    console.log("Success: " + results.status);
+                    console.log($routeParams.id);
+                    $scope.doc = results.data;
+                    console.debug($scope.doc);
+                }, function(results){
+                    //error
+                    console.log("Error: " + results.data + "; "
+                                          + results.status);
+                })
+                 */
         }
         
         function init(App) {
             console.log('MapCtrl init');
-            App.controller('MapCtrl', ['$scope', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', MapCtrl]);
             return MapCtrl;
         }
 
