@@ -25,8 +25,10 @@
                     // templateUrl: '/partials/index',
                     controller: MasherApp.MasherCtrl, reloadOnSearch: true
                   }).
-                  when('/views/partials/:id', {
-                    templateUrl: 'partials/',
+                  when('/views/partials/:id',  {
+                    templateUrl: function(params){ return '/partials/' + params.id; },
+ 
+                    // templateUrl: 'partials/',
                     // templateUrl: '/partials/index',
                     controller: MasherApp.MapCtrl, reloadOnSearch: true
                   }).

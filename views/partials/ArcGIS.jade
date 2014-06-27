@@ -1,14 +1,20 @@
-extends ./MapPageBase
+//
+    extends ./MapPageBase
 
+//    
     block append scriptsblock
             script(src='javascripts/lib/proj4js.js')
             script(src='/javascripts/lib/StartupArcGIS.js')
-            
-		
-	  div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
+
+
+block append content
+    div ArcGIS template for ArcGIS Map displays
+
+//
+      div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
             div(id="idDialogContainer")
                 div(class="dijitDialogPaneContentArea" id="idDialogText")
-  
+
                 div(class="dijitDialogPaneActionBar")
                     button(dojoType="dijit.form.Button" type="submit", id="idDialogButtonSameWindow")This Window
                     button(dojoType="dijit.form.Button", type="submit", id="idDialogButtonNewWindow")New Window

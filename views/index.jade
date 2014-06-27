@@ -25,10 +25,11 @@ block content
                 a(href="{{currentTab.url}}") 
                     {{currentTab.title}}
                 
-        //
-            div(ng-include="currentTab.url")
         div                   
             div(ng-view)
+            
+        //
+            div(ng-include="currentTab.url")
         
         
      
