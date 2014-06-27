@@ -1,11 +1,11 @@
-//
-    extends  ./MapPageBase
 
-//
-    block append scriptsblock
-        script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&sensor=false')
-        script(src='javascripts/GoogleMap.js')
-        script(src='javascripts/lib/StartupGoogle.js')
+extends  ./MapPageBase
+
+
+block append scriptsblock
+    script(src='http://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&sensor=false')
+    script(src='javascripts/GoogleMap.js')
+    script(src='javascripts/lib/StartupGoogle.js')
     
 block append content
     div GoogleMap template for GoogleMap displays
