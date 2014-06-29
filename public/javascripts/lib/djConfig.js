@@ -1,6 +1,6 @@
 var dojoConfig = {
     async: true,
-    parseOnLoad: false, 
+    parseOnLoad: true, 
     tlmSiblingOfDojo: true, 
     map: {
         // Instead of having to type "dojo/domReady!", we just want "ready!" instead

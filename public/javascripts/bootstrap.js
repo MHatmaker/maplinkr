@@ -22,14 +22,10 @@
                 $routeProvider.
                   when('/', {
                     templateUrl: 'partials/SystemSelector.jade',
-                    // templateUrl: '/partials/index',
                     controller: MasherApp.MasherCtrl, reloadOnSearch: true
                   }).
                   when('/views/partials/:id',  {
                     templateUrl: function(params){ return '/partials/' + params.id; },
- 
-                    // templateUrl: 'partials/',
-                    // templateUrl: '/partials/index',
                     controller: MasherApp.MapCtrl, reloadOnSearch: true
                   }).
                   otherwise({
@@ -37,11 +33,8 @@
                   }); 
                   
                 console.debug('html5Mode');
-                //alert('html5Mode before');
                 $locationProvider.html5Mode(true);
-                
                 console.debug('html5Mode again')
-                //alert('html5Mode after');
                }
             ]);
             
