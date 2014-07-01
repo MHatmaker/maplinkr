@@ -47,6 +47,8 @@
         domReady(function () {
             console.info('start the bootstrapper');
             console.debug(bootstrap);
+            readyForSearchGrid();
+            readyForSearchGridMap();
             bootstrap.start();
         });
     });

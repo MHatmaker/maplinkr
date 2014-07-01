@@ -148,11 +148,14 @@
       }
     }
 
-    dojo.ready(function () {
+    //dojo.ready(function () {
+    
+    function readyForSearchGridMap(){
       // esri.config.defaults.io.proxyUrl = '../proxy/proxy.ashx';
       esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
 
       //create the portal
+      var portalUrl = document.location.protocol + '//www.arcgis.com';
       portal = new esri.arcgis.Portal(portalUrl);
       dojo.connect(portal,'onLoad',function(loaded){
         //enable the sign-in and find buttons when the portal loads
@@ -172,4 +175,4 @@
 			console.log("A new pane was selected:", pane);
 			findMapsForGroup(selectedGroupId);
 		});
-    });
+    };

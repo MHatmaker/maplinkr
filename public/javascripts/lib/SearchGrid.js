@@ -117,7 +117,9 @@
       }
     }
 
-    dojo.ready(function () {
+    //dojo.ready(function () {
+    
+    function readyForSearchGrid(){
       // esri.config.defaults.io.proxyUrl = '../proxy/proxy.ashx';
       esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
 
@@ -128,6 +130,10 @@
 					// { name: "put-selector", location: baseUrl + "put-selector" }];
 
       //create the portal
+      
+      require(["dojo", "esri", "esri/arcgis/Portal"]);
+      dojo.require("esri.arcgis.Portal");
+      var portalUrl = document.location.protocol + '//www.arcgis.com';
       portal = new esri.arcgis.Portal(portalUrl);
       dojo.connect(portal,'onLoad',function(loaded){
         //enable the sign-in and find buttons when the portal loads
@@ -143,4 +149,4 @@
           findArcGISGroup();
         }
       });
-    });
+    };

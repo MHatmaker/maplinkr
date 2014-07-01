@@ -22,45 +22,52 @@ block append content
         div(id="mainPainDiv", data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'", style="width:100%; height:100%;")
 
             #mapWindow(ng-controller="MapCtrl", data-dojo-type="dijit.layout.BorderContainer",        data-dojo-props="design:'sidebar',gutters:false" style="width:80%; height: 90%;")
-                #map(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region:'center'")
-                    img#loadingImg(src="../styles/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+                #map_canvas(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region:'center'")
+                    img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
-                div(data-dojo-type="dijit/layout/ContentPane", data-dojo-props="splitter:true, minSize:1, region:'trailing'" id="verbagePan")
+                div(data-dojo-type="dijit/layout/ContentPane", data-dojo-props="splitter:true, minSize:1, region:'trailing'", id="verbagePan")
                     div(data-dojo-type="dijit/layout/AccordionContainer", id="Accdian")
-                    
-                        div(data-dojo-type="dijit/layout/ContentPane", title="Such Exiting News", id="newsPane", selected="true")
-                            h3(style="color:red")
-                            We now have WebMap mash-over capabilities
-                            Select the Mash-over Instruction pane below for all the latest.
+                        div(data-dojo-type="dijit/layout/ContentPane", title="Such Exciting News", id="newsPane", selected="true")
+                        
+                            h5(style="color:red").
+                                We now have WebMap mash-over capabilities
+                                Select the Mash-over Instruction pane below for all the latest.
                             br
-                            h3 Sed arcu magna
-                            molestie at, fringilla in, sodales eu, elit.
-                            Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
-                            vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
-                            augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
-                            metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
-                            ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
-                            euismod, magna nulla viverra libero, sit amet lacinia odio diam id
-                            risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
-                            porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
-                            faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
-                            consequat quis, varius interdum, nulla. Donec neque tortor,
-                            sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
-                            ut eros sit amet ante pharetra interdum.
+                            h5.
+                                Sed arcu magna.
+                            p.
+                                molestie at, fringilla in, sodales eu, elit.
+                                Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                                vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                                augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                                metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                                ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                                euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                                risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
+                                porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
+                                faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
+                                consequat quis, varius interdum, nulla. Donec neque tortor,
+                                sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
+                                ut eros sit amet ante pharetra interdum.
                             br
                         
                         div(data-dojo-type="dijit/layout/ContentPane", title="Mash-over Instructions", id="fillerPane")
-                            h3 Using Mash-over
+                            h3.
+                                Using Mash-over
+                                
                             Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
-                            p
-                            Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
+                            
+                            p.
+                                Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
                             br
                             ul
                                 1 An ArcGIS webmap viewer(such as this viewer)<br>
                                 2 A web page with a google map display<br>
                                 3 A web page with an open source map display<br>
                             
-                            h3 Steps:
+                            h3.
+                                Steps:
+                                
                             ul
                                 1 Open the accordian pane for group search.  Enter a search term and click the submit button.<br>
                                 2 The group pane displays groups matching the search term.  Click on one of the groups.<br>
@@ -75,11 +82,12 @@ block append content
                             div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                 div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
                                     span
-                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt')
-                                        AGO Group Search
+                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
+                                            AGO Group Search
                                         input(type="button", class="signInClass", id="signInGroup", name="signInGroup", onclick='signInFromGroupTab();', value="Sign In")
-                                    span
-                                    p Find group ids based on search term. Sign-in to search for private groups.
+                                        
+                                    p.
+                                        Find group ids based on search term. Sign-in to search for private groups.
                                     span
                                         input(name="groupFinder", id="groupFinder", value="Chicago")
                                         input(name="groupFinderSubmit", disabled='disabled,' type="submit", value="Submit", id="groupFinderSubmit", onclick="findArcGISGroup();")
@@ -92,17 +100,15 @@ block append content
                             div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                 div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
                                     span
-                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt')
-                                        AGO Map Search
+                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt').
+                                            AGO Map Search
                                         input(type="button", class="signInClass", id="signInMap", name="signInMap", onclick='signInFromMapTab();', value="Sign In")
 
-                                    p Find map ids based on search term. Sign-in to search for private groups.
+                                    p.
+                                        Find map ids based on search term. Sign-in to search for private groups.
                                     span
                                         input(name="mapFinder",  id="mapFinder", value="Chicago Crime")
-                                        input(name="mapFinderSubmit", disabled='disabled,' type="submit" value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
+                                        input(name="mapFinderSubmit", disabled='disabled,' type="submit", value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
 
                                 div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                     div(id='gridMap')
-
-//
-        ng-include(src=" 'partials/searcher.jade' ")

@@ -65,7 +65,7 @@ function initialize(newSelectedWebMapId)
 	}
 	else
 	{
-		var lMap = L.map('map').setView([41.8, -87.7], 13);
+		var lMap = L.map('map_canvas').setView([41.8, -87.7], 13);
 		// var lMap = L.map('map').setView([51.50, -0.09], 13);
 		mph = new MapHosterLeaflet(lMap); 
 		// stomper = new StompClient(mph);

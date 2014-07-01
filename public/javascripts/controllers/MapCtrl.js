@@ -24,7 +24,7 @@
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing");
-            $scope.map = mapGen('map');
+            $scope.map = mapGen('map_canvas');
             console.debug($scope.map);
             
             var tmpltName = $routeParams.id;

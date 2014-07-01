@@ -1,7 +1,7 @@
 
 function MapHosterLeaflet(lmap)
 {
-    this.map = lmap; //L.map('map').setView([51.50, -0.09], 13);
+    this.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
     var self = this;
     this.pusher = null;
     this.userZoom = true;
