@@ -3,6 +3,7 @@ var prevPaneWidth = null;
 
 function adjustSearchPane()
 {
+    console.log("clicked adjustSearchPane button");
     var dpan = dijit.byId('verbagePan');
     var apan = dojo.byId('verbagePan');
     var dmapWindow = dijit.byId('mapWindow');

@@ -1,4 +1,6 @@
 
+var portalForSearch;
+
     //display a list of groups that match the input user name
     function showGroupResults(response) {
       //clear any existing results
@@ -88,7 +90,7 @@
         q:  keyword,
         num:20  //find 40 items - max is 100
        };
-       portal.queryGroups(params).then(function (data) {
+       portalForSearch.queryGroups(params).then(function (data) {
         showGroupResults(data);
        });
     }
@@ -100,7 +102,7 @@
       var signInLinkGrp = dojo.byId('signInGroup');
 
       if (signInLinkGrp.value.indexOf('In') !== -1) {
-        portal.signIn().then(function (loggedInUser) {
+        portalForSearch.signIn().then(function (loggedInUser) {
           signInLinkMap.value = "Sign Out";
           signInLinkGrp.value = "Sign Out";
           findArcGISGroup();   // update results
@@ -109,7 +111,7 @@
           signInLinkGrp.value = 'Sign In';   //error so reset sign in link
         });
       } else {
-        portal.signOut().then(function (portalInfo) {
+        portalForSearch.signOut().then(function (portalInfo) {
           signInLinkMap.value = "Sign In";
           signInLinkGrp.value = "Sign In";
           findArcGISGroup();
@@ -119,7 +121,8 @@
 
     //dojo.ready(function () {
     
-    function readyForSearchGrid(){
+    function readyForSearchGrid(portal){
+      portalForSearch = portal;
       // esri.config.defaults.io.proxyUrl = '../proxy/proxy.ashx';
       esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
 
@@ -131,11 +134,7 @@
 
       //create the portal
       
-      require(["dojo", "esri", "esri/arcgis/Portal"]);
-      dojo.require("esri.arcgis.Portal");
-      var portalUrl = document.location.protocol + '//www.arcgis.com';
-      portal = new esri.arcgis.Portal(portalUrl);
-      dojo.connect(portal,'onLoad',function(loaded){
+      dojo.connect(portalForSearch,'onLoad',function(loaded){
         //enable the sign-in and find buttons when the portal loads
 		var gfs = dojo.byId('groupFinderSubmit');
         dojo.byId('groupFinderSubmit').disabled = false;

@@ -150,13 +150,13 @@
 
     //dojo.ready(function () {
     
-    function readyForSearchGridMap(){
+    function readyForSearchGridMap(portal){
       // esri.config.defaults.io.proxyUrl = '../proxy/proxy.ashx';
       esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
 
       //create the portal
-      var portalUrl = document.location.protocol + '//www.arcgis.com';
-      portal = new esri.arcgis.Portal(portalUrl);
+      // var portalUrl = document.location.protocol + '//www.arcgis.com';
+      // portal = new esri.arcgis.Portal(portalUrl);
       dojo.connect(portal,'onLoad',function(loaded){
         //enable the sign-in and find buttons when the portal loads
 		var gfs = dojo.byId('mapFinderSubmit');

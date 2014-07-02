@@ -35,19 +35,22 @@
     require([
         // "dojo",
         "dojo/domReady",
+        "esri/arcgis/Portal", 
         // 'dojo/ready',
         // 'dojo/domReady',
         // 'ready!',
         // "dojo/dom", 
         'javascripts/bootstrap'
-    ], function(domReady, bootstrap) {
+    ], function(domReady, esriPortal, bootstrap) {
         console.debug('call ready');
         console.log(domReady);
         // console.log(dom);
         domReady(function () {
+            var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
+            portal = new esri.arcgis.Portal(portalUrl);
             console.info('start the bootstrapper');
             console.debug(bootstrap);
-            readyForSearchGrid();
+            readyForSearchGrid(esriPortal);
             readyForSearchGridMap();
             bootstrap.start();
         });

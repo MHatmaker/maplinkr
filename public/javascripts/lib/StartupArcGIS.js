@@ -10,7 +10,7 @@ dojo.require("esri.dijit.Scalebar");
 dojo.require("esri.arcgis.utils");
 dojo.require("dgrid.Grid");
 dojo.require("dgrid/Selection");
-dojo.require("esri.arcgis.Portal");
+// dojo.require("esri.arcgis.Portal");
 dojo.require("dijit.Dialog");
 dojo.require("dojo.parser");
 
@@ -19,7 +19,7 @@ var mph = null;
 
 var map, urlObject;
 var configOptions;
-var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
+// var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
 var gridGroup;
 var gridMap;
 var selectedGroupId;
