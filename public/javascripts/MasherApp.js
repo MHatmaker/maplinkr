@@ -50,8 +50,8 @@
             portal = new esri.arcgis.Portal(portalUrl);
             console.info('start the bootstrapper');
             console.debug(bootstrap);
-            readyForSearchGrid(esriPortal);
-            readyForSearchGridMap();
+            readyForSearchGrid(portal);
+            readyForSearchGridMap(portal);
             bootstrap.start();
         });
     });

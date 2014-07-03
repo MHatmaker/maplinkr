@@ -1,116 +1,88 @@
 
+block stylesblock append
+    link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
+    
 block append content
 
-    div(id="mainWindow", data-dojo-type="dijit.layout.BorderContainer", style="width: 100%; height: 100%;")
-        #headerDiv(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'", style="width: 100%; height:7%;")
-        
-            div
-                span
-                    label(id = 'stnm', style='font-size:12pt').
-                        siteName1
-                        
-                    table(style='float: right; padding-right:20px;')
-                        tr
-                            td
-                                label(for="buttonRightPaneShowHide", style ='padding-right:10px; padding-top:7px; font-size:12pt').
-                                    Resize Right Pane
-                            td
-                                button(id="buttonRightPaneShowHide", data-dojo-type="dijit/form/Button", type="button", data-dojo-props="onClick:function(){adjustSearchPane();}", style ='padding-right:20px; padding-top:1px; float: right; font-size:12pt').
-                                    Shrink
-                                
-                br
-                label(id = 'mpnm',  style='font-size:9pt').
-                    siteName2
-                    
-        #leadpane(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region:'leading'")
-        
-        #map_canvas(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region: 'center'", style="width:70%; height:30%;")
-            img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+    ui-layout(id="mainWindow", options="{ flow : 'row' }", style="width:100%; height:100%;")
+        header(id='headerDiv', style="width:100%; height:7%;")
 
-        div(data-dojo-type="dijit/layout/ContentPane", data-dojo-props="splitter:true, minSize:1, region: 'trailing'", id="verbagePan")
-        
-            #Accdian(data-dojo-type="dijit/layout/AccordionContainer")
-            
-                #newsPane(data-dojo-type="dijit/layout/ContentPane", title="Such Exciting News",  selected="true")
-                    h5(style="color:red") 
-                        | We now have WebMap mash-over capabilities
-                        | Select the Mash-over Instruction pane below for all the latest.
-                    br
-                    h5 Sed arcu magna.
-                    p.
-                        molestie at, fringilla in, sodales eu, elit.
-                        Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
-                        vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
-                        augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
-                        metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
-                        ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
-                        euismod, magna nulla viverra libero, sit amet lacinia odio diam id
-                        risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
-                        porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
-                        faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
-                        consequat quis, varius interdum, nulla. Donec neque tortor,
-                        sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
-                        ut eros sit amet ante pharetra interdum.
-                    br
-                
-                #fillerPane(data-dojo-type="dijit/layout/ContentPane", title="Mash-over Instructions")
-                    h3 Using Mash-over
-                      
-                    p.                              
-                        Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
-                    
-                    p.
-                        Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
-                    br
-                    ul
-                        li 1 An ArcGIS webmap viewer(such as this viewer)<br>
-                        li 2 A web page with a google map display<br>
-                        li 3 A web page with an open source map display<br>
-                    
-                    h3 Steps:
-                        
-                    ul
-                        li 1 Open the accordian pane for group search.  Enter a search term and click the submit button.<br>
-                        li 2 The group pane displays groups matching the search term.  Click on one of the groups.<br>
-                        li 3 The map selection pane opens.  Clicking on a map item opens the WebMap in the default ArcGISOnline WebMap viewer in a new tab.
-                        li 4 Drag the tab to the desktop, which displays the tab's contents in a new browser instance.
-                        li 5  The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
-                    br
+        div
+            span
+                label(id = 'stnm', style='font-size:12pt').
+                    siteName1
 
-                div(data-dojo-type="dijit/layout/ContentPane", title="Group Searcher")
-                    div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                    
-                        div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                            span
-                                label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
-                                    AGO Group Search
-                                input(type="button", class="signInClass", id="signInGroup", name="signInGroup", onclick='signInFromGroupTab();', value="Sign In")
-                                
+                table(style='float: right; padding-right:20px;')
+                    tr
+                        td
+                            label(for="buttonRightPaneShowHide", style ='padding-right:10px; padding-top:7px; font-size:12pt').
+                                Resize Right Pane
+                        td
+                            button(id="buttonRightPaneShowHide", data-dojo-type="dijit/form/Button", type="button", data-dojo-props="onClick:function(){adjustSearchPane();}", style ='padding-right:20px; padding-top:1px; float: right; font-size:12pt').
+                                Shrink
+
+            br
+            label(id = 'mpnm',  style='font-size:9pt').
+                siteName2
+
+        ui-layout(id="leadpane", options="{ flow : 'column' }")
+        
+            sidebar(id="map_canvas", ng-controller="MapCtrl")
+                //
+                    img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+
+            sidebar(id="verbagePan")
+                accordion(id="Accdian")
+                    accordion-group(id="AccdianNews", heading="Such Exciting News")
+                        h5(style="color:red")
+                            | We now have WebMap mash-over capabilities
+                            | Select the Mash-over Instruction pane below for all the latest.
+                        br
+                        h5 Sed arcu magna.
+                        p.
+                            molestie at, fringilla in, sodales eu, elit.
+                            Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                            vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                            augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                            metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                            ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                            euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                            risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
+                            porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
+                            faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
+                            consequat quis, varius interdum, nulla. Donec neque tortor,
+                            sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
+                            ut eros sit amet ante pharetra interdum.
+                        br
+
+                    accordion-group(id="fillerPane", heading="Mash-over Instructions", is-open="true")
+                        div
+                            h3 Using Mash-over
+
+                            p.                              
+                                Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
+
                             p.
-                                Find group ids based on search term. Sign-in to search for private groups.
-                            span
-                                input(name="groupFinder", id="groupFinder", value="Chicago")
-                                input(name="groupFinderSubmit", disabled='disabled,' type="submit", value="Submit", id="groupFinderSubmit", onclick="findArcGISGroup();")
+                                Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
 
-                        #gridpaneGroup(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                            .gridGroup
-                            .groupResults
+                            div
+                                ol(style="list-style-type: decimal;")
 
-                #MapSearcherPane(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher")
-                    div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                    
-                        div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                            span
-                                label(id='mapSearchLabel', for='signInMap', style='font-size:12pt').
-                                    AGO Map Search
-                                input(type="button", class="signInClass", id="signInMap", name="signInMap", onclick='signInFromMapTab();', value="Sign In")
+                                    li(class="acc li") An ArcGIS webmap viewer - such as this viewer
+                                    li(class="acc li") A web page with a google map display
+                                    li(class="acc li") A web page with an open source map display
 
-                            p Find map ids based on search term. Sign-in to search for private groups.
-                            span
-                                input(name="mapFinder",  id="mapFinder", value="Chicago Crime")
-                                input(name="mapFinderSubmit", disabled='disabled', type="submit", value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
+                            div
+                                br
+                                h3( style="text-align:left").
+                                    Steps
 
-                        #gridpaneMap(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                            #gridMap
-                            
-        #btmpane(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="splitter:true, region:'bottom'")
+                            div
+                                ol#StepsList(style="list-style-type: decimal;")
+                                    li(class="acc li") Open the accordian pane for group search.  Enter a search term and click the submit button.
+                                    li(class="acc li") The group pane displays groups matching the search term.  Click on one of the groups.
+                                    li(class="acc li") The map selection pane opens.  Clicking on a map item opens the WebMap in the default ArcGISOnline WebMap viewer in a new tab.
+                                    li(class="acc li") Drag the tab to the desktop, which displays the tab's contents in a new browser instance.
+                                    li(class="acc li")  The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
+
+                            br

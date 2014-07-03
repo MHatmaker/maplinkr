@@ -14,7 +14,7 @@
             // var App = angular.module('app', ['ui.bootstrap']);
             console.debug('bootstrap init method');
             
-            var MasherApp = angular.module("app", ['ngRoute', 'ui.bootstrap'])
+            var MasherApp = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ui.layout'])
                 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
                 console.debug('MasherApp module route provider');
                 var isCollapsed = false;
