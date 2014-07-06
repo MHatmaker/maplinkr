@@ -22,17 +22,9 @@ block content
             #mainView
                 {{currentTab.content}}
                 br
-                br
                 a(href="{{currentTab.url}}") 
                     {{currentTab.title}}
 
-        div                   
-            div(ng-view)
-            
-        //
-            div(ng-include="currentTab.url")
-        
-        
-     
-        
 
+        div(style="position:absolute;height:80%;width:100%;")           
+            ng-view(style="position:absolute;height:80%;width:100%;")

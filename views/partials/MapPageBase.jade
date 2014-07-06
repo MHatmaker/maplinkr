@@ -4,10 +4,10 @@ block stylesblock append
     
 block append content
 
-    ui-layout(id="mainWindow", options="{ flow : 'row' }", style="width:100%; height:100%;")
+    ui-layout(id="mainWindow", options="{ flow : 'row' }", style="width:100%; height:90%;")
         header(id='headerDiv', style="width:100%; height:7%;")
 
-        div
+        div(style="height:7%;width:100%;")
             span
                 label(id = 'stnm', style='font-size:12pt').
                     siteName1
@@ -25,7 +25,7 @@ block append content
             label(id = 'mpnm',  style='font-size:9pt').
                 siteName2
 
-        ui-layout(id="leadpane", options="{ flow : 'column' }")
+        ui-layout(id="leadpane", options="{ flow : 'column' }", style="width:100%; height:100%;")
         
             sidebar(id="map_canvas", ng-controller="MapCtrl")
                 //
