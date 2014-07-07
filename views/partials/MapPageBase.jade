@@ -4,7 +4,7 @@ block stylesblock append
     
 block append content
 
-    div(style="height:100%")
+    div(style="height:100%;width:100%")
         table(id="mainWindow", style="width:100%")
             tbody
                 tr
@@ -28,13 +28,14 @@ block append content
 
         table(id="tableWindow", style="height:100%;width:100%")
             tbody
-                tr(id="leadpane", style="border:5px solid green;")
+                tr(id="leadpane", style="border:5px solid green;height:100%")
                     td(id="map_canvas", ng-controller="MapCtrl", style="width:70%;height:100%;vertical-align:top;")
                     //
                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
                     td(id="verbagePan", style='vertical-align:top')
-                        div(style="width: 100%; height: 100%; margin: 0; padding: 0; overflow: auto;")
+                        
+                        div(class = "acc scrollable")
                             accordion(id="Accdian", style="height:100%")
                                 accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;vertical-align:top")
                                     h5(style="color:red")
@@ -42,7 +43,7 @@ block append content
                                         | Select the Mash-over Instruction pane below for all the latest.
                                     br
                                     h5 Sed arcu magna.
-                                    p.
+                                    p(style='font-size:9pt').
                                         molestie at, fringilla in, sodales eu, elit.
                                         Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
                                         vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
@@ -61,10 +62,10 @@ block append content
                                 accordion-group(id="fillerPane", heading="Mash-over Instructions", style="height:100%;vertical-align:top;")
                                     h3 Using Mash-over
 
-                                    p.                              
+                                    p(style='font-size:9pt;margin:1em').                              
                                         Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
 
-                                    p.
+                                    p(style='font-size:9pt;margin:1em;').
                                         Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
 
                                     ul#MapTypes(style="list-style-type: decimal; height:100%")
