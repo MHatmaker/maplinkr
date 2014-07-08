@@ -21,10 +21,12 @@
         function mapGen(elem) {
             return new Map(elem, mapConfigs());
         }
+        
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing");
             $scope.map = mapGen('map_canvas');
+            $scope.MapWdth = 70;
             console.debug($scope.map);
             
             var tmpltName = $routeParams.id;
@@ -43,6 +45,13 @@
                                           + results.status);
                 })
                  */
+                 
+            $scope.resizeMap = function(){
+                console.debug("resize map");
+            }
+            $scope.$on('CollapseVerbageEvent', function() {
+                $scope.MapWdth = $scope.MapWdth == 100 ? 70 : 100;
+            });
         }
         
         function init(App) {

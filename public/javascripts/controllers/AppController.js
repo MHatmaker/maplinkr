@@ -8,9 +8,10 @@
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'controllers/MapCtrl',
-        'controllers/VerbageCtrl'
+        'controllers/VerbageCtrl',
+        'controllers/SPACtrl'
         ], 
-    function(angular, MasherCtrl, TabsCtrl, MapCtrl, VerbageCtrl) {
+    function(angular, MasherCtrl, TabsCtrl, MapCtrl, VerbageCtrl, SPACtrl) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -20,7 +21,8 @@
             MasherCtrl.start(App);
             TabsCtrl.start(App);
             MapCtrl.start(App);
-            VerbageCtrl.start(App);
+            SPACtrl.start(App, MapCtrl);
+            VerbageCtrl.start(App, MapCtrl);
             return AppController;
         }
 
