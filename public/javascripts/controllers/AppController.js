@@ -21,8 +21,8 @@
             MasherCtrl.start(App);
             TabsCtrl.start(App);
             MapCtrl.start(App);
-            SPACtrl.start(App, MapCtrl);
-            VerbageCtrl.start(App, MapCtrl);
+            SPACtrl.start(App);
+            VerbageCtrl.start(App);
             return AppController;
         }
 

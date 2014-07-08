@@ -46,9 +46,6 @@
                 })
                  */
                  
-            $scope.resizeMap = function(){
-                console.debug("resize map");
-            }
             $scope.$on('CollapseVerbageEvent', function() {
                 $scope.MapWdth = $scope.MapWdth == 100 ? 70 : 100;
             });
