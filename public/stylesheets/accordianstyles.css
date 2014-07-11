@@ -1,0 +1,19 @@
+
+ul {
+    display:table-row;
+}
+
+.acc.li {
+    border: 1px solid #000;
+    background-color: #330033;
+    color: #AAAAAA;
+}
+
+
+    .acc.scrollable {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+    }

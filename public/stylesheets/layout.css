@@ -1,0 +1,101 @@
+      html,body {
+        height:100%;
+        width:100%;
+        margin:0;
+        padding:0;
+      }
+      body {
+        background-color: #abcdd9;
+        color:#333;
+        font-size:14px;
+        overflow:hidden;
+        font-family:"Arial Narrow", Helvetica, Arial sans-serif;
+      }
+
+      #header {
+        overflow:hidden;
+        height:70px;
+        margin:0;
+      }
+
+      #title {
+        color:#FFF;
+        font-size:30px;
+        font-weight:bolder;
+        text-align:left;
+        padding-top:10px;
+        padding-left:25px;
+        text-shadow:0 1px 0 #333;
+      }
+
+      #subtitle {
+        font-size:16px;
+        color:#333;
+        padding-left:25px;
+        padding-top:5px;
+      }
+
+      #map_canvas {
+        border:solid 4px #666;
+        -webkit-border-radius:6px;
+        -moz-border-radius:6px;
+        border-radius:6px;
+        margin:15px 20px 15px 20px;
+        padding:0;
+      }
+      div.background
+            {
+          background: url(/stylesheets/images/bigmasher.png);
+          background-size: 100% 100%;
+          border: 2px solid black;
+          opacity:0.4;
+        }
+            
+      div.transbox
+            {
+          padding: 30px 50px;
+          margin: 30px 50px;
+          background-color: #ffffff;
+          border: 1px solid black;
+          background:rgba(255,255,255,0.7);
+          filter:alpha(opacity=99); /* For IE8 and earlier */
+        }
+            
+      td p
+            {
+          margin: 30px 40px;
+          font-weight: bold;
+          font-size: 150%; 
+          font-family:Arial;
+          color: #000000;
+        }
+        
+      img.svg-menu
+           {
+          width: 2.25em;
+          height: 1.25em;
+      }
+      
+      .hide-content 
+            {
+           position: absolute !important;
+           top: -9999px !important;
+           left: -9999px !important;
+           width: 0em;
+           height 0em;
+        }
+        
+      .reveal-content 
+            {
+           position: relative;
+           top: 0px;
+           left: 0px;
+           width: 30%;
+           height 100%;
+        }
+        
+      .max-map-width
+            {
+            width: 100%;
+       }
+       
