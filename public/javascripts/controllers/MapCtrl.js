@@ -14,7 +14,8 @@
             return {
                 basemap: 'streets',
                 center: [-118.1704035141802,34.03597014510993],
-                zoom: 15
+                zoom: 15,
+                autoResize: true
             };
         }
 
@@ -26,7 +27,9 @@
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing");
             $scope.map = mapGen('map_canvas');
-            $scope.MapWdth = 70;
+            // $scope.map.width = '70%';
+            $scope.MapWdth = '70%';
+            $scope.isMapExpanded = false;
             console.debug($scope.map);
             
             var tmpltName = $routeParams.id;
@@ -47,7 +50,24 @@
                  */
                  
             $scope.$on('CollapseVerbageEvent', function() {
-                $scope.MapWdth = $scope.MapWdth == 100 ? 70 : 100;
+                // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == '70%' ? '9999em' : '70%';
+                $scope.isMapExpanded = ! $scope.isMapExpanded;
+                $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '70%';
+                if($scope.isMapExpanded){
+                    angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
+                    angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
+                    angular.element(document.getElementById("map_canvas_root")).css({"width": "100%;"});
+                    angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%;"});
+                    angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+                }
+                else{
+                    angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
+                    angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
+                    angular.element(document.getElementById("map_canvas_root")).css({"width": "100%"});
+                    angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
+                    angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+                }
+                $scope.map.resize();
             });
         }
         

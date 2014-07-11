@@ -30,12 +30,12 @@ block append content
         table(id="tableWindow", style="height:100%;width:100%")
             tbody
                 tr(id="leadpane", style="border:5px solid green;height:100%")
-                    td(id="map_canvas", ng-controller="MapCtrl", style="height:100%;width:{{MapWdth}}%;vertical-align:top;")
+                    td(id="map_canvas", ng-controller="MapCtrl", style="height:100%;width:{{MapWdth}};vertical-align:top;")
                     //
                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
-                    td(id="verbagePan", collapse="isVerbageCollapsed", ng-controller="VerbageCtrl", style='vertical-align:top;width:{{VrbgWdth}}%;height:100%;')
-                            div(class = "acc scrollable")
+                    td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
+                            div(class = "acc scrollable", style="height:100%;width:100%;")
                                 accordion(id="Accdian", style="height:100%;width:100%;")
                                     accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top")
                                         h5(style="color:red")
