@@ -12,6 +12,13 @@
             $scope.isCollapsed = false;
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
+            
+            $scope.summmaryCollapser = function(){
+                $scope.$broadcast('CollapseSummaryEvent')
+                console.log("isCollapsed before " + $scope.isCollapsed);
+                $scope.isCollapsed = !$scope.isCollapsed;
+                console.log("isCollapsed after  " + $scope.isCollapsed);
+            }
         };
         
         function init(App) {

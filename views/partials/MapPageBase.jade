@@ -4,7 +4,7 @@ block stylesblock append
     
 block append content
 
-    div(style="height:100%;width:100%", ng-controller="SPACtrl")
+    #spa_window(style="height:100%;width:100%", ng-controller="SPACtrl")
         table(id="mainWindow", style="width:100%;")
             tbody
                 tr
@@ -27,7 +27,7 @@ block append content
                         td(id = 'mpnm',  style='font-size:9pt').
                             siteName2
 
-        table(id="tableWindow", style="height:100%;width:100%")
+        table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%")
             tbody
                 tr(id="leadpane", style="border:5px solid green;height:100%")
                     td(id="map_canvas", ng-controller="MapCtrl", style="height:100%;width:{{MapWdth}};vertical-align:top;")

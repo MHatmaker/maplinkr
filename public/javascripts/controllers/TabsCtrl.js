@@ -33,20 +33,24 @@ String.format = function() {
             { title:'Google Maps', 
               content: String.format(contentsText, 'a Google map', 'google map content'),
               url: "/views/partials/GoogleMap.jade",
+              imgSrc: "stylesheets/images/googlemap.png",
+              imgAlt: "Google Map",
               active: true,
               disabled: false
             },
             { title:'Leaflet/Cloudmade Maps', 
               content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
-               
+              imgSrc:  "stylesheets/images/Leaflet.png",
+              imgAlt: "Leaflet/Cloudmade Maps",
               active: false,
               disabled: false
             },
             { title:'ArcGIS Web Maps', 
               content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
               url: "/views/partials/ArcGIS.jade",
-               
+              imgSrc: "stylesheets/images/arcgis.png",
+              imgAlt: "ArcGIS Web Maps",
               active: false,
               disabled: false
             }
