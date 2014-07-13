@@ -1,6 +1,12 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
-
+function getDocHeight() {
+    return Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+    );
+}
 
 (function() {
     "use strict";
@@ -16,6 +22,9 @@
             $scope.isSummaryCollapsed = false;
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
+            var sumHead = angular.element(document.getElementById("summary_header"));
+            var sumHeadHeightStart = sumHead[0].offsetHeight;
+            console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
             
             $scope.collapser = function(){
                 $scope.$broadcast('CollapseVerbageEvent')
@@ -27,19 +36,28 @@
             $scope.$on('CollapseSummaryEvent', function() {
                 $scope.isSummaryCollapsed = ! $scope.isSummaryCollapsed;
                 console.log("isSummaryCollapsed after " +  $scope.isSummaryCollapsed);
-                var sumHead = angular.element(document.getElementById("summary_header"));
-                var sumHeadHeight = sumHead[0].offsetHeight;
-                console.log("sumHeadHeight = " + sumHeadHeight);
                 
-                var tblwnd = angular.element(document.getElementById("tableWindow"));
-                var spaWnd = angular.element(document.getElementById("spa_window"));
-                var w = window;
-                console.log("width " + w.innerWidth + " height " + w.innerHeight);
-                var h = w.innerHeight - sumHeadHeight - 10;
-                if($scope.isSummaryCollapsed == true)
-                    h = w.innerHeight - 10;
+                var mnwnd = angular.element(document.getElementById("mainWindow"));
+                var mnWndHgt = mnwnd[0].offsetHeight;
+                console.log("mnwnd height : " + mnWndHgt);
+                var wndHgt = window.innerHeight; //getDocHeight();
+                console.log(" window.innerHeight height " + wndHgt);
+                console.log(" sumHeadHeightStart " + sumHeadHeightStart);
+                var h = $scope.isSummaryCollapsed == true ?
+                    wndHgt - mnWndHgt - 25 - 10 - 20: wndHgt - mnWndHgt - sumHeadHeightStart - 25 - 10 - 20;
+                    // window.innerHeight - 10 : window.innerHeight - sumHeadHeightStart - 10;
                 $scope.ContentsHeight =  h; // $scope.isSummaryCollapsed ? h : h;
                 var hstr = String.format("{0}px", h);
+                var ngvwnd = angular.element(document.getElementById("ngview_container"));
+                var tblwnd = angular.element(document.getElementById("tableWindow"));
+                var spaWnd = angular.element(document.getElementById("spa_window"));
+                var mapCnvs = angular.element(document.getElementById("map_canvas"));
+                var mapCnRt = angular.element(document.getElementById("map_canvas_root"));
+                var vrbgPan = angular.element(document.getElementById("verbagePan"));
+                mapCnRt.css({"height": hstr});
+                mapCnvs.css({"height": hstr});
+                vrbgPan.css({"height": hstr});
+                ngvwnd.css({"height": hstr});
                 spaWnd.css({"height": hstr});
                 tblwnd.css({"height": hstr});
                 console.log("ContentsHeight = " + $scope.ContentsHeight);

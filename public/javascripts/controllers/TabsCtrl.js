@@ -1,10 +1,10 @@
 
 String.format = function() {
-    console.debug("lets format something");
+    // console.debug("lets format something");
     // The string containing the format items (e.g. "{0}")
     // will and always has to be the first argument.
     var theString = arguments[0];
-    console.debug(arguments[0]);
+    // console.debug(arguments[0]);
     
     // start with the second argument (i = 1)
     for (var i = 1; i < arguments.length; i++) {
