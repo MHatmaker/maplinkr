@@ -10,7 +10,7 @@ block append content
                 tr
                     td
                         label(id = 'stnm', style='font-size:12pt').
-                            siteName1
+                            {{currentTab.site}}
 
                     td
                         table(style='float: right; padding-right:20px;')
@@ -25,7 +25,7 @@ block append content
 
                     tr
                         td(id = 'mpnm',  style='font-size:9pt').
-                            siteName2
+                            {{currentTab.title}}
 
         table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%;")
             tbody

@@ -31,6 +31,7 @@ String.format = function() {
             
           $scope.tabs = [
             { title:'Google Maps', 
+              site: 'Commercial Web Site featuring a Google Map',
               content: String.format(contentsText, 'a Google map', 'google map content'),
               url: "/views/partials/GoogleMap.jade",
               imgSrc: "stylesheets/images/googlemap.png",
@@ -39,6 +40,7 @@ String.format = function() {
               disabled: false
             },
             { title:'Leaflet/Cloudmade Maps', 
+              site: 'Commercial Web Site featuring a Leaflet Map',
               content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
               imgSrc:  "stylesheets/images/Leaflet.png",
@@ -47,6 +49,7 @@ String.format = function() {
               disabled: false
             },
             { title:'ArcGIS Web Maps', 
+              site: 'Commercial Web Site featuring an ArcGIS Online Map',
               content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
               url: "/views/partials/ArcGIS.jade",
               imgSrc: "stylesheets/images/arcgis.png",

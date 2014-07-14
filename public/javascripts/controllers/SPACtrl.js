@@ -29,7 +29,6 @@ function getDocHeight() {
             
             $scope.collapser = function(){
                 $scope.$broadcast('CollapseVerbageEvent')
-                // $scope.mapCtrl.resizeMap();
                 console.log("isVerbageCollapsed before " + $scope.isVerbageCollapsed);
                 $scope.isVerbageCollapsed = !$scope.isVerbageCollapsed;
                 console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
@@ -64,18 +63,10 @@ function getDocHeight() {
                     wndHgt - mnWndHgt - adjustments: wndHgt - mnWndHgt - sumHeadHeightStart - adjustments;
                 $scope.ContentsHeight = contentsHeight;
                 var hstr = String.format("{0}px", contentsHeight);
-                // var vrbgPan = angular.element(document.getElementById("verbagePan"));
-                // var ngvwnd = angular.element(document.getElementById("ngview_container"));
-                // var spaWnd = angular.element(document.getElementById("spa_window"));
-                // var tblwnd = angular.element(document.getElementById("tableWindow"));
                 var mapCnvs = angular.element(document.getElementById("map_canvas"));
                 var mapCnRt = angular.element(document.getElementById("map_canvas_root"));
                 mapCnRt.css({"height": hstr});
                 mapCnvs.css({"height": hstr});
-                // vrbgPan.css({"height": hstr});
-                // ngvwnd.css({"height": hstr});
-                // spaWnd.css({"height": hstr});
-                // tblwnd.css({"height": hstr});
                 console.log("ContentsHeight = " + contentsHeight);
                 console.log("hstr = " + hstr);
             
