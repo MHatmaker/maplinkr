@@ -39,6 +39,16 @@ function getDocHeight() {
                 $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
             });
             
+            function calcAdjustments(){
+                var commonTopLine = angular.element(document.getElementById("top_line"));
+                var ftPane = angular.element(document.getElementById("foot_pane"));
+                
+                var topLineHgt = commonTopLine[0].offsetHeight;
+                var ftPaneHgt = ftPane[0].offsetHeight;
+                console.log("topLineHgt " + topLineHgt + " ftPaneHgt " + ftPaneHgt);
+                return topLineHgt + ftPaneHgt + 20;
+            }
+            
             function layoutPanes(isSummaryCollapsed) {
                 console.log("isSummaryCollapsed after " +  isSummaryCollapsed);
                 
@@ -48,24 +58,24 @@ function getDocHeight() {
                 var wndHgt = window.innerHeight; //getDocHeight();
                 console.log(" window.innerHeight height " + wndHgt);
                 console.log(" sumHeadHeightStart " + sumHeadHeightStart);
-                var adjustments = 25 + 10 + 20;
+                var adjustments = calcAdjustments(); //25 + 10 + 20;
                 console.log(" adjustments " + adjustments);
                 var contentsHeight = isSummaryCollapsed == true ?
                     wndHgt - mnWndHgt - adjustments: wndHgt - mnWndHgt - sumHeadHeightStart - adjustments;
                 $scope.ContentsHeight = contentsHeight;
                 var hstr = String.format("{0}px", contentsHeight);
-                var ngvwnd = angular.element(document.getElementById("ngview_container"));
-                var tblwnd = angular.element(document.getElementById("tableWindow"));
-                var spaWnd = angular.element(document.getElementById("spa_window"));
+                // var vrbgPan = angular.element(document.getElementById("verbagePan"));
+                // var ngvwnd = angular.element(document.getElementById("ngview_container"));
+                // var spaWnd = angular.element(document.getElementById("spa_window"));
+                // var tblwnd = angular.element(document.getElementById("tableWindow"));
                 var mapCnvs = angular.element(document.getElementById("map_canvas"));
                 var mapCnRt = angular.element(document.getElementById("map_canvas_root"));
-                var vrbgPan = angular.element(document.getElementById("verbagePan"));
                 mapCnRt.css({"height": hstr});
                 mapCnvs.css({"height": hstr});
-                vrbgPan.css({"height": hstr});
-                ngvwnd.css({"height": hstr});
-                spaWnd.css({"height": hstr});
-                tblwnd.css({"height": hstr});
+                // vrbgPan.css({"height": hstr});
+                // ngvwnd.css({"height": hstr});
+                // spaWnd.css({"height": hstr});
+                // tblwnd.css({"height": hstr});
                 console.log("ContentsHeight = " + contentsHeight);
                 console.log("hstr = " + hstr);
             
