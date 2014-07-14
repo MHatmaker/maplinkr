@@ -25,6 +25,7 @@ function getDocHeight() {
             var sumHead = angular.element(document.getElementById("summary_header"));
             var sumHeadHeightStart = sumHead[0].offsetHeight;
             console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
+            layoutPanes(false);
             
             $scope.collapser = function(){
                 $scope.$broadcast('CollapseVerbageEvent')
@@ -35,7 +36,11 @@ function getDocHeight() {
             }
             $scope.$on('CollapseSummaryEvent', function() {
                 $scope.isSummaryCollapsed = ! $scope.isSummaryCollapsed;
-                console.log("isSummaryCollapsed after " +  $scope.isSummaryCollapsed);
+                $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
+            });
+            
+            function layoutPanes(isSummaryCollapsed) {
+                console.log("isSummaryCollapsed after " +  isSummaryCollapsed);
                 
                 var mnwnd = angular.element(document.getElementById("mainWindow"));
                 var mnWndHgt = mnwnd[0].offsetHeight;
@@ -43,11 +48,12 @@ function getDocHeight() {
                 var wndHgt = window.innerHeight; //getDocHeight();
                 console.log(" window.innerHeight height " + wndHgt);
                 console.log(" sumHeadHeightStart " + sumHeadHeightStart);
-                var h = $scope.isSummaryCollapsed == true ?
-                    wndHgt - mnWndHgt - 25 - 10 - 20: wndHgt - mnWndHgt - sumHeadHeightStart - 25 - 10 - 20;
-                    // window.innerHeight - 10 : window.innerHeight - sumHeadHeightStart - 10;
-                $scope.ContentsHeight =  h; // $scope.isSummaryCollapsed ? h : h;
-                var hstr = String.format("{0}px", h);
+                var adjustments = 25 + 10 + 20;
+                console.log(" adjustments " + adjustments);
+                var contentsHeight = isSummaryCollapsed == true ?
+                    wndHgt - mnWndHgt - adjustments: wndHgt - mnWndHgt - sumHeadHeightStart - adjustments;
+                $scope.ContentsHeight = contentsHeight;
+                var hstr = String.format("{0}px", contentsHeight);
                 var ngvwnd = angular.element(document.getElementById("ngview_container"));
                 var tblwnd = angular.element(document.getElementById("tableWindow"));
                 var spaWnd = angular.element(document.getElementById("spa_window"));
@@ -60,9 +66,11 @@ function getDocHeight() {
                 ngvwnd.css({"height": hstr});
                 spaWnd.css({"height": hstr});
                 tblwnd.css({"height": hstr});
-                console.log("ContentsHeight = " + $scope.ContentsHeight);
+                console.log("ContentsHeight = " + contentsHeight);
                 console.log("hstr = " + hstr);
-            });
+            
+                return contentsHeight;
+            }
         };
         
         function init(App) {

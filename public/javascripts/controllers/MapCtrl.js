@@ -23,6 +23,23 @@
             return new Map(elem, mapConfigs());
         }
         
+        function resizeMap(isMapExpanded, map){
+            if(isMapExpanded){
+                angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
+                angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
+                angular.element(document.getElementById("map_canvas_root")).css({"width": "100%;"});
+                angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%;"});
+                angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+            }
+            else{
+                angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
+                angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
+                angular.element(document.getElementById("map_canvas_root")).css({"width": "100%"});
+                angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
+                angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+            }
+            map.resize();
+        }
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing");
@@ -31,6 +48,7 @@
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;
             console.debug($scope.map);
+            resizeMap($scope.isMapExpanded, $scope.map);
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -49,25 +67,15 @@
                 })
                  */
                  
+            $scope.$on('CollapseSummaryEvent', function() {
+                $scope.map.resize();
+            });
+            
             $scope.$on('CollapseVerbageEvent', function() {
                 // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == '70%' ? '9999em' : '70%';
                 $scope.isMapExpanded = ! $scope.isMapExpanded;
                 $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '70%';
-                if($scope.isMapExpanded){
-                    angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
-                    angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
-                    angular.element(document.getElementById("map_canvas_root")).css({"width": "100%;"});
-                    angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%;"});
-                    angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
-                }
-                else{
-                    angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
-                    angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
-                    angular.element(document.getElementById("map_canvas_root")).css({"width": "100%"});
-                    angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
-                    angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
-                }
-                $scope.map.resize();
+                resizeMap($scope.isMapExpanded, $scope.map);
             });
         }
         
