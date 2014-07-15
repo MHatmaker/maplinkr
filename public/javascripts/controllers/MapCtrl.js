@@ -42,7 +42,7 @@
         }
 
         function MapCtrl($scope, $routeParams) {
-            console.log("MapCtrl initializing");
+            console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             $scope.map = mapGen('map_canvas');
             // $scope.map.width = '70%';
             $scope.MapWdth = '70%';

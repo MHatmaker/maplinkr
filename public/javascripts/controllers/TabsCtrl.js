@@ -30,7 +30,9 @@ String.format = function() {
           var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
             
           $scope.tabs = [
-            { title:'Google Maps', 
+            { 
+              maptype : 'google',
+              title:'Google Maps', 
               site: 'Commercial Web Site featuring a Google Map',
               content: String.format(contentsText, 'a Google map', 'google map content'),
               url: "/views/partials/GoogleMap.jade",
@@ -39,7 +41,9 @@ String.format = function() {
               active: true,
               disabled: false
             },
-            { title:'Leaflet/Cloudmade Maps', 
+            { 
+              maptype : 'leaflet',
+              title:'Leaflet/Cloudmade Maps', 
               site: 'Commercial Web Site featuring a Leaflet Map',
               content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
@@ -48,7 +52,9 @@ String.format = function() {
               active: false,
               disabled: false
             },
-            { title:'ArcGIS Web Maps', 
+            { 
+              maptype : 'arcgis',
+              title:'ArcGIS Web Maps', 
               site: 'Commercial Web Site featuring an ArcGIS Online Map',
               content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
               url: "/views/partials/ArcGIS.jade",
