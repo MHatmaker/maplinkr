@@ -3,10 +3,11 @@ extends ./MapPageBase
 
 
 block append stylesblock
-    link(rel='stylesheet', href=('/stylesheets/leaflet.css'))
+    link(rel='stylesheet', href=('http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css'))
 
         
 block append scriptsblock
+    script(src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js')
     script(src='javascripts/lib/LeafletCloudmade.js') 
     script(src='javascripts/lib/StartupLeaflet.js')
     script(src='javascripts/lib/searcher.js')

@@ -6,8 +6,8 @@
     define([
         'angular',
         'esri/map',
-        'dijit/Dialog'
-    ], function(angular, Map) {
+        'lib/StartupLeaflet'
+    ], function(angular, Map, StartupLeaflet) {
         console.log('MapCtrl define');
 
         function mapConfigs() {
@@ -43,7 +43,11 @@
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
-            $scope.map = mapGen('map_canvas');
+            
+            // $scope.map = mapGen('map_canvas');
+            var stup = StartupLeaflet.start();
+            console.debug(stup);
+            var lflt = StartupLeaflet.config(null);
             // $scope.map.width = '70%';
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;

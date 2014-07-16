@@ -13,6 +13,12 @@
         }
         return {};
     });
+    define('leaflet', function () {
+        if (leaflet) {
+            return leaflet;
+        }
+        return {};
+    });
     
     require({
         async: true,
@@ -20,6 +26,10 @@
         packages: [{
             name: 'controllers',
             location: locationPath + 'javascripts/controllers'
+        }, 
+        {
+            name: 'lib',
+            location: locationPath + 'javascripts/lib'
         }, 
         {
             name: 'javascripts',

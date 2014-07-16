@@ -9,7 +9,41 @@ define('leaflet', function () {
 (function() {
     "use strict";
 
-    define(['leaflet'], function(leaflet) {
+    define(['lib/leaflet'], function(leaflet) {
+
+        function configureMap(lmap) 
+        {
+            this.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
+            
+            this.updateGlobals("init", -87.7, 41.8, 13, 0.0);
+            // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
+            this.showGlobals("Prior to new Map");
+
+            L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+            }).addTo(this.map);
+
+            this.minZoom = this.map.getMinZoom();
+            this.maxZoom = this.map.getMaxZoom();
+            this.zoomLevels = this.maxZoom - this.minZoom + 1;
+            this.collectScales();
+            this.bounds = this.map.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
+            
+            self.addInitialSymbols();
+            
+            this.mapCenter = this.map.getCenter();
+            this.map.on('mousemove', function(e){self.onMouseMove(e); })
+            this.map.on('click', function(e){self.onMapClick(e); })
+            this.map.on( "zoomend", function( e ) 
+            {
+                if(self.userZoom == true)
+                {
+                    self.setBounds('zoom', null);
+                }
+                }
+            );
+        }
 
         function MapHosterLeaflet()
         {
@@ -17,40 +51,6 @@ define('leaflet', function () {
             this.pusher = null;
             this.userZoom = true;
             
-            this.configureMap = function(lmap) 
-            {
-                this.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
-                
-                this.updateGlobals("init", -87.7, 41.8, 13, 0.0);
-                // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
-                this.showGlobals("Prior to new Map");
-
-                L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-                    maxZoom: 18,
-                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-                }).addTo(this.map);
-
-                this.minZoom = this.map.getMinZoom();
-                this.maxZoom = this.map.getMaxZoom();
-                this.zoomLevels = this.maxZoom - this.minZoom + 1;
-                this.collectScales();
-                this.bounds = this.map.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
-                
-                self.addInitialSymbols();
-                
-                this.mapCenter = this.map.getCenter();
-                this.map.on('mousemove', function(e){self.onMouseMove(e); })
-                this.map.on('click', function(e){self.onMapClick(e); })
-                this.map.on( "zoomend", function( e ) 
-                {
-                    if(self.userZoom == true)
-                    {
-                        self.setBounds('zoom', null);
-                    }
-                    }
-                );
-            }
-
             this.map.on( "moveend", function( e ) {
                 //console.log("moveend");
                 self.setBounds('pan', e.latlng);}  );
@@ -257,7 +257,8 @@ define('leaflet', function () {
             return MapHosterLeaflet;
         }
 
-        return { start: init };
+        return { start: init, config : configureMap };
+    });
 
 }).call(this);
 
