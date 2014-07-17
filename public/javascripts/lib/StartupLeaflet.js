@@ -10,10 +10,14 @@
         console.log('StartupLeaflet define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
+        var lMap = null;
         var loading;
         var newSelectedWebMapId = "";
         function configit(nmpid){
             console.log("nmpid " + nmpid);
+        }
+        function getMap(){
+            return lMap;
         }
         function configure(newMapId) 
         {
@@ -32,7 +36,7 @@
             }
             else
             {
-                var lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
+                lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
                 console.debug(lMap);
                 // var lMap = L.map('map').setView([51.50, -0.09], 13);
                 // mph = new MapHosterLeaflet(lMap); 
@@ -49,7 +53,7 @@
             return StartupLeaflet;
         }
 
-        return { start: init, config : configure };
+        return { start: init, config : configure, getMap: getMap };
 
     });
 

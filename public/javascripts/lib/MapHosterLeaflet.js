@@ -9,37 +9,49 @@ define('leaflet', function () {
 (function() {
     "use strict";
 
-    define(['lib/leaflet'], function(leaflet) {
+    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'], function(leaflet) {
 
+        var mph = null;
         function configureMap(lmap) 
         {
-            this.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
+            console.debug("ready to show mph");
+            console.debug(mph);
+            mph.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
+            console.debug(mph.map);
+            mph.map.setView([41.8, -87.7], 13);
+            console.log( mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
             
-            this.updateGlobals("init", -87.7, 41.8, 13, 0.0);
+            mph.updateGlobals("init", -87.7, 41.8, 13, 0.0);
             // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
-            this.showGlobals("Prior to new Map");
+            mph.showGlobals("Prior to new Map");
 
-            L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+            // L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+            L.tileLayer(osmUrl, {
                 maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-            }).addTo(this.map);
+            }).addTo(mph.map);
 
-            this.minZoom = this.map.getMinZoom();
-            this.maxZoom = this.map.getMaxZoom();
-            this.zoomLevels = this.maxZoom - this.minZoom + 1;
-            this.collectScales();
-            this.bounds = this.map.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
+            mph.minZoom = mph.map.getMinZoom();
+            mph.maxZoom = mph.map.getMaxZoom();
+            mph.zoomLevels = mph.maxZoom - mph.minZoom + 1;
+            mph.collectScales();
+            mph.bounds = mph.map.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
             
-            self.addInitialSymbols();
+            mph.addInitialSymbols();
             
-            this.mapCenter = this.map.getCenter();
-            this.map.on('mousemove', function(e){self.onMouseMove(e); })
-            this.map.on('click', function(e){self.onMapClick(e); })
-            this.map.on( "zoomend", function( e ) 
+            console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
+            mph.mapCenter = mph.map.getCenter
+            console.log("mousemove next");
+            mph.map.on('mousemove', function(e){self.onMouseMove(e); })
+            console.log("cllick next");
+            mph.map.on('click', function(e){mph.onMapClick(e); })
+            mph.map.on( "zoomend", function( e ) 
             {
-                if(self.userZoom == true)
+                if(mph.userZoom == true)
                 {
-                    self.setBounds('zoom', null);
+                    mph.setBounds('zoom', null);
                 }
                 }
             );
@@ -62,7 +74,7 @@ define('leaflet', function () {
                 var evlng = fixedLL.lon;
                 var evlat = fixedLL.lat;
                 var zm = self.map.getZoom();
-                var cntr = self.map.getCenter();
+                var cntr = self.mph.map.getCenter();
                 var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
                 var cntrlng = fixedCntrLL.lon;
                 var cntrlat = fixedCntrLL.lat;
@@ -177,8 +189,9 @@ define('leaflet', function () {
          
         MapHosterLeaflet.prototype.updateGlobals = function(msg, cntrx, cntry, zm)
         {
-            console.log("updateGlobals ");
+            console.log("updateGlobals " + msg);
             var gmBounds = this.map.getBounds();
+            console.debug(gmBounds);
             if(gmBounds)
             {
                 var ne = gmBounds.getNorthEast();
@@ -254,6 +267,7 @@ define('leaflet', function () {
         }
         
         function init() {
+            mph = MapHosterLeaflet.prototype;
             return MapHosterLeaflet;
         }
 

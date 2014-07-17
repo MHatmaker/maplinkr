@@ -38,7 +38,8 @@
                 angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
                 angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
             }
-            map.resize();
+            if(map.resize)
+                map.resize();
         }
 
         function MapCtrl($scope, $routeParams) {
@@ -48,6 +49,7 @@
             var stup = StartupLeaflet.start();
             console.debug(stup);
             var lflt = StartupLeaflet.config(null);
+            $scope.map = StartupLeaflet.getMap();
             // $scope.map.width = '70%';
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;
@@ -72,7 +74,8 @@
                  */
                  
             $scope.$on('CollapseSummaryEvent', function() {
-                $scope.map.resize();
+                if($scope.map.resize)
+                    $scope.map.resize();
             });
             
             $scope.$on('CollapseVerbageEvent', function() {
