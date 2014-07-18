@@ -13,12 +13,12 @@ var utils = (function()
     toFixedOne = function (value, precision) 
     {
         var precision = precision || 0,
-        neg = value < 0,
-        power = Math.pow(10, precision),
-        value = Math.round(value * power),
-        integral = String((neg ? Math.ceil : Math.floor)(value / power)),
-        fraction = String((neg ? -value : value) % power),
-        padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
+            neg = value < 0,
+            power = Math.pow(10, precision),
+            value = Math.round(value * power),
+            integral = String((neg ? Math.ceil : Math.floor)(value / power)),
+            fraction = String((neg ? -value : value) % power),
+            padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
 		sign = neg ? "-" : "";
 		if(integral[0] == '-')
 			sign = "";

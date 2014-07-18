@@ -8,10 +8,12 @@ define('leaflet', function () {
 
 (function() {
     "use strict";
+    require(["lib/utils"]);
 
     define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'], function(leaflet) {
 
-        var mph = null;
+        var mph = null,
+            scale2Level = []
         function configureMap(lmap) 
         {
             console.debug("ready to show mph");
@@ -44,9 +46,11 @@ define('leaflet', function () {
             console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
             mph.mapCenter = mph.map.getCenter
             console.log("mousemove next");
-            mph.map.on('mousemove', function(e){self.onMouseMove(e); })
-            console.log("cllick next");
-            mph.map.on('click', function(e){mph.onMapClick(e); })
+            // mph.map.on('mousemove', function(e){self.onMouseMove(e); })
+            mph.map.on('mousemove', onMouseMove);
+            console.log("click next");
+            // mph.map.on('click', function(e){mph.onMapClick(e); })
+            mph.map.on('click', onMapClick)
             mph.map.on( "zoomend", function( e ) 
             {
                 if(mph.userZoom == true)
@@ -55,6 +59,29 @@ define('leaflet', function () {
                 }
                 }
             );
+        }
+        function onMouseMove( e) 
+        {
+            var ltln = e.latlng;
+            var fixedLL = utils.toFixed(ltln.lng,ltln.lat, 3);
+            var evlng = fixedLL.lon;
+            var evlat = fixedLL.lat;
+            var zm = mph.map.getZoom();
+            var cntr = mph.map.getCenter();
+            var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
+            var cntrlng = fixedCntrLL.lon;
+            var cntrlat = fixedCntrLL.lat;
+            var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
+                zm + " " + scale2Level[zm].scale;
+            document.getElementById("mpnm").innerHTML = view;
+        }
+        function onMapClick(e) 
+        {
+            console.debug(e);
+            mph.popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(mph.map);
         }
 
         function MapHosterLeaflet()
@@ -66,30 +93,6 @@ define('leaflet', function () {
             this.map.on( "moveend", function( e ) {
                 //console.log("moveend");
                 self.setBounds('pan', e.latlng);}  );
-
-            this.onMouseMove = function(e) 
-            {
-                var ltln = e.latlng;
-                var fixedLL = utils.toFixed(ltln.lng,ltln.lat, 3);
-                var evlng = fixedLL.lon;
-                var evlat = fixedLL.lat;
-                var zm = self.map.getZoom();
-                var cntr = self.mph.map.getCenter();
-                var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
-                var cntrlng = fixedCntrLL.lon;
-                var cntrlat = fixedCntrLL.lat;
-                var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
-                    zm + " " + self.scale2Level[zm].scale;
-                document.getElementById("mpnm").innerHTML = view;
-            }
-            
-            this.onMapClick = function(e) 
-            {
-                self.popup
-                    .setLatLng(e.latlng)
-                    .setContent("You clicked the map at " + e.latlng.toString())
-                    .openOn(this.map);
-            }
 
             this.extractBounds = function(action, latlng)
             {
@@ -175,9 +178,10 @@ define('leaflet', function () {
 
         MapHosterLeaflet.prototype.collectScales = function()
         {
+            console.log('collectScales');
             var zm = this.map.getZoom();
-            this.scale2Level = [];
-            var sc2lv = this.scale2Level;
+            scale2Level = [];
+            var sc2lv = scale2Level;
             for(var i=0; i<this.zoomLevels + 1; i++)
             {
                 var scale = this.map.options.crs.scale(i);
