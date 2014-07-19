@@ -20,6 +20,13 @@
         function getMap(){
             return lMap;
         }
+        
+        function resizeWebSiteVertical(isMapExpanded){
+            MapHosterLeaflet.resizeWebSite(isMapExpanded);
+        }
+        function resizeVerbageHorizontal(isMapExpanded){
+            MapHosterLeaflet.resizeVerbage(isMapExpanded);
+        }
         function configure(newMapId) 
         {
             newSelectedWebMapId = newMapId;
@@ -54,7 +61,8 @@
             return StartupLeaflet;
         }
 
-        return { start: init, config : configure, getMap: getMap };
+        return { start: init, config : configure, getMap: getMap,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal};
 
     });
 

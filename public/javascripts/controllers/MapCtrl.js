@@ -54,7 +54,8 @@
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;
             console.debug($scope.map);
-            resizeMap($scope.isMapExpanded, $scope.map);
+            // resizeMap($scope.isMapExpanded, $scope.map);
+            StartupLeaflet.resizeWebSite($scope.isMapExpanded);
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -74,8 +75,9 @@
                  */
                  
             $scope.$on('CollapseSummaryEvent', function() {
-                if($scope.map.resize)
-                    $scope.map.resize();
+                // if($scope.map.resize)
+                    // $scope.map.resize();
+                StartupLeaflet.resizeVerbage($scope.isMapExpanded);
             });
             
             $scope.$on('CollapseVerbageEvent', function() {

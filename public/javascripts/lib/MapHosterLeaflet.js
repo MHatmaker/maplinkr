@@ -8,9 +8,9 @@ define('leaflet', function () {
 
 (function() {
     "use strict";
-    require(["lib/utils"]);
+    require(["lib/utils", 'angular']);
 
-    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'], function(leaflet) {
+    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', 'angular'], function(leaflet, angular) {
 
         var mph = null,
             scale2Level = [],
@@ -52,17 +52,9 @@ define('leaflet', function () {
             
             console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
             mph.mapCenter = mph.map.getCenter();
-            console.log("mousemove next");
-            // mph.map.on('mousemove', function(e){self.onMouseMove(e); })
-            // mph.map.on('mousemove', onMouseMove);
             mph.map.on( "mousemove", function( e ) {
-                console.log("mousemove");
                 onMouseMove(e);}  );
-            console.log("click next");
-            // mph.map.on('click', function(e){mph.onMapClick(e); })
-            // mph.map.on('click', onMapClick)
             mph.map.on( "click", function( e ) {
-                console.log("click");
                 onMapClick(e);}  );
             mph.map.on( "zoomend", function( e ){
                 if(mph.userZoom == true)
@@ -72,7 +64,6 @@ define('leaflet', function () {
                 });
             
             mph.map.on( "moveend", function( e ) {
-                console.log("moveend");
                 setBounds('pan', e.latlng);}  );
         }
         
@@ -93,8 +84,6 @@ define('leaflet', function () {
         }
         function onMapClick(e) 
         {
-            console.debug('onMapClick');
-            console.debug(e);
             mph.popup
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
@@ -221,9 +210,7 @@ define('leaflet', function () {
                 gmBounds.xmax = ne.lng;
                 gmBounds.ymax = ne.lat;
             }
-            // this.zmG = zm; this.cntrxG = cntrx; this.cntryG = cntry;
             zmG = zm; cntrxG = cntrx; cntryG = cntry;
-            // console.log("Updated Globals " + msg + " " + this.cntrxG + ", " + this.cntryG + " : " + this.zmG);
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
         }
 
@@ -291,8 +278,23 @@ define('leaflet', function () {
             mph = MapHosterLeaflet.prototype;
             return MapHosterLeaflet;
         }
+        
+        function resizeWebSiteVertical(isMapExpanded){
+            if(isMapExpanded){
+                angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%;"});
+                angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+            }
+            else{
+                angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%"});
+                angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+            }
+        }
+        function resizeVerbageHorizontal(isMapExpanded){
+            // mph.resizeWebSite(isMapExpanded);
+        }
 
-        return { start: init, config : configureMap };
+        return { start: init, config : configureMap,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal };
     });
 
 }).call(this);
