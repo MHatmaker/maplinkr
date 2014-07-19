@@ -13,7 +13,14 @@ define('leaflet', function () {
     define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js'], function(leaflet) {
 
         var mph = null,
-            scale2Level = []
+            scale2Level = [],
+            zmG,
+            cntrxG,
+            cntryG,
+            bounds,
+            channel,
+            pusher;
+            
         function configureMap(lmap) 
         {
             console.debug("ready to show mph");
@@ -44,22 +51,31 @@ define('leaflet', function () {
             mph.addInitialSymbols();
             
             console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
-            mph.mapCenter = mph.map.getCenter
+            mph.mapCenter = mph.map.getCenter();
             console.log("mousemove next");
             // mph.map.on('mousemove', function(e){self.onMouseMove(e); })
-            mph.map.on('mousemove', onMouseMove);
+            // mph.map.on('mousemove', onMouseMove);
+            mph.map.on( "mousemove", function( e ) {
+                console.log("mousemove");
+                onMouseMove(e);}  );
             console.log("click next");
             // mph.map.on('click', function(e){mph.onMapClick(e); })
-            mph.map.on('click', onMapClick)
-            mph.map.on( "zoomend", function( e ) 
-            {
+            // mph.map.on('click', onMapClick)
+            mph.map.on( "click", function( e ) {
+                console.log("click");
+                onMapClick(e);}  );
+            mph.map.on( "zoomend", function( e ){
                 if(mph.userZoom == true)
                 {
                     mph.setBounds('zoom', null);
                 }
-                }
-            );
+                });
+            
+            mph.map.on( "moveend", function( e ) {
+                console.log("moveend");
+                setBounds('pan', e.latlng);}  );
         }
+        
         function onMouseMove( e) 
         {
             var ltln = e.latlng;
@@ -77,6 +93,7 @@ define('leaflet', function () {
         }
         function onMapClick(e) 
         {
+            console.debug('onMapClick');
             console.debug(e);
             mph.popup
                 .setLatLng(e.latlng)
@@ -84,92 +101,90 @@ define('leaflet', function () {
                 .openOn(mph.map);
         }
 
+        function setBounds(action, latlng)
+        {
+            // if(self.pusher && self.pusher.ready == true)
+            {
+                // runs this code after finishing the zoom
+                var xtExt = extractBounds(action, latlng);
+                var xtntJsonStr = JSON.stringify(xtExt);
+                console.log("extracted bounds " + xtntJsonStr);
+                var cmp = compareExtents("setBounds", xtExt);
+                if(cmp == false)
+                {
+                    console.log("MapHoster setBounds pusher send to channel " + channel);
+                    // var sendRet = self.pusher.send(xtntJsonStr, channel);
+                    if(pusher)
+                    {
+                        pusher.channel(channel).trigger('client-MapXtntEvent', xtExt);
+                    }
+                    mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                    //console.debug(sendRet);
+                }
+            }
+        }
+        
+        function extractBounds(action, latlng)
+        {
+            var zm = mph.map.getZoom();
+            var scale = mph.map.options.crs.scale(zm);
+            var oldMapCenter = mph.mapCenter;
+            mph.mapCenter = mph.map.getCenter();
+            // var cntr = action == 'pan' ? latlng : this.map.getCenter();
+            var cntr = mph.map.getCenter();
+            var fixedLL = utils.toFixed(cntr.lng,cntr.lat, 3);
+            var xtntDict = {'src' : 'cloudmade', 
+                'zoom' : zm, 
+                'lon' : fixedLL.lon, 
+                'lat' : fixedLL.lat,
+                'scale': scale2Level[zm].scale,
+                'action': action};
+            return xtntDict;
+        }
+        
+         function retrievedBounds(xj)
+        {
+            console.log("Back in retrievedBounds");
+            var zm = xj.zoom
+            var cmp = mph.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+            var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.scale2Level[zm].scale;
+            document.getElementById("mpnm").innerHTML = view;
+            if(cmp == false)
+            {
+                var tmpLon = mph.cntrxG;
+                var tmpLat = mph.cntryG;
+                var tmpZm = mph.zmG;
+                
+                mph.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                mph.userZoom = false;
+                var cntr = new L.LatLng(xj.lat, xj.lon);
+                mph.userZoom = true;
+                if(xj.action == 'pan')
+                    // mph.map.panTo(cntr);
+                    mph.map.setView(cntr, zm);
+                else
+                {
+                    if(tmpLon != xj.lon || tmpLat != xj.lat)
+                    {
+                        mph.map.setView(cntr, zm);
+                    }
+                    else
+                    {
+                        mph.map.setZoom(zm);
+                    }
+                }
+                // mph.userZoom = true;
+            }
+            //mph.map.setView(cntr, zm);
+        }
+
+            
         function MapHosterLeaflet()
         {
             var self = this;
             this.pusher = null;
             this.userZoom = true;
-            
-            this.map.on( "moveend", function( e ) {
-                //console.log("moveend");
-                self.setBounds('pan', e.latlng);}  );
-
-            this.extractBounds = function(action, latlng)
-            {
-                var zm = this.map.getZoom();
-                var scale = this.map.options.crs.scale(zm);
-                var oldMapCenter = this.mapCenter;
-                this.mapCenter = this.map.getCenter();
-                // var cntr = action == 'pan' ? latlng : this.map.getCenter();
-                var cntr = this.map.getCenter();
-                var fixedLL = utils.toFixed(cntr.lng,cntr.lat, 3);
-                var xtntDict = {'src' : 'cloudmade', 
-                    'zoom' : zm, 
-                    'lon' : fixedLL.lon, 
-                    'lat' : fixedLL.lat,
-                    'scale': self.scale2Level[zm].scale,
-                    'action': action};
-                return xtntDict;
-            }
-                
-             this.retrievedBounds = function(xj)
-            {
-                console.log("Back in retrievedBounds");
-                var zm = xj.zoom
-                var cmp = self.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
-                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.scale2Level[zm].scale;
-                document.getElementById("mpnm").innerHTML = view;
-                if(cmp == false)
-                {
-                    var tmpLon = self.cntrxG;
-                    var tmpLat = self.cntryG;
-                    var tmpZm = self.zmG;
-                    
-                    self.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
-                    self.userZoom = false;
-                    var cntr = new L.LatLng(xj.lat, xj.lon);
-                    self.userZoom = true;
-                    if(xj.action == 'pan')
-                        // self.map.panTo(cntr);
-                        self.map.setView(cntr, zm);
-                    else
-                    {
-                        if(tmpLon != xj.lon || tmpLat != xj.lat)
-                        {
-                            self.map.setView(cntr, zm);
-                        }
-                        else
-                        {
-                            self.map.setZoom(zm);
-                        }
-                    }
-                    // self.userZoom = true;
-                }
-                //self.map.setView(cntr, zm);
-            }
-
-            this.setBounds = function(action, latlng)
-            {
-                // if(self.pusher && self.pusher.ready == true)
-                {
-                    // runs this code after finishing the zoom
-                    var xtExt = self.extractBounds(action, latlng);
-                    var xtntJsonStr = JSON.stringify(xtExt);
-                    console.log("extracted bounds " + xtntJsonStr);
-                    var cmp = self.compareExtents("setBounds", xtExt);
-                    if(cmp == false)
-                    {
-                        console.log("MapHoster setBounds pusher send to channel " + this.channel);
-                        // var sendRet = self.pusher.send(xtntJsonStr, this.channel);
-                        if(self.pusher)
-                        {
-                            self.pusher.channel(this.channel).trigger('client-MapXtntEvent', xtExt);
-                        }
-                        self.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
-                        //console.debug(sendRet);
-                    }
-                }
-            }
+                            
             this.getGlobalsForUrl = function()
             {
                 return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
@@ -200,14 +215,16 @@ define('leaflet', function () {
             {
                 var ne = gmBounds.getNorthEast();
                 var sw = gmBounds.getSouthWest();
-                this.bounds = gmBounds;
+                bounds = gmBounds;
                 gmBounds.xmin = sw.lng;
                 gmBounds.ymin = sw.lat;
                 gmBounds.xmax = ne.lng;
                 gmBounds.ymax = ne.lat;
             }
-            this.zmG = zm; this.cntrxG = cntrx; this.cntryG = cntry;
-            console.log("Updated Globals " + msg + " " + this.cntrxG + ", " + this.cntryG + " : " + this.zmG);
+            // this.zmG = zm; this.cntrxG = cntrx; this.cntryG = cntry;
+            zmG = zm; cntrxG = cntrx; cntryG = cntry;
+            // console.log("Updated Globals " + msg + " " + this.cntrxG + ", " + this.cntryG + " : " + this.zmG);
+            console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
         }
 
         MapHosterLeaflet.prototype.showGlobals = function(cntxt)
@@ -215,13 +232,13 @@ define('leaflet', function () {
             console.log( cntxt + " Globals : lon " + this.cntrxG + " lat " + this.cntryG + " zoom " + this.zmG);
         }
 
-        MapHosterLeaflet.prototype.compareExtents = function(msg, xtnt)
+        function compareExtents(msg, xtnt)
         {
-            cmp = xtnt.zoom == this.zmG;
-            var wdth = Math.abs(this.bounds.xmax - this.bounds.xmin);
-            var hgt = Math.abs(this.bounds.ymax - this.bounds.ymin);
-            lonDif = Math.abs((xtnt.lon - this.cntrxG) / wdth);
-            latDif =  Math.abs((xtnt.lat - this.cntryG) / hgt);
+            var cmp = xtnt.zoom == zmG;
+            var wdth = Math.abs(bounds.xmax - bounds.xmin);
+            var hgt = Math.abs(bounds.ymax - bounds.ymin);
+            var lonDif = Math.abs((xtnt.lon - cntrxG) / wdth);
+            var latDif =  Math.abs((xtnt.lat - cntryG) / hgt);
             // cmp = ((cmp == true) && (xtnt.lon == this.cntrxG) && (xtnt.lat == this.cntryG));
             cmp = ((cmp == true) && (lonDif < 0.0005) && (latDif < 0.0005));
             console.log("compareExtents " + msg + " " + cmp)
@@ -266,8 +283,8 @@ define('leaflet', function () {
 
         MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
         {   
-            this.pusher = pusher;
-            this.channel = channel;
+            pusher = pusher;
+            channel = channel;
         }
         
         function init() {

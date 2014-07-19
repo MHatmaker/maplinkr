@@ -1,6 +1,7 @@
 
 (function() {
     "use strict";
+    require(['lib/MapHosterLeaflet']);
 
     console.log('StartupLeaflet setup');
     define([
