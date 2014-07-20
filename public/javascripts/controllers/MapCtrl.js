@@ -9,6 +9,12 @@
         'lib/StartupLeaflet'
     ], function(angular, Map, StartupLeaflet) {
         console.log('MapCtrl define');
+        
+        var mapTypes = {'leaflet': StartupLeaflet};
+        // var mapTypes = {'leaflet': StartupLeaflet,
+                        // 'google' : StartupGoogle,
+                        // 'arcgis' : StartupArcGIS};
+        var currentMapType = null;
 
         function mapConfigs() {
             return {
@@ -40,22 +46,24 @@
             }
             if(map.resize)
                 map.resize();
+            currentMapType.resizeMapPane(isMapExpanded);
         }
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
+            currentMapType = mapTypes[$scope.currentTab.maptype];
             
             // $scope.map = mapGen('map_canvas');
-            var stup = StartupLeaflet.start();
+            var stup = currentMapType.start(); //StartupLeaflet.start();
             console.debug(stup);
-            var lflt = StartupLeaflet.config(null);
-            $scope.map = StartupLeaflet.getMap();
+            var lflt = currentMapType.config(null); //.StartupLeaflet.config(null);
+            $scope.map = currentMapType.getMap(); //StartupLeaflet.getMap();
             // $scope.map.width = '70%';
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
-            StartupLeaflet.resizeWebSite($scope.isMapExpanded);
+            currentMapType.resizeWebSite($scope.isMapExpanded);
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -77,7 +85,8 @@
             $scope.$on('CollapseSummaryEvent', function() {
                 // if($scope.map.resize)
                     // $scope.map.resize();
-                StartupLeaflet.resizeVerbage($scope.isMapExpanded);
+                // StartupLeaflet.resizeSummaary($scope.isMapExpanded);
+                currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
             $scope.$on('CollapseVerbageEvent', function() {
@@ -85,6 +94,7 @@
                 $scope.isMapExpanded = ! $scope.isMapExpanded;
                 $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '70%';
                 resizeMap($scope.isMapExpanded, $scope.map);
+                currentMapType.resizeVerbage($scope.isMapExpanded);
             });
         }
         

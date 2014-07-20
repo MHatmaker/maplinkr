@@ -280,16 +280,24 @@ define('leaflet', function () {
         }
         
         function resizeWebSiteVertical(isMapExpanded){
-            if(isMapExpanded){
-                angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%;"});
-                angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
-            }
-            else{
-                angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%"});
-                angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
-            }
+            console.log('resizeWebSiteVertical');
+            mph.map.invalidateSize();
+            // if(isMapExpanded){
+                // angular.element(document.getElementById("leaflet-map-pane")).addClass("max-map-width");
+                // angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%;"});
+                // angular.element(document.getElementById("leaflet-tile-pane")).css({"width": "100%;"});
+                // angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+            // }
+            // else{
+                // angular.element(document.getElementById("leaflet-map-pane")).removeClass("max-map-width");
+                // angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%"});
+                // angular.element(document.getElementById("leaflet-tile-pane")).css({"width": "100%"});
+                // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+            // }
         }
         function resizeVerbageHorizontal(isMapExpanded){
+            console.log('resizeVerbageHorizontal');
+            mph.map.invalidateSize();
             // mph.resizeWebSite(isMapExpanded);
         }
 

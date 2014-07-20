@@ -27,6 +27,10 @@
         function resizeVerbageHorizontal(isMapExpanded){
             MapHosterLeaflet.resizeVerbage(isMapExpanded);
         }
+        function resizeMapPane(isMapExpanded){
+            console.log("StartupLeaflet : invalidateSize");
+            lMap.invalidateSize();
+        }
         function configure(newMapId) 
         {
             newSelectedWebMapId = newMapId;
@@ -62,7 +66,8 @@
         }
 
         return { start: init, config : configure, getMap: getMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal};
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
+                 resizeMapPane: resizeMapPane};
 
     });
 
