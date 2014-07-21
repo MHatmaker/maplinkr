@@ -43,12 +43,12 @@ String.format = function() {
             },
             { 
               maptype : 'leaflet',
-              title:'Leaflet/Cloudmade Maps', 
+              title:'Leaflet/OSM Maps', 
               site: 'Commercial Web Site featuring a Leaflet Map',
-              content: String.format(contentsText, 'a Leaflet/Cloudmade map', 'Leaflet content'),
+              content: String.format(contentsText, 'a Leaflet/OSM map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
               imgSrc:  "stylesheets/images/Leaflet.png",
-              imgAlt: "Leaflet/Cloudmade Maps",
+              imgAlt: "Leaflet/OSM Maps",
               active: false,
               disabled: false
             },

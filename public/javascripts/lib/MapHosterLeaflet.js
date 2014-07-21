@@ -246,9 +246,6 @@ define('leaflet', function () {
             content = "Perfect hangout for the undiscriminating cave dweller";
             this.markerInfoPopup([41.805, -87.705], content, "Perfection in Paradise");
             
-            // L.marker([51.5, -0.09]).addTo(this.map)
-                // .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
-
             // L.circle([51.508, -0.11], 500, {
                 // color: 'red',
                 // fillColor: '#f03',
@@ -282,23 +279,10 @@ define('leaflet', function () {
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             mph.map.invalidateSize(true);
-            // if(isMapExpanded){
-                // angular.element(document.getElementById("leaflet-map-pane")).addClass("max-map-width");
-                // angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%;"});
-                // angular.element(document.getElementById("leaflet-tile-pane")).css({"width": "100%;"});
-                // angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
-            // }
-            // else{
-                // angular.element(document.getElementById("leaflet-map-pane")).removeClass("max-map-width");
-                // angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%"});
-                // angular.element(document.getElementById("leaflet-tile-pane")).css({"width": "100%"});
-                // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
-            // }
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
             mph.map.invalidateSize(true);
-            // mph.resizeWebSite(isMapExpanded);
         }
 
         return { start: init, config : configureMap,

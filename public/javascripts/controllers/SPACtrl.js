@@ -17,7 +17,6 @@ function getDocHeight() {
         
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
-            // alert('SPACtrl - initialize some tabs');
             $scope.isVerbageCollapsed = false;
             $scope.isSummaryCollapsed = false;
             $scope.ContentsHeight = 'auto';
@@ -63,7 +62,6 @@ function getDocHeight() {
                     wndHgt - mnWndHgt - adjustments: wndHgt - mnWndHgt - sumHeadHeightStart - adjustments;
                 $scope.ContentsHeight = contentsHeight;
                 var hstr = String.format("{0}px", contentsHeight);
-                // var mapCnvs = angular.element(document.getElementById("map_canvas"));
                 var mapCnvs = angular.element(document.getElementById("wrapper"));
                 var mapCnRt = angular.element(document.getElementById("map_canvas_root"));
                 mapCnRt.css({"height": hstr});

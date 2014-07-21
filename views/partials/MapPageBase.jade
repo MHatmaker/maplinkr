@@ -39,8 +39,8 @@ block append content
 
                     td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
                             div(class = "acc scrollable", style="height:100%;width:100%;")
-                                accordion(id="Accdian", style="height:100%;width:100%;margin:5px;")
-                                    accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top")
+                                accordion(id="Accdian", style="height:100%;width:100%;")
+                                    accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;margin:5px;")
                                         h5(style="color:red")
                                             | We now have WebMap mash-over capabilities
                                             | Select the Mash-over Instruction pane below for all the latest.
@@ -87,4 +87,4 @@ block append content
 
                                         br
                 tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
-                    td(colspan=2) The rest of this awesome {{currentTab.title}} contents
+                    td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
