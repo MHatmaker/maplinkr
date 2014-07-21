@@ -281,7 +281,7 @@ define('leaflet', function () {
         
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
-            mph.map.invalidateSize();
+            mph.map.invalidateSize(true);
             // if(isMapExpanded){
                 // angular.element(document.getElementById("leaflet-map-pane")).addClass("max-map-width");
                 // angular.element(document.getElementById("leaflet-map-pane")).css({"width": "100%;"});
@@ -297,7 +297,7 @@ define('leaflet', function () {
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
-            mph.map.invalidateSize();
+            mph.map.invalidateSize(true);
             // mph.resizeWebSite(isMapExpanded);
         }
 

@@ -54,10 +54,10 @@
             currentMapType = mapTypes[$scope.currentTab.maptype];
             
             // $scope.map = mapGen('map_canvas');
-            var stup = currentMapType.start(); //StartupLeaflet.start();
+            var stup = currentMapType.start();
             console.debug(stup);
-            var lflt = currentMapType.config(null); //.StartupLeaflet.config(null);
-            $scope.map = currentMapType.getMap(); //StartupLeaflet.getMap();
+            var lflt = currentMapType.config(null);
+            $scope.map = currentMapType.getMap();
             // $scope.map.width = '70%';
             $scope.MapWdth = '70%';
             $scope.isMapExpanded = false;
@@ -85,7 +85,7 @@
             $scope.$on('CollapseSummaryEvent', function() {
                 // if($scope.map.resize)
                     // $scope.map.resize();
-                // StartupLeaflet.resizeSummaary($scope.isMapExpanded);
+                currentMapType.resizeMapPane($scope.isMapExpanded);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             

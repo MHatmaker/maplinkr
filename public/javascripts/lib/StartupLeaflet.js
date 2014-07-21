@@ -29,7 +29,7 @@
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupLeaflet : invalidateSize");
-            lMap.invalidateSize();
+            // lMap.invalidateSize(true);
         }
         function configure(newMapId) 
         {
