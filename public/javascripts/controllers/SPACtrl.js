@@ -63,7 +63,8 @@ function getDocHeight() {
                     wndHgt - mnWndHgt - adjustments: wndHgt - mnWndHgt - sumHeadHeightStart - adjustments;
                 $scope.ContentsHeight = contentsHeight;
                 var hstr = String.format("{0}px", contentsHeight);
-                var mapCnvs = angular.element(document.getElementById("map_canvas"));
+                // var mapCnvs = angular.element(document.getElementById("map_canvas"));
+                var mapCnvs = angular.element(document.getElementById("wrapper"));
                 var mapCnRt = angular.element(document.getElementById("map_canvas_root"));
                 mapCnRt.css({"height": hstr});
                 mapCnvs.css({"height": hstr});

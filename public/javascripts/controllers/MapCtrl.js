@@ -35,14 +35,16 @@
                 angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
                 angular.element(document.getElementById("map_canvas_root")).css({"width": "100%;"});
                 angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%;"});
-                angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+                // angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
+                angular.element(document.getElementById("map_wrapper")).addClass("max-map-width");
             }
             else{
                 angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
                 angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
                 angular.element(document.getElementById("map_canvas_root")).css({"width": "100%"});
                 angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
-                angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+                // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
+                angular.element(document.getElementById("map_wrapper")).removeClass("max-map-width");
             }
             if(map.resize)
                 map.resize();
