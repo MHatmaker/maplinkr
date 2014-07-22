@@ -19,6 +19,12 @@
         }
         return {};
     });
+    // define('google', function () {
+    // if (google) {
+        // return google;
+    // }
+    // return {};
+// });
     
     require({
         async: true,

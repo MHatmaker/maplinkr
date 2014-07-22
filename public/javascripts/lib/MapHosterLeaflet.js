@@ -1,10 +1,10 @@
 
-define('leaflet', function () {
-    if (leaflet) {
-        return leaflet;
-    }
-    return {};
-});
+// define('leaflet', function () {
+    // if (leaflet) {
+        // return leaflet;
+    // }
+    // return {};
+// });
 
 (function() {
     "use strict";

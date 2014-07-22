@@ -6,13 +6,13 @@
     define([
         'angular',
         'esri/map',
-        'lib/StartupLeaflet'
-    ], function(angular, Map, StartupLeaflet) {
+        'lib/StartupLeaflet',
+        'lib/StartupGoogle'
+    ], function(angular, Map, StartupLeaflet, StartupGoogle) {
         console.log('MapCtrl define');
         
-        var mapTypes = {'leaflet': StartupLeaflet};
-        // var mapTypes = {'leaflet': StartupLeaflet,
-                        // 'google' : StartupGoogle,
+        var mapTypes = {'leaflet': StartupLeaflet,
+                        'google' : StartupGoogle};
                         // 'arcgis' : StartupArcGIS};
         var currentMapType = null;
 
