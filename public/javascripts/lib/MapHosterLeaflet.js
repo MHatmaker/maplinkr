@@ -168,17 +168,6 @@
         }
 
             
-        function MapHosterLeaflet()
-        {
-            var self = this;
-            this.pusher = null;
-            this.userZoom = true;
-                            
-            this.getGlobalsForUrl = function()
-            {
-                return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
-            }
-        }
 
         MapHosterLeaflet.prototype.collectScales = function()
         {
@@ -269,6 +258,18 @@
         {   
             pusher = pusher;
             channel = channel;
+        }
+        
+        function MapHosterLeaflet()
+        {
+            var self = this;
+            this.pusher = null;
+            this.userZoom = true;
+                            
+            this.getGlobalsForUrl = function()
+            {
+                return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
+            }
         }
         
         function init() {

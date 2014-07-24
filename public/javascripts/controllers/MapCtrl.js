@@ -54,7 +54,22 @@
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             currentMapType = mapTypes[$scope.currentTab.maptype];
-            
+            var height = document.body.clientHeight;
+            var width = document.body.clientWidth;
+            console.log("width " + width + ", height " + height);
+            var mapWrp = angular.element(document.getElementById("map_wrapper"));
+            console.log("map_wrapper height");
+            console.debug(mapWrp);
+            var hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
+            console.log(hstr);
+            mapWrp.css({"height": hstr});
+            var mapCnv = angular.element(document.getElementById("map_wrapper"));
+            mapCnv.css({"height": hstr});
+            $scope.MapWdth = '70%';
+            hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
+            console.log(hstr);
+            mapWrp.css({"width": hstr});
+                    
             // $scope.map = mapGen('map_canvas');
             var stup = currentMapType.start();
             console.debug(stup);

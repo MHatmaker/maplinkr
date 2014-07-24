@@ -46,7 +46,7 @@ function skipScript() {
             console.log("nmpid " + nmpid);
         }
         function getMap(){
-            return lMap;
+            return gMap;
         }
         
         function resizeWebSiteVertical(isMapExpanded){
@@ -57,7 +57,7 @@ function skipScript() {
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupGoogle : invalidateSize");
-            // lMap.invalidateSize(true);
+            // gMap.invalidateSize(true);
         }
         
         var urlObject;
@@ -110,18 +110,20 @@ function skipScript() {
             
                 loadScript();
                 if(google != 3){
+                
                     var mapOptions = {
                       center: new google.maps.LatLng(41.8, -87.7),
                       // center: new google.maps.LatLng(51.50, -0.09),
                       zoom: 13,
                       mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    console.log(mapOptions.mapTypeId);
+                    console.log("create a google map with option: " + mapOptions.mapTypeId);
                     gMap = new google.maps.Map(document.getElementById("map_canvas"),
                         mapOptions);
                     // mph = new MapHosterGoogle(gMap); 
                     mph = MapHosterGoogle.start(); 
-                    MapHosterGoogle.config(gMap);
+                    MapHosterGoogle.config(gMap, google);
+                    MapHosterGoogle.resizeWebSite(true);
                 }
             }
         } 

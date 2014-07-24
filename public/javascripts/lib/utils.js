@@ -40,6 +40,7 @@ var utils = (function()
     
 	return {
 		toFixed : toFixedTwo,
+        toFixedOne: toFixedOne,
         showLoading : showLoading,
         hideLoading : hideLoading
 	}
