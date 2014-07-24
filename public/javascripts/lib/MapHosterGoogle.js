@@ -17,15 +17,20 @@
 
         var mph = null,
             scale2Level = [],
+            zoomLevels = 0,
+            minZoom = 0,
             zmG,
             cntrxG,
             cntryG,
             bounds,
             channel,
-            pusher;
+            pusher,
+            self = null;
               
         
         function configureMap(gMap, google) {
+            self = this;
+            self.mph = mph;
             mph.map = gMap;
             mph.google = google;
             this.google = google;
@@ -74,7 +79,7 @@
             mph.map.setCenter(center);
             mph.addInitialSymbols();
             
-            mph.minZoom = 0;
+            mph.minZoom = mph.maxZoom = mph.zoomLevels = 0;
             var zsvc = new google.maps.MaxZoomService();
             var cntr = new google.maps.LatLng(mph.cntryG, mph.cntrxG);
             
@@ -82,9 +87,9 @@
             {
                 if (response && response['status'] == google.maps.MaxZoomStatus.OK) 
                 {
-                    self.maxZoom = response['zoom'];
-                    self.zoomLevels = self.maxZoom - self.minZoom;
-                    self.collectScales(self.zoomLevels);
+                    self.mph.maxZoom = response['zoom'];
+                    self.mph.zoomLevels = self.mph.maxZoom - self.mph.minZoom;
+                    self.mph.collectScales(self.mph.zoomLevels);
                 }
             });
             
@@ -196,7 +201,7 @@
             {
                 var obj = {"scale" : scale, "level" : i};
                 scale = scale * 2;
-                console.log("scale " + obj.scale + " level " + obj.level);
+                // console.log("scale " + obj.scale + " level " + obj.level);
                 sc2lv.push(obj);
             }
         }

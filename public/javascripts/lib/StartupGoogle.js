@@ -4,14 +4,23 @@
     // }
     // return {};
 // });
+
+var isGoogleLoaded = false;
 function loadScript() {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     console.log('loadScript before append');
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&'  +
-      'callback=skipScript';
-    document.body.appendChild(script);
-    console.log('loadScript after append');
+    if(isGoogleLoaded == false){
+        console.log("load google api v3.exp");
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&'  +
+            'callback=skipScript';
+        isGoogleLoaded = true;
+        document.body.appendChild(script);
+        console.log('loadScript after append');
+    }
+    else{
+        console.log("google api already loaded");
+    }
 }
 
 function skipScript() {
@@ -40,6 +49,7 @@ function skipScript() {
         var gMap = null;
         var loading;
         var newSelectedWebMapId = "";
+        // loadScript();
         console.debug(google);
 
         function configit(nmpid){
@@ -108,7 +118,7 @@ function skipScript() {
             else
             {
             
-                loadScript();
+                // loadScript();
                 if(google != 3){
                 
                     var mapOptions = {
