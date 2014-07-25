@@ -40,16 +40,17 @@
         {
             name: 'javascripts',
             location: locationPath + 'javascripts'
-        }/* ,
-        { 
-            name: 'dojo',
-            location: '//ajax.googleapis.com/ajax/libs/dojo/1.9.3/'
-        } */
+        }
+        // ,
+        // { 
+            // name: 'dojo',
+            // location: '//ajax.googleapis.com/ajax/libs/dojo/1.9.3/'
+        // }
         ]
     });
 
     require([
-        // "dojo",
+        "dojo",
         "dojo/domReady",
         "esri/arcgis/Portal", 
         // 'dojo/ready',
@@ -57,11 +58,11 @@
         // 'ready!',
         // "dojo/dom", 
         'javascripts/bootstrap'
-    ], function(domReady, esriPortal, bootstrap) {
+    ], function(dojo, domReady, esriPortal, bootstrap) {
         console.debug('call ready');
-        console.log(domReady);
+        // console.log(domReady);
         // console.log(dom);
-        domReady(function () {
+        // domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);
             console.info('start the bootstrapper');
@@ -69,7 +70,7 @@
             readyForSearchGrid(portal);
             readyForSearchGridMap(portal);
             bootstrap.start();
-        });
+        // });
     });
 
 }).call(this);

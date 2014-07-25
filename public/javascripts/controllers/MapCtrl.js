@@ -7,13 +7,14 @@
         'angular',
         'esri/map',
         'lib/StartupLeaflet',
-        'lib/StartupGoogle'
-    ], function(angular, Map, StartupLeaflet, StartupGoogle) {
+        'lib/StartupGoogle',
+        'lib/StartupArcGIS'
+    ], function(angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS) {
         console.log('MapCtrl define');
         
         var mapTypes = {'leaflet': StartupLeaflet,
-                        'google' : StartupGoogle};
-                        // 'arcgis' : StartupArcGIS};
+                        'google' : StartupGoogle,
+                        'arcgis' : StartupArcGIS};
         var currentMapType = null;
 
         function mapConfigs() {
