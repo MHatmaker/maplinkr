@@ -41,10 +41,12 @@
         }
         
         function resizeWebSiteVertical(isMapExpanded){
-            MapHosterArcGIS.resizeWebSite(isMapExpanded);
+            if(aMap)
+                MapHosterArcGIS.resizeWebSite(isMapExpanded);
         }
         function resizeVerbageHorizontal(isMapExpanded){
-            MapHosterArcGIS.resizeVerbage(isMapExpanded);
+            if(aMap)
+                MapHosterArcGIS.resizeVerbage(isMapExpanded);
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupArcGIS : invalidateSize");
@@ -163,7 +165,7 @@
             // }
 
             //create the map using the web map id specified using configOptions or via the url parameter
-            var map = esri.arcgis.utils.createMap(configOptions.webmap, "map", {
+            var mapDeferred = esri.arcgis.utils.createMap(configOptions.webmap, "map_canvas", {
                 mapOptions: {
                   slider: true,
                   nav: false,
@@ -181,19 +183,19 @@
                     previousSelectedWebMapId = selectedWebMapId;
                     //dojo.destroy(map.container);
                 }
-                if(window.map)
+                if(aMap)
                 {
-                    window.map.destroy();
+                    aMap.destroy();
                 }
-                window.map = response.map;
+                aMap = response.map;
                 console.log("in mapDeferred anonymous method");
                 console.log("configOptions title " + configOptions.title);
                 console.debug("ItemInfo object " + response.itemInfo);
                 console.log("ItemInfo.item object " + response.itemInfo.item);
                 console.log("response title " + response.itemInfo.item.title);
-                dojo.connect(map, "onUpdateStart", showLoading);
-                dojo.connect(map, "onUpdateEnd", hideLoading);
-                if (map.loaded) {
+                dojo.connect(aMap, "onUpdateStart", showLoading);
+                dojo.connect(aMap, "onUpdateEnd", hideLoading);
+                if (aMap.loaded) {
                     initUI();
                 } else {
                     dojo.connect(map, "onLoad", initUI);
@@ -220,20 +222,24 @@
         function initUI(){   
           //add scalebar or other components like a legend, overview map etc
             var scalebar = new esri.dijit.Scalebar({
-                map: map,
+                map: aMap,
                 scalebarUnit:"english" 
             });    
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
             if(mph == null)
             {
-                mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
+                mph = MapHosterArcGIS.start();
+                MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
+                // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
                 pusher = new PusherClient(mph, pusherChannel, null);     
             }
             else
             {
                 currentPusher = mph.pusher;
                 currentChannel = mph.channel;
-                mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
+                mph = MapHosterArcGIS.start();
+                MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
+                // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 mph.setPusherClient(currentPusher, currentChannel);
             }
         }
@@ -272,17 +278,26 @@
                     
         function initializePreProc()
         {
+            console.log('initializePreProc entered');
             var urlparams=dojo.queryToObject(window.location.search); 
+            console.debug(urlparams);
             var idWebMap=urlparams['?id'];
+            console.debug(idWebMap);
+            // initUI();
             if(! idWebMap)
             {
+                console.log("no idWebMap");
                 selectedWebMapId = "e39fa319c45c483aa2ba93595583c1d5"; //"e68ab88371e145198215a792c2d3c794";
-                pointWebMap = [-87.7, lat=41.8];
+                console.log("use " + selectedWebMapId);
+                // pointWebMap = [-87.7, lat=41.8];
+                pointWebMap = [-87.7, 41.8];
                 zoomWebMap = 13;
                 initialize(selectedWebMapId, false, "");
             }
             else
             {
+                console.log("found idWebMap");
+                console.log("use " + idWebMap);
                 initialize(idWebMap, false, "");
             }
         }

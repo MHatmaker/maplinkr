@@ -13,8 +13,8 @@
         console.log('MapCtrl define');
         
         var mapTypes = {'leaflet': StartupLeaflet,
-                        'google' : StartupGoogle,
-                        'arcgis' : StartupArcGIS};
+                    'google' : StartupGoogle,
+                    'arcgis' : StartupArcGIS};
         var currentMapType = null;
 
         function mapConfigs() {

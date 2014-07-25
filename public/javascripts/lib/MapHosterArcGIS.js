@@ -17,6 +17,7 @@
             bounds,
             channel,
             pusher,
+            userZoom,
             self = null;
               
         
@@ -24,31 +25,33 @@
         // }
         function configureMap(xtntMap, zoomWebMap, pointWebMap)
         {
-            var self = this;
-            this.pusher = null;
-            this.mapReady = false;
-            this.map = xtntMap;
+            self = this;
+            self.mph = mph;
+            mph.map = xtntMap;
+            mph.pusher = null;
+            mph.mapReady = false;
+            mph.map = xtntMap;
             // alert("before first update globals");
             if(zoomWebMap != null)
-                this.updateGlobals("init with attributes in args", pointWebMap[0], pointWebMap[1], zoomWebMap, 0.0);
+                mph.updateGlobals("init with attributes in args", pointWebMap[0], pointWebMap[1], zoomWebMap, 0.0);
             else
-                this.updateGlobals("init standard", -87.7, 41.8, 13, 0.0);
+                mph.updateGlobals("init standard", -87.7, 41.8, 13, 0.0);
             // this.updateGlobals("init", -0.09, 51.50, 13, 0.0);
             // alert("prior to showing first globals");
-            this.showGlobals("Prior to new Map");
+            mph.showGlobals("Prior to new Map");
             // alert("showed first globals");
-            var startCenter = new esri.geometry.Point(this.cntrxG, this.cntryG, new esri.SpatialReference({wkid:4326}));
+            var startCenter = new esri.geometry.Point(mph.cntrxG, mph.cntryG, new esri.SpatialReference({wkid:4326}));
             
-            this.updateGlobals("using startCenter", startCenter.x, startCenter.y, this.zmG, 0.0)
-            this.showGlobals("Prior to startup centerAndZoom");
-            this.map.centerAndZoom(startCenter, this.zmG);
-            this.showGlobals("After centerAndZoom");
-            this.initialPan == true;
+            mph.updateGlobals("using startCenter", startCenter.x, startCenter.y, mph.zmG, 0.0)
+            mph.showGlobals("Prior to startup centerAndZoom");
+            mph.map.centerAndZoom(startCenter, mph.zmG);
+            mph.showGlobals("After centerAndZoom");
+            mph.initialPan == true;
 
             self.initMap("mapDiv_layer0");
             // self.addInitialSymbols();
-            this.bounds = xtntMap.geographicExtent;
-            this.userZoom = true;
+            mph.bounds = xtntMap.geographicExtent;
+            mph.userZoom = true;
                  
             dojo.connect(xtntMap, "onZoomStart", function (extent, zoomFactor, anchor, level)
                 {
@@ -302,17 +305,18 @@
         
         function MapHosterArcGIS()
         {
-            var self = this;
-            self.mph = this.mph;
-            this.mapReady = false;
-            this.pusher = null;
-            this.bounds = null;
-            this.userZoom = true;
+            // var self = this;
+            // self.mph = mph;
+            // this.mapReady = false;
+            // this.pusher = null;
+            // this.bounds = null;
+            // this.userZoom = true;
         }
         
         function init() {
-            mph = MapHosterGoogle.prototype;
-            return MapHosterGoogle;
+            mph = MapHosterArcGIS.prototype;
+            MapHosterArcGIS();
+            return MapHosterArcGIS;
         }
         
         function resizeWebSiteVertical(isMapExpanded){

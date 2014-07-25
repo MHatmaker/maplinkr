@@ -122,7 +122,7 @@
             // var cntr = action == 'pan' ? latlng : this.map.getCenter();
             var cntr = mph.map.getCenter();
             var fixedLL = utils.toFixed(cntr.lng,cntr.lat, 3);
-            var xtntDict = {'src' : 'cloudmade', 
+            var xtntDict = {'src' : 'leaflet_osm', 
                 'zoom' : zm, 
                 'lon' : fixedLL.lon, 
                 'lat' : fixedLL.lat,
