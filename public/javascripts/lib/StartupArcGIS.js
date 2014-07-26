@@ -50,7 +50,6 @@
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupArcGIS : invalidateSize");
-            // gMap.invalidateSize(true);
         }
         
 
@@ -145,7 +144,7 @@
             //specify any default settings for your map 
             //for example a bing maps key or a default web map id
             configOptions = {
-                webmap:selectedWebMapId,
+                webmap: '4b99c1fb712d4fe694805717df5fadf2', // selectedWebMapId,
                 title:"",
                 subtitle:"",
                 //arcgis.com sharing url is used modify this if yours is different
@@ -172,7 +171,9 @@
                   wrapAround180:true
                 },
                 ignorePopups:false,
-                bingMapsKey: configOptions.bingMapsKey
+                bingMapsKey: configOptions.bingMapsKey,
+                geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
+
             });
             console.log("set up mapDeferred anonymous method");
             mapDeferred.then(function (response) 
@@ -208,15 +209,15 @@
         function showLoading() 
         {
             utils.showLoading() ;
-            map.disableMapNavigation();
-            map.hideZoomSlider();
+            aMap.disableMapNavigation();
+            aMap.hideZoomSlider();
         }
 
         function hideLoading(error) 
         {
             utils.hideLoading(error);
-            map.enableMapNavigation();
-            map.showZoomSlider();
+            aMap.enableMapNavigation();
+            aMap.showZoomSlider();
         }
 
         function initUI(){   
@@ -239,6 +240,7 @@
                 currentChannel = mph.channel;
                 mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
+                resizeWebSiteVertical(true);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 mph.setPusherClient(currentPusher, currentChannel);
             }

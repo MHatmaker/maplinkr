@@ -321,19 +321,21 @@
         
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
-            // mph.map.invalidateSize(true);
-            var center = mph.map.getCenter();
-            var bnds = mph.map.getBounds();
-            console.debug(bnds);
-            this.google.maps.event.trigger(mph.map, 'resize');
-            mph.map.setCenter(center);
+            var tmpLon = mph.cntrxG;
+            var tmpLat = mph.cntryG;
+            var tmpZm = mph.zmG;
+            
+            var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+            mph.map.centerAndZoom(cntr, tmpZm);
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
-            // mph.map.invalidateSize(true);
-            var center = mph.map.getCenter();
-            this.google.maps.event.trigger(mph.map, 'resize');
-            mph.map.setCenter(center);
+            var tmpLon = mph.cntrxG;
+            var tmpLat = mph.cntryG;
+            var tmpZm = mph.zmG;
+            
+            var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+            mph.map.centerAndZoom(cntr, tmpZm);
         }
 
         return { start: init, config : configureMap,

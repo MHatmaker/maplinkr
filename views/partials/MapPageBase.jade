@@ -34,7 +34,7 @@ block append content
                 tr(id="leadpane", style="height:{{ContentsHeight}}px")
                     td(id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
                         #map_canvas(style="height:100%;width:100%;margin:0px;")
-                        //
+                        
                             img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
                     td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')

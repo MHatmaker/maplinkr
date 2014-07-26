@@ -17,19 +17,6 @@
                     'arcgis' : StartupArcGIS};
         var currentMapType = null;
 
-        function mapConfigs() {
-            return {
-                basemap: 'streets',
-                center: [-118.1704035141802,34.03597014510993],
-                zoom: 15,
-                autoResize: true
-            };
-        }
-
-        function mapGen(elem) {
-            return new Map(elem, mapConfigs());
-        }
-        
         function resizeMap(isMapExpanded, map){
             if(isMapExpanded){
                 angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
@@ -47,7 +34,7 @@
                 // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
                 angular.element(document.getElementById("map_wrapper")).removeClass("max-map-width");
             }
-            if(map.resize)
+            if(map && map.resize)
                 map.resize();
             currentMapType.resizeMapPane(isMapExpanded);
         }
@@ -71,7 +58,6 @@
             console.log(hstr);
             mapWrp.css({"width": hstr});
                     
-            // $scope.map = mapGen('map_canvas');
             var stup = currentMapType.start();
             console.debug(stup);
             var lflt = currentMapType.config(null);
