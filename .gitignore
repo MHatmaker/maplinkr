@@ -2,6 +2,7 @@ public/javascripts/lib/angular/*
 public/javascripts/lib/jquery.js
 public/javascripts/lib/leaflet.js
 public/javascripts/lib/proj4js.js
+public/javascripts/lib/Control.Loading.js
 public/javascripts/lib/Orb*
 public/javascripts/EsriSample.js
 public/javascripts/PortalExample.html
@@ -20,6 +21,7 @@ public/stylesheets/LayoutTests.css
 public/stylesheets/Leaflet.css
 public/stylesheets/Leaflet.ie.css
 public/stylesheets/SearchGrid.css
+public/stylesheets/Control.Loading.css
 public/stylesheets/images/*
 kdiff3DiffTools.txt
 
