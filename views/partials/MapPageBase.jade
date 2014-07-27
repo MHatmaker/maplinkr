@@ -86,5 +86,42 @@ block append content
                                             li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
 
                                         br
+                                        
+                                    accordion-group(id="GroupSearcherPane", heading="Group Searcher", style="height:100%;width:100%;vertical-align:top;")
+            
+
+                                        div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
+                                            div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
+                                                span
+                                                    label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
+                                                        AGO Group Search
+                                                    input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value="Sign In")
+                                                span
+                                                p Find group ids based on search term. Sign-in to search for private groups.
+                                                span
+                                                    input(name="groupFinder", id="groupFinder", value="Chicago")
+                                                    input(name="groupFinderSubmit", disabled='disabled,' type="submit", value="Submit", id="groupFinderSubmit", onclick="findArcGISGroup();")
+
+                                            div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                div(id='gridGroup')
+                                                div(id="groupResults")
+
+                                    accordion-group(id="MapSearcherPane", heading="Map Searcher", style="height:100%;width:100%;vertical-align:top;")
+                                        div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
+                                            div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
+                                                div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
+                                                    span
+                                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt').
+                                                            AGO Map Search
+                                                        input(type="button", class="signInClass", id="signInMap", name="signInMap", onclick='signInFromMapTab();', value="Sign In")
+
+                                                    p Find map ids based on search term. Sign-in to search for private groups.
+                                                    span
+                                                        input(name="mapFinder",  id="mapFinder", value="Chicago Crime")
+                                                        input(name="mapFinderSubmit", disabled='disabled,' type="submit" value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
+
+                                                div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                    div(id='gridMap')
+
                 tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
                     td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
