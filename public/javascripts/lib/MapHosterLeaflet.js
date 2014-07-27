@@ -52,20 +52,30 @@
             
             console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
             mph.mapCenter = mph.map.getCenter();
-            mph.map.on( "mousemove", function( e ) {
+            mph.map.on("mousemove", function( e ) {
                 onMouseMove(e);}  );
-            mph.map.on( "click", function( e ) {
+            mph.map.on("click", function( e ) {
                 onMapClick(e);}  );
-            mph.map.on( "zoomend", function( e ){
+            mph.map.on("zoomend", function( e ){
                 if(mph.userZoom == true)
                 {
                     mph.setBounds('zoom', null);
                 }
                 });
             
-            mph.map.on( "moveend", function( e ) {
+            mph.map.on("moveend", function( e ) {
                 setBounds('pan', e.latlng);}  );
+            // mph.map.on("loading", function( e ) {
+                // showLoading()};  );
+            // mph.map.on("load", function( e ) {
+                // hideLoading()};  );
         }
+        // function showLoading(){
+            // utils.showLoading();
+        // }
+        // function hideLoading(){
+            // utils.hideLoading();
+        // }
         
         function onMouseMove( e) 
         {

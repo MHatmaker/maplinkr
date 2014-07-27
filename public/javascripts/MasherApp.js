@@ -3,9 +3,10 @@
 (function() {
     'use strict';
     
+    var locationPath = "";
     var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
     //locationPath =  "./";
-    console.log(locationPath);
+    // console.log(locationPath);
     
     define('angular', function () {
         if (angular) {

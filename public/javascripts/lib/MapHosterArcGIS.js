@@ -326,6 +326,7 @@
             var tmpZm = mph.zmG;
             
             var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+            mph.map.resize();
             mph.map.centerAndZoom(cntr, tmpZm);
         }
         function resizeVerbageHorizontal(isMapExpanded){
@@ -335,6 +336,7 @@
             var tmpZm = mph.zmG;
             
             var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+            mph.map.resize();
             mph.map.centerAndZoom(cntr, tmpZm);
         }
 
