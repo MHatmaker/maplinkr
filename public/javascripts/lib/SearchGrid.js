@@ -7,7 +7,7 @@ var portalForSearch;
       var data = [];
       if (gridGroup) {
         console.log("before gridGroup.refresh()");
-        gridGroup.refresh();
+        //gridGroup.refresh();
         console.log("after gridGroup.refresh()");
       }
       if (response.total > 0) {
@@ -78,7 +78,8 @@ var portalForSearch;
       // var template = '<div class="thumbnail"><img src="${0}" width="50" height="50" onClick="thumbnailClicked()"/></div><div class="title" >${1}<span> <i> (${2} ) </i></span></div><div class="summary">${3} </div>';
       var template = '<div class="thumbnail"><img src="${0}" width="50" height="50" /></div><div class="title" >${1}<span> <i> (${2} ) </i></span></div><div class="summary">${3} </div>';
       var summary = obj.snippet || '';
-      var url = portalUrl + '/home/group.html?groupid=id:' + obj.id;
+      // var url = portalUrl + '/home/group.html?groupid=id:' + obj.id;
+      var url = portalForSearch + '/home/group.html?groupid=id:' + obj.id;
       var thumbnail = obj.thumbnail || '';
       return div = dojo.create("div",{
         innerHTML : dojo.string.substitute(template,[thumbnail,obj.title,obj.owner,summary])
