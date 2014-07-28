@@ -6,7 +6,9 @@ var portalForSearch;
       //clear any existing results
       var data = [];
       if (gridGroup) {
+        console.log("before gridGroup.refresh()");
         gridGroup.refresh();
+        console.log("after gridGroup.refresh()");
       }
       if (response.total > 0) {
         //create an array of attributes for each group - we'll display these in a dojo dgrid

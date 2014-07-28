@@ -2,6 +2,9 @@
 block stylesblock append
     link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
     
+block append scriptsblock
+            script(src='/javascripts/lib/SearcherCtrl.js')
+    
 block append content
 
     #spa_window(style="height:100%;width:100%", ng-controller="SPACtrl")
@@ -88,23 +91,24 @@ block append content
                                         br
                                         
                                     accordion-group(id="GroupSearcherPane", heading="Group Searcher", style="height:100%;width:100%;vertical-align:top;")
+                                        #SearchGroup(ng-controller="SearcherCtrl")
             
 
-                                        div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                                            div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                span
-                                                    label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
-                                                        AGO Group Search
-                                                    input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value="Sign In")
-                                                span
-                                                p Find group ids based on search term. Sign-in to search for private groups.
-                                                span
-                                                    input(name="groupFinder", id="groupFinder", value="Chicago")
-                                                    input(name="groupFinderSubmit", disabled='disabled,' type="submit", value="Submit", id="groupFinderSubmit", onclick="findArcGISGroup();")
+                                            div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
+                                                div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
+                                                    span
+                                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
+                                                            AGO Group Search
+                                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value="Sign In")
+                                                    span
+                                                    p Find group ids based on search term. Sign-in to search for private groups.
+                                                    span
+                                                        input(name="groupFinder", id="groupFinder", ng-model="searchTerm")
+                                                        input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
-                                            div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                div(id='gridGroup')
-                                                div(id="groupResults")
+                                                div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                    div(id='gridGroup')
+                                                    div(id="groupResults")
 
                                     accordion-group(id="MapSearcherPane", heading="Map Searcher", style="height:100%;width:100%;vertical-align:top;")
                                         div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
@@ -118,7 +122,7 @@ block append content
                                                     p Find map ids based on search term. Sign-in to search for private groups.
                                                     span
                                                         input(name="mapFinder",  id="mapFinder", value="Chicago Crime")
-                                                        input(name="mapFinderSubmit", disabled='disabled,' type="submit" value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
+                                                        input(name="mapFinderSubmit", disabled='disabled', type="submit" value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
 
                                                 div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                     div(id='gridMap')
