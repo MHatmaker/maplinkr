@@ -1,6 +1,7 @@
 
 block stylesblock append
     link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
+    link(rel='stylesheet', href='/stylesheets/gridstyle.css')
     
 block append scriptsblock
             script(src='/javascripts/lib/SearcherCtrl.js')
@@ -92,40 +93,40 @@ block append content
                                         
                                     accordion-group(id="GroupSearcherPane", heading="Group Searcher", style="height:100%;width:100%;vertical-align:top;")
                                         #SearchGroup(ng-controller="SearcherCtrl")
-            
-
                                             div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                                 div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
                                                     span
                                                         label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt').
                                                             AGO Group Search
-                                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value="Sign In")
+                                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value='{{signInOutGrp}}')
+                                                            
                                                     span
                                                     p Find group ids based on search term. Sign-in to search for private groups.
                                                     span
-                                                        input(name="groupFinder", id="groupFinder", ng-model="searchTerm")
+                                                        input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
                                                         input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
                                                 div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                    div(id='gridGroup')
+                                                    div(id="gridGroup", class="gridStyle", ng-grid="gridGrpOptions")
                                                     div(id="groupResults")
 
                                     accordion-group(id="MapSearcherPane", heading="Map Searcher", style="height:100%;width:100%;vertical-align:top;")
-                                        div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
-                                            div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                                                div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                    span
-                                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt').
-                                                            AGO Map Search
-                                                        input(type="button", class="signInClass", id="signInMap", name="signInMap", onclick='signInFromMapTab();', value="Sign In")
+                                        #SearchMap(ng-controller="SearcherCtrl")
+                                            div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
+                                                div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
+                                                    div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
+                                                        span
+                                                            label(id='mapSearchLabel', for='signInMap', style='font-size:12pt').
+                                                                AGO Map Search
+                                                            input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', value='{{signInOutMap}}')
 
-                                                    p Find map ids based on search term. Sign-in to search for private groups.
-                                                    span
-                                                        input(name="mapFinder",  id="mapFinder", value="Chicago Crime")
-                                                        input(name="mapFinderSubmit", disabled='disabled', type="submit" value="Submit", id="mapFinderSubmit", onclick="findArcGISGroupMaps();")
+                                                        p Find map ids based on search term. Sign-in to search for private groups.
+                                                        span
+                                                            input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
+                                                            input(name="mapFinderSubmit", disabled='{{findGrpDisabled}}', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
 
-                                                div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                    div(id='gridMap')
+                                                    div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                        div(id="gridMap", class="gridStyle", ng-grid="gridMapOptions")
 
                 tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
                     td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}

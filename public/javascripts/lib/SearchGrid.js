@@ -1,6 +1,6 @@
 
 var portalForSearch;
-
+/* 
     //display a list of groups that match the input user name
     function showGroupResults(response) {
       //clear any existing results
@@ -11,37 +11,26 @@ var portalForSearch;
         console.log("after gridGroup.refresh()");
       }
       if (response.total > 0) {
-        //create an array of attributes for each group - we'll display these in a dojo dgrid
-        data = dojo.map(response.results, function (group) {
-          return {
-            'snippet': group.snippet,
-            'title': group.title,
-            'url': group.url,
-            'thumbnail': group.thumbnailUrl || '',
-            'id': group.id,
-            'owner': group.owner
-          }
-        });
-		require(["dojo/_base/declare", "dgrid/Grid", "dgrid/Keyboard", "dgrid/Selection", "dojo/domReady!"],
-		function(declare, Grid, Keyboard, Selection){
 			//create the grid
 			var localData = data;
-			var CustomGrid = declare([ Grid, Keyboard, Selection ]);
-			// gridGroup = new dgrid.Grid({
-			var gridGroupLocal = new CustomGrid({
-			  columns: {
-				thumbnail: 'Group Icon',
-				title: 'Group',
-				snippet: 'Description',
-				id: 'Group ID'
-			  },
-			  renderRow: renderTableLocal,
-			  selectionMode: "single", // for Selection; only select a single row at a time
-			  cellNavigation: false, // for Keyboard; allow only row-level keyboard navigation
-			  //this function renders the table in a non-grid looking view
-			  showHeader: false
-			}, "gridGroup");
-			gridGroupLocal.renderArray(localData);
+            
+        $scope.gridOptions = { 
+            data: 'localData',
+            rowHeight: '35',
+            columnDefs: [
+                {field:'thumbnail',
+                 displayName:'Group Icon',
+                 cellTemplate: 'ImageTemplate.html'},
+                {field:'title',
+                 displayName:'Group'},
+                {field:'snippet',
+                 displayName:'Description',
+                 cellTemplate: 'cellTemplate.html'},
+                {field: 'id',
+                 displayName: 'Group ID'}
+            ]
+        };
+        
 			// gridGroupLocal.on("dgrid-select", function(event){
 				// Report the item from the selected row to the console.
 				// console.log("Row selected: ", event.rows[0].data.title);
@@ -65,7 +54,7 @@ var portalForSearch;
         dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
       }
     }
-
+ */
       // var template = '<div class="thumbnail"><img src="${0}" width="50" height="50"
 	  // onClick='thumbnailClicked()'<div><div>class="title" >${1}<span> <i> (${2} ) </i></span><div class="summary">${3} </div><div class="group=id">${4}</div>';
 	  // var template = '<div class="thumbnail"><img src="${0}" width="50" height="50"/></div><a 	target="_blank" class="title" href=${1}>${2}</a><span> <i> (${3} ) </i></span><div class="summary">${4} </div><div class="group=id">${5}</div>';
