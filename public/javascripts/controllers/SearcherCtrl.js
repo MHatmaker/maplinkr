@@ -4,40 +4,82 @@
 
     console.log('SearcherCtrl setup');
     define([
-        'angular'
+        'angular' //,
+        // 'ngGrid'
     ], function(angular) {
         console.log('SearcherCtrl define');
         
+            // find groups based on input keyword
+        function findArcGISGroup(portalForSearch, searchTermGrp, gridGrpOptions) {
+          console.log('findArcGISGroup');
+          var keyword = searchTermGrp; //dojo.byId('groupFinder').value;
+          var params = {
+            q:  keyword,
+            num:20  //find 40 items - max is 100
+           };
+           portalForSearch.queryGroups(params).then(function (data) {
+            showGroupResults(data, gridGrpOptions);
+           });
+        }
+            
+        function findArcGISGroupMaps(portal, searchTermMap) {
+          utils.showLoading()
+          var keyword = searchTermMap; //dojo.byId('mapFinder').value;
+          var params = {
+            q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
+            num: 20
+          };
+          portal.queryItems(params).then(function (data) {
+                showMapResults(data);
+            });
+        }
+        function showGroupResults(response, gridGrpOptions) {
+            //clear any existing results
+            console.log('$scope.showGroupResults');
+            
+                // gridGroupLocal.on("dgrid-select", function(event){
+                    // Report the item from the selected row to the console.
+            if (response.total > 0) {
+                var data = response.results;
+                //create the grid
+                var localData = data;
+                
+                gridGrpOptions.data = data;
+                    // console.log("Row selected: ", event.rows[0].data.title);
+                    // console.log("Row selected: ", event.rows[0].data.id);
+                // });
+          } else {
+            dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
+          }
+        }
+        
         function SearcherCtrl($scope) {
-            $scope.findGrpDisabled = true;
+            $scope.findGrpDisabled = false;
             $scope.searchTermGrp = "Chicago";
             $scope.searchTermMap = "Chicago Crime";
             $scope.signInOutGrp = "Sign In";
             $scope.signInOutMap = "Sign In";
+            $scope.data = [];
+            var self = this;
+            self.scope = $scope;
             
-            // find groups based on input keyword
-            $scope.findArcGISGroup = function() {
-              var keyword = $scope.searchTermGrp; //dojo.byId('groupFinder').value;
-              var params = {
-                q:  keyword,
-                num:20  //find 40 items - max is 100
-               };
-               portalForSearch.queryGroups(params).then(function (data) {
-                showGroupResults(data);
-               });
-            }
+            $scope.gridGrpOptions = { 
+                data: 'localData',
+                rowHeight: '50',
+                columnDefs: [
+                    {field:'thumbnail',
+                     displayName:'Group Icon',
+                     cellTemplate: 'ImageTemplate.html'},
+                    {field:'title',
+                     displayName:'Group'},
+                    {field:'snippet',
+                     displayName:'Description',
+                     cellTemplate: 'cellTemplate.html'},
+                    {field: 'id',
+                     displayName: 'Group ID'}
+                ]
+            };
             
-            $scope.findArcGISGroupMaps = function() {
-              utils.showLoading()
-              var keyword = $scope.searchTermMap; //dojo.byId('mapFinder').value;
-              var params = {
-                q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
-                num: 20
-              };
-              portal.queryItems(params).then(function (data) {
-                    showMapResults(data);
-                });
-            }
             
             $scope.findMapsForGroup = function(gId)
             {
@@ -65,12 +107,13 @@
             // gets private groups as well
             $scope.signInFromGroupTab = function() {
               console.log("signInFromGroupTab");
+              $scope.gridGrpOptions = {};
 
               if ($scope.signInOutGrp.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
                     $scope.signInOutGrp = "Sign Out";
                     $scope.signInOutMap = "Sign Out";
-                    findArcGISGroup();   // update results
+                    findArcGISGroup(portalForSearch, $scope.searchTermGrp, $scope.gridGrpOptions);   // update results
                 }, function (error) { //error so reset sign in link
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";
@@ -79,7 +122,7 @@
                 portalForSearch.signOut().then(function (portalInfo) {
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";
-                    findArcGISGroup();
+                    findArcGISGroup(portalForSearch, $scope.searchTermGrp, $scope.gridGrpOptions);
                 });
               }
             }
@@ -92,7 +135,7 @@
                 portal.signIn().then(function (loggedInUser) {
                     $scope.signInOutGrp = "Sign Out";
                     $scope.signInOutMap = "Sign Out";
-                  findArcGISGroupMaps();   // update results
+                  findArcGISGroupMaps(portal, $scope.searchTermMap);   // update results
                 }, function (error) {  //error so reset sign in link
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";
@@ -101,46 +144,12 @@
                 portal.signOut().then(function (portalInfo) {
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";
-                    findArcGISGroupMaps();
+                    findArcGISGroupMaps(portal, $scope.searchTermMap);
                 });
               }
             }
             
             //display a list of groups that match the input user name
-            $scope.showGroupResults = function(response) {
-                //clear any existing results
-                var data = [];
-
-                
-                    // gridGroupLocal.on("dgrid-select", function(event){
-                        // Report the item from the selected row to the console.
-                if (response.total > 0) {
-                    //create the grid
-                    var localData = data;
-                    
-                    $scope.gridGrpOptions = { 
-                        data: 'localData',
-                        rowHeight: '50',
-                        columnDefs: [
-                            {field:'thumbnail',
-                             displayName:'Group Icon',
-                             cellTemplate: 'ImageTemplate.html'},
-                            {field:'title',
-                             displayName:'Group'},
-                            {field:'snippet',
-                             displayName:'Description',
-                             cellTemplate: 'cellTemplate.html'},
-                            {field: 'id',
-                             displayName: 'Group ID'}
-                        ]
-                    };
-                        // console.log("Row selected: ", event.rows[0].data.title);
-                        // console.log("Row selected: ", event.rows[0].data.id);
-                    // });
-              } else {
-                dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
-              }
-            }
             
             function showMapResults(response) {
                 utils.hideLoading();

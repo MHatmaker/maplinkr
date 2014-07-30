@@ -1,11 +1,12 @@
 doctype
-html(ng-app="MasherApp", style="height:100%;width:100%;")
+html(style="height:100%;width:100%;")
     head
         meta(charset='utf8')
         base(href='/')
         title Mashover Viewer
         block stylesblock
             link(rel='stylesheet', href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
+            link(rel='stylesheet', href="/stylesheets/ng-grid.css")
             link(rel='stylesheet', href="https://rawgithub.com/angular-ui/ui-layout/master/src/ui-layout.css")
             link(rel='stylesheet', href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/nihilo/nihilo.css")
             link(rel='stylesheet', href='/stylesheets/esri.css')
@@ -14,7 +15,7 @@ html(ng-app="MasherApp", style="height:100%;width:100%;")
             link(rel='stylesheet', href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dgrid/css/skins/nihilo.css')
             link(rel='stylesheet', href='/stylesheets/layout.css')
             link(rel='stylesheet', href='/stylesheets/tabstyles.css')
-            link(rel='stylesheet', href=('http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css'))
+            link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
             link(rel='stylesheet', href='/stylesheets/Control.Loading.css')
             
         block scriptsblock
@@ -25,12 +26,14 @@ html(ng-app="MasherApp", style="height:100%;width:100%;")
             script(src='/javascripts/lib/StompSetup.js')
             script(src='/javascripts/lib/SearchGrid.js')
             script(src='/javascripts/lib/SearchGridMap.js')
+            script(src='/javascripts/lib/SearchGridMap.js')
             script(src='/javascripts/lib/angular/angular.js')
             script(src='/javascripts/lib/angular/angular-route.js')
             script(src='https://rawgithub.com/angular-ui/ui-layout/master/src/ui-layout.js')
             script(src='/javascripts/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
+            script(src='/javascripts/lib/jquery.js')
+            script(src='/javascripts/lib/angular/ng-grid.js')
             script(src='/javascripts/MasherApp.js')
-            script(src='/javascripts/lib/SearcherCtrl.js')
         
     body(class="nihilo",style="height:100%;width:100%;")
         block content

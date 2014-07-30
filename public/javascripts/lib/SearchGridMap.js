@@ -88,7 +88,7 @@
         innerHTML : dojo.string.substitute(template,[thumbnail,obj.title,obj.owner,summary])
       });
     }
-
+/* 
     function findArcGISGroupMaps() {
       utils.showLoading()
       var keyword = dojo.byId('mapFinder').value;
@@ -99,7 +99,7 @@
 	  portal.queryItems(params).then(function (data) {
 			showMapResults(data);
 		});
-    }
+    } */
 	
 	function findMapsForGroup(gId)
 	{
@@ -166,11 +166,11 @@
       });
 
       //search when enter key is pressed
-      dojo.connect(dojo.byId("mapFinder"), "onkeyup", function (e) {
+     /*  dojo.connect(dojo.byId("mapFinder"), "onkeyup", function (e) {
         if (e.keyCode === 13) {
           findArcGISGroupMaps();
         }
-      });
+      }); */
 		dojo.subscribe("Accdian-selectChild", function(pane){
 			console.log("A new pane was selected:", pane);
 			findMapsForGroup(selectedGroupId);

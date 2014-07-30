@@ -1,4 +1,3 @@
-'use strict';
 
 (function() {
     'use strict';
@@ -14,6 +13,12 @@
         }
         return {};
     });
+  /*   define('ngGrid', function () {
+        if (ngGrid) {
+            return ngGrid;
+        }
+        return {};
+    }); */
     define('leaflet', function () {
         if (leaflet) {
             return leaflet;

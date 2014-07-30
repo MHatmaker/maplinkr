@@ -74,7 +74,7 @@ var portalForSearch;
         innerHTML : dojo.string.substitute(template,[thumbnail,obj.title,obj.owner,summary])
       });
     }
-
+/* 
     // find groups based on input keyword
     function findArcGISGroup() {
       var keyword = dojo.byId('groupFinder').value;
@@ -86,7 +86,7 @@ var portalForSearch;
         showGroupResults(data);
        });
     }
-
+ */
     // gets private groups as well
     function signInFromGroupTab() {
       console.log("signInFromGroupTab");
@@ -135,9 +135,9 @@ var portalForSearch;
       });
 
       //search when enter key is pressed
-      dojo.connect(dojo.byId("groupFinder"), "onkeyup", function (e) {
+     /*  dojo.connect(dojo.byId("groupFinder"), "onkeyup", function (e) {
         if (e.keyCode === 13) {
           findArcGISGroup();
         }
-      });
+      }); */
     };
