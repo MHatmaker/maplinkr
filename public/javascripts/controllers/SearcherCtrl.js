@@ -10,7 +10,7 @@
         console.log('SearcherCtrl define');
         
             // find groups based on input keyword
-        function findArcGISGroup(portalForSearch, searchTermGrp, gridGrpOptions) {
+        function findArcGISGroup(portalForSearch, searchTermGrp, gridGrpOptions, grdData) {
           console.log('findArcGISGroup');
           var keyword = searchTermGrp; //dojo.byId('groupFinder').value;
           var params = {
@@ -18,7 +18,7 @@
             num:20  //find 40 items - max is 100
            };
            portalForSearch.queryGroups(params).then(function (data) {
-            showGroupResults(data, gridGrpOptions);
+            showGroupResults(data, gridGrpOptions, grdData);
            });
         }
             
@@ -33,7 +33,7 @@
                 showMapResults(data);
             });
         }
-        function showGroupResults(response, gridGrpOptions) {
+        function showGroupResults(response, gridGrpOptions, grdData) {
             //clear any existing results
             console.log('$scope.showGroupResults');
             
@@ -42,9 +42,9 @@
             if (response.total > 0) {
                 var data = response.results;
                 //create the grid
-                var localData = data;
+                grdData = data;
                 
-                gridGrpOptions.data = data;
+                // gridGrpOptions.data = data;
                     // console.log("Row selected: ", event.rows[0].data.title);
                     // console.log("Row selected: ", event.rows[0].data.id);
                 // });
@@ -64,17 +64,21 @@
             self.scope = $scope;
             
             $scope.gridGrpOptions = { 
-                data: 'localData',
+                data: 'data',
                 rowHeight: '50',
                 columnDefs: [
+                /* 
                     {field:'thumbnail',
                      displayName:'Group Icon',
                      cellTemplate: 'ImageTemplate.html'},
+                      */
                     {field:'title',
                      displayName:'Group'},
+                     /* 
                     {field:'snippet',
                      displayName:'Description',
                      cellTemplate: 'cellTemplate.html'},
+                      */
                     {field: 'id',
                      displayName: 'Group ID'}
                 ]
@@ -107,13 +111,12 @@
             // gets private groups as well
             $scope.signInFromGroupTab = function() {
               console.log("signInFromGroupTab");
-              $scope.gridGrpOptions = {};
 
               if ($scope.signInOutGrp.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
                     $scope.signInOutGrp = "Sign Out";
                     $scope.signInOutMap = "Sign Out";
-                    findArcGISGroup(portalForSearch, $scope.searchTermGrp, $scope.gridGrpOptions);   // update results
+                    findArcGISGroup(portalForSearch, $scope.searchTermGrp, $scope.gridGrpOptions, $scope.data);   // update results
                 }, function (error) { //error so reset sign in link
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";

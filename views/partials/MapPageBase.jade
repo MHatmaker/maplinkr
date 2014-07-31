@@ -101,7 +101,7 @@ block append content
                                                         input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', value='{{signInOutGrp}}')
                                                             
                                                     span
-                                                    p Find group ids based on search term. Sign-in to search for private groups.
+                                                    p(style='font-size: 100%; ') Find group ids based on search term. Sign-in to search for private groups.
                                                     span
                                                         input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
                                                         input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
