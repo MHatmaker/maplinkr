@@ -16,18 +16,19 @@
             $scope.signInOutGrp = "Sign In";
             $scope.signInOutMap = "Sign In";
             $scope.data = [
-                {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago"},
-                {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak"}
+                {"owner" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago"},
+                {"owner" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak"}
                 ];
             $scope.mapGriddata = [];
             $scope.gridMapOptions = { 
                 data: 'mapGriddata',
                 rowHeight: '50',
+                /* 
                 columnDefs: [
                     {field:'snippet',
                      displayName:'Description'},
                     {field:'title',
-                     displayName:'Map Title'}/*  ,
+                     displayName:'Map Title'}  ,
                                     {field:'url',
                                      displayName:'Map Url'},
                                     {field:'thumbnail',
@@ -36,8 +37,9 @@
                                     {field:'id',
                                      displayName:'ID'},
                                     {field: 'owner',
-                                     displayName: 'Map Owner'} */
+                                     displayName: 'Map Owner'} 
                 ]
+                 */
             };
             var self = this;
             self.scope = $scope;
@@ -52,13 +54,13 @@
                 data: 'data',
                 // enablePaging: true,
                 rowHeight: '50' ,
-                plugins: [layoutPlugin],
+                // plugins: [layoutPlugin],
                 columnDefs: [
                     {field:'title',
-                     width: '80px',
+                     width: '120px',
                      displayName: 'Group'},
                     {field: 'owner',
-                     width: '80px',
+                     width: '120px',
                      displayName: 'Owner'}
                 ] 
             };
