@@ -85,7 +85,8 @@
                     height = 300;
                 }
                 return {
-                    height: height + "px",
+                    // height: height + "px",
+                    height: "100%",
                 }
             };
                                        
