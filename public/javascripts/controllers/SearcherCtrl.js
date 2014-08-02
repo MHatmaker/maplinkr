@@ -42,28 +42,25 @@
             var self = this;
             self.scope = $scope;
             
+            var layoutPlugin = new ngGridLayoutPlugin();
+            
+            $scope.updateLayout = function(){
+              layoutPlugin.updateGridLayout();
+            };
+    
             $scope.gridGrpOptions = { 
                 data: 'data',
                 // enablePaging: true,
-                rowHeight: '50',
+                rowHeight: '50' ,
+                plugins: [layoutPlugin],
                 columnDefs: [
-                /* 
-                    {field:'thumbnail',
-                     displayName:'Group Icon',
-                     cellTemplate: 'ImageTemplate.html'},
-                      */
                     {field:'title',
-                     width: 80,
-                     displayName:'Group'},
-                     /* 
-                    {field:'snippet',
-                     displayName:'Description',
-                     cellTemplate: 'cellTemplate.html'},
-                      */
-                    {field: 'id',
-                     width: 80,
-                     displayName: 'Group ID'}
-                ]
+                     width: '80px',
+                     displayName: 'Group'},
+                    {field: 'owner',
+                     width: '80px',
+                     displayName: 'Owner'}
+                ] 
             };
                // find groups based on input keyword
             $scope.findArcGISGroup = function(portalForSearch) {
@@ -78,6 +75,25 @@
                });
             }
             
+            $scope.getGridStyle = function () {
+                var rowHeight = 50;
+                var headerHeight = 34;
+                var height = +($scope.data.length * rowHeight + headerHeight);
+                if (height > 300) {
+                    height = 300;
+                }
+                return {
+                    height: height + "px",
+                }
+            };
+                                       
+            $scope.redrawGrid = function () {
+                window.setTimeout(function () {
+                    $(window).resize();
+                    $(window).resize();
+                }, 250);
+            };
+            
             $scope.showGroupResults = function(response) {
                 //clear any existing results
                 console.log('$scope.showGroupResults');
@@ -90,6 +106,7 @@
                     $scope.data = response.results;
                     // $scope.gridGrpOptions.data = response.results;
                     console.debug($scope.data);
+                    $scope.redrawGrid();
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }

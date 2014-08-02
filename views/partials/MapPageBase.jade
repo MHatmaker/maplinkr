@@ -4,6 +4,8 @@ block stylesblock append
     link(rel='stylesheet', href='/stylesheets/gridstyle.css')
     
 block append scriptsblock
+            script(src='http://js.pusherapp.com/1.10/pusher.min.js')
+            script(src='/javascripts/lib/StompSetup.js')
             script(src='/javascripts/lib/SearcherCtrl.js')
     
 block append content
@@ -107,8 +109,7 @@ block append content
                                                         input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
                                                 div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                    div(class="gridStyle", ng-grid="gridGrpOptions")
-                                                    div(id="groupResults")
+                                                    div(ng-grid="gridGrpOptions", ng-style="getGridStyle()")
 
                                     accordion-group(id="MapSearcherPane", heading="Map Searcher", style="height:100%;width:100%;vertical-align:top;")
                                         #SearchMap(ng-controller="SearcherCtrl")
