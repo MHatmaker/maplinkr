@@ -81,12 +81,12 @@
                 var rowHeight = 50;
                 var headerHeight = 34;
                 var height = +($scope.data.length * rowHeight + headerHeight);
-                if (height > 300) {
-                    height = 300;
+                if (height > 200) {
+                    height = 200;
                 }
                 return {
-                    // height: height + "px",
-                    height: "100%",
+                    height: height + "px",
+                    // height: "100%",
                 }
             };
                                        
