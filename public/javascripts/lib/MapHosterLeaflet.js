@@ -90,7 +90,7 @@
             var cntrlat = fixedCntrLL.lat;
             var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
                 zm + " " + scale2Level[zm].scale;
-            document.getElementById("mpnm").innerHTML = view;
+            document.getElementById("mppos").innerHTML = view;
         }
         function onMapClick(e) 
         {

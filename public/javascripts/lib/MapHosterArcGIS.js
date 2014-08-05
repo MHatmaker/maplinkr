@@ -48,7 +48,7 @@
             mph.showGlobals("After centerAndZoom");
             mph.initialPan == true;
 
-            self.initMap("mapDiv_layer0");
+            mph.initMap("mapDiv_layer0");
             // self.addInitialSymbols();
             mph.bounds = xtntMap.geographicExtent;
             mph.userZoom = true;
@@ -63,7 +63,7 @@
                     if(self.userZoom == true)
                     {
                         var cntr = extent.getCenter();
-                        var xtnt = self.extractBounds(level, cntr, 'zoom');
+                        var xtnt = self.extractBounds(mph.map.getLevel(), cntr, 'zoom');
                         self.setBounds(xtnt);
                     }
                     // self.userZoom = true;
@@ -74,7 +74,7 @@
             dojo.connect(xtntMap, "onPanEnd", function (extent, endPoint)
                 {
                     var cntr = extent.getCenter();
-                    var xtnt = self.extractBounds(self.zmG, cntr, 'pan');
+                    var xtnt = self.extractBounds(mph.map.getLevel(), cntr, 'pan');
                     // var xtnt = self.extractBounds(self.zmG, endPoint, 'pan');
                     self.setBounds(xtnt);
                     // if(self.initialPan == false)
@@ -92,15 +92,15 @@
                     var fixedLL = utils.toFixed(ltln.x,ltln.y, 3);
                     var evlng = fixedLL.lon;
                     var evlat = fixedLL.lat;
-                    var zm = self.map.getLevel();
-                    var xtnt = self.map.extent;
+                    var zm = mph.map.getLevel();
+                    var xtnt = mph.map.extent;
                     var cntr = esri.geometry.webMercatorToGeographic(xtnt.getCenter());
                     var fixedCntrLL = utils.toFixed(cntr.x,cntr.y, 3);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
                     var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
-                        zm + " " + selectedWebMapId;
-                    document.getElementById("mpnm").innerHTML = view;
+                        zm + " "; // + selectedWebMapId;
+                    document.getElementById("mppos").innerHTML = view;
                 });
             this.mapReady = true;
             this.userZoom = true;
@@ -119,7 +119,7 @@
                     'zoom' : zm, 
                     'lon' : fixedLL.lon, 
                     'lat' : fixedLL.lat,
-                    'scale': self.scale2Level[zm].scale,
+                    'scale': mph.scale2Level[zm].scale,
                     'action': action};
                 return xtntDict;
             }
