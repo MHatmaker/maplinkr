@@ -46,7 +46,7 @@ block append content
                     td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
                             div(class = "acc scrollable", style="height:100%;width:100%;")
                                 accordion(id="Accdian", style="height:100%;width:100%;")
-                                    accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;margin:5px;")
+                                    accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;")
                                         h5(style="color:red")
                                             | We now have WebMap mash-over capabilities
                                             | Select the Mash-over Instruction pane below for all the latest.
@@ -97,14 +97,15 @@ block append content
                                         #SearchGroup(ng-controller="SearcherCtrl")
                                             div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                                 div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                    span
-                                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:70%') AGO Group Search
-                                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:30%;', value='{{signInOutGrp}}')
-                                                         
-                                                    p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
-                                                    span
-                                                        input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                                        input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
+                                                    div(id="searchToolWrapper")
+                                                        span
+                                                            label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:70%') AGO Group Search
+                                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:30%;', value='{{signInOutGrp}}')
+                                                             
+                                                        p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
+                                                        span
+                                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
+                                                            input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
                                                 div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                     div(ng-grid="gridGrpOptions", ng-style="getGridStyle()")

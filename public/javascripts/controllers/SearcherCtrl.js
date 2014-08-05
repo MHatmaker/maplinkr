@@ -78,15 +78,22 @@
             }
             
             $scope.getGridStyle = function () {
+                
+                var vrbg = angular.element(document.getElementById("verbagePan"));
+                var accHead = angular.element(document.getElementById("AccdianNews"));
+                var srchWrap = angular.element(document.getElementById("searchToolWrapper"));
+                var marginborder = (1 + 1) * 2;
+                var accinnermarginborder = (1 + 9) * 2;
+                var availableHgt = vrbg[0].offsetHeight - srchWrap[0].offsetHeight - accinnermarginborder -
+                                    4 * (accHead[0].offsetHeight + marginborder);
                 var rowHeight = 50;
                 var headerHeight = 34;
                 var height = +($scope.data.length * rowHeight + headerHeight);
-                if (height > 200) {
-                    height = 200;
+                if (height > availableHgt) {
+                    height = availableHgt;
                 }
                 return {
-                    height: height + "px",
-                    // height: "100%",
+                    height: height + "px"
                 }
             };
                                        
