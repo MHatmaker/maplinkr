@@ -98,8 +98,7 @@
                     var fixedCntrLL = utils.toFixed(cntr.x,cntr.y, 3);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
-                    var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
-                        zm + " "; // + selectedWebMapId;
+                    var view = "Zoom : " + zm + " Center : " + cntrlng + ", " + cntrlat + " Current  : " + evlng + ", " + evlat;      // + selectedWebMapId;
                     document.getElementById("mppos").innerHTML = view;
                 });
             this.mapReady = true;

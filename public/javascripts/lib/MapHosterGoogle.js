@@ -67,8 +67,7 @@
                     var cntrlat = fixedCntrLL.lat;
                     if(mph.scale2Level)
                     {
-                        var view = cntrlng + ", " + cntrlat + " : " + evlng + ", " + evlat + " : " + 
-                            zm + " " + mph.scale2Level[zm].scale;
+                        var view = "Zoom : " + zm + " Scale : " + mph.scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
                         document.getElementById("mpnm").innerHTML = view;
                     }
                 }
