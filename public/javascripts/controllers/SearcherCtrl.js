@@ -51,11 +51,16 @@
             };
             
             var webmpid = "8d15d99dc973499d8f93860298b3e576";
+            
+            
             $scope.token = "?token=ZVqxewEPcUptwX8XGnxGibtbuV5Y457GELkGUYjVMJeQsQWaN4k3WViqkqrOgukBnLltKMJD7oomDEbg0lzMzVc4cLlo2wlhzg5zWo5XcqLP0zGZM2ez_nxSbb6JIePlVu5eH722XWHwH61WzKW91Q..";
             
-            $scope.imgUrlBase = "http://www.arcgis.com/sharing/rest/content/items/info/thumbnail/"
+            // $scope.imgUrlBase = "http://www.arcgis.com/sharing/rest/content/items/info/thumbnail/"
+            
+            $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/'
+            
             $scope.imgTmplt = 
-                '<img ng-src="{{imgUrlBase}}{{row.getProperty(col.field)}}" width="50" height="50" />'
+                '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />'
                 
                 // '<img ng-src="{{imgUrlBase}}{{row.getProperty(col.field)}}{{token}}" width="50" height="50" />'
             
