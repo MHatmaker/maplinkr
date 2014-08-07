@@ -49,40 +49,40 @@
             $scope.updateLayout = function(){
               layoutPlugin.updateGridLayout();
             };
+            $scope.selectedItm = "Nada";
+            $scope.selectionChanged = function(rowItem,event){ 
+                console.debug(rowItem.entity);
+                console.debug(rowItem.entity.thumbnailUrl + '/' + rowItem.entity.thumbnail);
+                // $scope.selectedItm = rowItem.entity.thumbnail;
+            }
             
-            var webmpid = "8d15d99dc973499d8f93860298b3e576";
-            
-            
-            $scope.token = "?token=ZVqxewEPcUptwX8XGnxGibtbuV5Y457GELkGUYjVMJeQsQWaN4k3WViqkqrOgukBnLltKMJD7oomDEbg0lzMzVc4cLlo2wlhzg5zWo5XcqLP0zGZM2ez_nxSbb6JIePlVu5eH722XWHwH61WzKW91Q..";
-            
-            // $scope.imgUrlBase = "http://www.arcgis.com/sharing/rest/content/items/info/thumbnail/"
             
             $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/'
             
             $scope.imgTmplt = 
                 '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />'
-                
-                // '<img ng-src="{{imgUrlBase}}{{row.getProperty(col.field)}}{{token}}" width="50" height="50" />'
             
             $scope.gridGrpOptions = { 
                 data: 'data',
                 // enablePaging: true,
                 rowHeight: '50' ,
                 // plugins: [layoutPlugin],
+                multiSelect: false,
+                afterSelectionChange:  $scope.selectionChanged,
                 columnDefs: [ 
                     {field:'thumbnail',
                      width: '50px',
-                     displayName:'Thumb',
+                     displayName:'Img',
                      cellTemplate: $scope.imgTmplt},
                     {field:'title',
-                     width: '100px',
+                     width: '124px',
                      displayName: 'Group'},
-                    {field: 'owner',
-                     width: '80px',
-                     displayName: 'Owner'},
+                    {field: 'snippet',
+                     width: '124px',
+                     displayName: 'Description'},
                     {field: 'id',
-                     width: '80px',
-                     displayName: 'Group ID'}
+                     visible: false,
+                     displayName: '#'}
                 ] 
             };
                // find groups based on input keyword
