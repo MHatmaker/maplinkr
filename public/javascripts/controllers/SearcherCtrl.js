@@ -19,27 +19,28 @@
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "owner" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "owner" : "bar", "thumbnail" : "bar.jpg"}
                 ];
+            $scope.isMapAccPanelOpen = false;
             $scope.mapGriddata = [];
             $scope.gridMapOptions = { 
                 data: 'mapGriddata',
                 rowHeight: '50',
-                /* 
+                // plugins: [layoutPlugin],
+                
                 columnDefs: [
+                    {field:'thumbnail',
+                     width: '50px',
+                     displayName:'Map Thumbnail Url'},
                     {field:'snippet',
+                     width: '60px',
                      displayName:'Description'},
                     {field:'title',
-                     displayName:'Map Title'}  ,
-                                    {field:'url',
-                                     displayName:'Map Url'},
-                                    {field:'thumbnail',
-                                     displayName:'Map Thumbnail Url',
-                                     cellTemplate: 'ImageTemplate.html'},
-                                    {field:'id',
-                                     displayName:'ID'},
-                                    {field: 'owner',
-                                     displayName: 'Map Owner'} 
+                     width: '56px',
+                     displayName:'Map Title'},
+                    {field:'id',
+                     width: '58px',
+                     displayName:'ID'}
                 ]
-                 */
+                 
             };
             var self = this;
             self.scope = $scope;
@@ -52,7 +53,10 @@
             $scope.selectedItm = "Nada";
             $scope.selectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);
-                console.debug(rowItem.entity.thumbnailUrl + '/' + rowItem.entity.thumbnail);
+                console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
+                $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
+                console.log("isMapAccPanelOpen = " + $scope.isMapAccPanelOpen);
+                $scope.findMapsForGroup(rowItem.entity.id);
                 // $scope.selectedItm = rowItem.entity.thumbnail;
             }
             
@@ -85,8 +89,11 @@
                      displayName: '#'}
                 ] 
             };
+            
+            var portal = null;
                // find groups based on input keyword
             $scope.findArcGISGroup = function(portalForSearch) {
+              self.portal = portalForSearch;
               console.log('findArcGISGroup');
               var keyword = $scope.searchTermGrp;
               var params = {
@@ -98,11 +105,15 @@
                });
             }
             
-            $scope.getGridStyle = function () {
+            
+            $scope.getGridStyleMap = function () {
+            }
+            
+            $scope.getGridStyleGroup = function () {
                 
                 var vrbg = angular.element(document.getElementById("verbagePan"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));
-                var srchWrap = angular.element(document.getElementById("searchToolWrapper"));
+                var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
                 var marginborder = (1 + 1) * 2;
                 var accinnermarginborder = (1 + 9) * 2;
                 var availableHgt = vrbg[0].offsetHeight - srchWrap[0].offsetHeight - accinnermarginborder -
@@ -164,14 +175,18 @@
             
             $scope.findMapsForGroup = function(gId)
             {
+              console.log("findMapsForGroup : " + gId);
               var params = {
                  q:  'id : ' +  gId,
                  num:20  //find 40 items - max is 100
                 };
-                portal.queryGroups(params).then(function(groups){
+                
+                self.portal.queryGroups(params).then(function(groups){
                 //get group title and thumbnail url 
                 if (groups.results.length > 0) {
-                  group = groups.results[0];
+                  console.log("group 0 results:");
+                  var group = groups.results[0];
+                  console.debug(group);
                   
                   //Retrieve the web maps and applications from the group and display 
                   var params = {
@@ -211,7 +226,7 @@
             $scope.signInFromMapTab = function() {
               console.log("signInFromMapTab");
 
-              if (signInOutMap.indexOf('In') !== -1) {
+              if ($scope.signInOutMap.indexOf('In') !== -1) {
                 portal.signIn().then(function (loggedInUser) {
                     $scope.signInOutGrp = "Sign Out";
                     $scope.signInOutMap = "Sign Out";
@@ -234,11 +249,15 @@
             $scope.showMapResults = function(response) {
                 utils.hideLoading();
                 //clear any existing results
+                console.log("showMapResults");
+                console.debug(response);
                 if (response.total > 0) {
                     //create the grid
                     $scope.mapGriddata = response.results;
                     // $scope.gridGrpOptions.data = response.results;
                     console.debug($scope.mapGriddata);
+                    $scope.redrawGrid();
+                    $scope.updateLayout();
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
