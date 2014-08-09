@@ -16,20 +16,29 @@
             $scope.signInOutGrp = "Sign In";
             $scope.signInOutMap = "Sign In";
             $scope.data = [
-                {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "owner" : "foo", "thumbnail" : "foo.jpg"},
-                {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "owner" : "bar", "thumbnail" : "bar.jpg"}
+                {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
+                {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
                 ];
             $scope.isMapAccPanelOpen = false;
-            $scope.mapGriddata = [];
+            $scope.mapGriddata = [
+                {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
+                {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
+                ];
+                
+            $scope.imgWebMapUrlBase = 'http://www.arcgis.com/sharing/rest/content/items/';
+            $scope.imgWebMapTmplt = 
+                '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
+                
             $scope.gridMapOptions = { 
                 data: 'mapGriddata',
                 rowHeight: '50',
-                // plugins: [layoutPlugin],
+                plugins: [layoutPlugin],
                 
                 columnDefs: [
                     {field:'thumbnail',
                      width: '50px',
-                     displayName:'Map Thumbnail Url'},
+                     displayName:'Img',
+                     cellTemplate: $scope.imgWebMapTmplt},
                     {field:'snippet',
                      width: '60px',
                      displayName:'Description'},
@@ -56,15 +65,17 @@
                 console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
                 $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
                 console.log("isMapAccPanelOpen = " + $scope.isMapAccPanelOpen);
+                var accPane = angular.element(document.getElementById("MapSearcherPane"));
+                console.debug(accPane);
                 $scope.findMapsForGroup(rowItem.entity.id);
                 // $scope.selectedItm = rowItem.entity.thumbnail;
             }
             
             
-            $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/'
+            $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/';
             
             $scope.imgTmplt = 
-                '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />'
+                '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
             
             $scope.gridGrpOptions = { 
                 data: 'data',
@@ -107,6 +118,23 @@
             
             
             $scope.getGridStyleMap = function () {
+                
+                var vrbg = angular.element(document.getElementById("verbagePan"));
+                var accHead = angular.element(document.getElementById("AccdianNews"));
+                var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
+                var marginborder = (1 + 1) * 2;
+                var accinnermarginborder = (1 + 9) * 2;
+                var availableHgt = vrbg[0].offsetHeight - srchWrap[0].offsetHeight - accinnermarginborder -
+                                    4 * (accHead[0].offsetHeight + marginborder);
+                var rowHeight = 50;
+                var headerHeight = 34;
+                var height = +($scope.data.length * rowHeight + headerHeight);
+                if (height > availableHgt) {
+                    height = availableHgt;
+                }
+                return {
+                    height: height + "px"
+                }
             }
             
             $scope.getGridStyleGroup = function () {
@@ -247,11 +275,12 @@
             //display a list of groups that match the input user name
             
             $scope.showMapResults = function(response) {
-                utils.hideLoading();
+                // utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
                 console.debug(response);
                 if (response.total > 0) {
+                    var mpdata = response.results;
                     //create the grid
                     $scope.mapGriddata = response.results;
                     // $scope.gridGrpOptions.data = response.results;
