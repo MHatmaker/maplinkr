@@ -125,7 +125,7 @@ block append content
                                                             p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                                             span
                                                                 input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                                                input(name="mapFinderSubmit", disabled='{{findGrpDisabled}}', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+                                                                input(name="mapFinderSubmit",  ng-disabled='findGrpDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
 
                                                     div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                         div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")

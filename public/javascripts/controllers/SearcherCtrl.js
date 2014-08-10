@@ -279,14 +279,27 @@
                 //clear any existing results
                 console.log("showMapResults");
                 console.debug(response);
+                console.log("response.total " + response.total);
                 if (response.total > 0) {
-                    var mpdata = response.results;
+                    console.log("found array with length " + response.total);
+                    var i = response.total;
+                    var mpdata = [];
+                    mpdata = dojo.map(response.results, function (map) {
+                      return {
+                        'snippet': map.snippet,
+                        'title': map.title,
+                        'url': map.url,
+                        'thumbnail': map.thumbnailUrl || '',
+                        'id': map.id,
+                        'owner': map.owner
+                      }
+                    });
                     //create the grid
-                    $scope.mapGriddata = response.results;
-                    // $scope.gridGrpOptions.data = response.results;
+                    $scope.mapGriddata = mpdata;
+                    $scope.gridGrpOptions.data = mpdata;
                     console.debug($scope.mapGriddata);
                     $scope.redrawGrid();
-                    $scope.updateLayout();
+                    // $scope.updateLayout();
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
