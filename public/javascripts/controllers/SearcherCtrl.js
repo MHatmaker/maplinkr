@@ -16,19 +16,23 @@
             $scope.signInOutGrp = "Sign In";
             $scope.signInOutMap = "Sign In";
             $scope.data = [
+            /* 
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
+                 */
                 ];
             $scope.isMapAccPanelOpen = false;
             $scope.mapGriddata = [
+            /* 
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
+                 */
                 ];
                 
-            $scope.imgWebMapUrlBase = 'http://www.arcgis.com/sharing/rest/content/items/';
-            $scope.imgWebMapTmplt = 
-                '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
-                
+            $scope.imgWebMapUrlBase = ""; /*  'http://www.arcgis.com/sharing/rest/content/items/'; */
+            $scope.imgWebMapTmplt = "";
+              /*   '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
+                 */
             $scope.gridMapOptions = { 
                 data: 'mapGriddata',
                 rowHeight: '50',
@@ -69,7 +73,7 @@
                 console.debug(accPane);
                 $scope.findMapsForGroup(rowItem.entity.id);
                 // $scope.selectedItm = rowItem.entity.thumbnail;
-            }
+            };
             
             
             $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/';
@@ -103,8 +107,8 @@
             
             var portal = null;
                // find groups based on input keyword
-            $scope.findArcGISGroup = function(portalForSearch) {
-              self.portal = portalForSearch;
+            $scope.findArcGISGroup = function() { //portalForSearch) {
+              // self.portal = portalForSearch;
               console.log('findArcGISGroup');
               var keyword = $scope.searchTermGrp;
               var params = {
@@ -114,11 +118,11 @@
                portalForSearch.queryGroups(params).then(function (data) {
                 $scope.showGroupResults(data);
                });
-            }
+            };
             
             
             $scope.getGridStyleMap = function () {
-                
+                /* 
                 var vrbg = angular.element(document.getElementById("verbagePan"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));
                 var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
@@ -134,9 +138,10 @@
                 }
                 return {
                     height: height + "px"
-                }
-            }
-            
+                }; */
+                
+            };
+
             $scope.getGridStyleGroup = function () {
                 
                 var vrbg = angular.element(document.getElementById("verbagePan"));
@@ -154,7 +159,7 @@
                 }
                 return {
                     height: height + "px"
-                }
+                };
             };
                                        
             $scope.redrawGrid = function () {
@@ -187,10 +192,10 @@
               } else {
                 dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
               }
-            }
+            };
             
             $scope.findArcGISGroupMaps = function(portal, searchTermMap) {
-              utils.showLoading()
+              utils.showLoading();
               var keyword = searchTermMap; //dojo.byId('mapFinder').value;
               var params = {
                 q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
@@ -199,7 +204,7 @@
               portal.queryItems(params).then(function (data) {
                     $scope.showMapResults(data);
                 });
-            }
+            };
             
             $scope.findMapsForGroup = function(gId)
             {
@@ -226,17 +231,18 @@
                     });
                 }
               });
-            }
+            };
             
             // gets private groups as well
             $scope.signInFromGroupTab = function() {
               console.log("signInFromGroupTab");
+              self.portal = portalForSearch;
 
               if ($scope.signInOutGrp.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
                     $scope.signInOutGrp = "Sign Out";
                     $scope.signInOutMap = "Sign Out";
-                    $scope.findArcGISGroup(portalForSearch);   // update results
+                    $scope.findArcGISGroup(); // portalForSearch);   // update results
                 }, function (error) { //error so reset sign in link
                     $scope.signInOutGrp = "Sign In";
                     $scope.signInOutMap = "Sign In";
@@ -248,11 +254,12 @@
                     findArcGISGroup(portalForSearch);
                 });
               }
-            }
+            };
             
             // gets private groups as well
             $scope.signInFromMapTab = function() {
               console.log("signInFromMapTab");
+              self.portal = portalForSearch;
 
               if ($scope.signInOutMap.indexOf('In') !== -1) {
                 portal.signIn().then(function (loggedInUser) {
@@ -270,7 +277,7 @@
                     findArcGISGroupMaps(portal, $scope.searchTermMap);
                 });
               }
-            }
+            };
             
             //display a list of groups that match the input user name
             
@@ -292,7 +299,7 @@
                     }
                     
                  }
-            }
+            };
         }  
         
         function init(App) {
