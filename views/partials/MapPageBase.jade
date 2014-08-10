@@ -106,7 +106,7 @@ block append content
                                                         p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                                         span
                                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                                            input(name="groupFinderSubmit", disabled='{{findGrpDisabled}}', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
+                                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
                                                 div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                     div(ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()")
