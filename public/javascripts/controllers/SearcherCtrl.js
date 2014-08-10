@@ -20,15 +20,21 @@
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
                 ];
             $scope.isMapAccPanelOpen = false;
-            $scope.mapGriddata = [];
+            // $scope.mapGriddata = [];
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
                 ];
                 
+            // $scope.mapGriddata = [
+                // {"id": "5a250f671f9a4d87b0801d26eca44337"},
+                // {"snippet": "Thematic map showing the distribution of crime in 288 Chicago neighborhoods. Single click to view 10 year crime trend, click the right-facing arrow to view pie chart showing crime types for 2010 to Present."},
+                // {"thumbnail": "thumbnail/croudsource.PNG"},
+                // {"title": "Chicago Neighborhood Crime Totals"}
+                // ];
             $scope.imgWebMapUrlBase = 'http://www.arcgis.com/sharing/rest/content/items/';
             $scope.imgWebMapTmplt = 
-                '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
+                '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(\'thumbnail\')}}" width="50" height="50" />';
                 
             $scope.gridMapOptions = { 
                 data: 'mapGriddata',
@@ -284,18 +290,18 @@
                     console.log("found array with length " + response.total);
                     var i = response.total;
                     var mpdata = [];
-                    mpdata = dojo.map(response.results, function (map) {
+                    $scope.mapGriddata  = dojo.map(response.results, function (map) {
                       return {
                         'snippet': map.snippet,
                         'title': map.title,
-                        'url': map.url,
+                        // 'url': map.url,
                         'thumbnail': map.thumbnailUrl || '',
                         'id': map.id,
-                        'owner': map.owner
+                        // 'owner': map.owner
                       }
                     });
                     //create the grid
-                    $scope.mapGriddata = mpdata;
+                    // $scope.mapGriddata = mpdata;
                     $scope.gridGrpOptions.data = mpdata;
                     console.debug($scope.mapGriddata);
                     $scope.redrawGrid();
