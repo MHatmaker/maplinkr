@@ -25,10 +25,6 @@
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
                 ];
-                
-            // $scope.imgWebMapUrlBase = 'http://www.arcgis.com/sharing/rest/content/items/';
-            // $scope.imgWebMapTmplt = 
-                // '<img ng-src="{{imgWebMapUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
             $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.field)}}" width="50" height="50" />';
                 
             $scope.gridMapOptions = { 
@@ -41,13 +37,13 @@
                      displayName:'Img',
                      cellTemplate: $scope.imgWebMapTmplt},
                     {field:'snippet',
-                     width: '60px',
+                     width: '120px',
                      displayName:'Description'},
                     {field:'title',
-                     width: '56px',
+                     width: '120x',
                      displayName:'Map Title'},
                     {field:'id',
-                     width: '58px',
+                     visible: false,
                      displayName:'ID'}
                 ]
                  
@@ -300,26 +296,15 @@
                     $scope.mapGriddata = mpdata;
                     console.log("show $scope.mapGriddata");
                     var scopeQ = $('#SearchMap').scope();
-                    scopeQ.gridGrpOptions.data = $scope.mapGriddata.concat(mpdata);;
+                    scopeQ.gridGrpOptions.data = $scope.mapGriddata.concat(mpdata);
                     console.debug($scope.mapGriddata);
                     
-                    // var elemT = document.getElementById("SearchMap");
-                    // var elemA = angular.element("SearchMap");
-                    scopeQ = $('#SearchMap').scope();
-                    // var elemQScope = $('#SearchMap').scope();
-                    // $('#SearchMap').scope().$apply();
-                    // var scopeT = elemA.scope();
-                    // console.log( $("#SearchGroup") , angular.element($("#SearchMap")) , scopeT );
+                    // scopeQ = $('#SearchMap').scope();
                     if( scopeQ )
                     {
-                        scopeQ.myData = mpdata;
-                        scopeQ.mapGriddata = mpdata;
                         $scope.mapGriddata = mpdata;
                         scopeQ.$apply(function(){
-                                scopeQ.myData = mpdata;
-                            });
-                        $scope.$apply(function(){
-                                $scope.myData = mpdata;
+                                scopeQ.mapGriddata = mpdata;
                             });
                     }
                     $scope.redrawGrid();

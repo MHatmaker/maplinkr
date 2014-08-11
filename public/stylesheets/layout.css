@@ -51,6 +51,10 @@
         margin:5px;   /*15px 20px 15px 20px;*/
         padding:5px;
       }
+      .ngCellText {
+        font-size:10px;
+        }
+      
       div.background
             {
           background: url(/stylesheets/images/bigmasher.png);
