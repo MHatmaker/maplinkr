@@ -20,6 +20,7 @@
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
                 ];
             $scope.isMapAccPanelOpen = false;
+            $scope.isGrpAccPanelOpen = false;
             $scope.mapGriddata = [];
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
@@ -60,12 +61,11 @@
             $scope.selectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
-                $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
-                var accPane = angular.element(document.getElementById("MapSearcherPane"));
-                console.debug(accPane);
-                console.log("isMapAccPanelOpen = " + $scope.isMapAccPanelOpen);
+                var scopeG = $('#GroupSearcherPane').scope();
+                scopeG.isGrpAccPanelOpen = false;
+                // var scopeQ = $('#MapSearcherPane').scope();
+                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                 $scope.findMapsForGroup(rowItem.entity.id);
-                // $scope.selectedItm = rowItem.entity.thumbnail;
             };
             
             
@@ -116,6 +116,7 @@
             $scope.getGridStyleMap = function () {                
                 var vrbg = angular.element(document.getElementById("verbagePan"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));
+                // var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
                 var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
                 var marginborder = (1 + 1) * 2;
                 var accinnermarginborder = (1 + 9) * 2;
@@ -312,6 +313,8 @@
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
+                var scopeQ = $('#MapSearcherPane').scope();
+                scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                     
                  }
             };
