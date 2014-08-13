@@ -39,7 +39,16 @@
                     $locationProvider.html5Mode(true);
                     console.debug('html5Mode again')
                    }
-            ]);
+            ]).
+            
+            
+            factory("CurrentWebMapIdService", function(){
+                var currentWebMapId = "fooWebMapId";
+                return {
+                        setCurrentWebMapId : function(newId){ currentWebMapId = newId; },
+                        getCurrentWebMapId : function(){ return currentWebMapId;}
+                 };
+             });
             
             AppController.start(App);
             // need to bootstrap angular since we wait for dojo/DOM to load

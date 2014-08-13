@@ -16,9 +16,28 @@
             $scope.VrbgWdth = '30%';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             
+            $scope.isGrpAccPanelOpen = false;
+            $scope.isMapAccPanelOpen = false;
+            $scope.signInOutGrp = "Sign In";
+            $scope.signInOutMap = "Sign In";
+            
             $scope.$on('CollapseVerbageEvent', function() {
                 $scope.VrbgWdth = $scope.VrbgWdth == '30%' ? '0%' : '30%';
                 $scope.isVerbageCollapsed = ! $scope.isVerbageCollapsed;
+            });
+            $scope.$on('SignInOutEvent', function(isSignedIn) {
+                if(isSignedIn){
+                    $scope.signInOutGrp = "Sign Out";
+                    $scope.signInOutMap = "Sign Out";
+                }else{
+                    $scope.signInOutGrp = "Sign In";
+                    $scope.signInOutMap = "Sign In";
+                }
+            });
+            $scope.$on('OpenMapPaneEvent', function(event, args) {
+                $scope.isGrpAccPanelOpen = ! $scope.isGrpAccPanelOpen;
+                $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
+                $scope.$broadcast('OpenMapPaneCommand', args );  // ? args.respData);
             });
         };
         

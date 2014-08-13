@@ -2,20 +2,17 @@
 (function() {
     "use strict";
 
-    console.log('SearcherCtrl setup');
+    console.log('SearcherCtrlGrp setup');
     define([
         'angular' //,
         // 'CurrentWebMapIdService'  //,
         // 'ngGrid'
     ], function(angular) {
-        console.log('SearcherCtrl define');
+        console.log('SearcherCtrlGrp define');
         
-        function SearcherCtrl($scope) {
+        function SearcherCtrlGrp($scope) {
             $scope.findGrpDisabled = false;
             $scope.searchTermGrp = "Chicago";
-            $scope.searchTermMap = "Chicago Crime";
-            $scope.signInOutGrp = "Sign In";
-            $scope.signInOutMap = "Sign In";
             
             var injector = angular.injector(['app', 'ng']);
             if(injector.has('CurrentWebMapIdService')){
@@ -26,38 +23,8 @@
             $scope.data = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
-                ];
-            $scope.isMapAccPanelOpen = false;
-            $scope.isGrpAccPanelOpen = false;
-            $scope.mapGriddata = [];
-            $scope.mapGriddata = [
-                {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
-                {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
-                ];
-            $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.field)}}" width="50" height="50" />';
+                ];  
                 
-            $scope.gridMapOptions = { 
-                data: 'mapGriddata',
-                rowHeight: '50',
-                afterSelectionChange:  $scope.mapSelectionChanged,
-                
-                columnDefs: [
-                    {field:'thumbnail',
-                     width: '50px',
-                     displayName:'Img',
-                     cellTemplate: $scope.imgWebMapTmplt},
-                    {field:'snippet',
-                     width: '120px',
-                     displayName:'Description'},
-                    {field:'title',
-                     width: '120x',
-                     displayName:'Map Title'},
-                    {field:'id',
-                     visible: false,
-                     displayName:'ID'}
-                ]
-                 
-            };
             var self = this;
             self.scope = $scope;
             
@@ -70,22 +37,12 @@
             $scope.selectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
-                var scopeG = $('#GroupSearcherPane').scope();
-                scopeG.isGrpAccPanelOpen = false;
+                // var scopeG = $('#GroupSearcherPane').scope();
+                // scopeG.isGrpAccPanelOpen = false;
                 // var scopeQ = $('#MapSearcherPane').scope();
                 // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                 $scope.findMapsForGroup(rowItem.entity.id);
             };
-            
-            
-            var scopeMp = $('#MapSearcherPane').scope();
-            scopeMp.mapSelectionChanged = function(rowItem,event){ 
-                console.debug(rowItem.entity);
-                console.debug(rowItem.entity.title);
-                // previousSelectedWebMapId = selectedWebMapId;
-                var selectedWebMapId = rowItem.entity.id;
-                initialize(selectedWebMapId, true, rowItem.entity.title);
-            }
             
             
             $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/';
@@ -129,27 +86,6 @@
                portalForSearch.queryGroups(params).then(function (data) {
                 $scope.showGroupResults(data);
                });
-            };
-            
-            
-            $scope.getGridStyleMap = function () {                
-                var vrbg = angular.element(document.getElementById("verbagePan"));
-                var accHead = angular.element(document.getElementById("AccdianNews"));
-                // var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
-                var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
-                var marginborder = (1 + 1) * 2;
-                var accinnermarginborder = (1 + 9) * 2;
-                var availableHgt = vrbg[0].offsetHeight - srchWrap[0].offsetHeight - accinnermarginborder -
-                                    4 * (accHead[0].offsetHeight + marginborder);
-                var rowHeight = 50;
-                var headerHeight = 34;
-                var height = +($scope.data.length * rowHeight + headerHeight);
-                if (height > availableHgt) {
-                    height = availableHgt;
-                }
-                return {
-                    height: height + "px"
-                };
             };
             
             $scope.getGridStyleGroup = function () {
@@ -248,46 +184,21 @@
               console.log("signInFromGroupTab");
               self.portal = portalForSearch;
 
-              if ($scope.signInOutGrp.indexOf('In') !== -1) {
+              if ($scope.$parent.signInOutGrp.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
-                    $scope.signInOutGrp = "Sign Out";
-                    $scope.signInOutMap = "Sign Out";
+                    $scope.$emit('SignInOutEvent'); //out
                     $scope.findArcGISGroup(portalForSearch);   // update results
                 }, function (error) { //error so reset sign in link
-                    $scope.signInOutGrp = "Sign In";
-                    $scope.signInOutMap = "Sign In";
+                    $scope.$emit('SignInOutEvent'); //in
                 });
               } else {
                 portalForSearch.signOut().then(function (portalInfo) {
-                    $scope.signInOutGrp = "Sign In";
-                    $scope.signInOutMap = "Sign In";
+                    $scope.$emit('SignInOutEvent'); //in
                     findArcGISGroup(portalForSearch);
                 });
               }
             };
             
-            // gets private groups as well
-            $scope.signInFromMapTab = function() {
-              console.log("signInFromMapTab");
-              self.portal = portalForSearch;
-
-              if ($scope.signInOutMap.indexOf('In') !== -1) {
-                portal.signIn().then(function (loggedInUser) {
-                    $scope.signInOutGrp = "Sign Out";
-                    $scope.signInOutMap = "Sign Out";
-                  findArcGISGroupMaps(portal, $scope.searchTermMap);   // update results
-                }, function (error) {  //error so reset sign in link
-                    $scope.signInOutGrp = "Sign In";
-                    $scope.signInOutMap = "Sign In";
-                });
-              } else {
-                portal.signOut().then(function (portalInfo) {
-                    $scope.signInOutGrp = "Sign In";
-                    $scope.signInOutMap = "Sign In";
-                    findArcGISGroupMaps(portal, $scope.searchTermMap);
-                });
-              }
-            };
             
             //display a list of groups that match the input user name
             
@@ -295,6 +206,7 @@
                 // utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
+                $scope.$emit('OpenMapPaneEvent', { 'respData' : response });
                 console.debug(response);
                 console.log("response.total " + response.total);
                 if (response.total > 0) {
@@ -312,11 +224,10 @@
                       }
                     });
                     //create the grid
-                    $scope.gridGrpOptions.data = [];
                     $scope.mapGriddata = mpdata;
                     console.log("show $scope.mapGriddata");
                     var scopeQ = $('#SearchMap').scope();
-                    scopeQ.gridGrpOptions.data = $scope.mapGriddata.concat(mpdata);
+                    scopeQ.gridMapOptions.data = $scope.mapGriddata.concat(mpdata);
                     console.debug($scope.mapGriddata);
                     
                     // scopeQ = $('#SearchMap').scope();
@@ -332,21 +243,21 @@
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
-                var scopeQ = $('#MapSearcherPane').scope();
-                scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
+                // var scopeQ = $('#MapSearcherPane').scope();
+                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                     
                  }
             };
         }  
         
         function init(App) {
-            console.log('SearcherCtrl init');
+            console.log('SearcherCtrlGrp init');
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrl',  ['$scope', SearcherCtrl]);
-            // SearcherCtrl.CurrentWebMapIdService= CurrentWebMapIdService;
-            return SearcherCtrl;
+            App.controller('SearcherCtrlGrp',  ['$scope', SearcherCtrlGrp]);
+            // SearcherCtrlGrp.CurrentWebMapIdService= CurrentWebMapIdService;
+            return SearcherCtrlGrp;
         }
         
         return { start: init };

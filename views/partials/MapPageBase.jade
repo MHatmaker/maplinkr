@@ -6,7 +6,8 @@ block stylesblock append
 block append scriptsblock
             script(src='http://js.pusherapp.com/1.10/pusher.min.js')
             script(src='/javascripts/lib/StompSetup.js')
-            script(src='/javascripts/lib/SearcherCtrl.js')
+            script(src='/javascripts/lib/SearcherCtrlGrp.js')
+            script(src='/javascripts/lib/SearcherCtrlMap.js')
     
 block append content
 
@@ -94,14 +95,14 @@ block append content
                                         br
                                         
                                     accordion-group(id="GroupSearcherPane", heading="Group Searcher", is-open="isGrpAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
-                                        #SearchGroup(ng-controller="SearcherCtrl")
+                                        #SearchGroup(ng-controller="SearcherCtrlGrp")
                                             div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                                 div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
                                                     div(id="searchToolWrapperGroup")
                                                         span
                                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:75%') AGO Group Search
                                                             
-                                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
+                                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{VerbageCtrl.signInOutGrp}}')
                                                              
                                                         p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                                         span
@@ -112,7 +113,7 @@ block append content
                                                     div(ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()")
 
                                     accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
-                                        #SearchMap(ng-controller="SearcherCtrl")
+                                        #SearchMap(ng-controller="SearcherCtrlMap")
                                             div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
                                                 div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                                     div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
@@ -125,7 +126,7 @@ block append content
                                                             p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                                             span
                                                                 input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                                                input(name="mapFinderSubmit",  ng-disabled='findGrpDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+                                                                input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
 
                                                     div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                         div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")

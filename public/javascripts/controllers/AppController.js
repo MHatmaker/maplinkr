@@ -10,9 +10,10 @@
         'controllers/MapCtrl',
         'controllers/VerbageCtrl',
         'controllers/SPACtrl',
-        'controllers/SearcherCtrl'
+        'controllers/SearcherCtrlGrp',
+        'controllers/SearcherCtrlMap'
         ], 
-    function(angular, MasherCtrl, TabsCtrl, MapCtrl, VerbageCtrl, SPACtrl, SearcherCtrl) {
+    function(angular, MasherCtrl, TabsCtrl, MapCtrl, VerbageCtrl, SPACtrl, SearcherCtrlGrp, SearcherCtrlMap) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -24,7 +25,8 @@
             MapCtrl.start(App);
             SPACtrl.start(App);
             VerbageCtrl.start(App);
-            SearcherCtrl.start(App);
+            SearcherCtrlGrp.start(App);
+            SearcherCtrlMap.start(App);
             return AppController;
         }
 
