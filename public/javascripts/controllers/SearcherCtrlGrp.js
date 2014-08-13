@@ -14,11 +14,14 @@
             $scope.findGrpDisabled = false;
             $scope.searchTermGrp = "Chicago";
             
+            $scope.isGrpAccPanelOpen = false;
+            $scope.signInOutGrp = "Sign In";
+            
             var injector = angular.injector(['app', 'ng']);
-            if(injector.has('CurrentWebMapIdService')){
+          /*   if(injector.has('CurrentWebMapIdService')){
                 var CurrentWebMapIdService = injector.get('CurrentWebMapIdService');
                 CurrentWebMapIdService.getCurrentWebMapId('foobar');
-            } 
+            }  */
            
             $scope.data = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
@@ -184,20 +187,28 @@
               console.log("signInFromGroupTab");
               self.portal = portalForSearch;
 
-              if ($scope.$parent.signInOutGrp.indexOf('In') !== -1) {
+              if ($scope.signInOutGrp.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
-                    $scope.$emit('SignInOutEvent'); //out
+                    $scope.$emit('SignInOutEmitEvent', true); //out
                     $scope.findArcGISGroup(portalForSearch);   // update results
                 }, function (error) { //error so reset sign in link
-                    $scope.$emit('SignInOutEvent'); //in
+                    $scope.$emit('SignInOutEmitEvent', true); //in
                 });
               } else {
                 portalForSearch.signOut().then(function (portalInfo) {
-                    $scope.$emit('SignInOutEvent'); //in
+                    $scope.$emit('SignInOutEmitEvent', false); //in
                     findArcGISGroup(portalForSearch);
                 });
               }
             };
+            
+            $scope.$on('SignInOutBroadcastEvent', function(event, isSignedIn) {
+                if(isSignedIn){
+                    $scope.signInOutGrp = "Sign Out";
+                }else{
+                    $scope.signInOutGrp = "Sign In";
+                }
+            });
             
             
             //display a list of groups that match the input user name

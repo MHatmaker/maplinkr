@@ -14,11 +14,14 @@
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
             
+            $scope.isMapAccPanelOpen = false;
+            $scope.signInOutMap = "Sign In";
+            
             var injector = angular.injector(['app', 'ng']);
-            if(injector.has('CurrentWebMapIdService')){
+          /*   if(injector.has('CurrentWebMapIdService')){
                 var CurrentWebMapIdService = injector.get('CurrentWebMapIdService');
                 CurrentWebMapIdService.getCurrentWebMapId('foobar');
-            } 
+            }  */
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
@@ -81,7 +84,7 @@
                                     4 * (accHead[0].offsetHeight + marginborder);
                 var rowHeight = 50;
                 var headerHeight = 34;
-                var height = +($scope.data.length * rowHeight + headerHeight);
+                var height = +($scope.mapGriddata.length * rowHeight + headerHeight);
                 if (height > availableHgt) {
                     height = availableHgt;
                 }
@@ -118,19 +121,26 @@
 
               if ($scope.signInOutMap.indexOf('In') !== -1) {
                 portal.signIn().then(function (loggedInUser) {
-                    $scope.$emit('SignInOutEvent'); //out
+                    $scope.$emit('SignInOutEmitEvent'); //out
                   findArcGISGroupMaps(portal, $scope.searchTermMap);   // update results
                 }, function (error) {  //error so reset sign in link
-                    $scope.$emit('SignInOutEvent'); //in
+                    $scope.$emit('SignInOutEmitEvent'); //in
                 });
               } else {
                 portal.signOut().then(function (portalInfo) {
-                    $scope.$emit('SignInOutEvent'); //in
+                    $scope.$emit('SignInOutEmitEvent'); //in
                     findArcGISGroupMaps(portal, $scope.searchTermMap);
                 });
               }
             };
             
+            $scope.$on('SignInOutBroadcastEvent', function(event, isSignedIn) {
+                if(isSignedIn){
+                    $scope.signInOutMap = "Sign Out";
+                }else{
+                    $scope.signInOutMap = "Sign In";
+                }
+            });
             
             $scope.$on('OpenMapPaneEvent', function(event, args) {
                 $scope.showMapResults(args.respData);
