@@ -1,4 +1,24 @@
 
+
+
+var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+  $scope.thisWindow = function () {
+    $scope.newWindow = false;
+    $modalInstance.close();
+  };
+  
+  $scope.newWindow = function () {
+    $scope.newWindow = true;
+    $modalInstance.close();
+  };
+
+  $scope.cancelMash = function () {
+    $scope.newWindow = "cancelMashOp";
+    $modalInstance.dismiss('cancel');
+  };
+};
+
 (function() {
     "use strict";
 
@@ -9,7 +29,7 @@
     ], function(angular, StartupArcGIS) {
         console.log('SearcherCtrlMap define');
         
-        function SearcherCtrlMap($scope) {
+        function SearcherCtrlMap($scope, $modal) {
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
             
@@ -25,6 +45,7 @@
               layoutPlugin.updateGridLayout();
             };
             
+            $scope.newWindow = false;
             $scope.selectedItm = "Nada";
             
             // var scopeMp = $('#MapSearcherPane').scope();
@@ -33,7 +54,10 @@
                 console.debug(rowItem.entity.title);
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
-                StartupArcGIS.replaceWebMap(selectedWebMapId, true, rowItem.entity.title);
+                $scope.openWindowSelectionDialog($modal);
+                if($scope.newWindow != "cancelMashOp"){
+                    StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.newWindow, rowItem.entity.title);
+                }
             }
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
@@ -177,6 +201,20 @@
                     
                  }
             };
+            
+          $scope.openWindowSelectionDialog = function ($modal) {
+
+            var modalInstance = $modal.open({
+              templateUrl: 'DestSelectModalDlg.html',
+              controller: ModalInstanceCtrl
+            });
+
+            modalInstance.result.then(function () {
+            }, function () {
+              console.log('Modal dismissed at: ' + new Date());
+            });
+          };
+          
         }  
         
         function init(App) {
@@ -184,7 +222,7 @@
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
+            App.controller('SearcherCtrlMap',  ['$scope', '$modal', SearcherCtrlMap]);
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return SearcherCtrlMap;
         }

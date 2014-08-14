@@ -5,15 +5,30 @@ extends ./MapPageBase
 block append scriptsblock
     script(src='javascripts/lib/proj4js.js')
     script(src='/javascripts/lib/StartupArcGIS.js')
-    script(src='javascripts/lib/searcher.js')
+    script(src='javascripts/lib/searcher.js') 
+    script(type="text/ng-template" id="DestSelectModalDlg.html")
+        div(class="modal-header")
+            h3(Select Destination Window)
+        div(class="modal-body")
+            ul
+                li Open a new web map replacing map in this window
+                li Open a new web map in a new window
+        div(class="modal-footer")
+            button(class="btn btn-primary" ng-click="thisWindow()", value="This Window")
+            button(class="btn btn-primary" ng-click="newWindow()", value=">New Window")
+            button(class="btn btn-warning" ng-click="cancelMash()", value="Cancel")
 
+//
 
+    block append content        
+                div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
+                        div(id="idDialogContainer")
+                            div(class="dijitDialogPaneContentArea" id="idDialogText")
 
-    block append content
-                div(class="dijitDialogPaneActionBar")
-                    button(dojoType="dijit.form.Button" type="submit", id="idDialogButtonSameWindow", value='This Window') 
-                    button(dojoType="dijit.form.Button", type="submit", id="idDialogButtonNewWindow", value='New Window')
-                    button(dojoType="dijit.form.Button", type="button", onClick="dijit.byId('idWindowSelectionDialog').onCancel();", id="idDialogButtonCancel", value='Cancel') 
+                            div(class="dijitDialogPaneActionBar")
+                                button(dojoType="dijit.form.Button" type="submit", id="idDialogButtonSameWindow", value='This Window') 
+                                button(dojoType="dijit.form.Button", type="submit", id="idDialogButtonNewWindow", value='New Window')
+                                button(dojoType="dijit.form.Button", type="button", onClick="dijit.byId('idWindowSelectionDialog').onCancel();", id="idDialogButtonCancel", value='Cancel') 
 
 //
     block append content
