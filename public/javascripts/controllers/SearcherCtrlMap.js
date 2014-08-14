@@ -22,6 +22,26 @@
                 var CurrentWebMapIdService = injector.get('CurrentWebMapIdService');
                 CurrentWebMapIdService.getCurrentWebMapId('foobar');
             }  */
+            
+            var self = this;
+            self.scope = $scope;
+            
+            var layoutPlugin = new ngGridLayoutPlugin();
+            
+            $scope.updateLayout = function(){
+              layoutPlugin.updateGridLayout();
+            };
+            
+            $scope.selectedItm = "Nada";
+            
+            // var scopeMp = $('#MapSearcherPane').scope();
+            $scope.mapSelectionChanged = function(rowItem,event){ 
+                console.debug(rowItem.entity);
+                console.debug(rowItem.entity.title);
+                // previousSelectedWebMapId = selectedWebMapId;
+                var selectedWebMapId = rowItem.entity.id;
+                initialize(selectedWebMapId, true, rowItem.entity.title);
+            }
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
@@ -32,6 +52,7 @@
                 data: 'mapGriddata',
                 rowHeight: '50',
                 afterSelectionChange:  $scope.mapSelectionChanged,
+                multiSelect: false,
                 
                 columnDefs: [
                     {field:'thumbnail',
@@ -50,24 +71,6 @@
                 ]
                  
             };
-            var self = this;
-            self.scope = $scope;
-            
-            var layoutPlugin = new ngGridLayoutPlugin();
-            
-            $scope.updateLayout = function(){
-              layoutPlugin.updateGridLayout();
-            };
-            $scope.selectedItm = "Nada";
-            
-            var scopeMp = $('#MapSearcherPane').scope();
-            scopeMp.mapSelectionChanged = function(rowItem,event){ 
-                console.debug(rowItem.entity);
-                console.debug(rowItem.entity.title);
-                // previousSelectedWebMapId = selectedWebMapId;
-                var selectedWebMapId = rowItem.entity.id;
-                initialize(selectedWebMapId, true, rowItem.entity.title);
-            }
             
             
             var portal = null;
@@ -169,28 +172,17 @@
                       }
                     });
                     //create the grid
-                    $scope.gridMapOptions.data = [];
-                    $scope.mapGriddata = mpdata;
-                    console.log("show $scope.mapGriddata");
-                    var scopeQ = $('#SearchMap').scope();
-                    scopeQ.gridMapOptions.data = $scope.mapGriddata.concat(mpdata);
-                    console.debug($scope.mapGriddata);
-                    
-                    // scopeQ = $('#SearchMap').scope();
-                    if( scopeQ )
-                    {
-                        $scope.mapGriddata = mpdata;
-                        scopeQ.$apply(function(){
-                                scopeQ.mapGriddata = mpdata;
-                            });
-                    }
+                    $scope.mapGriddata = [];
+                    $scope.mapGriddata = $scope.mapGriddata.concat(mpdata);
                     $scope.redrawGrid();
                     // $scope.updateLayout();
                     if (!$scope.$$phase) {
-                        $scope.$apply();
+                        $scope.$apply(function(){
+                                $scope.mapGriddata = mpdata;
+                            });
                     }
-                var scopeQ = $('#MapSearcherPane').scope();
-                scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
+                // var scopeQ = $('#MapSearcherPane').scope();
+                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                     
                  }
             };

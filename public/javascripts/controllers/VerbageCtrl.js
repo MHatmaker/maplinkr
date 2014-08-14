@@ -15,6 +15,8 @@
             $scope.isVerbageCollapsed = false;
             $scope.VrbgWdth = '30%';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
+                $scope.isGrpAccPanelOpen = false;
+                $scope.isMapAccPanelOpen = false;
             
             
             $scope.$on('CollapseVerbageEvent', function() {
