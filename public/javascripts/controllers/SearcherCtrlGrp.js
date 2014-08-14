@@ -18,11 +18,6 @@
             $scope.signInOutGrp = "Sign In";
             
             var injector = angular.injector(['app', 'ng']);
-          /*   if(injector.has('CurrentWebMapIdService')){
-                var CurrentWebMapIdService = injector.get('CurrentWebMapIdService');
-                CurrentWebMapIdService.getCurrentWebMapId('foobar');
-            }  */
-           
             $scope.data = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
@@ -40,10 +35,6 @@
             $scope.selectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
-                // var scopeG = $('#GroupSearcherPane').scope();
-                // scopeG.isGrpAccPanelOpen = false;
-                // var scopeQ = $('#MapSearcherPane').scope();
-                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                 $scope.findMapsForGroup(rowItem.entity.id);
             };
             
@@ -122,8 +113,6 @@
                 //clear any existing results
                 console.log('$scope.showGroupResults');
                 
-                    // gridGroupLocal.on("dgrid-select", function(event){
-                        // Report the item from the selected row to the console.
                 if (response.total > 0) {
                     var grddata = response.results;
                     //create the grid
@@ -134,10 +123,6 @@
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
-                    // gridGrpOptions.data = data;
-                        // console.log("Row selected: ", event.rows[0].data.title);
-                        // console.log("Row selected: ", event.rows[0].data.id);
-                    // });
               } else {
                 dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
               }
@@ -218,46 +203,6 @@
                 //clear any existing results
                 console.log("showMapResults");
                 $scope.$emit('OpenMapPaneEvent', { 'respData' : response });
-             /*    console.debug(response);
-                console.log("response.total " + response.total);
-                if (response.total > 0) {
-                    console.log("found array with length " + response.total);
-                    var i = response.total;
-                    var mpdata = [];
-                    mpdata = dojo.map(response.results, function (map) {
-                      return {
-                        'snippet': map.snippet,
-                        'title': map.title,
-                        'url': map.itemUrl,
-                        'thumbnail': map.thumbnailUrl || '',
-                        'id': map.id,
-                        'owner': map.owner
-                      }
-                    });
-                    //create the grid
-                    $scope.mapGriddata = mpdata;
-                    console.log("show $scope.mapGriddata");
-                    var scopeQ = $('#SearchMap').scope();
-                    scopeQ.gridMapOptions.data = $scope.mapGriddata.concat(mpdata);
-                    console.debug($scope.mapGriddata);
-                    
-                    // scopeQ = $('#SearchMap').scope();
-                    if( scopeQ )
-                    {
-                        $scope.mapGriddata = mpdata;
-                        scopeQ.$apply(function(){
-                                scopeQ.mapGriddata = mpdata;
-                            });
-                    }
-                    $scope.redrawGrid();
-                    // $scope.updateLayout();
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
-                    }
-                // var scopeQ = $('#MapSearcherPane').scope();
-                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
-                    
-                 } */
             };
         }  
         

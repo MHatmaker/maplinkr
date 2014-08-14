@@ -17,12 +17,6 @@
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
             
-            var injector = angular.injector(['app', 'ng']);
-          /*   if(injector.has('CurrentWebMapIdService')){
-                var CurrentWebMapIdService = injector.get('CurrentWebMapIdService');
-                CurrentWebMapIdService.getCurrentWebMapId('foobar');
-            }  */
-            
             var self = this;
             self.scope = $scope;
             
@@ -181,8 +175,6 @@
                                 $scope.mapGriddata = mpdata;
                             });
                     }
-                // var scopeQ = $('#MapSearcherPane').scope();
-                // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                     
                  }
             };
