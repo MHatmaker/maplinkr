@@ -142,7 +142,7 @@
                 }
             });
             
-            $scope.$on('OpenMapPaneEvent', function(event, args) {
+            $scope.$on('OpenMapPaneCommand', function(event, args) {
                 $scope.showMapResults(args.respData);
             });
             
@@ -169,11 +169,11 @@
                       }
                     });
                     //create the grid
-                    $scope.gridGrpOptions.data = [];
+                    $scope.gridMapOptions.data = [];
                     $scope.mapGriddata = mpdata;
                     console.log("show $scope.mapGriddata");
                     var scopeQ = $('#SearchMap').scope();
-                    scopeQ.gridGrpOptions.data = $scope.mapGriddata.concat(mpdata);
+                    scopeQ.gridMapOptions.data = $scope.mapGriddata.concat(mpdata);
                     console.debug($scope.mapGriddata);
                     
                     // scopeQ = $('#SearchMap').scope();

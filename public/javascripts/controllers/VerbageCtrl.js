@@ -22,7 +22,7 @@
                 $scope.isVerbageCollapsed = ! $scope.isVerbageCollapsed;
             });
             $scope.$on('SignInOutEmitEvent', function(event, args) {
-                $scope.broadcast('SignInOutBroadcastEvent', args);
+                $scope.$broadcast('SignInOutBroadcastEvent', args);
             });
             $scope.$on('OpenMapPaneEvent', function(event, args) {
                 $scope.isGrpAccPanelOpen = ! $scope.isGrpAccPanelOpen;

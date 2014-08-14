@@ -218,7 +218,7 @@
                 //clear any existing results
                 console.log("showMapResults");
                 $scope.$emit('OpenMapPaneEvent', { 'respData' : response });
-                console.debug(response);
+             /*    console.debug(response);
                 console.log("response.total " + response.total);
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
@@ -257,7 +257,7 @@
                 // var scopeQ = $('#MapSearcherPane').scope();
                 // scopeQ.isMapAccPanelOpen = ! scopeQ.isMapAccPanelOpen;
                     
-                 }
+                 } */
             };
         }  
         
