@@ -312,7 +312,7 @@
             return StartupArcGIS;
         }
 
-        return { start: init, config : initializePreProc, getMap: getMap,
+        return { start: init, config : initializePreProc, getMap: getMap, replaceWebMap : initialize,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                  resizeMapPane: resizeMapPane};
 

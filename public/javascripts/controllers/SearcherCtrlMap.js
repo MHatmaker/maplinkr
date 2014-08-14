@@ -4,10 +4,9 @@
 
     console.log('SearcherCtrlMap setup');
     define([
-        'angular' //,
-        // 'CurrentWebMapIdService'  //,
-        // 'ngGrid'
-    ], function(angular) {
+        'angular',
+        'lib/StartupArcGIS'
+    ], function(angular, StartupArcGIS) {
         console.log('SearcherCtrlMap define');
         
         function SearcherCtrlMap($scope) {
@@ -34,7 +33,7 @@
                 console.debug(rowItem.entity.title);
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
-                initialize(selectedWebMapId, true, rowItem.entity.title);
+                StartupArcGIS.replaceWebMap(selectedWebMapId, true, rowItem.entity.title);
             }
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
