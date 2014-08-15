@@ -11,12 +11,15 @@ block append scriptsblock
             h3(Select Destination Window)
         div(class="modal-body")
             ul
-                li Open a new web map replacing map in this window
-                li Open a new web map in a new window
+                li(class="acc li") 1 Open a new web map replacing map in this window
+                li(class="acc li") 2 Open a new web map in a new tab
+                li(class="acc li") 3 Open a new web map in a new window
         div(class="modal-footer")
-            button(class="btn btn-primary" ng-click="thisWindow()", value="This Window")
-            button(class="btn btn-primary" ng-click="newWindow()", value=">New Window")
-            button(class="btn btn-warning" ng-click="cancelMash()", value="Cancel")
+            div(class="btn-group" style="margin: 9px 0;")
+                button(class="btn btn-primary", style='width:25%;', ng-click="thisWindow()", value="This Window") This Window
+                button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
+                button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
+                button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
 
 //
 

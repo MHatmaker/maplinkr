@@ -72,6 +72,8 @@
             
         function initialize(newSelectedWebMapId, promptForDestination, selectedMapTitle) 
         {
+            initializePostProc(newSelectedWebMapId);
+            /* 
             if(promptForDestination == false)
             {
                 initializePostProc(newSelectedWebMapId);
@@ -101,7 +103,7 @@
                         500,
                         150
                     );
-            }
+            } */
         }
 
         function initializePostProc(newSelectedWebMapId)
@@ -136,6 +138,10 @@
                         // stompChannel = urlparams['channel'];
                     }
                 }
+                else
+                {
+                    selectedWebMapId = newSelectedWebMapId;
+                }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
             //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications. 
@@ -144,7 +150,8 @@
             //specify any default settings for your map 
             //for example a bing maps key or a default web map id
             configOptions = {
-                webmap: '4b99c1fb712d4fe694805717df5fadf2', // selectedWebMapId,
+                // webmap: '4b99c1fb712d4fe694805717df5fadf2', // selectedWebMapId,
+                webmap: selectedWebMapId,
                 title:"",
                 subtitle:"",
                 //arcgis.com sharing url is used modify this if yours is different

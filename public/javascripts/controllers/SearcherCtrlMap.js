@@ -1,21 +1,33 @@
 
 
 
-var ModalInstanceCtrl = function ($scope, $modalInstance) {
+var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
 
+  $scope.selected = {
+    item: selected || "cancelMashOp"
+  };
+  
   $scope.thisWindow = function () {
-    $scope.newWindow = false;
-    $modalInstance.close();
+    $scope.selected.item = $scope.destWindow = "sameWindowOp";
+    console.log('ModalInstanceCtrl callback : ' + $scope.destWindow);
+    $modalInstance.close($scope.selected.item);
   };
   
   $scope.newWindow = function () {
-    $scope.newWindow = true;
-    $modalInstance.close();
+    $scope.selected.item = $scope.destWindow = "newWindowOp";
+    console.log('ModalInstanceCtrl callback : ' + $scope.destWindow);
+    $modalInstance.close($scope.selected.item);
+  };
+  
+  $scope.newTab = function () {
+    $scope.selected.item = $scope.destWindow = "newTabOp";
+    console.log('ModalInstanceCtrl callback : ' + $scope.destWindow);
+    $modalInstance.close($scope.selected.item);
   };
 
   $scope.cancelMash = function () {
-    $scope.newWindow = "cancelMashOp";
-    $modalInstance.dismiss('cancel');
+    $scope.selected.item = $scope.destWindow = "cancelMashOp";
+    $modalInstance.dismiss('cancelMashOp');
   };
 };
 
@@ -45,7 +57,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance) {
               layoutPlugin.updateGridLayout();
             };
             
-            $scope.newWindow = false;
+            $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
             
             // var scopeMp = $('#MapSearcherPane').scope();
@@ -54,10 +66,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance) {
                 console.debug(rowItem.entity.title);
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
-                $scope.openWindowSelectionDialog($modal);
-                if($scope.newWindow != "cancelMashOp"){
-                    StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.newWindow, rowItem.entity.title);
-                }
+                $scope.openWindowSelectionDialog($modal, rowItem.entity.id, rowItem.entity.title);
+                // if($scope.destWindow != "cancelMashOp"){
+                    // StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, rowItem.entity.title);
+                // }
             }
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
@@ -202,16 +214,25 @@ var ModalInstanceCtrl = function ($scope, $modalInstance) {
                  }
             };
             
-          $scope.openWindowSelectionDialog = function ($modal) {
+          $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
 
             var modalInstance = $modal.open({
               templateUrl: 'DestSelectModalDlg.html',
-              controller: ModalInstanceCtrl
+              controller: ModalInstanceCtrl,
+                  resolve: {
+                    selected: function() {
+                      return $scope.selected;
+                    }
+                  }
             });
 
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (selectedItem) {
+                $scope.destWindow = $scope.selected = selectedItem;
+                if($scope.destWindow != "cancelMashOp"){
+                    StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, selectedMapTitle);
+                }
             }, function () {
-              console.log('Modal dismissed at: ' + new Date());
+                console.log('Modal dismissed at: ' + new Date());
             });
           };
           
