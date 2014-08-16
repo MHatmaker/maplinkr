@@ -9,12 +9,13 @@
         'lib/MapHosterArcGIS'
     ], function(angular, MapHosterArcGIS) {
         console.log('StompSetupCtrl define');  
-        var self = {};
-        self.scope = null;
+        var selfdict = {};
+        selfdict.scope = null;
         
         function StompSetupCtrl($scope, $modal){
+            console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = 'private-channel-mashover';
-            self.scope = $scope;
+            selfdict.scope = $scope;
         
 
             $scope.PusherClient = function(mapholder, channel, cbfn)
@@ -85,32 +86,50 @@
                     $scope.save();
                 }
             }; // end hitEnter
+            
+            $scope.setupPusherClientX = function(mapholder, cbfn)
+            {
+                var dlg = document.getElementById('StompChannelerDialog');
+                self.scope = angular.element(dlg).scope();
+                self.scope.pusherChannelSelectorDialog(function() {
+                                console.log('You selected a channel name');
+                                var channelTextBox = dojo.byId('channelName');
+                                console.debug(channelTextBox.value);
+                                channel = (channelTextBox.value);
+                                PusherClient(mapholder, channel, cbfn);
+                            });
+            };
+            selfdict.setupPusherClient = $scope.setupPusherClient;
           
         }  
         
-        function setupPusherClient(mapholder, cbfn)
+        StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn, $scope)
         {
+            // var scp = $scope;
+            // StompSetupCtrl.setupPusherClientX(mapholder, cbfn);
             var dlg = document.getElementById('StompChannelerDialog');
             self.scope = angular.element(dlg).scope();
+            /*
             self.scope.pusherChannelSelectorDialog(function() {
                             console.log('You selected a channel name');
                             var channelTextBox = dojo.byId('channelName');
                             console.debug(channelTextBox.value);
                             channel = (channelTextBox.value);
                             PusherClient(mapholder, channel, cbfn);
-                        });
+                        }); */
         };
         
         function init(App) {
             console.log('StompSetup init');
             App.controller('StompSetupCtrl',  ['$scope', '$modal', StompSetupCtrl]);
+            selfdict.setupPusherClient = StompSetupCtrl.setupPusherClient;
             
             // StompSetupCtrl.self.scope = StompSetupCtrl.$scope;
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return StompSetupCtrl;
         }
         
-        return { start: init, setupPusherClient : setupPusherClient };
+        return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient };
 
     });
 
