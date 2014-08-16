@@ -1,0 +1,17 @@
+
+    script(type="text/ng-template" id="StompChannelerDialog.html")
+        div(class="modal-header")
+            h3(Select Name for Synchronization Channel)
+        div(class="modal-body")
+                table
+                    tr
+                        td
+                            label(for='channelName', style='font-size:12pt') 
+                        td
+                            input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
+                            
+        div(class="modal-footer")
+            div(class="btn-group" style="margin: 9px 0;")
+                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
+                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                

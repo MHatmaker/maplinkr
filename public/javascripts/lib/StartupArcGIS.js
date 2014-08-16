@@ -22,9 +22,10 @@
     
     define([
         'lib/MapHosterArcGIS',
+        'controllers/StompSetupCtrl',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS) {
+    ], function(MapHosterArcGIS, StompSetupCtrl) {
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';
@@ -70,9 +71,18 @@
         var pusherChannel = null;
         var loading;
             
-        function initialize(newSelectedWebMapId, promptForDestination, selectedMapTitle) 
+        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
             initializePostProc(newSelectedWebMapId);
+            if(displayDestination == 'newWindowOp')
+            {
+                StompSetupCtrl.setupPusherClient(mph, function(channel){
+                    var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
+                    console.log("open new ArcGIS window with URI " + url);
+                    console.log("using channel " + channel);
+                    window.open("http://localhost:3035/arcgis/" + url);
+                    });
+            }
             /* 
             if(promptForDestination == false)
             {

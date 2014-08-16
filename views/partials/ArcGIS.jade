@@ -6,6 +6,7 @@ block append scriptsblock
     script(src='javascripts/lib/proj4js.js')
     script(src='/javascripts/lib/StartupArcGIS.js')
     script(src='javascripts/lib/searcher.js') 
+    script(src='javascripts/controllers/StompSetupCtrl.js') 
     script(type="text/ng-template" id="DestSelectModalDlg.html")
         div(class="modal-header")
             h3(Select Destination Window)
@@ -20,24 +21,22 @@ block append scriptsblock
                 button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
                 button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
                 button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
-
-//
-
-    block append content        
-                div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
-                        div(id="idDialogContainer")
-                            div(class="dijitDialogPaneContentArea" id="idDialogText")
-
-                            div(class="dijitDialogPaneActionBar")
-                                button(dojoType="dijit.form.Button" type="submit", id="idDialogButtonSameWindow", value='This Window') 
-                                button(dojoType="dijit.form.Button", type="submit", id="idDialogButtonNewWindow", value='New Window')
-                                button(dojoType="dijit.form.Button", type="button", onClick="dijit.byId('idWindowSelectionDialog').onCancel();", id="idDialogButtonCancel", value='Cancel') 
-
-//
-    block append content
-        div ArcGIS template for ArcGIS Map displays
-
-
-        div(id="idWindowSelectionDialog", data-dojo-type="dijit.Dialog", title="Select Destination Window", style="width:500px;height:120px;")
-            div(id="idDialogContainer")
-                div(class="dijitDialogPaneContentArea" id="idDialogText")
+                
+                
+    script(type="text/ng-template" id="StompChannelerDialog.html")
+        #StompChannelerDialog(ng-controller="StompSetupCtrl")
+            div(class="modal-header")
+                h3(Select Name for Synchronization Channel)
+            div(class="modal-body")
+                    table
+                        tr
+                            td
+                                label(for='channelName', style='font-size:12pt') 
+                            td
+                                input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
+                            
+        div(class="modal-footer")
+            div(class="btn-group" style="margin: 9px 0;")
+                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
+                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                
