@@ -1,5 +1,21 @@
 
 
+
+var StompModalInstanceCtrl = function ($scope, $modalInstance) {
+
+  $scope.privateChannelMashover = 'private-channel-mashover';
+  
+  $scope.acceptStomperChannel = function () {
+    console.log('StompModalInstanceCtrl callback : ' + $scope.privateChannelMashover);
+    $modalInstance.close($scope.privateChannelMashover);
+  };
+  
+  $scope.cancelStomperChannel = function () {
+    console.log('StompModalInstanceCtrl callback : ' + $scope.privateChannelMashover);
+    $modalInstance.close($scope.privateChannelMashover);
+  };
+};
+
 (function() {
     "use strict";
 
@@ -68,7 +84,7 @@
             
             $scope.pusherChannelSelectorDialog = function(onAcceptChannelName)
             {
-                require(["dijit/Dialog", "dijit/form/Button"]);
+               /*  require(["dijit/Dialog", "dijit/form/Button"]);
                 dojo.byId('idDialogButtonAcceptChannel').onclick  = onAcceptChannelName;
                 dojo.byId('channelName').onkeypress = function(e) {
                         if(e.which == 13) {
@@ -77,8 +93,11 @@
                         }
                     };
 
-                var p = dijit.byId('StompChannelerDialog');
-                StompChannelerDialog.show();
+                var p = dijit.byId('StompChannelerDialog'); */
+                // var dlg = document.getElementById('StompChannelerModal');
+                // dlg.modal({show:true});
+                var dlg = angular.element('#StompChannelerModal');
+                dlg.modal({show:true})
             };
             
             $scope.hitEnter = function(evt){
@@ -105,18 +124,14 @@
         
         StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn, $scope)
         {
-            // var scp = $scope;
-            // StompSetupCtrl.setupPusherClientX(mapholder, cbfn);
             var dlg = document.getElementById('StompChannelerDialog');
             self.scope = angular.element(dlg).scope();
-            /*
+            
             self.scope.pusherChannelSelectorDialog(function() {
                             console.log('You selected a channel name');
-                            var channelTextBox = dojo.byId('channelName');
-                            console.debug(channelTextBox.value);
-                            channel = (channelTextBox.value);
-                            PusherClient(mapholder, channel, cbfn);
-                        }); */
+                            console.debug(self.scope.privateChannelMashover);
+                            PusherClient(mapholder, self.scope.privateChannelMashover, cbfn);
+                        }); 
         };
         
         function init(App) {

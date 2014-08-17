@@ -135,20 +135,23 @@ block append content
                     td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
                     
                     
-        #StompChannelerDialog(ng-controller="StompSetupCtrl")
-            div(class="modal-header")
-                h3(Select Name for Synchronization Channel)
-            div(class="modal-body")
-                    table
-                        tr
-                            td
-                                label(for='channelName', style='font-size:12pt') 
-                            td
-                                input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
-                            
-            div(class="modal-footer")
-                div(class="btn-group" style="margin: 9px 0;")
-                    button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
-                    button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
-                
-                
+        #StompChannelerDialog(ng-controller="StompSetupCtrl" data-target="#StompChannelerModal")
+            div(id="StompChannelerModal", class="modal hide", role="dialog")
+                div(class="modal-dialog")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h3(Select Name for Synchronization Channel)
+                        div(class="modal-body")
+                                table
+                                    tr
+                                        td
+                                            label(for='channelName', style='font-size:12pt') 
+                                        td
+                                            input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
+                                        
+                        div(class="modal-footer")
+                            div(class="btn-group" style="margin: 9px 0;")
+                                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
+                                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                        
+                        
