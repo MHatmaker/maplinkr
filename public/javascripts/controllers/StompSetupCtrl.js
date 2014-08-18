@@ -96,7 +96,8 @@ var StompModalInstanceCtrl = function ($scope, $modalInstance) {
                 var p = dijit.byId('StompChannelerDialog'); */
                 // var dlg = document.getElementById('StompChannelerModal');
                 // dlg.modal({show:true});
-                var dlg = angular.element('#StompChannelerModal');
+                // var dlg = angular.element('#StompChannelerModal');
+                var dlg = $('#StompChannelerModal');
                 dlg.modal({show:true})
             };
             
