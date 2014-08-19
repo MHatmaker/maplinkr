@@ -35,122 +35,146 @@ block append content
                                             img(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg")
 
 
-        table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%;")
-            tbody
-                tr(id="leadpane", style="height:{{ContentsHeight}}px")
-                    td(id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
-                        #map_canvas(style="height:100%;width:100%;margin:0px;")
-                        //
-                            img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+        div
+            table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%;")
+                tbody
+                    tr(id="leadpane", style="height:{{ContentsHeight}}px")
+                        td(id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
+                            #map_canvas(style="height:100%;width:100%;margin:0px;")
+                            //
+                                img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
-                    td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
-                            div(class = "acc scrollable", style="height:100%;width:100%;")
-                                accordion(id="Accdian", style="height:100%;width:100%;", close-others="false")
-                                    accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;")
-                                        h5(style="color:red")
-                                            | We now have WebMap mash-over capabilities
-                                            | Select the Mash-over Instruction pane below for all the latest.
-                                        br
-                                        h5 Sed arcu magna.
-                                        p(style='font-size:9pt').
-                                            molestie at, fringilla in, sodales eu, elit.
-                                            Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
-                                            vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
-                                            augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
-                                            metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
-                                            ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
-                                            euismod, magna nulla viverra libero, sit amet lacinia odio diam id
-                                            risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
-                                            porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
-                                            faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
-                                            consequat quis, varius interdum, nulla. Donec neque tortor,
-                                            sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
-                                            ut eros sit amet ante pharetra interdum.
-                                        br
+                        td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
+                                div(class = "acc scrollable", style="height:100%;width:100%;")
+                                    accordion(id="Accdian", style="height:100%;width:100%;", close-others="false")
+                                        accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;")
+                                            h5(style="color:red")
+                                                | We now have WebMap mash-over capabilities
+                                                | Select the Mash-over Instruction pane below for all the latest.
+                                            br
+                                            h5 Sed arcu magna.
+                                            p(style='font-size:9pt').
+                                                molestie at, fringilla in, sodales eu, elit.
+                                                Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                                                vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                                                augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                                                metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                                                ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                                                euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                                                risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
+                                                porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
+                                                faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
+                                                consequat quis, varius interdum, nulla. Donec neque tortor,
+                                                sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
+                                                ut eros sit amet ante pharetra interdum.
+                                            br
 
-                                    accordion-group(id="fillerPane", heading="Mash-over Instructions", style="height:100%;width:100%;vertical-align:top;")
-                                        h3 Using Mash-over
+                                        accordion-group(id="fillerPane", heading="Mash-over Instructions", style="height:100%;width:100%;vertical-align:top;")
+                                            h3 Using Mash-over
 
-                                        p(style='font-size:9pt;margin:1em').                              
-                                            Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
+                                            p(style='font-size:9pt;margin:1em').                              
+                                                Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
 
-                                        p(style='font-size:9pt;margin:1em;').
-                                            Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
+                                            p(style='font-size:9pt;margin:1em;').
+                                                Mash-overs can be created from three map viewer sources, if the viewer incorporates the mash-over component.
 
-                                        ul#MapTypes(style="list-style-type: decimal; height:100%")
-                                            li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
-                                            li(class="acc li") 2 A web page with a google map display.
-                                            li(class="acc li") 3 A web page with an open source map display.
+                                            ul#MapTypes(style="list-style-type: decimal; height:100%")
+                                                li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
+                                                li(class="acc li") 2 A web page with a google map display.
+                                                li(class="acc li") 3 A web page with an open source map display.
+                                                
+                                            h3( style="text-align:left") Steps
+
+                                            ul#StepsList(style="height:100%")
+                                                li(class="acc li") 1 Open the accordian pane for group search.  Enter a search term and click the submit button.
+                                                li(class="acc li") 2 The group pane displays groups matching the search term.  Click on one of the groups.
+                                                li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens the WebMap in the default ArcGISOnline WebMap viewer in a new tab.
+                                                li(class="acc li") 4 Drag the tab to the desktop, which displays the tab's contents in a new browser instance.
+                                                li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
+
+                                            br
                                             
-                                        h3( style="text-align:left") Steps
-
-                                        ul#StepsList(style="height:100%")
-                                            li(class="acc li") 1 Open the accordian pane for group search.  Enter a search term and click the submit button.
-                                            li(class="acc li") 2 The group pane displays groups matching the search term.  Click on one of the groups.
-                                            li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens the WebMap in the default ArcGISOnline WebMap viewer in a new tab.
-                                            li(class="acc li") 4 Drag the tab to the desktop, which displays the tab's contents in a new browser instance.
-                                            li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
-
-                                        br
-                                        
-                                    accordion-group(id="GroupSearcherPane", heading="Group Searcher", is-open="$parent.isGrpAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
-                                        #SearchGroup(ng-controller="SearcherCtrlGrp")
-                                            div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                                                div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                    div(id="searchToolWrapperGroup")
-                                                        span
-                                                            label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:75%') AGO Group Search
-                                                            
-                                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
-                                                             
-                                                        p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
-                                                        span
-                                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
-
-                                                div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                    div(ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()")
-
-                                    accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="$parent.isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
-                                        #SearchMap(ng-controller="SearcherCtrlMap")
-                                            div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
+                                        accordion-group(id="GroupSearcherPane", heading="Group Searcher", is-open="$parent.isGrpAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
+                                            #SearchGroup(ng-controller="SearcherCtrlGrp")
                                                 div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
                                                     div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                        div(id="searchToolWrapperMap")
+                                                        div(id="searchToolWrapperGroup")
                                                             span
-                                                                label(id='mapSearchLabel', for='signInMap', style='font-size:12pt') AGO Map Search
+                                                                label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:75%') AGO Group Search
                                                                 
-                                                                input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
-
-                                                            p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                                                input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
+                                                                 
+                                                            p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                                             span
-                                                                input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                                                input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+                                                                input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
+                                                                input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
-                                                    div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                        div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")
+                                                    div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                        div(ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()")
 
-                tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
-                    td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
-                    
-                    
-        #StompChannelerDialog(ng-controller="StompSetupCtrl" data-target="#StompChannelerModal")
-            div(id="StompChannelerModal", class="modal hide", role="dialog")
-                div(class="modal-dialog")
-                    div(class="modal-content")
-                        div(class="modal-header")
-                            h3(Select Name for Synchronization Channel)
-                        div(class="modal-body")
-                                table
-                                    tr
-                                        td
-                                            label(for='channelName', style='font-size:12pt') 
-                                        td
-                                            input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
-                                        
-                        div(class="modal-footer")
-                            div(class="btn-group" style="margin: 9px 0;")
-                                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
-                                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                                        accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="$parent.isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
+                                            #SearchMap(ng-controller="SearcherCtrlMap")
+                                                div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
+                                                    div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
+                                                        div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
+                                                            div(id="searchToolWrapperMap")
+                                                                span
+                                                                    label(id='mapSearchLabel', for='signInMap', style='font-size:12pt') AGO Map Search
+                                                                    
+                                                                    input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
+
+                                                                p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                                                span
+                                                                    input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
+                                                                    input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+
+                                                        div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
+                                                            div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")
+                                                                 
+                                
+
+
+                    tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
+                        td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
                         
-                        
+                    
+//                    
+            #StompChannelerDialog(ng-controller="StompSetupCtrl" data-target="#StompChannelerModal")
+                div(id="StompChannelerModal", class="modal hide", role="dialog")
+                    div(class="modal-dialog")
+                        div(class="modal-content")
+                            div(class="modal-header")
+                                h3(Select Name for Synchronization Channel)
+                            div(class="modal-body")
+                                    table
+                                        tr
+                                            td
+                                                label(for='channelName', style='font-size:12pt') 
+                                            td
+                                                input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
+                                            
+                            div(class="modal-footer")
+                                div(class="btn-group" style="margin: 9px 0;")
+                                    button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
+                                    button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                                    
+//                                   
+            #DestinationSelectorDialog(ng-controller="StompSetupCtrl" data-target="#StompChannelerModal")
+                div(class="modal hide fade", role="dialog")
+                    div(class="modal-dialog")
+                        div(class="modal-content")
+                            div(class="modal-header")
+                                h3(Select Destination Window)
+                            div(class="modal-body")
+                                ul
+                                    li(class="acc li") 1 Open a new web map replacing map in this window
+                                    li(class="acc li") 2 Open a new web map in a new tab
+                                    li(class="acc li") 3 Open a new web map in a new window
+                            div(class="modal-footer")
+                                div(class="btn-group" style="margin: 9px 0;")
+                                    button(class="btn btn-primary", style='width:25%;', ng-click="thisWindow()", value="This Window") This Window
+                                    button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
+                                    button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
+                                    button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
+                                
+                            

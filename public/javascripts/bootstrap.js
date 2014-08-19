@@ -15,7 +15,7 @@
             // var App = angular.module('app', ['ui.bootstrap']);
             console.debug('bootstrap init method');
             
-            var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.layout', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion'])
+            var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion'])
                 .config(['$routeProvider', '$locationProvider', 
                 function($routeProvider, $locationProvider) {
                     console.debug('App module route provider');
