@@ -17,7 +17,6 @@
             $scope.isGrpAccPanelOpen = false;
             $scope.signInOutGrp = "Sign In";
             
-            var injector = angular.injector(['app', 'ng']);
             $scope.data = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}

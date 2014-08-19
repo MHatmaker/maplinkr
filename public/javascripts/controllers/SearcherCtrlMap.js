@@ -216,9 +216,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             
           $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
 
+            var dlg = document.getElementById('DestSelectDlgId');
+            dlg.modal({show:true})
+            self.scope = angular.element(dlg).scope();
             var modalInstance = $modal.open({
+              show : true,
               templateUrl: 'DestSelectModalDlg.html',
-              controller: ModalInstanceCtrl,
+              controller: 'ModalInstanceCtrl',
                   resolve: {
                     selected: function() {
                       return $scope.selected;
@@ -244,6 +248,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlMap',  ['$scope', '$modal', SearcherCtrlMap]);
+            App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return SearcherCtrlMap;
         }
