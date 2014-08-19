@@ -5,7 +5,7 @@ html(style="height:100%;width:100%;")
         base(href='/')
         title Mashover Viewer
         block stylesblock
-            link(rel='stylesheet', href="http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.css")
+            link(rel='stylesheet', href="/stylesheets/ng-grid.css")
             link(rel='stylesheet', href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
             link(rel='stylesheet', href="https://rawgithub.com/angular-ui/ui-layout/master/src/ui-layout.css")
             link(rel='stylesheet', href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/nihilo/nihilo.css")
@@ -24,51 +24,14 @@ html(style="height:100%;width:100%;")
             script(src='/javascripts/lib/DocDomain.js')
             script(src='/javascripts/lib/SearchGrid.js')
             script(src='/javascripts/lib/SearchGridMap.js')
-            script(src='/javascripts/lib/jquery.js')
+            script(src='http://code.jquery.com/jquery-2.1.1.min.js')
             script(src='/javascripts/lib/angular/angular.js')
             script(src='/javascripts/lib/angular/angular-route.js')
+            script(src='https://rawgithub.com/angular-ui/ui-layout/master/src/ui-layout.js')
             script(src='http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid-layout.min.js')
+            script(src='/javascripts/lib/angular/ng-grid.js')
+            script(src='http://angular-ui.github.com/ng-grid/lib/ng-grid-layout.js')
             script(src='/javascripts/MasherApp.js')
         
     body(class="nihilo",style="height:100%;width:100%;")
-                    
-        #StompChannelerDialog(ng-controller="StompSetupCtrl", data-target="#StompChannelerModal", tabindex="-1", role="dialog")
-            div(id="StompChannelerModal", class="modal hide", role="dialog")
-                div(class="modal-dialog")
-                    div(class="modal-content")
-                        div(class="modal-header")
-                            h3(Select Name for Synchronization Channel)
-                        div(class="modal-body")
-                                table
-                                    tr
-                                        td
-                                            label(for='channelName', style='font-size:12pt') 
-                                        td
-                                            input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
-                                        
-                        div(class="modal-footer")
-                            div(class="btn-group" style="margin: 9px 0;")
-                                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
-                                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
-                                
-        #DestinationSelectorDialog
-            div(class="modal hide fade", role="dialog", tabindex="-1")
-                div(class="modal-dialog")
-                    div(class="modal-content")
-                        div(class="modal-header")
-                            h3(Select Destination Window)
-                        div(class="modal-body")
-                            ul
-                                li(class="acc li") 1 Open a new web map replacing map in this window
-                                li(class="acc li") 2 Open a new web map in a new tab
-                                li(class="acc li") 3 Open a new web map in a new window
-                        div(class="modal-footer")
-                            div(class="btn-group" style="margin: 9px 0;")
-                                button(class="btn btn-primary", style='width:25%;', ng-click="thisWindow()", value="This Window") This Window
-                                button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
-                                button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
-                                button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
-                                
         block content
