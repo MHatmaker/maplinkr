@@ -217,7 +217,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
           $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
 
             var dlg = document.getElementById('DestSelectDlgId');
-            dlg.modal({show:true})
+            self.scope = angular.element(dlg).scope();
+            // dlg.modal({show:true})
             self.scope = angular.element(dlg).scope();
             var modalInstance = $modal.open({
               show : true,
