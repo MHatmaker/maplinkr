@@ -47,6 +47,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
+            // $scope.showDialog = false;
             
             var self = this;
             self.scope = $scope;
@@ -67,6 +68,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
                 $scope.openWindowSelectionDialog($modal, rowItem.entity.id, rowItem.entity.title);
+                // $scope.showDialog = true;
                 // if($scope.destWindow != "cancelMashOp"){
                     // StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, rowItem.entity.title);
                 // }
@@ -250,6 +252,42 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlMap',  ['$scope', '$modal', SearcherCtrlMap]);
             App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
+            
+            
+            App.directive("modalShow", function ($parse) {
+                return {
+                    restrict: "A",
+                    link: function (scope, element, attrs) {
+
+                        //Watch for changes to the modal-visible attribute
+                        scope.$watch(attrs.modalShow, function (newValue, oldValue) {
+                            scope.showModal(newValue, attrs.$$element);
+                        });
+
+                        //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+                        $(element).bind("hide.bs.modal", function () {
+                            $parse(attrs.modalShow).assign(scope, false);
+                            if (!scope.$$phase && !scope.$root.$$phase)
+                                scope.$apply();
+                        });
+
+                        //Hide or show the modal
+                        scope.showModal = function (visible, elem) {
+                            if (!elem)
+                                elem = element;
+
+                            if( $(elem).modal){
+                                if (visible)
+                                    $(elem).modal("show");                     
+                                else
+                                    $(elem).modal("hide");
+                            }
+                        }
+                    }
+
+                };
+            });
+            
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return SearcherCtrlMap;
         }
