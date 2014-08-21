@@ -132,7 +132,7 @@ block append content
                                                         div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
                                                             div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")    
                                                             
-                                                #DestinationSelectorDialog
+                                                #DestinationSelectorDialog(ng-controller="ModalInstanceCtrl")
                                                     div(modal-show="showDialog" class="modal hide fade", id="DestSelectDlgId")
                                                         div(class="modal-dialog")
                                                             div(class="modal-content")

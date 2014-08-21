@@ -47,7 +47,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
-            // $scope.showDialog = false;
+            $scope.showDialog = false;
             
             var self = this;
             self.scope = $scope;
@@ -68,7 +68,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
                 $scope.openWindowSelectionDialog($modal, rowItem.entity.id, rowItem.entity.title);
-                // $scope.showDialog = true;
+                $scope.showDialog = true;
                 // if($scope.destWindow != "cancelMashOp"){
                     // StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, rowItem.entity.title);
                 // }
@@ -224,7 +224,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             self.scope = angular.element(dlg).scope();
             var modalInstance = $modal.open({
               show : true,
-              templateUrl: 'DestSelectModalDlg.html',
+              // templateUrl: 'DestSelectModalDlg.html',
+              templateUrl: dlg,
               controller: 'ModalInstanceCtrl',
                   resolve: {
                     selected: function() {
@@ -239,6 +240,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                     StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, selectedMapTitle);
                 }
             }, function () {
+                $scope.showDialog = false;
                 console.log('Modal dismissed at: ' + new Date());
             });
           };
@@ -254,38 +256,54 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
             
             
-            App.directive("modalShow", function ($parse) {
+            App.directive("modalShow", function () {
                 return {
                     restrict: "A",
+                    scope: {
+                        modalVisible: "="
+                    },
                     link: function (scope, element, attrs) {
 
-                        //Watch for changes to the modal-visible attribute
-                        scope.$watch(attrs.modalShow, function (newValue, oldValue) {
-                            scope.showModal(newValue, attrs.$$element);
-                        });
-
-                        //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-                        $(element).bind("hide.bs.modal", function () {
-                            $parse(attrs.modalShow).assign(scope, false);
-                            if (!scope.$$phase && !scope.$root.$$phase)
-                                scope.$apply();
-                        });
-
                         //Hide or show the modal
-                        scope.showModal = function (visible, elem) {
-                            if (!elem)
-                                elem = element;
-
-                            if( $(elem).modal){
-                                if (visible)
-                                    $(elem).modal("show");                     
-                                else
-                                    $(elem).modal("hide");
+                        scope.showModal = function (visible) {
+                            if (visible)
+                            {
+                                element.modal("show");
+                            }
+                            else
+                            {
+                                element.modal("hide");
                             }
                         }
-                    }
 
+                        //Check to see if the modal-visible attribute exists
+                        if (!attrs.modalVisible)
+                        {
+
+                            //The attribute isn't defined, show the modal by default
+                            scope.showModal(true);
+
+                        }
+                        else
+                        {
+
+                            //Watch for changes to the modal-visible attribute
+                            scope.$watch("modalVisible", function (newValue, oldValue) {
+                                scope.showModal(newValue);
+                            });
+
+                            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+                            element.bind("hide.bs.modal", function () {
+                                scope.modalVisible = false;
+                                if (!scope.$$phase && !scope.$root.$$phase)
+                                    scope.$apply();
+                            });
+
+                        }
+
+                    }
                 };
+
             });
             
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
