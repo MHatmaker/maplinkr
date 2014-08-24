@@ -63,7 +63,9 @@
         // 'dojo/domReady',
         // 'ready!',
         // "dojo/dom", 
-        'javascripts/bootstrap'
+        'javascripts/bootstrap' //, 
+        // 'javascripts/Modal311'
+    // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
     ], function(dojo, domReady, esriPortal, bootstrap) {
         console.debug('call ready');
         // console.log(domReady);

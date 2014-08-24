@@ -41,9 +41,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
     ], function(angular, StartupArcGIS) {
         console.log('SearcherCtrlMap define');
         
-        function SearcherCtrlMap($scope, $modal) {
-            console.log("debug $modal");
-            console.debug($modal);
+        // function SearcherCtrlMap($scope, $modal311) {
+        function SearcherCtrlMap($scope) {
+            // console.log("debug $modal");
+            // console.debug($modal311);
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
             
@@ -69,7 +70,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                 console.debug(rowItem.entity.title);
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
-                $scope.openWindowSelectionDialog($modal, rowItem.entity.id, rowItem.entity.title);
+                // $scope.openWindowSelectionDialog(modal311, rowItem.entity.id, rowItem.entity.title);
+                $scope.openWindowSelectionDialog(rowItem.entity.id, rowItem.entity.title);
                 // $scope.showDialog = true;
                 // if($scope.destWindow != "cancelMashOp"){
                     // StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, rowItem.entity.title);
@@ -228,7 +230,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                 }
             };
                 
-            $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
+            // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
+            $scope.openWindowSelectionDialog = function (selectedWebMapId, selectedMapTitle) {
               
                 console.log("toggleShow from " + $scope.showDialog);
                 // $scope.showDialog = ! $scope.showDialog;
@@ -273,7 +276,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrlMap',  ['$scope', '$modal', SearcherCtrlMap]);
+            App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
+            // App.controller('SearcherCtrlMap',  ['$scope', 'modal311', SearcherCtrlMap]);
             // App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
             
             
@@ -306,9 +310,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                         scope.showModal = function (visible, elem) {
                             if (!elem){
                                 elem = element;
-                                if(! elem.modal){
+                                if(! elem.modal311){
                                     // var elemById = document.getElementById('#DestSelectDlgId');
-                                    elem = angular.element.find('.modal')[0];
+                                    elem = angular.element.find('.modal311')[0];
                                     // elem = angular.element(elemById);
                                 }
                             }
@@ -317,13 +321,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                             try{
                                 if (visible){
                                     var dlgelm = $(elem);
-                                    dlgelm.modal({show: true});  
-                                    // elm0.modal("show");
+                                    // dlgelm.modal({show: true});  
+                                    dlgelm.modal311("show");
                                 }                                    
                                 else{
                                     var dlgelm = $(elem);
-                                    dlgelm.modal({show: false});
-                                    // elm0.modal("hide");
+                                    // dlgelm.modal({show: false});
+                                    dlgelm.modal311("hide");
                                 }                           
                             }
                             catch(e){
