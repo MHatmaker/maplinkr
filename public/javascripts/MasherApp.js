@@ -68,7 +68,7 @@
         console.debug('call ready');
         // console.log(domReady);
         // console.log(dom);
-        // domReady(function () {
+        domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);
             console.info('start the bootstrapper');
@@ -76,7 +76,7 @@
             readyForSearchGrid(portal);
             readyForSearchGridMap(portal);
             bootstrap.start();
-        // });
+        });
     });
 
 }).call(this);

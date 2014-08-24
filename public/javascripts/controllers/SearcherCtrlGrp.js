@@ -12,7 +12,7 @@
         
         function SearcherCtrlGrp($scope) {
             $scope.findGrpDisabled = false;
-            $scope.searchTermGrp = "Chicago";
+            $scope.searchTermGrp = "Chicago Crime";
             
             $scope.isGrpAccPanelOpen = false;
             $scope.signInOutGrp = "Sign In";
@@ -24,12 +24,13 @@
                 
             var self = this;
             self.scope = $scope;
-            
+          /*   
             var layoutPlugin = new ngGridLayoutPlugin();
             
             $scope.updateLayout = function(){
               layoutPlugin.updateGridLayout();
             };
+             */
             $scope.selectedItm = "Nada";
             $scope.selectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);

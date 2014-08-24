@@ -1,5 +1,5 @@
 
-
+/* 
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
 
@@ -30,7 +30,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
     $modalInstance.dismiss('cancelMashOp');
   };
 };
-
+ */
 (function() {
     "use strict";
 
@@ -42,6 +42,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
         console.log('SearcherCtrlMap define');
         
         function SearcherCtrlMap($scope, $modal) {
+            console.log("debug $modal");
+            console.debug($modal);
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
             
@@ -51,12 +53,12 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             
             var self = this;
             self.scope = $scope;
-            
+         /*    
             var layoutPlugin = new ngGridLayoutPlugin();
             
             $scope.updateLayout = function(){
               layoutPlugin.updateGridLayout();
-            };
+            }; */
             
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
@@ -68,7 +70,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                 // previousSelectedWebMapId = selectedWebMapId;
                 var selectedWebMapId = rowItem.entity.id;
                 $scope.openWindowSelectionDialog($modal, rowItem.entity.id, rowItem.entity.title);
-                $scope.showDialog = true;
+                // $scope.showDialog = true;
                 // if($scope.destWindow != "cancelMashOp"){
                     // StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, rowItem.entity.title);
                 // }
@@ -215,36 +217,55 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                     
                  }
             };
-            
-          $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
-
-            var dlg = document.getElementById('DestSelectDlgId');
-            self.scope = angular.element(dlg).scope();
-            // dlg.modal({show:true})
-            self.scope = angular.element(dlg).scope();
-            var modalInstance = $modal.open({
-              show : true,
-              // templateUrl: 'DestSelectModalDlg.html',
-              templateUrl: dlg,
-              controller: 'ModalInstanceCtrl',
-                  resolve: {
-                    selected: function() {
-                      return $scope.selected;
-                    }
-                  }
-            });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.destWindow = $scope.selected = selectedItem;
-                if($scope.destWindow != "cancelMashOp"){
-                    StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, selectedMapTitle);
+            $scope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                  if(phase == '$apply' || phase == '$digest') {
+                      if(fn && (typeof(fn) === 'function')) {
+                          fn();
+                      }
+                  } else {
+                    this.$apply(fn);
                 }
-            }, function () {
-                $scope.showDialog = false;
-                console.log('Modal dismissed at: ' + new Date());
-            });
-          };
-          
+            };
+                
+            $scope.openWindowSelectionDialog = function ($modal, selectedWebMapId, selectedMapTitle) {
+              
+                console.log("toggleShow from " + $scope.showDialog);
+                // $scope.showDialog = ! $scope.showDialog;
+                console.log("toggleShow to " + $scope.showDialog);
+                $scope.safeApply(function(){
+                    $scope.showDialog = ! $scope.showDialog;
+                });
+                console.log("toggleShow after apply " + $scope.showDialog);
+              
+              /* 
+                var dlg = document.getElementById('DestSelectDlgId');
+                self.scope = angular.element(dlg).scope();
+                // dlg.modal({show:true})
+                self.scope = angular.element(dlg).scope();
+                var modalInstance = $modal.open({
+                  show : true,
+                  // templateUrl: 'DestSelectModalDlg.html',
+                  templateUrl: dlg,
+                  controller: 'ModalInstanceCtrl',
+                      resolve: {
+                        selected: function() {
+                          return $scope.selected;
+                        }
+                      }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.destWindow = $scope.selected = selectedItem;
+                    if($scope.destWindow != "cancelMashOp"){
+                        StartupArcGIS.replaceWebMap(selectedWebMapId, $scope.destWindow, selectedMapTitle);
+                    }
+                }, function () {
+                    $scope.showDialog = false;
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+               */
+            };
         }  
         
         function init(App) {
@@ -253,26 +274,60 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlMap',  ['$scope', '$modal', SearcherCtrlMap]);
-            App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
+            // App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
             
             
             App.directive("modalShow", function () {
+                var tpl = ' \
+                      <div class="modal-dialog" id="innerDlg"> \
+                        <div class="modal-content"> \
+                          <div class="modal-header"> \
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                            <h4 class="modal-title">Modal title</h4> \
+                          </div> \
+                          <div class="modal-body"> \
+                            <p>One fine bodddy&hellip;</p> \
+                          </div> \
+                          <div class="modal-footer"> \
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
+                          </div> \
+                        </div><!-- /.modal-content --> \
+                      </div><!-- /.modal-dialog --> \
+                ';
                 return {
                     restrict: "A",
+                    template : tpl,
                     scope: {
                         modalVisible: "="
                     },
                     link: function (scope, element, attrs) {
 
                         //Hide or show the modal
-                        scope.showModal = function (visible) {
-                            if (visible)
-                            {
-                                element.modal("show");
+                        scope.showModal = function (visible, elem) {
+                            if (!elem){
+                                elem = element;
+                                if(! elem.modal){
+                                    // var elemById = document.getElementById('#DestSelectDlgId');
+                                    elem = angular.element.find('.modal')[0];
+                                    // elem = angular.element(elemById);
+                                }
                             }
-                            else
-                            {
-                                element.modal("hide");
+                            // var elm0 = element.get(0);
+
+                            try{
+                                if (visible){
+                                    var dlgelm = $(elem);
+                                    dlgelm.modal({show: true});  
+                                    // elm0.modal("show");
+                                }                                    
+                                else{
+                                    var dlgelm = $(elem);
+                                    dlgelm.modal({show: false});
+                                    // elm0.modal("hide");
+                                }                           
+                            }
+                            catch(e){
+                                console.debug("modal exception");
                             }
                         }
 
@@ -289,21 +344,31 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
 
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
-                                scope.showModal(newValue);
+                                scope.showModal(newValue, element);
+                                scope.$parent.showDialog = newValue;
+                            });
+                            scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
+                                console.log("scope.$watch newValue : " + newValue);
+                                console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
+                                scope.showModal(newValue, element);
+                                //attrs.modalVisible = false;
                             });
 
-                            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-                            element.bind("hide.bs.modal", function () {
-                                scope.modalVisible = false;
-                                if (!scope.$$phase && !scope.$root.$$phase)
-                                    scope.$apply();
-                            });
 
                         }
-
+                            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+                            //element.bind("hide.bs.modal", function () {
+                            $('#DestSelectDlgId').on('hide.bs.modal', function () {
+                                scope.modalVisible = scope.$parent.showDialog = false;
+                                console.log("hide event called")
+                                if (!scope.$$phase && !scope.$root.$$phase){
+                                    scope.$apply();
+                                    //scope.$parent.toggleShow();
+                                }
+                            });
                     }
-                };
 
+                };
             });
             
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
