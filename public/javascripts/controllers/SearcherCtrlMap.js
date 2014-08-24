@@ -310,29 +310,39 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                         scope.showModal = function (visible, elem) {
                             if (!elem){
                                 elem = element;
+                                /* 
                                 if(! elem.modal311){
                                     // var elemById = document.getElementById('#DestSelectDlgId');
                                     elem = angular.element.find('.modal311')[0];
                                     // elem = angular.element(elemById);
                                 }
+                                 */
                             }
                             // var elm0 = element.get(0);
 
-                            try{
+                            // try{
                                 if (visible){
                                     var dlgelm = $(elem);
                                     // dlgelm.modal({show: true});  
                                     dlgelm.modal311("show");
+                                    // dlgelm.show();
+                                    // document.getElementById('DestSelectDlgId').style.display = 'block';
+                                    $(elem).removeClass('hide');
+                                    $(elem).css('display', 'block !important');
+                                    console.log("called jquery show()");
                                 }                                    
                                 else{
                                     var dlgelm = $(elem);
                                     // dlgelm.modal({show: false});
                                     dlgelm.modal311("hide");
+                                    // dlgelm.hide();
+                                    document.getElementById('DestSelectDlgId').style.display = 'none';
+                                    console.log("called jquery show()");
                                 }                           
-                            }
-                            catch(e){
-                                console.debug("modal exception");
-                            }
+                            // }
+                            // catch(e){
+                                // console.debug("modal exception");
+                            // }
                         }
 
                         //Check to see if the modal-visible attribute exists
@@ -348,13 +358,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
 
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
-                                scope.showModal(newValue, element);
+                                scope.showModal(newValue, attrs.$$element);
                                 scope.$parent.showDialog = newValue;
                             });
                             scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
-                                scope.showModal(newValue, element);
+                                scope.showModal(newValue, attrs.$$element);
                                 //attrs.modalVisible = false;
                             });
 
