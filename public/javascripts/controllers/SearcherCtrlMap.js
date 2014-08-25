@@ -1,5 +1,5 @@
 
-/* 
+
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
 
@@ -7,7 +7,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
     item: selected || "cancelMashOp"
   };
   
-  $scope.thisWindow = function () {
+  $scope.sameWindow = function () {
     $scope.selected.item = $scope.destWindow = "sameWindowOp";
     console.log('ModalInstanceCtrl callback : ' + $scope.destWindow);
     $modalInstance.close($scope.selected.item);
@@ -30,7 +30,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
     $modalInstance.dismiss('cancelMashOp');
   };
 };
- */
+
 (function() {
     "use strict";
 
@@ -278,25 +278,31 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
             // App.controller('SearcherCtrlMap',  ['$scope', 'modal311', SearcherCtrlMap]);
-            // App.controller('ModalInstanceCtrl',  ['$scope', '$modal', 'selected', ModalInstanceCtrl]);
+            App.controller('ModalInstanceCtrl',  ['$scope', 'selected', ModalInstanceCtrl]);
             
             
             App.directive("modalShow", function () {
                 var tpl = ' \
-                      <div class="modal-dialog" id="innerDlg"> \
-                        <div class="modal-content"> \
-                          <div class="modal-header"> \
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                            <h4 class="modal-title">Modal title</h4> \
-                          </div> \
-                          <div class="modal-body"> \
-                            <p>One fine bodddy&hellip;</p> \
-                          </div> \
-                          <div class="modal-footer"> \
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
-                          </div> \
-                        </div><!-- /.modal-content --> \
-                      </div><!-- /.modal-dialog --> \
+                      <div class="modal-content"> \
+                        <div class="modal-header"> \
+                          <h3> Select Destination Window</h3> \
+                        </div> \
+                        <div class="modal-body"> \
+                          <ul> \
+                            <li class="acc li">Open a new web map replacing map in this window</li> \
+                            <li class="acc li">Open a new web map in a new tab</li> \
+                            <li class="acc li">Open a new web map in a new window</li> \
+                          </ul> \
+                        </div> \
+                        <div class="modal-footer"> \
+                          <div class="btn-group" style="margin: 9px 0;"> \
+                          <button class="btn btn-primary" style="width:25%;" ng-click="sameWindow()" value="Same Window">Same Window</button>  \
+                          <button class="btn btn-default" style="width:25%;" ng-click="newTab()" value="New Tab">New Tab</button> \
+                          <button class="btn btn-primary" style="width:25%;" ng-click="newWindow()" value="New Window">New Window</button>  \
+                          <button class="btn btn-warning" style="width:25%;" ng-click="cancelMash()" value="Cancel">Cancel</button></div> \
+                        </div> \
+                      </div> \
+                    </div> \
                 ';
                 return {
                     restrict: "A",
@@ -327,8 +333,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                                     dlgelm.modal311("show");
                                     // dlgelm.show();
                                     // document.getElementById('DestSelectDlgId').style.display = 'block';
-                                    $(elem).removeClass('hide');
-                                    $(elem).css('display', 'block !important');
+                                    // $(elem).removeClass('hide');
+                                    // $(elem).css('display', 'block !important');
                                     console.log("called jquery show()");
                                 }                                    
                                 else{
@@ -359,15 +365,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
                                 scope.showModal(newValue, attrs.$$element);
-                                scope.$parent.showDialog = newValue;
+                                // scope.$parent.showDialog = newValue;
                             });
+                           /*  
                             scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
                                 scope.showModal(newValue, attrs.$$element);
                                 //attrs.modalVisible = false;
                             });
-
+ */
 
                         }
                             //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
