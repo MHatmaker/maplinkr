@@ -1,35 +1,3 @@
-Usage Example #1 - this assumes you want to show the modal - you could add ng-if as a condition
-
-<div modal-show class="modal fade"> ...bootstrap modal... </div>
-
-
-
-Usage Example #2 - this uses an Angular expression in the modal-visible attribute
-
-<div modal-show modal-visible="showDialog" class="modal fade"> ...bootstrap modal... </div>
-
-
-
-
-
-
-Another Example - to demo the controller interaction, you could add something like this to your controller and it will show the modal after 2 seconds and then hide it after 5 seconds.
-
-$scope.showDialog = false;
-$timeout(function () { $scope.showDialog = true; }, 2000)
-$timeout(function () { $scope.showDialog = false; }, 5000)
-
-
-
-plunker for "new, improved version"
-http://plnkr.co/edit/WJBp7A6M3RB1MLERDXSS
-
-my revision:
-
-http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ?p=preview
-
-<<<<<<<<<<<<<< this one works >>>>>>>>>>>>>>>>>>> except for needing two clicks to show after hide !!!!!!
-
 <!DOCTYPE html>
 <html ng-app="plunker">
 
@@ -45,8 +13,11 @@ http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ?p=preview
     <script src="script.js"></script>
   </head>
 
-  <body ng-controller="MainCtrl" >
+  <body ng-controller="MainCtrl as pc" >
     <input class="button" type="button" onclick="toggleShow()" value="Show It">
+    <h4>{{destSelected}}</h4>
+    <div>{{data.dstSel}}</div>
+    <div>where are you?</div>
     <div modal-show  modal-visible="showDialog" class="modal" id="someDLg">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -56,60 +27,20 @@ http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ?p=preview
           </div>
           <div class="modal-body">
             <div class="btn-group btn-group-vertical">
-                  <label data-ng-repeat="dest in destSelections">
-                    <span>
+                  <span data-ng-repeat="dest in destSelections">
                       <input 
                         name="destSelected" 
                         type="radio"
                         ng-model="$parent.destSelected"/>
                         {{dest}}
                       <br/>
-                      </span>
-                  </label>
+                  </span>
             </div>
+            <div>{{pc.data.dstSel}}</div>
+            <div>I am Lost</div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-  </body>
-
-</html>
-
-
-
-<!DOCTYPE html>
-<html ng-app="plunker">
-
-  <head>
-    <meta charset="utf-8" />
-    <title>Simple Angular Directive for Bootstrap Modal</title>
-    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-    <script>document.write('<base href="' + document.location + '" />');</script>
-    <link rel="stylesheet" href="style.css" />
-    <script data-require="angular.js@1.2.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" data-semver="1.2.16"></script>
-    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
-  </head>
-
-  <body ng-controller="MainCtrl" >
-    <input type="checkbox" ng-model="showDialog" id="phonyCB" ng-model-options="{ getterSetter: true }"> Show
-    <input class="button" type="button" onclick="toggleShow()" value="Show It">
-    <div modal-show  modal-visible="showDialog" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
