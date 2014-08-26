@@ -1,10 +1,12 @@
 
 
 
-var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
+// var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
+var ModalInstanceCtrl = function ($scope, $modalInstance) {
 
   $scope.selected = {
-    item: selected || "cancelMashOp"
+    // item: selected || "cancelMashOp"
+    item: "cancelMashOp"
   };
   
   $scope.sameWindow = function () {
@@ -278,13 +280,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
             // App.controller('SearcherCtrlMap',  ['$scope', 'modal311', SearcherCtrlMap]);
-            App.controller('ModalInstanceCtrl',  ['$scope', 'selected', ModalInstanceCtrl]);
+            // App.controller('ModalInstanceCtrl',  ['$scope', 'selected', ModalInstanceCtrl]);
+            App.controller('ModalInstanceCtrl',  ['$scope',  ModalInstanceCtrl]);
             
             
             App.directive("modalShow", function () {
                 var tpl = ' \
                       <div class="modal-content"> \
                         <div class="modal-header"> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> \
                           <h3> Select Destination Window</h3> \
                         </div> \
                         <div class="modal-body"> \
@@ -296,7 +300,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                         </div> \
                         <div class="modal-footer"> \
                           <div class="btn-group" style="margin: 9px 0;"> \
-                          <button class="btn btn-primary" style="width:25%;" ng-click="sameWindow()" value="Same Window">Same Window</button>  \
+                          <button class="btn btn-primary" data-dismiss="modal" style="width:25%;" ng-click="sameWindow()" value="Same Window">Same Window</button>  \
                           <button class="btn btn-default" style="width:25%;" ng-click="newTab()" value="New Tab">New Tab</button> \
                           <button class="btn btn-primary" style="width:25%;" ng-click="newWindow()" value="New Window">New Window</button>  \
                           <button class="btn btn-warning" style="width:25%;" ng-click="cancelMash()" value="Cancel">Cancel</button></div> \
@@ -379,9 +383,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, selected) {
                         }
                             //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
                             //element.bind("hide.bs.modal", function () {
-                            $('#DestSelectDlgId').on('hide.bs.modal', function () {
+                            $('#DestSelectDlgId').on('hidden.bs.modal', function () {
                                 scope.modalVisible = scope.$parent.showDialog = false;
                                 console.log("hide event called")
+                                scope.$parent.selectedItm =  "what?";
                                 if (!scope.$$phase && !scope.$root.$$phase){
                                     scope.$apply();
                                     //scope.$parent.toggleShow();
