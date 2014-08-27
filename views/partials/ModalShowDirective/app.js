@@ -1,15 +1,31 @@
+>>>>>>>>>>>>>>>>>>  plunker >>>>>>>>>>>>>>  http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ
+
+angular.isUndefinedOrNull = function(val) {
+    return angular.isUndefined(val) || val === null 
+}
+
 var app = angular.module('plunker', []);
 
 app.controller('MainCtrl', function($scope) {
   $scope.showDialog = false;
   $scope.destSelections = ["Same Window", "New Tab", "New Window"];
-  $scope.destSelected =  $scope.destSelections[0];
   $scope.data = {
-    dstSel : $scope.destSelections[0]
+    dstSel : $scope.destSelections[0].slice(0),
+    prevDstSel :$scope.destSelections[0].slice(0),
+    whichDismiss : "Cancel"
   };
   console.log("initialized showDialog to : " + $scope.showDialog);
-  console.log("initialized selection to : " + $scope.destSelected);
   console.log("initialized dstSel to : " + $scope.data.dstSel);
+  
+  $scope.preserveState = function(){
+    $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
+    console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
+  };
+  
+  $scope.restoreState = function(){
+    console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
+    $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
+  };
   
   toggleShow = function (){
     console.log("toggleShow from " + $scope.showDialog);
@@ -56,14 +72,16 @@ app.directive("modalShow", function ($parse) {
                 scope.$watch("modalVisible", function (newValue, oldValue) {
                     scope.showModal(newValue);
                     scope.$parent.showDialog = newValue;
-                    console.log("scope.$parent destinations= : " + scope.$parent.destSelections);
-                    console.log("scope.$parent data dstSel= : " + scope.$parent.data.dstSel);
+                    console.log("watch modalVisiblescope.$parent data  : ");
+                    console.debug(scope.$parent.data);
+                    scope.$parent.preserveState();
                 });
                 //Watch for changes to the modal-mdata attribute
                 scope.$watch("modalMdata", function (newValue, oldValue) {
-                    if(newValue != null)
-                      localScope.$parent.data.dstSel = newValue;
-                    console.log("scope.$parent data dstSel= : " + localScope.$parent.data.dstSel);
+                    if( ! angular.isUndefinedOrNull(newValue))
+                      localScope.$parent.data = newValue;
+                    console.log("watch modalMdata scope.$parent data  : ");
+                    console.debug(localScope.$parent.data);
                 });
                 /*
                 scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
@@ -75,22 +93,22 @@ app.directive("modalShow", function ($parse) {
                 */
 
             }
-                //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-                //element.bind("hide.bs.modal", function () {
-                $('#someDLg').on('hidden.bs.modal', function () {
-                    scope.modalVisible = localScope.$parent.showDialog = false;
-                    console.log("hide event called")
-                    console.log("selection : " + localScope.$parent.destSelected);
-                    if (!scope.$$phase && !scope.$root.$$phase){
-                        scope.$apply();
-                        //scope.$parent.toggleShow();
+            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+            $('#someDLg').on('hidden.bs.modal', function () {
+                scope.modalVisible = localScope.$parent.showDialog = false;
+                console.log("hide event called")
+                if (!scope.$$phase && !scope.$root.$$phase){
                     scope.$apply();
-                    console.log("selection : " + localScope.$parent.destSelected);
-                    console.log("dstSel : " + localScope.modalMdata);
-                    console.debug(localScope.modalMdata);
-                    //console.log("dstSel : " + localScope.$parent.data.dstSel);
-                    }
-                });
+                }
+                scope.$apply();
+                console.log("hidden modalMdata : ");
+                console.debug(scope.$parent.data);
+                console.log("whichDismiss : " + scope.$parent.whichDismiss);
+                if(scope.$parent.whichDismiss == "Cancel"){
+                  scope.$parent.restoreState();
+                console.debug(scope.$parent.data);
+                }
+            });
         }
 
     };

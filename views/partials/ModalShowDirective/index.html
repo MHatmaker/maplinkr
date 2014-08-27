@@ -15,10 +15,8 @@
 
   <body ng-controller="MainCtrl as pc" >
     <input class="button" type="button" onclick="toggleShow()" value="Show It">
-    <h4>{{destSelected}}</h4>
-    <h3>How about? {{data.dstSel}}</h3>
-    <div>where are you?</div>
-    <div modal-show  modal-visible="showDialog" modal-mdata="mData" role="dialog" class="modal" id="someDLg">
+    <h4>Current Selection :  {{data.dstSel}}</h4>
+    <div modal-show  modal-visible="showDialog" modal-mdata="mData.dstSel" role="dialog" class="modal" id="someDLg">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -37,10 +35,10 @@
                   </span>
             </div>
             <div>selected: {{data.dstSel}}</div>
-            <div>I am Lost</div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="whichDismiss = 'Accept'" data-dismiss="modal">Accept</button>
+            <button type="button" class="btn btn-primary" ng-click="whichDismiss = 'Cancel'" data-dismiss="modal">Cancel</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
