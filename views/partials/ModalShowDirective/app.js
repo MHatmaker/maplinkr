@@ -6,7 +6,10 @@ app.controller('MainCtrl', function($scope) {
   $scope.destSelected =  $scope.destSelections[0];
   $scope.data = {
     dstSel : $scope.destSelected
-  }
+  };
+  $scope.mData = {
+    dstSel : $scope.destSelected
+  };
   console.log("initialized showDialog to : " + $scope.showDialog);
   console.log("initialized selection to : " + $scope.destSelected);
   console.log("initialized dstSel to : " + $scope.data.dstSel);
@@ -25,7 +28,8 @@ app.directive("modalShow", function ($parse) {
         restrict: "A",
         urlTemplate : "index.html",
         scope: {
-            modalVisible: "="
+            modalVisible: "=",
+            modalMdata: "="
         },
         link: function (scope, element, attrs) {
             var localScope = scope;
@@ -56,7 +60,12 @@ app.directive("modalShow", function ($parse) {
                     scope.showModal(newValue);
                     scope.$parent.showDialog = newValue;
                     console.log("scope.$parent destinations= : " + scope.$parent.destSelections);
-                    console.log("scope.$parent data dstSel= : " + scope.$parent.data.dstSel);
+                    console.log("scope.$parent data dstSel= : " + scope.$parent.mData.dstSel);
+                });
+                //Watch for changes to the modal-mdata attribute
+                scope.$watch("modalMdata", function (newValue, oldValue) {
+                    scope.$parent.data.dstSel = newValue;
+                    console.log("scope.$parent data dstSel= : " + scope.$parent.mData.dstSel);
                 });
                 /*
                 scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
@@ -73,13 +82,15 @@ app.directive("modalShow", function ($parse) {
                 $('#someDLg').on('hidden.bs.modal', function () {
                     scope.modalVisible = localScope.$parent.showDialog = false;
                     console.log("hide event called")
-                    console.log("selection : " + localScope.$parent.destSelected)
+                    console.log("selection : " + localScope.$parent.destSelected);
                     if (!scope.$$phase && !scope.$root.$$phase){
                         scope.$apply();
                         //scope.$parent.toggleShow();
                     scope.$apply();
-                    console.log("selection : " + scope.$parent.destSelected)
-                    console.log("dstSel : " + scope.$parent.data.dstSel)
+                    console.log("selection : " + localScope.$parent.destSelected);
+                    console.log("dstSel : " + localScope.modalMdata);
+                    console.debug(localScope.modalMdata);
+                    //console.log("dstSel : " + localScope.$parent.data.dstSel);
                     }
                 });
         }
