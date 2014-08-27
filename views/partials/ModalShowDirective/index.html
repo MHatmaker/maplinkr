@@ -16,7 +16,7 @@
   <body ng-controller="MainCtrl as pc" >
     <input class="button" type="button" onclick="toggleShow()" value="Show It">
     <h4>{{destSelected}}</h4>
-    <h3>{{mData.dstSel}}</h3>
+    <h3>How about? {{data.dstSel}}</h3>
     <div>where are you?</div>
     <div modal-show  modal-visible="showDialog" modal-mdata="mData" role="dialog" class="modal" id="someDLg">
       <div class="modal-dialog">
@@ -31,12 +31,12 @@
                       <input 
                         name="destSelected" 
                         type="radio" value="{{dest}}"
-                        ng-model="$parent.mData.dstSel"/>
+                        ng-model="$parent.data.dstSel"/>
                         {{dest}}
                       <br/>
                   </span>
             </div>
-            <div>selected: {{mData.dstSel}}</div>
+            <div>selected: {{data.dstSel}}</div>
             <div>I am Lost</div>
           </div>
           <div class="modal-footer">

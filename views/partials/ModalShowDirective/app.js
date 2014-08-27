@@ -5,10 +5,7 @@ app.controller('MainCtrl', function($scope) {
   $scope.destSelections = ["Same Window", "New Tab", "New Window"];
   $scope.destSelected =  $scope.destSelections[0];
   $scope.data = {
-    dstSel : $scope.destSelected
-  };
-  $scope.mData = {
-    dstSel : $scope.destSelected
+    dstSel : $scope.destSelections[0]
   };
   console.log("initialized showDialog to : " + $scope.showDialog);
   console.log("initialized selection to : " + $scope.destSelected);
@@ -60,12 +57,13 @@ app.directive("modalShow", function ($parse) {
                     scope.showModal(newValue);
                     scope.$parent.showDialog = newValue;
                     console.log("scope.$parent destinations= : " + scope.$parent.destSelections);
-                    console.log("scope.$parent data dstSel= : " + scope.$parent.mData.dstSel);
+                    console.log("scope.$parent data dstSel= : " + scope.$parent.data.dstSel);
                 });
                 //Watch for changes to the modal-mdata attribute
                 scope.$watch("modalMdata", function (newValue, oldValue) {
-                    scope.$parent.data.dstSel = newValue;
-                    console.log("scope.$parent data dstSel= : " + scope.$parent.mData.dstSel);
+                    if(newValue != null)
+                      localScope.$parent.data.dstSel = newValue;
+                    console.log("scope.$parent data dstSel= : " + localScope.$parent.data.dstSel);
                 });
                 /*
                 scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
