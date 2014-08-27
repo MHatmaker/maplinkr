@@ -1,5 +1,4 @@
 >>>>>>>>>>>>>>>>>>  plunker >>>>>>>>>>>>>>  http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ
-
 angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null 
 }
@@ -104,10 +103,10 @@ app.directive("modalShow", function ($parse) {
                 console.log("hidden modalMdata : ");
                 console.debug(scope.$parent.data);
                 console.log("whichDismiss : " + scope.$parent.whichDismiss);
-                if(scope.$parent.whichDismiss == "Cancel"){
-                  scope.$parent.restoreState();
-                console.debug(scope.$parent.data);
-                }
+                //if(scope.$parent.whichDismiss == "Cancel"){
+                //  scope.$parent.restoreState();
+                //console.debug(scope.$parent.data);
+                //}
             });
         }
 

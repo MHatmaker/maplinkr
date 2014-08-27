@@ -38,7 +38,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="whichDismiss = 'Accept'" data-dismiss="modal">Accept</button>
-            <button type="button" class="btn btn-primary" ng-click="whichDismiss = 'Cancel'" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="whichDismiss = 'Cancel'; restoreState()" data-dismiss="modal">Cancel</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
