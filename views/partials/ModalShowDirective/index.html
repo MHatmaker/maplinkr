@@ -16,7 +16,7 @@
   <body ng-controller="MainCtrl as pc" >
     <input class="button" type="button" onclick="toggleShow()" value="Show It">
     <h4>Current Selection :  {{data.dstSel}}</h4>
-    <div modal-show  modal-visible="showDialog" modal-mdata="mData.dstSel" role="dialog" class="modal" id="someDLg">
+    <div modal-show  modal-visible="showDialog" modal-mdata="mData" role="dialog" class="modal" id="{{data.dlg2show}}">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

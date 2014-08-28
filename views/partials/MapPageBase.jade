@@ -115,22 +115,7 @@ block append content
                                         accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="$parent.isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
                                             #SearchMap(ng-controller="SearcherCtrlMap")
                                             
-                                                div(modal-show="", modal-visible="showDialog", class="modal311", id="DestSelectDlgId", style="display: block; position:relative", data-backdrop="false", role="dialog")
-                                                    div(class="modal-dialog")
-                                                        div(class="modal-content")
-                                                            div(class="modal-header")
-                                                                h3 Select Destination Window
-                                                            div(class="modal-body")
-                                                                ul
-                                                                    li(class="acc li") 1 Open a new web map replacing map in this window
-                                                                    li(class="acc li") 2 Open a new web map in a new tab
-                                                                    li(class="acc li") 3 Open a new web map in a new window
-                                                            div(class="modal-footer")
-                                                                div(class="btn-group" style="margin: 9px 0;")
-                                                                    button(class="btn btn-primary", style='width:25%;', ng-click="thisWindow()", value="This Window",  data-dismiss="modal311") This Window
-                                                                    button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value="New Tab") New Tab
-                                                                    button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
-                                                                    button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
+                                                div(modal-show="", modal-visible="showDialog", class="modal311",  modal-mdata="mData", role="dialog", class="modal", id="{{data.dlg2show}}", style="display: none; position:relative", data-backdrop="false")
                                 
                                                 div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
                                                     div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")

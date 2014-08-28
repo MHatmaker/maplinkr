@@ -1,5 +1,4 @@
->>>>>>>>>>>>>>>>>>  plunker >>>>>>>>>>>>>>  http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJ
-angular.isUndefinedOrNull = function(val) {
+>>>>>>>>>>>>>>>>>>  plunker >>>>>>>>>>>>>>  http://plnkr.co/edit/VnMUgAo1xZKPpKvtmqVJangular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null 
 }
 
@@ -11,7 +10,8 @@ app.controller('MainCtrl', function($scope) {
   $scope.data = {
     dstSel : $scope.destSelections[0].slice(0),
     prevDstSel :$scope.destSelections[0].slice(0),
-    whichDismiss : "Cancel"
+    whichDismiss : "Cancel",
+    dlg2show : "SelectWndDlg"
   };
   console.log("initialized showDialog to : " + $scope.showDialog);
   console.log("initialized dstSel to : " + $scope.data.dstSel);
@@ -93,7 +93,7 @@ app.directive("modalShow", function ($parse) {
 
             }
             //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-            $('#someDLg').on('hidden.bs.modal', function () {
+            $(element).on('hidden.bs.modal', function () {
                 scope.modalVisible = localScope.$parent.showDialog = false;
                 console.log("hide event called")
                 if (!scope.$$phase && !scope.$root.$$phase){
