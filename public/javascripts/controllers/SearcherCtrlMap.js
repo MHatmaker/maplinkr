@@ -220,8 +220,6 @@ angular.isUndefinedOrNull = function(val) {
             $scope.openWindowSelectionDialog = function (selectedWebMapId, selectedMapTitle) {
               
                 console.log("toggleShow from " + $scope.showDialog);
-                // $scope.showDialog = ! $scope.showDialog;
-                console.log("toggleShow to " + $scope.showDialog);
                 $scope.safeApply(function(){
                     $scope.showDialog = ! $scope.showDialog;
                 });
@@ -238,7 +236,7 @@ angular.isUndefinedOrNull = function(val) {
             
             App.directive("modalShow", function () {
                 var tpl = ' \
-                  <div class="modal-dialog"> \
+                  <div class="modal-dialog", style="width: 100%;"> \
                     <div class="modal-content"> \
                       <div class="modal-header"> \
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
@@ -255,7 +253,7 @@ angular.isUndefinedOrNull = function(val) {
                         <div>selected: {{data.dstSel}}</div> \
                       </div> \
                       <div class="modal-footer"> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\'" data-dismiss="modal">Accept</button> \
+                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';preserveState()" data-dismiss="modal">Accept</button> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\'; restoreState()" data-dismiss="modal">Cancel</button> \
                       </div> \
                     </div><!-- /.modal-content --> \
@@ -295,10 +293,10 @@ angular.isUndefinedOrNull = function(val) {
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
                                 scope.showModal(newValue);
-                                scope.$parent.showDialog = newValue;
-                                console.log("watch modalVisiblescope.$parent data  : ");
+                                // scope.$parent.showDialog = newValue;
+                                console.log("watch modalVisible  : ");
                                 console.debug(scope.$parent.data);
-                                scope.$parent.preserveState();
+                                // scope.$parent.preserveState();
                             });
                             //Watch for changes to the modal-mdata attribute
                             scope.$watch("modalMdata", function (newValue, oldValue) {
@@ -307,14 +305,14 @@ angular.isUndefinedOrNull = function(val) {
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
-                            
+                           /*  
                             scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
                                 scope.showModal(newValue);
                                 //attrs.modalVisible = false;
                             });
-                            
+                             */
 
                         }
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
