@@ -28,6 +28,10 @@
                         // templateUrl: '/',
                         controller: App.MasherCtrl, reloadOnSearch: true
                       }).
+                      // when('/AGONewWindow/:id',  {
+                        // templateUrl: function(params){ return '/AGONewWindow' + params.id; },
+                        // controller: App.MasherCtrl, reloadOnSearch: true
+                      // }).
                       when('/views/partials/:id',  {
                         templateUrl: function(params){ return '/partials/' + params.id; },
                         controller: App.MapCtrl, reloadOnSearch: true

@@ -123,6 +123,7 @@ urls = (
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
         self.routes['/'] = routesJade.index;
+        //self.routes['/agonewwindow*'] = routesJade.agonewwindow;
         //self.routes['partials/SystemSelector'] = routesJade.partials;
         self.routes['/partials/:name'] = routesJade.partials;
 
@@ -174,6 +175,7 @@ urls = (
         self.app.use(cookieParser());
         // app.use(express.static(path.join(__dirname, 'public')));
         self.app.use(express.static(__dirname + '/public'));
+        //self.app.use(app.router);
     };
 
 

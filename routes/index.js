@@ -5,6 +5,13 @@ exports.index = function(req, res){
   res.render('index');
 };
 
+
+exports.agonewwindow = function(req, res){
+  console.log("exports.agonewwindow");
+  res.render('agonewwindow');
+};
+
+
 exports.partials = function (req, res) {
   console.log("exports.partials");
   var name = req.params.name;

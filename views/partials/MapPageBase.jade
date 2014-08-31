@@ -23,13 +23,12 @@ block append content
                             tr
                                 td(id = 'mppos',  style='font-size:9pt;text-align:left;padding: 0px 5px 0px 5px;')
                                 td(id = 'mpnm',  style='font-size:9pt;text-align:center; padding: 0px 5px 0px 5px;')
-                                    span(style='padding: 0px 5px 0px 5px;')
-                                        {{currentTab.title}}
+                                    span(style='padding: 0px 5px 0px 5px;') {{currentTab.title}}
                                         img(ng-src="{{currentTab.imgSrc}}", style='padding: 0px 5px 0px 5px;')
                                 td
                                     label(for="buttonRightPaneShowHide", style ='padding-right:10px; padding-top:7px; padding-left:5px; font-size:12pt').
                                         Resize Right Pane
-                                td, 
+                                td
                                     div(ng-click="collapser()")
                                         div(ng-class = "svg-menu", style='padding: 0px 5px 0px 5px;')
                                             img(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg")

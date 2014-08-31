@@ -18,15 +18,12 @@ block content
                         ul
                             li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
                                 div(ng-click="onClickTab(tab)")
-                                    span
-                                        {{tab.title}} 
+                                    span {{tab.title}} 
                                         img(ng-src="{{tab.imgSrc}}")
 
-            #mainView
-                {{currentTab.content}}
+            #mainView {{currentTab.content}}
                 br
-                a(href="{{currentTab.url}}") 
-                    {{currentTab.title}}         
+                a(href="{{currentTab.url}}") {{currentTab.title}}         
                     
           
         div(id="ngview_container", style="position:relative;height:100%;width:100%;")

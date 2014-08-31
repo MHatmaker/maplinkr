@@ -25,6 +25,12 @@
         }
         return {};
     });
+    define('bootstrap', function () {
+        if (bootstrap) {
+            return bootstrap;
+        }
+        return {};
+    });
     // define('google', function () {
     // if (google) {
         // return google;
