@@ -1,11 +1,29 @@
 
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+
 (function() {
     'use strict';
-    
+    /* 
     var locationPath = "";
     var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
     //locationPath =  "./";
     // console.log(locationPath);
+     */
+    var locationPath = "/";
+    //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
+    console.log(location.pathname);
+    console.log(location.search);
+    console.log(locationPath);
+    var webmapId = getParameterByName('id');
+    var masherChannel = getParameterByName('channel');
+    console.log("webmapId " + webmapId + " channel " + masherChannel);
     
     define('angular', function () {
         if (angular) {
@@ -13,34 +31,10 @@
         }
         return {};
     });
-  /*   define('ngGrid', function () {
-        if (ngGrid) {
-            return ngGrid;
-        }
-        return {};
-    }); */
-    define('leaflet', function () {
-        if (leaflet) {
-            return leaflet;
-        }
-        return {};
-    });
-    define('bootstrap', function () {
-        if (bootstrap) {
-            return bootstrap;
-        }
-        return {};
-    });
-    // define('google', function () {
-    // if (google) {
-        // return google;
-    // }
-    // return {};
-// });
     
     require({
         async: true,
-        aliases: [['text', 'dojo/text']],
+        //aliases: [['text', 'dojo/text']],
         packages: [{
             name: 'controllers',
             location: locationPath + 'javascripts/controllers'
@@ -48,11 +42,17 @@
         {
             name: 'lib',
             location: locationPath + 'javascripts/lib'
-        }, 
+        },
         {
             name: 'javascripts',
             location: locationPath + 'javascripts'
+        },
+      /*   
+        {
+            name: 'bootstrap',
+            location: locationPath + 'javascripts'
         }
+         */
         // ,
         // { 
             // name: 'dojo',
@@ -74,6 +74,7 @@
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
     ], function(dojo, domReady, esriPortal, bootstrap) {
         console.debug('call ready');
+        console.log(bootstrap);
         // console.log(domReady);
         // console.log(dom);
         domReady(function () {
