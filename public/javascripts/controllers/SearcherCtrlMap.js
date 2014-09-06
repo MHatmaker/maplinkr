@@ -32,11 +32,15 @@ angular.isUndefinedOrNull = function(val) {
             };
              
             $scope.preserveState = function(){
+                console.log("preserveState");
+                // $scope.data.whichDismiss = 'Cancel';
                 $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
             $scope.restoreState = function(){
+                console.log("restoreState");
+                // $scope.data.whichDismiss = 'Accept';
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
@@ -253,8 +257,8 @@ angular.isUndefinedOrNull = function(val) {
                         <div>selected: {{data.dstSel}}</div> \
                       </div> \
                       <div class="modal-footer"> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';preserveState()" data-dismiss="modal">Accept</button> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\'; restoreState()" data-dismiss="modal">Cancel</button> \
+                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
+                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
                       </div> \
                     </div><!-- /.modal-content --> \
                   </div><!-- /.modal-dialog --> \
@@ -302,6 +306,13 @@ angular.isUndefinedOrNull = function(val) {
                             scope.$watch("modalMdata", function (newValue, oldValue) {
                                 if( ! angular.isUndefinedOrNull(newValue))
                                   localScope.$parent.data = newValue;
+                                console.log("watch modalMdata scope.$parent data  : ");
+                                console.debug(localScope.$parent.data);
+                            });
+                            //Watch for changes to the modal-mdata attribute
+                            scope.$watch("data.dstSel", function (newValue, oldValue) {
+                                if( ! angular.isUndefinedOrNull(newValue))
+                                  localScope.$parent.data.dstSel = newValue;
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });

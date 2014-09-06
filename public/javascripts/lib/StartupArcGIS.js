@@ -63,7 +63,7 @@
         var gridGroup;
         var gridMap;
         var selectedGroupId;
-        var selectedWebMapId = "e39fa319c45c483aa2ba93595583c1d5"; //"e68ab88371e145198215a792c2d3c794";
+        var selectedWebMapId = "a4bb8a91ecfb4131aa544eddfbc2f1d0 "; //"e68ab88371e145198215a792c2d3c794";
         var previousSelectedWebMapId = selectedWebMapId;
                 
         var zoomWebMap = null;
@@ -74,7 +74,7 @@
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
             initializePostProc(newSelectedWebMapId);
-            if(displayDestination == 'newWindowOp')
+            if(displayDestination == 'New Window')
             {
                 StompSetupCtrl.setupPusherClient(mph, function(channel){
                     var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
@@ -306,7 +306,7 @@
             if(! idWebMap)
             {
                 console.log("no idWebMap");
-                selectedWebMapId = "e39fa319c45c483aa2ba93595583c1d5"; //"e68ab88371e145198215a792c2d3c794";
+                selectedWebMapId = "a4bb8a91ecfb4131aa544eddfbc2f1d0 "; //"e68ab88371e145198215a792c2d3c794";
                 console.log("use " + selectedWebMapId);
                 // pointWebMap = [-87.7, lat=41.8];
                 pointWebMap = [-87.7, 41.8];
