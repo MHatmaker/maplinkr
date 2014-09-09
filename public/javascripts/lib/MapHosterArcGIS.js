@@ -292,7 +292,8 @@
             ]);
             this.circle([51.508, -0.11], 100);
         }
-
+        
+ 
         MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
         {   
             if(this.pusher == null)
@@ -301,9 +302,34 @@
                 this.channel = channel;
             }
         }
-        
+        MapHosterArcGIS.prototype.getGlobalsForUrl = function()
+        {
+            return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
+        }
+
+         /* 
+        function setPusherClient(pusher, channel)
+        {   
+            if(mph.pusher == null)
+            {
+                mph.pusher = pusher;
+                mph.channel = channel;
+            }
+        }
+         */
+         
         function MapHosterArcGIS()
         {
+        /* 
+            var setPusherClient = function (pusher, channel)
+            {   
+                if(mph.pusher == null)
+                {
+                    mph.pusher = pusher;
+                    mph.channel = channel;
+                }
+            };
+              */
             // var self = this;
             // self.mph = mph;
             // this.mapReady = false;
@@ -312,9 +338,28 @@
             // this.userZoom = true;
         }
         
+      /*   
+        MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
+        {   
+            if(mph.pusher == null)
+            {
+                mph.pusher = pusher;
+                mph.channel = channel;
+            }
+        }
+         */
+        
         function init() {
             mph = MapHosterArcGIS.prototype;
-            MapHosterArcGIS();
+            // setPusherClient = function (pshr, chnl)
+            // {   
+                // if(pusher == null)
+                // {
+                    // pusher = pshr;
+                    // channel = chnl;
+                // }
+            // };
+            // MapHosterArcGIS();
             return MapHosterArcGIS;
         }
         
@@ -340,7 +385,8 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal };
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal  }; //,
+                 // setPusherClient: setPusherClient };
     });
 
 }).call(this);

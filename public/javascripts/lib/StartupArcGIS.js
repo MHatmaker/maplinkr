@@ -77,10 +77,10 @@
             if(displayDestination == 'New Window')
             {
                 StompSetupCtrl.setupPusherClient(mph, function(channel){
-                    var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
+                    var url = "?id=" + newSelectedWebMapId + mph.prototype.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url);
+                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=250,width=250");
                     });
             }
             /* 

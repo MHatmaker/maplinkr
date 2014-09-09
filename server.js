@@ -9,12 +9,20 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var path = require('path');
 var socketio  = require('socket.io');
+var Pusher = require( 'pusher' );
 
 var routesJade = require('./routes');
 var api = require('./routes/api');
 
 var resource = require('express-resource');
 
+app_id = '40938'
+app_key = '5c6bad75dc0dd1cec1a6'
+app_secret = '54546672d0196be97f6a'
+
+var pusher = new Pusher( { appId: app_id, key: app_key, secret: app_secret } );
+
+api.setPusher(pusher);
 
 /**
  *  Define the sample application.
@@ -131,9 +139,21 @@ urls = (
             // res.setHeader('Content-Type', 'text/html');
             // res.send(self.cache_get('index.html') );
         // };
+        
         // JSON API
 
-        // self.routes['/api/docsList'] = api.getDocs;
+        // self.routes['/pusher/auth'] = api.getAuth;
+
+        self.app.post('/pusher/auth', function(req, res){
+            console.log('getAuth');
+            console.log('%s %s %s', req.method, req.url, req.path);
+            console.log('req.body.socket_id is %s', req.body.socket_id);
+            console.log('req.body.channel_name is %s', req.body.channel_name);
+            var socketId = req.body.socket_id;
+            var channel = req.body.channel_name;
+            var auth = pusher.auth( socketId, channel );
+            res.send( auth );
+        });
 
         // self.routes['/api/MarkdownSimple/:id'] = api.getDoc;
 

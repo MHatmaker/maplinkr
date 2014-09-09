@@ -9,16 +9,17 @@
         'lib/MapHosterArcGIS'
     ], function(angular, MapHosterArcGIS) {
         console.log('StompSetupCtrl define');  
+        
+        var selfdict = {};
 
         function StompSetupCtrl($scope, $modal){
             console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = 'private-channel-mashover';
             selfdict.scope = $scope;
         
-            var selfdict = {};
-            selfdict.scope = null;
-            selfdict.mph = null;
-            selfdict.callbackFunction = null;
+            // selfdict.scope = null;
+            // selfdict.mph = null;
+            // selfdict.callbackFunction = null;
             $scope.showDialog = false;
             $scope.data = {
                 privateChannelMashover : 'private-channel-mashover',
@@ -42,7 +43,7 @@
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.privateChannelMashover);
-                $scope.PusherClien($scope.data.privateChannelMashover, selfdict.callbackFunction);
+                $scope.PusherClient(selfdict.mph, $scope.data.privateChannelMashover, selfdict.callbackFunction);
             };
 
             $scope.PusherClient = function(mapholder, channel, cbfn)
@@ -51,6 +52,8 @@
                 this.mapHolder = mapholder;
                 var self = this;
                 self.callbackfunction = cbfn;
+                self.mapHolder = mapholder;
+                self.channel = channel;
                 if(channel[0] == '/')
                 {
                     var chlength = channel.length;
@@ -58,8 +61,8 @@
                     channelsub = channelsub.substring(0, chlength-2);
                     channel = channelsub;
                 }
-                this.CHANNEL = channel; //'/' + channel + '/';
-                console.log("with channel " + this.CHANNEL);
+                self.CHANNEL = channel; //'/' + channel + '/';
+                console.log("with channel " + self.CHANNEL);
                 
                 var pusher = new Pusher('5c6bad75dc0dd1cec1a6');
                 pusher.connection.bind('state_change', function(state) {
@@ -68,10 +71,12 @@
                         console.log("Yipee! We've connected!");
                         }
                     else {
-                        alert("Oh-Oh, connection failed");
+                        // alert("Oh-Noooo!, my Pusher connection failed");
+                        console.log("Oh-Noooo!, my Pusher connection failed");
                         }
                     });
-                var channelBind = pusher.subscribe(this.CHANNEL);
+                var channelBind = pusher.subscribe(self.CHANNEL);
+                /* 
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                  {  // Executed when a messge is received
                      console.log('frame is',frame);
@@ -79,38 +84,28 @@
                      console.log("back from boundsRetriever");
                  }
                 );
-                
-                channel.bind('pusher:subscription_error', function(statusCode) {
-                    alert('Problem subscribing to "private-channel": ' + statusCode);
+                 */
+                 
+                 
+                channelBind.bind('client-MapXtntEvent', function(data) 
+                {
+                    alert('An event was triggered with message: ' + data.message);
                 });
-                channel.bind('pusher:subscription_succeeded', function() {
+
+                channelBind.bind('pusher:subscription_error', function(statusCode) {
+                    //alert('Problem subscribing to "private-channel": ' + statusCode);
+                    console.log('Problem subscribing to "private-channel": ' + statusCode);
+                });
+                channelBind.bind('pusher:subscription_succeeded', function() {
                     console.log('Successfully subscribed to "private-channel"');
                 });
                             
-                self.mapHolder.setPusherClient(pusher, self.CHANNEL);
+                self.mapHolder.prototype.setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
                     self.callbackfunction(self.CHANNEL);
                 }
             };
             
-            $scope.pusherChannelSelectorDialog = function(onAcceptChannelName)
-            {
-               /*  require(["dijit/Dialog", "dijit/form/Button"]);
-                dojo.byId('idDialogButtonAcceptChannel').onclick  = onAcceptChannelName;
-                dojo.byId('channelName').onkeypress = function(e) {
-                        if(e.which == 13) {
-                            StompChannelerDialog.hide();
-                            onAcceptChannelName();
-                        }
-                    };
-
-                var p = dijit.byId('StompChannelerDialog'); */
-                // var dlg = document.getElementById('StompChannelerModal');
-                // dlg.modal({show:true});
-                // var dlg = angular.element('#StompChannelerModal');
-                var dlg = $('#StompChannelerModal');
-                dlg.modal({show:true})
-            };
             
             $scope.hitEnter = function(evt){
                 if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,''))){
@@ -118,44 +113,39 @@
                 }
             }; // end hitEnter
             
-            $scope.setupPusherClientX = function(mapholder, cbfn)
-            {
-                var dlg = document.getElementById('StompChannelerDialog');
-                self.scope = angular.element(dlg).scope();
-                self.scope.pusherChannelSelectorDialog(function() {
-                                console.log('You selected a channel name');
-                                var channelTextBox = dojo.byId('channelName');
-                                console.debug(channelTextBox.value);
-                                channel = (channelTextBox.value);
-                                PusherClient(mapholder, channel, cbfn);
-                            });
+            $scope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                  if(phase == '$apply' || phase == '$digest') {
+                      if(fn && (typeof(fn) === 'function')) {
+                          fn();
+                      }
+                  } else {
+                    this.$apply(fn);
+                }
             };
-            selfdict.setupPusherClient = $scope.setupPusherClient;
-          
         }  
+          
         
-        StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn, $scope)
+        StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn)
         {
-            selfdict.mph = mapholder;{
+            selfdict.mph = mapholder;
             selfdict.callbackFunction = cbfn;
-            console.log("toggleShow from " + $scope.showDialog);
-            $scope.safeApply(function(){
-                $scope.showDialog = ! $scope.showDialog;
+            console.log("toggleShow from " + selfdict.scope.showDialog);
+             selfdict.scope.safeApply(function(){
+                selfdict.scope.showDialog = ! selfdict.scope.showDialog;
             });
-            console.log("toggleShow after apply " + $scope.showDialog);
+            console.log("toggleShow after apply " + selfdict.scope.showDialog);
             
-            self.scope.pusherChannelSelectorDialog(function() {
-                            console.log('You selected a channel name');
-                            console.debug(self.scope.privateChannelMashover);
-                            PusherClient(mapholder, self.scope.privateChannelMashover, cbfn);
-                        }); 
+            // selfdict.scope.PusherClient(mapholder, selfdict.scope.privateChannelMashover, cbfn);
         };
+                
+            //selfdict.setupPusherClient = $scope.setupPusherClient;
         
         function init(App) {
             console.log('StompSetup init');
             App.controller('StompSetupCtrl',  ['$scope', '$modal', StompSetupCtrl]);
             
-            App.directive("modalShow", function () {
+            App.directive("modalShowPusher", function () {
                 var tpl = ' \
                   <div class="modal-dialog", style="width: 100%;"> \
                     <div class="modal-content"> \
@@ -165,7 +155,7 @@
                       </div> \
                       <div class="modal-body"> \
                         <input type="text" name="input" ng-model="data.privateChannelMashover"> \
-                        <div>selected: {{data.privateChannelMashover}}</div> \
+                        <div>channel name : {{data.privateChannelMashover}}</div> \
                       </div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
@@ -185,14 +175,16 @@
                         var localScope = scope;
                         //Hide or show the modal
                         scope.showModal = function (visible, elem) {
-                            if (!elem)
+                            if (!elem){
                                 elem = element;
-
-                            if (visible)
+                            }
+                            if (visible){
                                 $(elem).modal311("show");                     
-                            else
+                            }
+                            else{
                                 $(elem).modal311("hide");
-                        }
+                            }
+                        };
 
                         //Check to see if the modal-visible attribute exists
                         if (!attrs.modalVisible)
@@ -215,15 +207,18 @@
                             });
                             //Watch for changes to the modal-mdata attribute
                             scope.$watch("modalPdata", function (newValue, oldValue) {
-                                if( ! angular.isUndefinedOrNull(newValue))
+                                if( ! angular.isUndefinedOrNull(newValue)){
                                   localScope.$parent.data = newValue;
+                                }
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
                             //Watch for changes to the modal-mdata attribute
-                            scope.$watch("data.privateChannelMashover", function (newValue, oldValue) {
-                                if( ! angular.isUndefinedOrNull(newValue))
-                                  localScope.$parent.data.privateChannelMashover = newValue;
+                            scope.$watch("data.privateChannelMashover", function (newValue, oldValue) 
+                            {
+                                if( ! angular.isUndefinedOrNull(newValue)){
+                                    localScope.$parent.data.privateChannelMashover = newValue;
+                                }
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
@@ -240,7 +235,7 @@
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
                         $(element).on('hidden.bs.modal', function () {
                             scope.modalVisible = localScope.$parent.showDialog = false;
-                            console.log("hide event called")
+                            console.log("hide event called");
                             if (!scope.$$phase && !scope.$root.$$phase){
                                 scope.$apply();
                             }
