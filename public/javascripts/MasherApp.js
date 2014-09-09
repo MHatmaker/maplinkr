@@ -43,25 +43,24 @@
         "dojo",
         "dojo/domReady",
         "esri/arcgis/Portal", 
-        // 'dojo/ready',
-        // 'dojo/domReady',
-        // 'ready!',
-        // "dojo/dom", 
-        'javascripts/bootstrap',
-        'javascripts/lib/AgoNewWindowConfig'
+        'javascripts/lib/AgoNewWindowConfig',
+        'javascripts/bootstrap'
         // 'javascripts/Modal311'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
-    ], function(dojo, domReady, esriPortal, bootstrap, AgoNewWindowConfig) {
+    ], function(dojo, domReady, esriPortal, AgoNewWindowConfig, bootstrap ) {
         console.debug('call ready');
         console.log(bootstrap);
         console.log('AgoNewWindowConfig initialization');
         console.log(AgoNewWindowConfig);
+        /* 
         var mc = null;
         mc = AgoNewWindowConfig.masherChannel(false);
         console.log(mc);
         var wmid = null
         wmid = AgoNewWindowConfig.webmapId(false);
         console.log(wmid);
+         */
+      /*   
         var isNewAgoWnd = AgoNewWindowConfig.testUrlArgs();
         if(isNewAgoWnd){
             mc = AgoNewWindowConfig.masherChannel(true);
@@ -69,8 +68,12 @@
             wmid = AgoNewWindowConfig.webmapId(true);
             alert(wmid);
         }
+         */
         // console.log(domReady);
         // console.log(dom);
+        
+        console.log("before domready, url is " + location.search);
+        AgoNewWindowConfig.locationPath(location.search);
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);

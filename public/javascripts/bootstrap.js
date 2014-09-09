@@ -7,8 +7,9 @@
         'angular',
         'controllers/AppController',
         'controllers/MasherCtrl',
-        'lib/AgoNewWindowConfig.js'
-    ], function(angular, AppController, MasherCtrl, AgoNewWindowConfig) {
+        'controllers/TabsCtrl',
+        'lib/AgoNewWindowConfig'
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -64,9 +65,12 @@
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);
             
-            var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs()
+            console.log("url is " + location.search);
+            var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             if(isNewAgoWindow){
+                alert("isNewAgoWindow is true");
                 MasherCtrl.startArcGIS();
+                TabsCtrl.selectAgoOnline();
             }
             return App;
         }

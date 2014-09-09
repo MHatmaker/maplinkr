@@ -23,13 +23,14 @@ String.format = function() {
     console.log('TabsCtrl setup');
     define(['angular'], function(angular) {
         console.log('TabsCtrl define');
+        var selfMethods = {};
 
         function TabsCtrl($scope) {
-          console.debug('TabsCtrl - initialize tabs');
-         
-          var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
-            
-          $scope.tabs = [
+            console.debug('TabsCtrl - initialize tabs');
+
+            var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
+
+            $scope.tabs = [
             { 
               maptype : 'google',
               title:'Google Maps', 
@@ -63,24 +64,35 @@ String.format = function() {
               active: false,
               disabled: false
             }
-          ];
-           $scope.currentTab = $scope.tabs[0]; //'googlemaptab.tpl.html';
-           $scope.$parent.currentTab = $scope.currentTab;
-           console.log("currentTab - url initialized to " + $scope.currentTab.url);
+            ];
+            $scope.currentTab = $scope.tabs[0]; //'googlemaptab.tpl.html';
+            $scope.$parent.currentTab = $scope.currentTab;
+            console.log("currentTab - url initialized to " + $scope.currentTab.url);
 
             $scope.onClickTab = function (tb) {
                 //alert("clicked on " + tb.url);
                 $scope.currentTab =$scope.$parent.currentTab = tb;
                 console.debug("clicked on " + tb.url);
             }
-            
             $scope.isActiveTab = function(tabUrl) {
                 //console.debug("set active tab testing " + tabUrl);
                 return tabUrl == $scope.currentTab.url;
             }
-           console.log("onClickTab and isActiveTab defined ");
+            console.log("onClickTab and isActiveTab defined ");
+            
+            $scope.selectAgoOnline = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
+                console.log("currentTab - url reset to " + $scope.currentTab.url);
+            }
+            selfMethods["selectAgoOnline"] = $scope.selectAgoOnline;
+            console.debug(selfMethods);
            
         };
+            
+        TabsCtrl.prototype.selectAgoOnline = function (){
+            selfMethods["selectAgoOnline"]();
+        }
+        
 
         function init(App) {
             console.log('TabsCtrl init');
