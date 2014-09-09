@@ -5,10 +5,10 @@
     console.debug('bootstrap setup method');
     define([
         'angular',
-        //'angular/angular-route',
-        'controllers/AppController' //,
-        // 'ngGrid'
-    ], function(angular, AppController) {
+        'controllers/AppController',
+        'controllers/MasherCtrl',
+        'lib/AgoNewWindowConfig.js'
+    ], function(angular, AppController, MasherCtrl, AgoNewWindowConfig) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -63,6 +63,11 @@
             AppController.start(App);
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);
+            
+            var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs()
+            if(isNewAgoWindow){
+                MasherCtrl.startArcGIS();
+            }
             return App;
         }
 

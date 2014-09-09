@@ -1,29 +1,7 @@
 
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-
 (function() {
     'use strict';
-    /* 
-    var locationPath = "";
-    var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
-    //locationPath =  "./";
-    // console.log(locationPath);
-     */
     var locationPath = "/";
-    //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
-    console.log(location.pathname);
-    console.log(location.search);
-    console.log(locationPath);
-    var webmapId = getParameterByName('id');
-    var masherChannel = getParameterByName('channel');
-    console.log("webmapId " + webmapId + " channel " + masherChannel);
     
     define('angular', function () {
         if (angular) {
@@ -69,12 +47,28 @@ function getParameterByName(name) {
         // 'dojo/domReady',
         // 'ready!',
         // "dojo/dom", 
-        'javascripts/bootstrap' //, 
+        'javascripts/bootstrap',
+        'javascripts/lib/AgoNewWindowConfig'
         // 'javascripts/Modal311'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
-    ], function(dojo, domReady, esriPortal, bootstrap) {
+    ], function(dojo, domReady, esriPortal, bootstrap, AgoNewWindowConfig) {
         console.debug('call ready');
         console.log(bootstrap);
+        console.log('AgoNewWindowConfig initialization');
+        console.log(AgoNewWindowConfig);
+        var mc = null;
+        mc = AgoNewWindowConfig.masherChannel(false);
+        console.log(mc);
+        var wmid = null
+        wmid = AgoNewWindowConfig.webmapId(false);
+        console.log(wmid);
+        var isNewAgoWnd = AgoNewWindowConfig.testUrlArgs();
+        if(isNewAgoWnd){
+            mc = AgoNewWindowConfig.masherChannel(true);
+            alert(mc);
+            wmid = AgoNewWindowConfig.webmapId(true);
+            alert(wmid);
+        }
         // console.log(domReady);
         // console.log(dom);
         domReady(function () {

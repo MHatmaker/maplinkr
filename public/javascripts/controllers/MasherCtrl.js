@@ -5,6 +5,7 @@
     console.log('MasherCtrl setup');
     define(['angular'], function(angular) {
         console.log('MasherCtrl define');
+        var selfMethods = {};
         
         function MasherCtrl($scope) {
             console.debug('MasherCtrl - initialize collapsed bool');
@@ -19,15 +20,25 @@
                 $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
             }
+            selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;
+            console.debug(selfMethods);
         };
+        
+        MasherCtrl.prototype.sumClaps = function (){
+                selfMethods["summmaryCollapser"]();
+            }
         
         function init(App) {
             console.log('MasherCtrl init');
             App.controller('MasherCtrl', ['$scope', MasherCtrl]);
             return MasherCtrl;
         }
+        function startArcGIS(){
+            console.log("startArcGIS");
+            MasherCtrl.prototype.sumClaps();
+        }
 
-        return { start: init };
+        return { start: init, startArcGIS: startArcGIS };
 
     });
 
