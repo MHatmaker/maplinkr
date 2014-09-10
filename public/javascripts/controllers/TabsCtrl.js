@@ -99,8 +99,12 @@ String.format = function() {
             App.controller('TabsCtrl', ['$scope', TabsCtrl]);
             return TabsCtrl;
         }
+        function selectAgoOnline() {
+            console.log('selectAgoOnline ');
+            TabsCtrl.prototype.selectAgoOnline();
+        }
 
-        return { start: init };
+        return { start: init, selectAgoOnline : selectAgoOnline };
 
     });
 

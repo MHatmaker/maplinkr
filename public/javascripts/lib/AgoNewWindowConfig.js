@@ -36,9 +36,9 @@ var details = {
         return {
             testUrlArgs: function(args){
                 var rslt = getParameterByName('id');
-                alert("getParameterByName('id') = " + rslt);
-                alert(rslt.length);
-                alert(rslt.length != 0);
+                // alert("getParameterByName('id') = " + rslt);
+                // alert(rslt.length);
+                // alert(rslt.length != 0);
                 
                 console.log("getParameterByName('id') = " + rslt);
                 console.log(rslt.length);

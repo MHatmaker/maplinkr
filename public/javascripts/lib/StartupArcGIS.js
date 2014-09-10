@@ -23,9 +23,10 @@
     define([
         'lib/MapHosterArcGIS',
         'controllers/StompSetupCtrl',
+        'controllers/AgoNewWindowConfig',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS, StompSetupCtrl) {
+    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig) {
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';
@@ -298,9 +299,10 @@
         function initializePreProc()
         {
             console.log('initializePreProc entered');
-            var urlparams=dojo.queryToObject(window.location.search); 
-            console.debug(urlparams);
-            var idWebMap=urlparams['?id'];
+            // var urlparams=dojo.queryToObject(window.location.search); 
+            // console.debug(urlparams);
+            // var idWebMap=urlparams['?id'];
+            var idWebMap = AgoNewWindowConfig.webmapId();
             console.debug(idWebMap);
             // initUI();
             if(! idWebMap)

@@ -8,8 +8,9 @@
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
-        'lib/AgoNewWindowConfig'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig) {
+        'lib/AgoNewWindowConfig',
+        '$http'
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, $http) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -71,6 +72,9 @@
                 alert("isNewAgoWindow is true");
                 MasherCtrl.startArcGIS();
                 TabsCtrl.selectAgoOnline();
+                $http.get('/views/partials/ArcGIS.jade').success(function(data) {
+                        console.log("$http.get on ArcGIS.jade");
+                });
             }
             return App;
         }
