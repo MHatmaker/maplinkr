@@ -23,7 +23,7 @@
     define([
         'lib/MapHosterArcGIS',
         'controllers/StompSetupCtrl',
-        'controllers/AgoNewWindowConfig',
+        'lib/AgoNewWindowConfig',
         'angular',
         'esri/map'
     ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig) {

@@ -8,6 +8,7 @@ var details = {
 
 (function () {
     'use strict';
+    console.debug('AgoNewWindowConfig.js setup method');
    /*  
     var locationPath = "/";
     //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
@@ -18,6 +19,7 @@ var details = {
  */
     define([
     ], function (Color, Symbol) {
+            console.debug('AgoNewWindowConfig define fn');
             
             function setLocationPath(locPath){
                 console.log("setLocationPath from " + details.locationPath + " to " + locPath);

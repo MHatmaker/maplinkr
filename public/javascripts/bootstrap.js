@@ -8,19 +8,20 @@
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
-        'lib/AgoNewWindowConfig',
-        '$http'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, $http) {
+        'lib/AgoNewWindowConfig'
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig) {
         console.debug('bootstrap define fn');
+        var selfMethods = {};
+        var selfStateDetails = {};
         
         function init() {
             // var App = angular.module('app', ['ui.bootstrap']);
             console.debug('bootstrap init method');
             
             // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
-            var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid'])
-                .config(['$routeProvider', '$locationProvider', 
-                function($routeProvider, $locationProvider) {
+            var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
+                .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
+                function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
                     console.debug('App module route provider');
                     var isCollapsed = false;
                      
@@ -46,11 +47,27 @@
                       otherwise({
                           redirectTo: '/'
                       }); 
-                      
+                             
                     console.debug('html5Mode');
                     $locationProvider.html5Mode(true);
                     console.debug('html5Mode again')
-                   }
+                    
+                    $stateProvider
+                        .state('ArcGISState', {
+                            url: "/partials/ArcGIS.jade",
+                            templateUrl: "/partials/ArcGIS.jade"
+                        });
+                        
+                    selfStateDetails['stateProvider'] = $stateProvider;
+                    
+                    selfMethods["selectAgoOnline"] = function(view, stateProvider){
+                        console.log("in setViewState");
+                        console.debug(selfStateDetails['state']);
+                        stateProvider.state.transitionTo(view);
+                        console.log("in setViewState after transition");
+                    };
+                    console.debug(selfMethods);
+                }
             ]).
             
             
@@ -72,10 +89,11 @@
                 alert("isNewAgoWindow is true");
                 MasherCtrl.startArcGIS();
                 TabsCtrl.selectAgoOnline();
-                $http.get('/views/partials/ArcGIS.jade').success(function(data) {
-                        console.log("$http.get on ArcGIS.jade");
-                });
-            }
+                
+                console.log("$state.transitionTo ArcGISState");
+                selfMethods["selectAgoOnline"]('ArcGISState', selfStateDetails['stateProvider']);
+                console.log("transitioned");
+                };
             return App;
         }
 
