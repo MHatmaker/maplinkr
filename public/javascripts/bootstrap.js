@@ -11,8 +11,6 @@
         'lib/AgoNewWindowConfig'
     ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig) {
         console.debug('bootstrap define fn');
-        var selfMethods = {};
-        var selfStateDetails = {};
         
         function init() {
             // var App = angular.module('app', ['ui.bootstrap']);
@@ -52,22 +50,6 @@
                     $locationProvider.html5Mode(true);
                     console.debug('html5Mode again')
                     
-                    $stateProvider
-                        .state('ArcGISState', {
-                            url: "/partials/ArcGIS.jade",
-                            templateUrl: "/partials/ArcGIS.jade"
-                        });
-                        
-                    selfStateDetails['stateProvider'] = $stateProvider;
-                    selfStateDetails['locationProvider'] = $locationProvider;
-                    
-                    selfMethods["selectAgoOnline"] = function(view, stateProvider){
-                        console.log("in setViewState");
-                        console.debug(selfStateDetails['state']);
-                        stateProvider.state.transitionTo(view);
-                        console.log("in setViewState after transition");
-                    };
-                    console.debug(selfMethods);
                 }
             ]).
             
@@ -87,14 +69,10 @@
             console.log("url is " + location.search);
             var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             if(isNewAgoWindow){
-                alert("isNewAgoWindow is true");
+                // alert("isNewAgoWindow is true");
                 MasherCtrl.startArcGIS();
-                TabsCtrl.selectAgoOnline(selfStateDetails['locationProvider']);
-                
-                // console.log("$state.transitionTo ArcGISState");
-                // selfMethods["selectAgoOnline"]('ArcGISState', selfStateDetails['stateProvider']);
-                // console.log("transitioned");
-                };
+                TabsCtrl.selectAgoOnline();
+            };
             return App;
         }
 

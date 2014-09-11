@@ -25,7 +25,7 @@ String.format = function() {
         console.log('TabsCtrl define');
         var selfMethods = {};
 
-        function TabsCtrl($scope, $state, $location) {
+        function TabsCtrl($scope, $location) {
             console.debug('TabsCtrl - initialize tabs');
 
             var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
@@ -65,19 +65,15 @@ String.format = function() {
               disabled: false
             }
             ];
-            $scope.setPage = function (page) {
-                console.log("transitionTo " + page);
-                $state.transitionTo(page);
-            };
             
-            $scope.currentTab = $scope.tabs[0]; //'googlemaptab.tpl.html';
+            $scope.currentTab = $scope.tabs[0]; 
             $scope.$parent.currentTab = $scope.currentTab;
             console.log("currentTab - url initialized to " + $scope.currentTab.url);
 
             $scope.onClickTab = function (tb) {
                 //alert("clicked on " + tb.url);
                 $scope.currentTab =$scope.$parent.currentTab = tb;
-                console.debug("clicked on " + tb.url);
+                console.debug("clicked on tab : " + tb.url);
             }
             $scope.isActiveTab = function(tabUrl) {
                 //console.debug("set active tab testing " + tabUrl);
@@ -85,16 +81,10 @@ String.format = function() {
             }
             console.log("onClickTab and isActiveTab defined ");
             
-            $scope.selectAgoOnline = function(locProvider){
+            $scope.selectAgoOnline = function(){
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
-                // $scope.setPage('ArcGISState');
-                // $location.path('ArcGISState');
-                console.debug(locProvider);
-                console.debug($location);
                 $location.path("/views/partials/ArcGIS");
-                // var selectedTabUrl = document.getElementById('currentTabSelectedId');
-                // angular.element(selectedTabUrl).trigger('click');
             }
             selfMethods["selectAgoOnline"] = $scope.selectAgoOnline;
             console.debug(selfMethods);
@@ -108,7 +98,7 @@ String.format = function() {
 
         function init(App) {
             console.log('TabsCtrl init');
-            App.controller('TabsCtrl', ['$scope', '$state', '$location', TabsCtrl]);
+            App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);
             return TabsCtrl;
         }
         function selectAgoOnline() {
