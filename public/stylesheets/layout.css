@@ -55,9 +55,9 @@
         font-size:10px;
         }
       
-      .mashbox
+     #mashbox
             {
-          background-image: url(/stylesheets/images/bigmasher.png);
+          background-image: url(images/bigmasher.png);
           background-size: 100% 100%;
           border: 2px solid black;
           opacity:0.4;
