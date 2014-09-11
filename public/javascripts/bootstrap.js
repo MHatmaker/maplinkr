@@ -59,6 +59,7 @@
                         });
                         
                     selfStateDetails['stateProvider'] = $stateProvider;
+                    selfStateDetails['locationProvider'] = $locationProvider;
                     
                     selfMethods["selectAgoOnline"] = function(view, stateProvider){
                         console.log("in setViewState");
@@ -88,11 +89,11 @@
             if(isNewAgoWindow){
                 alert("isNewAgoWindow is true");
                 MasherCtrl.startArcGIS();
-                TabsCtrl.selectAgoOnline();
+                TabsCtrl.selectAgoOnline(selfStateDetails['locationProvider']);
                 
-                console.log("$state.transitionTo ArcGISState");
-                selfMethods["selectAgoOnline"]('ArcGISState', selfStateDetails['stateProvider']);
-                console.log("transitioned");
+                // console.log("$state.transitionTo ArcGISState");
+                // selfMethods["selectAgoOnline"]('ArcGISState', selfStateDetails['stateProvider']);
+                // console.log("transitioned");
                 };
             return App;
         }
