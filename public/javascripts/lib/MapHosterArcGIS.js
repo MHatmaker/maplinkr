@@ -363,6 +363,10 @@
             return MapHosterArcGIS;
         }
         
+        function getInternals(){
+            return mph;
+        }
+        
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             var tmpLon = mph.cntrxG;
@@ -385,7 +389,7 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal  }; //,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals  }; //,
                  // setPusherClient: setPusherClient };
     });
 

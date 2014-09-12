@@ -286,6 +286,10 @@
             return MapHosterLeaflet;
         }
         
+        function getInternals(){
+            return mph;
+        }
+        
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             mph.map.invalidateSize(true);
@@ -296,7 +300,7 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal };
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals };
     });
 
 }).call(this);

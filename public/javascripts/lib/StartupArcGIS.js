@@ -2,6 +2,7 @@
 (function() {
     "use strict";
 
+    var selfDetails = {};
     console.log('StartupGArcGIS setup');
     require(['lib/MapHosterArcGIS']);
         
@@ -34,6 +35,8 @@
         var aMap = null;
         var loading;
         var newSelectedWebMapId = "";
+        
+        selfDetails.mph = null; 
 
         function configit(nmpid){
             console.log("nmpid " + nmpid);
@@ -77,11 +80,11 @@
             initializePostProc(newSelectedWebMapId);
             if(displayDestination == 'New Window')
             {
-                StompSetupCtrl.setupPusherClient(mph, function(channel){
-                    var url = "?id=" + newSelectedWebMapId + mph.prototype.getGlobalsForUrl() + "&channel=" + channel;
+                StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel){
+                    var url = "?id=" + newSelectedWebMapId + MapHosterArcGIS.internals().getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=250,width=250");
+                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=350,width=400");
                     });
             }
             /* 
@@ -245,56 +248,26 @@
                 scalebarUnit:"english" 
             });    
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
-            if(mph == null)
+            console.log("selfDetails.mph : " + selfDetails.mph);
+            if(selfDetails.mph == null)
             {
-                mph = MapHosterArcGIS.start();
+                selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
-                pusher = new PusherClient(mph, pusherChannel, null);     
+                pusher = new PusherClient(MapHosterArcGIS, pusherChannel, null);     
             }
             else
             {
                 currentPusher = mph.pusher;
                 currentChannel = mph.channel;
-                mph = MapHosterArcGIS.start();
+                selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 resizeWebSiteVertical(true);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
-                mph.setPusherClient(currentPusher, currentChannel);
+                MapHosterArcGIS.prototype.setPusherClient(currentPusher, currentChannel);
             }
         }
-                     
-        function dialogDestinationWindowSelector(title, message, sameLabel, newLabel, 
-                onSameLabel, onNewLabel, onNo, width, height) 
-        {
-            dijit.byId('idDialogButtonSameWindow').set("style", "color:crimson;font-weight:bold");
-            dijit.byId('idDialogButtonSameWindow').set("label", sameLabel);
-            dojo.byId('idDialogButtonSameWindow').onclick  = onSameLabel;
-            dijit.byId('idDialogButtonNewWindow').set("style", "color:#131313;font-weight:bold");
-            dijit.byId('idDialogButtonNewWindow').set("label", newLabel);
-            dojo.byId('idDialogButtonNewWindow').onclick  = onNewLabel;
-            document.getElementById('idDialogContainer').style.width=width;
-            document.getElementById('idDialogContainer').style.height=height;
-            var p = dijit.byId('idWindowSelectionDialog');
-            p.set( "title", title );
-            dojo.byId('idDialogText').innerHTML = message;
-            p.execute = dojo.hitch( p, function() 
-            {
-                if( dojo.isObject( arguments ) ) 
-                {
-                    // var arg0Str = arguments[0].toString();
-                    // console.log(arg0Str);
-                    // var arg0Val = arguments[0].valueOf();
-                    // console.log(arg0Val);
-                    // onSameLabel();
-                } 
-                else 
-                {
-                    onNo();
-                }
-            });
-            p.show();
-        }
+          
                     
         function initializePreProc()
         {

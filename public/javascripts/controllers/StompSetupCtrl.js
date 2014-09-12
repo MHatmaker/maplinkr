@@ -5,9 +5,8 @@
 
     console.log('StompSetup setup');
     define([
-        'angular',
-        'lib/MapHosterArcGIS'
-    ], function(angular, MapHosterArcGIS) {
+        'angular'
+    ], function(angular) {
         console.log('StompSetupCtrl define');  
         
         var selfdict = {};
@@ -41,8 +40,8 @@
                 $scope.data.privateChannelMashover = $scope.data.prevChannel.slice(0);
             };
 
-            $scope.onAcceptDestination = function(){
-                console.log("onAcceptDestination " + $scope.data.privateChannelMashover);
+            $scope.onAcceptChannel = function(){
+                console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 $scope.PusherClient(selfdict.mph, $scope.data.privateChannelMashover, selfdict.callbackFunction);
             };
 
@@ -128,7 +127,7 @@
         
         StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn)
         {
-            selfdict.mph = mapholder;
+            selfdict.mph = mapholder.internals();
             selfdict.callbackFunction = cbfn;
             console.log("toggleShow from " + selfdict.scope.showDialog);
              selfdict.scope.safeApply(function(){
@@ -244,7 +243,7 @@
                             console.debug(scope.$parent.data);
                             console.log("whichDismiss : " + scope.$parent.data.whichDismiss);
                             if(scope.$parent.data.whichDismiss == "Accept"){
-                                scope.$parent.onAcceptDestination();
+                                scope.$parent.onAcceptChannel();
                             }
                         });
                     }
