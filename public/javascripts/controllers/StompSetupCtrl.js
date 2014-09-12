@@ -100,7 +100,7 @@
                     console.log('Successfully subscribed to "private-channel"');
                 });
                             
-                self.mapHolder.prototype.setPusherClient(pusher, self.CHANNEL);
+                selfdict.mph.setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
                     self.callbackfunction(self.CHANNEL);
                 }
@@ -154,7 +154,7 @@
                         <h3>Create a Pusher Channel ID :</h3> \
                       </div> \
                       <div class="modal-body"> \
-                        <input type="text" name="input" ng-model="data.privateChannelMashover"> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'private-channel-mashover\'"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
                       </div> \
                       <div class="modal-footer"> \
@@ -219,8 +219,8 @@
                                 if( ! angular.isUndefinedOrNull(newValue)){
                                     localScope.$parent.data.privateChannelMashover = newValue;
                                 }
-                                console.log("watch modalMdata scope.$parent data  : ");
-                                console.debug(localScope.$parent.data);
+                                // console.log("watch modalMdata scope.$parent data  : ");
+                                // console.debug(localScope.$parent.data);
                             });
                            /*  
                             scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {

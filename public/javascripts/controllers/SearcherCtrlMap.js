@@ -249,7 +249,7 @@ angular.isUndefinedOrNull = function(val) {
                       <div class="modal-body"> \
                         <div class="btn-group btn-group-vertical"> \
                               <span data-ng-repeat="dest in $parent.destSelections"> \
-                                  <input name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel"/> \
+                                  <input name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel" ng-init="$parent.data.dstSel=\'Same Window\'"/> \
                                     {{dest}} \
                                   <br/> \
                               </span> \
