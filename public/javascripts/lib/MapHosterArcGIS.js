@@ -21,6 +21,7 @@
             self = null;
               
         
+        mph = MapHosterArcGIS.prototype;
         // function configureMap(gMap, google) {
         // }
         function configureMap(xtntMap, zoomWebMap, pointWebMap)
@@ -320,6 +321,9 @@
          
         function MapHosterArcGIS()
         {
+            self = this;
+            mph = MapHosterArcGIS.prototype;
+            self.mph = mph;
         /* 
             var setPusherClient = function (pusher, channel)
             {   
@@ -350,7 +354,9 @@
          */
         
         function init() {
+            self = this;
             mph = MapHosterArcGIS.prototype;
+            self.mph = mph;
             // setPusherClient = function (pshr, chnl)
             // {   
                 // if(pusher == null)

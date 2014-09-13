@@ -44,7 +44,10 @@
         "dojo/domReady",
         "esri/arcgis/Portal", 
         'javascripts/lib/AgoNewWindowConfig',
-        'javascripts/bootstrap'
+        'javascripts/bootstrap',
+        'lib/MapHosterLeaflet',
+        'lib/MapHosterGoogle',
+        'lib/MapHosterArcGIS'
         // 'javascripts/Modal311'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
     ], function(dojo, domReady, esriPortal, AgoNewWindowConfig, bootstrap ) {

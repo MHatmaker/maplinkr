@@ -20,6 +20,10 @@
             bounds,
             channel,
             pusher;
+        var selfPusherDetails = {
+            channel : null,
+            pusher : null
+        };
             
         function configureMap(lmap) 
         {
@@ -110,11 +114,11 @@
                 var cmp = compareExtents("setBounds", xtExt);
                 if(cmp == false)
                 {
-                    console.log("MapHoster setBounds pusher send to channel " + channel);
+                    console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
                     // var sendRet = self.pusher.send(xtntJsonStr, channel);
-                    if(pusher)
+                    if(selfPusherDetails.pusher)
                     {
-                        pusher.channel(channel).trigger('client-MapXtntEvent', xtExt);
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
                     mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     //console.debug(sendRet);
@@ -265,14 +269,15 @@
 
         MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
         {   
-            pusher = pusher;
-            channel = channel;
+            selfPusherDetails.pusher = pusher;
+            selfPusherDetails.channel = channel;
         }
         
         function MapHosterLeaflet()
         {
             var self = this;
             this.pusher = null;
+            // selfPusherDetails.pusher = null;
             this.userZoom = true;
                             
             this.getGlobalsForUrl = function()

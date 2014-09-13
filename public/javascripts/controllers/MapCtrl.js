@@ -71,20 +71,6 @@
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
-            /* 
-            $http.get('/partials/' + tmpltName)
-                .then(function(results){
-                    //Success;
-                    console.log("Success: " + results.status);
-                    console.log($routeParams.id);
-                    $scope.doc = results.data;
-                    console.debug($scope.doc);
-                }, function(results){
-                    //error
-                    console.log("Error: " + results.data + "; "
-                                          + results.status);
-                })
-                 */
                  
             $scope.$on('CollapseSummaryEvent', function() {
                 // if($scope.map.resize)

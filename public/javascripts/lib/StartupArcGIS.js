@@ -77,7 +77,6 @@
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
-            initializePostProc(newSelectedWebMapId);
             if(displayDestination == 'New Window')
             {
                 StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel){
@@ -87,37 +86,10 @@
                     window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=350,width=400");
                     });
             }
-            /* 
-            if(promptForDestination == false)
+            else
             {
                 initializePostProc(newSelectedWebMapId);
             }
-            else
-            {
-                dialogDestinationWindowSelector("Select Destination Window",
-                    "Where do you want to display " + selectedMapTitle + "?",
-                    "Replace map in this window",
-                    "Open map in new tab(window)",
-                        function() {
-                            console.log('You selected same window');
-                            initializePostProc(newSelectedWebMapId);
-                        },
-                        function() {
-                            console.log('You selected new window');
-                            setupPusherClient(mph, function(channel){
-                                var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
-                                console.log("open new ArcGIS window with URI " + url);
-                                console.log("using channel " + channel);
-                                window.open("http://localhost:8080/arcgis/" + url);
-                                });
-                        },
-                        function() {
-                           console.log('You cancelled new map operation');
-                        },
-                        500,
-                        150
-                    );
-            } */
         }
 
         function initializePostProc(newSelectedWebMapId)

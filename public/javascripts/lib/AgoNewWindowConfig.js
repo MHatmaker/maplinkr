@@ -55,6 +55,15 @@ var details = {
             },
             locationPath : function (locPath){
                 setLocationPath(locPath);
+            },
+            lon: function(){
+                return getParameterByName('lon');
+            },
+            lat: function(){
+                return getParameterByName('lat');
+            },
+            zoom: function(){
+                return getParameterByName('zoom');
             }
         };
     });
