@@ -37,7 +37,7 @@
             // window.loading = dojo.byId("loadingImg")
             // console.log(window.loading);
             console.log("newSelectedWebMapId " + newMapId);
-            if( newSelectedWebMapId )
+            if( newSelectedWebMapId !== null)
             {
                 setupPusherClient(MapHosterLeaflet, function(channel){
                     var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.internals().getGlobalsForUrl() + "&channel=" + channel;

@@ -98,8 +98,13 @@
                 channelBind.bind('pusher:subscription_succeeded', function() {
                     console.log('Successfully subscribed to "private-channel"');
                 });
-                            
-                selfdict.mph.setPusherClient(pusher, self.CHANNEL);
+                          
+
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                selfdict.mph = serv.getCurrentMapType();
+                                      
+                selfdict.mph.internals().setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
                     self.callbackfunction(self.CHANNEL);
                 }

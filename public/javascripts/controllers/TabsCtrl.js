@@ -69,10 +69,18 @@ String.format = function() {
             $scope.currentTab = $scope.tabs[0]; 
             $scope.$parent.currentTab = $scope.currentTab;
             console.log("currentTab - url initialized to " + $scope.currentTab.url);
+            
+            var $inj = angular.injector(['app']);
+            var serv = $inj.get('CurrentMapTypeService');
+            serv.setCurrentMapType($scope.currentTab.maptype);
 
             $scope.onClickTab = function (tb) {
                 //alert("clicked on " + tb.url);
                 $scope.currentTab =$scope.$parent.currentTab = tb;
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                serv.setCurrentMapType($scope.currentTab.maptype);
+            
                 console.debug("clicked on tab : " + tb.url);
             }
             $scope.isActiveTab = function(tabUrl) {

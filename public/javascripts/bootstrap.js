@@ -8,8 +8,11 @@
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
-        'lib/AgoNewWindowConfig'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig) {
+        'lib/AgoNewWindowConfig',
+        'lib/MapHosterLeaflet',
+        'lib/MapHosterGoogle',
+        'lib/MapHosterArcGIS'
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -60,7 +63,22 @@
                         setCurrentWebMapId : function(newId){ currentWebMapId = newId; },
                         getCurrentWebMapId : function(){ return currentWebMapId;}
                  };
-             });
+             }).
+             factory("CurrentMapTypeService", function(){
+                var mapTypes = {'leaflet': MapHosterLeaflet,
+                            'google' : MapHosterGoogle,
+                            'arcgis' : MapHosterArcGIS};
+                var currentMapType = 'arcgis';
+                
+                var getMapType = function(){
+                    return mapTypes[currentMapType];
+                }
+                var setMapType = function(mpt){
+                    currentMapType = mpt;
+                }
+                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType };
+            });
+                
             
             AppController.start(App);
             // need to bootstrap angular since we wait for dojo/DOM to load
