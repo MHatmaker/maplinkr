@@ -19,6 +19,10 @@
             pusher,
             userZoom,
             self = null;
+        var selfPusherDetails = {
+            channel : null,
+            pusher : null
+        };
               
         
         mph = MapHosterArcGIS.prototype;
@@ -181,7 +185,7 @@
 
             this.setBounds = function(xtExt)
             {
-                if(self.mapReady == true && self.pusher) // && self.pusher.ready == true)
+                if(self.mapReady == true && selfPusherDetails.pusher) // && self.pusher.ready == true)
                 {
                     // runs this code after you finishing the zoom
                     var xtntJsonStr = JSON.stringify(xtExt);
@@ -191,10 +195,10 @@
                     {
                         console.log("MapHoster setBounds pusher send ");
                         // var sendRet = self.stomp.send(xtntJsonStr, self.channel);
-                        if(self.pusher)
-                        {
-                            self.pusher.channel(this.channel).trigger('client-MapXtntEvent', xtExt);
-                        }
+                    if(selfPusherDetails.pusher)
+                    {
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
+                    }
                         self.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                         //console.debug(sendRet);
                     }
@@ -202,6 +206,8 @@
             }
             this.getGlobalsForUrl = function()
             {
+                console.log(" MapHosterArcGIS.prototype.getGlobalsForUrl");
+                console.log("&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG);
                 return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
             }
         }
@@ -297,10 +303,10 @@
  
         MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
         {   
-            if(this.pusher == null)
+            if(selfPusherDetails.pusher == null)
             {
-                this.pusher = pusher;
-                this.channel = channel;
+                selfPusherDetails.pusher = pusher;
+                selfPusherDetails.channel = channel;
             }
         }
         MapHosterArcGIS.prototype.getGlobalsForUrl = function()

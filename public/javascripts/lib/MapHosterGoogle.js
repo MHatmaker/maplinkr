@@ -26,7 +26,12 @@
             channel,
             pusher,
             self = null;
+        var selfPusherDetails = {
+            channel : null,
+            pusher : null
+        };
               
+        mph = MapHosterGoogle.prototype;
         
         function configureMap(gMap, google) {
             self = this;
@@ -154,10 +159,10 @@
                     var cmp = self.compareExtents("setBounds", xtExt);
                     if(cmp == false)
                     {
-                        console.log("MapHoster setBounds pusher send to channel " + mph.channel);
-                        if(self.pusher)
+                        console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
+                        if(selfPusherDetails.pusher)
                         {
-                            self.pusher.channel(mph.channel).trigger('client-MapXtntEvent', xtExt);
+                            selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                         }
                         self.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     }
@@ -325,8 +330,8 @@
 
         MapHosterGoogle.prototype.setPusherClient = function (pusher, channel)
         {   
-            this.pusher = pusher;
-            this.channel = channel;
+            selfPusherDetails.pusher = pusher;
+            selfPusherDetails.channel = channel;
         }
         
         function MapHosterGoogle()
@@ -344,6 +349,9 @@
             return MapHosterGoogle;
         }
         
+        function getInternals(){
+            return mph;
+        }
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             // mph.map.invalidateSize(true);
@@ -362,7 +370,7 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal };
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals };
     });
 
 }).call(this);

@@ -79,8 +79,8 @@
         {
             if(displayDestination == 'New Window')
             {
-                StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel){
-                    var url = "?id=" + newSelectedWebMapId + MapHosterArcGIS.internals().getGlobalsForUrl() + "&channel=" + channel;
+                StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel, curMph){
+                    var url = "?id=" + newSelectedWebMapId +curMph.internals().getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
                     window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=350,width=400");
@@ -95,10 +95,14 @@
         function initializePostProc(newSelectedWebMapId)
         {
             window.loading = dojo.byId("loadingImg");  //loading image. id
+            console.log("initializePostProc");
             if(newSelectedWebMapId && newSelectedWebMapId != null)
             {
                 var urlparams=dojo.queryToObject(window.location.search); 
-                var idWebMap=urlparams['?id'];
+                console.log("initializePostProc - urlparams");
+                console.log(urlparams);
+                // var idWebMap=urlparams['?id'];
+                var idWebMap = AgoNewWindowConfig.webmapId(true);
                 if(idWebMap && idWebMap != "")
                 {
                     if(idWebMap != newSelectedWebMapId)
@@ -111,10 +115,13 @@
                         selectedWebMapId = idWebMap;
                     }
                     
-                    var lonWebMap = urlparams['lon'];
-                    var latWebMap = urlparams['lat'];
-                    var zmw = urlparams['zoom'];
-                    pusherChannel = urlparams['channel'];
+                    var lonWebMap = AgoNewWindowConfig.lon();
+                    var latWebMap = AgoNewWindowConfig.lat();
+                    var zmw = AgoNewWindowConfig.zoom();
+                    pusherChannel = AgoNewWindowConfig.masherChannel(true);
+                    
+                    // alert("initializePostProc - pusherChannel = " + pusherChannel);
+                    console.log("initializePostProc - pusherChannel = " + pusherChannel);
                     if(lonWebMap && latWebMap && zoomWebMap)
                     {
                         zoomWebMap =  zmw;
@@ -223,9 +230,13 @@
             console.log("selfDetails.mph : " + selfDetails.mph);
             if(selfDetails.mph == null)
             {
+                // alert("StartupArcGIS.initUI : selfDetails.mph == null");
                 selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
+                console.log("StartupArcGIS.initUI : selfDetails.mph == null");
+                console.debug(MapHosterArcGIS);
+                console.debug(pusherChannel);
                 pusher = new PusherClient(MapHosterArcGIS, pusherChannel, null);     
             }
             else
@@ -247,7 +258,7 @@
             // var urlparams=dojo.queryToObject(window.location.search); 
             // console.debug(urlparams);
             // var idWebMap=urlparams['?id'];
-            var idWebMap = AgoNewWindowConfig.webmapId();
+            var idWebMap = AgoNewWindowConfig.webmapId(true);
             console.debug(idWebMap);
             // initUI();
             if(! idWebMap)

@@ -39,8 +39,8 @@
             console.log("newSelectedWebMapId " + newMapId);
             if( newSelectedWebMapId !== null)
             {
-                setupPusherClient(MapHosterLeaflet, function(channel){
-                    var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.internals().getGlobalsForUrl() + "&channel=" + channel;
+                setupPusherClient(MapHosterLeaflet, function(channel, curMph){
+                    var url = "?id=" + newSelectedWebMapId + curMph.internals().getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
                     window.open("http://localhost:8080/arcgis/" + url);

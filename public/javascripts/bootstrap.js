@@ -1,4 +1,6 @@
 
+var selectedMapType = 'arcgis';
+
 (function() {
     "use strict";
 
@@ -69,14 +71,26 @@
                             'google' : MapHosterGoogle,
                             'arcgis' : MapHosterArcGIS};
                 var currentMapType = 'arcgis';
+                var previousMapType = 'arcgis';
+                
                 
                 var getMapType = function(){
                     return mapTypes[currentMapType];
                 }
                 var setMapType = function(mpt){
+                    previousMapType = currentMapType;
+                    selectedMapType = mpt;
                     currentMapType = mpt;
+                    console.log("selectedMapType set to " + selectedMapType);
                 }
-                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType };
+                var getPreviousMapType = function(){
+                    return mapTypes[previousMapType];
+                }
+                var getSelectedMapType = function(){
+                    console.log("getSelectedMapType : " + selectedMapType);
+                    return mapTypes[selectedMapType];
+                }
+                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType };
             });
                 
             

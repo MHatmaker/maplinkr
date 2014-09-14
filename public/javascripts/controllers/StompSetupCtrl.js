@@ -89,6 +89,7 @@
                 channelBind.bind('client-MapXtntEvent', function(data) 
                 {
                     alert('An event was triggered with message: ' + data.message);
+                    console.log('An event was triggered with message: ' + data.message);
                 });
 
                 channelBind.bind('pusher:subscription_error', function(statusCode) {
@@ -102,11 +103,11 @@
 
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
-                selfdict.mph = serv.getCurrentMapType();
+                selfdict.mph = serv.getSelectedMapType();
                                       
                 selfdict.mph.internals().setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
-                    self.callbackfunction(self.CHANNEL);
+                    self.callbackfunction(self.CHANNEL, serv.getSelectedMapType());
                 }
             };
             

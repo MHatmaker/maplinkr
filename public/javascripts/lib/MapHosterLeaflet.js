@@ -24,6 +24,8 @@
             channel : null,
             pusher : null
         };
+        
+        mph = MapHosterLeaflet.prototype;
             
         function configureMap(lmap) 
         {
@@ -272,6 +274,12 @@
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
         }
+        MapHosterLeaflet.prototype.getGlobalsForUrl = function()
+        {
+            console.log(" MapHosterLeaflet.prototype.getGlobalsForUrl");
+            console.log("&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG);
+            return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
+        }
         
         function MapHosterLeaflet()
         {
@@ -280,10 +288,10 @@
             // selfPusherDetails.pusher = null;
             this.userZoom = true;
                             
-            this.getGlobalsForUrl = function()
-            {
-                return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
-            }
+            // this.getGlobalsForUrl = function()
+            // {
+                // return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
+            // }
         }
         
         function init() {
