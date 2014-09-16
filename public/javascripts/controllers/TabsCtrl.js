@@ -89,18 +89,28 @@ String.format = function() {
             }
             console.log("onClickTab and isActiveTab defined ");
             
-            $scope.selectAgoOnline = function(){
+            $scope.selectAgo = function(){
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 $location.path("/views/partials/ArcGIS");
             }
-            selfMethods["selectAgoOnline"] = $scope.selectAgoOnline;
+            selfMethods["selectAgo"] = $scope.selectAgo;
+            
+            $scope.forceAgo = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
+            }
+            selfMethods["forceAgo"] = $scope.forceAgo;
+            
             console.debug(selfMethods);
            
         };
             
-        TabsCtrl.prototype.selectAgoOnline = function (){
-            selfMethods["selectAgoOnline"]();
+        TabsCtrl.prototype.selectAgo = function (){
+            selfMethods["selectAgo"]();
+        }
+            
+        TabsCtrl.prototype.forceAgo = function (){
+            selfMethods["forceAgo"]();
         }
         
 
@@ -109,12 +119,16 @@ String.format = function() {
             App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);
             return TabsCtrl;
         }
-        function selectAgoOnline() {
-            console.log('selectAgoOnline ');
-            TabsCtrl.prototype.selectAgoOnline();
+        function selectAgo() {
+            console.log('selectAgo ');
+            TabsCtrl.prototype.selectAgo();
+        }
+        function forceAgo() {
+            console.log('forceAgo ');
+            TabsCtrl.prototype.forceAgo();
         }
 
-        return { start: init, selectAgoOnline : selectAgoOnline };
+        return { start: init, selectAgo : selectAgo, forceAgo :  forceAgo};
 
     });
 

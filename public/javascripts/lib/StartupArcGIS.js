@@ -199,7 +199,7 @@
                 if (aMap.loaded) {
                     initUI();
                 } else {
-                    dojo.connect(map, "onLoad", initUI);
+                    dojo.connect(aMap, "onLoad", initUI);
                 }       
               }, function(error){
                     console.log('Create Map Failed: ' , dojo.toJson(error));
@@ -237,7 +237,9 @@
                 console.log("StartupArcGIS.initUI : selfDetails.mph == null");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
-                pusher = new PusherClient(MapHosterArcGIS, pusherChannel, null);     
+                pusher = StompSetupCtrl.createPusherClient(MapHosterArcGIS, pusherChannel, null);  
+                console.log("got pusher - now setPusherClient");
+                //MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
             }
             else
             {
@@ -247,7 +249,8 @@
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 resizeWebSiteVertical(true);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
-                MapHosterArcGIS.prototype.setPusherClient(currentPusher, currentChannel);
+                console.log("use current pusher - now setPusherClient");
+                MapHosterArcGIS.internals().setPusherClient(currentPusher, currentChannel);
             }
         }
           

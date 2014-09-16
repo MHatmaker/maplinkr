@@ -19,10 +19,14 @@
             pusher,
             userZoom,
             self = null;
+            
         var selfPusherDetails = {
             channel : null,
             pusher : null
         };
+        
+        var selfMethods = {retrievedBoundsInner : null};
+        self = this;
               
         
         mph = MapHosterArcGIS.prototype;
@@ -128,13 +132,13 @@
                 return xtntDict;
             }
                 
-             this.retrievedBounds = function(xj)
+             this.retrievedBoundsInner = function(xj)
             {
-                console.log("Back in retrievedBounds");
+                console.log("Back in retrievedBoundsInner");
                 var zm = xj.zoom;
-                var cmp = self.compareExtents("retrievedBounds", 
+                var cmp = self.mph.compareExtents("retrievedBounds", 
                     {'zoom' : xj.zoom, 'lon' : xj.lon, 'lat' : xj.lat});
-                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.scale2Level[zm].scale;
+                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.mph.scale2Level[zm].scale;
                 ;
                 document.getElementById("mpnm").innerHTML = view;
                 if(cmp == false)
@@ -143,7 +147,7 @@
                     var tmpLat = self.cntryG;
                     var tmpZm = self.zmG;
                     
-                    self.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                    self.mph.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                     // self.userZoom = false;
                     console.log("retrievedBounds centerAndZoom at zm = " + zm);
                     var cntr = new esri.geometry.Point(xj.lon, xj.lat, new esri.SpatialReference({wkid:4326}));
@@ -153,13 +157,13 @@
                         if(tmpZm != zm)
                         {
                             self.userZoom = false;
-                            self.map.centerAndZoom(cntr, zm);
+                            self.mph.map.centerAndZoom(cntr, zm);
                             self.userZoom = true;
                         }
                         else
                         {
                             self.userZoom = false;
-                            self.map.centerAt(cntr);
+                            self.mph.map.centerAt(cntr);
                             self.userZoom = true;
                         }
                     }
@@ -169,28 +173,36 @@
                         {
                             // var tmpCenter = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
                             self.userZoom = false;
-                            self.map.centerAndZoom(cntr, zm);
+                            self.mph.map.centerAndZoom(cntr, zm);
                             self.userZoom = true;
                         }
                         else
                         {
                             self.userZoom = false;
-                            self.map.setZoom(zm);
+                            self.mph.map.setZoom(zm);
                             self.userZoom = true;
                         }
                     }
                     // self.userZoom = true;
                 }
             }
+            
+            console.log("selfMethods");
+            console.debug(selfMethods);
+            selfMethods["retrievedBoundsInner"] = this.retrievedBoundsInner;
+            console.debug(selfMethods);
+
 
             this.setBounds = function(xtExt)
             {
+                console.log("MapHosterArcGIS setBounds with selfPusherDetails.pusher " + selfPusherDetails.pusher);
                 if(self.mapReady == true && selfPusherDetails.pusher) // && self.pusher.ready == true)
                 {
                     // runs this code after you finishing the zoom
+                    console.log("setBounds ready to process json xtExt");
                     var xtntJsonStr = JSON.stringify(xtExt);
                     console.log("extracted bounds " + xtntJsonStr);
-                    var cmp = self.compareExtents("setBounds", xtExt);
+                    var cmp = self.mph.compareExtents("setBounds", xtExt);
                     if(cmp == false)
                     {
                         console.log("MapHoster setBounds pusher send ");
@@ -199,7 +211,7 @@
                     {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
-                        self.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                        self.mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                         //console.debug(sendRet);
                     }
                 }
@@ -211,7 +223,6 @@
                 return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
             }
         }
-
         MapHosterArcGIS.prototype.initMap = function(value, precision) 
         {
             var tileInfo = this.map.__tileInfo;
@@ -243,11 +254,11 @@
 
         MapHosterArcGIS.prototype.compareExtents = function(msg, xtnt)
         {
-            cmp = xtnt.zoom == this.zmG;
+            var cmp = xtnt.zoom == this.zmG;
             var wdth = Math.abs(this.bounds.xmax - this.bounds.xmin);
             var hgt = Math.abs(this.bounds.ymax - this.bounds.ymin);
-            lonDif = Math.abs((xtnt.lon - this.cntrxG) / wdth);
-            latDif =  Math.abs((xtnt.lat - this.cntryG) / hgt);
+            var lonDif = Math.abs((xtnt.lon - this.cntrxG) / wdth);
+            var latDif =  Math.abs((xtnt.lat - this.cntryG) / hgt);
             // cmp = ((cmp == true) && (xtnt.lon == this.cntrxG) && (xtnt.lat == this.cntryG));
             cmp = ((cmp == true) && (lonDif < 0.0005) && (latDif < 0.0005));
             console.log("compareExtents " + msg + " " + cmp)
@@ -303,15 +314,22 @@
  
         MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
         {   
+            console.log("MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             if(selfPusherDetails.pusher == null)
             {
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;
+                console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             }
         }
         MapHosterArcGIS.prototype.getGlobalsForUrl = function()
         {
             return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
+        }
+        MapHosterArcGIS.prototype.retrievedBounds = function(x)
+        {
+            console.log("MapHosterArcGIS.prototype.retrievedBounds");
+            return selfMethods.retrievedBoundsInner(x);
         }
 
          /* 
@@ -327,7 +345,7 @@
          
         function MapHosterArcGIS()
         {
-            self = this;
+            // self = this;
             mph = MapHosterArcGIS.prototype;
             self.mph = mph;
         /* 
@@ -401,7 +419,8 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals  }; //,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
+                retrievedBounds: MapHosterArcGIS.prototype.retrievedBounds }; //,
                  // setPusherClient: setPusherClient };
     });
 

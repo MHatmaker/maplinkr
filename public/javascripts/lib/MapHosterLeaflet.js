@@ -65,7 +65,7 @@
             mph.map.on("zoomend", function( e ){
                 if(mph.userZoom == true)
                 {
-                    mph.setBounds('zoom', null);
+                    setBounds('zoom', null);
                 }
                 });
             
@@ -150,8 +150,8 @@
         {
             console.log("Back in retrievedBounds");
             var zm = xj.zoom
-            var cmp = mph.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
-            var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.scale2Level[zm].scale;
+            var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+            var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
             document.getElementById("mpnm").innerHTML = view;
             if(cmp == false)
             {
@@ -313,7 +313,8 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals };
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
+                  retrievedBounds: retrievedBounds };
     });
 
 }).call(this);

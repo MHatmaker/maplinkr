@@ -86,10 +86,11 @@
                  */
                  
                  
-                channelBind.bind('client-MapXtntEvent', function(data) 
+                channelBind.bind('client-MapXtntEvent', function(frame) 
                 {
-                    alert('An event was triggered with message: ' + data.message);
-                    console.log('An event was triggered with message: ' + data.message);
+                    console.log('frame is',frame);
+                    selfdict.mph.retrievedBounds(frame);
+                    console.log("back from boundsRetriever");
                 });
 
                 channelBind.bind('pusher:subscription_error', function(statusCode) {
@@ -105,6 +106,7 @@
                 var serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
                                       
+                console.log("CurrentMapTypeService got mph, call setPusherClient");
                 selfdict.mph.internals().setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
                     self.callbackfunction(self.CHANNEL, serv.getSelectedMapType());
@@ -142,6 +144,14 @@
             console.log("toggleShow after apply " + selfdict.scope.showDialog);
             
             // selfdict.scope.PusherClient(mapholder, selfdict.scope.privateChannelMashover, cbfn);
+        };
+          
+        
+        StompSetupCtrl.prototype.createPusherClient = function(mapholder, pusherChannel, cbfn)
+        {
+            selfdict.mph = mapholder.internals();
+            selfdict.callbackFunction = cbfn;
+            selfdict.scope.PusherClient(mapholder, pusherChannel, cbfn);
         };
                 
             //selfdict.setupPusherClient = $scope.setupPusherClient;
@@ -262,7 +272,8 @@
             return StompSetupCtrl;
         }
         
-        return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient };
+        return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient,
+                  createPusherClient : StompSetupCtrl.prototype.createPusherClient};
 
     });
 

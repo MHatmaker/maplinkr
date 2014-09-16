@@ -102,8 +102,13 @@ var selectedMapType = 'arcgis';
             var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             if(isNewAgoWindow){
                 // alert("isNewAgoWindow is true");
+                TabsCtrl.selectAgo();
+                TabsCtrl.forceAgo();
+                
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                serv.setCurrentMapType('arcgis');
                 MasherCtrl.startArcGIS();
-                TabsCtrl.selectAgoOnline();
             };
             return App;
         }
