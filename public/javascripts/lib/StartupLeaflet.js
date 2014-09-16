@@ -43,7 +43,7 @@
                     var url = "?id=" + newSelectedWebMapId + curMph.internals().getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:8080/arcgis/" + url);
+                    window.open("http://localhost:3035/arcgis/" + url);
                     });
             }
             else
