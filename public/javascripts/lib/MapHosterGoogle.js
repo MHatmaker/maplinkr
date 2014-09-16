@@ -25,6 +25,7 @@
             bounds,
             channel,
             pusher,
+            userZoom = true,
             self = null;
         var selfPusherDetails = {
             channel : null,
@@ -32,6 +33,7 @@
         };
               
         mph = MapHosterGoogle.prototype;
+        userZoom = true;
         
         function configureMap(gMap, google) {
             self = this;
@@ -45,7 +47,7 @@
             google.maps.event.addListener(gMap, 'dragend', function() 
                 {self.setBounds('pan');});
             google.maps.event.addListener(gMap, "zoom_changed", function() {
-                if(self.userZoom == true)
+                if(userZoom == true)
                     self.setBounds('zoom', null);
                 // self.userZoom = true;
                 }
@@ -106,43 +108,43 @@
                     'zoom' : zm, 
                     'lon' : fixedLL.lon, 
                     'lat' : fixedLL.lat,
-                    'scale': self.scale2Level[zm].scale,
+                    'scale': mph.scale2Level[zm].scale,
                     'action': action};
                 return xtntDict;
             }
                 
-             this.retrievedBounds = function(xj)
+             this.retrievedBoundsInternal = function(xj)
             {
                 console.log("Back in retrievedBounds");
                 var zm = xj.zoom
-                var cmp = self.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
-                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + self.scale2Level[zm].scale;
+                var cmp = mph.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + mph.scale2Level[zm].scale;
                 document.getElementById("mpnm").innerHTML = view;
                 if(cmp == false)
                 {
-                    var tmpLon = self.cntrxG;
-                    var tmpLat = self.cntryG;
-                    var tmpZm = self.zmG;
+                    var tmpLon = mph.cntrxG;
+                    var tmpLat = mph.cntryG;
+                    var tmpZm = mph.zmG;
                     
-                    self.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
-                    self.userZoom = false;
+                    mph.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                    mph.userZoom = false;
                     var cntr = new google.maps.LatLng(xj.lat, xj.lon);
-                    self.userZoom = true;
+                    mph.userZoom = true;
                     if(xj.action == 'pan')
                     {
                         if(tmpZm != zm)
                         {
-                            self.map.setZoom(zm);
+                            mph.map.setZoom(zm);
                         }
-                        self.map.setCenter(cntr);
+                        mph.map.setCenter(cntr);
                     }
                     else
                     {
                         if(tmpLon != xj.lon || tmpLat != xj.lat)
                         {
-                            self.map.setCenter(cntr);
+                            mph.map.setCenter(cntr);
                         }
-                        self.map.setZoom(zm);
+                        mph.map.setZoom(zm);
                     }
                     // self.userZoom = true;
                 }
@@ -150,13 +152,13 @@
 
             this.setBounds = function(action)
             {
-                if(self.mapReady == true) // && self.stomp && self.stomp.ready == true)
+                if(mph.mapReady == true) // && self.stomp && self.stomp.ready == true)
                 {
                     // runs this code after you finishing the zoom
                     var xtExt = self.extractBounds(action);
                     var xtntJsonStr = JSON.stringify(xtExt);
                     console.log("extracted bounds " + xtntJsonStr);
-                    var cmp = self.compareExtents("setBounds", xtExt);
+                    var cmp = mph.compareExtents("setBounds", xtExt);
                     if(cmp == false)
                     {
                         console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
@@ -164,7 +166,7 @@
                         {
                             selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                         }
-                        self.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                        mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     }
                 }
             }
@@ -233,7 +235,7 @@
             console.log( cntxt + " Globals : lon " + this.cntrxG + " lat " + this.cntryG + " zoom " + this.zmG);
         }
 
-        function compareExtents(msg, xtnt)
+        MapHosterGoogle.prototype.compareExtents = function(msg, xtnt)
         {
             var cmp = true;
             var gmBounds = this.map.getBounds();
@@ -241,11 +243,11 @@
             {
                 var ne = gmBounds.getNorthEast();
                 var sw = gmBounds.getSouthWest();
-                cmp = xtnt.zoom == this.zmG;
+                var cmp = xtnt.zoom == this.zmG;
                 var wdth = Math.abs(ne.lng() - sw.lng());
                 var hgt = Math.abs(ne.lat() - sw.lat());
-                lonDif = Math.abs((xtnt.lon - this.cntrxG) / wdth);
-                latDif =  Math.abs((xtnt.lat - this.cntryG) / hgt);
+                var lonDif = Math.abs((xtnt.lon - mph.cntrxG) / wdth);
+                var latDif =  Math.abs((xtnt.lat - mph.cntryG) / hgt);
                 // cmp = ((cmp == true) && (xtnt.lon == this.cntrxG) && (xtnt.lat == this.cntryG));
                 cmp = ((cmp == true) && (lonDif < 0.0005) && (latDif < 0.0005));
                 console.log("compareExtents " + msg + " " + cmp)
@@ -334,6 +336,11 @@
             selfPusherDetails.channel = channel;
         }
         
+        MapHosterGoogle.prototype.retrievedBounds = function(xj)
+        {
+            return this.retrievedBoundsInternal(xj);
+        }
+        
         function MapHosterGoogle()
         {
             var self = this;
@@ -370,7 +377,8 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals };
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
+                  retrievedBounds: MapHosterGoogle.prototype.retrievedBounds };
     });
 
 }).call(this);
