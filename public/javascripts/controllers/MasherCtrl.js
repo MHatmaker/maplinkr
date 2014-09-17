@@ -35,6 +35,16 @@
             selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;
             console.debug(selfMethods);
             
+            
+            $scope.windowResized = function(){
+                $scope.$broadcast('windowResized');
+                // $scope.$apply(function() {
+                    // $scope.width = window.innerWidth;
+                    // $scope.height = window.innerHeight;
+                // });
+            };
+            selfMethods["windowResized"] = $scope.windowResized;
+            
             $scope.showMeTheMapClicked = function(){
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 $location.path($scope.currentTab.url);
@@ -43,12 +53,17 @@
         };
         
         MasherCtrl.prototype.sumClaps = function (){
-                selfMethods["summmaryCollapser"]();
-            }
+            selfMethods["summmaryCollapser"]();
+        }
+        MasherCtrl.prototype.windowResized = function(){
+            selfMethods["windowResized"]();
+        }
         
         function init(App) {
             console.log('MasherCtrl init');
             App.controller('MasherCtrl', ['$scope', '$location', MasherCtrl]);
+            //calling tellAngular on resize event
+            window.onresize = MasherCtrl.prototype.windowResized;
             return MasherCtrl;
         }
         function startArcGIS(){

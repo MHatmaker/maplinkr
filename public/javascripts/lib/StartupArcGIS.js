@@ -222,9 +222,11 @@
 
         function initUI(){   
           //add scalebar or other components like a legend, overview map etc
+            dojo.parser.parse();
             var scalebar = new esri.dijit.Scalebar({
                 map: aMap,
-                scalebarUnit:"english" 
+                scalebarUnit:"english",
+                attachTo: "top-right"
             });    
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
             console.log("selfDetails.mph : " + selfDetails.mph);
