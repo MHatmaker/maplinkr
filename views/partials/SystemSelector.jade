@@ -7,7 +7,21 @@ block stylesblock
     
 block append content
     
-div(style="height:auto;width:100%;") PlaceHolder for map displays
+div(style="height:auto;width:100%;")
+    h2 MashOver Web Site Simulator
+    h3 Selecting a map type from the tabs above will simulate a web site in this container.
+    h3 The web site will host a Google Map, Open Source map, or ArcGIS Online map, depending on the selection.
+    h4 The Show/hide button at the top will open or close the web site selection tabs.
+    
+    p After selecting a map type, it will appear on the left of the screen.  An accordion container on the right side will display some other web site verbage.  The container also contains instructions on how to use the system.  Finally, it contains expandable panels that allow the user to search ArcGIS Online for interesting map layers and map groups.
+    
+    p After a search is conducted, selecting a map layer will display dialogs for directing the new layer to the same window, a new window, or a new tab.  It will also prompt for a channel name to allow all opened maps to synchronize over web sockets.
+
+
+
+
+
+
 
 //   this shows the layout mockup with nsew tiles (with more than one center-back tile)
     ui-layout(class="layout-mock", style="height:100%;width:100%;")

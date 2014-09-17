@@ -23,7 +23,10 @@ block content
 
             #mainView {{currentTab.content}}
                 br
-                a(href="{{currentTab.url}}", id="currentTabSelectedId") {{currentTab.title}}         
+                span
+                    a(href="{{currentTab.url}}", id="currentTabSelectedId") {{currentTab.title}} 
+                    input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px', value='Show Me The Map')
+                    
                     
           
         div(id="ngview_container", style="position:relative;height:100%;width:100%;")
