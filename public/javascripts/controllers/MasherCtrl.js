@@ -27,8 +27,8 @@
             });
             
             $scope.summmaryCollapser = function(){
-                $scope.$broadcast('CollapseSummaryEvent')
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
+                $scope.$broadcast('CollapseSummaryEvent')
                 $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
             };

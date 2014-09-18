@@ -55,7 +55,7 @@
                 MapHosterArcGIS.resizeVerbage(isMapExpanded);
         }
         function resizeMapPane(isMapExpanded){
-            console.log("StartupArcGIS : invalidateSize");
+            console.log("StartupArcGIS.resizeMapPane : invalidateSize with current isMapExpanded = " + isMapExpanded);
         }
         
 

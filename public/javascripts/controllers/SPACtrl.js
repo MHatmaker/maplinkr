@@ -33,11 +33,14 @@ function getDocHeight() {
                 console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
             }
             $scope.$on('CollapseSummaryEvent', function() {
+                console.log("isSummaryCollapsed before " + $scope.isSummaryCollapsed);
                 $scope.isSummaryCollapsed = ! $scope.isSummaryCollapsed;
+                console.log("isSummaryCollapsed after  " + $scope.isSummaryCollapsed);
                 $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
             });
             
             $scope.$on('windowResized', function() {
+                console.log("windowResized with isSummaryCollapsed " + $scope.isSummaryCollapsed);
                 layoutPanes($scope.isSummaryCollapsed);
             });
             
@@ -54,7 +57,7 @@ function getDocHeight() {
             }
             
             function layoutPanes(isSummaryCollapsed) {
-                console.log("isSummaryCollapsed after " +  isSummaryCollapsed);
+                console.log("isSummaryCollapsed in layoutPanes " +  isSummaryCollapsed);
                 
                 var sumwnd = angular.element(document.getElementById("summary_header"));
                 var sumwndHgt = sumwnd[0].offsetHeight;

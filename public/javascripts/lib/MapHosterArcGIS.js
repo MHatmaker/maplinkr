@@ -108,7 +108,7 @@
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
                     var view = "Zoom : " + zm + " Center : " + cntrlng + ", " + cntrlat + " Current  : " + evlng + ", " + evlat;      // + selectedWebMapId;
-                    document.getElementById("mppos").innerHTML = view;
+                    document.getElementById("mppos").value = view;
                 });
             this.mapReady = true;
             this.userZoom = true;
