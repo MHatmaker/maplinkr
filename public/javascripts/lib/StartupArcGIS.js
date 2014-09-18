@@ -3,6 +3,7 @@
     "use strict";
 
     var selfDetails = {};
+        var aMap = null;
     console.log('StartupGArcGIS setup');
     require(['lib/MapHosterArcGIS']);
         
@@ -32,9 +33,9 @@
         
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
-        var aMap = null;
         var loading;
         var newSelectedWebMapId = "";
+        var mapCreated = null;
         
         selfDetails.mph = null; 
 
@@ -164,6 +165,10 @@
             // }
 
             //create the map using the web map id specified using configOptions or via the url parameter
+            // var cpn = new dijit.layout.ContentPane({}, "map_canvas").startup();
+            
+            // dijit.byId("map_canvas").addChild(cpn).placeAt("map_canvas").startup();
+            
             var mapDeferred = esri.arcgis.utils.createMap(configOptions.webmap, "map_canvas", {
                 mapOptions: {
                   slider: true,
@@ -175,6 +180,8 @@
                 geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 
             });
+            mapCreated = mapDeferred;
+            
             console.log("set up mapDeferred anonymous method");
             mapDeferred.then(function (response) 
             {
@@ -222,7 +229,8 @@
 
         function initUI(){   
           //add scalebar or other components like a legend, overview map etc
-            dojo.parser.parse();
+            // dojo.parser.parse();
+            console.debug(aMap);
             var scalebar = new esri.dijit.Scalebar({
                 map: aMap,
                 scalebarUnit:"english",
