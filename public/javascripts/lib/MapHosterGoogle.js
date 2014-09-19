@@ -15,150 +15,155 @@
         // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
         ], function(angular) {
 
-        var mph = null,
+        var 
+            mphmap,
+            google,
+            mapReady = true,
             scale2Level = [],
             zoomLevels = 0,
             minZoom = 0,
+            maxZoom,
             zmG,
             cntrxG,
             cntryG,
             bounds,
             channel,
             pusher,
-            userZoom = true,
-            self = null;
+            userZoom = true;
+            
         var selfPusherDetails = {
             channel : null,
             pusher : null
         };
-              
-        mph = MapHosterGoogle.prototype;
-        userZoom = true;
-        
-        function configureMap(gMap, google) {
-            self = this;
-            self.mph = mph;
-            mph.map = gMap;
-            mph.google = google;
-            this.google = google;
-            mph.updateGlobals("init", -87.7, 41.8,  13, 0.0);
-            // self.updateGlobals("init", -0.09, 51.50, 13, 0.0);
-            mph.showGlobals("Prior to new Map");
-            google.maps.event.addListener(gMap, 'dragend', function() 
-                {self.setBounds('pan');});
-            google.maps.event.addListener(gMap, "zoom_changed", function() {
+                      
+        function configureMap(gMap, goooogle) {
+            mphmap = gMap;
+            google = goooogle;
+            updateGlobals("init", -87.7, 41.8,  13, 0.0);
+            // updateGlobals("init", -0.09, 51.50, 13, 0.0);
+            showGlobals("Prior to new Map");
+            // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
+            google.maps.event.addListener(mphmap, 'dragend', function() 
+                {setBounds('pan');});
+            google.maps.event.addListener(mphmap, "zoom_changed", function() {
                 if(userZoom == true)
-                    self.setBounds('zoom', null);
-                // self.userZoom = true;
+                    setBounds('zoom', null);
+                // userZoom = true;
                 }
             );
             function gotResize(){
                 console.log("resize event hit");
-                console.log(mph.map.getBounds());
-            }
+                console.log(mphmap.getBounds());
+            };
             
-            google.maps.event.addListener(gMap, 'resize', gotResize); //function() {
+            google.maps.event.addListener(mphmap, 'resize', gotResize); //function() {
                 // console.log("resize event hit");
-                // console.log(self.mph.map.getBounds());
+                // console.log(mphmap.getBounds());
             // });
-            google.maps.event.addListener(gMap, "mousemove", function(e) 
+            google.maps.event.addListener(mphmap, "mousemove", function(e) 
                 {
                     var ltln = e.latLng;
                     var fixedLL = utils.toFixed(ltln.lng(),ltln.lat(), 3);
                     var evlng = fixedLL.lon;
                     var evlat = fixedLL.lat;
-                    var zm = gMap.getZoom();
-                    var cntr = gMap.getCenter();
+                    var zm = mphmap.getZoom();
+                    var cntr = mphmap.getCenter();
                     var fixedCntrLL = utils.toFixed(cntr.lng(),cntr.lat(), 3);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
-                    if(mph.scale2Level)
+                    if(scale2Level)
                     {
-                        var view = "Zoom : " + zm + " Scale : " + mph.scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
-                        document.getElementById("mpnm").innerHTML = view;
+                        var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
+                        document.getElementById("mppos").value = view;
                     }
                 }
             );
-            mph.mapReady = true;
-            var center = mph.map.getCenter();
-            this.google.maps.event.trigger(mph.map, 'resize');
-            mph.map.setCenter(center);
-            mph.addInitialSymbols();
+            mapReady = true;
+            var center = mphmap.getCenter();
+            google.maps.event.trigger(mphmap, 'resize');
+            mphmap.setCenter(center);
+            addInitialSymbols();
             
-            mph.minZoom = mph.maxZoom = mph.zoomLevels = 0;
+            minZoom = maxZoom = zoomLevels = 0;
             var zsvc = new google.maps.MaxZoomService();
-            var cntr = new google.maps.LatLng(mph.cntryG, mph.cntrxG);
+            var cntr = new google.maps.LatLng(cntryG, cntrxG);
             
             zsvc.getMaxZoomAtLatLng(cntr, function(response) 
             {
                 if (response && response['status'] == google.maps.MaxZoomStatus.OK) 
                 {
-                    self.mph.maxZoom = response['zoom'];
-                    self.mph.zoomLevels = self.mph.maxZoom - self.mph.minZoom;
-                    self.mph.collectScales(self.mph.zoomLevels);
+                    maxZoom = response['zoom'];
+                    zoomLevels = maxZoom - minZoom;
+                    collectScales(zoomLevels);
                 }
             });
+        }
+        
+            function gotDragEnd(){
+                console.log("dragend event hit");
+                setBounds('pan');
+            }
             
-            this.extractBounds = function (action)
+            function extractBounds(action)
             {
-                var zm = mph.map.getZoom();
-                var cntr = mph.map.getCenter();
+                var zm = mphmap.getZoom();
+                var cntr = mphmap.getCenter();
                 var fixedLL = utils.toFixed(cntr.lng(),cntr.lat(), 3);
                 var xtntDict = {'src' : 'google', 
                     'zoom' : zm, 
                     'lon' : fixedLL.lon, 
                     'lat' : fixedLL.lat,
-                    'scale': mph.scale2Level[zm].scale,
+                    'scale': scale2Level[zm].scale,
                     'action': action};
                 return xtntDict;
             }
                 
-             this.retrievedBoundsInternal = function(xj)
+            function retrievedBoundsInternal(xj)
             {
                 console.log("Back in retrievedBounds");
                 var zm = xj.zoom
-                var cmp = mph.compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
-                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + mph.scale2Level[zm].scale;
+                var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
                 document.getElementById("mpnm").innerHTML = view;
                 if(cmp == false)
                 {
-                    var tmpLon = mph.cntrxG;
-                    var tmpLat = mph.cntryG;
-                    var tmpZm = mph.zmG;
+                    var tmpLon = cntrxG;
+                    var tmpLat = cntryG;
+                    var tmpZm = zmG;
                     
-                    mph.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
-                    mph.userZoom = false;
+                    updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                    userZoom = false;
                     var cntr = new google.maps.LatLng(xj.lat, xj.lon);
-                    mph.userZoom = true;
+                    userZoom = true;
                     if(xj.action == 'pan')
                     {
                         if(tmpZm != zm)
                         {
-                            mph.map.setZoom(zm);
+                            mphmap.setZoom(zm);
                         }
-                        mph.map.setCenter(cntr);
+                        mphmap.setCenter(cntr);
                     }
                     else
                     {
                         if(tmpLon != xj.lon || tmpLat != xj.lat)
                         {
-                            mph.map.setCenter(cntr);
+                            mphmap.setCenter(cntr);
                         }
-                        mph.map.setZoom(zm);
+                        mphmap.setZoom(zm);
                     }
-                    // self.userZoom = true;
+                    // userZoom = true;
                 }
             }
 
-            this.setBounds = function(action)
+            function setBounds(action)
             {
-                if(mph.mapReady == true) // && self.stomp && self.stomp.ready == true)
+                if(mapReady == true) // && stomp && stomp.ready == true)
                 {
                     // runs this code after you finishing the zoom
-                    var xtExt = self.extractBounds(action);
+                    var xtExt = extractBounds(action);
                     var xtntJsonStr = JSON.stringify(xtExt);
                     console.log("extracted bounds " + xtntJsonStr);
-                    var cmp = mph.compareExtents("setBounds", xtExt);
+                    var cmp = compareExtents("setBounds", xtExt);
                     if(cmp == false)
                     {
                         console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
@@ -166,12 +171,12 @@
                         {
                             selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                         }
-                        mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                        updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     }
                 }
             }
             
-            this.getBoundsZoomLevel = function(bounds)
+            function getBoundsZoomLevel(bounds)
             {
                 var GLOBE_HEIGHT = 256; // Height of a google map that displays the entire world when zoomed all the way out
                 var GLOBE_WIDTH = 256; // Width of a google map that displays the entire world when zoomed all the way out
@@ -186,21 +191,16 @@
 
                 var lngAngle = ne.lng() - sw.lng();
 
-                var latZoomLevel = Math.floor(Math.log(self.map.height * 360 / latAngle / GLOBE_HEIGHT) / Math.LN2);
-                var lngZoomLevel = Math.floor(Math.log(self.map.width * 360 / lngAngle / GLOBE_WIDTH) / Math.LN2);
+                var latZoomLevel = Math.floor(Math.log(mphmap.height * 360 / latAngle / GLOBE_HEIGHT) / Math.LN2);
+                var lngZoomLevel = Math.floor(Math.log(mphmap.width * 360 / lngAngle / GLOBE_WIDTH) / Math.LN2);
 
                 return (latZoomLevel < lngZoomLevel) ? latZoomLevel : lngZoomLevel;
             }
-            mph.getGlobalsForUrl = function()
-            {
-                return "&lon=" + mph.cntrxG + "&lat=" + mph.cntryG + "&zoom=" + mph.zmG; 
-            }
-        }
 
-        MapHosterGoogle.prototype.collectScales = function(levels)
+        function collectScales(levels)
         {
-            this.scale2Level = [];
-            var sc2lv = this.scale2Level;
+            scale2Level = [];
+            var sc2lv = scale2Level;
             var topLevel = ++levels;
             var scale = 1128.497220;
             for(var i=topLevel; i>0; i--)
@@ -212,57 +212,57 @@
             }
         }
          
-        MapHosterGoogle.prototype.updateGlobals = function(msg, cntrx, cntry, zm)
+        function updateGlobals(msg, cntrx, cntry, zm)
         {
             console.log("updateGlobals ");
-            var gmBounds = this.map.getBounds();
+            var gmBounds = mphmap.getBounds();
             if(gmBounds)
             {
                 var ne = gmBounds.getNorthEast();
                 var sw = gmBounds.getSouthWest();
-                this.bounds = gmBounds;
+                bounds = gmBounds;
                 gmBounds.xmin = sw.lng();
                 gmBounds.ymin = sw.lat();
                 gmBounds.xmax = ne.lng();
                 gmBounds.ymax = ne.lat();
             }
-            this.zmG = zm; this.cntrxG = cntrx; this.cntryG = cntry;
-            console.log("Updated Globals " + msg + " " + this.cntrxG + ", " + this.cntryG + " : " + this.zmG);
+            zmG = zm; cntrxG = cntrx; cntryG = cntry;
+            console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
         }
 
-        MapHosterGoogle.prototype.showGlobals = function(cntxt)
+        function showGlobals(cntxt)
         {
-            console.log( cntxt + " Globals : lon " + this.cntrxG + " lat " + this.cntryG + " zoom " + this.zmG);
+            console.log( cntxt + " Globals : lon " + cntrxG + " lat " + cntryG + " zoom " + zmG);
         }
 
-        MapHosterGoogle.prototype.compareExtents = function(msg, xtnt)
+        function compareExtents(msg, xtnt)
         {
             var cmp = true;
-            var gmBounds = this.map.getBounds();
+            var gmBounds = mphmap.getBounds();
             if(gmBounds)
             {
                 var ne = gmBounds.getNorthEast();
                 var sw = gmBounds.getSouthWest();
-                var cmp = xtnt.zoom == this.zmG;
+                var cmp = xtnt.zoom == zmG;
                 var wdth = Math.abs(ne.lng() - sw.lng());
                 var hgt = Math.abs(ne.lat() - sw.lat());
-                var lonDif = Math.abs((xtnt.lon - mph.cntrxG) / wdth);
-                var latDif =  Math.abs((xtnt.lat - mph.cntryG) / hgt);
-                // cmp = ((cmp == true) && (xtnt.lon == this.cntrxG) && (xtnt.lat == this.cntryG));
+                var lonDif = Math.abs((xtnt.lon - cntrxG) / wdth);
+                var latDif =  Math.abs((xtnt.lat - cntryG) / hgt);
+                // cmp = ((cmp == true) && (xtnt.lon == cntrxG) && (xtnt.lat == cntryG));
                 cmp = ((cmp == true) && (lonDif < 0.0005) && (latDif < 0.0005));
                 console.log("compareExtents " + msg + " " + cmp)
             }
             return cmp;
         }
 
-        MapHosterGoogle.prototype.polygon = function(coords)
+        function polygon(coords)
         {
             arrayLatLng = []
             for(var i=0; i<coords.length; i++)
             {
-                arrayLatLng.push(new this.google.maps.LatLng(coords[i][0], coords[i][1]));
+                arrayLatLng.push(new google.maps.LatLng(coords[i][0], coords[i][1]));
             }
-            pgn = new this.google.maps.Polygon({
+            pgn = new google.maps.Polygon({
                 paths: arrayLatLng,
                 strokeColor: "#0000FF",
                 strokeOpacity: 0.8,
@@ -271,13 +271,13 @@
                 fillOpacity: 0.25
                 });
 
-            pgn.setMap(this.map);
+            pgn.setMap(mphmap);
         }
 
-        MapHosterGoogle.prototype.circle = function(cntr, rds)
+        function circle(cntr, rds)
         {
-            var cntrLatLng = new this.google.maps.LatLng(cntr[0], cntr[1]);
-            crcl = new this.google.maps.Circle({
+            var cntrLatLng = new google.maps.LatLng(cntr[0], cntr[1]);
+            crcl = new google.maps.Circle({
                 center: cntrLatLng,
                 radius: rds,
                 strokeColor: 'red',
@@ -285,13 +285,12 @@
                 fillOpacity: 0.5
             });
 
-            crcl.setMap(this.map);
+            crcl.setMap(mphmap);
         }
 
-        MapHosterGoogle.prototype.markerInfoPopup = function(pos, content, title)
+        function markerInfoPopup(pos, content, title)
         {
             var popId = "id" + title;
-            var map = this.map;
             var contentString = '<div id="content">'+
                     '<h3 id="' + popId + '">' + title + '</h3>'+
                     '<div id="bodyContent">'+
@@ -299,29 +298,29 @@
                     '</div>'+
                     '</div>';
 
-                var infowindow = new this.google.maps.InfoWindow({
+                var infowindow = new google.maps.InfoWindow({
                     content: contentString
                 });
 
-                var marker = new this.google.maps.Marker({
+                var marker = new google.maps.Marker({
                     position: pos,
-                    map: map,
+                    map: mphmap,
                     title: title
                 });
-                this.google.maps.event.addListener(marker, 'click', function() {
-                  infowindow.open(map,marker);
+                google.maps.event.addListener(marker, 'click', function() {
+                  infowindow.open(mphmap,marker);
                 });
         }
 
 
-        MapHosterGoogle.prototype.addInitialSymbols = function ()
+        function addInitialSymbols()
         {  
-            var popPt = new this.google.maps.LatLng(41.795, -87.695);
+            var popPt = new google.maps.LatLng(41.795, -87.695);
             var content = "Great home with spectacular view of abandoned industrial site";
-            this.markerInfoPopup(popPt, content, "Prime home for sale");
-            popPt = new this.google.maps.LatLng(41.805, -87.705);
+            markerInfoPopup(popPt, content, "Prime home for sale");
+            popPt = new google.maps.LatLng(41.805, -87.705);
             content = "Perfect hangout for the undiscriminating cave dweller";
-            this.markerInfoPopup(popPt, content, "Perfection in Paradise");
+            markerInfoPopup(popPt, content, "Perfection in Paradise");
             // this.polygon([
                 // [51.509, -0.08],
                 // [51.503, -0.06],
@@ -341,49 +340,43 @@
             return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
         }
         
-        MapHosterGoogle.prototype.retrievedBounds = function(xj)
+        function retrievedBounds(xj)
         {
-            return this.retrievedBoundsInternal(xj);
+            return retrievedBoundsInternal(xj);
         }
         
         function MapHosterGoogle()
         {
-            var self = this;
-            self.mph = this.mph;
-            this.mapReady = false;
-            this.pusher = null;
-            this.bounds = null;
-            this.userZoom = true;
+            mapReady = false;
+            pusher = null;
+            bounds = null;
+            userZoom = true;
         }
         
         function init() {
-            mph = MapHosterGoogle.prototype;
             return MapHosterGoogle;
         }
         
-        function getInternals(){
-            return mph;
-        }
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
-            // mph.map.invalidateSize(true);
-            var center = mph.map.getCenter();
-            var bnds = mph.map.getBounds();
+            // map.invalidateSize(true);
+            var center = mphmap.getCenter();
+            var bnds = mphmap.getBounds();
             console.debug(bnds);
-            this.google.maps.event.trigger(mph.map, 'resize');
-            mph.map.setCenter(center);
+            google.maps.event.trigger(mphmap, 'resize');
+            mphmap.setCenter(center);
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
-            // mph.map.invalidateSize(true);
-            var center = mph.map.getCenter();
-            this.google.maps.event.trigger(mph.map, 'resize');
-            mph.map.setCenter(center);
+            // mphmap.invalidateSize(true);
+            var center = mphmap.getCenter();
+            google.maps.event.trigger(mphmap, 'resize');
+            mphmap.setCenter(center);
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
-                  retrievedBounds: MapHosterGoogle.prototype.retrievedBounds,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
+                  retrievedBounds: retrievedBounds,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
     });
 
