@@ -312,7 +312,8 @@
         }
         
  
-        MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
+        // MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
+        function setPusherClient(pusher, channel)
         {   
             console.log("MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             if(selfPusherDetails.pusher == null)
@@ -322,7 +323,8 @@
                 console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             }
         }
-        MapHosterArcGIS.prototype.getGlobalsForUrl = function()
+        // MapHosterArcGIS.prototype.getGlobalsForUrl = function()
+        function getGlobalsForUrl()
         {
             return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
         }
@@ -420,8 +422,8 @@
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
-                retrievedBounds: MapHosterArcGIS.prototype.retrievedBounds }; //,
-                 // setPusherClient: setPusherClient };
+                retrievedBounds: MapHosterArcGIS.prototype.retrievedBounds,
+                setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
     });
 
 }).call(this);

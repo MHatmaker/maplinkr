@@ -107,7 +107,7 @@
                 selfdict.mph = serv.getSelectedMapType();
                                       
                 console.log("CurrentMapTypeService got mph, call setPusherClient");
-                selfdict.mph.internals().setPusherClient(pusher, self.CHANNEL);
+                selfdict.mph.setPusherClient(pusher, self.CHANNEL);
                 if(self.callbackfunction){
                     self.callbackfunction(self.CHANNEL, serv.getSelectedMapType());
                 }
@@ -135,7 +135,7 @@
         
         StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn)
         {
-            selfdict.mph = mapholder.internals();
+            selfdict.mph = mapholder;
             selfdict.callbackFunction = cbfn;
             console.log("toggleShow from " + selfdict.scope.showDialog);
              selfdict.scope.safeApply(function(){
@@ -149,7 +149,7 @@
         
         StompSetupCtrl.prototype.createPusherClient = function(mapholder, pusherChannel, cbfn)
         {
-            selfdict.mph = mapholder.internals();
+            selfdict.mph = mapholder;
             selfdict.callbackFunction = cbfn;
             selfdict.scope.PusherClient(mapholder, pusherChannel, cbfn);
         };

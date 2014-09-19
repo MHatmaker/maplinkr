@@ -330,10 +330,15 @@
             // this.circle([51.508, -0.11], 500);
         }
 
-        MapHosterGoogle.prototype.setPusherClient = function (pusher, channel)
+        // MapHosterGoogle.prototype.setPusherClient = function (pusher, channel)
+        function setPusherClient(pusher, channel)
         {   
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
+        }
+        function getGlobalsForUrl()
+        {
+            return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
         }
         
         MapHosterGoogle.prototype.retrievedBounds = function(xj)
@@ -378,7 +383,8 @@
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
-                  retrievedBounds: MapHosterGoogle.prototype.retrievedBounds };
+                  retrievedBounds: MapHosterGoogle.prototype.retrievedBounds,
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
     });
 
 }).call(this);

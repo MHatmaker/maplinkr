@@ -269,12 +269,14 @@
             popup = L.popup();
         }
 
-        MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
+        // MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
+        function setPusherClient(pusher, channel)
         {   
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
         }
-        MapHosterLeaflet.prototype.getGlobalsForUrl = function()
+        // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
+        function getGlobalsForUrl()
         {
             console.log(" MapHosterLeaflet.prototype.getGlobalsForUrl");
             console.log("&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG);
@@ -310,7 +312,7 @@
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                  retrievedBounds: retrievedBounds };
+                  retrievedBounds: retrievedBounds, setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl };
     });
 
 }).call(this);
