@@ -12,33 +12,36 @@
 
     define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', 'angular'], function(leaflet, angular) {
 
-        var mph = null,
-            scale2Level = [],
+        var scale2Level = [],
             zmG,
+            userZoom = true,
+            mphmapCenter,
             cntrxG,
             cntryG,
             bounds,
+            minZoom,
+            maxZoom,
+            zoomLevels,
             channel,
-            pusher;
+            pusher,
+            popup,
+            mphmap;
         var selfPusherDetails = {
             channel : null,
             pusher : null
         };
-        
-        mph = MapHosterLeaflet.prototype;
-            
+                    
         function configureMap(lmap) 
         {
-            console.debug("ready to show mph");
-            console.debug(mph);
-            mph.map = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
-            console.debug(mph.map);
-            mph.map.setView([41.8, -87.7], 13);
-            console.log( mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
+            console.debug("ready to show mphmap");
+            mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
+            console.debug(mphmap);
+            mphmap.setView([41.8, -87.7], 13);
+            console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
             
-            mph.updateGlobals("init", -87.7, 41.8, 13, 0.0);
+            updateGlobals("init", -87.7, 41.8, 13, 0.0);
             // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
-            mph.showGlobals("Prior to new Map");
+            showGlobals("Prior to new Map");
 
             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -46,34 +49,34 @@
             L.tileLayer(osmUrl, {
                 maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-            }).addTo(mph.map);
+            }).addTo(mphmap);
 
-            mph.minZoom = mph.map.getMinZoom();
-            mph.maxZoom = mph.map.getMaxZoom();
-            mph.zoomLevels = mph.maxZoom - mph.minZoom + 1;
-            mph.collectScales();
-            mph.bounds = mph.map.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
+            minZoom = mphmap.getMinZoom();
+            maxZoom = mphmap.getMaxZoom();
+            zoomLevels = maxZoom - minZoom + 1;
+            collectScales();
+            bounds = mphmap.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
             
-            mph.addInitialSymbols();
+            addInitialSymbols();
             
-            console.log("again " + mph.map.getCenter().lng + " " +  mph.map.getCenter().lat);
-            mph.mapCenter = mph.map.getCenter();
-            mph.map.on("mousemove", function( e ) {
+            console.log("again " + mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
+            mphmapCenter = mphmap.getCenter();
+            mphmap.on("mousemove", function( e ) {
                 onMouseMove(e);}  );
-            mph.map.on("click", function( e ) {
+            mphmap.on("click", function( e ) {
                 onMapClick(e);}  );
-            mph.map.on("zoomend", function( e ){
-                if(mph.userZoom == true)
+            mphmap.on("zoomend", function( e ){
+                if(userZoom == true)
                 {
                     setBounds('zoom', null);
                 }
                 });
             
-            mph.map.on("moveend", function( e ) {
+            mphmap.on("moveend", function( e ) {
                 setBounds('pan', e.latlng);}  );
-            // mph.map.on("loading", function( e ) {
+            // mphmap.on("loading", function( e ) {
                 // showLoading()};  );
-            // mph.map.on("load", function( e ) {
+            // mphmap.on("load", function( e ) {
                 // hideLoading()};  );
         }
         // function showLoading(){
@@ -89,20 +92,21 @@
             var fixedLL = utils.toFixed(ltln.lng,ltln.lat, 3);
             var evlng = fixedLL.lon;
             var evlat = fixedLL.lat;
-            var zm = mph.map.getZoom();
-            var cntr = mph.map.getCenter();
+            var zm = mphmap.getZoom();
+            var cntr = mphmap.getCenter();
             var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
             var cntrlng = fixedCntrLL.lon;
             var cntrlat = fixedCntrLL.lat;
             var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current: " + evlng + ", " + evlat;
-            document.getElementById("mppos").innerHTML = view;
+            // document.getElementById("mppos").innerHTML = view;
+            document.getElementById("mppos").value = view;
         }
         function onMapClick(e) 
         {
-            mph.popup
+            popup
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(mph.map);
+                .openOn(mphmap);
         }
 
         function setBounds(action, latlng)
@@ -122,7 +126,7 @@
                     {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
-                    mph.updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                    updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     //console.debug(sendRet);
                 }
             }
@@ -130,12 +134,12 @@
         
         function extractBounds(action, latlng)
         {
-            var zm = mph.map.getZoom();
-            var scale = mph.map.options.crs.scale(zm);
-            var oldMapCenter = mph.mapCenter;
-            mph.mapCenter = mph.map.getCenter();
-            // var cntr = action == 'pan' ? latlng : this.map.getCenter();
-            var cntr = mph.map.getCenter();
+            var zm = mphmap.getZoom();
+            var scale = mphmap.options.crs.scale(zm);
+            var oldMapCenter = mphmapCenter;
+            mphmapCenter = mphmap.getCenter();
+            // var cntr = action == 'pan' ? latlng : mphmap.getCenter();
+            var cntr = mphmap.getCenter();
             var fixedLL = utils.toFixed(cntr.lng,cntr.lat, 3);
             var xtntDict = {'src' : 'leaflet_osm', 
                 'zoom' : zm, 
@@ -155,54 +159,50 @@
             document.getElementById("mpnm").innerHTML = view;
             if(cmp == false)
             {
-                var tmpLon = mph.cntrxG;
-                var tmpLat = mph.cntryG;
-                var tmpZm = mph.zmG;
+                var tmpLon = cntrxG;
+                var tmpLat = cntryG;
+                var tmpZm = zmG;
                 
-                mph.updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
-                mph.userZoom = false;
+                updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                userZoom = false;
                 var cntr = new L.LatLng(xj.lat, xj.lon);
-                mph.userZoom = true;
+                userZoom = true;
                 if(xj.action == 'pan')
-                    // mph.map.panTo(cntr);
-                    mph.map.setView(cntr, zm);
+                    mphmap.setView(cntr, zm);
                 else
                 {
                     if(tmpLon != xj.lon || tmpLat != xj.lat)
                     {
-                        mph.map.setView(cntr, zm);
+                        mphmap.setView(cntr, zm);
                     }
                     else
                     {
-                        mph.map.setZoom(zm);
+                        mphmap.setZoom(zm);
                     }
                 }
-                // mph.userZoom = true;
             }
-            //mph.map.setView(cntr, zm);
         }
 
-            
-
-        MapHosterLeaflet.prototype.collectScales = function()
+        function collectScales()
         {
             console.log('collectScales');
-            var zm = this.map.getZoom();
+            var zm = mphmap.getZoom();
             scale2Level = [];
             var sc2lv = scale2Level;
-            for(var i=0; i<this.zoomLevels + 1; i++)
+            for(var i=0; i<zoomLevels + 1; i++)
             {
-                var scale = this.map.options.crs.scale(i);
+                var scale = mphmap.options.crs.scale(i);
                 var obj = {"scale" : scale, "level" : i};
                 // console.log("scale " + obj.scale + " level " + obj.level);
                 sc2lv.push(obj);
             }
         }
          
-        MapHosterLeaflet.prototype.updateGlobals = function(msg, cntrx, cntry, zm)
+        // MapHosterLeaflet.prototype.updateGlobals = function(msg, cntrx, cntry, zm)
+        function updateGlobals(msg, cntrx, cntry, zm)
         {
             console.log("updateGlobals " + msg);
-            var gmBounds = this.map.getBounds();
+            var gmBounds = mphmap.getBounds();
             console.debug(gmBounds);
             if(gmBounds)
             {
@@ -218,9 +218,9 @@
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
         }
 
-        MapHosterLeaflet.prototype.showGlobals = function(cntxt)
+        function showGlobals(cntxt)
         {
-            console.log( cntxt + " Globals : lon " + this.cntrxG + " lat " + this.cntryG + " zoom " + this.zmG);
+            console.log( cntxt + " Globals : lon " + cntrxG + " lat " + cntryG + " zoom " + zmG);
         }
 
         function compareExtents(msg, xtnt)
@@ -236,25 +236,25 @@
             return cmp;
         }
 
-        MapHosterLeaflet.prototype.markerInfoPopup = function(pos, content, title)
+        function markerInfoPopup(pos, content, title)
         {
             var allContent = '<h3>' + title + '</h3>' + content;
-            L.marker(pos).addTo(this.map)
+            L.marker(pos).addTo(mphmap)
                 .bindPopup(allContent).openPopup();
         }
 
-        MapHosterLeaflet.prototype.addInitialSymbols = function ()
+        function addInitialSymbols()
         {   
             var content = "Great home with spectacular view of abandoned industrial site";
-            this.markerInfoPopup([41.795, -87.695], content, "Prime home for sale");
+            markerInfoPopup([41.795, -87.695], content, "Prime home for sale");
             content = "Perfect hangout for the undiscriminating cave dweller";
-            this.markerInfoPopup([41.805, -87.705], content, "Perfection in Paradise");
+            markerInfoPopup([41.805, -87.705], content, "Perfection in Paradise");
             
             // L.circle([51.508, -0.11], 500, {
                 // color: 'red',
                 // fillColor: '#f03',
                 // fillOpacity: 0.5
-            // }).addTo(this.map).bindPopup("I am a circle.");
+            // }).addTo(mphmap).bindPopup("I am a circle.");
 
             // L.polygon([
                 // [51.509, -0.08],
@@ -264,9 +264,9 @@
                 // color: 'blue',
                 // fillColor: '#00f',
                 // fillOpacity: 0.25
-            // }).addTo(this.map).bindPopup("I am a polygon.");
+            // }).addTo(mphmap).bindPopup("I am a polygon.");
 
-            this.popup = L.popup();
+            popup = L.popup();
         }
 
         MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
@@ -286,7 +286,7 @@
             var self = this;
             this.pusher = null;
             // selfPusherDetails.pusher = null;
-            this.userZoom = true;
+            userZoom = true;
                             
             // this.getGlobalsForUrl = function()
             // {
@@ -295,25 +295,21 @@
         }
         
         function init() {
-            mph = MapHosterLeaflet.prototype;
             return MapHosterLeaflet;
         }
         
-        function getInternals(){
-            return mph;
-        }
         
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
-            mph.map.invalidateSize(true);
+            mphmap.invalidateSize(true);
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
-            mph.map.invalidateSize(true);
+            mphmap.invalidateSize(true);
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal, internals: getInternals,
+                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds };
     });
 
