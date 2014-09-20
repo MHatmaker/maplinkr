@@ -3,7 +3,7 @@
     "use strict";
 
     var selfDetails = {};
-        var aMap = null;
+    var aMap = null;
     console.log('StartupGArcGIS setup');
     require(['lib/MapHosterArcGIS']);
         
@@ -32,7 +32,6 @@
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';
-        var mph = null; 
         var loading;
         var newSelectedWebMapId = "";
         var mapCreated = null;
@@ -73,7 +72,9 @@
                 
         var zoomWebMap = null;
         var pointWebMap = [null, null];
+        var channel = null;
         var pusherChannel = null;
+        var pusher = null;
         var loading;
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
@@ -253,14 +254,14 @@
             }
             else
             {
-                currentPusher = mph.pusher;
-                currentChannel = mph.channel;
-                selfDetails.mph = mph = MapHosterArcGIS.start();
+                currentPusher = pusher;
+                currentChannel = channel;
+                selfDetails.mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 resizeWebSiteVertical(true);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("use current pusher - now setPusherClient");
-                MapHosterArcGIS.internals().setPusherClient(currentPusher, currentChannel);
+                MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
         }
           

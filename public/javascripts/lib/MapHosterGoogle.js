@@ -28,7 +28,6 @@
             cntryG,
             bounds,
             channel,
-            pusher,
             userZoom = true;
             
         var selfPusherDetails = {
@@ -348,7 +347,6 @@
         function MapHosterGoogle()
         {
             mapReady = false;
-            pusher = null;
             bounds = null;
             userZoom = true;
         }
