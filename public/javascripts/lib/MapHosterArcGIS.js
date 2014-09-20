@@ -23,9 +23,7 @@
             channel : null,
             pusher : null
         };
-        
-        var selfMethods = {retrievedBoundsInner : null};
-              
+                      
         
         function configureMap(xtntMap, zoomWebMap, pointWebMap)
         {
@@ -114,9 +112,9 @@
                 return xtntDict;
             }
                 
-            function retrievedBoundsInner(xj)
+            function retrievedBounds(xj)
             {
-                console.log("Back in retrievedBoundsInner");
+                console.log("Back in retrievedBounds");
                 var zm = xj.zoom;
                 var cmp = compareExtents("retrievedBounds", 
                     {'zoom' : xj.zoom, 'lon' : xj.lon, 'lat' : xj.lat});
@@ -169,12 +167,6 @@
                 }
             }
             
-            console.log("selfMethods");
-            console.debug(selfMethods);
-            selfMethods["retrievedBoundsInner"] = retrievedBoundsInner;
-            console.debug(selfMethods);
-
-
             function setBounds(xtExt)
             {
                 console.log("MapHosterArcGIS setBounds with selfPusherDetails.pusher " + selfPusherDetails.pusher);
@@ -193,7 +185,7 @@
                     {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
-                        supdateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                        updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                         //console.debug(sendRet);
                     }
                 }
@@ -309,11 +301,6 @@
         function getGlobalsForUrl()
         {
             return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
-        }
-        function retrievedBounds(x)
-        {
-            console.log("MapHosterArcGIS.prototype.retrievedBounds");
-            return selfMethods.retrievedBoundsInner(x);
         }
          
         function MapHosterArcGIS()

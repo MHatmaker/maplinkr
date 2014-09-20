@@ -19,7 +19,7 @@ block content
                             li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
                                 div(ng-click="onClickTab(tab)")
                                     span {{tab.title}} 
-                                        img(ng-src="{{tab.imgSrc}}")
+                                        img(ng-src="{{tab.imgSrc}}", style="margin: 2px 5px 6px 5px")
 
             #mainView {{currentTab.content}}
                 br

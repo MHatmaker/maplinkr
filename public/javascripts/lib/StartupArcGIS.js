@@ -79,13 +79,19 @@
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
-            if(displayDestination == 'New Window')
+            if(displayDestination == 'New Window' || displayDestination == 'New Tab')
             {
                 StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel, curMph){
                     var url = "?id=" + newSelectedWebMapId +curMph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=350,width=400");
+                    if(displayDestination == 'New Window'){
+                        window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=350,width=400");
+                    }
+                    else{
+                        window.open("http://localhost:3035/arcgis/" + url, '_blank');
+                        window.focus();
+                    }
                     });
             }
             else
