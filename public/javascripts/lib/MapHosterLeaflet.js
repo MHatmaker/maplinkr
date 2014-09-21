@@ -10,7 +10,9 @@
     "use strict";
     require(["lib/utils", 'angular']);
 
-    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', 'angular'], function(leaflet, angular) {
+    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', 'angular', 'controllers/PositionViewCtrl'], 
+    
+        function(leaflet, angular, PositionViewCtrl) {
 
         var scale2Level = [],
             zmG,
@@ -97,9 +99,18 @@
             var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
             var cntrlng = fixedCntrLL.lon;
             var cntrlat = fixedCntrLL.lat;
+          /*   
             var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current: " + evlng + ", " + evlat;
-            // document.getElementById("mppos").innerHTML = view;
             document.getElementById("mppos").value = view;
+             */
+            PositionViewCtrl.update({
+                'zm' : zm,
+                'scl' : scl,
+                'cntrlng' : cntrlng,
+                'cntrlat': cntrlat,
+                'evlng' : evlng,
+                'evlat' : evlat
+            });
         }
         function onMapClick(e) 
         {
@@ -156,7 +167,7 @@
             var zm = xj.zoom
             var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
             var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-            document.getElementById("mpnm").innerHTML = view;
+            document.getElementById("mppos").innerHTML = view;
             if(cmp == false)
             {
                 var tmpLon = cntrxG;
@@ -216,6 +227,14 @@
             }
             zmG = zm; cntrxG = cntrx; cntryG = cntry;
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
+            PositionViewCtrl.update({
+                'zm' : zmG,
+                'scl' : scale2Level[zmG].scale,
+                'cntrlng' : cntrxG,
+                'cntrlat': cntryG,
+                'evlng' : cntrxG,
+                'evlat' : cntryG
+            });
         }
 
         function showGlobals(cntxt)

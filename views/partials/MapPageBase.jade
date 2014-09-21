@@ -20,9 +20,11 @@ block append content
 
                     td(style='width: 70%')
                         table(style='padding-right:20px;')
-                            tr
+                            tr(ng-controller="PositionViewCtrl")
                                 td(style='width:50%')
-                                    input(id = 'mppos', type='text', name='cursPos', disabled,  style='font-size:9pt;text-align:right;margin-right:10px;padding: 0px 5px 0px 5px;width:100%')
+                                    input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:9pt;text-align:right;margin-right:10px;padding: 0px 5px 0px 5px;width:100%')
+                                td
+                                    select(ng-model="viewOptions", ng-options="option.name for option in viewOptions", ng-change="setPostionDisplayType()")
                                 td
                                     span
                                         input(id = 'mpnm', type='text', name='curTabTitle', ng-model= "currentTab.title", style='font-size:9pt;text-align:center; padding: 0px 5px 0px 5px;', disabled)
