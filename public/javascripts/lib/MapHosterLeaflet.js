@@ -103,9 +103,9 @@
             var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current: " + evlng + ", " + evlat;
             document.getElementById("mppos").value = view;
              */
-            PositionViewCtrl.update({
+            PositionViewCtrl.update('coords', {
                 'zm' : zm,
-                'scl' : scl,
+                'scl' : scale2Level[zm].scale,
                 'cntrlng' : cntrlng,
                 'cntrlat': cntrlat,
                 'evlng' : evlng,
@@ -227,9 +227,9 @@
             }
             zmG = zm; cntrxG = cntrx; cntryG = cntry;
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
-            PositionViewCtrl.update({
+            PositionViewCtrl.update('zm', {
                 'zm' : zmG,
-                'scl' : scale2Level[zmG].scale,
+                'scl' : scale2Level.length > 0 ? scale2Level[zmG].scale : 3,
                 'cntrlng' : cntrxG,
                 'cntrlat': cntryG,
                 'evlng' : cntrxG,
