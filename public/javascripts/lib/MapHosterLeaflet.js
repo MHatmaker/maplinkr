@@ -103,6 +103,8 @@
             var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current: " + evlng + ", " + evlat;
             document.getElementById("mppos").value = view;
              */
+            // e.originalEvent.preventDefault();
+             
             PositionViewCtrl.update('coords', {
                 'zm' : zm,
                 'scl' : scale2Level[zm].scale,
@@ -111,6 +113,12 @@
                 'evlng' : evlng,
                 'evlat' : evlat
             });
+            var scope = angular.element(document.getElementById('mppos')).scope();
+            scope.$apply();
+            console.log("returned from PositionViewCtrl.update");
+            // e.originalEvent.stopPropagation();
+            // e.originalEvent.preventDefault();
+            // console.log("preventDefault() was called");
         }
         function onMapClick(e) 
         {

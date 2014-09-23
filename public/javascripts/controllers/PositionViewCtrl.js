@@ -38,23 +38,25 @@
             ];
             
             $scope.currentViewOption = $scope.viewOptions[2]; 
+            $scope.positionView = "position info";
             
             $scope.updateDetails = {
-                'zm' : function(z){curDetails['zm'] = z['zm']; curDetails['scl'] = z['scl'];},
-                'cntr' : function(z) {curDetails['cntrlng'] = z['cntrlng']; curDetails['cntrlat'] = z['cntrlat'];},
-                'coords' : function(z) {curDetails['evlng'] = z['evlng']; curDetails['evlat'] = z['evlat'];}
+                'zm' : function(opt){curDetails['zm'] = opt['zm']; curDetails['scl'] = opt['scl'];},
+                'cntr' : function(opt) {curDetails['cntrlng'] = opt['cntrlng']; curDetails['cntrlat'] = opt['cntrlat'];},
+                'coords' : function(opt) {curDetails['evlng'] = opt['evlng']; curDetails['evlat'] = opt['evlat'];}
             };
             $scope.formatView = {
-                'zm' : function(z){
-                    var formatted = "Zoom : " + z['zm'] + " Scale : " + z['scl'];
+                'zm' : function(zlevel){
+                    var formatted = "Zoom : " + zlevel['zm'] + " Scale : " + zlevel['scl'];
                     $scope.positionView = formatted;
                 },
-                'cntr' : function(z) {
-                    var formatted  = z['cntrlng'] + ', ' + z['cntrlat'];
+                'cntr' : function(cntr) {
+                    var formatted  = cntr['cntrlng'] + ', ' + cntr['cntrlat'];
                     $scope.positionView = formatted;
                 },
-                'coords' : function(z) {
-                    var formatted  = z['evlng'] + ', ' + z['evlat'];
+                'coords' : function(evnt) {
+                    var formatted  = evnt['evlng'] + ', ' + evnt['evlat'];
+                    console.log("old : " + $scope.positionView + " new " + formatted);
                     $scope.positionView = formatted;
                 }
             };
@@ -64,37 +66,40 @@
             $scope.setPostionDisplayType = function() {
                 //alert("changed " + $scope.selectedOption.value);
                 // $scope.positionView = $scope.selectedOption.value;
+                console.log("setPostionDisplayType : " + $scope.currentViewOption.key);
                 curKey = $scope.currentViewOption.key;
                 $scope.formatView[curKey](curDetails);
             };
             
             $scope.updatePosition = function(key, val){
-                var k = key; //.slice(0);
-                if(k == 'zm' || k == 'cntr'){
+                console.log("in updatePosition");
+                if(key == 'zm' || key == 'cntr'){
                     $scope.updateDetails['zm'](val);
                     $scope.updateDetails['cntr'](val);
                 }
                 else{
-                    $scope.updateDetails[k](val);
+                        $scope.updateDetails[key](val);
                 }
-                if(k = $scope.currentViewOption.key){
-                    $scope.formatView[k](val);
+                if(key = $scope.currentViewOption.key){
+                    console.log("calling $apply()");
+                    $scope.$apply( $scope.formatView[key](val));
+                    //angular.element("mppos").scope().$apply();
+                }
+            };
+            $scope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                  if(phase == '$apply' || phase == '$digest') {
+                      if(fn && (typeof(fn) === 'function')) {
+                          fn();
+                      }
+                  } else {
+                    this.$apply(fn);
                 }
             };
         
             selfMethods["updatePosition"] = $scope.updatePosition;
         
         };
-            
-        /* 
-        PositionViewCtrl.prototype.selectAgo = function (){
-            selfMethods["selectAgo"]();
-        }
-            
-        PositionViewCtrl.prototype.forceAgo = function (){
-            selfMethods["forceAgo"]();
-        }
-         */
           
         PositionViewCtrl.prototype.updatePosition = function (key, val){
             selfMethods["updatePosition"](key, val);
@@ -105,14 +110,6 @@
             App.controller('PositionViewCtrl', ['$scope', PositionViewCtrl]);
             return PositionViewCtrl;
         }
-        // function selectAgo() {
-            // console.log('selectAgo ');
-            // PositionViewCtrl.prototype.selectAgo();
-        // }
-        // function forceAgo() {
-            // console.log('forceAgo ');
-            // PositionViewCtrl.prototype.forceAgo();
-        // }
 
         return { start: init, update : PositionViewCtrl.prototype.updatePosition};
 
