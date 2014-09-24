@@ -70,7 +70,7 @@
                     var fixedCntrLL = utils.toFixed(cntr.lng(),cntr.lat(), 3);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
-                    if(scale2Level)
+                    if(scale2Level.length > 0)
                     {
                         var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
                         document.getElementById("mppos").value = view;
