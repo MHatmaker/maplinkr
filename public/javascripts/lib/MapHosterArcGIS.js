@@ -4,8 +4,8 @@
     require(["lib/utils", 'angular']);
 
     define([
-        'angular'
-        ], function(angular) {
+        'angular', 'controllers/PositionViewCtrl'
+        ], function(angular, PositionViewCtrl) {
 
         var mphmap = null,
             mapReady = true,
@@ -27,6 +27,7 @@
         
         function configureMap(xtntMap, zoomWebMap, pointWebMap)
         {
+            console.log("configureMap");
             mphmap = xtntMap;
             mapReady = false;
             // alert("before first update globals");
@@ -86,8 +87,16 @@
                     var fixedCntrLL = utils.toFixed(cntr.x,cntr.y, 3);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
-                    var view = "Zoom : " + zm + " Center : " + cntrlng + ", " + cntrlat + " Current  : " + evlng + ", " + evlat;      // + selectedWebMapId;
-                    document.getElementById("mppos").value = view;
+                    // var view = "Zoom : " + zm + " Center : " + cntrlng + ", " + cntrlat + " Current  : " + evlng + ", " + evlat;      // + selectedWebMapId;
+                    // document.getElementById("mppos").value = view;
+                    PositionViewCtrl.update('coords', {
+                        'zm' : zm,
+                        'scl' : scale2Level[zm].scale,
+                        'cntrlng' : cntrlng,
+                        'cntrlat': cntrlat,
+                        'evlng' : evlng,
+                        'evlat' : evlat
+                    });
                 });
             mapReady = true;
             userZoom = true;
@@ -219,6 +228,14 @@
             if(mphmap != null)
                 bounds = mphmap.geographicExtent;
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
+            PositionViewCtrl.update('zm', {
+                'zm' : zmG,
+                'scl' : scale2Level.length > 0 ? scale2Level[zmG].scale : 3,
+                'cntrlng' : cntrxG,
+                'cntrlat': cntryG,
+                'evlng' : cntrxG,
+                'evlat' : cntryG
+            });
         }
 
         function showGlobals(cntxt)
@@ -308,6 +325,7 @@
         }
         
         function init() {
+            console.log("MapHosterArcGIS start - init");
             return MapHosterArcGIS;
         }
         

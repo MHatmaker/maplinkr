@@ -13,7 +13,8 @@
         // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA', 
         'angular'
         // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
-        ], function(angular) {
+        , 'controllers/PositionViewCtrl'
+        ], function(angular, PositionViewCtrl) {
 
         var 
             mphmap,
@@ -72,8 +73,16 @@
                     var cntrlat = fixedCntrLL.lat;
                     if(scale2Level.length > 0)
                     {
-                        var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
-                        document.getElementById("mppos").value = view;
+                        // var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current : " + evlng + ", " + evlat;
+                        // document.getElementById("mppos").value = view;
+                        PositionViewCtrl.update('coords', {
+                            'zm' : zm,
+                            'scl' : scale2Level[zm].scale,
+                            'cntrlng' : cntrlng,
+                            'cntrlat': cntrlat,
+                            'evlng' : evlng,
+                            'evlat' : evlat
+                        });
                     }
                 }
             );
@@ -227,6 +236,14 @@
             }
             zmG = zm; cntrxG = cntrx; cntryG = cntry;
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
+            PositionViewCtrl.update('zm', {
+                'zm' : zmG,
+                'scl' : scale2Level.length > 0 ? scale2Level[zmG].scale : 3,
+                'cntrlng' : cntrxG,
+                'cntrlat': cntryG,
+                'evlng' : cntrxG,
+                'evlat' : cntryG
+            });
         }
 
         function showGlobals(cntxt)

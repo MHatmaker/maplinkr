@@ -56,7 +56,7 @@
                 },
                 'coords' : function(evnt) {
                     var formatted  = evnt['evlng'] + ', ' + evnt['evlat'];
-                    console.log("old : " + $scope.positionView + " new " + formatted);
+                    // console.log("old : " + $scope.positionView + " new " + formatted);
                     $scope.positionView = formatted;
                 }
             };
@@ -72,7 +72,7 @@
             };
             
             $scope.updatePosition = function(key, val){
-                console.log("in updatePosition");
+                // console.log("in updatePosition");
                 if(key == 'zm' || key == 'cntr'){
                     $scope.updateDetails['zm'](val);
                     $scope.updateDetails['cntr'](val);
@@ -81,7 +81,7 @@
                         $scope.updateDetails[key](val);
                 }
                 if(key = $scope.currentViewOption.key){
-                    console.log("calling $apply()");
+                    // console.log("calling $apply()");
                     $scope.$apply( $scope.formatView[key](val));
                     //angular.element("mppos").scope().$apply();
                 }
