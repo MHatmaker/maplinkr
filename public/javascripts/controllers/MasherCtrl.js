@@ -52,9 +52,6 @@
             };
         };
         
-        MasherCtrl.prototype.sumClaps = function (){
-            selfMethods["summmaryCollapser"]();
-        }
         MasherCtrl.prototype.windowResized = function(){
             selfMethods["windowResized"]();
         }
@@ -69,7 +66,7 @@
         function startArcGIS(){
             console.log("startArcGIS");
             isFirstViewing = false;
-            MasherCtrl.prototype.sumClaps();
+            selfMethods["summmaryCollapser"]();
         }
 
         return { start: init, startArcGIS: startArcGIS };

@@ -119,16 +119,8 @@ String.format = function() {
             App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);
             return TabsCtrl;
         }
-        function selectAgo() {
-            console.log('selectAgo ');
-            TabsCtrl.prototype.selectAgo();
-        }
-        function forceAgo() {
-            console.log('forceAgo ');
-            TabsCtrl.prototype.forceAgo();
-        }
 
-        return { start: init, selectAgo : selectAgo, forceAgo :  forceAgo};
+        return { start: init, selectAgo : TabsCtrl.prototype.selectAgo, forceAgo :  TabsCtrl.prototype.forceAgo};
 
     });
 

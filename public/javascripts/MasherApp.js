@@ -47,8 +47,8 @@
         'javascripts/bootstrap',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
-        'lib/MapHosterArcGIS'
-        // 'javascripts/Modal311'
+        'lib/MapHosterArcGIS',
+        'lib/Modal311'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
     ], function(dojo, domReady, esriPortal, AgoNewWindowConfig, bootstrap ) {
         console.debug('call ready');
