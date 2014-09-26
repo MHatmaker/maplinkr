@@ -34,12 +34,7 @@ function skipScript() {
     require(['lib/MapHosterGoogle']);
 
     console.log('StartupGoogle setup');
-    
-        // gm = 'http://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&sensor=false'
-        
     define([
-        // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA',
-        // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript',
         'lib/MapHosterGoogle',
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
     ], function(MapHosterGoogle) {
@@ -52,9 +47,6 @@ function skipScript() {
         // loadScript();
         console.debug(google);
 
-        function configit(nmpid){
-            console.log("nmpid " + nmpid);
-        }
         function getMap(){
             return gMap;
         }
@@ -112,29 +104,26 @@ function skipScript() {
                     var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url);
+                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                     });
             }
             else
             {
             
                 // loadScript();
-                if(google != 3){
-                
-                    var mapOptions = {
-                      center: new google.maps.LatLng(41.8, -87.7),
-                      // center: new google.maps.LatLng(51.50, -0.09),
-                      zoom: 13,
-                      mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    console.log("create a google map with option: " + mapOptions.mapTypeId);
-                    gMap = new google.maps.Map(document.getElementById("map_canvas"),
-                        mapOptions);
-                    // mph = new MapHosterGoogle(gMap); 
-                    mph = MapHosterGoogle.start(); 
-                    MapHosterGoogle.config(gMap, google);
-                    MapHosterGoogle.resizeWebSite(true);
-                }
+                var mapOptions = {
+                  center: new google.maps.LatLng(41.8, -87.7),
+                  // center: new google.maps.LatLng(51.50, -0.09),
+                  zoom: 13,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                console.log("create a google map with option: " + mapOptions.mapTypeId);
+                gMap = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+                // mph = new MapHosterGoogle(gMap); 
+                mph = MapHosterGoogle.start(); 
+                MapHosterGoogle.config(gMap, google);
+                MapHosterGoogle.resizeWebSite(true);
             }
         } 
         function StartupGoogle() {

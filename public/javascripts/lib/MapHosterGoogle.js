@@ -10,9 +10,7 @@
     require(["lib/utils", 'angular']);
 
     define([
-        // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA', 
         'angular'
-        // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
         , 'controllers/PositionViewCtrl'
         ], function(angular, PositionViewCtrl) {
 

@@ -55,23 +55,6 @@
         console.log(bootstrap);
         console.log('AgoNewWindowConfig initialization');
         console.log(AgoNewWindowConfig);
-        /* 
-        var mc = null;
-        mc = AgoNewWindowConfig.masherChannel(false);
-        console.log(mc);
-        var wmid = null
-        wmid = AgoNewWindowConfig.webmapId(false);
-        console.log(wmid);
-         */
-      /*   
-        var isNewAgoWnd = AgoNewWindowConfig.testUrlArgs();
-        if(isNewAgoWnd){
-            mc = AgoNewWindowConfig.masherChannel(true);
-            alert(mc);
-            wmid = AgoNewWindowConfig.webmapId(true);
-            alert(wmid);
-        }
-         */
         // console.log(domReady);
         // console.log(dom);
         

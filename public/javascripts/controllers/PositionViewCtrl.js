@@ -16,6 +16,7 @@
             evlng : 'evlng',
             evlat : 'evlat'
         };
+        var keyToUpdate = 'coords';
         function PositionViewCtrl($scope) {
             console.debug('PositionViewCtrl - initialize dropdown for position selections');
             
@@ -60,8 +61,10 @@
                     $scope.positionView = formatted;
                 }
             };
-            var curKey = 'coords';
-
+            
+            function fmtView(){
+                $scope.formatView[$scope.currentViewOption.key]( curDetails);
+            }
            
             $scope.setPostionDisplayType = function() {
                 //alert("changed " + $scope.selectedOption.value);
@@ -82,12 +85,12 @@
                 }
                 if(key = $scope.currentViewOption.key){
                     // console.log("calling $apply()");
-                    $scope.$apply( $scope.formatView[key](val));
+                    $scope.safeApply( fmtView); // $scope.formatView[key](val));
                     //angular.element("mppos").scope().$apply();
                 }
             };
             $scope.safeApply = function(fn) {
-                var phase = this.$root.$$phase;
+                var phase = this.$root ? this.$root.$$phase : 'notphase';
                   if(phase == '$apply' || phase == '$digest') {
                       if(fn && (typeof(fn) === 'function')) {
                           fn();
