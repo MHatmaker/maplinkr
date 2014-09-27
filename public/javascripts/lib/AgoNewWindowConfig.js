@@ -2,7 +2,9 @@
 var details = {
     locationPath : "/",
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
-    masherChannel : "private-channel-mashover"
+    masherChannel : "private-channel-mashover",
+    hostport : '3035',
+    href : "http://localhost:3035/"
 };
     
 
@@ -64,6 +66,14 @@ var details = {
             },
             zoom: function(){
                 return getParameterByName('zoom');
+            },
+            sethref: function(hrf){
+                console.log("sethref : " + hrf);
+                details.href = hrf;
+                console.log("sethref : " + details.href);
+            },
+            gethref: function(){
+                return details.href;
             }
         };
     });

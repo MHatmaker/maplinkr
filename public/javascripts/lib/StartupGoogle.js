@@ -31,13 +31,13 @@ function skipScript() {
 
 (function() {
     "use strict";
-    require(['lib/MapHosterGoogle']);
+    require(['lib/MapHosterGoogle', 'lib/AgoNewWindowConfig']);
 
     console.log('StartupGoogle setup');
     define([
         'lib/MapHosterGoogle',
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
-    ], function(MapHosterGoogle) {
+    ], function(MapHosterGoogle, AgoNewWindowConfig) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
@@ -104,7 +104,9 @@ function skipScript() {
                     var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                    // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                    window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                    
                     });
             }
             else

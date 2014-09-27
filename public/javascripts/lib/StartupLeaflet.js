@@ -6,8 +6,9 @@
     console.log('StartupLeaflet setup');
     define([
         'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js',
-        'lib/MapHosterLeaflet'
-    ], function(leaflet, MapHosterLeaflet) {
+        'lib/MapHosterLeaflet', 
+        'lib/AgoNewWindowConfig'
+    ], function(leaflet, MapHosterLeaflet, AgoNewWindowConfig) {
         console.log('StartupLeaflet define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
@@ -43,7 +44,8 @@
                     var url = "?id=" + newSelectedWebMapId + curMph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
-                    window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                    // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                    window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                     });
             }
             else
