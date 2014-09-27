@@ -6,6 +6,7 @@
     "OpenShift",
     "Node.js",
     "application",
+    "pusher",
     "openshift"
   ],
   "author": {
@@ -33,6 +34,7 @@
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
     "jade": "~1.3.0",
+    "pusher": "0.1.3",
     "socket.io": "*"
   },
   "devDependencies": {},
