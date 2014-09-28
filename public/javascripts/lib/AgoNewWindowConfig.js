@@ -4,7 +4,7 @@ var details = {
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
     masherChannel : "private-channel-mashover",
     hostport : '3035',
-    href : "http://localhost:3035/"
+    href : "http://localhost"
 };
     
 
@@ -74,6 +74,13 @@ var details = {
             },
             gethref: function(){
                 return details.href;
+            },
+            sethostport: function(hp){
+                details.hostport = hp;
+                console.log("hostport : " + details.hostport);
+            },
+            gethostport: function(){
+                return details.hostport;
             }
         };
     });
