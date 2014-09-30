@@ -1,6 +1,7 @@
 
 var details = {
     locationPath : "/",
+    search: "/",
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
     masherChannel : "private-channel-mashover",
     hostport : '3035',
@@ -23,17 +24,17 @@ var details = {
     ], function (Color, Symbol) {
             console.debug('AgoNewWindowConfig define fn');
             
-            function setLocationPath(locPath){
-                console.log("setLocationPath from " + details.locationPath + " to " + locPath);
-                details.locationPath = locPath.substring(0);
-                console.log("copied to details : " + details.locationPath);
+            function search(searchDetails){
+                console.log("setSearch from " + details.search + " to " + searchDetails);
+                details.search = searchDetails.substring(0);
+                console.log("copied to details : " + details.search);
                 //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
             };
             function getParameterByName(name) {
-                console.log("get location from " + details.locationPath);
+                console.log("get paramater from " + details.search);
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                    results = regex.exec(details.locationPath);
+                    results = regex.exec(details.search);
                 return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             };
 
@@ -50,13 +51,24 @@ var details = {
                 return getParameterByName('id').length != 0;
             },
             masherChannel: function (newWindow) {
+                // alert(getParameterByName('channel'));
+                // alert(details.masherChannel);
                 return newWindow ? getParameterByName('channel') : details.masherChannel;
+            },
+            setChannel : function(cnhl){
+                details.masherChannel = cnhl;
             },
             webmapId: function (newWindow) {
                 return newWindow ? getParameterByName('id') : details.webmapId;
             },
-            locationPath : function (locPath){
-                setLocationPath(locPath);
+            setLocationPath : function (locPath){
+                details.locationPath = locPath;
+            },
+            getLocationPath: function(){
+                return details.locationPath;
+            },
+            setSearch : function (searchDetails){
+                search(searchDetails);
             },
             lon: function(){
                 return getParameterByName('lon');
@@ -81,6 +93,15 @@ var details = {
             },
             gethostport: function(){
                 return details.hostport;
+            },
+            showConfigDetails: function(){
+                console.log(
+                    "locationPath : "  + details.locationPath + "\n" +
+                    "search : "  + details.search + "\n" +
+                    "webmapId : "  + details.webmapId + "\n" +
+                    "masherChannel : "  + details.masherChannel + "\n" +
+                    "hostport : "  + details.hostport + "\n" +
+                    "href : "  + details.href + "\n");
             }
         };
     });

@@ -79,6 +79,7 @@ angular.isUndefinedOrNull = function(val) {
                 afterSelectionChange:  $scope.mapSelectionChanged,
                 multiSelect: false,
                 displayFooter: true,
+                enableColumnResize : true,
                 
                 columnDefs: [
                     {field:'thumbnail',
@@ -87,10 +88,10 @@ angular.isUndefinedOrNull = function(val) {
                      resizable: false,
                      cellTemplate: $scope.imgWebMapTmplt},
                     {field:'snippet',
-                     width: '120px',
+                     width: '*',
                      displayName:'Description'},
                     {field:'title',
-                     width: '120px',
+                     width: '*',
                      displayName:'Map Title'},
                     {field:'id',
                      visible: false,

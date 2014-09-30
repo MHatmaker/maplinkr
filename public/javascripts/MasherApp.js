@@ -59,9 +59,12 @@
         // console.log(dom);
         
         console.log("before domready, url is " + location.search);
-        AgoNewWindowConfig.locationPath(location.search);
+        AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
+        AgoNewWindowConfig.setSearch(location.search);
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.hostport);
+        AgoNewWindowConfig.setChannel("private-channel-mashover");
+        AgoNewWindowConfig.showConfigDetails();
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);
