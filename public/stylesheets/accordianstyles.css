@@ -5,8 +5,8 @@ ul {
 
 .acc.li {
     border: 1px solid #000;
-    background-color: #330033;
-    color: #AAAAAA;
+    background-color: #ffddee;
+    color: #222200;
 }
 
 
@@ -17,3 +17,18 @@ ul {
         padding: 2px;
         overflow: auto;
     }
+
+.panel-group,
+.panel-collapse,
+.panel-body {
+    background-color: #eeddee;
+    color: #333;
+}
+
+.panel-group,
+.panel-default > 
+.panel-heading {
+    font-weight:bolder;
+    background-color: #ffddfb;
+    color: #222;
+}

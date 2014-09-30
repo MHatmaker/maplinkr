@@ -87,7 +87,7 @@
                     console.log("using channel " + channel);
                     if(displayDestination == 'New Window'){
                         // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-                        window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                        window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
                     }
                     else{
                         // window.open("http://localhost:3035/arcgis/" + url, '_blank');

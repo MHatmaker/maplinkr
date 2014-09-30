@@ -32,7 +32,7 @@
               value : 'cntrlng, cntrlat'
             },
             { 
-              type : 'mouse coordinates',
+              type : 'mouse coords',
               key : 'coords',
               value : 'evlng, evlat'
             }

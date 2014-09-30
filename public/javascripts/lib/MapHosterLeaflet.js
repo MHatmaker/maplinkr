@@ -115,7 +115,7 @@
             });
             // var scope = angular.element(document.getElementById('mppos')).scope();
             // scope.$apply();
-            console.log("returned from PositionViewCtrl.update");
+            // console.log("returned from PositionViewCtrl.update");
             // e.originalEvent.stopPropagation();
             // e.originalEvent.preventDefault();
             // console.log("preventDefault() was called");
