@@ -124,23 +124,21 @@ block append content
                                                 
                                                 div(modal-show-pusher="", modal-visible="showDialog", class="modal311", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="false")
                                 
-                                                div(data-dojo-type="dijit/layout/ContentPane", title="Map Searcher", id="MapSearcherPane")
-                                                    div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                                                        div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                            div(id="searchToolWrapperMap")
-                                                                span
-                                                                    label(id='mapSearchLabel', for='signInMap', style='font-size:12pt') AGO Map Search
-                                                                    
-                                                                    input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
+                                                
+                                                div(id="searchToolWrapperMap")
+                                                    span
+                                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt') AGO Map Search
+                                                        
+                                                        input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
 
-                                                                p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
-                                                                span
-                                                                    input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                                                    input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+                                                    p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                                    span
+                                                        input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
+                                                        input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
 
-                                                        div(id='gridpaneMap', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                            div(ng-grid="gridMapOptions", ng-style="getGridStyleMap()")    
-                                                    
+                                                    div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;")
+                                                        div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
+                                                
                                                                  
                                 
 

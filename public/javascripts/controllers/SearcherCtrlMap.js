@@ -104,8 +104,7 @@ angular.isUndefinedOrNull = function(val) {
             
             var portal = null;
             
-            
-            $scope.getGridStyleMap = function () {                
+            $scope.calculateHeights = function(){              
                 var vrbg = angular.element(document.getElementById("verbagePan"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));
                 // var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
@@ -120,9 +119,25 @@ angular.isUndefinedOrNull = function(val) {
                 if (height > availableHgt) {
                     height = availableHgt;
                 }
+                return height;
+            }
+            
+            $scope.getGridStyleMap = function () {  
+                var height = $scope.calculateHeights() - 20;
                 return {
                     height: height + "px"
                 };
+            };
+            
+            $scope.getGridStyleWrapper = function () { 
+                var dct = {}; 
+                var wrp = document.getElementById("gridpaneMap");
+                var height = $scope.calculateHeights();  
+                var heightStr = String(height) + "px";
+                //alert(ghtgStr);
+                dct["height"] = heightStr;  
+                var awrp = angular.element(wrp);
+                awrp.css(dct);   
             };
             
                                        
@@ -203,6 +218,7 @@ angular.isUndefinedOrNull = function(val) {
                     //create the grid
                     $scope.mapGriddata = [];
                     $scope.mapGriddata = $scope.mapGriddata.concat(mpdata);
+                    $scope.getGridStyleWrapper();
                     $scope.redrawGrid();
                     // $scope.updateLayout();
                     if (!$scope.$$phase) {
