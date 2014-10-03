@@ -136,7 +136,7 @@ block append content
                                                         input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
                                                         input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
 
-                                                    div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;" ng-style="getGridStyleWrapper()" )
+                                                    div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                                         div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
                                                 
                                                                  
