@@ -162,9 +162,13 @@ angular.isUndefinedOrNull = function(val) {
                 var heightStr = String(height) + "px";
                 console.log("getGridStyleWrapper heightStr : " + heightStr);
                 //alert(ghtgStr);
-                dct["height"] = heightStr;  
-                var awrp = angular.element(wrp);
-                awrp.css(dct);   
+                // dct["height"] = heightStr;  
+                // var awrp = angular.element(wrp);
+                // awrp.css(dct);    
+                
+                return {
+                    height: heightStr
+                };
             };
             
                                        
@@ -245,7 +249,7 @@ angular.isUndefinedOrNull = function(val) {
                     //create the grid
                     $scope.mapGriddata = [];
                     $scope.mapGriddata = $scope.mapGriddata.concat(mpdata);
-                    $scope.redrawGrid();
+                    // $scope.redrawGrid();
                     // $scope.updateLayout();
                     if (!$scope.$$phase) {
                         $scope.$apply(function(){
@@ -254,11 +258,11 @@ angular.isUndefinedOrNull = function(val) {
                     }
                     // $scope.getGridStyleMap();
                     // $scope.getGridStyleWrapper();
-                    if (!$scope.$$phase) {
-                        $scope.$apply(function(){
-                                $scope.mapGriddata = mpdata;
-                            });
-                    }
+                    // if (!$scope.$$phase) {
+                        // $scope.$apply(function(){
+                                // $scope.mapGriddata = mpdata;
+                            // });
+                    // }
                     $scope.redrawGrid();
                     
                  }
