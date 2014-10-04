@@ -184,7 +184,7 @@ angular.isUndefinedOrNull = function(val) {
                 }
                 var heightStr = String(heightCalculations['wrapHeight']) + "px";
                  */
-            
+            /* 
                 var dct = {}; 
                 var wrp = document.getElementById("gridpaneMap");
                 var height = $scope.calculateHeights();  
@@ -194,14 +194,14 @@ angular.isUndefinedOrNull = function(val) {
                 dct["height"] = heightStr;  
                 var awrp = angular.element(wrp);
                 awrp.css(dct);    
+                  */
                  
-               /*   
                 var height = $scope.calculateHeights();
                 var heightStr = String(height) + "px";
                 return {
                     height: heightStr
                 };
-                 */
+                
             };
             
                                        
