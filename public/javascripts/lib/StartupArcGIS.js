@@ -85,6 +85,7 @@
                     var url = "?id=" + newSelectedWebMapId +curMph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
+                    AgoNewWindowConfig.setUrl(url);
                     if(displayDestination == 'New Window'){
                         // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                         window.open(AgoNewWindowConfig.gethref() + "/arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
@@ -132,6 +133,8 @@
                     
                     // alert("initializePostProc - pusherChannel = " + pusherChannel);
                     console.log("initializePostProc - pusherChannel = " + pusherChannel);
+                    // AgoNewWindowConfig.setUrl(url);
+                    
                     if(lonWebMap && latWebMap && zoomWebMap)
                     {
                         zoomWebMap =  zmw;

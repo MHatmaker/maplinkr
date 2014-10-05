@@ -10,9 +10,11 @@ var http = require('http');
 var path = require('path');
 var socketio  = require('socket.io');
 var Pusher = require( 'pusher' );
+var nodemailer = require("nodemailer");
 
 var routesJade = require('./routes');
 var api = require('./routes/api');
+var contact = require('./routes/contact');  // Contact Form
 
 var resource = require('express-resource');
 
@@ -154,6 +156,8 @@ urls = (
             var auth = pusher.auth( socketId, channel );
             res.send( auth );
         });
+        self.app.post('/contact', contact.process);  // Contact form route
+
 
         // self.routes['/api/MarkdownSimple/:id'] = api.getDoc;
 

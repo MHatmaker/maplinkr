@@ -139,7 +139,13 @@ block append content
                                                     div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                                         div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
                                                 
-                                                                 
+                                        accordion-group(id="MailSenderId", heading="Send Link in Email", style="height:100%;width:100%;vertical-align:top;")
+                                            form(name="emailForm", ng-controller="EmailCtrl")
+                                                label(style='font-size:12pt;margin:4px').
+                                                    Email:
+                                                input(type="email", name="input", ng-model="emailtext", required)
+                                                br
+                                                button(class="btn btn-primary", style='width:25%;', ng-click="acceptAddress()", value="Accept") Accept
                                 
 
 

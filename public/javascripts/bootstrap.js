@@ -11,10 +11,11 @@ var selectedMapType = 'arcgis';
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
+        'controllers/EmailCtrl',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -46,6 +47,9 @@ var selectedMapType = 'arcgis';
                       when('/views/partials/:id',  {
                         templateUrl: function(params){ return '/partials/' + params.id; },
                         controller: App.MapCtrl, reloadOnSearch: true
+                      }).
+                      when('/contact', {
+                          controller: EmailCtrl
                       }).
                       otherwise({
                           redirectTo: '/'

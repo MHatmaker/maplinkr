@@ -111,10 +111,10 @@ angular.isUndefinedOrNull = function(val) {
                 var instructions = document.getElementById("mapSrchInstId");
                 
                 var instructionsHgt = instructions.offsetHeight;
-                console.log("instructionsHgt " + instructionsHgt);
+                // console.log("instructionsHgt " + instructionsHgt);
                 var srcTerm = angular.element(document.getElementById("mapFinder")); 
                 var hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
-                console.log("Instructions height : " + hgt);
+                // console.log("Instructions height : " + hgt);
                 return hgt;
             }
             
@@ -128,11 +128,11 @@ angular.isUndefinedOrNull = function(val) {
                 var instructionsHgt =  $scope.calculateInstructionHeight();
                 var acc0 = accHead[0];
                 var acc0Hgt = acc0.offsetHeight;
-                console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
+                // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
                 var gridTopHgt = 30 + 20; // ngTopPanel + ngViewPort
                 var availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
                                     4 * (accHead[0].offsetHeight + marginborder);
-                console.log("availableHgt" + availableHgt);
+                // console.log("availableHgt" + availableHgt);
                 var rowHeight = 50;
                 var headerHeight = 34;
                 var height = +($scope.mapGriddata.length * rowHeight + headerHeight);

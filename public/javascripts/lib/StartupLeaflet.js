@@ -44,6 +44,7 @@
                     var url = "?id=" + newSelectedWebMapId + curMph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
+                    AgoNewWindowConfig.setUrl(url);
                     // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                     window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
                     });

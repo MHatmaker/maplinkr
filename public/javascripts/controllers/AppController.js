@@ -13,10 +13,11 @@
         'controllers/SPACtrl',
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
-        'controllers/StompSetupCtrl'
+        'controllers/StompSetupCtrl',
+        'controllers/EmailCtrl'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, EmailCtrl) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -32,6 +33,7 @@
             SearcherCtrlGrp.start(App);
             SearcherCtrlMap.start(App);
             StompSetupCtrl.start(App);
+            EmailCtrl.start(App);
             return AppController;
         }
 
