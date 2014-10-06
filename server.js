@@ -11,6 +11,7 @@ var path = require('path');
 var socketio  = require('socket.io');
 var Pusher = require( 'pusher' );
 var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
 
 var routesJade = require('./routes');
 var api = require('./routes/api');
