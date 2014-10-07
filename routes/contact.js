@@ -1,11 +1,15 @@
 
-var nodemailer = require('nodemailer');
+// var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+var clipboard = require('ngClipboard');
+
+// var clipboard = require('clipboard');
 
 // sendgrid password Qv9ffUVFcI5Y
 // sendgrid username Arcadian
 
 // var transporter = nodemailer.createTransport(smtpTransport({
+/* 
 
 var transporter = nodemailer.createTransport({
     transport:'SMTP',
@@ -13,15 +17,18 @@ var transporter = nodemailer.createTransport({
         host:'127.0.0.1',
         service:'MashoverSMTPService'
     }
-   /*  
+});
+ */
+
+/*  
     host: 'localhost',
     port: 25 //,
-     */
     // auth: {
         // user: 'username',
         // pass: 'password'
     // }
 });
+*/
 
 /* 
     {
@@ -54,6 +61,8 @@ function process(req, res) {
     mailOptions.to = req.body.email;
     mailOptions.text = req.body.message;
     
+    clipboard.write(mailOptions.text);
+/*     
     // nodemailer.sendmail = true;
     transporter.sendMail(mailOptions, function(error, info){
     if(error){
@@ -62,5 +71,6 @@ function process(req, res) {
         console.log('Message sent: ' + info.response);
     }
 });
+ */
 }
 exports.process = process;
