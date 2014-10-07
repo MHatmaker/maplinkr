@@ -139,13 +139,18 @@ block append content
                                                     div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                                         div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
                                                 
-                                        accordion-group(id="MailSenderId", heading="Send Link in Email", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="MailSenderId", heading="Copy Map Link", style="height:100%;width:100%;vertical-align:top;")
                                             form(name="emailForm", ng-controller="EmailCtrl")
                                                 label(style='font-size:12pt;margin:4px').
-                                                    Email:
-                                                input(type="email", name="input", ng-model="emailtext", required)
+                                                    Fetch the link to the current ArcGIS Online map:
+                                                textarea(id="UrlCopyFieldID", type="url", name="input", ng-model="urlText", required)
                                                 br
-                                                button(class="btn btn-primary", style='width:25%;', ng-click="acceptAddress()", value="Accept") Accept
+                                                button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Fetch Url") Fetch Url
+                                                #UrlInstructions(style="display:none")
+                                                    label(style='font-size:12pt;margin:4px').The url is now focused and selected.
+                                                    label(style='font-size:12pt;margin:4px').Now use Ctrl-C to copy to clipboard.
+                                                    label(style='font-size:12pt;margin:4px').Then paste the link into an email.
+                                                
                                 
 
 

@@ -10,8 +10,9 @@ var http = require('http');
 var path = require('path');
 var socketio  = require('socket.io');
 var Pusher = require( 'pusher' );
-var nodemailer = require("nodemailer");
-var smtpTransport = require('nodemailer-smtp-transport');
+
+// var nodemailer = require("nodemailer");
+// var smtpTransport = require('nodemailer-smtp-transport');
 
 var routesJade = require('./routes');
 var api = require('./routes/api');
@@ -157,7 +158,7 @@ urls = (
             var auth = pusher.auth( socketId, channel );
             res.send( auth );
         });
-        self.app.post('/contact', contact.process);  // Contact form route
+        // self.app.post('/contact', contact.process);  // Contact form route
 
 
         // self.routes['/api/MarkdownSimple/:id'] = api.getDoc;

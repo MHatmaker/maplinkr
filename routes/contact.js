@@ -1,7 +1,7 @@
 
 // var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
-var clipboard = require('ngClipboard');
+// var smtpTransport = require('nodemailer-smtp-transport');
+// var clipboard = require('ngClipboard');
 
 // var clipboard = require('clipboard');
 
