@@ -16,7 +16,7 @@ var Pusher = require( 'pusher' );
 
 var routesJade = require('./routes');
 var api = require('./routes/api');
-var contact = require('./routes/contact');  // Contact Form
+// var contact = require('./routes/contact');  // Contact Form
 
 var resource = require('express-resource');
 
