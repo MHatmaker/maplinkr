@@ -31,11 +31,11 @@ block append content
                                         img(ng-src="{{currentTab.imgSrc}}", style='margin-left:10px;padding: 0px 5px 0px 5px;')
                                 td(style='width:20%')
                                     label(for="buttonRightPaneShowHide", style ='padding-right:10px; padding-top:7px; padding-left:5px; font-size:12pt').
-                                        Resize Right Pane
+                                        {{verbageExpandCollapse}} Right Pane
                                 td(style='width:5%')
                                     div(ng-click="collapser()")
-                                        div(ng-class = "svg-menu", style='padding: 0px 5px 0px 5px;')
-                                            img(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg")
+                                        div(style='padding: 0px 5px 0px 5px;')
+                                            img(ng-src="../stylesheets/images/{{verbageExpandCollapse}}.png")
 
 
         div
@@ -91,11 +91,17 @@ block append content
                                             h3( style="text-align:left") Steps
 
                                             ul#StepsList(style="height:100%")
-                                                li(class="acc li") 1 Open the accordian pane for group search.  Enter a search term and click the submit button.
+                                                li(class="acc li") 1 Open the accordion pane for group search.  Enter a search term and click the submit button.
                                                 li(class="acc li") 2 The group pane displays groups matching the search term.  Click on one of the groups.
-                                                li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens the WebMap in the default ArcGISOnline WebMap viewer in a new tab.
-                                                li(class="acc li") 4 Drag the tab to the desktop, which displays the tab's contents in a new browser instance.
+                                                li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens a dialog that allows showing the selected WebMap in the default ArcGISOnline WebMap viewer in a new popup window.
+                                                li(class="acc li") 4 If the open in new tab option is chosen, you can subsequently drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.
                                                 li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
+
+                                            p(style='font-size:9pt;margin:1em').                              
+                                                Multiple users can view synchronized maps in web browsers in other locations.  When you have an ArcGIS WebMap that you want to share, open the "Copy Map Link" accordion pane.  The url for the current WebMap will be inserted in the text field and pre-selected.  Use Ctrl-C to copy it to the clipboard, and then paste the link in an email to collaborators.
+                                                
+                                            p(style='font-size:9pt;margin:1em').
+                                                The url includes the name of the Pusher channel that you have selected.  As users open the link, they will be subscribing to share map pans and zooms with all other users as any user manipulates any map view.
 
                                             br
                                             
@@ -143,13 +149,13 @@ block append content
                                             form(name="emailForm", ng-controller="EmailCtrl")
                                                 label(style='font-size:12pt;margin:4px').
                                                     Fetch the link to the current ArcGIS Online map:
-                                                textarea(id="UrlCopyFieldID", type="url", name="input", ng-model="urlText", required)
+                                                textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden; resize: vertical;", ng-model="urlText", required)
                                                 br
-                                                button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Fetch Url") Fetch Url
+                                                button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
                                                 #UrlInstructions(style="display:none")
-                                                    label(style='font-size:12pt;margin:4px').The url is now focused and selected.
-                                                    label(style='font-size:12pt;margin:4px').Now use Ctrl-C to copy to clipboard.
-                                                    label(style='font-size:12pt;margin:4px').Then paste the link into an email.
+                                                    label(style='font-size:12pt;margin:2px').The url is now focused and selected.
+                                                    label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
+                                                    label(style='font-size:12pt;margin:2px').Then paste the link into an email.
                                                 
                                 
 

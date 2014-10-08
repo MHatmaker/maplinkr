@@ -5,8 +5,9 @@ block content
         
     div(ng-controller="MasherCtrl")
         #top_line(ng-click="summmaryCollapser()")
-            img.svg-menu(src="http://f.cl.ly/items/1U2c3b1215383h3a2T2r/icon-menu.svg", align = "left")
-            p Show/Hide
+            p(style="float: left;")
+                img(ng-src="../stylesheets/images/{{sumExpandCollapse}}.png")
+            p(style="padding-left:5px;font-size:14pt; font-weight: bold;") {{sumExpandCollapse}} Master Web Site Container
                 
         #summary_header(collapse="isCollapsed")
             .background
@@ -23,9 +24,10 @@ block content
 
             #mainView {{currentTab.content}}
                 br
-                span
-                    a(href="{{currentTab.url}}", id="currentTabSelectedId") {{currentTab.title}} 
-                    input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px', value='Show Me The Map')
+                br
+                div
+                    p(id="currentTabSelectedId", style="float: left; font-weight: bold;") Selected Map Type: {{currentTab.title}} 
+                    input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Show Me The Website')
                     
                     
           

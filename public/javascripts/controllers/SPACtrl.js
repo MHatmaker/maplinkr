@@ -19,6 +19,8 @@ function getDocHeight() {
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.isVerbageCollapsed = false;
             $scope.isSummaryCollapsed = false;
+            $scope.verbageExpandCollapse = "Collapse";
+            
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             var sumHead = angular.element(document.getElementById("summary_header"));
@@ -30,6 +32,7 @@ function getDocHeight() {
                 $scope.$broadcast('CollapseVerbageEvent')
                 console.log("isVerbageCollapsed before " + $scope.isVerbageCollapsed);
                 $scope.isVerbageCollapsed = !$scope.isVerbageCollapsed;
+                $scope.verbageExpandCollapse =  $scope.isVerbageCollapsed ? "Expand" : "Collapse";
                 console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
             }
             $scope.$on('CollapseSummaryEvent', function() {

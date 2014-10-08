@@ -12,6 +12,8 @@
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
             $scope.isCollapsed = false;
+            $scope.sumExpandCollapse = "Collapse";
+            
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
             
@@ -30,6 +32,7 @@
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent')
                 $scope.isCollapsed = !$scope.isCollapsed;
+                $scope.sumExpandCollapse =  $scope.isCollapsed ? "Expand" : "Collapse";
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
             };
             selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;

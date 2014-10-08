@@ -11,11 +11,18 @@
         function EmailCtrl($scope) {
             context.fullUrl = AgoNewWindowConfig.gethref();
             $scope.urlText = context.fullUrl;
+            resizeTextArea();
+            
+            function resizeTextArea() {
+                var textarea = document.getElementById('UrlCopyFieldID');
+                textarea.style.height = (textarea.scrollHeight) + 'px';
+            };
         
             $scope.fetchUrl = function(){
                 context.fullUrl = AgoNewWindowConfig.gethref();
                 // context.urlText = $scope.urlText;
                 $scope.urlText = context.fullUrl;
+                resizeTextArea();
                 var docEl = document.getElementById("UrlCopyFieldID");
                 console.debug(docEl);
                 var urlEl = angular.element(docEl);
