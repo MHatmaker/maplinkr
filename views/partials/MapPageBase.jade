@@ -156,6 +156,15 @@ block append content
                                                     label(style='font-size:12pt;margin:2px').The url is now focused and selected.
                                                     label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
                                                     label(style='font-size:12pt;margin:2px').Then paste the link into an email.
+                                                    
+                                        accordion-group(id="ChannelSetterId", heading="Set Pusher Channel", style="height:100%;width:100%;vertical-align:top;")
+                                            div(ng-controller="StompSetupCtrl")
+                                                p(style='font-size:9pt;margin:1em').
+                                                    Set or change the Pusher communications channel.
+                                                button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
+
+                                                div(modal-show-pusher="", modal-visible="showDialog", class="modal311", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="false")
+                                
                                                 
                                 
 

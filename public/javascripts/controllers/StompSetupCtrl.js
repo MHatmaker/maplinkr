@@ -44,6 +44,11 @@
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 $scope.PusherClient(selfdict.mph, $scope.data.privateChannelMashover, selfdict.callbackFunction);
             };
+            
+            $scope.displayPusherDialog = function(){
+                selfdict.scope.showDialog = $scope.showDialog = true;
+                selfdict.scope.showModal
+            }
 
             $scope.PusherClient = function(mapholder, channel, cbfn)
             {
