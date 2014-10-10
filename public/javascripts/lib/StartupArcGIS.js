@@ -89,10 +89,12 @@
                     if(displayDestination == 'New Window'){
                         // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                         window.open(AgoNewWindowConfig.gethref() + "/arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+                        // window.open(AgoNewWindowConfig.gethref(), newSelectedWebMapId, "top=1, left=1, height=400,width=500");
                     }
                     else{
                         // window.open("http://localhost:3035/arcgis/" + url, '_blank');
                         window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, '_blank');
+                        // window.open(AgoNewWindowConfig.gethref(), '_blank');
                         window.focus();
                     }
                     });
