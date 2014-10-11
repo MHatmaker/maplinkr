@@ -4,17 +4,20 @@
     "use strict";
 
     console.log('StompSetup setup');
+    var areWeInitialized = false;
     define([
         'angular'
     ], function(angular) {
         console.log('StompSetupCtrl define');  
         
         var selfdict = {};
+        selfdict.isInitialized = areWeInitialized = false;
 
         function StompSetupCtrl($scope, $modal){
             console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = 'private-channel-mashover';
             selfdict.scope = $scope;
+            selfdict.isInitialized = areWeInitialized = false;
         
             // selfdict.scope = null;
             // selfdict.mph = null;
@@ -47,7 +50,7 @@
             
             $scope.displayPusherDialog = function(){
                 selfdict.scope.showDialog = $scope.showDialog = true;
-                selfdict.scope.showModal
+                selfdict.scope.showModal(true);
             }
 
             $scope.PusherClient = function(mapholder, channel, cbfn)
@@ -137,13 +140,16 @@
             };
         }  
           
+        StompSetupCtrl.prototype.isInitialized = function(){
+            return areWeInitialized;
+        }
         
         StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn)
         {
             selfdict.mph = mapholder;
             selfdict.callbackFunction = cbfn;
             console.log("toggleShow from " + selfdict.scope.showDialog);
-             selfdict.scope.safeApply(function(){
+            selfdict.scope.safeApply(function(){
                 selfdict.scope.showDialog = ! selfdict.scope.showDialog;
             });
             console.log("toggleShow after apply " + selfdict.scope.showDialog);
@@ -163,6 +169,13 @@
         
         function init(App) {
             console.log('StompSetup init');
+            alert("areWeInitialized ?");
+            alert(areWeInitialized);
+            if(areWeInitialized == true){
+                alert("quick bailout");
+                return;
+            }
+            selfdict.isInitialized = areWeInitialized = true;
             App.controller('StompSetupCtrl',  ['$scope', '$modal', StompSetupCtrl]);
             
             App.directive("modalShowPusher", function () {
@@ -197,6 +210,11 @@
                         scope.showModal = function (visible, elem) {
                             if (!elem){
                                 elem = element;
+                                console.log("elem is now :");
+                                console.debug(elem);
+                                console.log("how about $(elem)?");
+                                var delem = $(elem);
+                                console.debug(delem);
                             }
                             if (visible){
                                 $(elem).modal311("show");                     
@@ -278,7 +296,8 @@
         }
         
         return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient,
-                  createPusherClient : StompSetupCtrl.prototype.createPusherClient};
+                  createPusherClient : StompSetupCtrl.prototype.createPusherClient,
+                  isInitialized : StompSetupCtrl.prototype.isInitialized};
 
     });
 

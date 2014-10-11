@@ -32,7 +32,9 @@
             VerbageCtrl.start(App);
             SearcherCtrlGrp.start(App);
             SearcherCtrlMap.start(App);
-            StompSetupCtrl.start(App);
+            if(StompSetupCtrl.isInitialized() == false){
+                StompSetupCtrl.start(App);
+            }
             EmailCtrl.start(App);
             return AppController;
         }
