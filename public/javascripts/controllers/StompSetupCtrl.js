@@ -12,17 +12,20 @@
         
         var selfdict = {};
         selfdict.isInitialized = areWeInitialized = false;
+        var scopeDict = {};
 
-        function StompSetupCtrl($scope, $modal){
+        function StompSetupCtrl($scope, $modal, $rootScope){
             console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = 'private-channel-mashover';
             selfdict.scope = $scope;
+            selfdict.pusher = null;
             selfdict.isInitialized = areWeInitialized = false;
+            scopeDict['rootScope'] = $rootScope;
         
             // selfdict.scope = null;
             // selfdict.mph = null;
             // selfdict.callbackFunction = null;
-            $scope.showDialog = false;
+            $scope.showDialog = selfdict.scope.showDialog = false;
             $scope.data = {
                 privateChannelMashover : 'private-channel-mashover',
                 prevChannel : 'private-channel-mashover',
@@ -45,21 +48,26 @@
 
             $scope.onAcceptChannel = function(){
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
-                $scope.PusherClient(selfdict.mph, $scope.data.privateChannelMashover, selfdict.callbackFunction);
+                selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.privateChannelMashover, 
+                    selfdict.callbackFunction);
             };
             
             $scope.displayPusherDialog = function(){
-                selfdict.scope.showDialog = $scope.showDialog = true;
-                selfdict.scope.showModal(true);
-            }
+                // selfdict.scope.showModal(true);
+                selfdict.callbackFunction = null;
+                scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');
+                $scope.safeApply(function(){
+                    selfdict.scope.showDialog = $scope.showDialog = true;
+                });
+            };
 
-            $scope.PusherClient = function(mapholder, channel, cbfn)
+            $scope.PusherClient = function(eventDct, channel, cbfn)
             {
                 console.log("PusherClient");
-                this.mapHolder = mapholder;
+                this.eventDct = eventDct;
                 var self = this;
                 self.callbackfunction = cbfn;
-                self.mapHolder = mapholder;
+                self.eventDct = eventDct;
                 self.channel = channel;
                 if(channel[0] == '/')
                 {
@@ -87,7 +95,7 @@
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                  {  // Executed when a messge is received
                      console.log('frame is',frame);
-                     self.mapHolder.retrievedBounds(frame);
+                     self.eventDct.retrievedBounds(frame);
                      console.log("back from boundsRetriever");
                  }
                 );
@@ -97,7 +105,7 @@
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                 {
                     console.log('frame is',frame);
-                    selfdict.mph.retrievedBounds(frame);
+                    selfdict.eventDct['client-MapXtntEvent'](frame);
                     console.log("back from boundsRetriever");
                 });
 
@@ -116,9 +124,10 @@
                                       
                 console.log("CurrentMapTypeService got mph, call setPusherClient");
                 selfdict.mph.setPusherClient(pusher, self.CHANNEL);
-                if(self.callbackfunction){
-                    self.callbackfunction(self.CHANNEL, serv.getSelectedMapType());
+                if(self.callbackfunction != null){
+                    self.callbackfunction(self.CHANNEL);
                 }
+                return pusher;
             };
             
             
@@ -144,39 +153,41 @@
             return areWeInitialized;
         }
         
-        StompSetupCtrl.prototype.setupPusherClient = function(mapholder, cbfn)
+        StompSetupCtrl.prototype.setupPusherClient = function(eventDct, cbfn)
         {
-            selfdict.mph = mapholder;
+            selfdict.eventDct = eventDct;
             selfdict.callbackFunction = cbfn;
             console.log("toggleShow from " + selfdict.scope.showDialog);
+            scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');
             selfdict.scope.safeApply(function(){
                 selfdict.scope.showDialog = ! selfdict.scope.showDialog;
             });
             console.log("toggleShow after apply " + selfdict.scope.showDialog);
             
-            // selfdict.scope.PusherClient(mapholder, selfdict.scope.privateChannelMashover, cbfn);
+            // selfdict.scope.PusherClient(eventDct, selfdict.scope.privateChannelMashover, cbfn);
         };
           
         
-        StompSetupCtrl.prototype.createPusherClient = function(mapholder, pusherChannel, cbfn)
+        StompSetupCtrl.prototype.createPusherClient = function(eventDct, pusherChannel, cbfn)
         {
-            selfdict.mph = mapholder;
+            selfdict.eventDct = eventDct;
             selfdict.callbackFunction = cbfn;
-            selfdict.scope.PusherClient(mapholder, pusherChannel, cbfn);
+            selfdict.pusher = selfdict.scope.PusherClient(eventDct, pusherChannel, cbfn);
+            return selfdict.pusher;
         };
                 
             //selfdict.setupPusherClient = $scope.setupPusherClient;
         
         function init(App) {
             console.log('StompSetup init');
-            alert("areWeInitialized ?");
-            alert(areWeInitialized);
-            if(areWeInitialized == true){
-                alert("quick bailout");
-                return;
-            }
+            // alert("areWeInitialized ?");
+            // alert(areWeInitialized);
+            // if(areWeInitialized == true){
+                // alert("quick bailout");
+                // return;
+            // }
             selfdict.isInitialized = areWeInitialized = true;
-            App.controller('StompSetupCtrl',  ['$scope', '$modal', StompSetupCtrl]);
+            App.controller('StompSetupCtrl',  ['$scope', '$modal', '$rootScope', StompSetupCtrl]);
             
             App.directive("modalShowPusher", function () {
                 var tpl = ' \
@@ -223,6 +234,12 @@
                                 $(elem).modal311("hide");
                             }
                         };
+                        
+                        scope.$on('ShowChannelSelectorEvent', function() {
+                            scope.showModal(true);
+                        });
+                            
+                        selfdict.scope.showModal = scope.showModal;
 
                         //Check to see if the modal-visible attribute exists
                         if (!attrs.modalVisible)
@@ -260,14 +277,14 @@
                                 // console.log("watch modalMdata scope.$parent data  : ");
                                 // console.debug(localScope.$parent.data);
                             });
-                           /*  
-                            scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
+                            
+                            scope.$watch('scope.$parent.selfdict.scope.showDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
                                 scope.showModal(newValue);
                                 //attrs.modalVisible = false;
                             });
-                             */
+                            
 
                         }
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
@@ -285,6 +302,7 @@
                                 scope.$parent.onAcceptChannel();
                             }
                         });
+                        
                     }
 
                 };

@@ -81,8 +81,15 @@
         {
             if(displayDestination == 'New Window' || displayDestination == 'New Tab')
             {
-                StompSetupCtrl.setupPusherClient(MapHosterArcGIS, function(channel, curMph){
-                    var url = "?id=" + newSelectedWebMapId +curMph.getGlobalsForUrl() + "&channel=" + channel;
+                var curmph = MapHosterArcGIS;
+                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                    var $inj = angular.injector(['app']);
+                    var serv = $inj.get('CurrentMapTypeService');
+                    curmph = serv.getSelectedMapType();
+                    }
+                    
+                StompSetupCtrl.setupPusherClient({'client-MapXtntEvent' : curmph.retrievedBounds}, function(channel){
+                    var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
                     AgoNewWindowConfig.setUrl(url);
@@ -261,7 +268,7 @@
                 console.log("StartupArcGIS.initUI : selfDetails.mph == null");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
-                pusher = StompSetupCtrl.createPusherClient(MapHosterArcGIS, pusherChannel, null);  
+                pusher = StompSetupCtrl.createPusherClient({'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds}, pusherChannel, null);  
                 console.log("got pusher - now setPusherClient");
                 //MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
             }

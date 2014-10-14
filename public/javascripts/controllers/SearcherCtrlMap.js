@@ -55,6 +55,7 @@ angular.isUndefinedOrNull = function(val) {
             var selectedWebMapId = "Nada ID";
             var selectedWebMapTitle = "Nada Title";
             
+            
             $scope.mapSelectionChanged = function(rowItem,event){ 
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title);

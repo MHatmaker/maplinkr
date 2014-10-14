@@ -30,7 +30,7 @@
             
             $scope.summmaryCollapser = function(){
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
-                $scope.$broadcast('CollapseSummaryEvent')
+                $scope.$broadcast('CollapseSummaryEvent');
                 $scope.isCollapsed = !$scope.isCollapsed;
                 $scope.sumExpandCollapse =  $scope.isCollapsed ? "Expand" : "Collapse";
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);

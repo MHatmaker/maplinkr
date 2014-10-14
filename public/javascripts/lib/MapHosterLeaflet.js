@@ -301,6 +301,7 @@
         {   
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
+            pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
         function getGlobalsForUrl()

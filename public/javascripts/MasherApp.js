@@ -63,7 +63,7 @@
         AgoNewWindowConfig.setSearch(location.search);
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.hostport);
-        AgoNewWindowConfig.setChannel("private-channel-mashover");
+        // AgoNewWindowConfig.setChannel("private-channel-mashover");
         AgoNewWindowConfig.showConfigDetails();
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';

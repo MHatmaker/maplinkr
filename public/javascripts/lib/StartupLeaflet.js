@@ -40,14 +40,14 @@
             console.log("newSelectedWebMapId " + newMapId);
             if( newSelectedWebMapId !== null)
             {
-                setupPusherClient(MapHosterLeaflet, function(channel, curMph){
-                    var url = "?id=" + newSelectedWebMapId + curMph.getGlobalsForUrl() + "&channel=" + channel;
-                    console.log("open new ArcGIS window with URI " + url);
-                    console.log("using channel " + channel);
-                    AgoNewWindowConfig.setUrl(url);
-                    // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-                    window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
-                    });
+                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                    setupPusherClient({'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds}, function(channel){
+                        openAgoWindow(channel);
+                        });
+                }
+                else{
+                    openAgoWindow(AgoNewWindowConfig.masherChannel(false));
+                }
             }
             else
             {
@@ -64,7 +64,16 @@
                 MapHosterLeaflet.config(lMap);
                 // stomper = new StompClient(mph);
             }
-        }   
+        }
+        
+        function openAGOWindow(channel){
+            var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.getGlobalsForUrl() + "&channel=" + channel;
+            console.log("open new ArcGIS window with URI " + url);
+            console.log("using channel " + channel);
+            AgoNewWindowConfig.setUrl(url);
+            // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+        }
 
         function StartupLeaflet() {
         };

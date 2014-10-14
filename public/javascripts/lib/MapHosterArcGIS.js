@@ -311,6 +311,7 @@
             {
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;
+                pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
                 console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             }
         }

@@ -4,6 +4,7 @@ var details = {
     search: "/",
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
     masherChannel : "private-channel-mashover",
+    masherChannelInitialized : false,
     hostport : '3035',
     href : "http://localhost",
     url: ''
@@ -57,7 +58,13 @@ var details = {
                 return newWindow ? getParameterByName('channel') : details.masherChannel;
             },
             setChannel : function(cnhl){
+                if(masherChannelInitialized == false){
+                    details.masherChannelInitialized = true;
+                }
                 details.masherChannel = cnhl;
+            },
+            isChannelInitialized : function(){
+                return details.masherChannelInitialized;
             },
             webmapId: function (newWindow) {
                 return newWindow ? getParameterByName('id') : details.webmapId;

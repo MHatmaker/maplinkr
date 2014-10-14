@@ -46,10 +46,13 @@ block append content
                             
                             #map_canvas(style="height:100%;width:100%;margin:0px;")
 
-                            //
+                           
                                 img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
                         td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
+
+                                div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal311", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="false")
+                                                
                                 div(class = "acc scrollable", style="height:100%;width:100%;")
                                     accordion(id="Accdian", style="height:100%;width:100%;", close-others="false")
                                         accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;")
@@ -127,8 +130,6 @@ block append content
                                             #SearchMap(ng-controller="SearcherCtrlMap")
                                             
                                                 div(modal-show="", modal-visible="showDialog", class="modal311",  modal-mdata="mData", role="dialog", class="modal", id="{{data.dlg2show}}", style="display: none; position:relative", data-backdrop="false")
-                                                
-                                                div(modal-show-pusher="", modal-visible="showDialog", class="modal311", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="false")
                                 
                                                 
                                                 div(id="searchToolWrapperMap")
@@ -162,8 +163,6 @@ block append content
                                                 p(style='font-size:9pt;margin:1em').
                                                     Set or change the Pusher communications channel.
                                                 button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
-
-                                                div(modal-show-pusher="", modal-visible="showDialog", class="modal311", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="false")
                                 
                                                 
                                 
