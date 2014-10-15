@@ -38,6 +38,7 @@
             console.debug("ready to show mphmap");
             mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
             console.debug(mphmap);
+            showLoading();
             mphmap.setView([41.8, -87.7], 13);
             console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
             
@@ -48,10 +49,14 @@
             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
             // L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-            L.tileLayer(osmUrl, {
+            var lyr = L.tileLayer(osmUrl, {
                 maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
             }).addTo(mphmap);
+            lyr.on("loading", function( e ) {
+                    showLoading()}  );
+            lyr.on("load", function( e ) {
+                    hideLoading()}  );
 
             minZoom = mphmap.getMinZoom();
             maxZoom = mphmap.getMaxZoom();
@@ -76,17 +81,13 @@
             
             mphmap.on("moveend", function( e ) {
                 setBounds('pan', e.latlng);}  );
-            // mphmap.on("loading", function( e ) {
-                // showLoading()};  );
-            // mphmap.on("load", function( e ) {
-                // hideLoading()};  );
         }
-        // function showLoading(){
-            // utils.showLoading();
-        // }
-        // function hideLoading(){
-            // utils.hideLoading();
-        // }
+        function showLoading(){
+            utils.showLoading();
+        }
+        function hideLoading(){
+            utils.hideLoading();
+        }
         
         function onMouseMove( e) 
         {

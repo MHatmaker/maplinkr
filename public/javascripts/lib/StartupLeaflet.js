@@ -35,8 +35,8 @@
         function configure(newMapId) 
         {
             newSelectedWebMapId = newMapId;
-            // window.loading = dojo.byId("loadingImg")
-            // console.log(window.loading);
+            window.loading = dojo.byId("loadingImg")
+            console.log(window.loading);
             console.log("newSelectedWebMapId " + newMapId);
             if( newSelectedWebMapId !== null)
             {
@@ -53,7 +53,7 @@
             {
                 // lMap = new L.Map('map_canvas', {loadingControl: true}); //.setView([41.8, -87.7], 13);
                 lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
-                console.debug(lMap);
+                // console.debug(lMap);
                 // var loadingControl = L.Control.loading({
                     // spinjs: true
                 // });
