@@ -127,9 +127,9 @@
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
                 .openOn(mphmap);
-            if(selfPusherDetails.pusher)
-            {
-                var latlng = {"x" : e.latlng.lng, "y" : e.latlng.lat, "z" : "0"};
+            if(selfPusherDetails.pusher){
+                var fixedLL = utils.toFixed(e.latlng.lng, e.latlng.lat, 3);
+                var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
                 console.log("You clicked the map at " + e.latlng.toString());
                 console.debug(latlng);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);

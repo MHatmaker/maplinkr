@@ -33,6 +33,7 @@
             channel : null,
             pusher : null
         };
+        var popDetails = null;
                       
         function configureMap(gMap, goooogle) {
             mphmap = gMap;
@@ -120,7 +121,11 @@
                 var popPt = e.latLng;
                 var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 3);
                 var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
-                var popDetails  = markerInfoPopup(popPt, content, "Ready to Push Click");
+                if(popDetails != null){
+                    popDetails.infoWnd.close();
+                    popDetails.infoMarker.setMap(null);
+                }
+                popDetails = markerInfoPopup(popPt, content, "Ready to Push Click");
                 popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
                 if(selfPusherDetails.pusher)
                 {
@@ -151,7 +156,11 @@
                 
                 var popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
                 var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
-                var popDetails = markerInfoPopup(popPt, content, "Received Pushed Click");
+                if(popDetails != null){
+                    popDetails.infoWnd.close();
+                    popDetails.infoMarker.setMap(null);
+                }
+                popDetails = markerInfoPopup(popPt, content, "Received Pushed Click");
                 popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
             }
         
