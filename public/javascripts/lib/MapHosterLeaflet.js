@@ -183,7 +183,7 @@
             var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
             popup
                 .setLatLng(latlng)
-                .setContent("You clicked the map at " + latlng.toString())
+                .setContent("Received Pushed Click " + latlng.toString())
                 .openOn(mphmap);
         }
         function retrievedBounds(xj)
@@ -217,6 +217,14 @@
                     }
                 }
             }
+        }
+        
+        function getEventDictionary(){
+            var eventDct = 
+                {'client-MapXtntEvent' : retrievedBounds,
+                'client-MapClickEvent' : retrievedClick
+                }
+            return eventDct;
         }
 
         function collectScales()
@@ -360,7 +368,8 @@
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
-                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl };
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
+                  getEventDictionary : getEventDictionary };
     });
 
 }).call(this);

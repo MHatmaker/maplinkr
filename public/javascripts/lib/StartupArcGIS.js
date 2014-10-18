@@ -199,7 +199,7 @@
                   nav: false,
                   wrapAround180:true
                 },
-                ignorePopups:true,
+                ignorePopups:false,
                 bingMapsKey: configOptions.bingMapsKey,
                 geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 

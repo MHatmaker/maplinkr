@@ -164,6 +164,13 @@
                 popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
             }
         
+            function getEventDictionary(){
+                var eventDct = 
+                    {'client-MapXtntEvent' : retrievedBounds,
+                    'client-MapClickEvent' : retrievedClick
+                    }
+                return eventDct;
+            }
             function retrievedBoundsInternal(xj)
             {
                 console.log("Back in retrievedBounds");
@@ -434,7 +441,8 @@
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
-                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
+                  getEventDictionary : getEventDictionary };
     });
 
 }).call(this);

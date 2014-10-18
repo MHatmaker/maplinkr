@@ -58,10 +58,12 @@
                 var serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
                 
-                selfdict.eventDct = 
-                        {'client-MapXtntEvent' : selfdict.mph.retrievedBounds,
-                        'client-MapClickEvent' : selfdict.mph.retrievedClick
-                        };
+                selfdict.eventDct = selfdict.mph.getEventDictionary();
+                
+                // selfdict.eventDct = 
+                        // {'client-MapXtntEvent' : selfdict.mph.retrievedBounds,
+                        // 'client-MapClickEvent' : selfdict.mph.retrievedClick
+                        // };
                 
                 selfdict.callbackFunction = null;
                 scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');

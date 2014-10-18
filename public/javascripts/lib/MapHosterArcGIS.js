@@ -136,8 +136,8 @@
                 console.log("converted Pt " + cntrpt.x + ", " + cntrpt.y);
                 var fixedLL = utils.toFixed(cntrpt.x,cntrpt.y, 3);
                 
-                mphmap.infoWindow.setTitle("Coordinates");
-                mphmap.infoWindow.setContent("lat/lon : " + fixedLL.lat + ", " + fixedLL.lon);
+                // mphmap.infoWindow.setTitle("Coordinates");
+                // mphmap.infoWindow.setContent("lat/lon : " + fixedLL.lat + ", " + fixedLL.lon);
                 mphmap.infoWindow.show(e.screenPoint,mphmap.getInfoWindowAnchor(e.screenPoint));
                 
                 if(selfPusherDetails.pusher)
@@ -170,7 +170,7 @@
                 // var screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry); 
 
                 
-                mphmap.infoWindow.setTitle("Coordinates");
+                mphmap.infoWindow.setTitle("Received Pushed Click");
                 mphmap.infoWindow.setContent("lat/lon : " + clickPt.y + ", " + clickPt.x);
                 
                 mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));
@@ -233,6 +233,14 @@
                     }
                     // userZoom = true;
                 }
+            }
+            
+            function getEventDictionary(){
+                var eventDct = 
+                    {'client-MapXtntEvent' : retrievedBounds,
+                    'client-MapClickEvent' : retrievedClick
+                    }
+                return eventDct;
             }
             
             function setBounds(xtExt)
@@ -413,9 +421,10 @@
         }
 
         return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
-                setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
+                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
+                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
+                  getEventDictionary : getEventDictionary };
     });
 
 }).call(this);
