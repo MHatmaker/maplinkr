@@ -88,7 +88,10 @@
                     curmph = serv.getSelectedMapType();
                     }
                     
-                StompSetupCtrl.setupPusherClient({'client-MapXtntEvent' : curmph.retrievedBounds}, function(channel){
+                StompSetupCtrl.setupPusherClient(
+                    {'client-MapXtntEvent' : curmph.retrievedBounds,
+                    'client-MapClickEvent' : curmph.retrievedClick},
+                    function(channel){
                     var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
@@ -196,7 +199,7 @@
                   nav: false,
                   wrapAround180:true
                 },
-                ignorePopups:false,
+                ignorePopups:true,
                 bingMapsKey: configOptions.bingMapsKey,
                 geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 
@@ -268,7 +271,10 @@
                 console.log("StartupArcGIS.initUI : selfDetails.mph == null");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
-                pusher = StompSetupCtrl.createPusherClient({'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds}, pusherChannel, null);  
+                pusher = StompSetupCtrl.createPusherClient(
+                        {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
+                        'client-MapClickEvent' : MapHosterArcGIS.retrievedClick},
+                        pusherChannel, null);  
                 console.log("got pusher - now setPusherClient");
                 //MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
             }

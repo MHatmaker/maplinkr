@@ -109,6 +109,13 @@
                     console.log("back from boundsRetriever");
                 });
 
+                channelBind.bind('client-MapClickEvent', function(frame) 
+                {
+                    console.log('frame is',frame);
+                    selfdict.eventDct['client-MapClickEvent'](frame);
+                    console.log("back from clickRetriever");
+                });
+                
                 channelBind.bind('pusher:subscription_error', function(statusCode) {
                     //alert('Problem subscribing to "private-channel": ' + statusCode);
                     console.log('Problem subscribing to "private-channel": ' + statusCode);

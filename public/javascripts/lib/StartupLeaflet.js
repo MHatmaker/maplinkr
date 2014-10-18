@@ -41,7 +41,10 @@
             if( newSelectedWebMapId !== null)
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
-                    setupPusherClient({'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds}, function(channel){
+                    setupPusherClient(
+                        {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
+                        'client-MapClickEvent' : MapHosterLeaflet.retrievedClick
+                        }, function(channel){
                         openAgoWindow(channel);
                         });
                 }

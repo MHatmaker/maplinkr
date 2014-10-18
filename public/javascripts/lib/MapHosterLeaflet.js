@@ -127,6 +127,13 @@
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
                 .openOn(mphmap);
+            if(selfPusherDetails.pusher)
+            {
+                var latlng = {"x" : e.latlng.lng, "y" : e.latlng.lat, "z" : "0"};
+                console.log("You clicked the map at " + e.latlng.toString());
+                console.debug(latlng);
+                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+            }
         }
 
         function setBounds(action, latlng)
@@ -170,7 +177,16 @@
             return xtntDict;
         }
         
-         function retrievedBounds(xj)
+        function retrievedClick(clickPt)
+        {
+            console.log("Back in retrievedClick - You clicked the map at " +  clickPt.x + ", " + clickPt.y);
+            var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
+            popup
+                .setLatLng(latlng)
+                .setContent("You clicked the map at " + latlng.toString())
+                .openOn(mphmap);
+        }
+        function retrievedBounds(xj)
         {
             console.log("Back in retrievedBounds");
             var zm = xj.zoom
@@ -303,6 +319,8 @@
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
             pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
+            pusher.subscribe( 'client-MapClicktEvent', retrievedClick);
+            console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
         function getGlobalsForUrl()
@@ -341,7 +359,8 @@
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                  retrievedBounds: retrievedBounds, setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl };
+                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl };
     });
 
 }).call(this);
