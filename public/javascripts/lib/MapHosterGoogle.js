@@ -84,6 +84,11 @@
                     }
                 }
             );
+            google.maps.event.addListener(mphmap, 'click', function(event) {
+                onMapClick(event);
+                }
+            );
+            
             mapReady = true;
             var center = mphmap.getCenter();
             google.maps.event.trigger(mphmap, 'resize');
@@ -110,6 +115,20 @@
                 setBounds('pan');
             }
             
+            function onMapClick(e) 
+            {
+                var popPt = e.latLng;
+                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 3);
+                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
+                var popDetails  = markerInfoPopup(popPt, content, "Ready to Push Click");
+                popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+                if(selfPusherDetails.pusher)
+                {
+                    var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                    console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+                }
+            }
             function extractBounds(action)
             {
                 var zm = mphmap.getZoom();
@@ -124,6 +143,18 @@
                 return xtntDict;
             }
                 
+            function retrievedClick(clickPt)
+            {
+                var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 3);
+                console.log("Back in retrievedClick - You clicked the map at " +  clickPt.x + ", " + clickPt.y);
+                var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
+                
+                var popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
+                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
+                var popDetails = markerInfoPopup(popPt, content, "Received Pushed Click");
+                popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+            }
+        
             function retrievedBoundsInternal(xj)
             {
                 console.log("Back in retrievedBounds");
@@ -324,6 +355,7 @@
                 google.maps.event.addListener(marker, 'click', function() {
                   infowindow.open(mphmap,marker);
                 });
+            return { "infoWnd" : infowindow, "infoMarker" : marker};
         }
 
 
@@ -348,6 +380,9 @@
         {   
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
+            pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
+            pusher.subscribe( 'client-MapClicktEvent', retrievedClick);
+            console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         function getGlobalsForUrl()
         {
@@ -389,7 +424,7 @@
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                  retrievedBounds: retrievedBounds,
+                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl};
     });
 

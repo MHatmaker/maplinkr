@@ -100,7 +100,10 @@ function skipScript() {
             // }
             if( newSelectedWebMapId )
             {
-                setupPusherClient(mph, function(channel){
+                setupPusherClient(
+                    {'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
+                    'client-MapClickEvent' : MapHosterGoogle.retrievedClick
+                    }, function(channel){
                     var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
