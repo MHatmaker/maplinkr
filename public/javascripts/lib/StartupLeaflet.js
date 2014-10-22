@@ -1,14 +1,13 @@
 
 (function() {
     "use strict";
-    require(['lib/MapHosterLeaflet']);
+    // require(['lib/MapHosterLeaflet']);
 
     console.log('StartupLeaflet setup');
     define([
-        'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js',
         'lib/MapHosterLeaflet', 
         'lib/AgoNewWindowConfig'
-    ], function(leaflet, MapHosterLeaflet, AgoNewWindowConfig) {
+    ], function(MapHosterLeaflet, AgoNewWindowConfig) {
         console.log('StartupLeaflet define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 

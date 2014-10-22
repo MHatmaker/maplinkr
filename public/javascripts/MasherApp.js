@@ -24,8 +24,12 @@
         {
             name: 'javascripts',
             location: locationPath + 'javascripts'
-        },
-      /*   
+        }
+      /*   ,
+        {
+            name: 'Geocoder',
+            location: locationPath + 'javascripts/lib/L.Control.Geocoder'
+        }
         {
             name: 'bootstrap',
             location: locationPath + 'javascripts'

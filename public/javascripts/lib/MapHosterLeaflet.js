@@ -5,14 +5,21 @@
     // }
     // return {};
 // });
-
+define('GeoCoder', function () {
+    if (GeoCoder) {
+        return GeoCoder;
+    }
+    return {};
+});
+    
 (function() {
     "use strict";
-    require(["lib/utils", 'angular']);
+    console.log("ready to require stuff");
+    require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', 'angular', 'controllers/PositionViewCtrl'], 
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder'], 
     
-        function(leaflet, angular, PositionViewCtrl) {
+        function(PositionViewCtrl, GeoCoder) {
 
         var scale2Level = [],
             zmG,
@@ -27,6 +34,8 @@
             channel,
             pusher,
             popup,
+            geoCoder,
+            marker,
             mphmap;
         var selfPusherDetails = {
             channel : null,
@@ -42,6 +51,8 @@
             mphmap.setView([41.8, -87.7], 13);
             console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
             
+			geoCoder =  GeoCoder.nominatim();
+        
             updateGlobals("init", -87.7, 41.8, 13, 0.0);
             // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
@@ -121,8 +132,42 @@
             // e.originalEvent.preventDefault();
             // console.log("preventDefault() was called");
         }
+        
+        function showClickResult(r){
+            if (r) {
+                if (marker) {
+                    marker.
+                        setLatLng(r.center).
+                        setPopupContent(r.html || r.name).
+                        openPopup();
+                } else {
+                    marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+                }
+            }
+            /* 
+            popup
+                .setLatLng(popPt)
+                .setContent("You clicked the map at " + popPt.lat + ", " + popPt.lng)
+                .openOn(mphmap);
+                 */
+            if(selfPusherDetails.pusher){
+                var popPt = r.center;
+                var fixedLL = utils.toFixed(popPt.lng, popPt.lat, 3);
+                var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                console.log("You clicked the map at " + popPt.lat + ", " + popPt.lng);
+                console.debug(latlng);
+                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+            }
+        }
+            
         function onMapClick(e) 
         {
+			geoCoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+				var r = results[0];
+				showClickResult(r);
+            });
+            
+        /* 
             popup
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
@@ -134,6 +179,7 @@
                 console.debug(latlng);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
             }
+             */
         }
 
         function setBounds(action, latlng)

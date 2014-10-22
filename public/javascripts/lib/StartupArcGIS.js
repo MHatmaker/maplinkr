@@ -13,6 +13,8 @@
     dojo.require("dijit.layout.AccordionPane");
     dojo.require("dijit.layout.ContentPane");
     dojo.require("esri.tasks.geometry");
+    dojo.require("esri.tasks.locator");
+    dojo.require("esri/geometry/webMercatorUtils"),
     dojo.require("esri.IdentityManager");
     dojo.require("esri.dijit.Scalebar");
     dojo.require("esri.arcgis.utils");

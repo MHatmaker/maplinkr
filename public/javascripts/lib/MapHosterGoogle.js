@@ -28,6 +28,7 @@
             bounds,
             channel,
             userZoom = true;
+            var geoCoder = null;
             
         var selfPusherDetails = {
             channel : null,
@@ -38,6 +39,7 @@
         function configureMap(gMap, goooogle) {
             mphmap = gMap;
             google = goooogle;
+            geoCoder = new google.maps.Geocoder();
             updateGlobals("init", -87.7, 41.8,  13, 0.0);
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
@@ -116,11 +118,7 @@
                 setBounds('pan');
             }
             
-            function onMapClick(e) 
-            {
-                var popPt = e.latLng;
-                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 3);
-                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
+            function showClickResult(content, popPt){
                 if(popDetails != null){
                     popDetails.infoWnd.close();
                     popDetails.infoMarker.setMap(null);
@@ -133,6 +131,22 @@
                     console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
                 }
+            }
+            
+            function onMapClick(e) 
+            {
+                var popPt = e.latLng;
+                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 3);
+                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
+                geoCoder.geocode({'latLng': popPt}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            content = results[1].formatted_address;
+                            showClickResult(content, popPt);
+                        }
+                    }
+                });
+                showClickResult(content, popPt);
             }
             function extractBounds(action)
             {
@@ -254,7 +268,8 @@
         {
             scale2Level = [];
             var sc2lv = scale2Level;
-            var topLevel = ++levels;
+            // var topLevel = ++levels;
+            var topLevel = levels + 2;
             var scale = 1128.497220;
             for(var i=topLevel; i>0; i--)
             {
@@ -353,7 +368,7 @@
         {
             var popId = "id" + title;
             var contentString = '<div id="content">'+
-                    '<h3 id="' + popId + '">' + title + '</h3>'+
+                    '<h5 id="' + popId + '">' + title + '</h5>'+
                     '<div id="bodyContent">'+
                     content +
                     '</div>'+
