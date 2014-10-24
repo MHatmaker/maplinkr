@@ -51,7 +51,7 @@ define('GeoCoder', function () {
             mphmap.setView([41.8, -87.7], 13);
             console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
             
-			geoCoder =  GeoCoder.nominatim();
+			geoCoder =  GeoCoder; //.nominatim();
         
             updateGlobals("init", -87.7, 41.8, 13, 0.0);
             // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
@@ -111,11 +111,6 @@ define('GeoCoder', function () {
             var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
             var cntrlng = fixedCntrLL.lon;
             var cntrlat = fixedCntrLL.lat;
-          /*   
-            var view = "Zoom : " + zm + " Scale : " + scale2Level[zm].scale + " Center : " + cntrlng + ", " + cntrlat + " Current: " + evlng + ", " + evlat;
-            document.getElementById("mppos").value = view;
-             */
-            // e.originalEvent.preventDefault();
              
             PositionViewCtrl.update('coords', {
                 'zm' : zm,
@@ -125,61 +120,38 @@ define('GeoCoder', function () {
                 'evlng' : evlng,
                 'evlat' : evlat
             });
-            // var scope = angular.element(document.getElementById('mppos')).scope();
-            // scope.$apply();
-            // console.log("returned from PositionViewCtrl.update");
-            // e.originalEvent.stopPropagation();
-            // e.originalEvent.preventDefault();
-            // console.log("preventDefault() was called");
         }
         
         function showClickResult(r){
             if (r) {
+                console.log("showClickResultp at " + r.lat + ", " + r.lon);
+                var cntr = new L.latLng(r.lat, r.lon, 0);
                 if (marker) {
+                    marker.closePopup();
                     marker.
-                        setLatLng(r.center).
-                        setPopupContent(r.html || r.name).
+                        setLatLng(cntr).
+                        setPopupContent(r.display_name).
                         openPopup();
                 } else {
-                    marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+                    marker = L.marker(cntr).bindPopup(r.display_name).addTo(mphmap).openPopup();
                 }
-            }
-            /* 
-            popup
-                .setLatLng(popPt)
-                .setContent("You clicked the map at " + popPt.lat + ", " + popPt.lng)
-                .openOn(mphmap);
-                 */
-            if(selfPusherDetails.pusher){
-                var popPt = r.center;
-                var fixedLL = utils.toFixed(popPt.lng, popPt.lat, 3);
-                var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
-                console.log("You clicked the map at " + popPt.lat + ", " + popPt.lng);
-                console.debug(latlng);
-                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+                if(selfPusherDetails.pusher){
+                    var fixedLL = utils.toFixed(r.lon, r.lat, 6);
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                    console.log("You clicked the map at " + r.lat + ", " + r.lon);
+                    console.debug(pushLL);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                }
             }
         }
             
         function onMapClick(e) 
         {
-			geoCoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
-				var r = results[0];
+			geoCoder.reverse(e.latlng, mphmap.options.crs.scale(mphmap.getZoom())).
+                then(function(results) {
+				var r = results;
 				showClickResult(r);
             });
-            
-        /* 
-            popup
-                .setLatLng(e.latlng)
-                .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(mphmap);
-            if(selfPusherDetails.pusher){
-                var fixedLL = utils.toFixed(e.latlng.lng, e.latlng.lat, 3);
-                var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
-                console.log("You clicked the map at " + e.latlng.toString());
-                console.debug(latlng);
-                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
-            }
-             */
         }
 
         function setBounds(action, latlng)

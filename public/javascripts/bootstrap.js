@@ -12,10 +12,11 @@ var selectedMapType = 'arcgis';
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
+        'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {

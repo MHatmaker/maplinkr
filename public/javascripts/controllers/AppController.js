@@ -14,10 +14,11 @@
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
         'controllers/StompSetupCtrl',
-        'controllers/EmailCtrl'
+        'controllers/EmailCtrl',
+        'lib/GeoCoder'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, EmailCtrl) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, EmailCtrl, GeoCoder) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -36,6 +37,9 @@
                 StompSetupCtrl.start(App);
             }
             EmailCtrl.start(App);
+            var $inj = angular.injector(['app']);
+            var $http = $inj.get('$http');
+            GeoCoder.start(App, $http);
             return AppController;
         }
 
