@@ -55,10 +55,11 @@
     //nominatim.openstreetmap.org/reverse/?lat=33.49351305030696&lon=-111.95955634117126&zoom=18&addressdetails=1&format=json
 
             function reverse(location, scale) {
-                var zm = Math.round(Math.log(scale / 256) / Math.log(2));
+                var zm = 18; //Math.round(Math.log(scale / 256) / Math.log(2));
                 var qstr = options.serviceUrl + 'reverse/?lat=' + location.lat + '&lon=' + location.lng + '&zoom='+ zm +
                     '&addressdetails=1&format=json';
-                    
+                 console.log(qstr);   
+                 
                 var request = http({
                     method: "get",
                     url: qstr,
