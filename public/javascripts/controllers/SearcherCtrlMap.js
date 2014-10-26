@@ -62,10 +62,15 @@ angular.isUndefinedOrNull = function(val) {
                 $scope.openWindowSelectionDialog(rowItem.entity.id, rowItem.entity.title);
             }
             
-            $scope.onAcceptDestination = function(){
+            $scope.$on('DestinationSelectorEvent', function() {
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  $scope.data.dstSel, selectedWebMapTitle);
-            };
+            });
+            
+            // $scope.onAcceptDestination = function(){
+                // console.log("onAcceptDestination " + $scope.data.dstSel);
+                // StartupArcGIS.replaceWebMap(selectedWebMapId,  $scope.data.dstSel, selectedWebMapTitle);
+            // };
             
              
             $scope.mapGriddata = [

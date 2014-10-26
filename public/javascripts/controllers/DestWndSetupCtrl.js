@@ -14,10 +14,11 @@
         selfdict.isInitialized = areWeInitialized = false;
         var scopeDict = {};
 
-        function DestWndSetupCtrl($scope, $modal){
+        function DestWndSetupCtrl($scope, $modal, $rootScope){
             console.log("in DestWndSetupCtrl");
             selfdict.scope = $scope
             selfdict.isInitialized = areWeInitialized = false;
+            scopeDict['rootScope'] = $rootScope;
         
             // selfdict.callbackFunction = null;
             $scope.showDialog = selfdict.scope.showDialog = false;
@@ -46,7 +47,8 @@
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 $scope.$parent.data.dstSel = $scope.data.dstSel;
-                $scope.$parent.onAcceptDestination();
+                // $scope.$parent.onAcceptDestination();
+                scopeDict.rootScope.$broadcast('DestinationSelectorEvent');
                 // selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.dstSel, 
                     // selfdict.callbackFunction);
             };
@@ -82,7 +84,7 @@
             console.debug(CurrentWebMapIdService);
             
             selfdict.isInitialized = areWeInitialized = true;
-            App.controller('DestWndSetupCtrl',  ['$scope', '$modal', DestWndSetupCtrl]);
+            App.controller('DestWndSetupCtrl',  ['$scope', '$modal', '$rootScope', DestWndSetupCtrl]);
             // App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
             
             App.directive("modalShowDest", function () {

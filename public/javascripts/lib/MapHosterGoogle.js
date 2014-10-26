@@ -127,9 +127,10 @@
                 popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
                 if(selfPusherDetails.pusher)
                 {
-                    var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                    var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
                     console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             }
             
