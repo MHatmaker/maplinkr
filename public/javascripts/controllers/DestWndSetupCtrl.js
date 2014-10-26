@@ -16,12 +16,12 @@
 
         function DestWndSetupCtrl($scope, $modal, $rootScope){
             console.log("in DestWndSetupCtrl");
-            selfdict.scope = $scope
+            selfdict.scope = $scope;
             selfdict.isInitialized = areWeInitialized = false;
             scopeDict['rootScope'] = $rootScope;
         
             // selfdict.callbackFunction = null;
-            $scope.showDialog = selfdict.scope.showDialog = false;
+            $scope.showDestDialog = false;
             $scope.destSelections = ["Same Window", "New Tab", "New Window"];
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
@@ -43,12 +43,17 @@
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
+            $scope.$on('ShowWindowSelectorModalEvent', function(){
+                // $scope.modalVisible = $scope.showDestDialog = selfdict.scope.showDestDialog = true;
+                $scope.safeApply(function(){
+                    selfdict.scope.showDestDialog = $scope.showDestDialog = true;
+                });
+            });
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
-                $scope.$parent.data.dstSel = $scope.data.dstSel;
                 // $scope.$parent.onAcceptDestination();
-                scopeDict.rootScope.$broadcast('DestinationSelectorEvent');
+                scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
                 // selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.dstSel, 
                     // selfdict.callbackFunction);
             };
@@ -146,7 +151,7 @@
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
                                 scope.showModal(newValue);
-                                // scope.$parent.showDialog = newValue;
+                                // scope.$parent.showDestDialog = newValue;
                                 console.log("watch modalVisible  : ");
                                 console.debug(scope.$parent.data);
                                 // scope.$parent.preserveState();
@@ -165,19 +170,19 @@
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
-                           /*  
-                            scope.$watch('scope.$parent.showDialog', function (newValue, oldValue) {
+                             
+                            scope.$watch('scope.$parent.showDestDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
-                                console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
+                                console.log("scope.$watch 'scope.$parent.showDestDialog' : " + scope.$parent.showDestDialog);
                                 scope.showModal(newValue);
                                 //attrs.modalVisible = false;
                             });
-                             */
+                             
 
                         }
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
                         $(element).on('hidden.bs.modal', function () {
-                            scope.modalVisible = localScope.$parent.showDialog = false;
+                            scope.modalVisible = localScope.$parent.showDestDialog = localScope.showDestDialog =false;
                             console.log("hide event called")
                             if (!scope.$$phase && !scope.$root.$$phase){
                                 scope.$apply();

@@ -14,9 +14,10 @@ angular.isUndefinedOrNull = function(val) {
         console.log('SearcherCtrlMap define');
         var heightCalculations = {};
         heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
+        var scopeDict = {};
         
         // function SearcherCtrlMap($scope, $modal311) {
-        function SearcherCtrlMap($scope) {
+        function SearcherCtrlMap($scope, $rootScope) {
             // console.log("debug $modal");
             // console.debug($modal311);
             $scope.findMapDisabled = false;
@@ -24,10 +25,11 @@ angular.isUndefinedOrNull = function(val) {
             
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
-            $scope.showDialog = false;
+            // $scope.showDialog = false;
             $scope.data = {
                 dstSel : "Same Window"
             };
+            scopeDict['rootScope'] = $rootScope;
             
              /* 
             $scope.preserveState = function(){
@@ -62,9 +64,10 @@ angular.isUndefinedOrNull = function(val) {
                 $scope.openWindowSelectionDialog(rowItem.entity.id, rowItem.entity.title);
             }
             
-            $scope.$on('DestinationSelectorEvent', function() {
-                console.log("onAcceptDestination " + $scope.data.dstSel);
-                StartupArcGIS.replaceWebMap(selectedWebMapId,  $scope.data.dstSel, selectedWebMapTitle);
+            $scope.$on('DestinationSelectorEvent', function(event, args) {
+                var destWnd = args.destWnd;
+                console.log("onAcceptDestination " + destWnd); //$scope.data.dstSel);
+                StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle);
             });
             
             // $scope.onAcceptDestination = function(){
@@ -319,11 +322,13 @@ angular.isUndefinedOrNull = function(val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (selectedWebMapId, selectedMapTitle) {
               
-                console.log("toggleShow from " + $scope.showDialog);
-                $scope.safeApply(function(){
-                    $scope.showDialog = ! $scope.showDialog;
-                });
-                console.log("toggleShow after apply " + $scope.showDialog);
+                console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
+                // console.log("toggleShow from " + $scope.showDialog);
+                // $scope.safeApply(function(){
+                    // $scope.showDialog = ! $scope.showDialog;
+                scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent');
+                // });
+                // console.log("toggleShow after apply " + $scope.showDialog);
             };
         }  
         
@@ -332,7 +337,7 @@ angular.isUndefinedOrNull = function(val) {
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
+            App.controller('SearcherCtrlMap',  ['$scope', '$rootScope', SearcherCtrlMap]);
             
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return SearcherCtrlMap;
