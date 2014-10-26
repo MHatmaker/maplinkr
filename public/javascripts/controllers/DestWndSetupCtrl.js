@@ -15,7 +15,7 @@
         var scopeDict = {};
 
         function DestWndSetupCtrl($scope, $modal){
-            console.log("in DestWndSetupCtrl
+            console.log("in DestWndSetupCtrl");
             selfdict.scope = $scope
             selfdict.isInitialized = areWeInitialized = false;
         
@@ -43,10 +43,12 @@
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
 
-            $scope.onAcceptChannel = function(){
-                console.log("onAcceptChannel " + $scope.data.dstSel);
-                selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.dstSel, 
-                    selfdict.callbackFunction);
+            $scope.onAcceptDestination = function(){
+                console.log("onAcceptDestination " + $scope.data.dstSel);
+                $scope.$parent.data.dstSel = $scope.data.dstSel;
+                $scope.$parent.onAcceptDestination();
+                // selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.dstSel, 
+                    // selfdict.callbackFunction);
             };
             
             $scope.hitEnter = function(evt){
@@ -83,7 +85,7 @@
             App.controller('DestWndSetupCtrl',  ['$scope', '$modal', DestWndSetupCtrl]);
             // App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
             
-            App.directive("modalShow", function () {
+            App.directive("modalShowDest", function () {
                 var tpl = ' \
                   <div class="modal-dialog", style="width: 100%;"> \
                     <div class="modal-content"> \
