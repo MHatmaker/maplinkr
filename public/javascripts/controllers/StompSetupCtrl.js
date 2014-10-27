@@ -16,7 +16,7 @@
 
         function StompSetupCtrl($scope, $modal, $rootScope){
             console.log("in StompSetupCtrl");
-            $scope.privateChannelMashover = 'private-channel-mashover';
+            $scope.privateChannelMashover = 'mashchannel';
             selfdict.scope = $scope;
             selfdict.pusher = null;
             selfdict.isInitialized = areWeInitialized = false;
@@ -27,8 +27,8 @@
             // selfdict.callbackFunction = null;
             $scope.showDialog = selfdict.scope.showDialog = false;
             $scope.data = {
-                privateChannelMashover : 'private-channel-mashover',
-                prevChannel : 'private-channel-mashover',
+                privateChannelMashover : 'mashchannel',
+                prevChannel : 'mashchannel',
                 whichDismiss : "Cancel"
             };
                      
@@ -87,7 +87,8 @@
                     channelsub = channelsub.substring(0, chlength-2);
                     channel = channelsub;
                 }
-                self.CHANNEL = channel; //'/' + channel + '/';
+                
+                self.CHANNEL = channel.indexOf("private-channel-") > -1 ? channel : 'private-channel-' + channel;
                 console.log("with channel " + self.CHANNEL);
                 
                 var pusher = new Pusher('5c6bad75dc0dd1cec1a6');
@@ -132,7 +133,7 @@
                     console.log('Problem subscribing to "private-channel": ' + statusCode);
                 });
                 channelBind.bind('pusher:subscription_succeeded', function() {
-                    console.log('Successfully subscribed to "private-channel"');
+                    console.log('Successfully subscribed to "' + self.CHANNEL + 'r"');
                 });
                           
 
@@ -216,7 +217,7 @@
                         <h3>Create a Pusher Channel ID :</h3> \
                       </div> \
                       <div class="modal-body"> \
-                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'private-channel-mashover\'"> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'mashchannel\'"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
                       </div> \
                       <div class="modal-footer"> \
