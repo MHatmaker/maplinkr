@@ -95,7 +95,7 @@ var details = {
             gethref: function(){
                 var pos = details.href.indexOf("/arcgis");
                 if(pos  > -1){
-                    return details.href.substring(0, pos);
+                    return details.href; //.substring(0, pos);
                 }
                 return details.href;
             },

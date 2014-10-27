@@ -22,7 +22,7 @@
         
             // selfdict.callbackFunction = null;
             $scope.showDestDialog = false;
-            $scope.destSelections = ["Same Window", "New Tab", "New Window"];
+            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel :$scope.destSelections[0].slice(0),

@@ -81,7 +81,7 @@
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
-            if(displayDestination == 'New Window' || displayDestination == 'New Tab')
+            if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
                 var curmph = MapHosterArcGIS;
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
@@ -98,7 +98,7 @@
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel);
                     AgoNewWindowConfig.setUrl(url);
-                    if(displayDestination == 'New Window'){
+                    if(displayDestination == 'New Pop-up Window'){
                         // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
                         window.open(AgoNewWindowConfig.gethref() + "/arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
                         // window.open(AgoNewWindowConfig.gethref(), newSelectedWebMapId, "top=1, left=1, height=400,width=500");
