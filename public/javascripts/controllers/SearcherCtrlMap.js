@@ -25,27 +25,8 @@ angular.isUndefinedOrNull = function(val) {
             
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
-            // $scope.showDialog = false;
-            $scope.data = {
-                dstSel : "Same Window"
-            };
             scopeDict['rootScope'] = $rootScope;
             
-             /* 
-            $scope.preserveState = function(){
-                console.log("preserveState");
-                // $scope.data.whichDismiss = 'Cancel';
-                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
-                console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
-            };
-
-            $scope.restoreState = function(){
-                console.log("restoreState");
-                // $scope.data.whichDismiss = 'Accept';
-                console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
-                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
-            };
-            */
             var self = this;
             self.scope = $scope;
             
@@ -66,16 +47,10 @@ angular.isUndefinedOrNull = function(val) {
             
             $scope.$on('DestinationSelectorEvent', function(event, args) {
                 var destWnd = args.destWnd;
-                console.log("onAcceptDestination " + destWnd); //$scope.data.dstSel);
+                console.log("onAcceptDestination " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle);
             });
-            
-            // $scope.onAcceptDestination = function(){
-                // console.log("onAcceptDestination " + $scope.data.dstSel);
-                // StartupArcGIS.replaceWebMap(selectedWebMapId,  $scope.data.dstSel, selectedWebMapTitle);
-            // };
-            
-             
+                        
             $scope.mapGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}

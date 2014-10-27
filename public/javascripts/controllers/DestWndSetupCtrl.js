@@ -44,18 +44,14 @@
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
             $scope.$on('ShowWindowSelectorModalEvent', function(){
-                // $scope.modalVisible = $scope.showDestDialog = selfdict.scope.showDestDialog = true;
                 $scope.safeApply(function(){
-                    selfdict.scope.showDestDialog = $scope.showDestDialog = true;
+                    $scope.showDestDialog = true;
                 });
             });
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
-                // $scope.$parent.onAcceptDestination();
                 scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
-                // selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.dstSel, 
-                    // selfdict.callbackFunction);
             };
             
             $scope.hitEnter = function(evt){
@@ -79,8 +75,6 @@
         DestWndSetupCtrl.prototype.isInitialized = function(){
             return areWeInitialized;
         }
-                
-            //selfdict.setupPusherClient = $scope.setupPusherClient;
         
         function init(App) {
             console.log('SearcherCtrlMap init');
@@ -90,7 +84,6 @@
             
             selfdict.isInitialized = areWeInitialized = true;
             App.controller('DestWndSetupCtrl',  ['$scope', '$modal', '$rootScope', DestWndSetupCtrl]);
-            // App.controller('SearcherCtrlMap',  ['$scope', SearcherCtrlMap]);
             
             App.directive("modalShowDest", function () {
                 var tpl = ' \
@@ -151,7 +144,6 @@
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
                                 scope.showModal(newValue);
-                                // scope.$parent.showDestDialog = newValue;
                                 console.log("watch modalVisible  : ");
                                 console.debug(scope.$parent.data);
                                 // scope.$parent.preserveState();
@@ -170,14 +162,14 @@
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
-                             
+                             /* 
                             scope.$watch('scope.$parent.showDestDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDestDialog' : " + scope.$parent.showDestDialog);
                                 scope.showModal(newValue);
                                 //attrs.modalVisible = false;
                             });
-                             
+                              */
 
                         }
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
@@ -200,8 +192,6 @@
                 };
             });
             
-            // DestWndSetupCtrl.self.scope = DestWndSetupCtrl.$scope;
-            // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
             return DestWndSetupCtrl;
         }
         
