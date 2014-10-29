@@ -30,9 +30,9 @@ block append content
                                         input(id = 'mpnm', type='text', name='curTabTitle', ng-model= "currentTab.title", style='font-size:9pt;text-align:center; padding: 0px 5px 0px 5px;', disabled)
                                         img(ng-src="{{currentTab.imgSrc}}", style='margin-left:10px;padding: 0px 5px 0px 5px;')
                                 td(style='width:20%')
-                                    label(for="buttonRightPaneShowHide", style ='padding-right:10px; padding-top:7px; padding-left:5px; font-size:12pt').
-                                        {{verbageExpandCollapse}} Right Pane
-                                td(style='width:5%')
+                                    label(for="buttonRightPaneShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
+                                        {{verbageExpandCollapse}} Control Pane
+                                td(style='width:4%')
                                     div(ng-click="collapser()")
                                         div(style='padding: 0px 5px 0px 5px;')
                                             img(ng-src="../stylesheets/images/{{verbageExpandCollapse}}.png", width="75%" height="75%")
@@ -105,13 +105,15 @@ block append content
                                                 li(class="acc li") 2 The group pane displays groups matching the search term.  Click on one of the groups.
                                                 li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens a dialog that allows showing the selected WebMap in the default ArcGISOnline WebMap viewer in three possible destination viewer locations.
                                                 li(class="acc li") 4 If the open in new tab option is chosen, you can subsequently drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.
-                                                li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.
+                                                li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.  A click at any point in one map viewer will display a location dialog and underlying info at that point in the clicked map and a location dialog at that point in all synchronized map viewers.
 
+                                            h3( style="text-align:left") Concepts and Features
+                                            
                                             p(style='font-size:9pt;margin:1em').                              
                                                 Multiple users can view synchronized maps in web browsers on other devices.  When you have an ArcGIS WebMap that you want to share, open the "Copy Map Link" accordion pane.  The url for the current WebMap will be inserted in the text field and will be pre-selected/focused.  Use Ctrl-C to copy it to the clipboard, and then paste the link in an email to collaborators.
                                                 
                                             p(style='font-size:9pt;margin:1em').
-                                                The url includes the name of the Pusher channel that you have selected.  As users open the link, they will be subscribing to share map pans and zooms with all other users as any user manipulates any map view.
+                                                The url includes the name of the Pusher channel that you have selected.  As users open the link, they will be subscribing to share map clicks, pans and zooms with all other users as any user manipulates any map view.
                                                 
                                             p(style='font-size:9pt;margin:1em').
                                                 The Pusher channel can also be set without opening a new map viewer by opening the "Set Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.
@@ -124,11 +126,11 @@ block append content
                                                     div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
                                                         div(id="searchToolWrapperGroup")
                                                             span
-                                                                label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;float:left;width:75%') AGO Group Search
+                                                                label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
                                                                 
                                                                 input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
                                                                  
-                                                            p(style='font-size: 80%; padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
+                                                            h5(style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                                             span
                                                                 input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
                                                                 input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
@@ -143,11 +145,11 @@ block append content
                                                 
                                                 div(id="searchToolWrapperMap")
                                                     span
-                                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt') AGO Map Search
+                                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
                                                         
                                                         input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
 
-                                                    h5(id="mapSrchInstId", style-'padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                                    h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                                     span
                                                         input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
                                                         input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")

@@ -18,37 +18,22 @@ style.img.
     
 block append content
     
-div(style="height:auto;width:100%; overflow: auto")
+div( style="height:100%;width:100%; overflow-y:auto;")
     h2(align="center")
         | MashOver Web Site Simulator
     h3( align="center", style="color: chocolate")
         | Selecting a map type from the tabs above will simulate a web site in this container.
-    div(style="border:2px solid green; margin: 8px")
+    div(style="border:2px solid green; margin: 8px; height:100%;")
         h4  Depending on the tab selected, the web site will host a Google Map, Open Source map, or ArcGIS Online map.
         
         span
             p 
-                | The Collapse/Expand button 
-                img(ng-src="../stylesheets/images/{{sumExpandCollapse}}.png", width="2%" height="2%")
-                | at the top will open or close the web site selection tabs container above.
+                | The Collapse/Expand button  
+                img(ng-src="../stylesheets/images/{{sumExpandCollapse}}.png", width="1.5%" height="2%")
+                |  at the top will open or close the web site selection tabs container above.
     
-    div(style="border:2px solid green; margin: 8px")
-        p After selecting a map type, it will appear on the left of the screen.  An accordion container on the right side will display some other web site verbage.  The container also contains instructions on how to use the system.  Finally, it contains expandable panels that allow the user to search ArcGIS Online for interesting map layers and map groups.
+    div(style="border:2px solid green; margin: 8px; height:100%;")
+        p After selecting a map type, the map will appear on the left of the screen.  An accordion container on the right side will display some other web site verbage.  The container also contains instructions on how to use the system.  Finally, it contains expandable panels that allow the user to search ArcGIS Online for interesting map layers and map groups.
     
-        p After a search is conducted, selecting a map layer will display dialogs for directing the new layer to the same window, a new window, or a new tab.  It will also prompt for a channel name to allow all opened maps to synchronize over web sockets.
+        p After a search is conducted, selecting a map layer will display a dialog for directing the new layer to the same window, a new window, or a new tab.  It will also prompt for a channel name to allow all opened maps to synchronize over web sockets.
 
-
-
-
-
-
-
-//   this shows the layout mockup with nsew tiles (with more than one center-back tile)
-    ui-layout(class="layout-mock", style="height:100%;width:100%;")
-      header(class="north-back")
-      ui-layout(options="{ flow : 'column' }")
-        sidebar(class="east-back")
-        div(class="center-back")
-        div(class="center-back")
-        sidebar(class="west-back")
-      footer(class="south-back")

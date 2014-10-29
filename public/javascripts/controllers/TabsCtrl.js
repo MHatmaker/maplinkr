@@ -28,14 +28,14 @@ String.format = function() {
         function TabsCtrl($scope, $location) {
             console.debug('TabsCtrl - initialize tabs');
 
-            var contentsText = 'This tab opens a typical web page which displays typical web page stuff, including a div with {0}  programmed with {1} embedded in it.  Right click on the link below and select open in a new window or open in a new tab.';
+            var contentsText = 'The {0} tab opens a typical web page displaying typical web page stuff, including a div with {1}  programmed with {2} embedded in it.';
 
             $scope.tabs = [
             { 
               maptype : 'google',
               title:'Google Maps', 
-              site: 'Commercial Web Site featuring a Google Map',
-              content: String.format(contentsText, 'a Google map', 'google map content'),
+              site: 'Web Site featuring a Google Map',
+              content: String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
               url: "/views/partials/GoogleMap.jade",
               imgSrc: "stylesheets/images/googlemap.png",
               imgAlt: "Google Map",
@@ -45,8 +45,8 @@ String.format = function() {
             { 
               maptype : 'leaflet',
               title:'Leaflet/OSM Maps', 
-              site: 'Commercial Web Site featuring a Leaflet Map',
-              content: String.format(contentsText, 'a Leaflet/OSM map', 'Leaflet content'),
+              site: 'Web Site featuring a Leaflet Map',
+              content: String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
               imgSrc:  "stylesheets/images/Leaflet.png",
               imgAlt: "Leaflet/OSM Maps",
@@ -56,8 +56,8 @@ String.format = function() {
             { 
               maptype : 'arcgis',
               title:'ArcGIS Web Maps', 
-              site: 'Commercial Web Site featuring an ArcGIS Online Map',
-              content: String.format(contentsText, 'an ArcGIS Web Map', 'ArcGIS Online content'),
+              site: 'Web Site featuring an ArcGIS Online Map',
+              content: String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
               url: "/views/partials/ArcGIS.jade",
               imgSrc: "stylesheets/images/arcgis.png",
               imgAlt: "ArcGIS Web Maps",
