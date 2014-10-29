@@ -102,8 +102,7 @@ angular.isUndefinedOrNull = function(val) {
             
             $scope.calculateHeights = function(){              
                 var vrbg = angular.element(document.getElementById("verbagePan"));
-                var accHead = angular.element(document.getElementById("AccdianNews"));
-                // var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
+                var accHead = angular.element(document.getElementById("AccdianNews"));;
                 var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
                 var marginborder = (1 + 1) * 2;
                 var accinnermarginborder = (1 + 9) * 2;
@@ -122,33 +121,9 @@ angular.isUndefinedOrNull = function(val) {
                     height = availableHgt;
                 }
                 return height;
-                // var heightStr = String(height) + "px";
-                // heightCalculations['wrapHeight'] = height;
-                // heightStr = String(height - 20) + "px";
-                // heightCalculations['gridHeight'] = height - 20;
             }
             
-            $scope.getGridStyleMap = function () { /*  
-            
-                var dct = {}; 
-                var height = $scope.calculateHeights() - 20;
-                var heightStr = String(height) + "px";
-                console.log("getGridStyleMap heightStr : " + heightStr);
-                //alert(ghtgStr);
-                dct["height"] = heightStr;  
-                // var srchWrap = angular.element(document.getElementById("searchToolWrapperMap")); 
-                // srchWrap.css(dct);   
-                 */
-                 /* 
-                if( heightCalculations.instructionsHeight == 0){
-                    var instHeight = $scope.calculateInstructionHeight();
-                    heightCalculations.instructionsHeight = instHeight;
-                    heightCalculations['wrapHeight'] += instHeight
-                    heightCalculations['gridHeight'] += instHeight;
-                }
-                var heightStr = String(heightCalculations['gridHeight']) + "px";
-                 */
-                 
+            $scope.getGridStyleMap = function () {
                 var height = $scope.calculateHeights() - 20;
                 var heightStr = String(height) + "px";
                 return {
@@ -157,27 +132,6 @@ angular.isUndefinedOrNull = function(val) {
             };
             
             $scope.getGridStyleWrapper = function () { 
-            /* 
-                if( heightCalculations.instructionsHeight == 0){
-                    var instHeight = $scope.calculateInstructionHeight();
-                    heightCalculations.instructionsHeight = instHeight;
-                    heightCalculations['wrapHeight'] += instHeight
-                    heightCalculations['gridHeight'] += instHeight;
-                }
-                var heightStr = String(heightCalculations['wrapHeight']) + "px";
-                 */
-            /* 
-                var dct = {}; 
-                var wrp = document.getElementById("gridpaneMap");
-                var height = $scope.calculateHeights();  
-                var heightStr = String(height) + "px";
-                console.log("getGridStyleWrapper heightStr : " + heightStr);
-                //alert(ghtgStr);
-                dct["height"] = heightStr;  
-                var awrp = angular.element(wrp);
-                awrp.css(dct);    
-                  */
-                 
                 var height = $scope.calculateHeights();
                 var heightStr = String(height) + "px";
                 return {

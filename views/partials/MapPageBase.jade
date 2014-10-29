@@ -122,27 +122,22 @@ block append content
                                             
                                         accordion-group(id="GroupSearcherPane", heading="Group Searcher", is-open="$parent.isGrpAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
                                             #SearchGroup(ng-controller="SearcherCtrlGrp")
-                                                div(data-dojo-type="dijit.layout.BorderContainer", data-dojo-props="design:'headline',gutters:false")
-                                                    div(data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'top'")
-                                                        div(id="searchToolWrapperGroup")
-                                                            span
-                                                                label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
-                                                                
-                                                                input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
-                                                                 
-                                                            h5(style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
-                                                            span
-                                                                input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                                                input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
+                                                div(id="searchToolWrapperGroup")
+                                                    span
+                                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
+                                                        
+                                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
+                                                         
+                                                    h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
+                                                    span
+                                                        input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
+                                                        input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
 
-                                                    div(id='gridpaneGroup', data-dojo-type="dijit.layout.ContentPane", data-dojo-props="region:'center'")
-                                                        div(ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()")
+                                                    div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
+                                                        div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
 
                                         accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="$parent.isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
                                             #SearchMap(ng-controller="SearcherCtrlMap")
-                                            
-                                
-                                                
                                                 div(id="searchToolWrapperMap")
                                                     span
                                                         label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search

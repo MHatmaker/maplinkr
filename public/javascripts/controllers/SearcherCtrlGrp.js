@@ -17,7 +17,7 @@
             $scope.isGrpAccPanelOpen = false;
             $scope.signInOutGrp = "Sign In";
             
-            $scope.data = [
+            $scope.grpGriddata = [
                 {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "foo.jpg"},
                 {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "bar.jpg"}
                 ];  
@@ -45,7 +45,7 @@
                 '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
             
             $scope.gridGrpOptions = { 
-                data: 'data',
+                data: 'grpGriddata',
                 // enablePaging: true,
                 rowHeight: '50' ,
                 // plugins: [layoutPlugin],
@@ -81,27 +81,58 @@
                 $scope.showGroupResults(data);
                });
             };
-            
-            $scope.getGridStyleGroup = function () {
+                   
+            $scope.calculateInstructionHeight = function(){
+                var label = angular.element(document.getElementById("grpSearchLabel"));
+                var instructions = document.getElementById("grpSrchInstId");
                 
+                var instructionsHgt = instructions.offsetHeight;
+                // console.log("instructionsHgt " + instructionsHgt);
+                var srcTerm = angular.element(document.getElementById("groupFinder")); 
+                var hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
+                // console.log("Instructions height : " + hgt);
+                return hgt;
+            }
+            
+            $scope.calculateHeights = function(){              
                 var vrbg = angular.element(document.getElementById("verbagePan"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));
                 var srchWrap = angular.element(document.getElementById("searchToolWrapperGroup"));
                 var marginborder = (1 + 1) * 2;
                 var accinnermarginborder = (1 + 9) * 2;
-                var availableHgt = vrbg[0].offsetHeight - srchWrap[0].offsetHeight - accinnermarginborder -
+                var instructionsHgt =  $scope.calculateInstructionHeight();
+                var acc0 = accHead[0];
+                var acc0Hgt = acc0.offsetHeight;
+                // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
+                var gridTopHgt = 30 + 20; // ngTopPanel + ngViewPort
+                var availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
                                     4 * (accHead[0].offsetHeight + marginborder);
+                // console.log("availableHgt" + availableHgt);
                 var rowHeight = 50;
                 var headerHeight = 34;
-                var height = +($scope.data.length * rowHeight + headerHeight);
+                var height = +($scope.grpGriddata.length * rowHeight + headerHeight);
                 if (height > availableHgt) {
                     height = availableHgt;
                 }
+                return height;
+            };
+            
+            $scope.getGridStyleGroup = function () {
+                var height = $scope.calculateHeights() - 20;
+                var heightStr = String(height) + "px";
                 return {
-                    height: height + "px"
+                    height: heightStr
                 };
             };
-                                       
+            
+            $scope.getGridStyleWrapper = function () {
+                var height = $scope.calculateHeights();
+                var heightStr = String(height) + "px";
+                return {
+                    height: heightStr
+                };
+            };
+            
             $scope.redrawGrid = function () {
                 window.setTimeout(function () {
                     $(window).resize();
@@ -116,13 +147,14 @@
                 if (response.total > 0) {
                     var grddata = response.results;
                     //create the grid
-                    $scope.data = response.results;
+                    $scope.grpGriddata = response.results;
                     // $scope.gridGrpOptions.data = response.results;
-                    console.debug($scope.data);
+                    console.debug($scope.grpGriddata);
                     $scope.redrawGrid();
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
+                    $scope.redrawGrid();
               } else {
                 dojo.byId('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
               }
