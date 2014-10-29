@@ -114,12 +114,16 @@
                 if (height > availableHgt) {
                     height = availableHgt;
                 }
+                if (height < 120){
+                    height = 120;
+                }
                 return height;
             };
             
             $scope.getGridStyleGroup = function () {
                 var height = $scope.calculateHeights() - 20;
                 var heightStr = String(height) + "px";
+                console.log("heightStr - getGridStyleGroup : " + heightStr);
                 return {
                     height: heightStr
                 };
@@ -128,6 +132,7 @@
             $scope.getGridStyleWrapper = function () {
                 var height = $scope.calculateHeights();
                 var heightStr = String(height) + "px";
+                console.log("heightStr - getGridStyleWrapper : " + heightStr);
                 return {
                     height: heightStr
                 };
