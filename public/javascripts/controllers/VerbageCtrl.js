@@ -15,8 +15,8 @@
             $scope.isVerbageCollapsed = false;
             $scope.VrbgWdth = '30%';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
-            $scope.isGrpAccPanelOpen = false;
-            $scope.isMapAccPanelOpen = false;
+            // $scope.isGroupSearchOpen = false;
+            // $scope.isMapSearchOpen = false;
             $scope.oneAtATime = true;
             
             
@@ -28,8 +28,8 @@
                 $scope.$broadcast('SignInOutBroadcastEvent', args);
             });
             $scope.$on('OpenMapPaneEvent', function(event, args) {
-                $scope.isGrpAccPanelOpen = ! $scope.isGrpAccPanelOpen;
-                $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
+                $scope.status.isGroupSearchOpen = ! $scope.status.isGroupSearchOpen;
+                $scope.status.isMapSearchOpen = ! $scope.status.isMapSearchOpen;
                 $scope.$broadcast('OpenMapPaneCommand', args );  // ? args.respData);
             });
             $scope.status = {
