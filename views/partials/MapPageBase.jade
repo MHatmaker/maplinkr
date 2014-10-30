@@ -57,7 +57,10 @@ block append content
                                                 
                                 div(class = "acc scrollable", style="height:100%;width:100%;")
                                     accordion(id="Accdian", style="height:100%;width:100%;", close-others="false")
-                                        accordion-group(id="AccdianNews", heading="Such Exciting News", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="AccdianNews", style="height:100%;width:100%;vertical-align:top;" is-open="status.isNewsOpen")
+                                            accordion-heading
+                                                 | Such Exciting News
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
                                             h4(style="color:red") BEAKING NEWS
                                             h5(style="color:red")
                                                 | We now have WebMap mash-over capabilities
@@ -84,7 +87,10 @@ block append content
                                                 ut eros sit amet ante pharetra interdum.
                                             br
 
-                                        accordion-group(id="fillerPane", heading="Mash-over Instructions", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isInstructionsOpen")
+                                            accordion-heading
+                                                 | Mash-over Instructions
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")
                                             h3 Using Mash-over
 
                                             p(style='font-size:9pt;margin:1em').                              
@@ -120,7 +126,10 @@ block append content
 
                                             br
                                             
-                                        accordion-group(id="GroupSearcherPane", heading="Group Searcher", is-open="$parent.isGrpAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="GroupSearcherPane", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isGroupSearchOpen")
+                                            accordion-heading
+                                                 | Group Searcher
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isGroupSearchOpen, 'glyphicon-chevron-right': !status.isGroupSearchOpen}")
                                             #SearchGroup(ng-controller="SearcherCtrlGrp")
                                                 div(id="searchToolWrapperGroup")
                                                     span
@@ -136,7 +145,10 @@ block append content
                                                     div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                                         div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
 
-                                        accordion-group(id="MapSearcherPane", heading="Map Searcher", is-open="$parent.isMapAccPanelOpen", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="MapSearcherPane", style="height:100%;width:100%;vertical-align:top;", is-open="status.isMapSearchOpen")
+                                            accordion-heading
+                                                 | Map Searcher
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isMapSearchOpen, 'glyphicon-chevron-right': !status.isMapSearchOpen}")
                                             #SearchMap(ng-controller="SearcherCtrlMap")
                                                 div(id="searchToolWrapperMap")
                                                     span
@@ -152,7 +164,10 @@ block append content
                                                     div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                                         div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
                                                 
-                                        accordion-group(id="MailSenderId", heading="Copy Map Link", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="MailSenderId", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isCopyMapLinkOpen")
+                                            accordion-heading
+                                                 | Copy Map Link
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isCopyMapLinkOpen, 'glyphicon-chevron-right': !status.isCopyMapLinkOpen}")
                                             form(name="emailForm", ng-controller="EmailCtrl")
                                                 label(style='font-size:12pt;margin:4px').
                                                     Fetch the link to the current ArcGIS Online map:
@@ -164,7 +179,10 @@ block append content
                                                     label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
                                                     label(style='font-size:12pt;margin:2px').Then paste the link into an email.
                                                     
-                                        accordion-group(id="ChannelSetterId", heading="Set Pusher Channel", style="height:100%;width:100%;vertical-align:top;")
+                                        accordion-group(id="ChannelSetterId", style="height:100%;width:100%;vertical-align:top;", is-open="status.isSetChannelOpen")
+                                            accordion-heading
+                                                 | Set Pusher Channel
+                                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSetChannelOpen, 'glyphicon-chevron-right': !status.isSetChannelOpen}")
                                             div(ng-controller="StompSetupCtrl")
                                                 p(style='font-size:9pt;margin:1em').
                                                     Set or change the Pusher communications channel.

@@ -17,6 +17,7 @@
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             $scope.isGrpAccPanelOpen = false;
             $scope.isMapAccPanelOpen = false;
+            $scope.oneAtATime = true;
             
             
             $scope.$on('CollapseVerbageEvent', function() {
@@ -31,6 +32,14 @@
                 $scope.isMapAccPanelOpen = ! $scope.isMapAccPanelOpen;
                 $scope.$broadcast('OpenMapPaneCommand', args );  // ? args.respData);
             });
+            $scope.status = {
+                isNewsOpen: false,
+                isInstructionsOpen: false,
+                isGroupSearchOpen: false,
+                isMapSearchOpen: false,
+                isCopyMapLinkOpen: false,
+                isSetChannelOpen: false,
+            };
         };
         
         function init(App) {
