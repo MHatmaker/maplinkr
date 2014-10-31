@@ -35,6 +35,9 @@
             $scope.status = {
                 isNewsOpen: false,
                 isInstructionsOpen: false,
+                    isSameWindowPaneOpen: false,
+                    isNewTabPaneOpen: false,
+                    isNewWindowPaneOpen: false,
                 isGroupSearchOpen: false,
                 isMapSearchOpen: false,
                 isCopyMapLinkOpen: false,

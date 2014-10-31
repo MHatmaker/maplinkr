@@ -3,6 +3,12 @@ block stylesblock append
     link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
     link(rel='stylesheet', href='/stylesheets/gridstyle.css')
     
+style.panel-heading.panel-title.
+    accordion-toggle{
+        font-size: 9pt;
+        font-weight: bold
+    }
+    
 block append scriptsblock
             script(src='http://js.pusherapp.com/1.10/pusher.min.js')
             script(src='/javascripts/lib/SearcherCtrlGrp.js')
@@ -109,9 +115,33 @@ block append content
                                             ul#StepsList(style="height:100%")
                                                 li(class="acc li") 1 Open the accordion pane for group search.  Enter a search term and click the submit button.
                                                 li(class="acc li") 2 The group pane displays groups matching the search term.  Click on one of the groups.
-                                                li(class="acc li") 3 The map selection pane opens.  Clicking on a map item opens a dialog that allows showing the selected WebMap in the default ArcGISOnline WebMap viewer in three possible destination viewer locations.
-                                                li(class="acc li") 4 If the open in new tab option is chosen, you can subsequently drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.
-                                                li(class="acc li") 5 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.  A click at any point in one map viewer will display a location dialog and underlying info at that point in the clicked map and a location dialog at that point in all synchronized map viewers.
+                                                li(class="acc li") 3 The map selection pane opens showing available maps in the group.  Click on a map item.  A dialog opens offering a choice of three possible destination viewers where the selected map can be displayed.  The most convenient option is usually the "New Window" option.
+                                                
+                                                    div
+                                                        accordion(close-others="true") 
+                                                            accordion-group(id="sameWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isSameWindowPaneOpen")
+                                                                accordion-heading
+                                                                    |Same Window
+                                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
+                                                            
+                                                                p(style='font-size:9pt;margin:1em').                              
+                                                                    The newly selected map replaces the current map in the map viewer to the left. 
+                                                            accordion-group(id="newTabPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewTabPaneOpen")
+                                                                accordion-heading(style='font-size:9pt;')
+                                                                    | New Tab / Same Browser
+                                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
+                                                            
+                                                                p(style='font-size:9pt;margin:1em').                              
+                                                                    The newly selected map opens in a new tab in the current browser.  Switch to the tab and drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.  This is a fully functional web browser.
+                                                            accordion-group(id="newWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewWindowPaneOpen")
+                                                                accordion-heading(style='font-size:9pt;')
+                                                                    | New Window
+                                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
+                                                            
+                                                                p(style='font-size:9pt;margin:1em').                              
+                                                                    The newly selected map is opened in a map viewer in a new popup window.  Although this is not a full-featured new web browser instance, it provides complete functionality as a synchronized map viewer.  If popups are turned off, use sequence described under the "New Tab" option above.
+                                                            
+                                                li(class="acc li") 4 The two map viewer displays (or any number of generated viewers) are synchronized so that panning or zooming in any map viewer pans or zooms all other map viewers to the same extent.  A click at any point in one map viewer will display a location dialog and underlying info at that point in the clicked map and a location dialog at that point in all synchronized map viewers.
 
                                             h3( style="text-align:left") Concepts and Features
                                             

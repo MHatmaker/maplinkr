@@ -123,7 +123,7 @@
             $scope.getGridStyleGroup = function () {
                 var height = $scope.calculateHeights() - 20;
                 var heightStr = String(height) + "px";
-                console.log("heightStr - getGridStyleGroup : " + heightStr);
+                // console.log("heightStr - getGridStyleGroup : " + heightStr);
                 return {
                     height: heightStr
                 };
@@ -132,7 +132,7 @@
             $scope.getGridStyleWrapper = function () {
                 var height = $scope.calculateHeights();
                 var heightStr = String(height) + "px";
-                console.log("heightStr - getGridStyleWrapper : " + heightStr);
+                // console.log("heightStr - getGridStyleWrapper : " + heightStr);
                 return {
                     height: heightStr
                 };
