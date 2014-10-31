@@ -40,6 +40,7 @@
                     isNewWindowPaneOpen: false,
                 isGroupSearchOpen: false,
                 isMapSearchOpen: false,
+                isSharingInstructionsOpen: false,
                 isCopyMapLinkOpen: false,
                 isSetChannelOpen: false,
             };
