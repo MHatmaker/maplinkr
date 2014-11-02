@@ -24,7 +24,8 @@
             $scope.showDescriptionDialog = false;
             $scope.data = {
                 whichSite : "",
-                whichDismiss : "Cancel"
+                whichDismiss : "Cancel",
+                description : "Initial description"
             };
             $scope.$on('ShowWebSiteDescriptionModalEvent', function(){
                 console.log("ShowWebSiteDescriptionModalEvent caught");
@@ -60,6 +61,10 @@
             return areWeInitialized;
         }
         
+        WebSiteDescriptionCtrl.prototype.setDescription = function(description){
+            $scope.data.description = description;
+        }
+        
         function init(App) {
             console.log('WebSiteDescriptionCtrl init');
             console.debug(App);
@@ -84,6 +89,9 @@
                         <p> \
                             Clicking on a location icon pops up information about the restaurant at that address. \
                         </p> \
+                        <p> \
+                            {{data.description}} \
+                        </p> \
                       </div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';" data-dismiss="modal">Accept</button> \
@@ -106,10 +114,16 @@
                             if (!elem)
                                 elem = element;
 
-                            if (visible)
-                                $(elem).modal311("show");                     
-                            else
+                            if (visible){
+                                $(elem).modal311("show"); 
+
+                                var $inj = angular.injector(['app']);
+                                var serv = $inj.get('CurrentMapTypeService');
+                                selfdict.mapType = serv.getMapTypeKey();  
+                            }
+                            else{
                                 $(elem).modal311("hide");
+                            }
                         }
 
                         //Check to see if the modal-visible attribute exists
@@ -188,7 +202,8 @@
         }
         
         return { start: init,
-                  isInitialized : WebSiteDescriptionCtrl.prototype.isInitialized};
+                  isInitialized : WebSiteDescriptionCtrl.prototype.isInitialized,
+                  setDescription : WebSiteDescriptionCtrl.prototype.setDescription};
 
     });
 

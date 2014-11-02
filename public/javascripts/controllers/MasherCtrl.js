@@ -4,11 +4,16 @@
     var isFirstViewing = true;
 
     console.log('MasherCtrl setup');
-    define(['angular'], function(angular) {
+    define(['angular', 'controllers/WebSiteDescriptionCtrl'], function(angular, WebSiteDescriptionCtrl) {
         console.log('MasherCtrl define');
         var selfMethods = {};
+        var descriptions = {
+            'leaflet': 'Tell me about the leaflet site',
+            'google' : 'Tell me about the google site',
+            'arcgis' : 'Tell me about the arcgis site'
+        };
         
-        function MasherCtrl($scope, $location, $route, $routeParams) {
+        function MasherCtrl($scope, $location, $route, $routeParams, WebSiteDescriptionCtrl) {
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
             $scope.isCollapsed = false;
@@ -58,6 +63,7 @@
             
             $scope.describeTheWebsiteClicked = function(){
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
+                WebSiteDescriptionCtrl.setDescription($scope.currentTab.maptype);
                 $scope.showDescriptionDialog = true;
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
             };
@@ -80,7 +86,7 @@
         
         function init(App) {
             console.log('MasherCtrl init');
-            App.controller('MasherCtrl', ['$scope', '$location', MasherCtrl]);
+            App.controller('MasherCtrl', ['$scope', '$location', 'WebSiteDescriptionCtrl', MasherCtrl]);
             //calling tellAngular on resize event
             window.onresize = MasherCtrl.prototype.windowResized;
             return MasherCtrl;

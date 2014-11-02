@@ -8,6 +8,7 @@ var selectedMapType = 'arcgis';
     define([
         'angular',
         'controllers/AppController',
+        'controllers/WebSiteDescriptionCtrl',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
@@ -16,7 +17,7 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, WebSiteDescriptionCtrl, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -82,6 +83,9 @@ var selectedMapType = 'arcgis';
                 var getMapType = function(){
                     return mapTypes[currentMapType];
                 }
+                var getMapTypeKey = function(){
+                    return currentMapType;
+                }
                 var setMapType = function(mpt){
                     previousMapType = currentMapType;
                     selectedMapType = mpt;
@@ -95,7 +99,7 @@ var selectedMapType = 'arcgis';
                     console.log("getSelectedMapType : " + selectedMapType);
                     return mapTypes[selectedMapType];
                 }
-                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType };
+                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey };
             });
                 
             
