@@ -10,6 +10,7 @@
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
         'controllers/VerbageCtrl',
+        'controllers/WebSiteDescriptionCtrl',
         'controllers/SPACtrl',
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
@@ -18,7 +19,7 @@
         'controllers/EmailCtrl',
         'lib/GeoCoder'
         ], 
-    function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, SPACtrl,
+    function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, WebSiteDescriptionCtrl, SPACtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, EmailCtrl, GeoCoder) {
         console.log('AppController define');
 
@@ -31,6 +32,7 @@
             PositionViewCtrl.start(App);
             MapCtrl.start(App);
             SPACtrl.start(App);
+            WebSiteDescriptionCtrl.start(App);
             VerbageCtrl.start(App);
             SearcherCtrlGrp.start(App);
             SearcherCtrlMap.start(App);

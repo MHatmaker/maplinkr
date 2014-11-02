@@ -16,6 +16,7 @@
             
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
+            $scope.showDescriptionDialog = false;
             
             $scope.$on('$viewContentLoaded', function(){
                 // alert($route.current.templateUrl + ' is loaded !!');
@@ -50,9 +51,27 @@
             
             $scope.showMeTheMapClicked = function(){
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
+                console.debug($location);
                 $location.path($scope.currentTab.url);
                 // $scope.summmaryCollapser();
             };
+            
+            $scope.describeTheWebsiteClicked = function(){
+                console.log("Describe the website for currentTab " + $scope.currentTab.title);
+                $scope.showDescriptionDialog = true;
+                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
+            };
+            
+            $scope.$on('WebSiteDescriptionEvent', function() {
+                console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
+                console.debug($location);
+                var showElem = document.getElementById('showMeTheMap');
+                var showElemA = angular.element(showElem);
+                var showElem0 = showElemA[0];
+
+                // $location.path($scope.currentTab.url);
+                showElem0.click();
+            });
         };
         
         MasherCtrl.prototype.windowResized = function(){
