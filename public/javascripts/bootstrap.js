@@ -83,7 +83,7 @@ var selectedMapType = 'arcgis';
                     return mapTypes[currentMapType];
                 }
                 var getMapTypeKey = function(){
-                    return currentMapType;
+                    return selectedMapType;
                 }
                 var setMapType = function(mpt){
                     previousMapType = currentMapType;

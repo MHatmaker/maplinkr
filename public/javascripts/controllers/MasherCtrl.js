@@ -8,9 +8,9 @@
         console.log('MasherCtrl define');
         var selfMethods = {};
         var descriptions = {
-            'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data.',
-            'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google.',
-            'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.'
+            'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
+            'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
+            'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
         };
         
         function MasherCtrl($scope, $location, $route, $routeParams) {
@@ -63,7 +63,7 @@
             
             $scope.describeTheWebsiteClicked = function(){
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
-                WebSiteDescriptionCtrl.setDescription(descriptions[$scope.currentTab.maptype]);
+                WebSiteDescriptionCtrl.setDescription(descriptions[$scope.currentTab.maptype], $scope.currentTab.imgSrc);
                 $scope.showDescriptionDialog = true;
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
             };

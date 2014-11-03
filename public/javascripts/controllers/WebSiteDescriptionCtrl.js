@@ -25,7 +25,8 @@
             $scope.data = {
                 whichSite : "",
                 whichDismiss : "Cancel",
-                description : "Initial description"
+                description : "Initial description",
+                image : ""
             };
             $scope.$on('ShowWebSiteDescriptionModalEvent', function(){
                 console.log("ShowWebSiteDescriptionModalEvent caught");
@@ -61,8 +62,9 @@
             return areWeInitialized;
         }
         
-        WebSiteDescriptionCtrl.prototype.setDescription = function(description){
+        WebSiteDescriptionCtrl.prototype.setDescription = function(description, img){
             selfdict.scope.data.description = description;
+            selfdict.scope.data.image = img;
         }
         
         function init(App) {
@@ -80,10 +82,10 @@
                     <div class="modal-content"> \
                       <div class="modal-header"> \
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                        <h3>This Web Site is showing us :</h3> \
+                        <h4>This sample Web Site powered by <img src="{{$parent.data.image}}">  {{$parent.data.mapType}} is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \
-                        <p style="border-style:solid; border-color:#287EC7;"> \
+                        <p style="border-style:solid; border-color:#287EC7;padding: 5px"> \
                             {{$parent.data.description}} \
                         </p> \
                         <p> \
@@ -116,7 +118,8 @@
 
                                 var $inj = angular.injector(['app']);
                                 var serv = $inj.get('CurrentMapTypeService');
-                                selfdict.mapType = serv.getMapTypeKey();  
+                                var mapType= serv.getMapTypeKey();  
+                                selfdict.scope.data.mapType = mapType.charAt(0).toUpperCase() + mapType.slice(1);
                             }
                             else{
                                 $(elem).modal311("hide");
