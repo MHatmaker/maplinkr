@@ -24,11 +24,10 @@ block content
 
             #mainView {{currentTab.content}}
                 br
-                br
                 div(modal-show-websitedescription="", modal-visible="$parent.showDescriptionDialog", class="modal311", ng-controller="WebSiteDescriptionCtrl", modal-mdata="mData", role="dialog", class="modal", id="WebSiteDescriptionDialog", style="display: none; position:relative", data-backdrop="false")
                                 
                 div
-                    p(id="currentTabSelectedId", style="float: left; font-weight: bold;") Selected Map Type: {{currentTab.title}} 
+                    p(id="currentTabSelectedId", style="float: left; font-weight: bold; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} <img src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px'>
                     input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Tell  Me About The Website')
                     input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Show Me The Website')
                     
