@@ -27,12 +27,12 @@
             
         function init(App) {
             console.log('AppController init');
+            WebSiteDescriptionCtrl.start(App);
             MasherCtrl.start(App);
             TabsCtrl.start(App);
             PositionViewCtrl.start(App);
             MapCtrl.start(App);
             SPACtrl.start(App);
-            WebSiteDescriptionCtrl.start(App);
             VerbageCtrl.start(App);
             SearcherCtrlGrp.start(App);
             SearcherCtrlMap.start(App);

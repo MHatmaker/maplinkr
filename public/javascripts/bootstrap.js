@@ -8,7 +8,6 @@ var selectedMapType = 'arcgis';
     define([
         'angular',
         'controllers/AppController',
-        'controllers/WebSiteDescriptionCtrl',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
@@ -17,7 +16,7 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, WebSiteDescriptionCtrl, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {

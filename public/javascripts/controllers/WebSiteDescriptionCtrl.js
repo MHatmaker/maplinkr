@@ -62,7 +62,7 @@
         }
         
         WebSiteDescriptionCtrl.prototype.setDescription = function(description){
-            $scope.data.description = description;
+            selfdict.scope.data.description = description;
         }
         
         function init(App) {
@@ -83,14 +83,11 @@
                         <h3>This Web Site is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \
-                        <p> \
-                            A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google. \
+                        <p style="border-style:solid; border-color:#287EC7;"> \
+                            {{$parent.data.description}} \
                         </p> \
                         <p> \
-                            Clicking on a location icon pops up information about the restaurant at that address. \
-                        </p> \
-                        <p> \
-                            {{data.description}} \
+                            Clicking on a location icon pops up available, relevant information at that address. \
                         </p> \
                       </div> \
                       <div class="modal-footer"> \
