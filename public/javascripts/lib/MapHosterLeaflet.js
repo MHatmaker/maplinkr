@@ -306,19 +306,21 @@ define('GeoCoder', function () {
             return cmp;
         }
 
-        function markerInfoPopup(pos, content, title)
+        function markerInfoPopup(pos, content, hint)
         {
-            var allContent = '<h3>' + title + '</h3>' + content;
+            var allContent = '<h3>' + hint + '</h3>' + content;
             L.marker(pos).addTo(mphmap)
                 .bindPopup(allContent).openPopup();
         }
 
         function addInitialSymbols()
         {   
-            var content = "Great home with spectacular view of abandoned industrial site";
-            markerInfoPopup([41.795, -87.695], content, "Prime home for sale");
-            content = "Perfect hangout for the undiscriminating cave dweller";
-            markerInfoPopup([41.805, -87.705], content, "Perfection in Paradise");
+            var hint = "Seanery Beanery Industrial Row";
+            markerInfoPopup([41.790, -87.735], "Seanery Beanery with spectacular view of abandoned industrial site", hint);
+            hint = "Seanery Beanery For Discriminating Beaners";
+            markerInfoPopup([41.810, -87.715], "Seanery Beanery located adjacent to great entertainment venues", hint);
+            hint = "Seanery Beanery For Walking Averse";
+            markerInfoPopup([41.785, -87.70], "Seanery Beanery located close to the pedicab terminal", hint);
             
             // L.circle([51.508, -0.11], 500, {
                 // color: 'red',

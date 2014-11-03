@@ -394,11 +394,14 @@
         function addInitialSymbols()
         {  
             var popPt = new google.maps.LatLng(41.795, -87.695);
-            var content = "Great home with spectacular view of abandoned industrial site";
-            markerInfoPopup(popPt, content, "Prime home for sale");
+            var hint = "Deep Fried Butter Steaks";
+            markerInfoPopup(popPt, "128 oz steaks with 4 cubes of butter on top on a bed of deep fried onion rings.", hint);
             popPt = new google.maps.LatLng(41.805, -87.705);
-            content = "Perfect hangout for the undiscriminating cave dweller";
-            markerInfoPopup(popPt, content, "Perfection in Paradise");
+            hint = "Raw Fish and Seaweed";
+            markerInfoPopup(popPt, "We throw whatever comes out of the water on your plate.", hint);
+            popPt = new google.maps.LatLng(41.825, -87.725);
+            hint = "Nothing But Vegetables";
+            markerInfoPopup(popPt, "If it isn't an animal or mineral, we have it.", hint);
             // this.polygon([
                 // [51.509, -0.08],
                 // [51.503, -0.06],
