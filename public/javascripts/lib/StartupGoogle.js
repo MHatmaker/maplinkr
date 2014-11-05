@@ -73,7 +73,7 @@ function skipScript() {
         {
             newSelectedWebMapId = newMapId;
             console.log("newSelectedWebMapId " + newMapId);
-            // window.loading = dojo.byId("loadingImg")
+            window.loading = dojo.byId("loadingImg")
             //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications. 
             // esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
           
