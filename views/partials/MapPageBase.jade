@@ -65,19 +65,23 @@ block append content
                                     accordion(id="Accdian", style="height:100%;width:100%;", close-others="true")
                                         accordion-group(id="AccdianNews", style="height:100%;width:100%;vertical-align:top;" is-open="status.isNewsOpen")
                                             accordion-heading
-                                                 | <b>Such Exciting News</b>
+                                                 | <b>News and All That Other Stuff</b>
                                                  i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
-                                            h4(style="color:red") BEAKING NEWS
-                                            h5(style="color:red")
-                                                | We now have WebMap mash-over capabilities
+                                            div(style='font-size:9pt;border:2px solid red;margin:1px;padding:2px;')
+                                                h4(style="color:red") BREAKING NEWS
+                                                h5(style="color:red")
+                                                    | We now have WebMap mash-over capabilities
+                                                h5(style="color:red")
+                                                    | Select the Mash-over Instruction accordion pane below for all the latest.
+                                                
+                                            h4 OTHER GREAT STUFF
                                             br
-                                            h5(style="color:red")
-                                                | Select the Mash-over Instruction accordion pane below for all the latest.
-                                            br
-                                            h4 OTHER RECENT EVENTS
+                                            
+                                            img(ng-src="../stylesheets/images/NewsPapers.jpg", width="95%" height="95%")
+                                            
                                             br
                                             h5 Sed arcu magna.
-                                            p(style='font-size:9pt').
+                                            p(style='font-size:9pt;border:2px solid green;margin:1px;padding:2px;').
                                                 molestie at, fringilla in, sodales eu, elit.
                                                 Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
                                                 vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
@@ -211,7 +215,7 @@ block append content
                                                 The url includes the name of the Pusher channel that you have selected.  As users open the link, they will be subscribing to share map clicks, pans and zooms with all other users as any user manipulates any map view.
                                                 
                                             p(style='font-size:9pt;margin:1em').
-                                                The Pusher channel can also be set without opening a new map viewer by opening the "Set Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.
+                                                The Pusher channel can also be set without opening a new map viewer by opening the "Set Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.  This step is necessary if you and your collaborators want to synchronize map views where all collaborators already have synchronize-capable maps open.
 
                                             br
                                         accordion-group(id="MailSenderId", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isCopyMapLinkOpen")
