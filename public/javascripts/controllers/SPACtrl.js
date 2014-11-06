@@ -28,6 +28,7 @@ function getDocHeight() {
             console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
             var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
             var samplePageTopRowHgtInit = $scope.isVerbageCollapsed ?  samplePageTopRow[0].offsetHeight : 0;
+            // samplePageTopRowHgtInit += 22;
             layoutPanes(false);
             
             $scope.collapser = function(){
