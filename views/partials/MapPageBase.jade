@@ -48,12 +48,42 @@ block append content
             table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%;")
                 tbody
                     tr(id="leadpane", style="height:{{ContentsHeight}}px")
-                        td(id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
-                            
-                            #map_canvas(style="height:100%;width:100%;margin:0px;")
+                        td
+                            table(id="SamplePageId")
+                                tr(id="SamplePageTopRowId",  ng-class="{false: 'hide-content', true: 'reveal-content'}[isVerbageCollapsed]")
+                                    td(colspan="2")
+                                        
+                                        h5(style="text-align:center;") Sed arcu magna.
+                                        p(style='font-size:9pt;border:2px solid green;margin:1px;padding:2px;').
+                                            molestie at, fringilla in, sodales eu, elit.
+                                            Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                                            vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                                            augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                                            metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                                            ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                                            euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                                            risus. 
+                                            
+                                tr
+                                    td(style="vertical-align:top;", ,  ng-class="{false: 'hide-content', true: 'reveal-content'}[isVerbageCollapsed]")
+                                    
+                                        h5 Sed arcu magna.
+                                        p(style='font-size:9pt;border:2px solid green;margin:1px;padding:2px;').
+                                            Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
+                                            porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
+                                            faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
+                                            consequat quis, varius interdum, nulla. Donec neque tortor,
+                                            sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
+                                            ut eros sit amet ante pharetra interdum.
+                                            
+                                        img(ng-src="../stylesheets/images/NewsPapers.jpg", width="95%" height="50%")
+                                                    
+                                    td(id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
+                                        
+                                        #map_canvas(style="height:100%;width:100%;margin:0px;")
 
-                           
-                                img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+                                       
+                                            img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
                         td(id="verbagePan", ng-controller="VerbageCtrl", ng-class="{true: 'hide-content', false: 'reveal-content'}[isVerbageCollapsed]", style='vertical-align:top;width:{{VrbgWdth}};height:100%;')
 

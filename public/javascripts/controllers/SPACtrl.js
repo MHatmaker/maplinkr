@@ -17,15 +17,17 @@ function getDocHeight() {
         
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
-            $scope.isVerbageCollapsed = false;
+            $scope.isVerbageCollapsed = true;
             $scope.isSummaryCollapsed = false;
-            $scope.verbageExpandCollapse = "Collapse";
+            $scope.verbageExpandCollapse = "Expand";
             
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             var sumHead = angular.element(document.getElementById("summary_header"));
             var sumHeadHeightStart = sumHead[0].offsetHeight;
             console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
+            var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
+            var samplePageTopRowHgtInit = $scope.isVerbageCollapsed ?  samplePageTopRow[0].offsetHeight : 0;
             layoutPanes(false);
             
             $scope.collapser = function(){
@@ -33,6 +35,7 @@ function getDocHeight() {
                 console.log("isVerbageCollapsed before " + $scope.isVerbageCollapsed);
                 $scope.isVerbageCollapsed = !$scope.isVerbageCollapsed;
                 $scope.verbageExpandCollapse =  $scope.isVerbageCollapsed ? "Expand" : "Collapse";
+                $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
                 console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
             }
             $scope.$on('CollapseSummaryEvent', function() {
@@ -51,12 +54,14 @@ function getDocHeight() {
                 var commonTopLine = angular.element(document.getElementById("top_line"));
                 var mnwnd = angular.element(document.getElementById("mainWindow"));
                 var ftPane = angular.element(document.getElementById("foot_pane"));
+                // var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
                 
                 var topLineHgt = commonTopLine[0].offsetHeight;
                 var mnwndHgt = mnwnd[0].offsetHeight;
+                var samplePageTopRowHgt = $scope.isVerbageCollapsed ?  samplePageTopRowHgtInit : 0;
                 var ftPaneHgt = ftPane[0].offsetHeight;
-                console.log("topLineHgt " + topLineHgt + " mnwndHgt " + mnwndHgt + " ftPaneHgt " + ftPaneHgt);
-                return topLineHgt + mnwndHgt + ftPaneHgt + 20;
+                console.log("topLineHgt " + topLineHgt + " mnwndHgt " + mnwndHgt + " samplePageTopRowHgt " + samplePageTopRowHgt + " ftPaneHgt " + ftPaneHgt);
+                return topLineHgt + mnwndHgt + samplePageTopRowHgt +ftPaneHgt + 20;
             }
             
             function layoutPanes(isSummaryCollapsed) {

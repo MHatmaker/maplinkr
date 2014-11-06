@@ -12,8 +12,8 @@
         function VerbageCtrl($scope) {
             console.debug('VerbageCtrl - initialize collapsed bool');
             // alert('VerbageCtrl - initialize some tabs');
-            $scope.isVerbageCollapsed = false;
-            $scope.VrbgWdth = '30%';
+            $scope.isVerbageCollapsed = true;
+            $scope.VrbgWdth = '0%';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             // $scope.isGroupSearchOpen = false;
             // $scope.isMapSearchOpen = false;
