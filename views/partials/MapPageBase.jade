@@ -20,11 +20,11 @@ block append content
         table(id="mainWindow", style="width:100%;")
             tbody
                 tr
-                    td(style='width: 30%')
+                    td(style='width: 25%')
                         label(id = 'stnm', style='font-size:12pt;').
                             {{currentTab.site}}
 
-                    td(style='width: 70%')
+                    td(style='width: 75%')
                         table(style='padding-right:20px;')
                             tr(ng-controller="PositionViewCtrl")
                                 td(style='width:15%')
@@ -35,13 +35,20 @@ block append content
                                     span
                                         input(id = 'mpnm', type='text', name='curTabTitle', ng-model= "currentTab.title", style='font-size:9pt;text-align:center; padding: 0px 5px 0px 5px;', disabled)
                                         img(ng-src="{{currentTab.imgSrc}}", style='margin-left:10px;padding: 0px 5px 0px 5px;')
-                                td(style='width:20%')
+                                td(style='width:15%')
                                     label(for="buttonRightPaneShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
                                         {{verbageExpandCollapse}} Control Pane
                                 td(style='width:4%')
                                     div(ng-click="collapser()")
                                         div(style='padding: 0px 5px 0px 5px;')
                                             img(ng-src="../stylesheets/images/{{verbageExpandCollapse}}.png", width="75%" height="75%")
+                                td(style='width:15%')
+                                    label(for="buttonWebSiteShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
+                                        {{webSiteHidden}} Web Site
+                                td(style='width:4%')
+                                    div(ng-click="siteHider()")
+                                        div(style='padding: 0px 5px 0px 5px;')
+                                            img(ng-src="../stylesheets/images/{{webSiteHidden}}.png", width="75%" height="75%")
 
 
         div
@@ -50,7 +57,7 @@ block append content
                     tr(id="leadpane", style="height:{{ContentsHeight}}px")
                         td
                             table(id="SamplePageId", style="height:100%;")
-                                tr(id="SamplePageTopRowId",  ng-class="{false: 'hide-content', true: 'reveal-content'}[isVerbageCollapsed]")
+                                tr(id="SamplePageTopRowId",  ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
                                     td(colspan="3")
                                         
                                         h5(style="text-align:center;font-size:9pt;border:2px solid green;margin:1px;padding:2px; font-weight: bold;") Sed arcu magna.
@@ -65,7 +72,7 @@ block append content
                                             risus. 
                                             
                                 tr
-                                    td(style="vertical-align:top;", ng-class="{false: 'hide-content', true: 'reveal-content'}[isVerbageCollapsed]")
+                                    td(style="vertical-align:top;", ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
                                     
                                         h5(style="text-align:center;font-size:9pt;color:red; font-weight: bold; border:2px solid green;margin:1px;padding:2px;") WHAT'S NEW
                                         
@@ -88,12 +95,21 @@ block append content
                                        
                                             img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                                             
-                                    td(style="vertical-align:top;", ,  ng-class="{false: 'hide-content', true: 'reveal-content'}[isVerbageCollapsed]")
+                                    td(style="vertical-align:top;", ,  ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
                                     
                                         h5(style="text-align:center;font-size:9pt; font-weight: bold; border:2px solid green;margin:1px;padding:2px;") Sit amet.
                                         p(style='font-size:9pt; font-weight: normal; border:2px solid green;margin:1px;padding:2px;').
-                                           Etiam ante libero, ultrices ac,
-                                            faucibus ac, cursus sodales, nisl. 
+                                            molestie at, fringilla in, sodales eu, elit.
+                                            Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                                            vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                                            augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                                            metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                                            ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                                            euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                                            risus. Ut varius viverra turpis. Morbi urna elit, imperdiet eu,
+                                            porta ac, pharetra sed, nisi. Etiam ante libero, ultrices ac,
+                                            faucibus ac, cursus sodales, nisl. Praesent nisl sem, fermentum eu,
+                                            consequat quis, varius interdum, nulla. Donec neque tortor,
                                             sollicitudin sed, consequat nec, facilisis sit amet, orci. Aenean
                                             ut eros sit amet ante pharetra interdum.
 

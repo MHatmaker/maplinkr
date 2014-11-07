@@ -53,7 +53,7 @@
             mapWrp.css({"height": hstr});
             var mapCnv = angular.element(document.getElementById("map_wrapper"));
             mapCnv.css({"height": hstr});
-            $scope.MapWdth = '70%';
+            $scope.MapWdth = '50%';
             hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
             console.log(hstr);
             mapWrp.css({"width": hstr});
@@ -63,7 +63,7 @@
             var lflt = currentMapType.config(null);
             $scope.map = currentMapType.getMap();
             // $scope.map.width = '70%';
-            $scope.MapWdth = '70%';
+            $scope.MapWdth = '50%';
             $scope.isMapExpanded = false;
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
@@ -79,10 +79,19 @@
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
-            $scope.$on('CollapseVerbageEvent', function() {
+            $scope.$on('WebSiteVisibilityEvent', function(){
+                console.log('WebSiteVisibilityEvent');
+                // $scope.isMapExpanded = ! $scope.isMapExpanded;
+                // $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
+                resizeMap($scope.isMapExpanded, $scope.map);
+                currentMapType.resizeVerbage($scope.isMapExpanded);
+            });
+            
+            $scope.$on('CollapseVerbageEvent', function(event, args) {
                 // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == '70%' ? '9999em' : '70%';
+                var isVerbageCollapsed = args.collapseIt;
                 $scope.isMapExpanded = ! $scope.isMapExpanded;
-                $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '70%';
+                $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });

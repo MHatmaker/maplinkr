@@ -19,7 +19,9 @@ function getDocHeight() {
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.isVerbageCollapsed = true;
             $scope.isSummaryCollapsed = false;
+            $scope.isWebSiteHidden = false;
             $scope.verbageExpandCollapse = "Expand";
+            $scope.webSiteHidden = "Hide";
             
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
@@ -31,10 +33,19 @@ function getDocHeight() {
             // samplePageTopRowHgtInit += 22;
             layoutPanes(false);
             
+            $scope.siteHider = function(){
+                $scope.$broadcast('WebSiteVisibilityEvent')
+                console.log("isWebSiteHidden before " + $scope.isWebSiteHidden);
+                $scope.isWebSiteHidden = !$scope.isWebSiteHidden;
+                $scope.webSiteHidden =  $scope.isWebSiteHidden ? "Show" : "Hide";
+                console.log("isWebSiteHidden after  " + $scope.isWebSiteHidden);
+            }
+            
             $scope.collapser = function(){
-                $scope.$broadcast('CollapseVerbageEvent')
+                $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageCollapsed });
                 console.log("isVerbageCollapsed before " + $scope.isVerbageCollapsed);
                 $scope.isVerbageCollapsed = !$scope.isVerbageCollapsed;
+                $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageCollapsed });
                 $scope.verbageExpandCollapse =  $scope.isVerbageCollapsed ? "Expand" : "Collapse";
                 $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
                 console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
