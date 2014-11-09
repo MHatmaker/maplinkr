@@ -12,43 +12,117 @@ function getDocHeight() {
     "use strict";
 
     console.log('SPACtrl setup');
-    define(['angular'], function(angular) {
+    define(['angular', 'lib/fsm'], function(angular, finstatmach) {
         console.log('SPACtrl define');
         
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
-            $scope.isVerbageCollapsed = true;
+            $scope.isVerbageVisible = false;
             $scope.isSummaryCollapsed = false;
-            $scope.isWebSiteHidden = false;
+            $scope.isWebSiteVisible = true;
             $scope.verbageExpandCollapse = "Expand";
-            $scope.webSiteHidden = "Hide";
+            $scope.webSiteVisible = "Hide";
+            
+            var status = {
+                'website' : true,
+                'plugin' : false
+                };
+                
+            var verbageWidth = {
+                true : '70%',
+                false : '0%'
+                };
+            var websiteVisibility = {
+                true : 'true',
+                false : 'false'
+                };
+                
+            function printStatus(msg){ 
+                var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}", 
+                         msg, status['website'], status['plugin']);
+                console.log(msgstr)
+                msgstr = String.format("verbage {0}, website {1}", verbageWidth[status['plugin']], websiteVisibility[       status['website']]);
+                console.log(msgstr)
+             }
+
+            function onShowPlugin(e, from, to, msg){ 
+                status['plugin'] = true;
+                printStatus('Show Plug-in!');
+             }
+             
+            function onHidePlugin(e, from, to, msg){ 
+                status['plugin'] = false;
+                printStatus('Hide Plug-in!');
+             }
+                
+            function onShowWebSite(e, from, to, msg){ 
+                status['website'] = true;
+                printStatus('Show Web Site!');
+             }
+                
+            function onHideWebSite(e, from, to, msg){ 
+                status['website'] = false;
+                printStatus('Hide Web Site!');
+             }
+            
+            var fsm = finstatmach.create({
+              'initial': 'FullWebSite',
+              'events': [
+                {'name': 'showplugin',  'from': 'FullWebSite',  'to': 'FullWebSiteWPlugin'},
+                {'name': 'showplugin',  'from': 'NoWebSite',  'to': 'NoWebSiteWPlugin'},
+                {'name': 'hideplugin', 'from': 'FullWebSiteWPlugin', 'to': 'FullWebSite'},
+                {'name': 'hideplugin', 'from': 'NoWebSiteWPlugin', 'to': 'NoWebSite'},
+                {'name': 'showwebsite',  'from': 'NoWebSite',  'to': 'FullWebSite'},
+                {'name': 'hidewebsite',  'from': 'FullWebSiteWPlugin',  'to': 'NoWebSiteWPlugin'},
+                {'name': 'showwebsite', 'from': 'NoWebSiteWPlugin', 'to': 'FullWebSiteWPlugin'},
+                {'name': 'hidewebsite', 'from': 'FullWebSite', 'to': 'NoWebSite'}
+              ],
+              'callbacks': {
+                'onshowplugin':  onShowPlugin,
+                'onhideplugin':  onHidePlugin,
+                'onshowwebsite': onShowWebSite,
+                'onhidewebsite': onHideWebSite
+              }
+            })
             
             $scope.ContentsHeight = 'auto';
-            console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
+            console.log("init with isVerbageVisible = " + $scope.isVerbageVisible);
             var sumHead = angular.element(document.getElementById("summary_header"));
             var sumHeadHeightStart = sumHead[0].offsetHeight;
             console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
             var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
-            var samplePageTopRowHgtInit = $scope.isVerbageCollapsed ?  samplePageTopRow[0].offsetHeight : 0;
+            var samplePageTopRowHgtInit = $scope.isVerbageVisible ?  0 : samplePageTopRow[0].offsetHeight;
             // samplePageTopRowHgtInit += 22;
             layoutPanes(false);
             
             $scope.siteHider = function(){
-                $scope.$broadcast('WebSiteVisibilityEvent')
-                console.log("isWebSiteHidden before " + $scope.isWebSiteHidden);
-                $scope.isWebSiteHidden = !$scope.isWebSiteHidden;
-                $scope.webSiteHidden =  $scope.isWebSiteHidden ? "Show" : "Hide";
-                console.log("isWebSiteHidden after  " + $scope.isWebSiteHidden);
+                console.log("isWebSiteVisible before " + $scope.isWebSiteVisible);
+                if($scope.isWebSiteVisible == true){
+                    fsm.onhidewebsite();
+                }else{
+                    fsm.onshowwebsite();
+                }
+                $scope.isWebSiteVisible = status['website'];
+                $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : $scope.isWebSiteVisible,
+                                                               'verbage' : $scope.isVerbageVisible});
+                $scope.webSiteVisible =  $scope.isWebSiteVisible ? "Hide" : "Show";
+                console.log("isWebSiteVisible after  " + $scope.isWebSiteVisible);
             }
             
             $scope.collapser = function(){
-                $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageCollapsed });
-                console.log("isVerbageCollapsed before " + $scope.isVerbageCollapsed);
-                $scope.isVerbageCollapsed = !$scope.isVerbageCollapsed;
-                $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageCollapsed });
-                $scope.verbageExpandCollapse =  $scope.isVerbageCollapsed ? "Expand" : "Collapse";
+                // $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageVisible });
+                console.log("isVerbageVisible before " + $scope.isVerbageVisible);
+                if($scope.isVerbageVisible == true){
+                    fsm.onhideplugin();
+                }else{
+                    fsm.onshowplugin();
+                }
+                $scope.isVerbageVisible = status['plugin'];
+                $scope.$broadcast('CollapseVerbageEvent', { 'website' : $scope.isWebSiteVisible,
+                                                             'verbage' : $scope.isVerbageVisible});
+                $scope.verbageExpandCollapse =  $scope.isVerbageVisible ? "Collapse" : "Expand";
                 $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
-                console.log("isVerbageCollapsed after  " + $scope.isVerbageCollapsed);
+                console.log("isVerbageVisible after  " + $scope.isVerbageVisible);
             }
             $scope.$on('CollapseSummaryEvent', function() {
                 console.log("isSummaryCollapsed before " + $scope.isSummaryCollapsed);
@@ -70,7 +144,9 @@ function getDocHeight() {
                 
                 var topLineHgt = commonTopLine[0].offsetHeight;
                 var mnwndHgt = mnwnd[0].offsetHeight;
-                var samplePageTopRowHgt = $scope.isVerbageCollapsed ?  samplePageTopRowHgtInit : 0;
+                var samplePageTopRowHgt = $scope.isVerbageVisible ?  0 : samplePageTopRowHgtInit;
+                if($scope.isWebSiteVisible == false)
+                    samplePageTopRowHgt = 0;
                 var ftPaneHgt = ftPane[0].offsetHeight;
                 console.log("topLineHgt " + topLineHgt + " mnwndHgt " + mnwndHgt + " samplePageTopRowHgt " + samplePageTopRowHgt + " ftPaneHgt " + ftPaneHgt);
                 return topLineHgt + mnwndHgt + samplePageTopRowHgt +ftPaneHgt + 20;

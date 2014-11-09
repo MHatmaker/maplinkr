@@ -44,11 +44,11 @@ block append content
                                             img(ng-src="../stylesheets/images/{{verbageExpandCollapse}}.png", width="75%" height="75%")
                                 td(style='width:15%')
                                     label(for="buttonWebSiteShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
-                                        {{webSiteHidden}} Web Site
+                                        {{webSiteVisible}} Web Site
                                 td(style='width:4%')
                                     div(ng-click="siteHider()")
                                         div(style='padding: 0px 5px 0px 5px;')
-                                            img(ng-src="../stylesheets/images/{{webSiteHidden}}.png", width="75%" height="75%")
+                                            img(ng-src="../stylesheets/images/{{webSiteVisible}}.png", width="75%" height="75%")
 
 
         div
@@ -56,8 +56,8 @@ block append content
                 tbody
                     tr(id="leadpane", style="height:{{ContentsHeight}}px")
                         td
-                            table(id="SamplePageId", style="height:100%;")
-                                tr(id="SamplePageTopRowId",  ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
+                            table(id="SamplePageId", style="height:100%;width:100%")
+                                tr(id="SamplePageTopRowId",  ng-class="{false: 'hide-content', true: 'reveal-content'}[isWebSiteVisible]")
                                     td(colspan="3")
                                         
                                         h5(style="text-align:center;font-size:9pt;border:2px solid green;margin:1px;padding:2px; font-weight: bold;") Sed arcu magna.
@@ -72,7 +72,7 @@ block append content
                                             risus. 
                                             
                                 tr
-                                    td(style="vertical-align:top;", ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
+                                    td(style="vertical-align:top;", ng-class="{false: 'hide-content', true: 'reveal-content'}[isWebSiteVisible]")
                                     
                                         h5(style="text-align:center;font-size:9pt;color:red; font-weight: bold; border:2px solid green;margin:1px;padding:2px;") WHAT'S NEW
                                         
@@ -95,7 +95,7 @@ block append content
                                        
                                             img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                                             
-                                    td(style="vertical-align:top;", ,  ng-class="{true: 'hide-content', false: 'reveal-content'}[isWebSiteHidden]")
+                                    td(style="vertical-align:top;", ,  ng-class="{false: 'hide-content', true: 'reveal-content'}[isWebSiteVisible]")
                                     
                                         h5(style="text-align:center;font-size:9pt; font-weight: bold; border:2px solid green;margin:1px;padding:2px;") Sit amet.
                                         p(style='font-size:9pt; font-weight: normal; border:2px solid green;margin:1px;padding:2px;').

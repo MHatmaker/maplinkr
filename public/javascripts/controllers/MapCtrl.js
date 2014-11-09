@@ -79,9 +79,18 @@
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
-            $scope.$on('WebSiteVisibilityEvent', function(){
+            $scope.$on('WebSiteVisibilityEvent', function(event, args){
                 console.log('WebSiteVisibilityEvent');
+                var isVerbageVisible = args.verbage;
+                var isWebSiteVisible = args.website;
+                $scope.isMapExpanded = ! isVerbageVisible;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
+                if(isWebSiteVisible){
+                     $scope.MapWdth = isVerbageVisible? '100%' : '50%';
+                }
+                else{
+                     $scope.MapWdth = isVerbageVisible? '100%' : '100%';
+                }
                 // $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
@@ -89,9 +98,18 @@
             
             $scope.$on('CollapseVerbageEvent', function(event, args) {
                 // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == '70%' ? '9999em' : '70%';
-                var isVerbageCollapsed = args.collapseIt;
-                $scope.isMapExpanded = ! $scope.isMapExpanded;
-                $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
+                var isVerbageVisible = args.verbage;
+                var isWebSiteVisible = args.website;
+                // $scope.isMapExpanded = ! $scope.isMapExpanded;
+                $scope.isMapExpanded = ! isVerbageVisible;
+                // $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
+                
+                if(isWebSiteVisible){
+                     $scope.MapWdth = isVerbageVisible? '70%' : '50%';
+                }
+                else{
+                     $scope.MapWdth = isVerbageVisible? '100%' : '100%';
+                }
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
