@@ -85,13 +85,15 @@ function getDocHeight() {
               }
             })
             
+            var samplePageTopRowDefault = 0;
+            
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageVisible = " + $scope.isVerbageVisible);
             var sumHead = angular.element(document.getElementById("summary_header"));
             var sumHeadHeightStart = sumHead[0].offsetHeight;
             console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
             var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
-            var samplePageTopRowHgtInit = $scope.isVerbageVisible ?  0 : samplePageTopRow[0].offsetHeight;
+            var samplePageTopRowHgtInit = $scope.isVerbageVisible ?  samplePageTopRowDefault : samplePageTopRow[0].offsetHeight;
             // samplePageTopRowHgtInit += 22;
             layoutPanes(false);
             
@@ -144,7 +146,7 @@ function getDocHeight() {
                 
                 var topLineHgt = commonTopLine[0].offsetHeight;
                 var mnwndHgt = mnwnd[0].offsetHeight;
-                var samplePageTopRowHgt = $scope.isVerbageVisible ?  0 : samplePageTopRowHgtInit;
+                var samplePageTopRowHgt = $scope.isVerbageVisible ?  samplePageTopRowDefault : samplePageTopRowHgtInit;
                 if($scope.isWebSiteVisible == false)
                     samplePageTopRowHgt = 0;
                 var ftPaneHgt = ftPane[0].offsetHeight;
