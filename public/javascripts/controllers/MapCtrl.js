@@ -16,21 +16,26 @@
                     'google' : StartupGoogle,
                     'arcgis' : StartupArcGIS};
         var currentMapType = null;
+        var mapSize = {
+            'small' : '40%',
+            'medium' : '70%',
+            'full' : '100%'
+        };
 
         function resizeMap(isMapExpanded, map){
             if(isMapExpanded){
                 angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
                 angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).css({"width": "100%;"});
-                angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%;"});
+                angular.element(document.getElementById("map_canvas_root")).css({"width": mapSize['full']});
+                angular.element(document.getElementById("map_canvas_layer0")).css({"width": mapSize['full']});
                 // angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
                 angular.element(document.getElementById("map_wrapper")).addClass("max-map-width");
             }
             else{
                 angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
                 angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).css({"width": "100%"});
-                angular.element(document.getElementById("map_canvas_layer0")).css({"width": "100%"});
+                angular.element(document.getElementById("map_canvas_root")).css({"width": mapSize['full']});
+                angular.element(document.getElementById("map_canvas_layer0")).css({"width": mapSize['full']});
                 // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
                 angular.element(document.getElementById("map_wrapper")).removeClass("max-map-width");
             }
@@ -53,7 +58,7 @@
             mapWrp.css({"height": hstr});
             var mapCnv = angular.element(document.getElementById("map_wrapper"));
             mapCnv.css({"height": hstr});
-            $scope.MapWdth = '50%';
+            $scope.MapWdth = mapSize['small'];
             hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
             console.log(hstr);
             mapWrp.css({"width": hstr});
@@ -62,8 +67,8 @@
             console.debug(stup);
             var lflt = currentMapType.config(null);
             $scope.map = currentMapType.getMap();
-            // $scope.map.width = '70%';
-            $scope.MapWdth = '50%';
+            // $scope.map.width = mapSize['medium'];
+            $scope.MapWdth = mapSize['small'];
             $scope.isMapExpanded = false;
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
@@ -86,29 +91,29 @@
                 $scope.isMapExpanded = ! isVerbageVisible;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
                 if(isWebSiteVisible){
-                     $scope.MapWdth = isVerbageVisible? '100%' : '50%';
+                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['small'];
                 }
                 else{
-                     $scope.MapWdth = isVerbageVisible? '100%' : '100%';
+                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['full'];
                 }
-                // $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
+                // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
             
             $scope.$on('CollapseVerbageEvent', function(event, args) {
-                // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == '70%' ? '9999em' : '70%';
+                // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == mapSize['medium'] ? '9999em' : mapSize['medium'];
                 var isVerbageVisible = args.verbage;
                 var isWebSiteVisible = args.website;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
                 $scope.isMapExpanded = ! isVerbageVisible;
-                // $scope.MapWdth =  $scope.isMapExpanded ? '100%' : '50%';
+                // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 
                 if(isWebSiteVisible){
-                     $scope.MapWdth = isVerbageVisible? '70%' : '50%';
+                     $scope.MapWdth = isVerbageVisible? mapSize['medium'] : mapSize['small'];
                 }
                 else{
-                     $scope.MapWdth = isVerbageVisible? '100%' : '100%';
+                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['full'];
                 }
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
