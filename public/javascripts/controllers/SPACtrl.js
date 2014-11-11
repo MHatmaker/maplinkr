@@ -85,7 +85,8 @@ function getDocHeight() {
               }
             })
             
-            var samplePageTopRowDefault = 0;
+            var samplePageTopRowDefault = 0;            
+            var samplePageLeftColDefault = 0;
             
             $scope.ContentsHeight = 'auto';
             console.log("init with isVerbageVisible = " + $scope.isVerbageVisible);
@@ -95,6 +96,8 @@ function getDocHeight() {
             var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
             var samplePageTopRowHgtInit = $scope.isVerbageVisible ?  samplePageTopRowDefault : samplePageTopRow[0].offsetHeight;
             // samplePageTopRowHgtInit += 22;
+            var samplePageLeftCol = angular.element(document.getElementById("samplePageLeftColId"));
+            var samplePageLeftColHgtInit = $scope.isVerbageVisible ?  samplePageLeftColDefault : samplePageLeftCol[0].offsetHeight;
             layoutPanes(false);
             
             $scope.siteHider = function(){
@@ -146,12 +149,18 @@ function getDocHeight() {
                 
                 var topLineHgt = commonTopLine[0].offsetHeight;
                 var mnwndHgt = mnwnd[0].offsetHeight;
+                
                 var samplePageTopRowHgt = $scope.isVerbageVisible ?  samplePageTopRowDefault : samplePageTopRowHgtInit;
                 if($scope.isWebSiteVisible == false)
                     samplePageTopRowHgt = 0;
+                    
+                var samplePageLeftColHgt = $scope.isVerbageVisible ?  samplePageLeftColDefault : samplePageLeftColHgtInit;
+                if($scope.isWebSiteVisible == false)
+                    samplePageLeftColHgt = 0;
+                    
                 var ftPaneHgt = ftPane[0].offsetHeight;
-                console.log("topLineHgt " + topLineHgt + " mnwndHgt " + mnwndHgt + " samplePageTopRowHgt " + samplePageTopRowHgt + " ftPaneHgt " + ftPaneHgt);
-                return topLineHgt + mnwndHgt + samplePageTopRowHgt +ftPaneHgt + 20;
+                console.log("topLineHgt " + topLineHgt + " mnwndHgt " + mnwndHgt + " samplePageTopRowHgt " + samplePageTopRowHgt  + " samplePageLeftColHgt " + samplePageLeftColHgt + " ftPaneHgt " + ftPaneHgt);
+                return topLineHgt + mnwndHgt + samplePageTopRowHgt + samplePageLeftColHgt + ftPaneHgt + 20;
             }
             
             function layoutPanes(isSummaryCollapsed) {

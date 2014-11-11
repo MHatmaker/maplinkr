@@ -72,7 +72,7 @@ block append content
                                             risus. 
                                             
                                 tr
-                                    td(style="vertical-align:top;", ng-class="{false: 'hide-content', true: 'reveal-content'}[isWebSiteVisible]")
+                                    td(id="samplePageLeftColId", style="vertical-align:top;", ng-class="{false: 'hide-content', true: 'reveal-content'}[isWebSiteVisible]")
                                     
                                         h5(style="text-align:center;font-size:10pt;color:red; font-weight: bold; border:2px solid green;margin:1px;padding:2px;") WHAT'S NEW
                                         
@@ -293,4 +293,4 @@ block append content
 
 
                     tr(id="foot_pane", style="border:5px solid green;height:5px;width:100%")
-                        td(colspan=2) The rest of this awesome web site contents featuring{{currentTab.title}}
+                        td(colspan=3) The rest of this awesome web site contents featuring{{currentTab.title}}
