@@ -12,6 +12,7 @@ public/javascripts/lib/proj4js.js
 public/javascripts/lib/searcher.js
 public/javascripts/lib/Startup.js
 public/javascripts/lib/StompSetup.js
+public/javascripts/lib/fsmmin.js
 public/javascripts/EsriSample.js
 public/javascripts/PortalExample.html
 public/javascripts/controllers/TabsInfoCommented.js

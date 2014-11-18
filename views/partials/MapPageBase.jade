@@ -2,6 +2,7 @@
 block stylesblock append
     link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
     link(rel='stylesheet', href='/stylesheets/gridstyle.css')
+    link(rel='stylesheet', href='/stylesheets/flexbox.css')
     
 style.panel-heading.panel-title.
     accordion-toggle{
@@ -16,40 +17,82 @@ block append scriptsblock
     
 block append content
 
-    #spa_window(style="height:100%;width:100%", ng-controller="SPACtrl")
-        table(id="mainWindow", style="width:100%;")
-            tbody
-                tr
-                    td(style='width: 25%')
-                        label(id = 'stnm', style='font-size:12pt;').
-                            {{currentTab.site}}
+    #spa_window(class="wrapper-website", style="height:100%;width:100%", ng-controller="SPACtrl")
+        div(id="idNavigator, class="navigation", ng-controller="PositionViewCtrl")
+                                    
+        div(class="havButton")
+          {{currentTab.site}}
+        div(class="havButton")
+          input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:9pt;text-align:right;margin-right:10px;padding: 0px 5px 0px 5px;width:100%')
+        div(class="havButton")
+         select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()")
+        div(class="havButton")
+          {{currentTab.title}}
+        div(id="idExpButton", class="havButton", ng-click="collapser()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
+          span
+            figure
+              figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                {{verbageExpandCollapse}} Control Pane
+              img(src="../stylesheets/images/{{verbageExpandCollapse}}.png", style="float: right; width:{{expBtnHeight}}px; height: {{expBtnHeight}}px; padding: 0.01em 0.1em  0.01em  0.4em;")
+        div(id="idExpButton", class="havButton", ng-click="siteHider()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
+          span
+            figure
+              figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                {{webSiteVisible}} Web Site
+              img(src="../stylesheets/images/{{webSiteVisible}}.png", style="float: right; width:{{expBtnHeight}}px; height: {{expBtnHeight}}px; padding: 0.01em 0.1em  0.01em  0.4em;")
 
-                    td(style='width: 75%')
-                        table(style='padding-right:20px;')
-                            tr(ng-controller="PositionViewCtrl")
-                                td(style='width:15%')
-                                    input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:9pt;text-align:right;margin-right:10px;padding: 0px 5px 0px 5px;width:100%')
-                                td
-                                    select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()")
-                                td
-                                    span
-                                        input(id = 'mpnm', type='text', name='curTabTitle', ng-model= "currentTab.title", style='font-size:9pt;text-align:center; padding: 0px 5px 0px 5px;', disabled)
-                                        img(ng-src="{{currentTab.imgSrc}}", style='margin-left:10px;padding: 0px 5px 0px 5px;')
-                                td(style='width:15%')
-                                    label(for="buttonRightPaneShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
-                                        {{verbageExpandCollapse}} Control Pane
-                                td(style='width:4%')
-                                    div(ng-click="collapser()")
-                                        div(style='padding: 0px 5px 0px 5px;')
-                                            img(ng-src="../stylesheets/images/{{verbageExpandCollapse}}.png", width="75%" height="75%")
-                                td(style='width:15%')
-                                    label(for="buttonWebSiteShowHide", style ='padding-right:5px; padding-top:7px; padding-left:5px; font-size:10pt').
-                                        {{webSiteVisible}} Web Site
-                                td(style='width:4%')
-                                    div(ng-click="siteHider()")
-                                        div(style='padding: 0px 5px 0px 5px;')
-                                            img(ng-src="../stylesheets/images/{{webSiteVisible}}.png", width="75%" height="75%")
-
+        div(class="container-website")
+      
+          div(class="container-primary" >
+              div(class="container-newscell")
+                div(class="container-newscellhead").
+                Sed arcu magna.
+              div(class="container-newscellbody" ).
+                molestie at, fringilla in, sodales eu, elit.
+                Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
+                vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat
+                augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non
+                metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus
+                ut elit convallis eleifend. Fusce tincidunt, justo quis tempus
+                euismod, magna nulla viverra libero, sit amet lacinia odio diam id
+                risus. 
+              br
+                Except fot the plugin, when it is visible, even if it requires another row
+          
+          div(class="container-body")
+            div(class="container-leftcol")
+              div(class="container-newscell")
+                div(class="container-newscellhead" style="font-size:10pt;color:red; font-weight: bold;").
+                WHAT'S NEW
+                div(class="container-newscellbody" style="font-size:10pt;color:red; font-weight: bold;" ).
+                  |We now have WebMap mash-over capabilities
+                  |
+                  | Click on the "Expand Control Pane" and "Hide Web Site" icons.
+                  | Then Select the Mash-over Instruction accordion pane for all the latest.
+                  
+                div(class="container-newscellhead" style="font-size:9pt;color:black; font-weight: bold;").
+                OTHER STUFF
+                div(class="container-newscellbody")
+                  img(ng-src="../stylesheets/images/NewsPapers.jpg", width="100%" height="60%")
+              
+              div(class="container-mapcol" style="border: solid orange">
+                div(class="container-mapcolheading">
+                  Here is the Map
+                div(class="container-mapholder")
+                  img(class="embedded-image" src="http://www.schaik.com/png/pngcsum_icon.gif")
+                  
+                  id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
+              
+              div(class="container-rightcol">
+                div(class="container-newscellhead" style=" overflow:auto; flex:2;">
+                  Some Right Column Stuff
+                </div>
+                div(class="container-newscellbody" style="border:2px solid blue;flex: 5; ">
+                  molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus. Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend. Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet lacinia odio diam idrisus. 
+                </div>
+              </div>
+          </div>
+        </div>
 
         div
             table(id="tableWindow", style="height:{{ContentsHeight}}px;width:100%;")

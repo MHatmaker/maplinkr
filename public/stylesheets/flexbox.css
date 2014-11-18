@@ -1,0 +1,197 @@
+body {
+  margin:0; /* This is used to reset any browser-default margins */ 
+}
+
+.wrapper-website {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  flex:1;
+}
+
+.navigation {
+  margin: 0; 
+    
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-end;
+}
+
+@media all and (max-width: 800px) {
+  .navigation {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .navigation {
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+  }
+}
+
+/*
+.wrapper > * {
+  display:flex;
+  flex:1;
+}
+*/
+
+.container-website {
+  display: flex; /* or inline-flex */
+  flex: 22;
+  flex-direction: row;
+  /*width:100%;*/
+ /* height:100%;*/
+ /* height: 400px;*/
+}
+
+.container-primary {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  flex: 1;
+  border:4px solid red;
+  padding : 2px;
+}
+
+.container-newscell {
+  display: flex;
+  flex-direction: column;
+  flex : 1;
+  padding:2px;
+}
+
+.container-newscellhead {
+  display: flex;
+  flex-direction: column;
+  flex : 1;
+  border:5px solid green;
+  font-size:11pt;
+  font-weight:bold; 
+  text-align: center;
+}
+
+.container-newscellbody {
+  display: flex;
+  flex-direction: column;
+  flex : 3;
+  overflow: auto;
+  border:2px solid blue;
+  font-size:11pt;
+}
+
+.container-body {
+  flex: 5;
+
+  border:3px dashed OrangeRed;
+  margin : 2px;
+  padding : 2px;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;  
+  
+  -webkit-flex-flow: row wrap;
+}
+
+.container-body > * {
+  padding: 3px;
+  /*flex: 1 100%;*/
+}
+
+.container-leftcol {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  border: solid yellow;
+}
+
+.container-mapcol {
+  flex: 3;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items : stretch;
+  flex-direction: column;
+}
+
+.container-rightcol {
+  flex: 1;
+
+  display: flex;
+  /*justify-content: center;*/
+  flex-direction: column;
+  border: solid purple;
+}
+
+.container-plugin {
+  /*
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  */
+  border:2px solid brown;
+}
+
+.container-mapcolheading {
+  display: flex;
+  flex : 1;
+  border:4px solid green; 
+  font-size:11pt;
+  font-weight:bold;
+  padding: 4;
+  justify-content: center;
+}
+
+.container-mapholder {
+  display: flex;
+  flex : 10;
+  border:4px solid blue;
+  height: auto;
+  overflow: hidden
+}
+
+.embedded-image {
+  display : flex;
+  flex : 4;
+  width:100%;
+  height:auto;
+}
+
+.fill-height-or-more > div {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media all and (max-width: 600px) {
+  .container-body {
+    /*flex: 1 auto; */
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+  }
+}
+
+@media all and (max-width: 800px) {
+  .container-mapcol    { flex: 3 0px; }
+  .container-leftcol { order: 1; } 
+  .container-mapcol     { order: 2; }
+  .container-rightcol { order: 3; }
+  /*.container-plugin { order : 4;}*/
+}
