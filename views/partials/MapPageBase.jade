@@ -17,8 +17,8 @@ block append scriptsblock
             script(src='/javascripts/lib/SearcherCtrlMap.js')
     
 block append content
-
-    #spa_window(class="wrapper-website", style="height:100%;width:100%", ng-controller="SPACtrl")
+    
+    #spa_window(class="wrapper-website", style="height: {{wrapperHeight}}px;max-height: {{wrapperHeight}}px;", ng-controller="SPACtrl")
         div(id="idNavigator", class="navigation", ng-controller="PositionViewCtrl")
                                     
         div(class="havButton").
