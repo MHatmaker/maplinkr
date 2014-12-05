@@ -2,6 +2,39 @@ body {
   margin:0; /* This is used to reset any browser-default margins */ 
 }
 
+
+.mastersitecontrol-expander{
+  flex : 1;
+}
+
+.mastersite-summary{
+  display: flex;
+  flex-direction: column;
+  flex : 3;
+  overflow: auto;
+  border:4px solid blue;
+  font-size:11pt;
+}
+
+.container-mastersite {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  /*width:100%;*/
+ /* height:100%;*/
+ /* height: 400px;*/
+}
+  
+  @media all and (max-width: 600px) {
+  .container-mastersite {
+    display: flex; /* or inline-flex */
+    flex-direction: column;
+    overflow-y:auto;
+    /*width:100%;*/
+   /* height:100%;*/
+   /* height: 400px;*/
+  }
+}
+
 .wrapper-website {
   display: -webkit-box;
   display: -moz-box;

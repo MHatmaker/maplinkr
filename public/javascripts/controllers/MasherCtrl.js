@@ -16,6 +16,18 @@
         function MasherCtrl($scope, $location, $route, $routeParams) {
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
+            
+            $scope.Header = "Site Exerciser";
+            $scope.ExpandPlug = "Show Plugin";
+            $scope.ExpandSum = "Hide Summary";
+            $scope.ExpandNav = "Hide Navigator";
+            $scope.ExpandSite = "Hide WebSite";
+            $scope.VerbVis = "none";
+            $scope.MasterSiteVis = "inline";
+            $scope.NavigatorVis = "flex";
+            $scope.SiteVis = "flex";
+  
+            $scope.expBtnHeight = getButtonHeight();
             $scope.isCollapsed = false;
             $scope.sumExpandCollapse = "Collapse";
             

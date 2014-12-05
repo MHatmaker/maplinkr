@@ -1,11 +1,23 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
 function getDocHeight() {
-    return Math.max(
-        document.body.scrollHeight, document.documentElement.scrollHeight,
-        document.body.offsetHeight, document.documentElement.offsetHeight,
-        document.body.clientHeight, document.documentElement.clientHeight
-    );
+    // return Math.max(
+        // document.body.scrollHeight, document.documentElement.scrollHeight,
+        // document.body.offsetHeight, document.documentElement.offsetHeight,
+        // document.body.clientHeight, document.documentElement.clientHeight
+    // );
+    return window.innerHeight - 30;
+}
+
+function getButtonHeight(){
+  var btnHeight = getElemHeight("idExpButtonSum");
+  return btnHeight * 0.6;
+}
+  
+function getElemHeight(itm){
+  var elem = document.getElementById(itm);
+  var elemHeight = elem.clientHeight;
+  return elemHeight;
 }
 
 (function() {
@@ -22,6 +34,8 @@ function getDocHeight() {
             $scope.isWebSiteVisible = true;
             $scope.verbageExpandCollapse = "Expand";
             $scope.webSiteVisible = "Hide";
+            
+            $scope.expBtnHeight = getButtonHeight();
             
             var status = {
                 'website' : true,
@@ -145,7 +159,7 @@ function getDocHeight() {
                 var commonTopLine = angular.element(document.getElementById("top_line"));
                 var mnwnd = angular.element(document.getElementById("mainWindow"));
                 var ftPane = angular.element(document.getElementById("foot_pane"));
-                // var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
+                var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
                 
                 var topLineHgt = commonTopLine[0].offsetHeight;
                 var mnwndHgt = mnwnd[0].offsetHeight;

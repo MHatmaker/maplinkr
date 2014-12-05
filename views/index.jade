@@ -3,36 +3,51 @@ extends layout
 
 block content
         
-    div(ng-controller="MasherCtrl")
-        #top_line(ng-click="summmaryCollapser()", ng-cloak class="ng-cloak")
-            p(style="float: left;")
-                img(ng-src="../stylesheets/images/{{sumExpandCollapse}}.png", width="75%" height="75%")
-            p(style="padding-left:5px;font-size:14pt; font-weight: bold;") {{sumExpandCollapse}} Master Web Site Container
-                
-        #summary_header(collapse="isCollapsed", ng-cloak class="ng-cloak")
-            .background
-                div(id="mashbox", class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")
-                    p Synchronizing Maps From a Variety of Map Systems
+    div(ng-controller="MasherCtrl", style="height:100vh;")
+        #idMasterSite(class="container-mastersite")
+        
+            #idMasterSiteControlRow
+                #idMasterSiteExpander(class="mastersitecontrol-expander")
+                    #idExpButtonSum(class="havButton" ng-click="summmaryCollapser()")
+                        span
+                            figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
+                                img(src="../stylesheets/images/{{sumExpandCollapse}}.png", 
+                                  style="flex:1;float: left; padding: 0.01em 0.1em  0.01em  0.01em;")
+                                figcaption(style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandSum}}
+                            
+                #idNavigatorExpander(class="mastersitecontrol-expander")
+                    #idExpButtonNav(class="havButton" ng-click="onExpNavClick()")
+                        span
+                            figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
+                                img(src="../stylesheets/images/{{sumExpandCollapse}}.png",
+                                  style="flex:1;float: left;  padding: 0.01em 0.1em  0.01em  0.01em;")
+                                figcaption(style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;").
+                                    {{ExpandNav}}
                     
-                div(style="background:rgba(255,255,255,0.99); background-color: #ffffff;")
-                    div(ng-controller="TabsCtrl")
-                        ul
-                            li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
-                                div(ng-click="onClickTab(tab)")
-                                    span {{tab.title}} 
-                                        img(ng-src="{{tab.imgSrc}}", style="margin: 2px 5px 6px 5px")
+            #summary_header(collapse="isCollapsed", ng-cloak class="ng-cloak")
+                .background
+                    div(id="mashbox", class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")
+                        p Synchronizing Maps From a Variety of Map Systems
+                        
+                    div(style="background:rgba(255,255,255,0.99); background-color: #ffffff;")
+                        div(ng-controller="TabsCtrl")
+                            ul
+                                li(ng-repeat="tab in tabs", ng-class="{active:isActiveTab(tab.url)}")
+                                    div(ng-click="onClickTab(tab)")
+                                        span {{tab.title}} 
+                                            img(ng-src="{{tab.imgSrc}}", style="margin: 2px 5px 6px 5px")
 
-            #mainView(ng-cloak class="ng-cloak") {{currentTab.content}}
-                br
-                div(modal-show-websitedescription="", modal-visible="$parent.showDescriptionDialog", class="modal330", ng-controller="WebSiteDescriptionCtrl", modal-mdata="mData", role="dialog", class="modal", id="WebSiteDescriptionDialog", style="display: none; position:relative", data-backdrop="true")
-                                
-                div(ng-cloak class="ng-cloak")
-                    p(id="currentTabSelectedId", style="float: left; font-weight: bold; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} <img src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px'>
-                    input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Tell  Me About The Website')
-                    input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Show Me The Website')
-                    
+                #mainView(ng-cloak class="ng-cloak") {{currentTab.content}}
+                    br
+                    div(modal-show-websitedescription="", modal-visible="$parent.showDescriptionDialog", class="modal330", ng-controller="WebSiteDescriptionCtrl", modal-mdata="mData", role="dialog", class="modal", id="WebSiteDescriptionDialog", style="display: none; position:relative", data-backdrop="true")
+                                    
+                    div(ng-cloak class="ng-cloak")
+                        p(id="currentTabSelectedId", style="float: left; font-weight: bold; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} <img src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px'>
+                        input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Tell  Me About The Website')
+                        input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Show Me The Website')
+                        
                     
           
-        div(id="ngview_container", style="position:relative;height:100%;width:100%;")
-            ng-view
+            div(id="ngview_container", style="position:relative;height:100%;width:100%;")
+                ng-view
             
