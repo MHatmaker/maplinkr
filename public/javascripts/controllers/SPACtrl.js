@@ -1,24 +1,5 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
-function getDocHeight() {
-    // return Math.max(
-        // document.body.scrollHeight, document.documentElement.scrollHeight,
-        // document.body.offsetHeight, document.documentElement.offsetHeight,
-        // document.body.clientHeight, document.documentElement.clientHeight
-    // );
-    return window.innerHeight - 30;
-}
-
-function getButtonHeight(){
-  var btnHeight = getElemHeight("idExpButtonSum");
-  return btnHeight * 0.6;
-}
-  
-function getElemHeight(itm){
-  var elem = document.getElementById(itm);
-  var elemHeight = elem.clientHeight;
-  return elemHeight;
-}
 
 (function() {
     "use strict";

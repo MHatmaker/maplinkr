@@ -13,23 +13,27 @@
             'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
         };
         
-        function MasherCtrl($scope, $location, $route, $routeParams) {
+        var hgtComponents = {
+            "totalHgt" : null,
+            "idMasterSite" : null,
+            "idMasterSiteExpander": null,
+            "idMasterSiteSummary" : null,
+            "idNavigator" : null,
+            "idSiteTopRow" : null,
+            "idFooter" : null,
+        };
+  
+        function MasherCtrl($scope, $location, $route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
             
-            $scope.Header = "Site Exerciser";
-            $scope.ExpandPlug = "Show Plugin";
             $scope.ExpandSum = "Hide Summary";
             $scope.ExpandNav = "Hide Navigator";
-            $scope.ExpandSite = "Hide WebSite";
-            $scope.VerbVis = "none";
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
-            $scope.SiteVis = "flex";
   
             $scope.expBtnHeight = getButtonHeight();
             $scope.isCollapsed = false;
-            $scope.sumExpandCollapse = "Collapse";
             
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
@@ -45,17 +49,45 @@
                     isFirstViewing = false;
                 }
             });
-            
+       
             $scope.summmaryCollapser = function(){
+                $scope.MasterSiteVis = $scope.ExpandSum == "Show Summary" ? "inline" : "none";
+                $scope.ExpandSum = $scope.ExpandSum == "Show Summary" ? "Hide Summary" : "Show Summary";
+            
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent');
                 $scope.isCollapsed = !$scope.isCollapsed;
-                $scope.sumExpandCollapse =  $scope.isCollapsed ? "Expand" : "Collapse";
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
+                
+                /* From flexbox.js plunker
+                  var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                  showHeights(prevTotalHgt, totalHgt);
+                  prevTotalHgt = totalHgt;
+                  var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
+                  $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+                  $scope.bodyColHeight = colHgt;
+                  $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
+                  $scope.childSiteHeight = colHgt;
+                 */
             };
             selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;
             console.debug(selfMethods);
             
+            $scope.onExpNavClick = function(){
+                $scope.NavigatorVis = $scope.ExpandNav == "Show Navigator" ? "flex" : "none";
+                $scope.ExpandNav = $scope.ExpandNav == "Show Navigator" ? "Hide Navigator" : "Show Navigator";
+
+                /* From flexbox.js plunker
+                var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                showHeights(prevTotalHgt, totalHgt);
+                prevTotalHgt = totalHgt;
+                var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
+                $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+                $scope.bodyColHeight = colHgt;
+                $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
+                $scope.childSiteHeight = colHgt;
+                 */
+            };
             
             $scope.windowResized = function(){
                 $scope.$broadcast('windowResized');
@@ -63,6 +95,18 @@
                     // $scope.width = window.innerWidth;
                     // $scope.height = window.innerHeight;
                 // });
+                
+                /* From flexbox.js plunker
+                    calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    var totalHgt = getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    showHeights(prevTotalHgt, totalHgt);
+                    prevTotalHgt = totalHgt;
+                    var colHgt = getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+                    $scope.bodyColHeight = colHgt;
+                    $scope.wrapperHeight = getDocHeight() - totalHgt;
+                    $scope.childSiteHeight = colHgt;
+                    */
             };
             selfMethods["windowResized"] = $scope.windowResized;
             
