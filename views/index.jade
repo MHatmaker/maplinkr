@@ -6,7 +6,8 @@ block content
     div(ng-controller="MasherCtrl", style="height:100vh;")
         #idMasterSite(class="container-mastersite")
         
-            #idMasterSiteControlRow
+            #idMasterSiteControlRow(style="flex:1;", ng-cloak, class="ng-cloak")
+            
                 #idMasterSiteExpander(class="mastersitecontrol-expander")
                     #idExpButtonSum(class="havButton" ng-click="summmaryCollapser()")
                         span
@@ -24,7 +25,7 @@ block content
                                 figcaption(style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;").
                                     {{ExpandNav}}
                     
-            #summary_header(collapse="isCollapsed", ng-cloak class="ng-cloak")
+            #summary_header(collapse="isCollapsed", ng-cloak, class="ng-cloak")
                 .background
                     div(id="mashbox", class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")
                         p Synchronizing Maps From a Variety of Map Systems
@@ -37,11 +38,11 @@ block content
                                         span {{tab.title}} 
                                             img(ng-src="{{tab.imgSrc}}", style="margin: 2px 5px 6px 5px")
 
-                #mainView(ng-cloak class="ng-cloak") {{currentTab.content}}
+                #mainView(ng-cloak, class="ng-cloak") {{currentTab.content}}
                     br
                     div(modal-show-websitedescription="", modal-visible="$parent.showDescriptionDialog", class="modal330", ng-controller="WebSiteDescriptionCtrl", modal-mdata="mData", role="dialog", class="modal", id="WebSiteDescriptionDialog", style="display: none; position:relative", data-backdrop="true")
                                     
-                    div(ng-cloak class="ng-cloak")
+                    div(ng-cloak, class="ng-cloak")
                         p(id="currentTabSelectedId", style="float: left; font-weight: bold; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} <img src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px'>
                         input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Tell  Me About The Website')
                         input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='width:25%; margin-left:40px; font-weight: bold;', value='Show Me The Website')
