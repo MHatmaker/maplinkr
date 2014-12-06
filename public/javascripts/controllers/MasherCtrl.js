@@ -27,12 +27,12 @@
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
             
-            $scope.ExpandSum = "Hide Summary";
-            $scope.ExpandNav = "Hide Navigator";
+            $scope.ExpandSum = "Collapse";
+            $scope.ExpandNav = "Collapse";
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
   
-            $scope.expBtnHeight = getButtonHeight();
+            $scope.expBtnHeight = utils.getButtonHeight();
             $scope.isCollapsed = false;
             
             $scope.currentTab = null;
@@ -51,8 +51,8 @@
             });
        
             $scope.summmaryCollapser = function(){
-                $scope.MasterSiteVis = $scope.ExpandSum == "Show Summary" ? "inline" : "none";
-                $scope.ExpandSum = $scope.ExpandSum == "Show Summary" ? "Hide Summary" : "Show Summary";
+                $scope.MasterSiteVis = $scope.ExpandSum == "Expand" ? "inline" : "none";
+                $scope.ExpandSum = $scope.ExpandSum == "Expand" ? "Collapse" : "Expand";
             
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent');
@@ -74,8 +74,8 @@
             console.debug(selfMethods);
             
             $scope.onExpNavClick = function(){
-                $scope.NavigatorVis = $scope.ExpandNav == "Show Navigator" ? "flex" : "none";
-                $scope.ExpandNav = $scope.ExpandNav == "Show Navigator" ? "Hide Navigator" : "Show Navigator";
+                $scope.NavigatorVis = $scope.ExpandNav == "Expand" ? "flex" : "none";
+                $scope.ExpandNav = $scope.ExpandNav == "Expand" ? "Collapse" : "Expand";
 
                 /* From flexbox.js plunker
                 var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);

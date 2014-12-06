@@ -163,6 +163,11 @@ var utils = (function()
     };
     
 	return {
+        getDocHeight : getDocHeight,
+        getButtonHeight : getButtonHeight,
+        calculateComponentHeights : calculateComponentHeights,
+        getComponentHeights : getComponentHeights,
+        getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
 		toFixed : toFixedTwo,
         toFixedOne: toFixedOne,
         showLoading : showLoading,
