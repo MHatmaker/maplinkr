@@ -12,17 +12,15 @@
         function VerbageCtrl($scope) {
             console.debug('VerbageCtrl - initialize collapsed bool');
             // alert('VerbageCtrl - initialize some tabs');
-            $scope.isVerbageCollapsed = true;
-            $scope.VrbgWdth = '0%';
+            $scope.VerbVis = "none";
             console.log("init with isVerbageCollapsed = " + $scope.isVerbageCollapsed);
             // $scope.isGroupSearchOpen = false;
             // $scope.isMapSearchOpen = false;
             $scope.oneAtATime = true;
             
             
-            $scope.$on('CollapseVerbageEvent', function() {
-                $scope.VrbgWdth = $scope.VrbgWdth == '30%' ? '0%' : '30%';
-                $scope.isVerbageCollapsed = ! $scope.isVerbageCollapsed;
+            $scope.$on('CollapseVerbageEvent', function(event, args) {
+                $scope.VerbVis = args.verbage;
             });
             $scope.$on('SignInOutEmitEvent', function(event, args) {
                 $scope.$broadcast('SignInOutBroadcastEvent', args);

@@ -30,7 +30,7 @@ block append content
                  select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()")
                 div(class="havButton")
                   {{currentTab.title}}
-                div(id="idExpButton", class="havButton", ng-click="collapser()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
+                div(id="idExpButton", class="havButton", ng-click="onExpPlugClick()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
                   span
                     figure
                       figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
@@ -92,7 +92,7 @@ block append content
                       molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus. Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend. Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet lacinia odio diam idrisus. 
                       
                       
-            div(id="Verbage", class="container-plugin", style="display:{{isVerbageCollapsed}}", ng-controller="VerbageCtrl")
+            div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
               div(class="fill-height-or-more" flex=4 style="height:{{innerTblHeight}}px;max-height: {{innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
               
               

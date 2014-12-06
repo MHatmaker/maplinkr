@@ -77,24 +77,22 @@
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
                  
-            $scope.$on('CollapseSummaryEvent', function() {
-                // if($scope.map.resize)
-                    // $scope.map.resize();
+            $scope.$on('CollapseSummaryEvent', function(event, args) {
                 currentMapType.resizeMapPane($scope.isMapExpanded);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
             $scope.$on('WebSiteVisibilityEvent', function(event, args){
                 console.log('WebSiteVisibilityEvent');
-                var isVerbageVisible = args.verbage;
-                var isWebSiteVisible = args.website;
-                $scope.isMapExpanded = ! isVerbageVisible;
+                var VerbVis = args.verbage;
+                var isWebSiteVisible = args.website == 'flex' ? true : false;
+                $scope.isMapExpanded = VerbVis == 'flex' ? false : true;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
                 if(isWebSiteVisible){
-                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['small'];
+                     $scope.MapWdth = VerbVis == 'none' ? mapSize['full'] : mapSize['small'];
                 }
                 else{
-                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['full'];
+                     $scope.MapWdth = mapSize['full']; 
                 }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 resizeMap($scope.isMapExpanded, $scope.map);
@@ -102,18 +100,17 @@
             });
             
             $scope.$on('CollapseVerbageEvent', function(event, args) {
-                // $scope.map.width = $scope.map_canvas_root = $scope.MapWdth = $scope.MapWdth == mapSize['medium'] ? '9999em' : mapSize['medium'];
-                var isVerbageVisible = args.verbage;
-                var isWebSiteVisible = args.website;
+                var VerbVis = args.verbage;
+                var isWebSiteVisible = args.website == 'flex' ? true : false;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
-                $scope.isMapExpanded = ! isVerbageVisible;
+                $scope.isMapExpanded = VerbVis == 'flex' ? false : true;
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 
                 if(isWebSiteVisible){
-                     $scope.MapWdth = isVerbageVisible? mapSize['medium'] : mapSize['small'];
+                     $scope.MapWdth = VerbVis == 'none' ? mapSize['medium'] : mapSize['small'];
                 }
                 else{
-                     $scope.MapWdth = isVerbageVisible? mapSize['full'] : mapSize['full'];
+                     $scope.MapWdth = mapSize['full']; 
                 }
                 resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
