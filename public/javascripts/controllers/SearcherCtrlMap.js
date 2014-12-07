@@ -101,7 +101,7 @@ angular.isUndefinedOrNull = function(val) {
             }
             
             $scope.calculateHeights = function(){              
-                var vrbg = angular.element(document.getElementById("verbagePan"));
+                var vrbg = angular.element(document.getElementById("Verbage"));
                 var accHead = angular.element(document.getElementById("AccdianNews"));;
                 var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
                 var marginborder = (1 + 1) * 2;

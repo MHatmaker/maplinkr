@@ -54,7 +54,8 @@
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS',
         'lib/Modal311',
-        'lib/fsm'
+        'lib/fsm',
+        'lib/utils'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
     ], function(dojo, domReady, esriPortal, AgoNewWindowConfig, bootstrap ) {
         console.debug('call ready');

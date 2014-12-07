@@ -5,24 +5,25 @@
     "use strict";
 
     console.log('SPACtrl setup');
-    define(['angular', 'lib/fsm'], function(angular, finstatmach) {
+    define(['angular', 'lib/fsm', 'lib/utils'], function(angular, finstatmach, utils) {
         console.log('SPACtrl define');
         
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.isVerbageVisible = false;
             $scope.isSummaryCollapsed = false;
-            $scope.isWebSiteVisible = true;
             $scope.verbageExpandCollapse = "Expand";
-            $scope.webSiteVisible = "Hide";
+            $scope.webSiteVisible = "Collapse";
             
-  $scope.ExpandSite = "Hide WebSite";
-  $scope.VerbVis = "none";
-  $scope.MasterSiteVis = "inline";
-  $scope.NavigatorVis = "flex";
-  $scope.SiteVis = "flex";
+            $scope.ExpandSite = "Hide WebSite";
+            $scope.VerbVis = "none";
+            $scope.MasterSiteVis = "inline";
+            $scope.NavigatorVis = "flex";
+            $scope.SiteVis = "flex";
+            var prevTotalHgt = 0;
+            // var utils = utilmod;
             
-            $scope.expBtnHeight = getButtonHeight();
+            // $scope.expBtnHeight = utils.getButtonHeight();
             
             var status = {
                 'website' : "flex",
@@ -56,7 +57,7 @@
                 printStatus('Hide Plug-in!');
              }
                 
-            function onShowWebSite(e, from, to, msg){     "flex" : "none"
+            function onShowWebSite(e, from, to, msg){ 
                 status['website'] = "flex";
                 printStatus('Show Web Site!');
              }
@@ -104,31 +105,47 @@
             */
             
             utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-            var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-            showHeights(prevTotalHgt, totalHgt);
+            var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, $scope.SiteVis);
+            utils.showHeights(prevTotalHgt, totalHgt);
             prevTotalHgt = totalHgt;
-            var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
-            $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+            var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, $scope.SiteVis);
+            $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
             $scope.bodyColHeight = colHgt;
-            $scope.wrapperHeight = utils.getDocHeight() - totalHgt; // - hgtComponents.idFooter;
-            $scope.childSiteHeight = utils.getDocHeight() - totalHgt  + getElemHeight("idNavigator") + 
-            getElemHeight("idSiteTopRow") + utils.getElemHeight("idFooter");
+            $scope.wrapperHeight = utils.getDocHeight() - totalHgt; // - utils.getFooterHeight();
+            $scope.childSiteHeight = utils.getDocHeight() - totalHgt  + utils.getElemHeight("idNavigator") + 
+            utils.getElemHeight("idSiteTopRow") + utils.getElemHeight("idFooter");
             $scope.mapColWidth = $scope.ExpandSite == "Show WebSite" ? "100%" : "inherit";
             
             
-            $scope.siteHider = function(){
-                console.log("isWebSiteVisible before " + $scope.isWebSiteVisible);
-                if($scope.isWebSiteVisible == true){
+            $scope.onExpSiteClick = function(){
+                console.log("status['website'] before " + status['website']);
+                if(status['website'] == 'flex'){
                     fsm.onhidewebsite();
+                    $scope.mapColWidth = "100%";
                 }else{
                     fsm.onshowwebsite();
+                    $scope.mapColWidth = "inherit";
                 }
-                $scope.isWebSiteVisible = status['website'];
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
-                                                               'verbage' : status['plugin']);
-                $scope.webSiteVisible =  $scope.isWebSiteVisible ? "Hide" : "Show";
-                console.log("isWebSiteVisible after  " + $scope.isWebSiteVisible);
+                                                               'verbage' : status['plugin']});
+                console.log("status['website'] after  " + status['website']);
+                
+                $scope.SiteVis = $scope.ExpandSite == "Show WebSite" ? "flex" : "none";
+                var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, status['website']);
+                utils.showHeights(prevTotalHgt, totalHgt);
+                prevTotalHgt = totalHgt;
+                var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
+                if($scope.SiteVis == 'flex'){
+                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
+                }
+                else{
+                    $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
+                }               
+                $scope.bodyColHeight = colHgt;
+                $scope.wrapperHeight = getDocHeight() - totalHgt;
+                $scope.childSiteHeight = colHgt;
             }
+     
             /* 
             $scope.collapser = function(){
                 // $scope.$broadcast('CollapseVerbageEvent', { 'collapseIt' : $scope.isVerbageVisible });
@@ -150,15 +167,15 @@
                 $scope.VerbVis = $scope.ExpandPlug == "Show Plugin" ? "flex" : "none";
                 $scope.ExpandPlug = $scope.ExpandPlug == "Show Plugin" ? "Hide Plugin" : "Show Plugin";
 
-                var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, status['website']);
-                showHeights(prevTotalHgt, totalHgt);
+                var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, status['website']);
+                utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
-                var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
+                var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                 if($scope.SiteVis == 'flex'){
-                    $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
                 }
                 else{
-                    $scope.innerTblHeight = colHgt; // + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
+                    $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
                 }
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
@@ -166,6 +183,7 @@
                 $scope.bodyColHeight = colHgt;
                 $scope.wrapperHeight = getDocHeight() - totalHgt;
                 $scope.childSiteHeight = colHgt;
+                $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
             };
             
             $scope.$on('CollapseSummaryEvent', function(event, args) {
@@ -174,14 +192,14 @@
                 console.log("isSummaryCollapsed before " + $scope.isSummaryCollapsed);
                 $scope.isSummaryCollapsed = $scope.MasterSiteVis == 'flex' ? false  : true;
                 console.log("isSummaryCollapsed after  " + $scope.isSummaryCollapsed);
-                $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
+                // $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
             });
             
             $scope.$on('windowResized', function() {
                 console.log("windowResized with isSummaryCollapsed " + $scope.isSummaryCollapsed);
-                layoutPanes($scope.isSummaryCollapsed);
+                //layoutPanes($scope.isSummaryCollapsed);
             });
-            
+            /* 
             function calcAdjustments(){
                 var commonTopLine = angular.element(document.getElementById("top_line"));
                 var mnwnd = angular.element(document.getElementById("mainWindow"));
@@ -228,7 +246,8 @@
                 console.log("hstr = " + hstr);
             
                 return contentsHeight;
-            }
+            } 
+            */
         };
         
         function init(App) {

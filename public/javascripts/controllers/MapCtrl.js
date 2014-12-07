@@ -8,8 +8,9 @@
         'esri/map',
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
-        'lib/StartupArcGIS'
-    ], function(angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS) {
+        'lib/StartupArcGIS',
+        'lib/utils'
+    ], function(angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils) {
         console.log('MapCtrl define');
         
         var mapTypes = {'leaflet': StartupLeaflet,

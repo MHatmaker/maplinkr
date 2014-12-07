@@ -32,7 +32,7 @@
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
   
-            $scope.expBtnHeight = utils.getButtonHeight();
+            // $scope.expBtnHeight = utils.getButtonHeight();
             $scope.isCollapsed = false;
             
             $scope.currentTab = null;
