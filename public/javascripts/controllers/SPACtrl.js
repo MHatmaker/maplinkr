@@ -16,6 +16,7 @@
             $scope.webSiteVisible = "Collapse";
             
             $scope.ExpandSite = "Hide WebSite";
+            $scope.ExpandPlug = "Show Plugin";
             $scope.VerbVis = "none";
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
@@ -86,24 +87,7 @@
                 'onhidewebsite': onHideWebSite
               }
             })
-            
-            /*
-            var samplePageTopRowDefault = 0;            
-            var samplePageLeftColDefault = 0;
-            
-            $scope.ContentsHeight = 'auto';
-            console.log("init with isVerbageVisible = " + $scope.isVerbageVisible);
-            var sumHead = angular.element(document.getElementById("summary_header"));
-            var sumHeadHeightStart = sumHead[0].offsetHeight;
-            console.log("sumHeadHeight at startup = " + sumHeadHeightStart);
-            var samplePageTopRow = angular.element(document.getElementById("SamplePageTopRowId"));
-            var samplePageTopRowHgtInit = $scope.isVerbageVisible ?  samplePageTopRowDefault : samplePageTopRow[0].offsetHeight;
-            // samplePageTopRowHgtInit += 22;
-            var samplePageLeftCol = angular.element(document.getElementById("samplePageLeftColId"));
-            var samplePageLeftColHgtInit = $scope.isVerbageVisible ?  samplePageLeftColDefault : samplePageLeftCol[0].offsetHeight;
-            layoutPanes(false);
-            */
-            
+                        
             utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
             var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, $scope.SiteVis);
             utils.showHeights(prevTotalHgt, totalHgt);
@@ -131,6 +115,7 @@
                 console.log("status['website'] after  " + status['website']);
                 
                 $scope.SiteVis = $scope.ExpandSite == "Show WebSite" ? "flex" : "none";
+                $scope.ExpandSite = $scope.ExpandSite == "Show WebSite" ? "Hide WebSite" : "Show WebSite";
                 var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, status['website']);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
@@ -142,8 +127,9 @@
                     $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
                 }               
                 $scope.bodyColHeight = colHgt;
-                $scope.wrapperHeight = getDocHeight() - totalHgt;
+                $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
                 $scope.childSiteHeight = colHgt;
+                $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
             }
      
             /* 
@@ -164,6 +150,14 @@
             }
              */
             $scope.onExpPlugClick = function(){
+                if($scope.VerbVis == 'flex'){
+                    fsm.onhideplugin();
+                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
+                }
+                else{
+                    fsm.onshowplugin();
+                    $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
+                }
                 $scope.VerbVis = $scope.ExpandPlug == "Show Plugin" ? "flex" : "none";
                 $scope.ExpandPlug = $scope.ExpandPlug == "Show Plugin" ? "Hide Plugin" : "Show Plugin";
 
@@ -171,17 +165,11 @@
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
-                if($scope.SiteVis == 'flex'){
-                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
-                }
-                else{
-                    $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
-                }
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
                                                              
                 $scope.bodyColHeight = colHgt;
-                $scope.wrapperHeight = getDocHeight() - totalHgt;
+                $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
                 $scope.childSiteHeight = colHgt;
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
             };
