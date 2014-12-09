@@ -48,7 +48,7 @@ block append content
             div(class="container-primary")
                 #idSiteTopRow(class="container-newscell", style="display:{{SiteVis}}; flex: 0.2;")
                     div(class="container-newscellhead").
-                    Sed arcu magna.
+                        Sed arcu magna.
                     div(class="container-newscellbody" ).
                         |molestie at, fringilla in, sodales eu, elit.
                         |Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum
@@ -80,7 +80,7 @@ block append content
                                   img(ng-src="../stylesheets/images/NewsPapers.jpg", width="100%" height="60%")
                               
                               div(class="container-mapcol" style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; border: solid orange")
-                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{ContentsHeight}}px;width:{{MapWdth}};vertical-align:top;")
+                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{bodyColHeight}}px;width:{{MapWdth}};vertical-align:top;")
                                                         
                                   #map_canvas(style="height:100%;width:100%;margin:0px;")
                                
@@ -91,10 +91,15 @@ block append content
                                   Some Right Column Stuff
                                   
                                 div(class="container-newscellbody" style="border:2px solid blue;flex: 5; overflow-y:auto;").
-                                  molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus. Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend. Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet lacinia odio diam idrisus. 
+                                  | molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et 
+                                  | tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros 
+                                  | feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus.
+                                  | Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend.
+                                  | Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet 
+                                  | lacinia odio diam idrisus. 
                               
                 #idFooter(class="container-newscellhead").
-                The rest of this awesome web site contents featuring{{currentTab.title}}     
+                    The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
               div(class="fill-height-or-more" flex=4 style="height:{{innerTblHeight}}px;max-height: {{innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
@@ -125,7 +130,8 @@ block append content
                             br
                             h5 Wallace and Gromit Use Mash-over.
                             p(style='font-size:9pt;color: #333333; border:2px solid green;margin:1px;padding:2px;').
-                                Wallace and Gromit have improved the efficiency of their window washing service by incorporating community maps of reported dirty windows.
+                                | Wallace and Gromit have improved the efficiency of their window washing service by
+                                | incorporating community maps of reported dirty windows.
                             br
 
                         accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isInstructionsOpen")
@@ -135,10 +141,14 @@ block append content
                             h3 Using Mash-over
 
                             p(style='font-size:9pt;margin:1em').                              
-                                Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use different base maps or different themes for overlays.  Unlike standard layer overlays in a single viewer, the base layers and overlays do not interfere with the visibility or legibility of other selected layers.
+                                | Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use 
+                                |  base maps or different themes for overlays.  Unlike standard layer overlays in a 
+                                | single viewer, the base layers and overlays do not interfere with the visibility or 
+                                | of other selected layers.
 
                             p(style='font-size:9pt;margin:1em;').
-                                Mash-overs can be created from three map viewer sources, if the viewer system incorporates the mash-over plug-in.
+                                | Mash-overs can be created from three map viewer sources, if the viewer system incorporates
+                                | the mash-over plug-in.
 
                             ul#MapTypes(style="height:100%")
                                 li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
@@ -160,25 +170,34 @@ block append content
                                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
                                             
                                                 p(style='font-size:9pt;margin:1em').                              
-                                                    The newly selected map replaces the current map in the map viewer to the left. 
+                                                    | The newly selected map replaces the current map in the map viewer to 
+                                                    | the left. 
                                             accordion-group(id="newTabPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewTabPaneOpen")
                                                 accordion-heading(style='font-size:9pt;')
                                                     | <b>New Tab / Same Browser<b/>
                                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
                                             
                                                 p(style='font-size:9pt;margin:1em').                              
-                                                    The newly selected map opens in a new tab in the current browser.  Switch to the tab and drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.  This is a fully functional web browser.
+                                                    | The newly selected map opens in a new tab in the current browser. 
+                                                    | Switch to the tab and drag the tab to the desktop, which displays the 
+                                                    | tab's contents in a completely new browser instance.  This is a fully 
+                                                    | functional web browser.
                                             accordion-group(id="newWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewWindowPaneOpen")
                                                 accordion-heading(style='font-size:9pt;')
                                                     | <b>New Window</b>
                                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
                                             
                                                 p(style='font-size:9pt;margin:1em').                              
-                                                    The newly selected map is opened in a map viewer in a new popup window.  Although this is not a full-featured new web browser instance, it provides complete functionality as a synchronized map viewer.  If popups are turned off, use sequence described under the "New Tab" option above.
+                                                    | The newly selected map is opened in a map viewer in a new popup 
+                                                    | window.  Although this is not a full-featured new web browser instance,
+                                                    | it provides complete functionality as a synchronized map viewer.  If 
+                                                    | popups are turned off, use sequence described under the "New Tab" 
+                                                    | option above.
                                             
                                 li(class="acc li") 4. Create a Pusher channel:
                                     p(style='font-size:9pt;margin:1em;').
-                                        A second dialog opens, requesting a Pusher channel name.  Specify a name that will be unique for the shared session.
+                                        | A second dialog opens, requesting a Pusher channel name.  Specify a name that 
+                                        | will be unique for the shared session.
                                 
                                 li(class="acc li") 5. Experiment with synchronized maps:
                                 
@@ -234,7 +253,8 @@ block append content
                             h3 Concepts and Features
                             
                             p(style='font-size:9pt;margin:1em').                              
-                                Multiple users can view synchronized maps in web browsers on other devices.  After finding an ArcGIS WebMap that you want to share:
+                                | Multiple users can view synchronized maps in web browsers on other devices.  After 
+                                | finding an ArcGIS WebMap that you want to share:
                                 
                             ul#StepsSharing(style="height:100%")
                             
@@ -243,10 +263,16 @@ block append content
                                 li(class="acc li") 3. Paste the link in an email to collaborators. 
                                
                             p(style='font-size:9pt;margin:1em').
-                                The url includes the name of the Pusher channel that you have selected.  As users open the link, they will be subscribing to share map clicks, pans and zooms with all other users as any user manipulates any map view.
+                                | The url includes the name of the Pusher channel that you have selected.  As users open
+                                | the link, they will be subscribing to share map clicks, pans and zooms with all other users
+                                | as any user manipulates any map view.
                                 
                             p(style='font-size:9pt;margin:1em').
-                                The Pusher channel can also be set without opening a new map viewer by opening the "Set Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.  This step is necessary if you and your collaborators want to synchronize map views where all collaborators already have synchronize-capable maps open.
+                                | The Pusher channel can also be set without opening a new map viewer by opening the "Set 
+                                | Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize 
+                                | their displays with your display.  This step is necessary if you and your collaborators 
+                                | want to synchronize map views where all collaborators already have synchronize-capable
+                                | maps open.
 
                             br
                         accordion-group(id="MailSenderId", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isCopyMapLinkOpen")

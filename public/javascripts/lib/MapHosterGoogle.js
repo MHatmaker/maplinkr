@@ -12,7 +12,8 @@
     define([
         'angular'
         , 'controllers/PositionViewCtrl'
-        ], function(angular, PositionViewCtrl) {
+        , 'lib/utils'
+        ], function(angular, PositionViewCtrl, utils) {
 
         var 
             mphmap,

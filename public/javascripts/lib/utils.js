@@ -65,7 +65,7 @@
             var masterSiteHgt = 0;
             var hgt = 0;
             hgtComponents.idMasterSite =  masterSiteHgt = getDocHeight();
-            hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteExpander"); totalHgt += hgt;
+            hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
             hgtComponents.idNavigator =  hgt = getElemHeight("idNavigator");  totalHgt += hgt;
             hgtComponents.idSiteTopRow =  hgt = getElemHeight("idSiteTopRow"); totalHgt += hgt;

@@ -12,6 +12,7 @@
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.isVerbageVisible = false;
             $scope.isSummaryCollapsed = false;
+            $scope.isNavigatorCollapsed = false;
             $scope.verbageExpandCollapse = "Expand";
             $scope.webSiteVisible = "Collapse";
             
@@ -28,7 +29,8 @@
             
             var status = {
                 'website' : "flex",
-                'plugin' : "none"
+                'plugin' : "none",
+                'navigator' : 'flex'
                 };
                 
             var verbageWidth = {
@@ -181,12 +183,36 @@
                 $scope.isSummaryCollapsed = $scope.MasterSiteVis == 'flex' ? false  : true;
                 console.log("isSummaryCollapsed after  " + $scope.isSummaryCollapsed);
                 // $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
+                adjustHeights($scope);
+                
+            });
+            
+            $scope.$on('CollapseNavigatorEvent', function(event, args) {
+                $scope.MasterSiteVis = args.mastersitevis;
+                $scope.NavigatorVis = args.navVis;
+                console.log("isSummaryCollapsed before " + $scope.isSummaryCollapsed);
+                $scope.isNavigatorCollapsed = $scope.NavigatorVis == 'flex' ? false  : true;
+                console.log("isSummaryCollapsed after  " + $scope.isNavigatorCollapsed);
+                // $scope.ContentsHeight =  layoutPanes($scope.isSummaryCollapsed);
+                adjustHeights($scope);
             });
             
             $scope.$on('windowResized', function() {
                 console.log("windowResized with isSummaryCollapsed " + $scope.isSummaryCollapsed);
                 //layoutPanes($scope.isSummaryCollapsed);
             });
+            
+            function adjustHeights(scope){
+                /* From flexbox.js plunker  */
+                var totalHgt = utils.getComponentHeights(scope, scope.MasterSiteVis, scope.SiteVis);
+                utils.showHeights(prevTotalHgt, totalHgt);
+                prevTotalHgt = totalHgt;
+                var colHgt = utils.getAvailableSiteColumnHeights(scope.MasterSiteVis, scope.SiteVis);
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
+                $scope.bodyColHeight = colHgt;
+                $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
+                $scope.childSiteHeight = colHgt;
+            }
             /* 
             function calcAdjustments(){
                 var commonTopLine = angular.element(document.getElementById("top_line"));

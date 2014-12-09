@@ -47,7 +47,8 @@
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
-            currentMapType = mapTypes[$scope.currentTab.maptype];
+            var mptp = $scope.currentTab.maptype;
+            currentMapType = mapTypes[mptp];
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
             console.log("width " + width + ", height " + height);

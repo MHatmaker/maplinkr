@@ -78,7 +78,8 @@
                 $scope.NavigatorVis = $scope.ExpandNav == "Expand" ? "flex" : "none";
                 $scope.ExpandNav = $scope.ExpandNav == "Expand" ? "Collapse" : "Expand";
 
-                $scope.$broadcast('CollapseNavigatorEvent');
+                $scope.$broadcast('CollapseNavigatorEvent', {'mastersitevis' : $scope.ExpandSum,
+                                                            'navVis' : $scope.NavigatorVis });
                 
                 /* From flexbox.js plunker
                 var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
