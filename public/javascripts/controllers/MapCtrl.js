@@ -97,7 +97,7 @@
                      $scope.MapWdth = mapSize['full']; 
                 }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
-                resizeMap($scope.isMapExpanded, $scope.map);
+                // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
             
@@ -114,7 +114,7 @@
                 else{
                      $scope.MapWdth = mapSize['full']; 
                 }
-                resizeMap($scope.isMapExpanded, $scope.map);
+                // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
         }

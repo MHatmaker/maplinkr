@@ -197,9 +197,9 @@ body {
   
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   flex: 0.3;
-  
+  overflow-y : auto;
   border:2px solid brown;
 }
 

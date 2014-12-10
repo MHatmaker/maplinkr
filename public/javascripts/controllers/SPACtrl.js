@@ -112,8 +112,6 @@
                     fsm.onshowwebsite();
                     $scope.mapColWidth = "inherit";
                 }
-                $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
-                                                               'verbage' : status['plugin']});
                 console.log("status['website'] after  " + status['website']);
                 
                 $scope.SiteVis = $scope.ExpandSite == "Show WebSite" ? "flex" : "none";
@@ -132,6 +130,8 @@
                 $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
                 $scope.childSiteHeight = colHgt;
                 $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
+                $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
+                                                               'verbage' : status['plugin']});
             }
      
             /* 
@@ -154,11 +154,9 @@
             $scope.onExpPlugClick = function(){
                 if($scope.VerbVis == 'flex'){
                     fsm.onhideplugin();
-                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
                 }
                 else{
                     fsm.onshowplugin();
-                    $scope.innerTblHeight = colHgt; // + utils.getTopRowHeight() + utils.getFooterHeight();
                 }
                 $scope.VerbVis = $scope.ExpandPlug == "Show Plugin" ? "flex" : "none";
                 $scope.ExpandPlug = $scope.ExpandPlug == "Show Plugin" ? "Hide Plugin" : "Show Plugin";
@@ -167,13 +165,14 @@
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
-                $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
-                                                             'verbage' : status['plugin']});
                                                              
                 $scope.bodyColHeight = colHgt;
                 $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
                 $scope.childSiteHeight = colHgt;
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
+                $scope.innerTblHeight = status['website'] == 'none' ? colHgt : colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
+                $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
+                                                             'verbage' : status['plugin']});
             };
             
             $scope.$on('CollapseSummaryEvent', function(event, args) {

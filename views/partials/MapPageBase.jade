@@ -102,7 +102,7 @@ block append content
                     The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
-              div(class="fill-height-or-more" flex=4 style="height:{{innerTblHeight}}px;max-height: {{innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
+              div(style="flex:4;height:{{$scope.$parent.innerTblHeight}}px;max-height: {{$scope.$parent.innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
               
               
                 div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
