@@ -111,7 +111,6 @@ body {
 }
 
 .container-body {
-  display: flex;  
   border:3px dashed OrangeRed;
   margin : 2px;
   padding : 2px;
@@ -119,7 +118,6 @@ body {
 
 .container-body > * {
   padding: 3px;
-  flex: 1 100%;
 }
 
 .bodyMap{
@@ -148,8 +146,7 @@ body {
 
 @media all and (max-width: 800px) {
   .aside { flex: 1; }
-  .container-body {flex-direction: column;}
-}
+}  
 
 @media all and (max-width: 800px) {
   .aside { flex: 1; }
@@ -163,16 +160,6 @@ body {
   .container-mapcol     { order: 2; }
   .container-rightcol { order: 3; }
   /*.container-plugin { order : 4;}*/
-  .container-body {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-    
-  }
 }
 
 @media all and (min-width: 800px) {

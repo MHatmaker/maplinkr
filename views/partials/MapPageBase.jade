@@ -65,30 +65,30 @@ block append content
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;display:flex; width: {{mapColWidth}};")
                             div(class="container-leftcol aside", style="display:{{SiteVis}};height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; overflow-y:auto;")
-                              div(class="container-newscell")
-                                div(class="container-newscellhead", style="color:red;").
-                                  WHAT IS NEW
-                                div(class="container-newscellbody").
-                                  |We now have WebMap mash-over capabilities
-                                  |
-                                  | Click on the "Expand Control Pane" and "Hide Web Site" icons.
-                                  | Then Select the Mash-over Instruction accordion pane for all the latest.
+                                div(class="container-newscell")
+                                    div(class="container-newscellhead", style="color:red;").
+                                        WHAT IS NEW
+                                    div(class="container-newscellbody").
+                                        We now have WebMap mash-over capabilities
+                                      
+                                        Click on the "Expand Control Pane" and "Hide Web Site" icons.
+                                        Then Select the Mash-over Instruction accordion pane for all the latest.
                                   
-                                div(class="container-newscellhead" style="font-size:9pt;color:black; font-weight: bold;").
-                                  OTHER STUFF
-                                div(class="container-newscellbody")
-                                  img(ng-src="../stylesheets/images/NewsPapers.jpg", width="100%" height="60%")
-                              
-                              div(class="container-mapcol" style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; border: solid orange")
-                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{bodyColHeight}}px;width:{{MapWdth}};vertical-align:top;")
-                                                        
-                                  #map_canvas(style="height:100%;width:100%;margin:0px;")
+                                    div(class="container-newscellhead" style="font-size:9pt;color:black; font-weight: bold;").
+                                        OTHER STUFF
+                                    div(class="container-newscellbody") 
+                                        img(ng-src="../stylesheets/images/NewsPapers.jpg")
                                
-                                    img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+                            div(class="container-mapcol" style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; border: solid orange")
+                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{$parent.bodyColHeight}}px;width:{{MapWdth}};vertical-align:top;")
+                                                        
+                                    #map_canvas(style="height:100%;width:100%;margin:0px;")
+                               
+                                        img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                               
-                              div(class="container-rightcol aside", style="overflow-y:auto;display:{{SiteVis}};height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
+                            div(class="container-rightcol aside", style="overflow-y:auto;display:{{SiteVis}};height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscellhead" style=" overflow:auto; flex:2;")
-                                  Some Right Column Stuff
+                                    Some Right Column Stuff
                                   
                                 div(class="container-newscellbody" style="border:2px solid blue;flex: 5; overflow-y:auto;").
                                   | molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et 
@@ -102,7 +102,7 @@ block append content
                     The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
-              div(style="flex:4;height:{{$scope.$parent.innerTblHeight}}px;max-height: {{$scope.$parent.innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
+              div(style="flex:4;height:{{$parent.innerTblHeight}}px;max-height: {{$parent.innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
               
               
                 div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
