@@ -57,7 +57,11 @@
         }
         
         function getFooterHeight(){
-            hgtComponents.idFooter;
+            return hgtComponents.idFooter;
+        }
+        
+        function getNavigatorHeight(){
+            return hgtComponents.idNavigator;
         }
         
         function calculateComponentHeights(sumvis, sitevis){
@@ -185,6 +189,7 @@
             getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
             getTopRowHeight : getTopRowHeight,
             getFooterHeight : getFooterHeight,
+            getNavigatorHeight : getNavigatorHeight,
             getElemHeight : getElemHeight,
             toFixed : toFixedTwo,
             toFixedOne: toFixedOne,

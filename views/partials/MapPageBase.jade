@@ -18,8 +18,8 @@ block append scriptsblock
     
 block append content
     
-#idChildWebSite(style="height:{{childSiteHeight}}px;max-height: {{childSiteHeight}}px;")
-    #spa_window(class="wrapper-website", ng-controller="SPACtrl")
+#idChildWebSite
+    #spa_window(class="wrapper-website", ng-controller="SPACtrl", style="height:{{childSiteHeight}}px;max-height: {{childSiteHeight}}px;")
         #idNavigator(class="navigation", ng-controller="PositionViewCtrl", style="display:{{NavigatorVis}};")
                                     
             div(class="havButton").

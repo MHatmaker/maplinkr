@@ -98,8 +98,8 @@
             $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
             $scope.bodyColHeight = colHgt;
             $scope.wrapperHeight = utils.getDocHeight() - totalHgt; // - utils.getFooterHeight();
-            $scope.childSiteHeight = utils.getDocHeight() - totalHgt  + utils.getElemHeight("idNavigator") + 
-                utils.getElemHeight("idSiteTopRow") + utils.getElemHeight("idFooter");
+            $scope.childSiteHeight = utils.getDocHeight() - totalHgt  + utils.getNavigatorHeight() + 
+                utils.getTopRowHeight() + utils.getFooterHeight();
             $scope.mapColWidth = $scope.ExpandSite == "Show WebSite" ? "100%" : "inherit";
             
             
