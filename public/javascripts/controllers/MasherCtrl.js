@@ -55,7 +55,7 @@
                 $scope.ExpandSum = $scope.ExpandSum == "Expand" ? "Collapse" : "Expand";
             
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
-                $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.ExpandSum,
+                $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis,
                                                             'navVis' : $scope.NavigatorVis });
                 $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
@@ -78,7 +78,7 @@
                 $scope.NavigatorVis = $scope.ExpandNav == "Expand" ? "flex" : "none";
                 $scope.ExpandNav = $scope.ExpandNav == "Expand" ? "Collapse" : "Expand";
 
-                $scope.$broadcast('CollapseNavigatorEvent', {'mastersitevis' : $scope.ExpandSum,
+                $scope.$broadcast('CollapseNavigatorEvent', {'mastersitevis' : $scope.MasterSiteVis,
                                                             'navVis' : $scope.NavigatorVis });
                 
                 /* From flexbox.js plunker

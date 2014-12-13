@@ -65,7 +65,7 @@
             // var colHgt = parentScope.bodyColHeight;
             // var mapCnv = angular.element(document.getElementById("map_wrapper"));
             // mapCnv.css({"height": hstr});
-            $scope.MapWdth = mapSize['small'];
+            // $scope.MapWdth = mapSize['small'];
             var hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
             console.log(hstr);
             mapWrp.css({"width": hstr});
@@ -75,7 +75,7 @@
             var lflt = currentMapType.config(null);
             $scope.map = currentMapType.getMap();
             // $scope.map.width = mapSize['medium'];
-            $scope.MapWdth = mapSize['small'];
+            // $scope.MapWdth = mapSize['small'];
             $scope.isMapExpanded = false;
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
@@ -95,12 +95,12 @@
                 var isWebSiteVisible = args.website == 'flex' ? true : false;
                 $scope.isMapExpanded = VerbVis == 'flex' ? false : true;
                 // $scope.isMapExpanded = ! $scope.isMapExpanded;
-                if(isWebSiteVisible){
-                     $scope.MapWdth = VerbVis == 'none' ? mapSize['full'] : mapSize['small'];
-                }
-                else{
-                     $scope.MapWdth = mapSize['full']; 
-                }
+                // if(isWebSiteVisible){
+                     // $scope.MapWdth = VerbVis == 'none' ? mapSize['full'] : mapSize['small'];
+                // }
+                // else{
+                     // $scope.MapWdth = mapSize['full']; 
+                // }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
@@ -113,12 +113,12 @@
                 $scope.isMapExpanded = VerbVis == 'flex' ? false : true;
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 
-                if(isWebSiteVisible){
-                     $scope.MapWdth = VerbVis == 'none' ? mapSize['medium'] : mapSize['small'];
-                }
-                else{
-                     $scope.MapWdth = mapSize['full']; 
-                }
+                // if(isWebSiteVisible){
+                     // $scope.MapWdth = VerbVis == 'none' ? mapSize['medium'] : mapSize['small'];
+                // }
+                // else{
+                     // $scope.MapWdth = mapSize['full']; 
+                // }
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });

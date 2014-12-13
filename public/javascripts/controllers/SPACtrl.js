@@ -206,7 +206,7 @@
                 var totalHgt = utils.getComponentHeights(scope, scope.MasterSiteVis, scope.SiteVis);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
-                var colHgt = utils.getAvailableSiteColumnHeights(scope.MasterSiteVis, scope.SiteVis);
+                var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, scope.SiteVis);
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
                 $scope.bodyColHeight = colHgt;
                 $scope.wrapperHeight = utils.getDocHeight() - totalHgt;
