@@ -125,7 +125,7 @@
         if( sumVis == "inline"){
           if(siteVis == 'flex'){
             var colHgtB = hgtComponents.idMasterSite - hgtComponents.totalHgt;
-            colHgt = colHgtB  - 20;
+            colHgt = colHgtB;
             showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{ // siteVis == "none"
@@ -139,11 +139,12 @@
           if(siteVis == 'flex'){
             var colHgtA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator 
                - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
-            colHgt = colHgtA - 20;
+            colHgt = colHgtA
             showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{ // siteVis == "none"
-            var colHgtAA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator;
+            var colHgtAA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator
+                 - hgtComponents.idFooter;
             colHgt = colHgtAA;
             showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
