@@ -38,7 +38,7 @@
             // document.body.offsetHeight, document.documentElement.offsetHeight,
             // document.body.clientHeight, document.documentElement.clientHeight
         // );
-        return window.innerHeight - 30;
+        return window.innerHeight;
         }
 
         function getButtonHeight(){
@@ -50,6 +50,14 @@
             var elem = document.getElementById(itm);
             var elemHeight = elem.clientHeight;
             return elemHeight;
+        }
+        
+        function setElementHeight(itm, hgt){
+            // var elem = angular.element(document.getElementById(itm))[0];
+            var elem = document.getElementById(itm);
+            var hstr = String.format("{0}px", hgt);
+            // elem.css({"height": hstr});
+            elem.setAttribute("style","height:" + hstr);
         }
         
         function getTopRowHeight(){
@@ -68,7 +76,7 @@
             var totalHgt = 0;
             var masterSiteHgt = 0;
             var hgt = 0;
-            hgtComponents.idMasterSite =  masterSiteHgt = getDocHeight();
+            hgtComponents.idMasterSite =  masterSiteHgt = getDocHeight(); // - 30;
             hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
             hgtComponents.idNavigator =  hgt = getElemHeight("idNavigator");  totalHgt += hgt;
@@ -76,6 +84,7 @@
             hgtComponents.idFooter =  hgt = getElemHeight("idFooter");  totalHgt += hgt;
             hgtComponents.totalHgt = totalHgt;
             console.log(masterSiteHgt);
+            console.debug(hgtComponents);
         }
       
       
@@ -84,21 +93,21 @@
         if(sumVis == "inline"){
           if(siteVis == 'flex'){
             totalHgt = hgtComponents.totalHgt;
-            showRelativeHeights(totalHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{
             totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
-            showRelativeHeights(totalHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
         else{  // sumVis == "none"
           if(siteVis == 'flex'){
             totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
-            showRelativeHeights(totalHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{
             totalHgt = hgtComponents.idMasterSiteExpander + hgtComponents.idNavigator;
-            showRelativeHeights(totalHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
         if(scope.NavigatorVis == "none"){
@@ -113,33 +122,35 @@
         var colHgt = 0;
         if( sumVis == "inline"){
           if(siteVis == 'flex'){
-            var colHgtB = getDocHeight() - hgtComponents.totalHgt;
+            var colHgtB = hgtComponents.idMasterSite - hgtComponents.totalHgt;
             colHgt = colHgtB
-            showRelativeHeights(colHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{ // siteVis == "none"
-            var colHgtBB = getDocHeight() -  hgtComponents.idMasterSiteExpander
+            var colHgtBB = hgtComponents.idMasterSite -  hgtComponents.idMasterSiteExpander
               - hgtComponents.idMasterSiteSummary - hgtComponents.idNavigator;
             colHgt = colHgtBB;
-            showRelativeHeights(colHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
         else{ // sumVis == "none"
           if(siteVis == 'flex'){
-            var colHgtA = getDocHeight() - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator - 
+            var colHgtA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator - 
               hgtComponents.idSiteTopRow - hgtComponents.idFooter;
             colHgt = colHgtA;
-            showRelativeHeights(colHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{ // siteVis == "none"
-            var colHgtAA = getDocHeight() - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator;
+            var colHgtAA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander - hgtComponents.idNavigator;
             colHgt = colHgtAA;
-            showRelativeHeights(colHgt, getDocHeight(), hgtComponents.idMasterSiteSummary);
+            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
         if(scope.NavigatorVis == "none"){
             colHgt += hgtComponents.idNavigator;
         }
+        console.log(" getAvailableSiteColumnHeights : " + colHgt);
+        console.debug(hgtComponents);
         return colHgt;
       }
       
@@ -191,6 +202,7 @@
             getFooterHeight : getFooterHeight,
             getNavigatorHeight : getNavigatorHeight,
             getElemHeight : getElemHeight,
+            setElementHeight : setElementHeight,
             toFixed : toFixedTwo,
             toFixedOne: toFixedOne,
             showLoading : showLoading,
