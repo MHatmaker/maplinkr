@@ -102,200 +102,200 @@ block append content
                     The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
-              div(style="flex:4;height:{{$parent.innerTblHeight}}px;max-height: {{$parent.innerTblHeight}}px; border:2px solid blue; margin:2px; overflow-y: auto;")
+                div(style="flex:4;height:{{$parent.innerTblHeight}}px;max-height: {{$parent.innerTblHeight}}px; border:2px solid blue; margin:2px;")
               
               
-                div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
-                
-                div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", style="display: none; position:relative", id="DestWndDialog", data-backdrop="true")
-                                
-                div(class = "acc scrollable", style="height:100%;width:100%;position:absolute;")
-                    accordion(id="Accdian", style="height:100%;width:100%;", close-others="true")
-                        accordion-group(id="AccdianNews", style="height:100%;width:100%;vertical-align:top;" is-open="status.isNewsOpen")
-                            accordion-heading
-                                 | <b>Mashover Release News</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
-                            div(style='font-size:9pt;border:2px solid red;margin:1px;padding:2px;')
-                                h4(style="color:red") Latest Release
-                                h5(style="color:red")
-                                    | Release notes will appear here as new features are added to the Mash-over plug-in.
-                                h5(style="color:red")
-                                    | Select the Mash-over Instruction accordion pane below some step-by-step help.
-                                
-                            h4 OTHER GREAT STUFF
-                            br
-                            
-                            img(ng-src="../stylesheets/images/NewsPapers.jpg", width="95%" height="95%")
-                            
-                            br
-                            h5 Wallace and Gromit Use Mash-over.
-                            p(style='font-size:9pt;color: #333333; border:2px solid green;margin:1px;padding:2px;').
-                                | Wallace and Gromit have improved the efficiency of their window washing service by
-                                | incorporating community maps of reported dirty windows.
-                            br
-
-                        accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isInstructionsOpen")
-                            accordion-heading
-                                 | <b>Mash-over Instructions</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")
-                            h3 Using Mash-over
-
-                            p(style='font-size:9pt;margin:1em').                              
-                                | Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use 
-                                |  base maps or different themes for overlays.  Unlike standard layer overlays in a 
-                                | single viewer, the base layers and overlays do not interfere with the visibility or 
-                                | of other selected layers.
-
-                            p(style='font-size:9pt;margin:1em;').
-                                | Mash-overs can be created from three map viewer sources, if the viewer system incorporates
-                                | the mash-over plug-in.
-
-                            ul#MapTypes(style="height:100%")
-                                li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
-                                li(class="acc li") 2 A web page with a google map display.
-                                li(class="acc li") 3 A web page with an open source map display.
-                                
-                            h3( style="text-align:left") Steps
-
-                            ul#StepsList(style="height:100%")
-                                li(class="acc li") 1. Open the accordion pane for group search.  Enter a search term and click the submit button.
-                                li(class="acc li") 2. The group pane displays groups matching the search term.  Click on one of the groups.
-                                li(class="acc li") 3. The map selection pane opens showing available maps in the group.  Click on a map item.  A dialog opens offering a choice of three possible destination viewers where the selected map can be displayed.  The most convenient option is usually the "New Window" option.
-                                
-                                    div
-                                        accordion(close-others="true") 
-                                            accordion-group(id="sameWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isSameWindowPaneOpen")
-                                                accordion-heading
-                                                    | <b>Same Window </b>
-                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
-                                            
-                                                p(style='font-size:9pt;margin:1em').                              
-                                                    | The newly selected map replaces the current map in the map viewer to 
-                                                    | the left. 
-                                            accordion-group(id="newTabPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewTabPaneOpen")
-                                                accordion-heading(style='font-size:9pt;')
-                                                    | <b>New Tab / Same Browser<b/>
-                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
-                                            
-                                                p(style='font-size:9pt;margin:1em').                              
-                                                    | The newly selected map opens in a new tab in the current browser. 
-                                                    | Switch to the tab and drag the tab to the desktop, which displays the 
-                                                    | tab's contents in a completely new browser instance.  This is a fully 
-                                                    | functional web browser.
-                                            accordion-group(id="newWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewWindowPaneOpen")
-                                                accordion-heading(style='font-size:9pt;')
-                                                    | <b>New Window</b>
-                                                    i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
-                                            
-                                                p(style='font-size:9pt;margin:1em').                              
-                                                    | The newly selected map is opened in a map viewer in a new popup 
-                                                    | window.  Although this is not a full-featured new web browser instance,
-                                                    | it provides complete functionality as a synchronized map viewer.  If 
-                                                    | popups are turned off, use sequence described under the "New Tab" 
-                                                    | option above.
-                                            
-                                li(class="acc li") 4. Create a Pusher channel:
-                                    p(style='font-size:9pt;margin:1em;').
-                                        | A second dialog opens, requesting a Pusher channel name.  Specify a name that 
-                                        | will be unique for the shared session.
-                                
-                                li(class="acc li") 5. Experiment with synchronized maps:
-                                
-                                    ul#StepsListSynch(style="height:100%")
+                    div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
+                    
+                    div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", style="display: none; position:relative", id="DestWndDialog", data-backdrop="true")
                                     
-                                        li(class="acc li") a. Resize and move any open map viewer windows so that they are simultaneously visible.
-                                        li(class="acc li") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
-                                        li(class="acc li") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
-
-                        
-                            
-                        accordion-group(id="GroupSearcherPane", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isGroupSearchOpen")
-                            accordion-heading
-                                 | <b>Group Searcher</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isGroupSearchOpen, 'glyphicon-chevron-right': !status.isGroupSearchOpen}")
-                            #SearchGroup(ng-controller="SearcherCtrlGrp")
-                                div(id="searchToolWrapperGroup")
-                                    span
-                                        label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
-                                        
-                                        input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
-                                         
-                                    h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
-                                    span
-                                        input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                        input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
-
-                                    div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
-                                        div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
-
-                        accordion-group(id="MapSearcherPane", style="height:100%;width:100%;vertical-align:top;", is-open="status.isMapSearchOpen")
-                            accordion-heading
-                                 | <b>Map Searcher</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isMapSearchOpen, 'glyphicon-chevron-right': !status.isMapSearchOpen}")
-                            #SearchMap(ng-controller="SearcherCtrlMap")
-                                div(id="searchToolWrapperMap")
-                                    span
-                                        label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
-                                        
-                                        input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
-
-                                    h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
-                                    span
-                                        input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                        input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
-
-                                    div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
-                                        div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
-                        accordion-group(id="sharingInstructionPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isSharingInstructionsOpen")
-                            accordion-heading
-                                 | <b>Sharing Overview</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSharingInstructionsOpen, 'glyphicon-chevron-right': !status.isSharingInstructionsOpen}")
-                            h3 Concepts and Features
-                            
-                            p(style='font-size:9pt;margin:1em').                              
-                                | Multiple users can view synchronized maps in web browsers on other devices.  After 
-                                | finding an ArcGIS WebMap that you want to share:
-                                
-                            ul#StepsSharing(style="height:100%")
-                            
-                                li(class="acc li") 1. Open the "Copy Map Link" accordion pane. The url for the current WebMap will be inserted in the text field and will be focused and selected.
-                                li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard. 
-                                li(class="acc li") 3. Paste the link in an email to collaborators. 
-                               
-                            p(style='font-size:9pt;margin:1em').
-                                | The url includes the name of the Pusher channel that you have selected.  As users open
-                                | the link, they will be subscribing to share map clicks, pans and zooms with all other users
-                                | as any user manipulates any map view.
-                                
-                            p(style='font-size:9pt;margin:1em').
-                                | The Pusher channel can also be set without opening a new map viewer by opening the "Set 
-                                | Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize 
-                                | their displays with your display.  This step is necessary if you and your collaborators 
-                                | want to synchronize map views where all collaborators already have synchronize-capable
-                                | maps open.
-
-                            br
-                        accordion-group(id="MailSenderId", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isCopyMapLinkOpen")
-                            accordion-heading
-                                 | <b>Copy Map Link</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isCopyMapLinkOpen, 'glyphicon-chevron-right': !status.isCopyMapLinkOpen}")
-                            form(name="emailForm", ng-controller="EmailCtrl")
-                                label(style='font-size:12pt;margin:4px').
-                                    Fetch the link to the current ArcGIS Online map:
-                                textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden; resize: vertical;", ng-model="urlText", required)
+                    div(class = "acc scrollable", style="height:100%;width:100%;position:relative;")
+                        accordion(id="Accdian", style="height:100%;width:100%;", close-others="true")
+                            accordion-group(id="AccdianNews", style="height:100%;width:100%;vertical-align:top;" is-open="status.isNewsOpen")
+                                accordion-heading
+                                     | <b>Mashover Release News</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
+                                div(style='font-size:9pt;border:2px solid red;margin:1px;padding:2px;')
+                                    h4(style="color:red") Latest Release
+                                    h5(style="color:red")
+                                        | Release notes will appear here as new features are added to the Mash-over plug-in.
+                                    h5(style="color:red")
+                                        | Select the Mash-over Instruction accordion pane below some step-by-step help.
+                                    
+                                h4 OTHER GREAT STUFF
                                 br
-                                button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
-                                #UrlInstructions(style="display:none")
-                                    label(style='font-size:12pt;margin:2px').The url is now focused and selected.
-                                    label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
-                                    label(style='font-size:12pt;margin:2px').Then paste the link into an email.
+                                
+                                img(ng-src="../stylesheets/images/NewsPapers.jpg", width="95%" height="95%")
+                                
+                                br
+                                h5 Wallace and Gromit Use Mash-over.
+                                p(style='font-size:9pt;color: #333333; border:2px solid green;margin:1px;padding:2px;').
+                                    | Wallace and Gromit have improved the efficiency of their window washing service by
+                                    | incorporating community maps of reported dirty windows.
+                                br
+
+                            accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isInstructionsOpen")
+                                accordion-heading
+                                     | <b>Mash-over Instructions</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")
+                                h3 Using Mash-over
+
+                                p(style='font-size:9pt;margin:1em').                              
+                                    | Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use 
+                                    |  base maps or different themes for overlays.  Unlike standard layer overlays in a 
+                                    | single viewer, the base layers and overlays do not interfere with the visibility or 
+                                    | of other selected layers.
+
+                                p(style='font-size:9pt;margin:1em;').
+                                    | Mash-overs can be created from three map viewer sources, if the viewer system incorporates
+                                    | the mash-over plug-in.
+
+                                ul#MapTypes(style="height:100%")
+                                    li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
+                                    li(class="acc li") 2 A web page with a google map display.
+                                    li(class="acc li") 3 A web page with an open source map display.
                                     
-                        accordion-group(id="ChannelSetterId", style="height:100%;width:100%;vertical-align:top;", is-open="status.isSetChannelOpen")
-                            accordion-heading
-                                 | <b>Set Pusher Channel</b>
-                                 i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSetChannelOpen, 'glyphicon-chevron-right': !status.isSetChannelOpen}")
-                            div(ng-controller="StompSetupCtrl")
+                                h3( style="text-align:left") Steps
+
+                                ul#StepsList(style="height:100%")
+                                    li(class="acc li") 1. Open the accordion pane for group search.  Enter a search term and click the submit button.
+                                    li(class="acc li") 2. The group pane displays groups matching the search term.  Click on one of the groups.
+                                    li(class="acc li") 3. The map selection pane opens showing available maps in the group.  Click on a map item.  A dialog opens offering a choice of three possible destination viewers where the selected map can be displayed.  The most convenient option is usually the "New Window" option.
+                                    
+                                        div
+                                            accordion(close-others="true") 
+                                                accordion-group(id="sameWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isSameWindowPaneOpen")
+                                                    accordion-heading
+                                                        | <b>Same Window </b>
+                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
+                                                
+                                                    p(style='font-size:9pt;margin:1em').                              
+                                                        | The newly selected map replaces the current map in the map viewer to 
+                                                        | the left. 
+                                                accordion-group(id="newTabPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewTabPaneOpen")
+                                                    accordion-heading(style='font-size:9pt;')
+                                                        | <b>New Tab / Same Browser<b/>
+                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
+                                                
+                                                    p(style='font-size:9pt;margin:1em').                              
+                                                        | The newly selected map opens in a new tab in the current browser. 
+                                                        | Switch to the tab and drag the tab to the desktop, which displays the 
+                                                        | tab's contents in a completely new browser instance.  This is a fully 
+                                                        | functional web browser.
+                                                accordion-group(id="newWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewWindowPaneOpen")
+                                                    accordion-heading(style='font-size:9pt;')
+                                                        | <b>New Window</b>
+                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
+                                                
+                                                    p(style='font-size:9pt;margin:1em').                              
+                                                        | The newly selected map is opened in a map viewer in a new popup 
+                                                        | window.  Although this is not a full-featured new web browser instance,
+                                                        | it provides complete functionality as a synchronized map viewer.  If 
+                                                        | popups are turned off, use sequence described under the "New Tab" 
+                                                        | option above.
+                                                
+                                    li(class="acc li") 4. Create a Pusher channel:
+                                        p(style='font-size:9pt;margin:1em;').
+                                            | A second dialog opens, requesting a Pusher channel name.  Specify a name that 
+                                            | will be unique for the shared session.
+                                    
+                                    li(class="acc li") 5. Experiment with synchronized maps:
+                                    
+                                        ul#StepsListSynch(style="height:100%")
+                                        
+                                            li(class="acc li") a. Resize and move any open map viewer windows so that they are simultaneously visible.
+                                            li(class="acc li") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
+                                            li(class="acc li") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
+
+                            
+                                
+                            accordion-group(id="GroupSearcherPane", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isGroupSearchOpen")
+                                accordion-heading
+                                     | <b>Group Searcher</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isGroupSearchOpen, 'glyphicon-chevron-right': !status.isGroupSearchOpen}")
+                                #SearchGroup(ng-controller="SearcherCtrlGrp")
+                                    div(id="searchToolWrapperGroup")
+                                        span
+                                            label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
+                                            
+                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
+                                             
+                                        h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
+                                        span
+                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
+                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
+
+                                        div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
+                                            div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
+
+                            accordion-group(id="MapSearcherPane", style="height:100%;width:100%;vertical-align:top;", is-open="status.isMapSearchOpen")
+                                accordion-heading
+                                     | <b>Map Searcher</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isMapSearchOpen, 'glyphicon-chevron-right': !status.isMapSearchOpen}")
+                                #SearchMap(ng-controller="SearcherCtrlMap")
+                                    div(id="searchToolWrapperMap")
+                                        span
+                                            label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
+                                            
+                                            input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
+
+                                        h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                        span
+                                            input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
+                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+
+                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
+                                            div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
+                            accordion-group(id="sharingInstructionPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isSharingInstructionsOpen")
+                                accordion-heading
+                                     | <b>Sharing Overview</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSharingInstructionsOpen, 'glyphicon-chevron-right': !status.isSharingInstructionsOpen}")
+                                h3 Concepts and Features
+                                
+                                p(style='font-size:9pt;margin:1em').                              
+                                    | Multiple users can view synchronized maps in web browsers on other devices.  After 
+                                    | finding an ArcGIS WebMap that you want to share:
+                                    
+                                ul#StepsSharing(style="height:100%")
+                                
+                                    li(class="acc li") 1. Open the "Copy Map Link" accordion pane. The url for the current WebMap will be inserted in the text field and will be focused and selected.
+                                    li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard. 
+                                    li(class="acc li") 3. Paste the link in an email to collaborators. 
+                                   
                                 p(style='font-size:9pt;margin:1em').
-                                    Set or change the Pusher communications channel.
-                                button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
-                        
+                                    | The url includes the name of the Pusher channel that you have selected.  As users open
+                                    | the link, they will be subscribing to share map clicks, pans and zooms with all other users
+                                    | as any user manipulates any map view.
+                                    
+                                p(style='font-size:9pt;margin:1em').
+                                    | The Pusher channel can also be set without opening a new map viewer by opening the "Set 
+                                    | Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize 
+                                    | their displays with your display.  This step is necessary if you and your collaborators 
+                                    | want to synchronize map views where all collaborators already have synchronize-capable
+                                    | maps open.
+
+                                br
+                            accordion-group(id="MailSenderId", style="height:100%;width:100%;vertical-align:top;"   is-open="status.isCopyMapLinkOpen")
+                                accordion-heading
+                                     | <b>Copy Map Link</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isCopyMapLinkOpen, 'glyphicon-chevron-right': !status.isCopyMapLinkOpen}")
+                                form(name="emailForm", ng-controller="EmailCtrl")
+                                    label(style='font-size:12pt;margin:4px').
+                                        Fetch the link to the current ArcGIS Online map:
+                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden; resize: vertical;", ng-model="urlText", required)
+                                    br
+                                    button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
+                                    #UrlInstructions(style="display:none")
+                                        label(style='font-size:12pt;margin:2px').The url is now focused and selected.
+                                        label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
+                                        label(style='font-size:12pt;margin:2px').Then paste the link into an email.
+                                        
+                            accordion-group(id="ChannelSetterId", style="height:100%;width:100%;vertical-align:top;", is-open="status.isSetChannelOpen")
+                                accordion-heading
+                                     | <b>Set Pusher Channel</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSetChannelOpen, 'glyphicon-chevron-right': !status.isSetChannelOpen}")
+                                div(ng-controller="StompSetupCtrl")
+                                    p(style='font-size:9pt;margin:1em').
+                                        Set or change the Pusher communications channel.
+                                    button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
+                            
