@@ -131,6 +131,7 @@
                                                 
                 $scope.childSiteHeight = colHgt;
                 utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                                                                'verbage' : status['plugin']});
@@ -176,15 +177,18 @@
             });
             
             $scope.$on('windowResized', function() {
-                console.log("windowResized empty method in SPACtrl.js");
+                console.log("windowResized method in SPACtrl.js");
+                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
+                adjustHeights($scope);
             });
             
             function adjustHeights(scope){
                 /* From flexbox.js plunker  */
-                var totalHgt = utils.getComponentHeights(scope, scope.MasterSiteVis, scope.SiteVis);
+                var totalHgt = utils.getComponentHeights(scope, scope.MasterSiteVis, status['website']);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
-                var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, scope.SiteVis);
+                var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, status['website']);
                 scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
                 
                 $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 

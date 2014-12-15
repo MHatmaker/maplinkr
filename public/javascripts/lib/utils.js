@@ -73,7 +73,7 @@
         }
         
         function getMasterSiteHeight(){
-            return hgtComponents.idMasterSite;
+            return hgtComponents.idMasterSite; // - hgtComponents.idMasterSiteExpander;
         }
         
         function calculateComponentHeights(sumvis, sitevis){
