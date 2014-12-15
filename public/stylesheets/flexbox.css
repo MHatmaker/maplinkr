@@ -184,7 +184,7 @@ body {
   
   display: flex;
   flex-direction: column;
-  justify-content: top;
+  justify-content: center;
   flex: 0.3;
   overflow-y : auto;
   border:2px solid brown;
