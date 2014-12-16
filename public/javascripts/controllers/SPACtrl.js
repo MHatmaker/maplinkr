@@ -130,7 +130,7 @@
                     utils.getFooterHeight() + 20 : utils.getFooterHeight());
                                                 
                 $scope.childSiteHeight = colHgt;
-                utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
+                // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
@@ -155,7 +155,7 @@
                 $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
                     utils.getFooterHeight() + 20 : utils.getFooterHeight());
                                                    
-                utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
+                // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
@@ -178,8 +178,9 @@
             
             $scope.$on('windowResized', function() {
                 console.log("windowResized method in SPACtrl.js");
-                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                utils.calculateComponentHeights($scope.MasterSiteVis, status['website']);
                 utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
+                // utils.setElementHeight('idMasterSite', 90, '%');
                 adjustHeights($scope);
             });
             
@@ -195,7 +196,7 @@
                     utils.getFooterHeight() + 20 : utils.getFooterHeight());
                                                
                 // $scope.childSiteHeight = colHgt;
-                utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
+                // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
                 console.log("adjustHeights childSiteHgt : " + colHgt);
             }
         };

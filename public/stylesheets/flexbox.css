@@ -181,10 +181,21 @@ body {
 }
 
   @media all and (max-width: 600px) {
+  .aside { flex: 1;}
+  .container-mapcol    { flex: 3 0px; }
+  .container-leftcol { order: 1; } 
+  .container-mapcol     { order: 2; }
+  .container-rightcol { order: 3; }
   .bodyMap {
-    display: flex; /* or inline-flex */
+  /* 
+    display: flex;
     flex-direction: column;
     overflow-y:auto;
+     */
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    padding: 0;
+    
     /*width:100%;*/
    /* height:100%;*/
    /* height: 400px;*/

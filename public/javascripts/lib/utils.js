@@ -52,10 +52,11 @@
             return elemHeight;
         }
         
-        function setElementHeight(itm, hgt){
+        function setElementHeight(itm, hgt, units){
             // var elem = angular.element(document.getElementById(itm))[0];
+            if(typeof(units)==='undefined') units = 'px';
             var elem = document.getElementById(itm);
-            var hstr = String.format("{0}px", hgt);
+            var hstr = String.format("{0}{1}", hgt, units);
             // elem.css({"height": hstr});
             elem.setAttribute("style","height:" + hstr);
         }
@@ -73,7 +74,7 @@
         }
         
         function getMasterSiteHeight(){
-            return hgtComponents.idMasterSite; // - hgtComponents.idMasterSiteExpander;
+            return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
         }
         
         function calculateComponentHeights(sumvis, sitevis){
