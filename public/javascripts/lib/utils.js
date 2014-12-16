@@ -85,7 +85,7 @@
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
             hgtComponents.idNavigator =  hgt = getElemHeight("idNavigator");  totalHgt += hgt;
             hgtComponents.idSiteTopRow =  hgt = getElemHeight("idSiteTopRow"); totalHgt += hgt;
-            hgtComponents.idFooter =  hgt = getElemHeight("idFooter");  totalHgt += hgt;
+            hgtComponents.idFooter =  hgt = getElemHeight("idFooter") + 10;  totalHgt += hgt;
             hgtComponents.totalHgt = totalHgt;
             console.log("master site height : " + hgtComponents.idMasterSite);
             console.debug(hgtComponents);

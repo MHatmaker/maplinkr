@@ -94,7 +94,7 @@
               }
             })
                         
-            utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+            // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
             /* 
             var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, $scope.SiteVis);
             utils.showHeights(prevTotalHgt, totalHgt);
@@ -127,7 +127,7 @@
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                 
                 $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight() + 20 : utils.getFooterHeight());
+                    utils.getFooterHeight()/*  + 20  */: utils.getFooterHeight());
                                                 
                 $scope.childSiteHeight = colHgt;
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
@@ -153,7 +153,7 @@
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                                                    
                 $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight() + 20 : utils.getFooterHeight());
+                    utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                    
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
@@ -166,7 +166,10 @@
                 $scope.MasterSiteVis = args.mastersitevis;
                 $scope.NavigatorVis = args.navVis;
                 console.log("on CollapseSummaryEvent, call adjustHeights");
-                adjustHeights($scope);
+                setTimeout(function(){
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    adjustHeights($scope);
+                    },1000)  
                 
             });
             
@@ -183,17 +186,17 @@
                 // utils.setElementHeight('idMasterSite', 90, '%');
                 adjustHeights($scope);
             });
-            
+                        
             function adjustHeights(scope){
                 /* From flexbox.js plunker  */
                 var totalHgt = utils.getComponentHeights(scope, scope.MasterSiteVis, status['website']);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
                 var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, status['website']);
-                scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
+                scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
                 
                 $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight() + 20 : utils.getFooterHeight());
+                    utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                
                 // $scope.childSiteHeight = colHgt;
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);

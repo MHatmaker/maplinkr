@@ -18,9 +18,9 @@ block append scriptsblock
     
 block append content
     
-#idChildWebSite
-    #spa_window(class="wrapper-website", ng-controller="SPACtrl")
-        #idNavigator(class="navigation", ng-controller="PositionViewCtrl", style="display:{{NavigatorVis}};")
+#idChildWebSite(ng-cloak, class="ng-cloak")
+    #spa_window(class="wrapper-website", ng-controller="SPACtrl", ng-cloak, class="ng-cloak")
+        #idNavigator(class="navigation", ng-controller="PositionViewCtrl", ng-cloak, class="ng-cloak", style="display:{{NavigatorVis}};")
                                     
             div(class="havButton").
               {{currentTab.site}}
