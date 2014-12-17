@@ -128,8 +128,8 @@
                 prevTotalHgt = totalHgt;
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                 
-                $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight()/*  + 20  */: utils.getFooterHeight());
+                // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
+                    // utils.getFooterHeight()/*  + 20  */: utils.getFooterHeight());
                                                 
                 $scope.childSiteHeight = colHgt;
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
@@ -137,6 +137,11 @@
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                                                                'verbage' : status['plugin']});
+                setTimeout(function(){
+                    utils.setElementHeight('idCenterCol', colHgt - 40);
+                    utils.setElementHeight('map_wrapper', colHgt - 40);
+                    console.log("adjustHeights colHgt : " + colHgt);
+                    },1000);
             }
             
             $scope.onExpPlugClick = function(){
@@ -205,14 +210,24 @@
                 var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, status['website']);
                 scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
                 
+                setTimeout(function(){
+                    // $scope.bodyColHeight = colHgt;
+                    // $scope.bodyColHeight = colHgt;
+                    // utils.setElementHeight('idBody', colHgt - 20);
+                    utils.setElementHeight('idLeftCol', colHgt - 40);
+                    utils.setElementHeight('idCenterCol', colHgt - 40);
+                    utils.setElementHeight('idRightCol', colHgt - 40);
+                    utils.setElementHeight('map_wrapper', colHgt - 40);
+                    console.log("adjustHeights colHgt : " + colHgt);
+                    },1000);
                 
-                $scope.bodyColHeight = colHgt;
+                // $scope.bodyColHeight = colHgt;
                 // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
                     // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                
                 // $scope.childSiteHeight = colHgt;
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
-                console.log("adjustHeights childSiteHgt : " + colHgt);
+                // console.log("adjustHeights childSiteHgt : " + colHgt);
             }
         };
         
