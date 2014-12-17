@@ -20,6 +20,8 @@
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
             $scope.SiteVis = "flex";
+            $scope.mapColWidth = "inherit";
+                
             var prevTotalHgt = 0;
             // var utils = utilmod;
             
@@ -169,7 +171,7 @@
                 setTimeout(function(){
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                     adjustHeights($scope);
-                    },1000)  
+                    },1000);  
                 
             });
             
@@ -180,11 +182,19 @@
             });
             
             $scope.$on('windowResized', function() {
+                
+                setTimeout(function(){
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    adjustHeights($scope);
+                    utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
+                    },1000);
+                    
                 console.log("windowResized method in SPACtrl.js");
-                utils.calculateComponentHeights($scope.MasterSiteVis, status['website']);
-                utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
+                
+                // utils.calculateComponentHeights($scope.MasterSiteVis, status['website']);
+                // utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
                 // utils.setElementHeight('idMasterSite', 90, '%');
-                adjustHeights($scope);
+                // adjustHeights($scope);
             });
                         
             function adjustHeights(scope){
@@ -195,8 +205,10 @@
                 var colHgt = utils.getAvailableSiteColumnHeights(scope, scope.MasterSiteVis, status['website']);
                 scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
                 
-                $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
+                
+                $scope.bodyColHeight = colHgt;
+                // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
+                    // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                
                 // $scope.childSiteHeight = colHgt;
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
