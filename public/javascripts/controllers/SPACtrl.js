@@ -123,6 +123,7 @@
                 }
                 console.log("status['website'] after  " + status['website']);
                 
+                utils.displayHeights("####  onExpSiteClick  ###");
                 var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, status['website']);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
@@ -141,6 +142,7 @@
                     utils.setElementHeight('idCenterCol', colHgt - 40);
                     utils.setElementHeight('map_wrapper', colHgt - 40);
                     if(status['website'] == 'flex'){
+                        utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                         utils.setElementHeight('idLeftCol', colHgt - 40);
                         utils.setElementHeight('idRightCol', colHgt - 40);
                     }
@@ -161,6 +163,7 @@
                 var totalHgt = utils.getComponentHeights($scope, $scope.MasterSiteVis, status['website']);
                 utils.showHeights(prevTotalHgt, totalHgt);
                 prevTotalHgt = totalHgt;
+                utils.displayHeights("####  onExpPlugClick  ###");
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                                                    
                 // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
@@ -194,6 +197,7 @@
                 console.log("on CollapseSummaryEvent, call adjustHeights");
                 setTimeout(function(){
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    utils.displayHeights("####  CollapseSummaryEvent  ###");
                     adjustHeights($scope);
                     },1000);  
                 
@@ -206,9 +210,10 @@
             });
             
             $scope.$on('windowResized', function() {
+                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                utils.displayHeights("####  windowResized Event  ###");
                 
                 setTimeout(function(){
-                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                     adjustHeights($scope);
                     utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
                     },1000);

@@ -45,7 +45,7 @@ block append content
 
         div(class="container-website")
       
-            div(class="container-primary")
+            #idContainerPrimary(class="container-primary")
                 #idSiteTopRow(class="container-newscell", style="flex: 0.2; display:{{SiteVis}};")
                     div(class="container-newscellhead").
                         Sed arcu magna.
@@ -61,7 +61,7 @@ block append content
                         |This should span the complete page
                         |Except fot the plugin, when it is visible, even if it requires another row
           
-                div
+                div(style="flex : 3")
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="display:flex; width: {{mapColWidth}};")
                             #idLeftCol(class="container-leftcol aside", style="display:{{SiteVis}};height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; overflow-y:auto;")

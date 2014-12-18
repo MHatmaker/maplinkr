@@ -32,6 +32,24 @@
             //alert(totTotStr + totStr + elemStr);
         }
         
+        function displayHeights(purpose){
+            console.log(purpose);
+            var fullString = " ";
+            var counter = 0;
+            for (var key in hgtComponents) {
+                if (hgtComponents.hasOwnProperty(key)) {
+                    counter += 1;
+                    // console.log(key, hgtComponents[key]);
+                    var hstr = String.format("{0} : {1} ", key, hgtComponents[key]);
+                    fullString += hstr;
+                    if(counter % 3 == 0){
+                        console.log(fullString);
+                        fullString = "";
+                    }
+                }
+            }
+        }
+        
         function getDocHeight() {
         // return Math.max(
             // document.body.scrollHeight, document.documentElement.scrollHeight,
@@ -88,7 +106,7 @@
             hgtComponents.idFooter =  hgt = getElemHeight("idFooter") + 10;  totalHgt += hgt;
             hgtComponents.totalHgt = totalHgt;
             console.log("master site height : " + hgtComponents.idMasterSite);
-            console.debug(hgtComponents);
+            // displayHeights("####calculateComponentHeights###");
         }
       
       
@@ -153,8 +171,7 @@
         if(scope.NavigatorVis == "none"){
             colHgt += hgtComponents.idNavigator;
         }
-        console.log(" getAvailableSiteColumnHeights : " + colHgt);
-        console.debug(hgtComponents);
+        // displayHeights("####getAvailableSiteColumnHeights###");
         return colHgt;
       }
       
@@ -199,6 +216,7 @@
             showHeights : showHeights,
             getDocHeight : getDocHeight,
             // getButtonHeight : getButtonHeight,
+            displayHeights : displayHeights,
             calculateComponentHeights : calculateComponentHeights,
             getComponentHeights : getComponentHeights,
             getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
