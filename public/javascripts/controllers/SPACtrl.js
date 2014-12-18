@@ -46,7 +46,7 @@
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}", 
                          msg, status['website'], status['plugin']);
                 console.log(msgstr)
-                msgstr = String.format("verbage {0}, website {1}", verbageWidth[status['plugin']], websiteVisibility[       status['website']]);
+                msgstr = String.format("verbage {0}, website {1}", verbageWidth[status['plugin'] == 'flex'], websiteVisibility[status['website'] == 'flex']);
                 console.log(msgstr)
              }
 
@@ -140,6 +140,10 @@
                 setTimeout(function(){
                     utils.setElementHeight('idCenterCol', colHgt - 40);
                     utils.setElementHeight('map_wrapper', colHgt - 40);
+                    if(status['website'] == 'flex'){
+                        utils.setElementHeight('idLeftCol', colHgt - 40);
+                        utils.setElementHeight('idRightCol', colHgt - 40);
+                    }
                     console.log("adjustHeights colHgt : " + colHgt);
                     },1000);
             }
@@ -159,14 +163,29 @@
                 prevTotalHgt = totalHgt;
                 var colHgt = utils.getAvailableSiteColumnHeights($scope, $scope.MasterSiteVis, status['website']);
                                                    
-                $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
-                    utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
+                // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
+                    // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                    
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
-                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight();
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
+                setTimeout(function(){
+                    utils.setElementHeight('idCenterCol', colHgt - 40);
+                    utils.setElementHeight('map_wrapper', colHgt - 40);
+                    if(status['website'] == 'flex'){
+                        utils.setElementHeight('idLeftCol', colHgt - 40);
+                        utils.setElementHeight('idRightCol', colHgt - 40);
+                        utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
+                        utils.setElementHeight('idFooter', utils.getFooterHeight());
+                    }
+                    else{
+                        utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
+                        utils.setElementHeight('idFooter', utils.getFooterHeight());
+                    }
+                    console.log("adjustHeights colHgt : " + colHgt);
+                    },1000);
             };
             
             $scope.$on('CollapseSummaryEvent', function(event, args) {
@@ -214,10 +233,12 @@
                     // $scope.bodyColHeight = colHgt;
                     // $scope.bodyColHeight = colHgt;
                     // utils.setElementHeight('idBody', colHgt - 20);
-                    utils.setElementHeight('idLeftCol', colHgt - 40);
                     utils.setElementHeight('idCenterCol', colHgt - 40);
-                    utils.setElementHeight('idRightCol', colHgt - 40);
                     utils.setElementHeight('map_wrapper', colHgt - 40);
+                    if(status['website'] == 'flex'){
+                        utils.setElementHeight('idLeftCol', colHgt - 40);
+                        utils.setElementHeight('idRightCol', colHgt - 40);
+                    }
                     console.log("adjustHeights colHgt : " + colHgt);
                     },1000);
                 

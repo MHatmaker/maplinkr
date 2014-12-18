@@ -95,6 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   flex : 1;
+  overflow-y: auto;
   border:5px solid green;
   font-size:11pt;
   font-weight:bold; 

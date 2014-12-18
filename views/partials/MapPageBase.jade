@@ -46,7 +46,7 @@ block append content
         div(class="container-website")
       
             div(class="container-primary")
-                #idSiteTopRow(class="container-newscell", style="display:{{SiteVis}}; flex: 0.2;")
+                #idSiteTopRow(class="container-newscell", style="flex: 0.2; display:{{SiteVis}};")
                     div(class="container-newscellhead").
                         Sed arcu magna.
                     div(class="container-newscellbody" ).
@@ -98,8 +98,8 @@ block append content
                                   | Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet 
                                   | lacinia odio diam idrisus. 
                               
-                #idFooter(class="container-newscellhead").
-                    The rest of this awesome web site contents featuring{{currentTab.title}}     
+                    #idFooter(class="container-newscellhead").
+                        The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
                 div(style="flex:4;height:{{$parent.innerTblHeight}}px;max-height: {{$parent.innerTblHeight}}px; border:2px solid blue; margin:2px;")
