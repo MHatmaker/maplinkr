@@ -48,6 +48,7 @@
                     }
                 }
             }
+            console.log(fullString);
         }
         
         function getDocHeight() {
@@ -110,36 +111,32 @@
         }
       
       
-      function getComponentHeights(scope, sumVis, siteVis){
+      function getComponentHeights(navVis, sumVis, siteVis){
         var totalHgt = 0;
         if(sumVis == "inline"){
           if(siteVis == 'flex'){
             totalHgt = hgtComponents.totalHgt;
-            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{
             totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
-            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
         else{  // sumVis == "none"
           if(siteVis == 'flex'){
             totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
-            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
           else{
             totalHgt = hgtComponents.idMasterSiteExpander + hgtComponents.idNavigator;
-            showRelativeHeights(totalHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
-        if(scope.NavigatorVis == "none"){
+        if(navVis == "none"){
             totalHgt -= hgtComponents.idNavigator;
         }
         
         return totalHgt;
       }
       
-      function getAvailableSiteColumnHeights(scope, sumVis, siteVis){
+      function getAvailableSiteColumnHeights(navVis, sumVis, siteVis){
         var colHgt = 0;
         if( sumVis == "inline"){
           if(siteVis == 'flex'){
@@ -168,7 +165,7 @@
             showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
-        if(scope.NavigatorVis == "none"){
+        if(navVis == "none"){
             colHgt += hgtComponents.idNavigator;
         }
         // displayHeights("####getAvailableSiteColumnHeights###");
