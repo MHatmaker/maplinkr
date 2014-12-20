@@ -106,7 +106,7 @@
                     // utils.getFooterHeight()/*  + 20  */: utils.getFooterHeight());
                                                 
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
-                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                                                                'verbage' : status['plugin']});
@@ -132,31 +132,33 @@
                 $scope.VerbVis = $scope.ExpandPlug == "Show Plugin" ? "flex" : "none";
                 $scope.ExpandPlug = $scope.ExpandPlug == "Show Plugin" ? "Hide Plugin" : "Show Plugin";
                 utils.displayHeights("####  onExpPlugClick  ###");
+                    var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
                                                    
                 // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
                     // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                    
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
                                                             
                 setTimeout(function(){
-                    var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
                     utils.displayHeights("####  onExpPlugClick after timeout  ###");
-                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() + 20;
                     utils.setElementHeight('idCenterCol', colHgt - 40);
                     utils.setElementHeight('map_wrapper', colHgt - 40);
                     if(status['website'] == 'flex'){
+                        utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                         utils.setElementHeight('idLeftCol', colHgt - 40);
                         utils.setElementHeight('idRightCol', colHgt - 40);
-                        utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                        // utils.setElementHeight('idFooter', utils.getFooterHeight());
+                        utils.setElementHeight('idFooter', utils.getFooterHeight());
                     }
+                   /*  
                     else{
                         utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                         // utils.setElementHeight('idFooter', utils.getFooterHeight());
                     }
+                     */
                     console.log("onExpPlugClick adjustments - colHgt : " + colHgt);
                     },1000);
                     
