@@ -102,14 +102,14 @@ block append content
                         The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
-                div(style="border:2px solid blue; margin:2px;")
+                div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
               
               
                     div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
                     
                     div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", style="display: none; position:relative", id="DestWndDialog", data-backdrop="true")
                                     
-                    div(class = "acc scrollable", style="height:100%;width:100%;position:relative;")
+                    #idInnerPlugin(class = "acc scrollable", style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
                         accordion(id="Accdian", style="height:100%;width:100%;", close-others="true")
                             accordion-group(id="AccdianNews", style="height:100%;width:100%;vertical-align:top;" is-open="status.isNewsOpen")
                                 accordion-heading
@@ -134,7 +134,7 @@ block append content
                                     | incorporating community maps of reported dirty windows.
                                 br
 
-                            accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;"  is-open="status.isInstructionsOpen")
+                            accordion-group(id="fillerPane",style="height:100%;width:100%;vertical-align:top;overflow-y:true;"  is-open="status.isInstructionsOpen")
                                 accordion-heading
                                      | <b>Mash-over Instructions</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")

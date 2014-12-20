@@ -106,7 +106,7 @@
                     // utils.getFooterHeight()/*  + 20  */: utils.getFooterHeight());
                                                 
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
-                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - 50;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                                                                'verbage' : status['plugin']});
@@ -138,7 +138,7 @@
                     // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
                                                    
                 // utils.setElementHeight('idChildWebSite', $scope.bodyColHeight);
-                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
+                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - 50;
                 $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
@@ -207,7 +207,7 @@
             function adjustHeights(scope){
                 /* From flexbox.js plunker  */
                 var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], scope.MasterSiteVis, status['website']);
-                scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight(); // + 20;
+                scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - 50;
                 
                 setTimeout(function(){
                     // $scope.bodyColHeight = colHgt;
