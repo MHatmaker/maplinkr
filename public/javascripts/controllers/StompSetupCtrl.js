@@ -133,7 +133,7 @@
                     console.log('Problem subscribing to "private-channel": ' + statusCode);
                 });
                 channelBind.bind('pusher:subscription_succeeded', function() {
-                    console.log('Successfully subscribed to "' + self.CHANNEL + 'r"');
+                    console.log('Successfully subscribed to "' + self.CHANNEL); // + 'r"');
                 });
                           
 
