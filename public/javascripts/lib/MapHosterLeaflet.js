@@ -17,9 +17,9 @@ define('GeoCoder', function () {
     console.log("ready to require stuff");
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['controllers/PositionViewCtrl', 'lib/GeoCoder'], 
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils'], 
     
-        function(PositionViewCtrl, GeoCoder) {
+        function(PositionViewCtrl, GeoCoder, utils) {
 
         var scale2Level = [],
             zmG,

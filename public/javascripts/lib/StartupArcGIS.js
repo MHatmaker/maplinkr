@@ -5,7 +5,7 @@
     var selfDetails = {};
     var aMap = null;
     console.log('StartupGArcGIS setup');
-    require(['lib/MapHosterArcGIS']);
+    require(['lib/MapHosterArcGIS', 'lib/utils']);
         
     dojo.require("esri.map");
     dojo.require("dijit.layout.BorderContainer");
@@ -27,10 +27,11 @@
     define([
         'lib/MapHosterArcGIS',
         'controllers/StompSetupCtrl',
-        'lib/AgoNewWindowConfig',
+        'lib/AgoNewWindowConfig', 
+        'lib/utils',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig) {
+    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils) {
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';

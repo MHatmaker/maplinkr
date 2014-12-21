@@ -4,8 +4,8 @@
     require(["lib/utils", 'angular', "esri/tasks/locator"]);
 
     define([
-        'angular', 'controllers/PositionViewCtrl'
-        ], function(angular, PositionViewCtrl) {
+        'angular', 'controllers/PositionViewCtrl', 'lib/utils'
+        ], function(angular, PositionViewCtrl, utils) {
 
         var mphmap = null,
             mapReady = true,
