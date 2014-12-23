@@ -16,11 +16,12 @@
         'controllers/SearcherCtrlMap',
         'controllers/StompSetupCtrl',
         'controllers/DestWndSetupCtrl',
+        'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
         'lib/GeoCoder'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, WebSiteDescriptionCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, EmailCtrl, GeoCoder) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GeoCoder) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -42,6 +43,7 @@
             if(DestWndSetupCtrl.isInitialized() == false){
                 DestWndSetupCtrl.start(App);
             }
+            TransmitNewUrlCtrl.start(App);
             EmailCtrl.start(App);
             var $inj = angular.injector(['app']);
             var $http = $inj.get('$http');

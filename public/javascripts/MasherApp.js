@@ -69,7 +69,7 @@
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
         AgoNewWindowConfig.sethref(location.href);
-        AgoNewWindowConfig.sethostport(location.hostport);
+        AgoNewWindowConfig.sethostport(location.port);
         // AgoNewWindowConfig.setChannel("private-channel-mashover");
         AgoNewWindowConfig.showConfigDetails();
         domReady(function () {

@@ -113,6 +113,12 @@
                 );
                  */
                  
+                channelBind.bind('client-NewUrlEvent', function(frame) 
+                {
+                    console.log('frame is',frame);
+                    selfdict.eventDct['client-NewUrlEvent'](frame);
+                    console.log("back from NewUrlEvent");
+                });
                  
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                 {

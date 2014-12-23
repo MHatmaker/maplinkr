@@ -3,7 +3,7 @@ var details = {
     locationPath : "/",
     search: "/",
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
-    masherChannel : "private-channel-mashover",
+    masherChannel : "private-channel-mashchannel",
     masherChannelInitialized : false,
     hostport : '3035',
     href : "http://localhost",
@@ -90,7 +90,7 @@ var details = {
             sethref: function(hrf){
                 console.log("sethref : " + hrf);
                 details.href = hrf;
-                console.log("sethref : " + details.href);
+                console.log("details href : " + details.href);
             },
             gethref: function(){
                 var pos = details.href.indexOf("/arcgis");

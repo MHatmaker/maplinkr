@@ -298,4 +298,12 @@ block append content
                                     p(style='font-size:9pt;margin:1em').
                                         Set or change the Pusher communications channel.
                                     button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
-                            
+                                        
+                            accordion-group(id="UrlTransmitterId", style="height:100%;width:100%;vertical-align:top;", is-open="status.isUrlTransmitterOpen")
+                                accordion-heading
+                                     | <b>Publish Current URL</b>
+                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isUrlTransmitterOpen, 'glyphicon-chevron-right': !status.isUrlTransmitterOpen}")
+                                div(ng-controller="TransmitNewUrlCtrl")
+                                    p(style='font-size:9pt;margin:1em').
+                                        Publish the current map Url to Pusher communications channel subscribers.
+                                    button(class="btn btn-primary", style='width:100%;', ng-click="publishUrl()", value="Publish Url") Publish Url

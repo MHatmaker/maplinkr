@@ -95,21 +95,21 @@
                     {'client-MapXtntEvent' : curmph.retrievedBounds,
                     'client-MapClickEvent' : curmph.retrievedClick},
                     function(channel){
-                    var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
-                    console.log("open new ArcGIS window with URI " + url);
-                    console.log("using channel " + channel);
-                    AgoNewWindowConfig.setUrl(url);
-                    if(displayDestination == 'New Pop-up Window'){
-                        // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-                        window.open(AgoNewWindowConfig.gethref() + "/arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
-                        // window.open(AgoNewWindowConfig.gethref(), newSelectedWebMapId, "top=1, left=1, height=400,width=500");
-                    }
-                    else{
-                        // window.open("http://localhost:3035/arcgis/" + url, '_blank');
-                        window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, '_blank');
-                        // window.open(AgoNewWindowConfig.gethref(), '_blank');
-                        window.focus();
-                    }
+                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
+                        console.log("open new ArcGIS window with URI " + url);
+                        console.log("using channel " + channel);
+                        AgoNewWindowConfig.setUrl(url);
+                        if(displayDestination == 'New Pop-up Window'){
+                            // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                            window.open(AgoNewWindowConfig.gethref() + "/arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+                            // window.open(AgoNewWindowConfig.gethref(), newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+                        }
+                        else{
+                            // window.open("http://localhost:3035/arcgis/" + url, '_blank');
+                            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, '_blank');
+                            // window.open(AgoNewWindowConfig.gethref(), '_blank');
+                            window.focus();
+                        }
                     });
             }
             else
@@ -133,7 +133,12 @@
                 {
                     if(idWebMap != newSelectedWebMapId)
                     {
+                        var curmph = MapHosterArcGIS;
                         selectedWebMapId = newSelectedWebMapId;
+                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
+                        console.log("replace map in current window with URI " + url);
+                        console.log("using channel " + channel);
+                        AgoNewWindowConfig.setUrl(url);
                     }
                     else
                     {
@@ -162,6 +167,15 @@
                 else
                 {
                     selectedWebMapId = newSelectedWebMapId;
+                    var lonWebMap = AgoNewWindowConfig.lon();
+                    var latWebMap = AgoNewWindowConfig.lat();
+                    var zmw = AgoNewWindowConfig.zoom();
+                    pusherChannel = AgoNewWindowConfig.masherChannel(false);
+                    var curmph = MapHosterArcGIS;
+                    var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
+                    console.log("replace map in current window with URI " + url);
+                    console.log("using channel " + channel);
+                    AgoNewWindowConfig.setUrl(url);
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
@@ -271,7 +285,7 @@
                 selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
-                console.log("StartupArcGIS.initUI : selfDetails.mph == null");
+                console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
                 pusher = StompSetupCtrl.createPusherClient(

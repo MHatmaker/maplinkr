@@ -347,7 +347,7 @@ define('GeoCoder', function () {
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
             pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
-            pusher.subscribe( 'client-MapClicktEvent', retrievedClick);
+            pusher.subscribe( 'client-MapClickEvent', retrievedClick);
             console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()

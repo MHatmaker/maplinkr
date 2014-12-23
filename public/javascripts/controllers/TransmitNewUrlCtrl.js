@@ -32,6 +32,7 @@
             $scope.publishUrl = function(){
                 console.log("Publish Current URL");
                 console.log(context.fullUrl);
+                AgoNewWindowConfig.showConfigDetails();
             }
         }
         

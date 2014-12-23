@@ -41,6 +41,7 @@
                 isSharingInstructionsOpen: false,
                 isCopyMapLinkOpen: false,
                 isSetChannelOpen: false,
+                isUrlTransmitterOpen: false
             };
         };
         
