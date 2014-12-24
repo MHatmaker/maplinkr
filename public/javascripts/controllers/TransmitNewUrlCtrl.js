@@ -4,7 +4,7 @@
     "use strict";
 
     console.log('TransmitNewUrlCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig'], function(angular, AgoNewWindowConfig) {
+    define(['lib/AgoNewWindowConfig', 'angular'], function(AgoNewWindowConfig) {
         console.log('TransmitNewUrlCtrl define');
         var context = {};
         
@@ -33,6 +33,12 @@
                 console.log("Publish Current URL");
                 console.log(context.fullUrl);
                 AgoNewWindowConfig.showConfigDetails();
+                var updtUrl = AgoNewWindowConfig.getUpdatedUrl();
+                console.log(updtUrl);
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                var curmph = serv.getSelectedMapType();
+                curmph.publishPosition(AgoNewWindowConfig.getPosition());
             }
         }
         

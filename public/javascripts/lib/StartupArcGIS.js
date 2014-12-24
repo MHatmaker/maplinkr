@@ -176,6 +176,10 @@
                     console.log("replace map in current window with URI " + url);
                     console.log("using channel " + channel);
                     AgoNewWindowConfig.setUrl(url);
+                    var position = curmph.getGlobalPositionComponents();
+                    AgoNewWindowConfig.setPosition(position);
+                    AgoNewWindowConfig.setWebmapId(newSelectedWebMapId);
+                    AgoNewWindowConfig.showConfigDetails();
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
@@ -279,8 +283,9 @@
             });    
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
             console.log("selfDetails.mph : " + selfDetails.mph);
-            if(selfDetails.mph == null)
+            if(selfDetails.mph === null)
             {
+                console.log("self.Details.mph is null");
                 // alert("StartupArcGIS.initUI : selfDetails.mph == null");
                 selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
@@ -297,8 +302,9 @@
             }
             else
             {
-                currentPusher = pusher;
-                currentChannel = channel;
+                console.log("self.Details.mph is something or other");
+                var currentPusher = pusher;
+                var currentChannel = channel;
                 selfDetails.mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 resizeWebSiteVertical(true);

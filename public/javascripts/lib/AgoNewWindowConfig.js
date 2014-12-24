@@ -7,7 +7,10 @@ var details = {
     masherChannelInitialized : false,
     hostport : '3035',
     href : "http://localhost",
-    url: ''
+    url: '',
+    lat : '',
+    lon : '',
+    zoom : ''
 };
     
 
@@ -69,6 +72,9 @@ var details = {
             webmapId: function (newWindow) {
                 return newWindow ? getParameterByName('id') : details.webmapId;
             },
+            setWebmapId : function (id){
+                details.webmapId = id;
+            },
             setLocationPath : function (locPath){
                 details.locationPath = locPath;
             },
@@ -86,6 +92,14 @@ var details = {
             },
             zoom: function(){
                 return getParameterByName('zoom');
+            },
+            setPosition: function(position){
+                details.lon = position.lon;
+                details.lat = position.lat;
+                details.zoom = position.zoom;
+            },
+            getPosition: function(){
+                return {"lon" : details.lon, "lat" : details.lat, "zoom" : details.zoom};
             },
             sethref: function(hrf){
                 console.log("sethref : " + hrf);
@@ -112,6 +126,11 @@ var details = {
             getUrl: function(){
                 return details.url;
             },
+            getUpdatedUrl : function(){
+                var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3} ", details.webmapId,details.lon, details.lat, details.zoom);
+                console.log(updatedUrl);
+                return updatedUrl;
+            },
             showConfigDetails: function(){
                 console.log(
                     "locationPath : "  + details.locationPath + "\n" +
@@ -119,7 +138,10 @@ var details = {
                     "webmapId : "  + details.webmapId + "\n" +
                     "masherChannel : "  + details.masherChannel + "\n" +
                     "hostport : "  + details.hostport + "\n" +
-                    "href : "  + details.href + "\n");
+                    "href : "  + details.href + "\n"  +
+                    "lon :" + details.lon + '\n' +
+                    "lat : " + details.lat + "\n" +
+                    "zoom : " + details.zoom);
             }
         };
     });

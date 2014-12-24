@@ -4,8 +4,8 @@
     require(["lib/utils", 'angular', "esri/tasks/locator"]);
 
     define([
-        'angular', 'controllers/PositionViewCtrl', 'lib/utils'
-        ], function(angular, PositionViewCtrl, utils) {
+        'angular', 'controllers/PositionViewCtrl', 'lib/utils', 'lib/AgoNewWindowConfig'
+        ], function(angular, PositionViewCtrl, utils, AgoNewWindowConfig) {
 
         var mphmap = null,
             mapReady = true,
@@ -310,6 +310,17 @@
                 return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
             }
             
+            function publishPosition(pos)
+            {
+                if(selfPusherDetails.pusher)
+                {
+                    console.log("MapHosterArcGIS.publishPosition");
+                    console.log(pos);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
+                }
+                    
+            }
+            
         function initMap(value, precision) 
         {
             var tileInfo = mphmap.__tileInfo;
@@ -340,6 +351,7 @@
                 'evlng' : cntrxG,
                 'evlat' : cntryG
             });
+            AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
 
         function showGlobals(cntxt)
@@ -425,6 +437,10 @@
         {
             return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
         }
+        
+        function getGlobalPositionComponents(){
+            return {"lon" : cntrxG, "lat" : cntryG, "zoom" : zmG};
+        }
          
         function MapHosterArcGIS()
         {
@@ -461,7 +477,8 @@
                   resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary };
+                  getEventDictionary : getEventDictionary, getGlobalPositionComponents : getGlobalPositionComponents,
+                  publishPosition : publishPosition};
     });
 
 }).call(this);
