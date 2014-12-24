@@ -93,7 +93,8 @@
                     
                 StompSetupCtrl.setupPusherClient(
                     {'client-MapXtntEvent' : curmph.retrievedBounds,
-                    'client-MapClickEvent' : curmph.retrievedClick},
+                    'client-MapClickEvent' : curmph.retrievedClick,
+                    'client-NewMapPosition' : curmph.retrievedNewPosition},
                     function(channel){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("open new ArcGIS window with URI " + url);
@@ -295,7 +296,8 @@
                 console.debug(pusherChannel);
                 pusher = StompSetupCtrl.createPusherClient(
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
-                        'client-MapClickEvent' : MapHosterArcGIS.retrievedClick},
+                        'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
+                        'client-NewMapPosition' : curmph.retrievedNewPosition},
                         pusherChannel, null);  
                 console.log("got pusher - now setPusherClient");
                 //MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   

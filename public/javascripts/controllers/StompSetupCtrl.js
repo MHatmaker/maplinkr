@@ -120,6 +120,13 @@
                     console.log("back from NewUrlEvent");
                 });
                  
+                channelBind.bind('client-NewMapPosition', function(frame) 
+                {
+                    console.log('frame is',frame);
+                    selfdict.eventDct['client-NewMapPosition'](frame);
+                    console.log("back from NewMapPosition Event");
+                });
+                 
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                 {
                     console.log('frame is',frame);
