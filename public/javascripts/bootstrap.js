@@ -99,9 +99,29 @@ var selectedMapType = 'arcgis';
                     return mapTypes[selectedMapType];
                 }
                 return { getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey };
-            });
+            }).
                 
             
+             factory("StompEventHandlerService", function(){
+                var eventDct = 
+                        {'client-MapXtntEvent' : null,
+                        'client-MapClickEvent' : null,
+                        'client-NewMapPosition' : null};
+                        
+                var getEventDct = function(){
+                    return eventDct;
+                }
+                
+                var addEvent(evt, handler){
+                    eventDct[evt] = handler;
+                }
+                
+                var getHandler(evt){
+                    return eventDct[evt];
+                }
+                return { getEventDct : getEventDct, addEvent : addEvent, getHandler : getHandler};
+            });
+                
             AppController.start(App);
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);

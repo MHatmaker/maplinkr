@@ -91,10 +91,17 @@
                     curmph = serv.getSelectedMapType();
                     }
                     
-                StompSetupCtrl.setupPusherClient(
+                    
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                    /* 
                     {'client-MapXtntEvent' : curmph.retrievedBounds,
                     'client-MapClickEvent' : curmph.retrievedClick,
                     'client-NewMapPosition' : curmph.retrievedNewPosition},
+                     */
                     function(channel){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("open new ArcGIS window with URI " + url);

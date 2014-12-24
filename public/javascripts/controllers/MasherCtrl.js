@@ -156,6 +156,17 @@
             isFirstViewing = false;
             selfMethods["summmaryCollapser"]();
         }
+        
+        function onNewMapPosition(pos){
+            console.log("Back in retrievedNewPosition");
+            console.log(pos);
+            String.format('open map using framework {0} at x {1}, y {2}, zoom (3)', 
+                pos.maphost, pos.lon, pos.lat, pos.zoom);
+        }
+        
+        var $inj = angular.injector(['app']);
+        var evtSvc = $inj.get('StompEventHandlerService');
+        evtSvc.addEvent('client-NewMapPosition' : onNewMapPosition);
 
         return { start: init, startArcGIS: startArcGIS };
 
