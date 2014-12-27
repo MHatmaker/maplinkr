@@ -99,7 +99,7 @@ var details = {
                 details.zoom = position.zoom;
             },
             getPosition: function(){
-                return {"lon" : details.lon, "lat" : details.lat, "zoom" : details.zoom};
+                return {"webmapId" : details.webmapId, "lon" : details.lon, "lat" : details.lat, "zoom" : details.zoom};
             },
             sethref: function(hrf){
                 console.log("sethref : " + hrf);

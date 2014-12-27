@@ -44,15 +44,20 @@ var selectedMapType = 'arcgis';
                       }).
                       when('/partials/agonewwindow/:id',  {
                         templateUrl: function(params){
-                        console.log("when string is " + '/partials/agonewwindow/:id');
-                        console.log("params = " + params.id);
-                        console.log("prepare to return " + '/partials/agonewwindow' + params.id);
-                        return '/partials/agonewwindow' + params.id; 
+                            console.log("when string is " + '/partials/agonewwindow/:id');
+                            console.log("params = " + params.id);
+                            console.log("prepare to return " + '/partials/agonewwindow' + params.id);
+                            return '/partials/agonewwindow' + params.id; 
                         },
                         controller: App.MasherCtrl, reloadOnSearch: true
                       }).
                       when('/views/partials/:id',  {
-                        templateUrl: function(params){ return '/partials/' + params.id; },
+                        templateUrl: function(params){ 
+                            console.log("when string is " + '/views/partials/:id');
+                            console.log(" params.id : " +  params.id);
+                            console.log("prepare to return " + '/partials/' + params.id);
+                            return '/partials/' + params.id; 
+                        },
                         controller: App.MapCtrl, reloadOnSearch: true
                       }).
                       when('/contact', {
@@ -136,7 +141,7 @@ var selectedMapType = 'arcgis';
             var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             if(isNewAgoWindow){
                 // alert("isNewAgoWindow is true");
-                TabsCtrl.selectAgo();
+                TabsCtrl.selectAgo('');
                 TabsCtrl.forceAgo();
                 
                 var $inj = angular.injector(['app']);
