@@ -138,6 +138,28 @@
                 // $location.path($scope.currentTab.url);
                 showElem0.click();
             });
+            
+            $scope.onNewMapPosition = function(pos){
+                console.log("Back in retrievedNewPosition");
+                console.log(pos);
+                String.format('open map using framework {0} at x {1}, y {2}, zoom (3)', 
+                    pos.maphost, pos.lon, pos.lat, pos.zoom);
+                    
+                var isNewAgoWindow = pos.maphost && pos.maphost == 'arcgis';
+                if(isNewAgoWindow){
+                    // alert("isNewAgoWindow is true");
+                    $scope.$broadcast('NewAgoEvent');
+                    // above broadcast invokes :
+                        // TabsCtrl.selectAgo();
+                        // TabsCtrl.forceAgo();
+                    
+                    var $inj = angular.injector(['app']);
+                    var serv = $inj.get('CurrentMapTypeService');
+                    serv.setCurrentMapType('arcgis');
+                    startArcGIS();
+                }
+            }
+            selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;
         };
         
         MasherCtrl.prototype.windowResized = function(){
@@ -149,6 +171,10 @@
             App.controller('MasherCtrl', ['$scope', '$location', MasherCtrl]);
             //calling tellAngular on resize event
             window.onresize = MasherCtrl.prototype.windowResized;
+        
+            var $inj = angular.injector(['app']);
+            var evtSvc = $inj.get('StompEventHandlerService');
+            evtSvc.addEvent('client-NewMapPosition', onNewMapPosition);
             return MasherCtrl;
         }
         function startArcGIS(){
@@ -156,19 +182,14 @@
             isFirstViewing = false;
             selfMethods["summmaryCollapser"]();
         }
-        
+         
         function onNewMapPosition(pos){
-            console.log("Back in retrievedNewPosition");
-            console.log(pos);
-            String.format('open map using framework {0} at x {1}, y {2}, zoom (3)', 
-                pos.maphost, pos.lon, pos.lat, pos.zoom);
+            console.log("onNewMapPosition");
+            
+            selfMethods["onNewMapPosition"](pos);
         }
-        
-        var $inj = angular.injector(['app']);
-        var evtSvc = $inj.get('StompEventHandlerService');
-        evtSvc.addEvent('client-NewMapPosition' : onNewMapPosition);
-
-        return { start: init, startArcGIS: startArcGIS };
+ 
+        return { start: init, startArcGIS: startArcGIS, onNewMapPosition : onNewMapPosition };
 
     });
 

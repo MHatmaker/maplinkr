@@ -40,12 +40,14 @@
             if( newSelectedWebMapId !== null)
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
-                    setupPusherClient(
-                        {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
-                        'client-MapClickEvent' : MapHosterLeaflet.retrievedClick
-                        }, function(channel){
-                        openAgoWindow(channel);
-                        });
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
+                
+                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
+                    openAgoWindow(channel);
+                    });
                 }
                 else{
                     openAgoWindow(AgoNewWindowConfig.masherChannel(false));

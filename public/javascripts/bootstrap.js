@@ -24,6 +24,12 @@ var selectedMapType = 'arcgis';
             console.debug('bootstrap init method');
             
             // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
+            
+            var eventDct = 
+                    {'client-MapXtntEvent' : null,
+                    'client-MapClickEvent' : null,
+                    'client-NewMapPosition' : null};
+                        
             var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                 function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
@@ -103,20 +109,20 @@ var selectedMapType = 'arcgis';
                 
             
              factory("StompEventHandlerService", function(){
-                var eventDct = 
-                        {'client-MapXtntEvent' : null,
-                        'client-MapClickEvent' : null,
-                        'client-NewMapPosition' : null};
+                // var eventDct = 
+                        // {'client-MapXtntEvent' : null,
+                        // 'client-MapClickEvent' : null,
+                        // 'client-NewMapPosition' : null};
                         
                 var getEventDct = function(){
                     return eventDct;
                 }
                 
-                var addEvent(evt, handler){
+                var addEvent = function(evt, handler){
                     eventDct[evt] = handler;
                 }
                 
-                var getHandler(evt){
+                var getHandler = function(evt){
                     return eventDct[evt];
                 }
                 return { getEventDct : getEventDct, addEvent : addEvent, getHandler : getHandler};

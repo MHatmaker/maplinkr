@@ -238,10 +238,9 @@ define('GeoCoder', function () {
         }
         
         function getEventDictionary(){
-            var eventDct = 
-                {'client-MapXtntEvent' : retrievedBounds,
-                'client-MapClickEvent' : retrievedClick
-                }
+            var $inj = angular.injector(['app']);
+            var evtSvc = $inj.get('StompEventHandlerService');
+            var eventDct = evtSvc.getEventDct();
             return eventDct;
         }
 
@@ -346,8 +345,15 @@ define('GeoCoder', function () {
         {   
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
-            pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
-            pusher.subscribe( 'client-MapClickEvent', retrievedClick);
+            
+            var $inj = angular.injector(['app']);
+            var evtSvc = $inj.get('StompEventHandlerService');
+            var evtDct = evtSvc.getEventDct();
+            for (var key in evtDct) {
+                pusher.subscribe( key, evtDct[key]);
+                }
+            // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
+            // pusher.subscribe( 'client-MapClickEvent', retrievedClick);
             console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
@@ -356,6 +362,19 @@ define('GeoCoder', function () {
             console.log(" MapHosterLeaflet.prototype.getGlobalsForUrl");
             console.log("&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG);
             return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
+        }
+        
+        
+        function publishPosition(pos)
+        {
+            if(selfPusherDetails.pusher)
+            {
+                console.log("MapHosterArcGIS.publishPosition");
+                pos['maphost'] = 'arcgis';
+                console.log(pos);
+                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
+            }
+                
         }
         
         function MapHosterLeaflet()
@@ -389,7 +408,7 @@ define('GeoCoder', function () {
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary };
+                  getEventDictionary : getEventDictionary, publishPosition : publishPosition };
     });
 
 }).call(this);

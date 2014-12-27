@@ -281,11 +281,9 @@
         }
         
         function getEventDictionary(){
-            var eventDct = 
-                {'client-MapXtntEvent' : retrievedBounds,
-                'client-MapClickEvent' : retrievedClick,
-                'client-NewMapPosition': retrievedNewPosition
-                }
+            var $inj = angular.injector(['app']);
+            var evtSvc = $inj.get('StompEventHandlerService');
+            var eventDct = evtSvc.getEventDct();
             return eventDct;
         }
         
@@ -437,9 +435,17 @@
             {
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;
-                pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
-                pusher.subscribe( 'client-MapClickEvent', retrievedClick);
-                pusher.subscribe( 'client-NewMapPosition', retrievedNewPosition);
+                
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                var evtDct = evtSvc.getEventDct();
+                for (var key in evtDct) {
+                    pusher.subscribe( key, evtDct[key]);
+                    }
+
+                // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
+                // pusher.subscribe( 'client-MapClickEvent', retrievedClick);
+                // pusher.subscribe( 'client-NewMapPosition', retrievedNewPosition);
                 console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             }
         }

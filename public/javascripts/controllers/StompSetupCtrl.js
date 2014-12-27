@@ -50,6 +50,7 @@
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.privateChannelMashover, 
                     selfdict.callbackFunction);
+                selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
             
             $scope.displayPusherDialog = function(){
@@ -123,7 +124,11 @@
                 channelBind.bind('client-NewMapPosition', function(frame) 
                 {
                     console.log('frame is',frame);
-                    selfdict.eventDct['client-NewMapPosition'](frame);
+                    var $inj = angular.injector(['app']);
+                    var serv = $inj.get('StompEventHandlerService');
+                    var handler = serv.getHandler('client-NewMapPosition');
+                    handler(frame);
+                    // selfdict.eventDct['client-NewMapPosition'](frame);
                     console.log("back from NewMapPosition Event");
                 });
                  

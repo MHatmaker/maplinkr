@@ -82,9 +82,9 @@
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
+            var curmph = MapHosterArcGIS;
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
-                var curmph = MapHosterArcGIS;
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
                     var $inj = angular.injector(['app']);
                     var serv = $inj.get('CurrentMapTypeService');
@@ -123,6 +123,10 @@
             else
             {
                 initializePostProc(newSelectedWebMapId);
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
             }
         }
 

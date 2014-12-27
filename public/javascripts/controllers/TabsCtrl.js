@@ -102,6 +102,15 @@ String.format = function() {
             selfMethods["forceAgo"] = $scope.forceAgo;
             
             console.debug(selfMethods);
+            
+            $scope.$on('NewAgoEvent', function(event, args) {
+                $scope.selectAgo();
+                $scope.forceAgo();
+            // $scope.$on('NewAgoEvent', function(event, args) {
+                // selfMethods["selectAgo"]();
+                // selfMethods["forceAgo"]();
+                
+            });
            
         };
             

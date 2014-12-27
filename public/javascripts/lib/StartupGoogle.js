@@ -101,17 +101,20 @@ function skipScript() {
             if( newSelectedWebMapId !== null)
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
-                    setupPusherClient(
-                        {'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
-                        'client-MapClickEvent' : MapHosterGoogle.retrievedClick
-                        }, function(channel){
-                            var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
-                            console.log("open new ArcGIS window with URI " + url);
-                            console.log("using channel " + channel);
-                            AgoNewWindowConfig.setUrl(url);
-                            // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-                            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
-                        });
+                    var $inj = angular.injector(['app']);
+                    var evtSvc = $inj.get('StompEventHandlerService');
+                    evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
+                    evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
+                    
+                    setupPusherClient(evtSvc.getEventDct(), function(channel){
+                        
+                        var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
+                        console.log("open new ArcGIS window with URI " + url);
+                        console.log("using channel " + channel);
+                        AgoNewWindowConfig.setUrl(url);
+                        // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
+                        window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+                    });
                 }
                 else{
                     openAgoWindow(AgoNewWindowConfig.masherChannel(false));
