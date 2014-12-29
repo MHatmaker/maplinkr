@@ -67,9 +67,8 @@ var selectedMapType = 'arcgis';
                           redirectTo: '/'
                       }); 
                              
-                    console.debug('html5Mode');
                     $locationProvider.html5Mode(true);
-                    console.debug('html5Mode again')
+                    console.debug('Here we are at the end of routeProvider logic');
                     
                 }
             ]).

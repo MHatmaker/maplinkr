@@ -4,7 +4,7 @@
     var isFirstViewing = true;
 
     console.log('MasherCtrl setup');
-    define(['angular', 'controllers/WebSiteDescriptionCtrl'], function(angular, WebSiteDescriptionCtrl) {
+    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl'], function(angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl) {
         console.log('MasherCtrl define');
         var selfMethods = {};
         var descriptions = {
@@ -140,7 +140,7 @@
             });
             
             $scope.onNewMapPosition = function(pos){
-                console.log("Back in retrievedNewPosition");
+                console.log("In onNewMapPosition scope handler");
                 console.log(pos);
                 var agoId = pos.webmapId && pos.webmapId != '' ? pos.webmapId : '';
                 var pos2prt = String.format('open map using framework {0} at x {1}, y {2}, zoom {3}, webmapId {4}', 
@@ -149,7 +149,9 @@
                     
                 var isNewAgoWindow = pos.maphost && pos.maphost == 'arcgis';
                 if(isNewAgoWindow){
+                    AgoNewWindowConfig.setSearch(pos.search);
                     // alert("isNewAgoWindow is true");
+                    AgoNewWindowConfig.setWebmapId(agoId);
                     $scope.$broadcast('NewAgoEvent', {'webmapId' : agoId});
                     // above broadcast invokes :
                         // TabsCtrl.selectAgo();
@@ -159,6 +161,7 @@
                     var serv = $inj.get('CurrentMapTypeService');
                     serv.setCurrentMapType('arcgis');
                     startArcGIS();
+                    AgoNewWindowConfig.setSearch(pos.search);
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

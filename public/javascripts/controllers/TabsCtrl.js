@@ -93,9 +93,9 @@ String.format = function() {
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 var newPath = "/views/partials/ArcGIS";
-                if(agoId != ''){
-                    newPath += '/&id=' + agoId;
-                }
+                // if(agoId != ''){
+                    // newPath += '/?id=' + agoId;
+                // }
                 console.log("selectAgo setting path to : " + newPath);
                 $location.path(newPath);
             }

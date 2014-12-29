@@ -82,7 +82,7 @@ var details = {
                 return details.locationPath;
             },
             setSearch : function (searchDetails){
-                search(searchDetails);
+                details.search = searchDetails;
             },
             lon: function(){
                 return getParameterByName('lon');

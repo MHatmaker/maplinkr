@@ -38,7 +38,9 @@
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 var curmph = serv.getSelectedMapType();
-                curmph.publishPosition(AgoNewWindowConfig.getPosition());
+                var newPos = AgoNewWindowConfig.getPosition();
+                newPos.search = updtUrl;
+                curmph.publishPosition(newPos);
             }
         }
         
