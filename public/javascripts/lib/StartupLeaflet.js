@@ -40,14 +40,14 @@
             if( newSelectedWebMapId !== null)
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
-                var $inj = angular.injector(['app']);
-                var evtSvc = $inj.get('StompEventHandlerService');
-                evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
-                evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
-                
-                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
-                    openAgoWindow(channel);
-                    });
+                    var $inj = angular.injector(['app']);
+                    var evtSvc = $inj.get('StompEventHandlerService');
+                    evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
+                    evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
+                    
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
+                        openAgoWindow(channel);
+                        });
                 }
                 else{
                     openAgoWindow(AgoNewWindowConfig.masherChannel(false));
@@ -75,6 +75,7 @@
             console.log("open new ArcGIS window with URI " + url);
             console.log("using channel " + channel);
             AgoNewWindowConfig.setUrl(url);
+            AgoNewWindowConfig.setChannel(channel);
             // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
             window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
         }

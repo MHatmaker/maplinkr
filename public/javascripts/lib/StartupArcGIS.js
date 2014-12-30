@@ -80,9 +80,13 @@
         var pusher = null;
         var loading;
             
-        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
+        function initialize(newSelectedWebMapId, dispDest, selectedMapTitle) 
         {
             var curmph = MapHosterArcGIS;
+            var displayDestination = dispDest;
+            // if(displayDestination == ''){
+                // displayDestination = AgoNewWindowConfig.getDestinationPreference();
+            // }
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
@@ -96,12 +100,12 @@
                 var evtSvc = $inj.get('StompEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                // if(StompSetupCtrl.isInitialized() == false){
+                    // StompSetupCtrl.start(App);
+                // }
+                // var App = angular.module("app");
+                // StompSetupCtrl.start(App);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    /* 
-                    {'client-MapXtntEvent' : curmph.retrievedBounds,
-                    'client-MapClickEvent' : curmph.retrievedClick,
-                    'client-NewMapPosition' : curmph.retrievedNewPosition},
-                     */
                     function(channel){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("open new ArcGIS window with URI " + url);
@@ -345,13 +349,13 @@
                 // pointWebMap = [-87.7, lat=41.8];
                 pointWebMap = [-87.7, 41.8];
                 zoomWebMap = 13;
-                initialize(selectedWebMapId, false, "");
+                initialize(selectedWebMapId, '', '');
             }
             else
             {
                 console.log("found idWebMap");
                 console.log("use " + idWebMap);
-                initialize(idWebMap, false, "");
+                initialize(idWebMap, '', '');
             }
         }
 

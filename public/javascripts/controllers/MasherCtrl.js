@@ -149,9 +149,29 @@
                     
                 var isNewAgoWindow = pos.maphost && pos.maphost == 'arcgis';
                 if(isNewAgoWindow){
+                    // alert("isNewAgoWindow is true");
+                    /* 
+                    AgoNewWindowConfig.setSearch(pos.search);
+                    AgoNewWindowConfig.setWebmapId(agoId);
+                    AgoNewWindowConfig.setPosition({'lon' : pos.lon, 'lat' : pos.lat, 'zoom' : pos.zoom});
+                    AgoNewWindowConfig.setDestination('New Pop-up Window');
+                    AgoNewWindowConfig.setSearch(pos.search);
+                    // AgoNewWindowConfig.setChannel(pos.search);
+                     */
+                    var completeUrl = AgoNewWindowConfig.gethref() + "arcgis/" + pos.search;
+                    console.log('completeUrl');
+                    console.log(completeUrl);
+                    window.open(completeUrl, pos.webmapId, "top=1, left=1, height=400,width=500");
+                    console.log("after call to window.open");
+                    
+                /* 
+                if(isNewAgoWindow){
                     AgoNewWindowConfig.setSearch(pos.search);
                     // alert("isNewAgoWindow is true");
                     AgoNewWindowConfig.setWebmapId(agoId);
+                    AgoNewWindowConfig.setPosition({'lon' : pos.lon, 'lat' : pos.lat, 'zoom' : pos.zoom});
+                    AgoNewWindowConfig.setDestination('New Pop-up Window');
+                    
                     $scope.$broadcast('NewAgoEvent', {'webmapId' : agoId});
                     // above broadcast invokes :
                         // TabsCtrl.selectAgo();
@@ -162,6 +182,7 @@
                     serv.setCurrentMapType('arcgis');
                     startArcGIS();
                     AgoNewWindowConfig.setSearch(pos.search);
+                     */
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

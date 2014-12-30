@@ -10,7 +10,8 @@ var details = {
     url: '',
     lat : '',
     lon : '',
-    zoom : ''
+    zoom : '',
+    destPref : ''
 };
     
 
@@ -60,11 +61,11 @@ var details = {
                 // alert(details.masherChannel);
                 return newWindow ? getParameterByName('channel') : details.masherChannel;
             },
-            setChannel : function(cnhl){
+            setChannel : function(chnl){
                 if(masherChannelInitialized == false){
                     details.masherChannelInitialized = true;
                 }
-                details.masherChannel = cnhl;
+                details.masherChannel = chnl;
             },
             isChannelInitialized : function(){
                 return details.masherChannelInitialized;
@@ -127,9 +128,15 @@ var details = {
                 return details.url;
             },
             getUpdatedUrl : function(){
-                var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3} ", details.webmapId,details.lon, details.lat, details.zoom);
+                var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}", details.webmapId,details.lon, details.lat, details.zoom, details.masherChannel);
                 console.log(updatedUrl);
                 return updatedUrl;
+            },
+            getDestinationPreference : function(){
+                return details.destPref;
+            },
+            setDestinationPreference : function(pref){
+                details.destPref = pref;
             },
             showConfigDetails: function(){
                 console.log(
