@@ -80,13 +80,9 @@
         var pusher = null;
         var loading;
             
-        function initialize(newSelectedWebMapId, dispDest, selectedMapTitle) 
+        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
             var curmph = MapHosterArcGIS;
-            var displayDestination = dispDest;
-            // if(displayDestination == ''){
-                // displayDestination = AgoNewWindowConfig.getDestinationPreference();
-            // }
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
@@ -100,11 +96,6 @@
                 var evtSvc = $inj.get('StompEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-                // if(StompSetupCtrl.isInitialized() == false){
-                    // StompSetupCtrl.start(App);
-                // }
-                // var App = angular.module("app");
-                // StompSetupCtrl.start(App);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                     function(channel){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;

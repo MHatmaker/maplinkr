@@ -163,26 +163,6 @@
                     console.log(completeUrl);
                     window.open(completeUrl, pos.webmapId, "top=1, left=1, height=400,width=500");
                     console.log("after call to window.open");
-                    
-                /* 
-                if(isNewAgoWindow){
-                    AgoNewWindowConfig.setSearch(pos.search);
-                    // alert("isNewAgoWindow is true");
-                    AgoNewWindowConfig.setWebmapId(agoId);
-                    AgoNewWindowConfig.setPosition({'lon' : pos.lon, 'lat' : pos.lat, 'zoom' : pos.zoom});
-                    AgoNewWindowConfig.setDestination('New Pop-up Window');
-                    
-                    $scope.$broadcast('NewAgoEvent', {'webmapId' : agoId});
-                    // above broadcast invokes :
-                        // TabsCtrl.selectAgo();
-                        // TabsCtrl.forceAgo();
-                    
-                    var $inj = angular.injector(['app']);
-                    var serv = $inj.get('CurrentMapTypeService');
-                    serv.setCurrentMapType('arcgis');
-                    startArcGIS();
-                    AgoNewWindowConfig.setSearch(pos.search);
-                     */
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

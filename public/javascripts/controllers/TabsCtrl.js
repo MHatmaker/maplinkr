@@ -89,13 +89,10 @@ String.format = function() {
             }
             console.log("onClickTab and isActiveTab defined ");
             
-            $scope.selectAgo = function(agoId){
+            $scope.selectAgo = function(){
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[2];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 var newPath = "/views/partials/ArcGIS";
-                // if(agoId != ''){
-                    // newPath += '/?id=' + agoId;
-                // }
                 console.log("selectAgo setting path to : " + newPath);
                 $location.path(newPath);
             }
@@ -107,15 +104,6 @@ String.format = function() {
             selfMethods["forceAgo"] = $scope.forceAgo;
             
             console.debug(selfMethods);
-            
-            $scope.$on('NewAgoEvent', function(event, args) {
-                $scope.selectAgo(args.webmapId);
-                $scope.forceAgo();
-            // $scope.$on('NewAgoEvent', function(event, args) {
-                // selfMethods["selectAgo"]();
-                // selfMethods["forceAgo"]();
-                
-            });
            
         };
             

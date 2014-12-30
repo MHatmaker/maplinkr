@@ -15,9 +15,8 @@ var selectedMapType = 'arcgis';
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
-        'lib/MapHosterArcGIS',
-        'controllers/StompSetupCtrl'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS, StompSetupCtrl) {
+        'lib/MapHosterArcGIS'
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -144,9 +143,6 @@ var selectedMapType = 'arcgis';
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType('arcgis');
-                StompSetupCtrl.start(App);
-                var evtSvc = $inj.get('StompEventHandlerService');
-                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){});
                 MasherCtrl.startArcGIS();
                                
             };
