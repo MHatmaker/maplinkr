@@ -5,3 +5,18 @@ href : http://localhost:3035//arcgis/?id=5a250f671f9a4d87b0801d26eca44337&lon=-8
  http://localhost:3035//arcgis/?id=8d15d99dc973499d8f93860298b3e576&lon=-87.700&lat=41.806&zoom=13&channel=private-channel-mashchannel
  
  http://localhost:3035/arcgis/?id=8d15d99dc973499d8f93860298b3e576&lon=-87.7&lat=41.8&zoom=13&channel=private-channel-mashchannel
+ 
+ Most of the devices would come under the following 3 resolutions 1) HVGA-Half of VGA (320 x 240) 2) WVGA- wide VGA(800x 480) - nearly 1.5 times of HVGA 3) HVGA 2x- (640 X 960) - IPHONE 4 uses this resolution
+
+Write seperate css files for the above three resolutions by
+
+@Media screen and (min-width: 320px) and (max-width: 480px){
+/* css files here*/
+}
+or
+
+@Media screen and (min-device-pixel-ratio: 2)
+{/* css files here*/
+
+}
+Do the same with other resolutions. A css class created in 1 resolution should be copy pasted in all three resolutions to get a perfect view. By

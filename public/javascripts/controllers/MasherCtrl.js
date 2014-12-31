@@ -4,7 +4,7 @@
     var isFirstViewing = true;
 
     console.log('MasherCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl'], function(angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl) {
+    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function(angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
         console.log('MasherCtrl define');
         var selfMethods = {};
         var descriptions = {
@@ -32,7 +32,7 @@
             $scope.MasterSiteVis = "inline";
             $scope.NavigatorVis = "flex";
   
-            // $scope.expBtnHeight = utils.getButtonHeight();
+            $scope.expBtnHeight = utils.getButtonHeight(1.2); //'ExpandSumImgId');
             $scope.isCollapsed = false;
             
             $scope.currentTab = null;

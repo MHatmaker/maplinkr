@@ -59,12 +59,35 @@
         // );
         return window.innerHeight;
         }
+        
+        function getRootElementFontSize( ) {
+            // Returns a number
+            var fontSize = parseFloat(
+                // of the computed font-size, so in px
+                getComputedStyle(
+                    // for the root <html> element
+                    document.documentElement
+                )
+                .fontSize
+            );
+            return fontSize;
+        }
+        
+        function convertRem(value) {
+            return value * getRootElementFontSize();
+        }
 
-        function getButtonHeight(){
-            var btnHeight = getElemHeight("idExpButtonSum");
+        function getButtonHeight(m){
+            var btnHeight = convertRem(m);
+            btnHeight = btnHeight; // / 16;
+            return btnHeight;
+        }
+        /* 
+        function getButtonHeight(id){
+            var btnHeight = getElemHeight(id);
             return btnHeight * 0.6;
         }
-          
+           */
         function getElemHeight(itm){
             var elem = document.getElementById(itm);
             var elemHeight = elem.clientHeight;
@@ -212,7 +235,7 @@
         return {
             showHeights : showHeights,
             getDocHeight : getDocHeight,
-            // getButtonHeight : getButtonHeight,
+            getButtonHeight : getButtonHeight,
             displayHeights : displayHeights,
             calculateComponentHeights : calculateComponentHeights,
             getComponentHeights : getComponentHeights,
