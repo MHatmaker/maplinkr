@@ -7,7 +7,7 @@ block stylesblock append
     
 style.panel-heading.panel-title.
     accordion-toggle{
-        font-size: 9pt;
+        font-size: 0.75em;
         font-weight: bold
     }
     
@@ -22,26 +22,24 @@ block append content
     #spa_window(class="wrapper-website", ng-controller="SPACtrl", ng-cloak, class="ng-cloak")
         #idNavigator(class="navigation", ng-controller="PositionViewCtrl", ng-cloak, class="ng-cloak", style="display:{{NavigatorVis}};")
                                     
-            div(class="havButton").
+            div(class="navButton").
               {{currentTab.site}}
-            div(class="havButton")
-              input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='flex:0.6; font-size:9pt;text-align:right;margin-right:10px;padding: 0px 5px 0px 5px;width:100%')
-            div(class="havButton")
-             select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()")
-            div(class="havButton")
-              {{currentTab.title}}
-            div(id="idExpPlugButton", class="havButton", ng-click="onExpPlugClick()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
+            div(class="navButton")
+              input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='flex:0.6; font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
+            div(class="navButton")
+              select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()", style="font-size:0.75em; margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;")
+            div(id="idExpPlugButton", class="navButton", ng-click="onExpPlugClick()", style="padding: 0.01em 0.8em 0.01em 0.01em;")
               span
                 figure
                   figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandPlug}}
-                  img(src="../stylesheets/images/{{verbageExpandCollapse}}.png", id='verbageExpandCollapseImgId', style="float: width:{{expBtnHeight}}em;  height: {{expBtnHeight}}em; right; padding: 0.01em 0.1em  0.01em  0.4em;")
-            div(id="idExpSiteButton", class="havButton", ng-click="onExpSiteClick()", style="width:{{expBtnHeight}}em;  height: {{expBtnHeight}}em; padding: 0.01em 0.01em 0.01em 0.01em;")
+                  img(src="../stylesheets/images/{{verbageExpandCollapse}}.png", id='verbageExpandCollapseImgId', style="float: left; width:{{expBtnHeight}}em;  height: {{expBtnHeight}}em; right; margin: 0.01em 0.1em  0.01em 0.4em;")
+            div(id="idExpSiteButton", class="navButton", ng-click="onExpSiteClick()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
               span
                 figure
                   figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandSite}}
-                  img(src="../stylesheets/images/{{webSiteVisible}}.png", style="float: right; width:{{expBtnHeight}}px;  height: {{expBtnHeight}}px; padding: 0.01em 0.1em  0.01em  0.4em;")
+                  img(src="../stylesheets/images/{{webSiteVisible}}.png", style="float: left; width:{{expBtnHeight}}em;  height: {{expBtnHeight}}em; margin: 0.01em 0.1em 0.01em 0.41em;")
 
         div(class="container-website")
       
@@ -74,7 +72,7 @@ block append content
                                         Click on the "Expand Control Pane" and "Hide Web Site" icons.
                                         Then Select the Mash-over Instruction accordion pane for all the latest.
                                   
-                                    div(class="container-newscellhead" style="font-size:9pt;color:black; font-weight: bold;").
+                                    div(class="container-newscellhead" style="font-size:0.75em;color:black; font-weight: bold;").
                                         OTHER STUFF
                                     div(class="container-newscellbody") 
                                         img(ng-src="../stylesheets/images/NewsPapers.jpg")
@@ -115,7 +113,7 @@ block append content
                                 accordion-heading
                                      | <b>Mashover Release News</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
-                                div(style='font-size:9pt;border:2px solid red;margin:1px;padding:2px;')
+                                div(style='font-size:0.75em;border:2px solid red;margin:1px;padding:2px;')
                                     h4(style="color:red") Latest Release
                                     h5(style="color:red")
                                         | Release notes will appear here as new features are added to the Mash-over plug-in.
@@ -129,7 +127,7 @@ block append content
                                 
                                 br
                                 h5 Wallace and Gromit Use Mash-over.
-                                p(style='font-size:9pt;color: #333333; border:2px solid green;margin:1px;padding:2px;').
+                                p(style='font-size:0.75em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
                                     | Wallace and Gromit have improved the efficiency of their window washing service by
                                     | incorporating community maps of reported dirty windows.
                                 br
@@ -140,13 +138,13 @@ block append content
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")
                                 h3 Using Mash-over
 
-                                p(style='font-size:9pt;margin:1em').                              
+                                p(style='font-size:0.75em;margin:1em').                              
                                     | Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use 
                                     |  base maps or different themes for overlays.  Unlike standard layer overlays in a 
                                     | single viewer, the base layers and overlays do not interfere with the visibility or 
                                     | of other selected layers.
 
-                                p(style='font-size:9pt;margin:1em;').
+                                p(style='font-size:0.75em;margin:1em;').
                                     | Mash-overs can be created from three map viewer sources, if the viewer system incorporates
                                     | the mash-over plug-in.
 
@@ -165,47 +163,38 @@ block append content
                                         div
                                             accordion(close-others="true") 
                                                 accordion-group(id="sameWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isSameWindowPaneOpen")
-                                                    accordion-heading
+                                                    accordion-heading(style='font-size:0.75em;')
                                                         | <b>Same Window </b>
                                                         i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
                                                 
-                                                    p(style='font-size:9pt;margin:1em').                              
-                                                        | The newly selected map replaces the current map in the map viewer to 
-                                                        | the left. 
+                                                    p(style='margin:1em').                              
+                                                        The newly selected map replaces the current map in the map viewer to the left. 
                                                 accordion-group(id="newTabPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewTabPaneOpen")
-                                                    accordion-heading(style='font-size:9pt;')
-                                                        | <b>New Tab / Same Browser<b/>
+                                                    accordion-heading(style='font-size:0.75em;')
+                                                        | <b>New Tab in Same Browser<b/>
                                                         i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
                                                 
-                                                    p(style='font-size:9pt;margin:1em').                              
-                                                        | The newly selected map opens in a new tab in the current browser. 
-                                                        | Switch to the tab and drag the tab to the desktop, which displays the 
-                                                        | tab's contents in a completely new browser instance.  This is a fully 
-                                                        | functional web browser.
+                                                    p(style='margin:1em').                              
+                                                        The newly selected map opens in a new tab in the current browser. 
+                                                        Switch to the tab and drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.  This is a fully functional web browser.
                                                 accordion-group(id="newWindowPaneID",style="height:100%;width:100%;vertical-align:top;",  is-open="$parent.status.isNewWindowPaneOpen")
-                                                    accordion-heading(style='font-size:9pt;')
+                                                    accordion-heading(style='font-size:0.75em;')
                                                         | <b>New Window</b>
                                                         i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
                                                 
-                                                    p(style='font-size:9pt;margin:1em').                              
-                                                        | The newly selected map is opened in a map viewer in a new popup 
-                                                        | window.  Although this is not a full-featured new web browser instance,
-                                                        | it provides complete functionality as a synchronized map viewer.  If 
-                                                        | popups are turned off, use sequence described under the "New Tab" 
-                                                        | option above.
+                                                    p(style='margin:1em').                              
+                                                        The newly selected map is opened in a map viewer in a new popup  window.  Although this is not a full-featured new web browser instance, it provides complete functionality as a synchronized map viewer.  If  popups are turned off, use sequence described under the "New Tab" option above.
                                                 
                                     li(class="acc li") 4. Create a Pusher channel:
-                                        p(style='font-size:9pt;margin:1em;').
-                                            | A second dialog opens, requesting a Pusher channel name.  Specify a name that 
-                                            | will be unique for the shared session.
+                                        p(style='margin:1em;'). A second dialog opens, requesting a Pusher channel name.  Specify a name that  will be unique for the shared session.
                                     
                                     li(class="acc li") 5. Experiment with synchronized maps:
                                     
                                         ul#StepsListSynch(style="height:100%")
                                         
-                                            li(class="acc li") a. Resize and move any open map viewer windows so that they are simultaneously visible.
-                                            li(class="acc li") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
-                                            li(class="acc li") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
+                                            li(class="acc li", style="font-size:1.0em;") a. Resize and move any open map viewer windows so that they are simultaneously visible.
+                                            li(class="acc li", style="font-size:1.0em;") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
+                                            li(class="acc li", style="font-size:1.0em;") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
 
                             
                                 
@@ -252,7 +241,7 @@ block append content
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSharingInstructionsOpen, 'glyphicon-chevron-right': !status.isSharingInstructionsOpen}")
                                 h3 Concepts and Features
                                 
-                                p(style='font-size:9pt;margin:1em').                              
+                                p(style='font-size:0.75em;margin:1em').                              
                                     | Multiple users can view synchronized maps in web browsers on other devices.  After 
                                     | finding an ArcGIS WebMap that you want to share:
                                     
@@ -262,12 +251,12 @@ block append content
                                     li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard. 
                                     li(class="acc li") 3. Paste the link in an email to collaborators. 
                                    
-                                p(style='font-size:9pt;margin:1em').
+                                p(style='font-size:0.75em;margin:1em').
                                     | The url includes the name of the Pusher channel that you have selected.  As users open
                                     | the link, they will be subscribing to share map clicks, pans and zooms with all other users
                                     | as any user manipulates any map view.
                                     
-                                p(style='font-size:9pt;margin:1em').
+                                p(style='font-size:0.75em;margin:1em').
                                     | The Pusher channel can also be set without opening a new map viewer by opening the "Set 
                                     | Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize 
                                     | their displays with your display.  This step is necessary if you and your collaborators 
@@ -295,7 +284,7 @@ block append content
                                      | <b>Set Pusher Channel</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSetChannelOpen, 'glyphicon-chevron-right': !status.isSetChannelOpen}")
                                 div(ng-controller="StompSetupCtrl")
-                                    p(style='font-size:9pt;margin:1em').
+                                    p(style='font-size:0.75em;margin:1em').
                                         Set or change the Pusher communications channel.
                                     button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
                                         
@@ -304,6 +293,6 @@ block append content
                                      | <b>Publish Current URL</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isUrlTransmitterOpen, 'glyphicon-chevron-right': !status.isUrlTransmitterOpen}")
                                 div(ng-controller="TransmitNewUrlCtrl")
-                                    p(style='font-size:9pt;margin:1em').
+                                    p(style='font-size:0.75em;margin:1em').
                                         Publish the current map Url to Pusher communications channel subscribers.
                                     button(class="btn btn-primary", style='width:100%;', ng-click="publishUrl()", value="Publish Url") Publish Url

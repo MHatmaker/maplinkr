@@ -40,7 +40,7 @@
             
             $scope.currentViewOption = $scope.viewOptions[2]; 
             $scope.positionView = "position info";
-            $scope.expBtnHeight = utils.getButtonHeight(1.5); //'verbageExpandCollapseImgId');
+            $scope.expBtnHeight = 1.2; // utils.getButtonHeight(1.5); //'verbageExpandCollapseImgId');
             
             $scope.updateDetails = {
                 'zm' : function(opt){curDetails['zm'] = opt['zm']; curDetails['scl'] = opt['scl'];},
