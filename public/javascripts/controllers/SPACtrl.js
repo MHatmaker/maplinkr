@@ -144,6 +144,7 @@
                                                              'verbage' : status['plugin']});
                                                             
                 setTimeout(function(){
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                     utils.displayHeights("####  onExpPlugClick after timeout  ###");
                     utils.setElementHeight('idCenterCol', colHgt - 40);
                     utils.setElementHeight('map_wrapper', colHgt - 40);

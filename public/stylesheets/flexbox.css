@@ -105,12 +105,17 @@ body {
 .container-newscellbody {
   display: flex;
   flex-direction: column;
-  flex : 3;
+  flex : 4;
   overflow: auto;
   border:2px solid blue;
   font-size:11pt;
 }
 
+.newscelllatin {
+
+    font-weight: lighter;
+}
+    
 .container-body {
   border:3px dashed OrangeRed;
   margin : 2px;
@@ -213,6 +218,10 @@ body {
   border:2px solid brown;
 }
 
+  @media all and (max-width: 600px) {
+    .container-plugin {flex: 3;}
+}
+  
 .container-mapcolheading {
   display: flex;
   flex : 1;
