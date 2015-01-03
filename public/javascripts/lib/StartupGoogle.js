@@ -103,8 +103,8 @@ function skipScript() {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
                     var $inj = angular.injector(['app']);
                     var evtSvc = $inj.get('StompEventHandlerService');
-                    evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
-                    evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
+                    evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
+                    evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
                     
                     setupPusherClient(evtSvc.getEventDct(), function(channel){
                         
@@ -122,6 +122,10 @@ function skipScript() {
             }
             else
             {
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
             
                 // loadScript();
                 var mapOptions = {

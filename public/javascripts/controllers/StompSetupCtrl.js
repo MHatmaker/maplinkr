@@ -160,9 +160,18 @@
                 selfdict.mph = serv.getSelectedMapType();
                 
                 var allMapTypes = serv.getMapTypes();
+                var mptLength = allMapTypes.length;
+                for(var i =0; i< mptLength; i++){
+                    if (typeof allMapTypes[i] != "undefined") {
+                        console.log("set pusher client for hoster type:")
+                        console.debug(allMapTypes[i]);
+                        allMapTypes[i].setPusherClient(pusher, self.CHANNEL);
+                    }
+                }
                                       
                 console.log("CurrentMapTypeService got mph, call setPusherClient");
                 selfdict.mph.setPusherClient(pusher, self.CHANNEL);
+                selfdict.eventDct = selfdict.mph.getEventDictionary();
                 if(self.callbackfunction != null){
                     self.callbackfunction(self.CHANNEL);
                 }

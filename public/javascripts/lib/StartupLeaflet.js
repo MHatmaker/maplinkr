@@ -55,6 +55,11 @@
             }
             else
             {
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
+                
                 // lMap = new L.Map('map_canvas', {loadingControl: true}); //.setView([41.8, -87.7], 13);
                 lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
                 // console.debug(lMap);

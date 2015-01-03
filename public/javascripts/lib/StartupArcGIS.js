@@ -117,6 +117,11 @@
             }
             else
             {
+                var $inj = angular.injector(['app']);
+                var evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                
                 initializePostProc(newSelectedWebMapId);
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');

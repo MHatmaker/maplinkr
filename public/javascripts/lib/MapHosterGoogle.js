@@ -192,7 +192,7 @@
                 var zm = xj.zoom
                 var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
                 var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-                document.getElementById("mpnm").innerHTML = view;
+                document.getElementById("mppos").innerHTML = view;
                 if(cmp == false)
                 {
                     var tmpLon = cntrxG;
