@@ -158,6 +158,8 @@
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
+                
+                var allMapTypes = serv.getMapTypes();
                                       
                 console.log("CurrentMapTypeService got mph, call setPusherClient");
                 selfdict.mph.setPusherClient(pusher, self.CHANNEL);

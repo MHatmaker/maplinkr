@@ -89,6 +89,17 @@ var selectedMapType = 'arcgis';
                 var previousMapType = 'arcgis';
                 
                 
+                var getMapTypes = function(){
+                    var values = Object.keys(mapTypes).map(function(key){
+                        return mapTypes[key];
+                        });
+                    return values;
+                    
+                    // var mapTypeValues = [];
+                    // for (var key in mapTypes){
+                        // mapTypeValues.push(mapTypes[key]);
+                    // return mapTypes;
+                }
                 var getMapType = function(){
                     return mapTypes[currentMapType];
                 }
@@ -108,7 +119,7 @@ var selectedMapType = 'arcgis';
                     console.log("getSelectedMapType : " + selectedMapType);
                     return mapTypes[selectedMapType];
                 }
-                return { getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey };
+                return { getMapTypes: getMapTypes, getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey };
             }).
                 
             

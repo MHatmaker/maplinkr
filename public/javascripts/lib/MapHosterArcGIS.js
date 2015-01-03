@@ -431,7 +431,7 @@
         function setPusherClient(pusher, channel)
         {   
             console.log("MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
-            if(selfPusherDetails.pusher == null)
+            if(selfPusherDetails.pusher === null)
             {
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;

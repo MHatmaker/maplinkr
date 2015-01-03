@@ -2,6 +2,11 @@ body {
   margin:0; /* This is used to reset any browser-default margins */ 
 }
 
+.expandoimage {
+    height: 1.3em;
+    width : 1.3em;
+    float : left;
+}
 
 .mastersitecontrol-expander{
   flex : 1;
@@ -185,6 +190,13 @@ body {
     flex-flow: row wrap;
   }
 }
+
+  @media all and (max-width: 800px) {
+    .expandoimage {
+        height: 1.7em;
+        width : 1.7em;
+    }
+  }
 
   @media all and (max-width: 600px) {
   .aside { flex: 1;}
