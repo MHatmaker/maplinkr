@@ -1,6 +1,10 @@
 
 * { box-sizing: border-box; }
 
+.posViewVisible {
+    display: flex;
+}
+
 /* Large */
 .navigation {
   list-style: none;
@@ -67,5 +71,9 @@
   
   .navigation li:last-of-type a {
     border-bottom: none;
+  }
+  
+  .posViewVisible {
+    display : none;
   }
 }

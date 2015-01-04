@@ -100,6 +100,7 @@
                 console.log("status['website'] after  " + status['website']);
                 
                 utils.displayHeights("####  onExpSiteClick  ###");
+                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                 var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
                 
                 // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
@@ -132,7 +133,8 @@
                 $scope.VerbVis = $scope.ExpandPlug == "Show Plugin" ? "flex" : "none";
                 $scope.ExpandPlug = $scope.ExpandPlug == "Show Plugin" ? "Hide Plugin" : "Show Plugin";
                 utils.displayHeights("####  onExpPlugClick  ###");
-                    var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
                                                    
                 // $scope.bodyColHeight = colHgt + (status['website'] == 'flex' ? 
                     // utils.getFooterHeight()/*  + 20 */ : utils.getFooterHeight());
