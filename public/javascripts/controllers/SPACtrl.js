@@ -35,7 +35,8 @@
                 true : 'true',
                 false : 'false'
                 };
-            var innerTableAdjustment = 40;
+            var innerTableAdjustment = 20;
+            var colHeightAdjustment = 40;
                 
             function printStatus(msg){ 
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}", 
@@ -116,12 +117,16 @@
                                                                'verbage' : status['plugin']});
                 setTimeout(function(){
                     $scope.$apply(function(){
-                        utils.setElementHeight('idCenterCol', colHgt - 40);
-                        utils.setElementHeight('map_wrapper', colHgt - 40);
+                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                        var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                        $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                        utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
+                        utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+                        utils.setElementHeight('idFooter', utils.getFooterHeight());
                         if(status['website'] == 'flex'){
                             utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - 40);
-                            utils.setElementHeight('idRightCol', colHgt - 40);
+                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
                         console.log("onExpSiteClick adjustments - colHgt : " + colHgt);
                         });
@@ -149,12 +154,12 @@
                         var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.displayHeights("####  onExpPlugClick after timeout  ###");
-                        utils.setElementHeight('idCenterCol', colHgt - 40);
-                        utils.setElementHeight('map_wrapper', colHgt - 40);
+                        utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
+                        utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
                             utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - 40);
-                            utils.setElementHeight('idRightCol', colHgt - 40);
+                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idFooter', utils.getFooterHeight());
                         }
                         console.log("onExpPlugClick adjustments - colHgt : " + colHgt);
@@ -223,12 +228,15 @@
                         // $scope.bodyColHeight = colHgt;
                         // $scope.bodyColHeight = colHgt;
                         // utils.setElementHeight('idBody', colHgt - 20);
-                        utils.setElementHeight('idCenterCol', colHgt - 40);
-                        utils.setElementHeight('map_wrapper', colHgt - 40);
+                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                        var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                        $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                        utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
+                        utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
                             utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - 40);
-                            utils.setElementHeight('idRightCol', colHgt - 40);
+                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
                         console.log("adjustHeights colHgt : " + colHgt);
                         });
