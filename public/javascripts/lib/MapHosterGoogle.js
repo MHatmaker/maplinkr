@@ -37,7 +37,7 @@
         };
         var popDetails = null;
                       
-        function configureMap(gMap, goooogle) {
+        function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
             google = goooogle;
             geoCoder = new google.maps.Geocoder();
@@ -45,6 +45,62 @@
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
             // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
+            
+            
+            var searchInput = /** @type {HTMLInputElement} */(
+                document.getElementById('pac-input'));
+            mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+
+            var searchBox = new googPlaces.SearchBox(
+            /** @type {HTMLInputElement} */(searchInput));
+            
+            // Listen for the event fired when the user selects an item from the
+            // pick list. Retrieve the matching places for that item.
+            google.maps.event.addListener(searchBox, 'places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+                for (var i = 0, marker; marker = markers[i]; i++) {
+                    marker.setMap(null);
+                }
+
+                // For each place, get the icon, place name, and location.
+                markers = [];
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0, place; place = places[i]; i++) {
+                    var image = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                  // Create a marker for each place.
+                    var marker = new google.maps.Marker({
+                        map: mphmap,
+                        icon: image,
+                        title: place.name,
+                        position: place.geometry.location
+                    });
+
+                      markers.push(marker);
+
+                      bounds.extend(place.geometry.location);
+                }
+
+                mphmap.fitBounds(bounds);
+            });
+            
+            // Bias the SearchBox results towards places that are within the bounds of the
+            // current map's viewport.
+            google.maps.event.addListener(mphmap, 'bounds_changed', function() {
+                var bounds = mphmap.getBounds();
+                searchBox.setBounds(bounds);
+            });
+            
             google.maps.event.addListener(mphmap, 'dragend', function() 
                 {setBounds('pan');});
             google.maps.event.addListener(mphmap, "zoom_changed", function() {

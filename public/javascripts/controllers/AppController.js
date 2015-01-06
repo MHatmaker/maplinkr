@@ -18,10 +18,11 @@
         'controllers/DestWndSetupCtrl',
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
+        'controllers/GoogleSearchDirective',
         'lib/GeoCoder'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, WebSiteDescriptionCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GeoCoder) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -45,6 +46,7 @@
             }
             TransmitNewUrlCtrl.start(App);
             EmailCtrl.start(App);
+            GoogleSearchDirective.start(App);
             var $inj = angular.injector(['app']);
             var $http = $inj.get('$http');
             GeoCoder.start(App, $http);

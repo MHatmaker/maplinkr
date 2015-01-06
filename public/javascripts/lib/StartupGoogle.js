@@ -6,16 +6,23 @@
 // });
 
 var isGoogleLoaded = false;
-function loadScript() {
+var isPlacesLoaded = false;
+
+function loadScript(scrpt, loadedTest, callback) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     console.log('loadScript before append');
-    if(isGoogleLoaded == false){
-        console.log("load google api v3.exp");
-        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&'  +
-            'callback=skipScript';
-        isGoogleLoaded = true;
+    if(loadedTest == false){
+        console.log("load google api library" + scrpt);
+        
+        if(callback){
+            script.onload=callback;
+        }
+        
+        // script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&'  + 'callback=skipScript';
+        loadedTest = true;
         document.body.appendChild(script);
+        script.src = scrpt + '&callback=' + callback;
         console.log('loadScript after append');
     }
     else{
@@ -24,6 +31,10 @@ function loadScript() {
 }
 
 function skipScript() {
+    console.log('skipScript');
+}
+
+function initPlaces() {
     console.log('skipScript');
 }
 
@@ -36,7 +47,8 @@ function skipScript() {
     console.log('StartupGoogle setup');
     define([
         'lib/MapHosterGoogle',
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript'
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript' //,
+        //'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places'
     ], function(MapHosterGoogle, AgoNewWindowConfig) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
@@ -127,7 +139,6 @@ function skipScript() {
                 evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
             
-                // loadScript();
                 var mapOptions = {
                   center: new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
@@ -138,8 +149,9 @@ function skipScript() {
                 gMap = new google.maps.Map(document.getElementById("map_canvas"),
                     mapOptions);
                 // mph = new MapHosterGoogle(gMap); 
+                loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 mph = MapHosterGoogle.start(); 
-                MapHosterGoogle.config(gMap, google);
+                MapHosterGoogle.config(gMap, google, google.maps.places);
                 MapHosterGoogle.resizeWebSite(true);
             }
         } 
