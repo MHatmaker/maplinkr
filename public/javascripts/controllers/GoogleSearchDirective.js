@@ -9,12 +9,17 @@
         
         function init(App) {
             console.log('GoogleSearchDirective init');
-            App.directive('GoogleSearchDirective', function ($compile){
+            App.directive('gmsearch', function ($compile){
                 return {
+                  restrict: 'E',
                   template: '<input id="pac-input" class="gmsearchcontrols" type="text" placeholder="Search Box">',
                   replace: true,
                   link: function(scope, element) {
-                    element.after($compile('<gmsearch></gmsearcht>')(scope));
+                    scope.add = function(){
+                      console.log("GoogleSearchDirective ----  adding:");
+                      console.debug(element);
+                      element.after($compile('<gmsearch></gmsearch>')(scope));
+                    }
                   }
                 }
               });
@@ -27,7 +32,7 @@
 }).call(this);
 
        
-
+/* 
 angular.module("main", []).controller("MyCtrl", function($scope) {
     $scope.test = 'Test Message';
 }).directive("ngPortlet", function ($compile) {
@@ -42,7 +47,7 @@ angular.module("main", []).controller("MyCtrl", function($scope) {
         }
 	};
 });
-
+ */
 
 /* 
 angular.module('demo', []).

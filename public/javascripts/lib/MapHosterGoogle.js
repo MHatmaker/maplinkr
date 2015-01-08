@@ -42,7 +42,8 @@
             mphmap = gMap;
             google = goooogle;
             geoCoder = new google.maps.Geocoder();
-            // gplaces = new google.maps.places();
+            var markers = [];
+            
             updateGlobals("init", -87.7, 41.8,  13, 0.0);
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
