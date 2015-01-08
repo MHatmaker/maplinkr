@@ -46,9 +46,9 @@ function initPlaces() {
 
     console.log('StartupGoogle setup');
     define([
-        'lib/MapHosterGoogle',
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript' //,
-        //'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places'
+        'lib/MapHosterGoogle' //,
+        // 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&callback=skipScript' //,
+        // 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places'
     ], function(MapHosterGoogle, AgoNewWindowConfig) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
@@ -149,7 +149,8 @@ function initPlaces() {
                 gMap = new google.maps.Map(document.getElementById("map_canvas"),
                     mapOptions);
                 // mph = new MapHosterGoogle(gMap); 
-                loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
+                // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
+                var service = new google.maps.places.PlacesService(gMap);
                 mph = MapHosterGoogle.start(); 
                 MapHosterGoogle.config(gMap, google, google.maps.places);
                 MapHosterGoogle.resizeWebSite(true);

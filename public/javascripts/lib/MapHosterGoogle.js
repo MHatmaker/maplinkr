@@ -30,6 +30,7 @@
             channel,
             userZoom = true;
             var geoCoder = null;
+            var gplaces = null;
             
         var selfPusherDetails = {
             channel : null,
@@ -41,6 +42,7 @@
             mphmap = gMap;
             google = goooogle;
             geoCoder = new google.maps.Geocoder();
+            // gplaces = new google.maps.places();
             updateGlobals("init", -87.7, 41.8,  13, 0.0);
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
@@ -52,6 +54,7 @@
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 
             var searchBox = new googPlaces.SearchBox(
+            // var searchBox = new googPlaces.SearchBox(
             /** @type {HTMLInputElement} */(searchInput));
             
             // Listen for the event fired when the user selects an item from the
@@ -98,6 +101,7 @@
             // current map's viewport.
             google.maps.event.addListener(mphmap, 'bounds_changed', function() {
                 var bounds = mphmap.getBounds();
+                console.debug(bounds);
                 searchBox.setBounds(bounds);
             });
             
