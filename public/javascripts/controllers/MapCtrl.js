@@ -9,8 +9,9 @@
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
-        'lib/utils'
-    ], function(angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils) {
+        'lib/utils', 
+        'lib/AgoNewWindowConfig'
+    ], function(angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
         console.log('MapCtrl define');
         
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -49,6 +50,7 @@
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             var mptp = $scope.currentTab.maptype;
             $scope.gsearchVisible = mptp == 'google' ?  'block' : 'none';
+            $scope.gsearch = {'query' : 'Search Box'};
             currentMapType = mapTypes[mptp];
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
@@ -123,6 +125,10 @@
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
+            
+            $scope.queryChanged = function(){
+                AgoNewWindowConfig.setQuery($scope.gsearch['query']);
+            }
         }
         
         function init(App) {

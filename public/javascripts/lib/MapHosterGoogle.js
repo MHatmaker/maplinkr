@@ -502,6 +502,12 @@
                 console.log("MapHosterArcGIS.publishPosition");
                 // pos['maphost'] = 'arcgis';  pos should have been initialized with 'google'
                 console.log(pos);
+                
+                var gmQuery = AgoNewWindowConfig.getQuery();
+                if(qmQuery != ''){
+                    pos['gmquery'] = gmQuery;
+                }
+                
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }
                 

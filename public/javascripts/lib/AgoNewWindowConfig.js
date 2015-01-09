@@ -12,7 +12,8 @@ var details = {
     lon : '',
     zoom : '',
     destPref : '',
-    maphost : ''
+    maphost : '',
+    query : ''
 };
     
 
@@ -98,6 +99,9 @@ var details = {
             maphost: function(){
                 return getParameterByName('maphost');
             },
+            query: function(){
+                return getParameterByName('query');
+            },
             setPosition: function(position){
                 details.lon = position.lon;
                 details.lat = position.lat;
@@ -136,6 +140,12 @@ var details = {
             },
             getMapHost: function(){
                 return details.maphost;
+            },
+            setQuery: function(q){
+                details.query = q;
+            },
+            getQuery: function(){
+                return details.query;
             },
             getUpdatedUrl : function(){
                 var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}", details.webmapId,details.lon, details.lat, details.zoom, details.masherChannel);
