@@ -147,8 +147,7 @@
                     pos.maphost, pos.lon, pos.lat, pos.zoom, agoId);
                 console.log(pos2prt);
                     
-                var isNewAgoWindow = pos.maphost && pos.maphost == 'arcgis';
-                if(isNewAgoWindow){
+                if(pos.maphost && pos.maphost != ''){
                     // alert("isNewAgoWindow is true");
                     /* 
                     AgoNewWindowConfig.setSearch(pos.search);
@@ -158,7 +157,7 @@
                     AgoNewWindowConfig.setSearch(pos.search);
                     // AgoNewWindowConfig.setChannel(pos.search);
                      */
-                    var completeUrl = AgoNewWindowConfig.gethref() + "arcgis/" + pos.search;
+                    var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
                     console.log('completeUrl');
                     console.log(completeUrl);
                     window.open(completeUrl, pos.webmapId, "top=1, left=1, height=400,width=500");
@@ -189,13 +188,18 @@
             selfMethods["summmaryCollapser"]();
         }
          
+        function startGoogle(){
+            console.log("startGoogle");
+            isFirstViewing = false;
+            selfMethods["summmaryCollapser"]();
+        }
         function onNewMapPosition(pos){
             console.log("onNewMapPosition");
             
             selfMethods["onNewMapPosition"](pos);
         }
  
-        return { start: init, startArcGIS: startArcGIS, onNewMapPosition : onNewMapPosition };
+        return { start: init, startArcGIS: startArcGIS, startGoogle : startGoogle, onNewMapPosition : onNewMapPosition };
 
     });
 

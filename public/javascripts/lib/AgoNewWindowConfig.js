@@ -11,7 +11,8 @@ var details = {
     lat : '',
     lon : '',
     zoom : '',
-    destPref : ''
+    destPref : '',
+    maphost : ''
 };
     
 
@@ -54,7 +55,7 @@ var details = {
                 console.log("getParameterByName('id') = " + rslt);
                 console.log(rslt.length);
                 console.log(rslt.length != 0);
-                return getParameterByName('id').length != 0;
+                return rslt.length != 0;
             },
             masherChannel: function (newWindow) {
                 // alert(getParameterByName('channel'));
@@ -94,6 +95,9 @@ var details = {
             zoom: function(){
                 return getParameterByName('zoom');
             },
+            maphost: function(){
+                return getParameterByName('maphost');
+            },
             setPosition: function(position){
                 details.lon = position.lon;
                 details.lat = position.lat;
@@ -126,6 +130,12 @@ var details = {
             },
             getUrl: function(){
                 return details.url;
+            },
+            setMapHost: function(h){
+                details.maphost = h;
+            },
+            getMapHost: function(){
+                return details.maphost;
             },
             getUpdatedUrl : function(){
                 var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}", details.webmapId,details.lon, details.lat, details.zoom, details.masherChannel);

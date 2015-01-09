@@ -38,8 +38,11 @@
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 var curmph = serv.getSelectedMapType();
+                var curmapsys = serv.getMapRestUrl();
+                updtUrl += '&maphost=' + curmapsys;
                 var newPos = AgoNewWindowConfig.getPosition();
                 newPos.search = updtUrl;
+                newPos.maphost = curmapsys;
                 curmph.publishPosition(newPos);
             }
         }

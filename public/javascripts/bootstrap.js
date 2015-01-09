@@ -30,6 +30,10 @@ var selectedMapType = 'arcgis';
                     'client-MapClickEvent' : null,
                     'client-NewMapPosition' : null};
                         
+            var mapRestUrlToType = {'Leaflet': 'leaflet',
+                        'GoogleMap' : 'google',
+                        'ArcGIS' : 'arcgis'};
+                            
             var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                 function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
@@ -85,6 +89,11 @@ var selectedMapType = 'arcgis';
                 var mapTypes = {'leaflet': MapHosterLeaflet,
                             'google' : MapHosterGoogle,
                             'arcgis' : MapHosterArcGIS};
+                            
+                var mapRestUrl = {'leaflet': 'Leaflet',
+                            'google' : 'GoogleMap',
+                            'arcgis' : 'ArcGIS'};
+                            
                 var currentMapType = 'arcgis';
                 var previousMapType = 'arcgis';
                 
@@ -106,6 +115,9 @@ var selectedMapType = 'arcgis';
                 var getMapTypeKey = function(){
                     return selectedMapType;
                 }
+                var getMapRestUrl = function(){
+                    return mapRestUrl[selectedMapType];
+                }
                 var setMapType = function(mpt){
                     previousMapType = currentMapType;
                     selectedMapType = mpt;
@@ -119,7 +131,7 @@ var selectedMapType = 'arcgis';
                     console.log("getSelectedMapType : " + selectedMapType);
                     return mapTypes[selectedMapType];
                 }
-                return { getMapTypes: getMapTypes, getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey };
+                return { getMapTypes: getMapTypes, getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey, getMapRestUrl : getMapRestUrl };
             }).
                 
             
@@ -147,15 +159,27 @@ var selectedMapType = 'arcgis';
             var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             AgoNewWindowConfig.setDestinationPreference('New Pop-up Window');
             if(isNewAgoWindow){
+                var maphost = AgoNewWindowConfig.maphost();
+                console.log('maphost : ' + maphost);
+                
                 // alert("isNewAgoWindow is true");
-                TabsCtrl.selectAgo('');
-                TabsCtrl.forceAgo();
+                // TabsCtrl.selectAgo('');
+                // TabsCtrl.forceAgo();
                 
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
-                serv.setCurrentMapType('arcgis');
-                MasherCtrl.startArcGIS();
-                               
+                serv.setCurrentMapType(mapRestUrlToType[maphost]);
+                console.log('maptype' + mapRestUrlToType[maphost]);
+                if(maphost == 'ArcGIS'){
+                    MasherCtrl.startArcGIS();
+                    TabsCtrl.selectAgo('');
+                    TabsCtrl.forceAgo();
+                }
+                else if(maphost == 'GoogleMap'){
+                    MasherCtrl.startGoogle();
+                    TabsCtrl.selectGoogle('');
+                    TabsCtrl.forceGoogle();
+                }
             };
             return App;
         }

@@ -103,6 +103,19 @@ String.format = function() {
             }
             selfMethods["forceAgo"] = $scope.forceAgo;
             
+            $scope.selectGoogle = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[0];
+                console.log("currentTab - url reset to " + $scope.currentTab.url);
+                var newPath = "/views/partials/GoogleMap";
+                console.log("selectAgo setting path to : " + newPath);
+                $location.path(newPath);
+            }
+            selfMethods["selectGoogle"] = $scope.selectGoogle;
+            
+            $scope.forceGoogle = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[0];
+            }
+            selfMethods["forceGoogle"] = $scope.forceGoogle;
             console.debug(selfMethods);
            
         };
@@ -115,6 +128,13 @@ String.format = function() {
             selfMethods["forceAgo"]();
         }
         
+        TabsCtrl.prototype.selectGoogle = function (){
+            selfMethods["selectGoogle"]();
+        }
+            
+        TabsCtrl.prototype.forceGoogle = function (){
+            selfMethods["forceGoogle"]();
+        }
 
         function init(App) {
             console.log('TabsCtrl init');
@@ -122,7 +142,8 @@ String.format = function() {
             return TabsCtrl;
         }
 
-        return { start: init, selectAgo : TabsCtrl.prototype.selectAgo, forceAgo :  TabsCtrl.prototype.forceAgo};
+        return { start: init, selectAgo : TabsCtrl.prototype.selectAgo, forceAgo :  TabsCtrl.prototype.forceAgo,
+                               selectGoogle : TabsCtrl.prototype.selectGoogle, forceGoogle :  TabsCtrl.prototype.forceGoogle};
 
     });
 

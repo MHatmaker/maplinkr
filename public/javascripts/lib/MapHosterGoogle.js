@@ -13,7 +13,8 @@
         'angular'
         , 'controllers/PositionViewCtrl'
         , 'lib/utils'
-        ], function(angular, PositionViewCtrl, utils) {
+        , 'lib/AgoNewWindowConfig'
+        ], function(angular, PositionViewCtrl, utils, AgoNewWindowConfig) {
 
         var 
             mphmap,
@@ -366,6 +367,7 @@
                 'evlng' : cntrxG,
                 'evlat' : cntryG
             });
+            AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
 
         function showGlobals(cntxt)
@@ -498,7 +500,7 @@
             if(selfPusherDetails.pusher)
             {
                 console.log("MapHosterArcGIS.publishPosition");
-                pos['maphost'] = 'arcgis';
+                // pos['maphost'] = 'arcgis';  pos should have been initialized with 'google'
                 console.log(pos);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }

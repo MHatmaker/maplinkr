@@ -48,6 +48,7 @@
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             var mptp = $scope.currentTab.maptype;
+            $scope.gsearchVisible = mptp == 'google' ?  'block' : 'none';
             currentMapType = mapTypes[mptp];
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
