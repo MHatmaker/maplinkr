@@ -100,7 +100,7 @@ var details = {
                 return getParameterByName('maphost');
             },
             query: function(){
-                return getParameterByName('query');
+                return getParameterByName('gmquery');
             },
             setPosition: function(position){
                 details.lon = position.lon;

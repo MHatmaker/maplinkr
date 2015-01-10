@@ -174,7 +174,55 @@
                     collectScales(zoomLevels);
                 }
             });
+            
+            var gmQuery = AgoNewWindowConfig.query();
+            console.log('gmQuery contains ' + gmQuery);
+            if(gmQuery != ''){
+                var request = {
+                    location: center,
+                    radius: 500,
+                    types: [gmQuery]
+                };
+      
+                var service = new google.maps.places.PlacesService(mphmap);
+                service.nearbySearch(request, callback);
+            }
         }
+            
+
+            function callback(results, status) {
+                console.log("back in callbackfrom PlacesService");
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    // for (var i = 0; i < results.length; i++) {
+                      // createMarker(results[i]);
+                    // }
+                    
+                    console.log("results length : ");
+                    console.log(results.length);
+                    var markers = [];
+                    for (var i = 0, place; place = results[i]; i++) {
+                        var image = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+                      // Create a marker for each place.
+                        var marker = new google.maps.Marker({
+                            map: mphmap,
+                            icon: image,
+                            title: place.name,
+                            position: place.geometry.location
+                        });
+
+                          markers.push(marker);
+
+                          // bounds.extend(place.geometry.location);
+                    }
+                }
+            }
         
             function gotDragEnd(){
                 console.log("dragend event hit");
@@ -504,8 +552,9 @@
                 console.log(pos);
                 
                 var gmQuery = AgoNewWindowConfig.getQuery();
-                if(qmQuery != ''){
+                if(gmQuery != ''){
                     pos['gmquery'] = gmQuery;
+                    pos.search += "&gmquery=" + gmQuery;
                 }
                 
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
