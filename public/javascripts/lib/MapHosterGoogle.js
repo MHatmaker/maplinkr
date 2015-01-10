@@ -63,7 +63,8 @@
             // pick list. Retrieve the matching places for that item.
             google.maps.event.addListener(searchBox, 'places_changed', function() {
                 var places = searchBox.getPlaces();
-
+                placeMarkers(places);
+                /* 
                 if (places.length == 0) {
                     return;
                 }
@@ -97,6 +98,7 @@
                 }
 
                 mphmap.fitBounds(bounds);
+                 */
             });
             
             // Bias the SearchBox results towards places that are within the bounds of the
@@ -180,22 +182,70 @@
             if(gmQuery != ''){
                 var request = {
                     location: center,
-                    radius: 500,
+                    radius: 5000,
                     types: [gmQuery]
                 };
+                console.debug(request);
       
                 var service = new google.maps.places.PlacesService(mphmap);
-                service.nearbySearch(request, callback);
+                service.nearbySearch(request, retrievedPlaces);
+            }
+            
+            function retrievedPlaces(results, status) {
+                console.log("back in callbackfrom PlacesService");
+                console.log("results length : ");
+                console.log(results.length);
+                console.log(results);
+                console.log("PlacesServiceStatus.OK is");
+                console.log(google.maps.places.PlacesServiceStatus.OK);
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    placeMarkers(results);
+                }
+            }
+                    
+            function placeMarkers(places){
+                console.log("places length : ");
+                console.log(places.length);
+                if (places.length == 0) {
+                    return;
+                }
+                for (var i = 0, marker; marker = markers[i]; i++) {
+                    marker.setMap(null);
+                }
+
+                // For each place, get the icon, place name, and location.
+                markers = [];
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0, place; place = places[i]; i++) {
+                    var image = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                  // Create a marker for each place.
+                    var marker = new google.maps.Marker({
+                        map: mphmap,
+                        icon: image,
+                        title: place.name,
+                        position: place.geometry.location
+                    });
+
+                      markers.push(marker);
+
+                      bounds.extend(place.geometry.location);
+                }
+
+                mphmap.fitBounds(bounds);
             }
         }
             
-
+            /* 
             function callback(results, status) {
                 console.log("back in callbackfrom PlacesService");
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    // for (var i = 0; i < results.length; i++) {
-                      // createMarker(results[i]);
-                    // }
                     
                     console.log("results length : ");
                     console.log(results.length);
@@ -223,7 +273,7 @@
                     }
                 }
             }
-        
+         */
             function gotDragEnd(){
                 console.log("dragend event hit");
                 setBounds('pan');
