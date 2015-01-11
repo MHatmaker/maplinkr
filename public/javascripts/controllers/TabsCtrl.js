@@ -107,7 +107,7 @@ String.format = function() {
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[0];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 var newPath = "/views/partials/GoogleMap";
-                console.log("selectAgo setting path to : " + newPath);
+                console.log("selectGoogle setting path to : " + newPath);
                 $location.path(newPath);
             }
             selfMethods["selectGoogle"] = $scope.selectGoogle;

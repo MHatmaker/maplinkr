@@ -39,7 +39,7 @@ var details = {
                 //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
             };
             function getParameterByName(name) {
-                console.log("get paramater from " + details.search);
+                console.log("get paramater " + name + " from " + details.search);
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                     results = regex.exec(details.search);

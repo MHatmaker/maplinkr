@@ -46,7 +46,8 @@ function initPlaces() {
 
     console.log('StartupGoogle setup');
     define([
-        'lib/MapHosterGoogle'
+        'lib/MapHosterGoogle', 
+        'lib/AgoNewWindowConfig'
     ], function(MapHosterGoogle, AgoNewWindowConfig) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
@@ -137,8 +138,13 @@ function initPlaces() {
                 evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
             
+                console.debug(AgoNewWindowConfig);
+                var qlat = AgoNewWindowConfig.lat();
+                var qlon = AgoNewWindowConfig.lon();
+                var queryLatLng = new google.maps.LatLng(qlat, qlon);
+                
                 var mapOptions = {
-                  center: new google.maps.LatLng(41.8, -87.7),
+                  center: queryLatLng, //new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
                   zoom: 13,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -152,6 +158,9 @@ function initPlaces() {
                 mph = MapHosterGoogle.start(); 
                 MapHosterGoogle.config(gMap, google, google.maps.places);
                 MapHosterGoogle.resizeWebSite(true);
+                console.log("finished resizeWebSite, time for placesQuery");
+                // alert("finished resizeWebSite, time for placesQuery");
+                MapHosterGoogle.placesQuery();
             }
         } 
         function StartupGoogle() {

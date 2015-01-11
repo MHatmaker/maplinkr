@@ -38,6 +38,7 @@
             pusher : null
         };
         var popDetails = null;
+        var selfMethods = {};
                       
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
@@ -62,7 +63,9 @@
             // Listen for the event fired when the user selects an item from the
             // pick list. Retrieve the matching places for that item.
             google.maps.event.addListener(searchBox, 'places_changed', function() {
+                console.log("before searchBox.getPlaces()");
                 var places = searchBox.getPlaces();
+                console.log("after searchBox.getPlaces()");
                 placeMarkers(places);
                 /* 
                 if (places.length == 0) {
@@ -177,19 +180,6 @@
                 }
             });
             
-            var gmQuery = AgoNewWindowConfig.query();
-            console.log('gmQuery contains ' + gmQuery);
-            if(gmQuery != ''){
-                var request = {
-                    location: center,
-                    radius: 5000,
-                    types: [gmQuery]
-                };
-                console.debug(request);
-      
-                var service = new google.maps.places.PlacesService(mphmap);
-                service.nearbySearch(request, retrievedPlaces);
-            }
             
             function retrievedPlaces(results, status) {
                 console.log("back in callbackfrom PlacesService");
@@ -202,6 +192,34 @@
                     placeMarkers(results);
                 }
             }
+            
+            function placesQuery(){
+                var gmQuery = AgoNewWindowConfig.query();
+                console.log('gmQuery contains ' + gmQuery);
+                if(gmQuery != ''){
+                    var qlat = AgoNewWindowConfig.lat();
+                    var qlon = AgoNewWindowConfig.lon();
+                    var queryLatLng = new google.maps.LatLng(41.808, -87.724); //   qlat, qlon);
+                    var gmQueryBounds = new google.maps.LatLngBounds();
+                    console.debug(mphmap);
+                    gmQueryBounds = mphmap.getBounds();
+                    console.debug(gmQueryBounds);
+                    
+                    var request = {
+                        location: queryLatLng,
+                        // bounds : gmQueryBounds,
+                        // query: gmQuery,
+                        radius: 1500,
+                        types: [gmQuery]
+                    };
+                    console.debug(request);
+          
+                    var service = new google.maps.places.PlacesService(mphmap);
+                    // service.nearbySearch(request, retrievedPlaces);
+                    service.search(request, retrievedPlaces);
+                }
+            }
+            selfMethods["placesQuery"] = placesQuery;
                     
             function placeMarkers(places){
                 console.log("places length : ");
@@ -616,6 +634,9 @@
         {
             return retrievedBoundsInternal(xj);
         }
+        function placesQuery(){
+            selfMethods["placesQuery"]();
+        }
         
         function MapHosterGoogle()
         {
@@ -649,7 +670,8 @@
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary, publishPosition : publishPosition };
+                  getEventDictionary : getEventDictionary, publishPosition : publishPosition,
+                  placesQuery : placesQuery };
     });
 
 }).call(this);
