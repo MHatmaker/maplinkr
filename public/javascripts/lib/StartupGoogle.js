@@ -139,12 +139,15 @@ function initPlaces() {
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
             
                 console.debug(AgoNewWindowConfig);
+                var centerLatLng = new google.maps.LatLng(41.8, -87.7);
                 var qlat = AgoNewWindowConfig.lat();
                 var qlon = AgoNewWindowConfig.lon();
-                var queryLatLng = new google.maps.LatLng(qlat, qlon);
                 
+                if(qlat != ''){
+                    centerLatLng = new google.maps.LatLng(qlat, qlon);
+                }
                 var mapOptions = {
-                  center: queryLatLng, //new google.maps.LatLng(41.8, -87.7),
+                  center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
                   zoom: 13,
                   mapTypeId: google.maps.MapTypeId.ROADMAP

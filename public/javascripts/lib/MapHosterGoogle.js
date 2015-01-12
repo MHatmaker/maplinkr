@@ -43,10 +43,20 @@
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
             google = goooogle;
+            gplaces = googPlaces;
             geoCoder = new google.maps.Geocoder();
             var markers = [];
             
-            updateGlobals("init", -87.7, 41.8,  13, 0.0);
+            var qlat = AgoNewWindowConfig.lat();
+            var qlon = AgoNewWindowConfig.lon();
+            // var queryLatLng = new google.maps.LatLng(qlat, qlon);
+            
+            if(qlat != ''){
+                updateGlobals("init with qlon, qlat", qlon, qlat, 13);
+             }
+             else{
+                updateGlobals("init with hard-coded values", -87.7, 41.8,  13, 0.0);
+             }
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
             // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
@@ -56,7 +66,7 @@
                 document.getElementById('pac-input'));
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 
-            var searchBox = new googPlaces.SearchBox(
+            var searchBox = new gplaces.SearchBox(
             // var searchBox = new googPlaces.SearchBox(
             /** @type {HTMLInputElement} */(searchInput));
             
@@ -182,12 +192,14 @@
             
             
             function retrievedPlaces(results, status) {
-                console.log("back in callbackfrom PlacesService");
+                console.log("back in callback from PlacesService");
                 console.log("results length : ");
                 console.log(results.length);
                 console.log(results);
                 console.log("PlacesServiceStatus.OK is");
                 console.log(google.maps.places.PlacesServiceStatus.OK);
+                console.log("returned status is");
+                console.log(status);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     placeMarkers(results);
                 }
@@ -199,7 +211,7 @@
                 if(gmQuery != ''){
                     var qlat = AgoNewWindowConfig.lat();
                     var qlon = AgoNewWindowConfig.lon();
-                    var queryLatLng = new google.maps.LatLng(41.808, -87.724); //   qlat, qlon);
+                    var queryLatLng = new google.maps.LatLng(qlat, qlon);
                     var gmQueryBounds = new google.maps.LatLngBounds();
                     console.debug(mphmap);
                     gmQueryBounds = mphmap.getBounds();
@@ -214,9 +226,10 @@
                     };
                     console.debug(request);
           
-                    var service = new google.maps.places.PlacesService(mphmap);
+                    var service = new gplaces.PlacesService(mphmap);
                     // service.nearbySearch(request, retrievedPlaces);
-                    service.search(request, retrievedPlaces);
+                    // alert("nearbySearch");
+                    service.nearbySearch(request, retrievedPlaces);
                 }
             }
             selfMethods["placesQuery"] = placesQuery;
@@ -454,7 +467,7 @@
             {
                 var obj = {"scale" : scale, "level" : i};
                 scale = scale * 2;
-                // console.log("scale " + obj.scale + " level " + obj.level);
+                console.log("scale " + obj.scale + " level " + obj.level);
                 sc2lv.push(obj);
             }
         }
