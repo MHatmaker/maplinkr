@@ -71,7 +71,7 @@
                 //alert("changed " + $scope.selectedOption.value);
                 // $scope.positionView = $scope.selectedOption.value;
                 console.log("setPostionDisplayType : " + $scope.currentViewOption.key);
-                curKey = $scope.currentViewOption.key;
+                var curKey = $scope.currentViewOption.key;
                 $scope.formatView[curKey](curDetails);
             };
             

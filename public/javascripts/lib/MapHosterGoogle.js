@@ -77,48 +77,13 @@
                 var places = searchBox.getPlaces();
                 console.log("after searchBox.getPlaces()");
                 placeMarkers(places);
-                /* 
-                if (places.length == 0) {
-                    return;
-                }
-                for (var i = 0, marker; marker = markers[i]; i++) {
-                    marker.setMap(null);
-                }
-
-                // For each place, get the icon, place name, and location.
-                markers = [];
-                var bounds = new google.maps.LatLngBounds();
-                for (var i = 0, place; place = places[i]; i++) {
-                    var image = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                  // Create a marker for each place.
-                    var marker = new google.maps.Marker({
-                        map: mphmap,
-                        icon: image,
-                        title: place.name,
-                        position: place.geometry.location
-                    });
-
-                      markers.push(marker);
-
-                      bounds.extend(place.geometry.location);
-                }
-
-                mphmap.fitBounds(bounds);
-                 */
             });
             
             // Bias the SearchBox results towards places that are within the bounds of the
             // current map's viewport.
             google.maps.event.addListener(mphmap, 'bounds_changed', function() {
                 var bounds = mphmap.getBounds();
-                console.debug(bounds);
+                // console.debug(bounds);
                 searchBox.setBounds(bounds);
             });
             
@@ -142,12 +107,12 @@
             google.maps.event.addListener(mphmap, "mousemove", function(e) 
                 {
                     var ltln = e.latLng;
-                    var fixedLL = utils.toFixed(ltln.lng(),ltln.lat(), 3);
+                    var fixedLL = utils.toFixed(ltln.lng(),ltln.lat(), 6);
                     var evlng = fixedLL.lon;
                     var evlat = fixedLL.lat;
                     var zm = mphmap.getZoom();
                     var cntr = mphmap.getCenter();
-                    var fixedCntrLL = utils.toFixed(cntr.lng(),cntr.lat(), 3);
+                    var fixedCntrLL = utils.toFixed(cntr.lng(),cntr.lat(), 6);
                     var cntrlng = fixedCntrLL.lon;
                     var cntrlat = fixedCntrLL.lat;
                     if(scale2Level.length > 0)
@@ -187,6 +152,9 @@
                     maxZoom = response['zoom'];
                     zoomLevels = maxZoom - minZoom;
                     collectScales(zoomLevels);
+                    console.log("after collectScales");
+                    AgoNewWindowConfig.showConfigDetails();
+                    showGlobals("after collectScales");
                 }
             });
             
@@ -271,43 +239,18 @@
 
                       bounds.extend(place.geometry.location);
                 }
-
+/* 
+                console.log("prior to fitBounds");
+                AgoNewWindowConfig.showConfigDetails();
+                showGlobals("prior to fitBounds");
                 mphmap.fitBounds(bounds);
+                console.log("after fitBounds");
+                AgoNewWindowConfig.showConfigDetails();
+                showGlobals("after fitBounds");
+                 */
             }
         }
-            
-            /* 
-            function callback(results, status) {
-                console.log("back in callbackfrom PlacesService");
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    
-                    console.log("results length : ");
-                    console.log(results.length);
-                    var markers = [];
-                    for (var i = 0, place; place = results[i]; i++) {
-                        var image = {
-                            url: place.icon,
-                            size: new google.maps.Size(71, 71),
-                            origin: new google.maps.Point(0, 0),
-                            anchor: new google.maps.Point(17, 34),
-                            scaledSize: new google.maps.Size(25, 25)
-                        };
-
-                      // Create a marker for each place.
-                        var marker = new google.maps.Marker({
-                            map: mphmap,
-                            icon: image,
-                            title: place.name,
-                            position: place.geometry.location
-                        });
-
-                          markers.push(marker);
-
-                          // bounds.extend(place.geometry.location);
-                    }
-                }
-            }
-         */
+        
             function gotDragEnd(){
                 console.log("dragend event hit");
                 setBounds('pan');
@@ -332,7 +275,7 @@
             function onMapClick(e) 
             {
                 var popPt = e.latLng;
-                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 3);
+                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
                 var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
                 geoCoder.geocode({'latLng': popPt}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
@@ -348,7 +291,7 @@
             {
                 var zm = mphmap.getZoom();
                 var cntr = mphmap.getCenter();
-                var fixedLL = utils.toFixed(cntr.lng(),cntr.lat(), 3);
+                var fixedLL = utils.toFixed(cntr.lng(),cntr.lat(), 6);
                 var xtntDict = {'src' : 'google', 
                     'zoom' : zm, 
                     'lon' : fixedLL.lon, 
@@ -360,7 +303,7 @@
                 
             function retrievedClick(clickPt)
             {
-                var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 3);
+                var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
                 console.log("Back in retrievedClick - You clicked the map at " +  clickPt.x + ", " + clickPt.y);
                 var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
                 
@@ -470,7 +413,7 @@
             {
                 var obj = {"scale" : scale, "level" : i};
                 scale = scale * 2;
-                console.log("scale " + obj.scale + " level " + obj.level);
+                // console.log("scale " + obj.scale + " level " + obj.level);
                 sc2lv.push(obj);
             }
         }
