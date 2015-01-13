@@ -40,6 +40,9 @@
                 var curmph = serv.getSelectedMapType();
                 var curmapsys = serv.getMapRestUrl();
                 updtUrl += '&maphost=' + curmapsys;
+                
+                var nativeCenter = curmph.getCenter();
+                AgoNewWindowConfig.setPosition(nativeCenter);
                                 
                 var newPos = AgoNewWindowConfig.getPosition();
                 newPos.search = updtUrl;

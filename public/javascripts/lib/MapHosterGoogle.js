@@ -211,11 +211,14 @@
                 if(gmQuery != ''){
                     var qlat = AgoNewWindowConfig.lat();
                     var qlon = AgoNewWindowConfig.lon();
-                    var queryLatLng = new google.maps.LatLng(qlat, qlon);
+                    // var queryLatLng = new google.maps.LatLng(41.799, -87.715); //qlat, qlon);
+                    var queryLatLng = mphmap.getCenter();
                     var gmQueryBounds = new google.maps.LatLngBounds();
                     console.debug(mphmap);
                     gmQueryBounds = mphmap.getBounds();
                     console.debug(gmQueryBounds);
+                    console.log("queryLatLng parameters");
+                    console.log("lat " + queryLatLng.lat() + " lon " + queryLatLng.lng());
                     
                     var request = {
                         location: queryLatLng,
@@ -623,6 +626,12 @@
             return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
         }
         
+        function getCenter(){
+            var pos = { 'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG};
+            console.log("return accurate center from getCenter()");
+            console.debug(pos);
+            return pos;
+        }
         
         function publishPosition(pos)
         {
@@ -682,7 +691,7 @@
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
-                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
+                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
                   getEventDictionary : getEventDictionary, publishPosition : publishPosition,
                   placesQuery : placesQuery };
     });
