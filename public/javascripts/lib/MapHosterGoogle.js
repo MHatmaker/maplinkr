@@ -85,6 +85,9 @@
                 var bounds = mphmap.getBounds();
                 // console.debug(bounds);
                 searchBox.setBounds(bounds);
+                var bnds = {'llx' : bounds.getSouthWest().lng() , 'lly' : bounds.getSouthWest().lat(),
+                             'urx' : bounds.getNorthEast().lng() , 'ury' : bounds.getNorthEast().lat()};
+                AgoNewWindowConfig.setBounds(bnds);
             });
             
             google.maps.event.addListener(mphmap, 'dragend', function() 
@@ -188,11 +191,19 @@
                     console.log("queryLatLng parameters");
                     console.log("lat " + queryLatLng.lat() + " lon " + queryLatLng.lng());
                     
+                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                    console.log("getBoundsFromUrl..................");
+                    console.debug(bnds);
+                    var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    var gmbnds = new google.maps.LatLngBounds(ll, ur);
+                    console.debug(gmbnds);
+                    
                     var request = {
-                        location: queryLatLng,
-                        // bounds : gmQueryBounds,
+                        // location: queryLatLng,
+                        bounds : gmbnds,
                         // query: gmQuery,
-                        radius: 1500,
+                        // radius: 1500,
                         types: [gmQuery]
                     };
                     console.debug(request);
@@ -588,6 +599,8 @@
                 if(gmQuery != ''){
                     pos['gmquery'] = gmQuery;
                     pos.search += "&gmquery=" + gmQuery;
+                    var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                    pos.search += bnds;
                 }
                 
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);

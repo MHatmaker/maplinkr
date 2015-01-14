@@ -13,7 +13,8 @@ var details = {
     zoom : '',
     destPref : '',
     maphost : '',
-    query : ''
+    query : '',
+    bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''}
 };
     
 
@@ -146,6 +147,21 @@ var details = {
             },
             getQuery: function(){
                 return details.query;
+            },
+            setBounds : function(bnds){
+                details.bounds = bnds;
+            },
+            getBoundsForUrl : function(){
+                var bnds = details.bounds;
+                var bndsUrl = "&llx=" + bnds.llx + "&lly=" + bnds.lly + "&urx=" + bnds.urx + "&ury=" + bnds.ury;
+                return bndsUrl;
+            },
+            getBoundsFromUrl : function(){
+                var llx = getParameterByName('llx');
+                var lly = getParameterByName('lly');
+                var urx = getParameterByName('urx');
+                var ury = getParameterByName('ury');
+                return {'llx' : llx, 'lly' : lly, 'urx' : urx, 'ury' : ury};
             },
             getUpdatedUrl : function(){
                 var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}", details.webmapId,details.lon, details.lat, details.zoom, details.masherChannel);

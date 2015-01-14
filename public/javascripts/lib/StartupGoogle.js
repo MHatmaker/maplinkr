@@ -142,9 +142,16 @@ function initPlaces() {
                 var centerLatLng = new google.maps.LatLng(41.8, -87.7);
                 var qlat = AgoNewWindowConfig.lat();
                 var qlon = AgoNewWindowConfig.lon();
+                var ll = null;
+                var ur = null;
                 
                 if(qlat != ''){
                     centerLatLng = new google.maps.LatLng(qlat, qlon);
+                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                    console.log("getBoundsFromUrl..................");
+                    console.debug(bnds);
+                    ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    ur = new google.maps.LatLng(bnds.ury, bnds.urx);
                 }
                 var mapOptions = {
                   center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
@@ -155,6 +162,13 @@ function initPlaces() {
                 console.log("create a google map with option: " + mapOptions.mapTypeId);
                 gMap = new google.maps.Map(document.getElementById("map_canvas"),
                     mapOptions);
+                    
+                // if(qlat != ''){
+                    // var gmbnds = new google.maps.LatLngBounds(ll, ur);
+                    // console.debug(gmbnds);
+                    // gMap.fitBounds(gmbnds);
+                    // console.debug(gMap.getBounds());
+                // }
                     
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 var service = new google.maps.places.PlacesService(gMap);
