@@ -12,11 +12,12 @@ var selectedMapType = 'arcgis';
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
+        'controllers/MapCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, MapCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -34,6 +35,8 @@ var selectedMapType = 'arcgis';
                         'GoogleMap' : 'google',
                         'ArcGIS' : 'arcgis'};
                             
+            var googleQueryDct = {'query' : null};
+            
             var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                 function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
@@ -149,8 +152,40 @@ var selectedMapType = 'arcgis';
                     return eventDct[evt];
                 }
                 return { getEventDct : getEventDct, addEvent : addEvent, getHandler : getHandler};
+            }).
+            
+            factory("GoogleQueryService", function($rootScope){
+                var getQueryDct = function() {
+                    return googleQueryDct;
+                }
+                var setQuery = function(q){
+                    // alert('setQuery' + q);
+                    googleQueryDct.query = q;
+                }
+                var clickSearch = function(){
+                    var gmquery = AgoNewWindowConfig.query();
+                    // alert('clickSearch ready to broadcast ' + gmquery);
+                    var spaElem = document.getElementById('spa_window');
+                    var spaElemA = angular.element(spaElem);
+                    var spaScope = spaElemA.scope();
+                    spaScope.$broadcast('searchClickEvent', gmquery);
+                    MapHosterGoogle.firePlacesQuery();
+                }
+                return {getQueryDct: getQueryDct, setQuery : setQuery, clickSearch : clickSearch };
             });
                 
+            App.directive('autoFocus', function($timeout) {
+                return {
+                    restrict: 'AC',
+                    link: function(_scope, _element) {
+                        console.log("directive autoFocus");
+                        $timeout(function(){
+                            _element[0].focus();
+                        }, 0);
+                    }
+                };
+            });
+            
             AppController.start(App);
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);
@@ -176,9 +211,13 @@ var selectedMapType = 'arcgis';
                     TabsCtrl.forceAgo();
                 }
                 else if(maphost == 'GoogleMap'){
+                    var gmquery = AgoNewWindowConfig.query();
+                    var searchService = $inj.get('GoogleQueryService');
+                    searchService.setQuery(gmquery);
                     MasherCtrl.startGoogle();
                     TabsCtrl.selectGoogle('');
                     TabsCtrl.forceGoogle();
+                    // MapCtrl.setSearchQuery(gmquery);
                 }
             };
             return App;

@@ -23,6 +23,7 @@
             'medium' : '70%',
             'full' : '100%'
         };
+        var selfMethods = {};
 
         function resizeMap(isMapExpanded, map){
             if(isMapExpanded){
@@ -48,9 +49,16 @@
 
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
+            // alert("MapCtrl initializing");
             var mptp = $scope.currentTab.maptype;
             $scope.gsearchVisible = mptp == 'google' ?  'block' : 'none';
-            $scope.gsearch = {'query' : 'Search Box'};
+            var gmquery = AgoNewWindowConfig.query();
+            if(gmquery != ''){
+                $scope.gsearch = {'query' : gmquery};
+            }
+            else{
+                $scope.gsearch = {'query' : 'Search Box'};
+            }
             currentMapType = mapTypes[mptp];
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
@@ -86,6 +94,12 @@
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
+            
+            if(gmquery != ''){
+                var elem = document.getElementById('pac-input');
+                var aelem = angular.element(elem);
+                // aelem.trigger('return');
+            }
                  
             $scope.$on('CollapseSummaryEvent', function(event, args) {
                 currentMapType.resizeMapPane($scope.isMapExpanded);
@@ -126,9 +140,33 @@
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
             
+            $scope.$on('searchClickEvent', function(event, args){
+                var element = document.getElementById('pac-input');
+                if(element){
+                    element.focus();
+                }
+                // alert('searchClickEvent in MapCtrl with ' + args);
+                // $scope.$apply(function () {
+                    // $scope.current = AgoNewWindowConfig.getQuery();
+                // });
+            });
+            
             $scope.queryChanged = function(){
                 AgoNewWindowConfig.setQuery($scope.gsearch['query']);
             }
+            
+            $scope.setSearchQuery = function(q){
+                $scope.gsearch['query'] = q;
+                AgoNewWindowConfig.setQuery($scope.gsearch['query']);
+            }
+            
+            selfMethods["setSearchQuery"] = $scope.setSearchQuery;
+            console.debug(selfMethods);
+        }
+        
+        function setSearchQuery(q){
+            console.log("setSearchQuery");
+            selfMethods["setSearchQuery"](q);
         }
         
         function init(App) {
@@ -137,7 +175,7 @@
             return MapCtrl;
         }
 
-        return { start: init };
+        return { start: init, setSearchQuery : setSearchQuery };
 
     });
 

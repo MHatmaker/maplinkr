@@ -7,14 +7,17 @@
 
 (function() {
     "use strict";
+    console.log("ready to require stuff in MapHosterGoogle");
     require(["lib/utils", 'angular']);
+    // require(["lib/utils", 'angular', 'controllers/MapCtrl']);
 
     define([
         'angular'
         , 'controllers/PositionViewCtrl'
+        , 'controllers/MapCtrl'
         , 'lib/utils'
         , 'lib/AgoNewWindowConfig'
-        ], function(angular, PositionViewCtrl, utils, AgoNewWindowConfig) {
+        ], function(angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig) {
 
         var 
             mphmap,
@@ -30,8 +33,9 @@
             bounds,
             channel,
             userZoom = true;
-            var geoCoder = null;
-            var gplaces = null;
+        var geoCoder = null;
+        var gplaces = null;
+        var searchBox = null;
             
         var selfPusherDetails = {
             channel : null,
@@ -39,6 +43,9 @@
         };
         var popDetails = null;
         var selfMethods = {};
+        console.log("<<<<<<<<<<<<<<<<<<<<< where is MapCtrl? >>>>>>>>>>>>>>>>>>>>>>>>");
+        console.debug(MapCtrl);
+        console.debug(AgoNewWindowConfig);
                       
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
@@ -66,7 +73,7 @@
                 document.getElementById('pac-input'));
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 
-            var searchBox = new gplaces.SearchBox(
+            searchBox = new gplaces.SearchBox(
             // var searchBox = new googPlaces.SearchBox(
             /** @type {HTMLInputElement} */(searchInput));
             
@@ -167,19 +174,42 @@
                 console.log("results length : ");
                 console.log(results.length);
                 console.log(results);
-                console.log("PlacesServiceStatus.OK is");
-                console.log(google.maps.places.PlacesServiceStatus.OK);
                 console.log("returned status is");
                 console.log(status);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     placeMarkers(results);
                 }
+                else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+                    console.log("PlacesService nearbySearch returned no results.");
+                    // var gmQuery = AgoNewWindowConfig.query();
+                    
+                    var $inj = angular.injector(['app']);
+                    var qSvc = $inj.get('GoogleQueryService');
+                    console.debug(qSvc);
+                    qSvc.clickSearch();
+                }
             }
+            
+            function firePlacesQuery(){
+                searchInput.value = 'foo';
+                var text = AgoNewWindowConfig.query();
+                // var arr= [];
+                // console.debug(arr);
+                // arr.push('\r'); //0x0d);
+                // arr.push('\n'); //0x0a);
+                // var joined = arr.join('');
+                // var joinedText = text.concat('&nbsp\r');    //'&#10'); //joined);
+                searchInput.value = text; //joinedText;
+                console.log(searchInput.value);
+                google.maps.event.trigger(searchBox, 'places_changed');
+            }
+            selfMethods["firePlacesQuery"] = firePlacesQuery;
             
             function placesQuery(){
                 var gmQuery = AgoNewWindowConfig.query();
                 console.log('gmQuery contains ' + gmQuery);
                 if(gmQuery != ''){
+                    /* 
                     var qlat = AgoNewWindowConfig.lat();
                     var qlon = AgoNewWindowConfig.lon();
                     // var queryLatLng = new google.maps.LatLng(41.799, -87.715); //qlat, qlon);
@@ -190,7 +220,7 @@
                     console.debug(gmQueryBounds);
                     console.log("queryLatLng parameters");
                     console.log("lat " + queryLatLng.lat() + " lon " + queryLatLng.lng());
-                    
+                     */
                     var bnds = AgoNewWindowConfig.getBoundsFromUrl();
                     console.log("getBoundsFromUrl..................");
                     console.debug(bnds);
@@ -615,6 +645,10 @@
         function placesQuery(){
             selfMethods["placesQuery"]();
         }
+        function firePlacesQuery(){
+            selfMethods["firePlacesQuery"]();
+        }
+        
         
         function MapHosterGoogle()
         {
@@ -649,7 +683,7 @@
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
                   getEventDictionary : getEventDictionary, publishPosition : publishPosition,
-                  placesQuery : placesQuery };
+                  placesQuery : placesQuery, firePlacesQuery : firePlacesQuery };
     });
 
 }).call(this);

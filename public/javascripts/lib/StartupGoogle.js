@@ -42,7 +42,7 @@ function initPlaces() {
 
 (function() {
     "use strict";
-    require(['lib/MapHosterGoogle', 'lib/AgoNewWindowConfig']);
+    // require(['lib/MapHosterGoogle', 'lib/AgoNewWindowConfig']);
 
     console.log('StartupGoogle setup');
     define([

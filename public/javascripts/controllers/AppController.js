@@ -33,7 +33,7 @@
             MasherCtrl.start(App);
             TabsCtrl.start(App);
             PositionViewCtrl.start(App);
-            MapCtrl.start(App);
+            // MapCtrl.start(App);
             SPACtrl.start(App);
             VerbageCtrl.start(App);
             SearcherCtrlGrp.start(App);
@@ -47,6 +47,7 @@
             TransmitNewUrlCtrl.start(App);
             EmailCtrl.start(App);
             GoogleSearchDirective.start(App);
+            MapCtrl.start(App);
             var $inj = angular.injector(['app']);
             var $http = $inj.get('$http');
             GeoCoder.start(App, $http);
