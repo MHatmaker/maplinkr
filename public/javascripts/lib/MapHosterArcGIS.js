@@ -33,10 +33,24 @@
             mphmap = xtntMap;
             mapReady = false;
             // alert("before first update globals");
-            if(zoomWebMap != null)
-                updateGlobals("init with attributes in args", pointWebMap[0], pointWebMap[1], zoomWebMap, 0.0);
-            else
-                updateGlobals("init standard", -87.7, 41.8, 13, 0.0);
+            if(zoomWebMap != null){
+                updateGlobals("init with attributes in args", pointWebMap[0], pointWebMap[1], zoomWebMap);
+            }
+            else{
+            
+                var qlat = AgoNewWindowConfig.lat();
+                var qlon = AgoNewWindowConfig.lon();
+                var qzoom = AgoNewWindowConfig.zoom();
+                
+                if(qlat != ''){
+                    updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
+                 }
+                 else{
+                    updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
+                 }
+            
+                // updateGlobals("init standard", -87.7, 41.8, 13);
+            }
             showGlobals("Prior to new Map");
             // alert("showed first globals");
             var startCenter = new esri.geometry.Point(cntrxG, cntryG, new esri.SpatialReference({wkid:4326}));
@@ -325,6 +339,10 @@
                 console.log("MapHosterArcGIS.publishPosition");
                 pos['maphost'] = 'arcgis';
                 console.log(pos);
+                
+                var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                pos.search += bnds;
+                
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }
                 

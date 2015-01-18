@@ -17,9 +17,9 @@ define('GeoCoder', function () {
     console.log("ready to require stuff in MapHosterLeaflet");
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils'], 
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig'], 
     
-        function(PositionViewCtrl, GeoCoder, utils) {
+        function(PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig) {
 
         var scale2Level = [],
             zmG,
@@ -48,12 +48,24 @@ define('GeoCoder', function () {
             mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
             console.debug(mphmap);
             showLoading();
-            mphmap.setView([41.8, -87.7], 13);
-            console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
-            
+            // mphmap.setView([41.8, -87.7], 13);
+                        
 			geoCoder =  GeoCoder; //.nominatim();
         
-            updateGlobals("init", -87.7, 41.8, 13, 0.0);
+            var qlat = AgoNewWindowConfig.lat();
+            var qlon = AgoNewWindowConfig.lon();
+            var qzoom = AgoNewWindowConfig.zoom();;
+            
+            if(qlat != ''){
+                mphmap.setView([qlat, qlon], qzoom);
+                updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
+             }
+             else{
+                mphmap.setView([41.8, -87.7], 13);
+                updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
+             }
+             console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
+             
             // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
 
@@ -235,6 +247,8 @@ define('GeoCoder', function () {
                     }
                 }
             }
+            
+            AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
         
         function getEventDictionary(){
@@ -263,17 +277,17 @@ define('GeoCoder', function () {
         function updateGlobals(msg, cntrx, cntry, zm)
         {
             console.log("updateGlobals " + msg);
-            var gmBounds = mphmap.getBounds();
-            console.debug(gmBounds);
-            if(gmBounds)
+            var lfltBounds = mphmap.getBounds();
+            console.debug(lfltBounds);
+            if(lfltBounds)
             {
-                var ne = gmBounds.getNorthEast();
-                var sw = gmBounds.getSouthWest();
-                bounds = gmBounds;
-                gmBounds.xmin = sw.lng;
-                gmBounds.ymin = sw.lat;
-                gmBounds.xmax = ne.lng;
-                gmBounds.ymax = ne.lat;
+                var ne = lfltBounds.getNorthEast();
+                var sw = lfltBounds.getSouthWest();
+                bounds = lfltBounds;
+                lfltBounds.xmin = sw.lng;
+                lfltBounds.ymin = sw.lat;
+                lfltBounds.xmax = ne.lng;
+                lfltBounds.ymax = ne.lat;
             }
             zmG = zm; cntrxG = cntrx; cntryG = cntry;
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
@@ -285,8 +299,9 @@ define('GeoCoder', function () {
                 'evlng' : cntrxG,
                 'evlat' : cntryG
             });
+            AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
-
+        
         function showGlobals(cntxt)
         {
             console.log( cntxt + " Globals : lon " + cntrxG + " lat " + cntryG + " zoom " + zmG);
@@ -354,7 +369,7 @@ define('GeoCoder', function () {
                 }
             // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
             // pusher.subscribe( 'client-MapClickEvent', retrievedClick);
-            console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
+            console.log("reset MapHosterLeaflet setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
         function getGlobalsForUrl()
@@ -369,9 +384,30 @@ define('GeoCoder', function () {
         {
             if(selfPusherDetails.pusher)
             {
-                console.log("MapHosterArcGIS.publishPosition");
-                pos['maphost'] = 'arcgis';
+                console.log("MapHosterLeaflet.publishPosition");
+                // pos['maphost'] = 'Leaflet';
                 console.log(pos);
+                
+                var lfltBounds = mphmap.getBounds();
+                console.debug(lfltBounds);
+                if(lfltBounds)
+                {
+                    var ne = lfltBounds.getNorthEast();
+                    var sw = lfltBounds.getSouthWest();
+                    bounds = lfltBounds;
+                    lfltBounds.xmin = sw.lng;
+                    lfltBounds.ymin = sw.lat;
+                    lfltBounds.xmax = ne.lng;
+                    lfltBounds.ymax = ne.lat;
+                
+                    var bnds = {'llx' :sw.lng, 'lly' : sw.lat,
+                                 'urx' : ne.lng, 'ury' : ne.lat};
+                    AgoNewWindowConfig.setBounds(bnds);
+                }
+                
+                var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                pos.search += bnds;
+                
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }
                 

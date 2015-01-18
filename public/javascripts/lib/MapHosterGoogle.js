@@ -56,13 +56,13 @@
             
             var qlat = AgoNewWindowConfig.lat();
             var qlon = AgoNewWindowConfig.lon();
-            // var queryLatLng = new google.maps.LatLng(qlat, qlon);
+            var qzoom = AgoNewWindowConfig.zoom();
             
             if(qlat != ''){
-                updateGlobals("init with qlon, qlat", qlon, qlat, 13);
+                updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
              else{
-                updateGlobals("init with hard-coded values", -87.7, 41.8,  13, 0.0);
+                updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
              }
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
@@ -603,7 +603,7 @@
                     
             // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
             // pusher.subscribe( 'client-MapClicktEvent', retrievedClick);
-            console.log("reset MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
+            console.log("reset MapHosterGoogle setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         function getGlobalsForUrl()
         {
@@ -621,8 +621,7 @@
         {
             if(selfPusherDetails.pusher)
             {
-                console.log("MapHosterArcGIS.publishPosition");
-                // pos['maphost'] = 'arcgis';  pos should have been initialized with 'google'
+                console.log("MapHosterLeaflet.publishPosition");
                 console.log(pos);
                 
                 var gmQuery = AgoNewWindowConfig.getQuery();

@@ -288,11 +288,14 @@
           //add scalebar or other components like a legend, overview map etc
             // dojo.parser.parse();
             console.debug(aMap);
+            
+            /* Scalebar refuses to appear on map.  It appears outside the map on a bordering control.
             var scalebar = new esri.dijit.Scalebar({
                 map: aMap,
                 scalebarUnit:"english",
-                attachTo: "top-right"
+                attachTo: "top-left"
             });    
+             */
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
             console.log("selfDetails.mph : " + selfDetails.mph);
             if(selfDetails.mph === null)

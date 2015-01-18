@@ -182,29 +182,19 @@
             evtSvc.addEvent('client-NewMapPosition', onNewMapPosition);
             return MasherCtrl;
         }
-        function startArcGIS(){
-            console.log("startArcGIS");
+        function startMapSystem(){
+            console.log("startMapSystem");
             isFirstViewing = false;
             selfMethods["summmaryCollapser"]();
         }
-         
-        function startGoogle(){
-            console.log("startGoogle");
-            isFirstViewing = false;
-            selfMethods["summmaryCollapser"]();
-        }
-        function startLeaflet(){
-            console.log("startLeaflet");
-            isFirstViewing = false;
-            selfMethods["summmaryCollapser"]();
-        }
+        
         function onNewMapPosition(pos){
             console.log("onNewMapPosition");
             
             selfMethods["onNewMapPosition"](pos);
         }
  
-        return { start: init, startArcGIS: startArcGIS, startGoogle : startGoogle, startLeaflet: startLeaflet, onNewMapPosition : onNewMapPosition };
+        return { start: init, startMapSystem: startMapSystem, onNewMapPosition : onNewMapPosition };
 
     });
 

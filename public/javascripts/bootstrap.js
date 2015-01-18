@@ -205,26 +205,15 @@ var selectedMapType = 'arcgis';
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
                 console.log('maptype' + mapRestUrlToType[maphost]);
-                if(maphost == 'ArcGIS'){
-                    MasherCtrl.startArcGIS();
-                    TabsCtrl.selectAgo('');
-                    TabsCtrl.forceAgo();
-                }
-                else if(maphost == 'GoogleMap'){
+
+                if(maphost == 'GoogleMap'){
                     var gmquery = AgoNewWindowConfig.query();
                     var searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
-                    MasherCtrl.startGoogle();
-                    TabsCtrl.selectGoogle('');
-                    TabsCtrl.forceGoogle();
-                    // MapCtrl.setSearchQuery(gmquery);
                 }
-                else if(maphost == 'Leaflet'){
-                    MasherCtrl.startLeaflet();
-                    TabsCtrl.selectLeaflet('');
-                    TabsCtrl.forceLeaflet();
-                    // MapCtrl.setSearchQuery(gmquery);
-                }
+                    
+                MasherCtrl.startMapSystem();
+                TabsCtrl.forceMapSystem(maphost);
             };
             return App;
         }
