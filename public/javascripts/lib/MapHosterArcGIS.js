@@ -460,6 +460,13 @@
             return {"lon" : cntrxG, "lat" : cntryG, "zoom" : zmG};
         }
          
+        function getCenter(){
+            var pos = { 'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG};
+            console.log("return accurate center from getCenter()");
+            console.debug(pos);
+            return pos;
+        }
+        
         function MapHosterArcGIS()
         {
         }
@@ -496,7 +503,7 @@
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, getGlobalPositionComponents : getGlobalPositionComponents,
-                  publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition};
+                  publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter};
     });
 
 }).call(this);

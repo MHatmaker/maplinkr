@@ -24,6 +24,11 @@ String.format = function() {
     define(['angular'], function(angular) {
         console.log('TabsCtrl define');
         var selfMethods = {};
+        var mapSystemDct = {
+            'GoogleMap' : 0,
+            'Leaflet' : 1,
+            'ArcGIS' : 2
+        };
 
         function TabsCtrl($scope, $location) {
             console.debug('TabsCtrl - initialize tabs');
@@ -115,7 +120,31 @@ String.format = function() {
             $scope.forceGoogle = function(){
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[0];
             }
+            
+            $scope.selectLeaflet = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[1];
+                console.log("currentTab - url reset to " + $scope.currentTab.url);
+                var newPath = "/views/partials/Leaflet";
+                console.log("selectLeaflet setting path to : " + newPath);
+                $location.path(newPath);
+            }
+            selfMethods["selectLeaflet"] = $scope.selectLeaflet;
+            
+            $scope.forceLeaflet = function(){
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[1];
+            }
+            
             selfMethods["forceGoogle"] = $scope.forceGoogle;
+                        
+            $scope.forceMapSystem = function(mapSystem){
+                var tab = mapSystemDct[mapSystem];
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[tab];
+                console.log("currentTab - url reset to " + $scope.currentTab.url);
+                var newPath = "/views/partials/" + mapSystem;
+                console.log("forceMapSystem setting path to : " + newPath);
+                $location.path(newPath);
+            }
+            selfMethods["forceMapSystem"] = $scope.forceGoogle;
             console.debug(selfMethods);
            
         };
@@ -136,6 +165,18 @@ String.format = function() {
             selfMethods["forceGoogle"]();
         }
 
+        TabsCtrl.prototype.selectLeaflet = function (){
+            selfMethods["selectLeaflet"]();
+        }
+            
+        TabsCtrl.prototype.forceLeaflet = function (){
+            selfMethods["forceLeaflet"]();
+        }
+
+        TabsCtrl.prototype.forceMapSystem = function (mapSystem){
+            selfMethods["forceMapSystem"](mapSystem);
+        }
+        
         function init(App) {
             console.log('TabsCtrl init');
             App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);
@@ -143,7 +184,7 @@ String.format = function() {
         }
 
         return { start: init, selectAgo : TabsCtrl.prototype.selectAgo, forceAgo :  TabsCtrl.prototype.forceAgo,
-                               selectGoogle : TabsCtrl.prototype.selectGoogle, forceGoogle :  TabsCtrl.prototype.forceGoogle};
+                               selectGoogle : TabsCtrl.prototype.selectGoogle, forceGoogle :  TabsCtrl.prototype.forceGoogle, selectLeaflet : TabsCtrl.prototype.selectLeaflet, forceLeaflet : TabsCtrl.prototype.forceLeaflet, forceMapSystem : TabsCtrl.prototype.forceMapSystem};
 
     });
 

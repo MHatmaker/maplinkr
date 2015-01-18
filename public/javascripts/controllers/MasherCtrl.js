@@ -193,13 +193,18 @@
             isFirstViewing = false;
             selfMethods["summmaryCollapser"]();
         }
+        function startLeaflet(){
+            console.log("startLeaflet");
+            isFirstViewing = false;
+            selfMethods["summmaryCollapser"]();
+        }
         function onNewMapPosition(pos){
             console.log("onNewMapPosition");
             
             selfMethods["onNewMapPosition"](pos);
         }
  
-        return { start: init, startArcGIS: startArcGIS, startGoogle : startGoogle, onNewMapPosition : onNewMapPosition };
+        return { start: init, startArcGIS: startArcGIS, startGoogle : startGoogle, startLeaflet: startLeaflet, onNewMapPosition : onNewMapPosition };
 
     });
 

@@ -377,6 +377,13 @@ define('GeoCoder', function () {
                 
         }
         
+        function getCenter(){
+            var pos = { 'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG};
+            console.log("return accurate center from getCenter()");
+            console.debug(pos);
+            return pos;
+        }
+        
         function MapHosterLeaflet()
         {
             var self = this;
@@ -408,7 +415,7 @@ define('GeoCoder', function () {
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary, publishPosition : publishPosition };
+                  getEventDictionary : getEventDictionary, publishPosition : publishPosition, getCenter : getCenter };
     });
 
 }).call(this);

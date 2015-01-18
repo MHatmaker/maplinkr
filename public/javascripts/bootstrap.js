@@ -219,6 +219,12 @@ var selectedMapType = 'arcgis';
                     TabsCtrl.forceGoogle();
                     // MapCtrl.setSearchQuery(gmquery);
                 }
+                else if(maphost == 'Leaflet'){
+                    MasherCtrl.startLeaflet();
+                    TabsCtrl.selectLeaflet('');
+                    TabsCtrl.forceLeaflet();
+                    // MapCtrl.setSearchQuery(gmquery);
+                }
             };
             return App;
         }
