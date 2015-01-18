@@ -160,7 +160,7 @@
                     var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
                     console.log('completeUrl');
                     console.log(completeUrl);
-                    window.open(completeUrl, pos.webmapId, "top=1, left=1, height=400,width=500");
+                    window.open(completeUrl, pos.webmapId, "top=1, left=1, height=570,width=450");
                     console.log("after call to window.open");
                 }
             }

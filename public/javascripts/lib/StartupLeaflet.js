@@ -81,8 +81,8 @@
             console.log("using channel " + channel);
             AgoNewWindowConfig.setUrl(url);
             AgoNewWindowConfig.setChannel(channel);
-            // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=400,width=500");
+            // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=570,width=450");
+            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=570,width=450");
         }
 
         function StartupLeaflet() {
