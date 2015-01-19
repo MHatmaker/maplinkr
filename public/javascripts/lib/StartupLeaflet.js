@@ -6,14 +6,18 @@
     console.log('StartupLeaflet setup');
     define([
         'lib/MapHosterLeaflet', 
+        'controllers/StompSetupCtrl',
         'lib/AgoNewWindowConfig'
-    ], function(MapHosterLeaflet, AgoNewWindowConfig) {
+    ], function(MapHosterLeaflet, StompSetupCtrl, AgoNewWindowConfig) {
         console.log('StartupLeaflet define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
         var lMap = null;
         var loading;
         var newSelectedWebMapId = "";
+        var pusherChannel = null;
+        var pusher = null;
+        
         function configit(nmpid){
             console.log("nmpid " + nmpid);
         }
@@ -71,6 +75,15 @@
                 // mph = new MapHosterLeaflet(lMap); 
                 mph = MapHosterLeaflet.start(); 
                 MapHosterLeaflet.config(lMap);
+                 
+                pusherChannel = AgoNewWindowConfig.masherChannel(false);
+                console.debug(pusherChannel);
+                pusher = StompSetupCtrl.createPusherClient(
+                        {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
+                        'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,
+                        'client-NewMapPosition' : MapHosterLeaflet.retrievedNewPosition},
+                        pusherChannel, null);  
+                         
                 // stomper = new StompClient(mph);
             }
         }

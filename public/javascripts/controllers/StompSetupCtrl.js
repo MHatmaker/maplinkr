@@ -48,7 +48,7 @@
 
             $scope.onAcceptChannel = function(){
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
-                selfdict.pusher = $scope.PusherClient(selfdict.eventDct, $scope.data.privateChannelMashover, 
+                selfdict.pusher = selfdict.PusherClient(selfdict.eventDct, $scope.data.privateChannelMashover, 
                     selfdict.callbackFunction);
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
@@ -72,7 +72,7 @@
                     selfdict.scope.showDialog = $scope.showDialog = true;
                 });
             };
-
+/* 
             $scope.PusherClient = function(eventDct, channel, cbfn)
             {
                 console.log("PusherClient");
@@ -104,7 +104,8 @@
                         }
                     });
                 var channelBind = pusher.subscribe(self.CHANNEL);
-                /* 
+                
+                COMMENT_THIS_START
                 channelBind.bind('client-MapXtntEvent', function(frame) 
                  {  // Executed when a messge is received
                      console.log('frame is',frame);
@@ -112,7 +113,7 @@
                      console.log("back from boundsRetriever");
                  }
                 );
-                 */
+                COMMENT_THIS_END
                  
                 channelBind.bind('client-NewUrlEvent', function(frame) 
                 {
@@ -176,7 +177,8 @@
                     self.callbackfunction(self.CHANNEL);
                 }
                 return pusher;
-            };
+            }; 
+            */
             
             
             $scope.hitEnter = function(evt){
@@ -201,6 +203,113 @@
             return areWeInitialized;
         }
         
+        StompSetupCtrl.prototype.PusherClient = function(eventDct, channel, cbfn)
+        {
+            console.log("PusherClient");
+            this.eventDct = eventDct;
+            var self = this;
+            self.callbackfunction = cbfn;
+            self.eventDct = eventDct;
+            self.channel = channel;
+            if(channel[0] == '/')
+            {
+                var chlength = channel.length;
+                var channelsub = channel.substring(1);
+                channelsub = channelsub.substring(0, chlength-2);
+                channel = channelsub;
+            }
+            
+            self.CHANNEL = channel.indexOf("private-channel-") > -1 ? channel : 'private-channel-' + channel;
+            console.log("with channel " + self.CHANNEL);
+            
+            var pusher = new Pusher('5c6bad75dc0dd1cec1a6');
+            pusher.connection.bind('state_change', function(state) {
+                if( state.current === 'connected' ) {
+                    // alert("Yipee! We've connected!");
+                    console.log("Yipee! We've connected!");
+                    }
+                else {
+                    // alert("Oh-Noooo!, my Pusher connection failed");
+                    console.log("Oh-Noooo!, my Pusher connection failed");
+                    }
+                });
+            var channelBind = pusher.subscribe(self.CHANNEL);
+            
+            /* 
+            channelBind.bind('client-MapXtntEvent', function(frame) 
+             {  // Executed when a messge is received
+                 console.log('frame is',frame);
+                 self.eventDct.retrievedBounds(frame);
+                 console.log("back from boundsRetriever");
+             }
+            );
+             */
+             
+            channelBind.bind('client-NewUrlEvent', function(frame) 
+            {
+                console.log('frame is',frame);
+                selfdict.eventDct['client-NewUrlEvent'](frame);
+                console.log("back from NewUrlEvent");
+            });
+             
+            channelBind.bind('client-NewMapPosition', function(frame) 
+            {
+                console.log('frame is',frame);
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('StompEventHandlerService');
+                var handler = serv.getHandler('client-NewMapPosition');
+                handler(frame);
+                // selfdict.eventDct['client-NewMapPosition'](frame);
+                console.log("back from NewMapPosition Event");
+            });
+             
+            channelBind.bind('client-MapXtntEvent', function(frame) 
+            {
+                console.log('frame is',frame);
+                selfdict.eventDct['client-MapXtntEvent'](frame);
+                console.log("back from boundsRetriever");
+            });
+
+            channelBind.bind('client-MapClickEvent', function(frame) 
+            {
+                console.log('frame is',frame);
+                selfdict.eventDct['client-MapClickEvent'](frame);
+                console.log("back from clickRetriever");
+            });
+            
+            channelBind.bind('pusher:subscription_error', function(statusCode) {
+                //alert('Problem subscribing to "private-channel": ' + statusCode);
+                console.log('Problem subscribing to "private-channel": ' + statusCode);
+            });
+            channelBind.bind('pusher:subscription_succeeded', function() {
+                console.log('Successfully subscribed to "' + self.CHANNEL); // + 'r"');
+            });
+                      
+
+            var $inj = angular.injector(['app']);
+            var serv = $inj.get('CurrentMapTypeService');
+            selfdict.mph = serv.getSelectedMapType();
+            
+            var allMapTypes = serv.getMapTypes();
+            var mptLength = allMapTypes.length;
+            for(var i =0; i< mptLength; i++){
+                if (typeof allMapTypes[i] != "undefined") {
+                    console.log("set pusher client for hoster type:")
+                    console.debug(allMapTypes[i]);
+                    allMapTypes[i].setPusherClient(pusher, self.CHANNEL);
+                }
+            }
+                                  
+            console.log("CurrentMapTypeService got mph, call setPusherClient");
+            selfdict.mph.setPusherClient(pusher, self.CHANNEL);
+            selfdict.eventDct = selfdict.mph.getEventDictionary();
+            if(self.callbackfunction != null){
+                self.callbackfunction(self.CHANNEL);
+            }
+            return pusher;
+        }; 
+        selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
+        
         StompSetupCtrl.prototype.setupPusherClient = function(eventDct, cbfn)
         {
             selfdict.eventDct = eventDct;
@@ -220,7 +329,7 @@
         {
             selfdict.eventDct = eventDct;
             selfdict.callbackFunction = cbfn;
-            selfdict.pusher = selfdict.scope.PusherClient(eventDct, pusherChannel, cbfn);
+            selfdict.pusher = StompSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, cbfn);
             return selfdict.pusher;
         };
                 
