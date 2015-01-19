@@ -196,11 +196,7 @@ var selectedMapType = 'arcgis';
             if(isNewAgoWindow){
                 var maphost = AgoNewWindowConfig.maphost();
                 console.log('maphost : ' + maphost);
-                
-                // alert("isNewAgoWindow is true");
-                // TabsCtrl.selectAgo('');
-                // TabsCtrl.forceAgo();
-                
+                                
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);

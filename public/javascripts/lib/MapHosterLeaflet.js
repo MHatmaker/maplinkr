@@ -232,7 +232,7 @@ define('GeoCoder', function () {
                 updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                 userZoom = false;
                 var cntr = new L.LatLng(xj.lat, xj.lon);
-                userZoom = true;
+                // userZoom = true;
                 if(xj.action == 'pan')
                     mphmap.setView(cntr, zm);
                 else
@@ -246,6 +246,7 @@ define('GeoCoder', function () {
                         mphmap.setZoom(zm);
                     }
                 }
+                userZoom = true;
             }
             
             AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
@@ -440,11 +441,11 @@ define('GeoCoder', function () {
         
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
-            mphmap.invalidateSize(true);
+            mphmap.invalidateSize(false);
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
-            mphmap.invalidateSize(true);
+            mphmap.invalidateSize(false);
         }
 
         return { start: init, config : configureMap,

@@ -47,14 +47,18 @@ function initPlaces() {
     console.log('StartupGoogle setup');
     define([
         'lib/MapHosterGoogle', 
+        'controllers/StompSetupCtrl',
         'lib/AgoNewWindowConfig'
-    ], function(MapHosterGoogle, AgoNewWindowConfig) {
+    ], function(MapHosterGoogle, StompSetupCtrl, AgoNewWindowConfig) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
         var mph = null; 
         var gMap = null;
         var loading;
         var newSelectedWebMapId = "";
+        var pusherChannel = null;
+        var pusher = null;
+        
         // loadScript();
         console.debug(google);
 
@@ -178,6 +182,14 @@ function initPlaces() {
                 console.log("finished resizeWebSite, time for placesQuery");
                 // alert("finished resizeWebSite, time for placesQuery");
                 MapHosterGoogle.placesQuery();
+                
+                pusherChannel = AgoNewWindowConfig.masherChannel(false);
+                console.debug(pusherChannel);
+                pusher = StompSetupCtrl.createPusherClient(
+                        {'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
+                        'client-MapClickEvent' : MapHosterGoogle.retrievedClick,
+                        'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition},
+                        pusherChannel, null);  
             }
         } 
         function StartupGoogle() {
