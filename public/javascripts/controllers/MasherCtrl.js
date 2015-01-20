@@ -157,7 +157,9 @@
                     AgoNewWindowConfig.setSearch(pos.search);
                     // AgoNewWindowConfig.setChannel(pos.search);
                      */
-                    var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
+                    var baseUrl = AgoNewWindowConfig.getbaseurl();
+                    var completeUrl = baseUrl + pos.maphost + pos.search;
+                    // var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
                     console.log('completeUrl');
                     console.log(completeUrl);
                     window.open(completeUrl, pos.webmapId, "top=1, left=1, height=570,width=450");

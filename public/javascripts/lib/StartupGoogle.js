@@ -121,7 +121,7 @@ function initPlaces() {
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
                     
-                    setupPusherClient(evtSvc.getEventDct(), function(channel){
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
                         
                         var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("open new ArcGIS window with URI " + url);

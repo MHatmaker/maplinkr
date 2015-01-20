@@ -66,8 +66,14 @@
         // console.log(dom);
         
         console.log("before domready, url is " + location.search);
+        console.log("before domready, href is " + location.href);
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
+        if(location.search == ''){
+            AgoNewWindowConfig.setprotocol(location.protocol);
+            AgoNewWindowConfig.sethost(location.host);
+            AgoNewWindowConfig.sethostport(location.port);
+        }
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
         // AgoNewWindowConfig.setChannel("private-channel-mashover");

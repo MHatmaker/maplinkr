@@ -5,8 +5,10 @@ var details = {
     webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
     masherChannel : "private-channel-mashchannel",
     masherChannelInitialized : false,
+    protocol : 'http',
+    host : "http://localhost",
     hostport : '3035',
-    href : "http://localhost",
+    href : '', //"http://localhost",
     url: '',
     lat : '',
     lon : '',
@@ -123,12 +125,31 @@ var details = {
                 }
                 return details.href;
             },
+            sethost: function(h){
+                details.host = h;
+                console.log("host : " + details.host);
+            },
+            gethost: function(){
+                return details.host;
+            },
+            setprotocol: function(p){
+                details.protocol = p;
+                console.log("protocol : " + details.protocol);
+            },
+            getprotocol: function(){
+                return details.protocol;
+            },
             sethostport: function(hp){
                 details.hostport = hp;
                 console.log("hostport : " + details.hostport);
             },
             gethostport: function(){
                 return details.hostport;
+            },
+            getbaseurl : function(){
+                var baseurl = details.protocol + "://" + details.host + "/";
+                console.log( "getbaseurl --> " + baseurl);
+                return baseurl;
             },
             setUrl: function(u){
                 details.url = u;
