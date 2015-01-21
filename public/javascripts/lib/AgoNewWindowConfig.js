@@ -6,7 +6,7 @@ var details = {
     masherChannel : "private-channel-mashchannel",
     masherChannelInitialized : false,
     protocol : 'http',
-    host : "http://localhost",
+    host : '', //"http://localhost",
     hostport : '3035',
     href : '', //"http://localhost",
     url: '',
@@ -147,7 +147,7 @@ var details = {
                 return details.hostport;
             },
             getbaseurl : function(){
-                var baseurl = details.protocol + "://" + details.host + "/";
+                var baseurl = details.protocol + "//" + details.host + "/";
                 console.log( "getbaseurl --> " + baseurl);
                 return baseurl;
             },
@@ -198,14 +198,17 @@ var details = {
             showConfigDetails: function(){
                 console.log(
                     "locationPath : "  + details.locationPath + "\n" +
-                    "search : "  + details.search + "\n" +
-                    "webmapId : "  + details.webmapId + "\n" +
-                    "masherChannel : "  + details.masherChannel + "\n" +
+                    "host : "  + details.host + "\n" +
                     "hostport : "  + details.hostport + "\n" +
                     "href : "  + details.href + "\n"  +
+                    "search : "  + details.search + "\n" +
+                    "maphost : "  + details.maphost + "\n" +
+                    "webmapId : "  + details.webmapId + "\n" +
+                    "masherChannel : "  + details.masherChannel + "\n" +
                     "lon :" + details.lon + '\n' +
                     "lat : " + details.lat + "\n" +
                     "zoom : " + details.zoom);
+                    
             }
         };
     });
