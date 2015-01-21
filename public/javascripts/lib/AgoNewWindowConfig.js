@@ -16,7 +16,9 @@ var details = {
     destPref : '',
     maphost : '',
     query : '',
-    bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''}
+    bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
+    userId : null,
+    referrerId : null
 };
     
 
@@ -195,8 +197,26 @@ var details = {
             setDestinationPreference : function(pref){
                 details.destPref = pref;
             },
-            showConfigDetails: function(){
+            getUserId : function(){
+                return details.userId;
+            },
+            setUserId : function(id){
+                details.userId = id;
+            },
+            getReferrerId : function(){
+                return details.referrerId;
+            },
+            getReferrerIdFromUrl : function(){
+                details.referrerId = getParameterByName('referrerId');
+                return details.referrerId;
+            },
+            setReferrerId : function(id){
+                details.referrerId = id;
+            },
+            showConfigDetails: function(){ referrerId
                 console.log(
+                    "userId : "  + details.userId + "\n" +
+                    "referrerId : "  + details.referrerId + "\n" +
                     "locationPath : "  + details.locationPath + "\n" +
                     "host : "  + details.host + "\n" +
                     "hostport : "  + details.hostport + "\n" +

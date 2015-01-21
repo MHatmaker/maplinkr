@@ -98,7 +98,7 @@
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                     function(channel){
-                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&maphost=ArcGIS";
+                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
                         console.log("open new ArcGIS window with URI " + url);
                         console.log("using channel " + channel);
                         AgoNewWindowConfig.setUrl(url);

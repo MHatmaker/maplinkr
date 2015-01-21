@@ -162,8 +162,14 @@
                     // var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
                     console.log('completeUrl');
                     console.log(completeUrl);
-                    window.open(completeUrl, pos.webmapId, "top=1, left=1, height=570,width=450");
-                    console.log("after call to window.open");
+                    console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
+                    if(AgoNewWindowConfig.getReferrerId() != AgoNewWindowConfig.getUserId()){
+                        window.open(completeUrl, pos.webmapId, "top=1, left=1, height=570,width=450");
+                        console.log("after call to window.open");
+                    }
+                    else{
+                        console.log("userId and referrerId match : do not open window");
+                    }
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

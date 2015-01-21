@@ -74,6 +74,18 @@
             AgoNewWindowConfig.sethost(location.host);
             AgoNewWindowConfig.sethostport(location.port);
         }
+        if(AgoNewWindowConfig.getUserId() === null){
+            var userId = getRandomInt(1, 100);
+            AgoNewWindowConfig.setUserId(userId);
+            AgoNewWindowConfig.setReferrerId(userId);
+            alert("set userId and referrerId to " + userId);
+        }
+        else{
+            var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl();
+            // AgoNewWindowConfig.setReferrerId(referrerId);
+            alert("set referrerId to " + referrerId + " for userId " + AgoNewWindowConfig.getUserId());
+        }
+        console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
         // AgoNewWindowConfig.setChannel("private-channel-mashover");
@@ -90,3 +102,7 @@
     });
 
 }).call(this);
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

@@ -40,6 +40,8 @@
                 var curmph = serv.getSelectedMapType();
                 var curmapsys = serv.getMapRestUrl();
                 updtUrl += '&maphost=' + curmapsys;
+                var userId = AgoNewWindowConfig.getUserId();
+                updtUrl += '&referrerId=' + userId;
                 
                 var nativeCenter = curmph.getCenter();
                 AgoNewWindowConfig.setPosition(nativeCenter);
@@ -47,6 +49,7 @@
                 var newPos = AgoNewWindowConfig.getPosition();
                 newPos.search = updtUrl;
                 newPos.maphost = curmapsys;
+                
                 curmph.publishPosition(newPos);
             }
         }
