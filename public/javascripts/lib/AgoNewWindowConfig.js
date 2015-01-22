@@ -17,6 +17,7 @@ var details = {
     maphost : '',
     query : '',
     bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
+    isInitialUser : true,
     userId : null,
     referrerId : null
 };
@@ -213,8 +214,16 @@ var details = {
             setReferrerId : function(id){
                 details.referrerId = id;
             },
-            showConfigDetails: function(){ referrerId
+            
+            getInitialUserStatus : function(){
+                return details.isInitialUser;
+            },
+            setInitialUserStatus : function(tf){
+                details.isInitialUser = tf;
+            },
+            showConfigDetails: function(){
                 console.log(
+                    'isInitialUser ' + details.isInitialUser + "\n" ,
                     "userId : "  + details.userId + "\n" +
                     "referrerId : "  + details.referrerId + "\n" +
                     "locationPath : "  + details.locationPath + "\n" +

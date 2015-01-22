@@ -70,22 +70,24 @@
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
         if(location.search == ''){
+            AgoNewWindowConfig.setInitialUserStatus(true);
             AgoNewWindowConfig.setprotocol(location.protocol);
             AgoNewWindowConfig.sethost(location.host);
             AgoNewWindowConfig.sethostport(location.port);
-        }
-        if(AgoNewWindowConfig.getUserId() === null){
             var userId = getRandomInt(1, 100);
             AgoNewWindowConfig.setUserId(userId);
             AgoNewWindowConfig.setReferrerId(userId);
-            alert("set userId and referrerId to " + userId);
+            // alert("set userId and referrerId to " + userId);
         }
         else{
             var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl();
+            AgoNewWindowConfig.setUserId(referrerId);
+            AgoNewWindowConfig.setInitialUserStatus(false);
             // AgoNewWindowConfig.setReferrerId(referrerId);
-            alert("set referrerId to " + referrerId + " for userId " + AgoNewWindowConfig.getUserId());
+            // alert("set referrerId to " + referrerId + " for userId " + AgoNewWindowConfig.getUserId());
         }
         console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
+        console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
         // AgoNewWindowConfig.setChannel("private-channel-mashover");
