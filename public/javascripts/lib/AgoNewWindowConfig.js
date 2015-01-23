@@ -19,13 +19,15 @@ var details = {
     bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
     isInitialUser : true,
     userId : null,
-    referrerId : null
+    referrerId : null,
+    nextWindowName : 0
 };
     
 
 (function () {
     'use strict';
     console.debug('AgoNewWindowConfig.js setup method');
+    var nextWindowName = 'MishMash ';
    /*  
     var locationPath = "/";
     //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
@@ -220,6 +222,15 @@ var details = {
             },
             setInitialUserStatus : function(tf){
                 details.isInitialUser = tf;
+            },
+            getNextWindowName : function(){
+                var nextNum = getRandomInt(100, 200);
+                var nextName = nextWindowName + nextNum;
+                console.log("Open new window with name " + nextName);
+                return nextName;
+            },
+            getRandomInt : function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             },
             showConfigDetails: function(){
                 console.log(

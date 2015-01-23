@@ -162,18 +162,23 @@
                     // var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
                     console.log('completeUrl');
                     console.log(completeUrl);
-                    console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
+                    console.log("userId = " + AgoNewWindowConfig.getUserId() + " referrerId = " + AgoNewWindowConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
                     console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
+                    var nextWindowName = AgoNewWindowConfig.getNextWindowName();
                     
                     if(AgoNewWindowConfig.getInitialUserStatus() == true){
                         if(pos.referrerId != AgoNewWindowConfig.getUserId()){
-                            window.open(completeUrl, pos.webmapId, "top=1, left=1, height=570,width=450");
-                            console.log("after call to window.open");
+                            window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
+                            console.log("after call to window.open with initial user status true");
                         }
                         else{
                             console.log("userId and referrerId match : do not open window");
                         }
                     }
+                    // else{
+                        // window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
+                        // console.log("after call to window.open with initial user status false");
+                    // }
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

@@ -81,7 +81,9 @@
         }
         else{
             var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl();
-            AgoNewWindowConfig.setUserId(referrerId);
+            // AgoNewWindowConfig.setUserId(referrerId);
+            var userId = getRandomInt(1, 100);
+            AgoNewWindowConfig.setUserId(userId);
             AgoNewWindowConfig.setInitialUserStatus(false);
             // AgoNewWindowConfig.setReferrerId(referrerId);
             // alert("set referrerId to " + referrerId + " for userId " + AgoNewWindowConfig.getUserId());
