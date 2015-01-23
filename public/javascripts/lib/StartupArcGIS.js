@@ -201,7 +201,7 @@
                     var position = curmph.getGlobalPositionComponents();
                     AgoNewWindowConfig.setPosition(position);
                     AgoNewWindowConfig.setWebmapId(newSelectedWebMapId);
-                    AgoNewWindowConfig.showConfigDetails();
+                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - replace map');
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);

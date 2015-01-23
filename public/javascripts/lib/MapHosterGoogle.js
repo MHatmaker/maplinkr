@@ -43,9 +43,8 @@
         };
         var popDetails = null;
         var selfMethods = {};
-        console.log("<<<<<<<<<<<<<<<<<<<<< where is MapCtrl? >>>>>>>>>>>>>>>>>>>>>>>>");
-        console.debug(MapCtrl);
-        console.debug(AgoNewWindowConfig);
+        
+        AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - startup');
                       
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
@@ -97,14 +96,17 @@
                 AgoNewWindowConfig.setBounds(bnds);
             });
             
-            google.maps.event.addListener(mphmap, 'dragend', function() 
-                {setBounds('pan');});
+            google.maps.event.addListener(mphmap, 'dragend', function() {
+                if(userZoom == true){
+                    setBounds('pan');
+                }
+            });
             google.maps.event.addListener(mphmap, "zoom_changed", function() {
-                if(userZoom == true)
+                if(userZoom == true){
                     setBounds('zoom', null);
                 // userZoom = true;
                 }
-            );
+            });
             function gotResize(){
                 console.log("resize event hit");
                 console.log(mphmap.getBounds());
@@ -162,8 +164,7 @@
                     maxZoom = response['zoom'];
                     zoomLevels = maxZoom - minZoom;
                     collectScales(zoomLevels);
-                    console.log("after collectScales");
-                    AgoNewWindowConfig.showConfigDetails();
+                    AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
                     showGlobals("after collectScales");
                 }
             });
@@ -281,12 +282,10 @@
                       bounds.extend(place.geometry.location);
                 }
 /* 
-                console.log("prior to fitBounds");
-                AgoNewWindowConfig.showConfigDetails();
+                AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - prior to fitBounds');
                 showGlobals("prior to fitBounds");
                 mphmap.fitBounds(bounds);
-                console.log("after fitBounds");
-                AgoNewWindowConfig.showConfigDetails();
+                AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after fitBounds');
                 showGlobals("after fitBounds");
                  */
             }
@@ -380,7 +379,7 @@
                     updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                     userZoom = false;
                     var cntr = new google.maps.LatLng(xj.lat, xj.lon);
-                    userZoom = true;
+                    // userZoom = true;
                     if(xj.action == 'pan')
                     {
                         if(tmpZm != zm)
@@ -397,7 +396,7 @@
                         }
                         mphmap.setZoom(zm);
                     }
-                    // userZoom = true;
+                    userZoom = true;
                 }
             }
 

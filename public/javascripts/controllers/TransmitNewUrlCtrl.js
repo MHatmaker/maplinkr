@@ -32,7 +32,7 @@
             $scope.publishUrl = function(){
                 console.log("Publish Current URL");
                 console.log(context.fullUrl);
-                AgoNewWindowConfig.showConfigDetails();
+                AgoNewWindowConfig.showConfigDetails('TransmitNewUrlCtrl - PUBLISH');
                 var updtUrl = AgoNewWindowConfig.getUpdatedUrl();
                 console.log(updtUrl);
                 var $inj = angular.injector(['app']);

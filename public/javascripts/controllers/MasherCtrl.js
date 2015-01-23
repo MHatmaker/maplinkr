@@ -40,8 +40,6 @@
             $scope.showDescriptionDialog = false;
             
             $scope.$on('$viewContentLoaded', function(){
-                // alert($route.current.templateUrl + ' is loaded !!');
-                // alert('templateUrl  is loaded !!');
                 if(isFirstViewing == false){
                     $scope.summmaryCollapser();
                 }
@@ -59,17 +57,6 @@
                                                             'navVis' : $scope.NavigatorVis });
                 $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
-                
-                /* From flexbox.js plunker
-                  var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                  showHeights(prevTotalHgt, totalHgt);
-                  prevTotalHgt = totalHgt;
-                  var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
-                  $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
-                  $scope.bodyColHeight = colHgt;
-                  $scope.wrapperHeight = utils.getMasterSiteHeight() - totalHgt;
-                  $scope.childSiteHeight = colHgt;
-                 */
             };
             selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;
             console.debug(selfMethods);
@@ -80,37 +67,10 @@
 
                 $scope.$broadcast('CollapseNavigatorEvent', {'mastersitevis' : $scope.MasterSiteVis,
                                                             'navVis' : $scope.NavigatorVis });
-                
-                /* From flexbox.js plunker
-                var totalHgt = utils.getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                showHeights(prevTotalHgt, totalHgt);
-                prevTotalHgt = totalHgt;
-                var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
-                $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
-                $scope.bodyColHeight = colHgt;
-                $scope.wrapperHeight = utils.getMasterSiteHeight() - totalHgt;
-                $scope.childSiteHeight = colHgt;
-                 */
             };
             
             $scope.windowResized = function(){
                 $scope.$broadcast('windowResized');
-                // $scope.$apply(function() {
-                    // $scope.width = window.innerWidth;
-                    // $scope.height = window.innerHeight;
-                // });
-                
-                /* From flexbox.js plunker
-                    calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                    var totalHgt = getComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                    showHeights(prevTotalHgt, totalHgt);
-                    prevTotalHgt = totalHgt;
-                    var colHgt = getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.SiteVis);
-                    $scope.innerTblHeight = colHgt + hgtComponents.idSiteTopRow + hgtComponents.idFooter;
-                    $scope.bodyColHeight = colHgt;
-                    $scope.wrapperHeight = getMasterSiteHeight() - totalHgt;
-                    $scope.childSiteHeight = colHgt;
-                    */
             };
             selfMethods["windowResized"] = $scope.windowResized;
             
@@ -140,45 +100,28 @@
             });
             
             $scope.onNewMapPosition = function(pos){
-                console.log("In onNewMapPosition scope handler");
-                console.log(pos);
-                var agoId = pos.webmapId && pos.webmapId != '' ? pos.webmapId : '';
-                var pos2prt = String.format('open map using framework {0} at x {1}, y {2}, zoom {3}, webmapId {4}', 
-                    pos.maphost, pos.lon, pos.lat, pos.zoom, agoId);
+                var pos2prt = String.format('onNewMapPosition handler - framework {0}, referrer {1}, at x {2}, y {3}, zoom {4}', 
+                    pos.maphost, pos.referrerId, pos.lon, pos.lat, pos.zoom);
                 console.log(pos2prt);
+                console.log("search url :");
+                console.log(pos.search);
                     
-                if(pos.maphost && pos.maphost != ''){
-                    // alert("isNewAgoWindow is true");
-                    /* 
-                    AgoNewWindowConfig.setSearch(pos.search);
-                    AgoNewWindowConfig.setWebmapId(agoId);
-                    AgoNewWindowConfig.setPosition({'lon' : pos.lon, 'lat' : pos.lat, 'zoom' : pos.zoom});
-                    AgoNewWindowConfig.setDestination('New Pop-up Window');
-                    AgoNewWindowConfig.setSearch(pos.search);
-                    // AgoNewWindowConfig.setChannel(pos.search);
-                     */
-                    var baseUrl = AgoNewWindowConfig.getbaseurl();
-                    var completeUrl = baseUrl + pos.maphost + pos.search;
-                    // var completeUrl = AgoNewWindowConfig.gethref() + pos.maphost + pos.search;
-                    console.log('completeUrl');
-                    console.log(completeUrl);
-                    console.log("userId = " + AgoNewWindowConfig.getUserId() + " referrerId = " + AgoNewWindowConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
-                    console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
-                    var nextWindowName = AgoNewWindowConfig.getNextWindowName();
-                    
-                    if(AgoNewWindowConfig.getInitialUserStatus() == true){
-                        if(pos.referrerId != AgoNewWindowConfig.getUserId()){
-                            window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
-                            console.log("after call to window.open with initial user status true");
-                        }
-                        else{
-                            console.log("userId and referrerId match : do not open window");
-                        }
+                var baseUrl = AgoNewWindowConfig.getbaseurl();
+                var completeUrl = baseUrl + pos.maphost + pos.search;
+                console.log('completeUrl');
+                console.log(completeUrl);
+                console.log("userId = " + AgoNewWindowConfig.getUserId() + " referrerId = " + AgoNewWindowConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
+                console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
+                var nextWindowName = AgoNewWindowConfig.getNextWindowName();
+                
+                if(AgoNewWindowConfig.getInitialUserStatus() == true){
+                    if(pos.referrerId != AgoNewWindowConfig.getUserId()){
+                        window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
+                        console.log("after call to window.open with initial user status true");
                     }
-                    // else{
-                        // window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
-                        // console.log("after call to window.open with initial user status false");
-                    // }
+                    else{
+                        console.log("userId and referrerId match : do not open window");
+                    }
                 }
             }
             selfMethods["onNewMapPosition"] = $scope.onNewMapPosition;

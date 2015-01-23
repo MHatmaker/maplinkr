@@ -100,10 +100,13 @@ define('GeoCoder', function () {
                 {
                     setBounds('zoom', null);
                 }
-                });
+            });
             
             mphmap.on("moveend", function( e ) {
-                setBounds('pan', e.latlng);}  );
+                if(userZoom == true){
+                    setBounds('pan', e.latlng);
+                }
+            });
         }
         function showLoading(){
             utils.showLoading();

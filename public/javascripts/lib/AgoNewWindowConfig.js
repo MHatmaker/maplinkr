@@ -232,7 +232,8 @@ var details = {
             getRandomInt : function (min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             },
-            showConfigDetails: function(){
+            showConfigDetails: function(msg){
+                console.log(msg);
                 console.log(
                     'isInitialUser ' + details.isInitialUser + "\n" ,
                     "userId : "  + details.userId + "\n" +

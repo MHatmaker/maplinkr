@@ -61,39 +61,34 @@
         console.debug('call ready');
         console.log(bootstrap);
         console.log('AgoNewWindowConfig initialization');
-        console.log(AgoNewWindowConfig);
-        // console.log(domReady);
-        // console.log(dom);
+        AgoNewWindowConfig.showConfigDetails('MasherApp startup before modifying default settings');
         
         console.log("before domready, url is " + location.search);
         console.log("before domready, href is " + location.href);
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
+        var userId = getRandomInt(1, 100);
+        AgoNewWindowConfig.setUserId(userId);
+        
         if(location.search == ''){
             AgoNewWindowConfig.setInitialUserStatus(true);
             AgoNewWindowConfig.setprotocol(location.protocol);
             AgoNewWindowConfig.sethost(location.host);
             AgoNewWindowConfig.sethostport(location.port);
-            var userId = getRandomInt(1, 100);
-            AgoNewWindowConfig.setUserId(userId);
             AgoNewWindowConfig.setReferrerId(userId);
-            // alert("set userId and referrerId to " + userId);
         }
         else{
-            var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl();
+            var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl(); // sets id in config object
             // AgoNewWindowConfig.setUserId(referrerId);
-            var userId = getRandomInt(1, 100);
-            AgoNewWindowConfig.setUserId(userId);
             AgoNewWindowConfig.setInitialUserStatus(false);
             // AgoNewWindowConfig.setReferrerId(referrerId);
-            // alert("set referrerId to " + referrerId + " for userId " + AgoNewWindowConfig.getUserId());
         }
         console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
         console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
-        // AgoNewWindowConfig.setChannel("private-channel-mashover");
-        AgoNewWindowConfig.showConfigDetails();
+        
+        AgoNewWindowConfig.showConfigDetails('MasherApp startup after modifying default settings');
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);
