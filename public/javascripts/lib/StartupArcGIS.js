@@ -29,9 +29,10 @@
         'controllers/StompSetupCtrl',
         'lib/AgoNewWindowConfig', 
         'lib/utils',
+        'controllers/TabsCtrl',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils) {
+    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl) {
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';
@@ -143,6 +144,13 @@
                 console.log(urlparams);
                 // var idWebMap=urlparams['?id'];
                 var idWebMap = AgoNewWindowConfig.webmapId(true);
+                
+                AgoNewWindowConfig.setMapHost('ArcGIS');
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                serv.setCurrentMapType('arcgis');
+                
+                TabsCtrl.forceAGO();
                 if(idWebMap && idWebMap != "")
                 {
                     if(idWebMap != newSelectedWebMapId)

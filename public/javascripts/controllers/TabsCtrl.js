@@ -103,6 +103,13 @@ String.format = function() {
                 $location.path(newPath);
             }
             selfMethods["forceMapSystem"] = $scope.forceMapSystem;
+                            
+            $scope.forceAGO = function(){
+                var tab = mapSystemDct['ArcGIS'];
+                $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[tab];
+                console.log("currentTab - url reset to " + $scope.currentTab.url);
+            }
+            selfMethods["forceAGO"] = $scope.forceAGO;
             console.debug(selfMethods);
            
         };
@@ -111,13 +118,18 @@ String.format = function() {
             selfMethods["forceMapSystem"](mapSystem);
         }
         
+        TabsCtrl.prototype.forceAGO = function (mapSystem){
+            selfMethods["forceAGO"]();
+        }
+        
         function init(App) {
             console.log('TabsCtrl init');
             App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);
             return TabsCtrl;
         }
 
-        return { start: init, forceMapSystem : TabsCtrl.prototype.forceMapSystem};
+        return { start: init, forceMapSystem : TabsCtrl.prototype.forceMapSystem,
+            forceAGO : TabsCtrl.prototype.forceAGO};
 
     });
 
