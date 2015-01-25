@@ -88,10 +88,13 @@
                 });
             dojo.connect(mphmap, "onPanEnd", function (extent, endPoint)
                 {
-                    var cntr = extent.getCenter();
-                    var xtnt = extractBounds(mphmap.getLevel(), cntr, 'pan');
-                    // var xtnt = extractBounds(zmG, endPoint, 'pan');
-                    setBounds(xtnt);
+                    if(userZoom == true)
+                    {
+                        var cntr = extent.getCenter();
+                        var xtnt = extractBounds(mphmap.getLevel(), cntr, 'pan');
+                        // var xtnt = extractBounds(zmG, endPoint, 'pan');
+                        setBounds(xtnt);
+                    }
                 });
             dojo.connect(mphmap, "onMouseMove", function(e)
                 {
@@ -251,20 +254,17 @@
                 // userZoom = false;
                 console.log("retrievedBounds centerAndZoom at zm = " + zm);
                 var cntr = new esri.geometry.Point(xj.lon, xj.lat, new esri.SpatialReference({wkid:4326}));
-                // userZoom = true;
+                
+                userZoom = false;
                 if(xj.action == 'pan')
                 {
                     if(tmpZm != zm)
                     {
-                        userZoom = false;
                         mphmap.centerAndZoom(cntr, zm);
-                        userZoom = true;
                     }
                     else
                     {
-                        userZoom = false;
                         mphmap.centerAt(cntr);
-                        userZoom = true;
                     }
                 }
                 else
@@ -272,18 +272,14 @@
                     if(tmpLon != xj.lon || tmpLat != xj.lat)
                     {
                         // var tmpCenter = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
-                        userZoom = false;
                         mphmap.centerAndZoom(cntr, zm);
-                        userZoom = true;
                     }
                     else
                     {
-                        userZoom = false;
                         mphmap.setZoom(zm);
-                        userZoom = true;
                     }
                 }
-                // userZoom = true;
+                userZoom = true;
             }
         }
         
@@ -316,10 +312,10 @@
                 {
                     console.log("MapHoster setBounds pusher send ");
                     // var sendRet = self.stomp.send(xtntJsonStr, self.channel);
-                if(selfPusherDetails.pusher)
-                {
-                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
-                }
+                    if(selfPusherDetails.pusher)
+                    {
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
+                    }
                     updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
                     //console.debug(sendRet);
                 }
@@ -459,7 +455,7 @@
                 var evtSvc = $inj.get('StompEventHandlerService');
                 var evtDct = evtSvc.getEventDct();
                 for (var key in evtDct) {
-                    pusher.subscribe( key, evtDct[key]);
+                        pusher.subscribe( key, evtDct[key]);
                     }
 
                 // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);

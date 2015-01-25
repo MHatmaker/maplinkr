@@ -171,24 +171,21 @@ define('GeoCoder', function () {
 
         function setBounds(action, latlng)
         {
-            // if(self.pusher && self.pusher.ready == true)
+            // runs this code after finishing the zoom
+            var xtExt = extractBounds(action, latlng);
+            var xtntJsonStr = JSON.stringify(xtExt);
+            console.log("extracted bounds " + xtntJsonStr);
+            var cmp = compareExtents("setBounds", xtExt);
+            if(cmp == false)
             {
-                // runs this code after finishing the zoom
-                var xtExt = extractBounds(action, latlng);
-                var xtntJsonStr = JSON.stringify(xtExt);
-                console.log("extracted bounds " + xtntJsonStr);
-                var cmp = compareExtents("setBounds", xtExt);
-                if(cmp == false)
+                console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
+                // var sendRet = self.pusher.send(xtntJsonStr, channel);
+                if(selfPusherDetails.pusher)
                 {
-                    console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
-                    // var sendRet = self.pusher.send(xtntJsonStr, channel);
-                    if(selfPusherDetails.pusher)
-                    {
-                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
-                    }
-                    updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
-                    //console.debug(sendRet);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                 }
+                updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                //console.debug(sendRet);
             }
         }
         
@@ -235,9 +232,11 @@ define('GeoCoder', function () {
                 updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                 userZoom = false;
                 var cntr = new L.LatLng(xj.lat, xj.lon);
-                // userZoom = true;
+                
                 if(xj.action == 'pan')
+                {
                     mphmap.setView(cntr, zm);
+                }
                 else
                 {
                     if(tmpLon != xj.lon || tmpLat != xj.lat)
@@ -369,7 +368,7 @@ define('GeoCoder', function () {
             var evtSvc = $inj.get('StompEventHandlerService');
             var evtDct = evtSvc.getEventDct();
             for (var key in evtDct) {
-                pusher.subscribe( key, evtDct[key]);
+                    pusher.subscribe( key, evtDct[key]);
                 }
             // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
             // pusher.subscribe( 'client-MapClickEvent', retrievedClick);

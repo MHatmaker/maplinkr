@@ -157,6 +157,7 @@
                     {
                         var curmph = MapHosterArcGIS;
                         selectedWebMapId = newSelectedWebMapId;
+                        AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("replace map in current window with URI " + url);
                         console.log("using channel " + channel);
@@ -166,6 +167,7 @@
                     {
                         console.log("selectedWebMapId == newSelectedWebMapId " + newSelectedWebMapId);
                         selectedWebMapId = idWebMap;
+                        AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                     }
                     
                     var lonWebMap = AgoNewWindowConfig.lon();
@@ -223,13 +225,6 @@
 
             esri.arcgis.utils.arcgisUrl = configOptions.sharingurl;
             esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
-
-            // get the web map id from the url 
-            // urlObject = esri.urlToObject(document.location.href);
-            // urlObject.query = urlObject.query || {};
-            // if(urlObject.query && urlObject.query.webmap){
-             // configOptions.webmap = urlObject.query.webmap;
-            // }
 
             //create the map using the web map id specified using configOptions or via the url parameter
             // var cpn = new dijit.layout.ContentPane({}, "map_canvas").startup();
@@ -324,7 +319,7 @@
                         'client-NewMapPosition' : curmph.retrievedNewPosition},
                         pusherChannel, null);  
                 console.log("got pusher - now setPusherClient");
-                //MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
+                MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
             }
             else
             {
@@ -354,6 +349,7 @@
             {
                 console.log("no idWebMap");
                 selectedWebMapId = "a4bb8a91ecfb4131aa544eddfbc2f1d0 "; //"e68ab88371e145198215a792c2d3c794";
+                AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                 console.log("use " + selectedWebMapId);
                 // pointWebMap = [-87.7, lat=41.8];
                 pointWebMap = [-87.7, 41.8];
