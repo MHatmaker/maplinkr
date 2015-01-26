@@ -188,6 +188,8 @@
             
             var allMapTypes = serv.getMapTypes();
             var mptLength = allMapTypes.length;
+            console.log("BEWARE OF SIDE EFFECTS");
+            console.log("Attempt to setPusherClient for all defined map types"); 
             for(var i =0; i< mptLength; i++){
                 if (typeof allMapTypes[i] != "undefined") {
                     console.log("set pusher client for hoster type:")
@@ -223,6 +225,7 @@
         
         StompSetupCtrl.prototype.createPusherClient = function(eventDct, pusherChannel, cbfn)
         {
+            console.log("StompSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
             selfdict.callbackFunction = cbfn;
             selfdict.pusher = StompSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, cbfn);

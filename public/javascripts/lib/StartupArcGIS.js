@@ -84,8 +84,12 @@
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
             var curmph = MapHosterArcGIS;
+            /* 
+            This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
+             */
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
+                // This branch handles creating a parallel ArcGIS Online webmap initiated from an AGO group and map search.
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
                     var $inj = angular.injector(['app']);
                     var serv = $inj.get('CurrentMapTypeService');
@@ -120,6 +124,9 @@
             }
             else
             {
+                /* 
+                This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master site or opening the webmap from a url sent through a publish event.
+                 */
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
@@ -142,7 +149,8 @@
                 var urlparams=dojo.queryToObject(window.location.search); 
                 console.log("initializePostProc - urlparams");
                 console.log(urlparams);
-                // var idWebMap=urlparams['?id'];
+                
+                // Get the idWebMap from the url if it is present, otherwise return current webmapId
                 var idWebMap = AgoNewWindowConfig.webmapId(true);
                 
                 AgoNewWindowConfig.setMapHost('ArcGIS');
@@ -151,16 +159,24 @@
                 serv.setCurrentMapType('arcgis');
                 
                 TabsCtrl.forceAGO();
+                /*
+                    Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the AgoNewWindowConfig with ArcGIS-specific attributes.
+                */
                 if(idWebMap && idWebMap != "")
                 {
                     if(idWebMap != newSelectedWebMapId)
                     {
+                        /* 
+                        idWebMap should have been initiated through a replace current map selection
+                        in the AGO group/map search process.
+                         */
                         var curmph = MapHosterArcGIS;
                         selectedWebMapId = newSelectedWebMapId;
                         AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
-                        console.log("replace map in current window with URI " + url);
+                        console.log("initialize or replace map in current window with URI " + url);
                         console.log("using channel " + channel);
+                        // set up config in the event that this map environment might be published.
                         AgoNewWindowConfig.setUrl(url);
                     }
                     else
@@ -170,6 +186,10 @@
                         AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                     }
                     
+                    /*
+                    These accessors only return values from checking the url.  If it doesn't find them, 
+                    the value should be an empty string
+                    */
                     var lonWebMap = AgoNewWindowConfig.lon();
                     var latWebMap = AgoNewWindowConfig.lat();
                     var zmw = AgoNewWindowConfig.zoom();
@@ -181,8 +201,12 @@
                     
                     if(lonWebMap && latWebMap && zoomWebMap)
                     {
+                        /*
+                        zoomWebMap would only be non-null if the ArcGIS map system was invoked through
+                        the GUI in a "Show the map" selection.
+                        */
                         zoomWebMap =  zmw;
-                        console.log("from URI " + zoomWebMap);
+                        console.log("zoomWebMap from URI " + zoomWebMap);
                         pointWebMap = [lonWebMap, latWebMap];
                         console.log(pointWebMap);
                         // stompChannel = urlparams['channel'];
@@ -203,7 +227,7 @@
                     var position = curmph.getGlobalPositionComponents();
                     AgoNewWindowConfig.setPosition(position);
                     AgoNewWindowConfig.setWebmapId(newSelectedWebMapId);
-                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - replace map');
+                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - origina.l initialization or replace map');
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
@@ -301,7 +325,7 @@
                 attachTo: "top-left"
             });    
              */
-            console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1]);
+            console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1] + ' zoom ' + zoomWebMap);
             console.log("selfDetails.mph : " + selfDetails.mph);
             if(selfDetails.mph === null)
             {
@@ -313,13 +337,22 @@
                 console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
+                var curmph = null;
+                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                    var $inj = angular.injector(['app']);
+                    var serv = $inj.get('CurrentMapTypeService');
+                    curmph = serv.getSelectedMapType();
+                    }
                 pusher = StompSetupCtrl.createPusherClient(
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
                         'client-NewMapPosition' : curmph.retrievedNewPosition},
-                        pusherChannel, null);  
-                console.log("got pusher - now setPusherClient");
-                MapHosterArcGIS.prototype.setPusherClient(pusher, pusherChannel);   
+                        pusherChannel, function(callbackChannel){
+                            console.log("callback - don't need to setPusherClient");
+                            console.log("It was a side effect of the createPusherClient:PusherClient process");
+                            MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
+                        });  
+                   
             }
             else
             {

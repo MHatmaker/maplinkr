@@ -95,6 +95,9 @@ String.format = function() {
             console.log("onClickTab and isActiveTab defined ");
                                     
             $scope.forceMapSystem = function(mapSystem){
+            // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
+            // Resets the $locationPath under the ng-view.
+            // This code should be entered in a new window created by a publish event with the map system // in the url
                 var tab = mapSystemDct[mapSystem];
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[tab];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
@@ -105,6 +108,11 @@ String.format = function() {
             selfMethods["forceMapSystem"] = $scope.forceMapSystem;
                             
             $scope.forceAGO = function(){
+            // Simulate a click on the ArcGIS mapSystem "Show the Map" button under the map system tabs.
+            // Does not reset the $locationPath under the ng-view
+            // The ArcGIS map should appear in the map canvas div without replacing the host sub website.
+            // However, the angular GUI sync variable for mapsystem should reflect the ArcGIS map system.
+            // This cocde would be entered on a "Replace Map" selection in the AGO group/map search process
                 var tab = mapSystemDct['ArcGIS'];
                 $scope.currentTab =$scope.$parent.currentTab = $scope.tabs[tab];
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
