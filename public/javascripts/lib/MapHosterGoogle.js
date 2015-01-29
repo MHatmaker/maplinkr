@@ -67,6 +67,50 @@
             showGlobals("Prior to new Map");
             // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
             
+            // Maybe it will work at this point!!!
+            minZoom = maxZoom = zoomLevels = 0;
+            var zsvc = new google.maps.MaxZoomService();
+            var cntr = new google.maps.LatLng(cntryG, cntrxG);
+            
+            zsvc.getMaxZoomAtLatLng(cntr, function(response) 
+            {
+                if (response && response['status'] == google.maps.MaxZoomStatus.OK) 
+                {
+                    maxZoom = response['zoom'];
+                    zoomLevels = maxZoom - minZoom;
+                    collectScales(zoomLevels);
+                    AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
+                    showGlobals("after collectScales");
+                }
+            });
+            /* 
+            function getElemDimension(itm, dim){
+                var elem = document.getElementById(itm);
+                var ElemDim = dim == 'height' ? elem.clientHeight : elem.clientWidth;
+                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
+                return ElemDim;
+            }
+            
+            function setElementDimentsion(itm, dim, value, units){
+                if(typeof(units)==='undefined') units = 'px';
+                var elem = document.getElementById(itm);
+                var dimstr = String.format("{0}{1}", value, units);
+                elem.setAttribute("style", dim + ":" + dimstr);
+            }
+        
+            console.log("MapHosterGoogle map_wrapper : invalidateSize");
+            // gMap.invalidateSize(true);
+            var cnvsHgt = getElemDimension('map_wrapper', 'height');
+                console.log('reset map_wrapper height to ' + cnvsHgt);
+            setElementDimentsion('map_wrapper', 'height', cnvsHgt);
+            
+            var cnvsWdth = getElemDimension('map_wrapper', 'width');
+                console.log('reset map_wrapper width to ' + cnvsWdth);
+            setElementDimentsion('map_wrapper', 'width', cnvsWdth); 
+            */
+            
+            
+            google.maps.event.trigger(mphmap, 'resize');
             
             var searchInput = /** @type {HTMLInputElement} */(
                 document.getElementById('pac-input'));
@@ -103,7 +147,8 @@
             });
             google.maps.event.addListener(mphmap, "zoom_changed", function() {
                 if(userZoom == true){
-                    setBounds('zoom', null);
+                    if(scale2Level.length > 0)
+                        setBounds('zoom', null);
                 // userZoom = true;
                 }
             });
@@ -152,7 +197,9 @@
             google.maps.event.trigger(mphmap, 'resize');
             mphmap.setCenter(center);
             addInitialSymbols();
-            
+            google.maps.event.trigger(mphmap, 'resize');
+            mphmap.setCenter(center);
+            /* 
             minZoom = maxZoom = zoomLevels = 0;
             var zsvc = new google.maps.MaxZoomService();
             var cntr = new google.maps.LatLng(cntryG, cntrxG);
@@ -168,7 +215,7 @@
                     showGlobals("after collectScales");
                 }
             });
-            
+             */
             
             function retrievedPlaces(results, status) {
                 console.log("back in callback from PlacesService");

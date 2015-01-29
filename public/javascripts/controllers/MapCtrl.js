@@ -62,7 +62,7 @@
             currentMapType = mapTypes[mptp];
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
-            console.log("width " + width + ", height " + height);
+            console.log(" document.body.client : width " + width + ", height " + height);
             var mapWrp = angular.element(document.getElementById("map_wrapper"));
             /* 
             console.log("map_wrapper height");
@@ -102,6 +102,11 @@
             }
                  
             $scope.$on('CollapseSummaryEvent', function(event, args) {
+                currentMapType.resizeMapPane($scope.isMapExpanded);
+                currentMapType.resizeWebSite($scope.isMapExpanded);
+            });
+                
+            $scope.$on('CollapseSummaryCompletionEvent', function(event, args) {
                 currentMapType.resizeMapPane($scope.isMapExpanded);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });

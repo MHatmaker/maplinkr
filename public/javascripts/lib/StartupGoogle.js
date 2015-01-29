@@ -73,7 +73,10 @@ function initPlaces() {
             MapHosterGoogle.resizeVerbage(isMapExpanded);
         }
         function resizeMapPane(isMapExpanded){
-            console.log("StartupGoogle : invalidateSize");
+        
+            console.log("StartupGoogle.resizeMapPane : invalidateSize");
+            // invalidateMapWrapper();
+            window.resizeBy(0, 0);
             // gMap.invalidateSize(true);
         }
         
@@ -157,6 +160,9 @@ function initPlaces() {
                     ll = new google.maps.LatLng(bnds.lly, bnds.llx);
                     ur = new google.maps.LatLng(bnds.ury, bnds.urx);
                 }
+                
+                // invalidateMapWrapper();
+                
                 var mapOptions = {
                   center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
@@ -173,6 +179,7 @@ function initPlaces() {
                     // gMap.fitBounds(gmbnds);
                     // console.debug(gMap.getBounds());
                 // }
+                invalidateMapWrapper();
                     
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 var service = new google.maps.places.PlacesService(gMap);
@@ -192,6 +199,34 @@ function initPlaces() {
                         pusherChannel, null);  
             }
         } 
+        function invalidateMapWrapper(){
+            function getElemDimension(itm, dim){
+                var elem = document.getElementById(itm);
+                var ElemDim = dim == 'height' ? elem.clientHeight : elem.clientWidth;
+                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
+                return ElemDim;
+            }
+            
+            function setElementDimentsion(itm, dim, value, units){
+                if(typeof(units)==='undefined') units = 'px';
+                var elem = document.getElementById(itm);
+                var dimstr = String.format("{0} : {1}{2}", dim, value, units);
+                console.log("dim string : " + dimstr);
+                elem.setAttribute("style", dimstr);
+            }
+        
+            var element = 'map_wrapper';
+            console.log("MapHosterGoogle map_wrapper : invalidateSize");
+            // gMap.invalidateSize(true);
+            var cnvsHgt = getElemDimension(element, 'height');
+            console.log('reset ' + element + ' height to ' + cnvsHgt + 1);
+            setElementDimentsion(element, 'height', cnvsHgt  + 1);
+            
+            var cnvsWdth = getElemDimension(element, 'width');
+            console.log('reset ' + element + ' width to ' + cnvsWdth);
+            setElementDimentsion(element, 'width', cnvsWdth);
+        }
+        
         function StartupGoogle() {
         };
         function init() {

@@ -177,7 +177,7 @@
                     innerScope.$apply(function(){
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                         utils.displayHeights("####  CollapseSummaryEvent  ###");
-                        adjustHeights($scope);
+                        adjustHeights($scope, true);
                         });
                     },1000);  
                 
@@ -218,7 +218,7 @@
                 // adjustHeights($scope);
             });
                         
-            function adjustHeights(scope){
+            function adjustHeights(scope, invalidateMapPane){
                 /* From flexbox.js plunker  */
                 var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], scope.MasterSiteVis, status['website']);
                 scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
@@ -239,6 +239,10 @@
                             utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
                         console.log("adjustHeights colHgt : " + colHgt);
+                        if(invalidateMapPane && invalidateMapPane == true){
+                            console.log("NNNOOOWWW invalidateMapPane with CollapseSummaryCompletionEvent");
+                            $scope.$broadcast('CollapseSummaryCompletionEvent');
+                            }
                         });
                     },1000);
             }
