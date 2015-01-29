@@ -76,7 +76,6 @@ function initPlaces() {
         
             console.log("StartupGoogle.resizeMapPane : invalidateSize");
             // invalidateMapWrapper();
-            window.resizeBy(0, 0);
             // gMap.invalidateSize(true);
         }
         
