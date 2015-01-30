@@ -109,7 +109,10 @@
             $scope.$on('CollapseSummaryCompletionEvent', function(event, args) {
                 window.resizeBy(0, 0);
                 // currentMapType.resizeMapPane($scope.isMapExpanded);
-                currentMapType.resizeWebSite($scope.isMapExpanded);
+                // currentMapType.resizeWebSite($scope.isMapExpanded);
+                
+                // var btn = document.getElementById("idExpSiteButton");
+                // btn.click();
             });
 
             $scope.$on('WebSiteVisibilityEvent', function(event, args){

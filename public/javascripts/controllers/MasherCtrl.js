@@ -59,6 +59,8 @@
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
             };
             selfMethods["summmaryCollapser"] = $scope.summmaryCollapser;
+            
+            
             console.debug(selfMethods);
             
             $scope.onExpNavClick = function(){

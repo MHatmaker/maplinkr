@@ -126,7 +126,11 @@
                 console.log("before searchBox.getPlaces()");
                 var places = searchBox.getPlaces();
                 console.log("after searchBox.getPlaces()");
-                placeMarkers(places);
+                if(places && places.length > 0){
+                    console.log("places length : ");
+                    console.log(places.length);
+                    placeMarkers(places);
+                }
             });
             
             // Bias the SearchBox results towards places that are within the bounds of the
@@ -225,7 +229,11 @@
                 console.log("returned status is");
                 console.log(status);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    placeMarkers(results);
+                    if(results.length > 0){
+                        console.log("results length : ");
+                        console.log(results.length);
+                        placeMarkers(results);
+                    }
                 }
                 else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
                     console.log("PlacesService nearbySearch returned no results.");
@@ -295,11 +303,6 @@
             selfMethods["placesQuery"] = placesQuery;
                     
             function placeMarkers(places){
-                console.log("places length : ");
-                console.log(places.length);
-                if (places.length == 0) {
-                    return;
-                }
                 for (var i = 0, marker; marker = markers[i]; i++) {
                     marker.setMap(null);
                 }

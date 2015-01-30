@@ -20,7 +20,8 @@ var details = {
     isInitialUser : true,
     userId : null,
     referrerId : null,
-    nextWindowName : 0
+    nextWindowName : 0,
+    hideWebSiteOnStartup : false
 };
     
 
@@ -228,6 +229,12 @@ var details = {
                 var nextName = nextWindowName + nextNum;
                 console.log("Open new window with name " + nextName);
                 return nextName;
+            },
+            setHideWebSiteOnStartup : function(tf){
+                details.hideWebSiteOnStartup = tf;
+            },
+            getHideWebSiteOnStartup : function(){
+                return details.hideWebSiteOnStartup;
             },
             getRandomInt : function (min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -12,12 +12,13 @@ var selectedMapType = 'arcgis';
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
+        'controllers/SpaCtrl',
         'controllers/MapCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, MapCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
         
         function init() {
@@ -210,6 +211,8 @@ var selectedMapType = 'arcgis';
                     
                 MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
+                AgoNewWindowConfig.setHideWebSiteOnStartup(true);
+                // SpaCtrl.hideWebsite();
             };
             return App;
         }

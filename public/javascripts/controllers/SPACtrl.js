@@ -5,8 +5,9 @@
     "use strict";
 
     console.log('SPACtrl setup');
-    define(['angular', 'lib/fsm', 'lib/utils'], function(angular, finstatmach, utils) {
+    define(['angular', 'lib/AgoNewWindowConfig', 'lib/fsm', 'lib/utils'], function(angular, AgoNewWindowConfig, finstatmach, utils) {
         console.log('SPACtrl define');
+        var selfMethods = {};
         
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
@@ -20,6 +21,7 @@
             $scope.MasterSiteVis = "inline";
             $scope.SiteVis = "flex";
             $scope.mapColWidth = "inherit";
+            $scope.hideWebSiteOnStartup = false;   
                             
             var status = {
                 'website' : "flex",
@@ -217,7 +219,13 @@
                 // utils.setElementHeight('idMasterSite', 90, '%');
                 // adjustHeights($scope);
             });
-                        
+               
+            $scope.siteCollapser = function(tf){
+                $scope.hideWebSiteOnStartup = tf;
+                // $scope.onExpSiteClick();
+            };
+            selfMethods["siteCollapser"] = $scope.siteCollapser; 
+            
             function adjustHeights(scope, invalidateMapPane){
                 /* From flexbox.js plunker  */
                 var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], scope.MasterSiteVis, status['website']);
@@ -243,10 +251,19 @@
                             console.log("NNNOOOWWW invalidateMapPane with CollapseSummaryCompletionEvent");
                             $scope.$broadcast('CollapseSummaryCompletionEvent');
                             }
+                            if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
+                                $scope.onExpSiteClick();
+                            }
                         });
                     },1000);
             }
         };
+        
+        function hideWebsite(){
+            console.log("hideWebsite");
+            
+            selfMethods["siteCollapser"](true);
+        }
         
         function init(App) {
             console.log('SPACtrl init');
@@ -255,7 +272,7 @@
         }
     
 
-        return { start: init };
+        return { start: init, hideWebsite : hideWebsite };
 
     });
 
