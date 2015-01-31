@@ -107,9 +107,10 @@
             });
                 
             $scope.$on('CollapseSummaryCompletionEvent', function(event, args) {
+                console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
                 window.resizeBy(0, 0);
-                // currentMapType.resizeMapPane($scope.isMapExpanded);
-                // currentMapType.resizeWebSite($scope.isMapExpanded);
+                currentMapType.resizeMapPane($scope.isMapExpanded);
+                currentMapType.resizeWebSite($scope.isMapExpanded);
                 
                 // var btn = document.getElementById("idExpSiteButton");
                 // btn.click();

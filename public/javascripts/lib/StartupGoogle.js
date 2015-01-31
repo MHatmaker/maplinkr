@@ -75,6 +75,10 @@ function initPlaces() {
         function resizeMapPane(isMapExpanded){
         
             console.log("StartupGoogle.resizeMapPane : invalidateSize");
+            
+            MapHosterGoogle.firePlacesQuery();
+            // if(gmap)
+                // google.maps.event.trigger(gmap, 'resize');
             // invalidateMapWrapper();
             // gMap.invalidateSize(true);
         }

@@ -198,6 +198,13 @@
                     },1000);
             });
             
+            $scope.$on('CollapseSummaryCompletionEvent', function(event, args){
+                if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
+                    AgoNewWindowConfig.setHideWebSiteOnStartup(false);
+                    $scope.onExpSiteClick();
+                }
+            });
+            
             $scope.$on('windowResized', function() {
                 utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                 var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
@@ -251,9 +258,9 @@
                             console.log("NNNOOOWWW invalidateMapPane with CollapseSummaryCompletionEvent");
                             $scope.$broadcast('CollapseSummaryCompletionEvent');
                             }
-                            if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
-                                $scope.onExpSiteClick();
-                            }
+                            // if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
+                                // $scope.onExpSiteClick();
+                            // }
                         });
                     },1000);
             }

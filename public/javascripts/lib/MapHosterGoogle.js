@@ -36,6 +36,7 @@
         var geoCoder = null;
         var gplaces = null;
         var searchBox = null;
+        var searchFiredFromUrl = false;
             
         var selfPusherDetails = {
             channel : null,
@@ -124,6 +125,16 @@
             // pick list. Retrieve the matching places for that item.
             google.maps.event.addListener(searchBox, 'places_changed', function() {
                 console.log("before searchBox.getPlaces()");
+                if(searchFiredFromUrl == true){
+                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                    console.log("getBoundsFromUrl..................");
+                    console.debug(bnds);
+                    var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    var gBnds = new google.maps.LatLngBounds(ll, ur);
+                    searchBox.setBounds(gBnds);
+                    searchFiredFromUrl = false;
+                }
                 var places = searchBox.getPlaces();
                 console.log("after searchBox.getPlaces()");
                 if(places && places.length > 0){
@@ -157,7 +168,7 @@
                 }
             });
             function gotResize(){
-                console.log("resize event hit");
+                console.log("resize event hit in MapHosterGoogle");
                 console.log(mphmap.getBounds());
             };
             
@@ -247,8 +258,17 @@
             }
             
             function firePlacesQuery(){
+                searchFiredFromUrl = true;
                 searchInput.value = 'foo';
                 var text = AgoNewWindowConfig.query();
+            
+                var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                console.log("getBoundsFromUrl..................");
+                console.debug(bnds);
+                var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                var gBnds = new google.maps.LatLngBounds(ll, ur);
+                    
                 // var arr= [];
                 // console.debug(arr);
                 // arr.push('\r'); //0x0d);
@@ -257,6 +277,7 @@
                 // var joinedText = text.concat('&nbsp\r');    //'&#10'); //joined);
                 searchInput.value = text; //joinedText;
                 console.log(searchInput.value);
+                searchBox.setBounds(gBnds);
                 google.maps.event.trigger(searchBox, 'places_changed');
             }
             selfMethods["firePlacesQuery"] = firePlacesQuery;
