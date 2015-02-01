@@ -76,7 +76,7 @@ function initPlaces() {
         
             console.log("StartupGoogle.resizeMapPane : invalidateSize");
             
-            MapHosterGoogle.firePlacesQuery();
+            // MapHosterGoogle.firePlacesQuery();
             // if(gmap)
                 // google.maps.event.trigger(gmap, 'resize');
             // invalidateMapWrapper();
@@ -191,7 +191,9 @@ function initPlaces() {
                 MapHosterGoogle.resizeWebSite(true);
                 console.log("finished resizeWebSite, time for placesQuery");
                 // alert("finished resizeWebSite, time for placesQuery");
-                MapHosterGoogle.placesQuery();
+                if(AgoNewWindowConfig.query() != ''){
+                    MapHosterGoogle.placesQuery();
+                }
                 
                 pusherChannel = AgoNewWindowConfig.masherChannel(false);
                 console.debug(pusherChannel);
