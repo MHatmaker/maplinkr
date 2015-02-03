@@ -53,12 +53,11 @@
             gplaces = googPlaces;
             geoCoder = new google.maps.Geocoder();
             var markers = [];
-            
-            var qlat = AgoNewWindowConfig.lat();
-            var qlon = AgoNewWindowConfig.lon();
-            var qzoom = AgoNewWindowConfig.zoom();
-            
-            if(qlat != ''){
+                        
+            if(AgoNewWindowConfig.testUrlArgs()){
+                var qlat = AgoNewWindowConfig.lat();
+                var qlon = AgoNewWindowConfig.lon();
+                var qzoom = AgoNewWindowConfig.zoom();
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
              else{
@@ -84,32 +83,6 @@
                     showGlobals("after collectScales");
                 }
             });
-            /* 
-            function getElemDimension(itm, dim){
-                var elem = document.getElementById(itm);
-                var ElemDim = dim == 'height' ? elem.clientHeight : elem.clientWidth;
-                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
-                return ElemDim;
-            }
-            
-            function setElementDimentsion(itm, dim, value, units){
-                if(typeof(units)==='undefined') units = 'px';
-                var elem = document.getElementById(itm);
-                var dimstr = String.format("{0}{1}", value, units);
-                elem.setAttribute("style", dim + ":" + dimstr);
-            }
-        
-            console.log("MapHosterGoogle map_wrapper : invalidateSize");
-            // gMap.invalidateSize(true);
-            var cnvsHgt = getElemDimension('map_wrapper', 'height');
-                console.log('reset map_wrapper height to ' + cnvsHgt);
-            setElementDimentsion('map_wrapper', 'height', cnvsHgt);
-            
-            var cnvsWdth = getElemDimension('map_wrapper', 'width');
-                console.log('reset map_wrapper width to ' + cnvsWdth);
-            setElementDimentsion('map_wrapper', 'width', cnvsWdth); 
-            */
-            
             
             google.maps.event.trigger(mphmap, 'resize');
             
@@ -118,7 +91,6 @@
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
 
             searchBox = new gplaces.SearchBox(
-            // var searchBox = new googPlaces.SearchBox(
             /** @type {HTMLInputElement} */(searchInput));
             
             // Listen for the event fired when the user selects an item from the
@@ -214,23 +186,6 @@
             addInitialSymbols();
             google.maps.event.trigger(mphmap, 'resize');
             mphmap.setCenter(center);
-            /* 
-            minZoom = maxZoom = zoomLevels = 0;
-            var zsvc = new google.maps.MaxZoomService();
-            var cntr = new google.maps.LatLng(cntryG, cntrxG);
-            
-            zsvc.getMaxZoomAtLatLng(cntr, function(response) 
-            {
-                if (response && response['status'] == google.maps.MaxZoomStatus.OK) 
-                {
-                    maxZoom = response['zoom'];
-                    zoomLevels = maxZoom - minZoom;
-                    collectScales(zoomLevels);
-                    AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
-                    showGlobals("after collectScales");
-                }
-            });
-             */
             
             function retrievedPlaces(results, status) {
                 console.log("back in callback from PlacesService");
@@ -286,18 +241,6 @@
                 var gmQuery = AgoNewWindowConfig.query();
                 console.log('gmQuery contains ' + gmQuery);
                 if(gmQuery != ''){
-                    /* 
-                    var qlat = AgoNewWindowConfig.lat();
-                    var qlon = AgoNewWindowConfig.lon();
-                    // var queryLatLng = new google.maps.LatLng(41.799, -87.715); //qlat, qlon);
-                    var queryLatLng = mphmap.getCenter();
-                    var gmQueryBounds = new google.maps.LatLngBounds();
-                    console.debug(mphmap);
-                    gmQueryBounds = mphmap.getBounds();
-                    console.debug(gmQueryBounds);
-                    console.log("queryLatLng parameters");
-                    console.log("lat " + queryLatLng.lat() + " lon " + queryLatLng.lng());
-                     */
                     var bnds = AgoNewWindowConfig.getBoundsFromUrl();
                     console.log("getBoundsFromUrl..................");
                     console.debug(bnds);
@@ -309,15 +252,12 @@
                     var request = {
                         // location: queryLatLng,
                         bounds : gmbnds,
-                        // query: gmQuery,
                         // radius: 1500,
                         types: [gmQuery]
                     };
                     console.debug(request);
           
                     var service = new gplaces.PlacesService(mphmap);
-                    // service.nearbySearch(request, retrievedPlaces);
-                    // alert("nearbySearch");
                     service.nearbySearch(request, retrievedPlaces);
                 }
             }
@@ -352,13 +292,6 @@
 
                       bounds.extend(place.geometry.location);
                 }
-/* 
-                AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - prior to fitBounds');
-                showGlobals("prior to fitBounds");
-                mphmap.fitBounds(bounds);
-                AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after fitBounds');
-                showGlobals("after fitBounds");
-                 */
             }
         }
         
@@ -670,9 +603,6 @@
             for (var key in evtDct) {
                 pusher.subscribe( key, evtDct[key]);
                 }
-                    
-            // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
-            // pusher.subscribe( 'client-MapClicktEvent', retrievedClick);
             console.log("reset MapHosterGoogle setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         function getGlobalsForUrl()

@@ -74,20 +74,11 @@ function initPlaces() {
         }
         function resizeMapPane(isMapExpanded){
         
-            console.log("StartupGoogle.resizeMapPane : invalidateSize");
-            
-            // MapHosterGoogle.firePlacesQuery();
-            // if(gmap)
-                // google.maps.event.trigger(gmap, 'resize');
-            // invalidateMapWrapper();
-            // gMap.invalidateSize(true);
+            console.log("StartupGoogle.resizeMapPane : invalidateSize stub");
         }
         
         var urlObject;
         var configOptions;
-        // var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
-        var selectedWebMapId = "e68ab88371e145198215a792c2d3c794";
-        var previousSelectedWebMapId = selectedWebMapId;
         var loading;
 
         function configure(newMapId) 
@@ -110,15 +101,6 @@ function initPlaces() {
                 bingMapsKey:"/*Please enter your own Bing Map key*/"
             }
               
-            // esri.arcgis.utils.arcgisUrl = configOptions.sharingurl;
-            // esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
-              
-            // get the web map id from the url 
-            // urlObject = esri.urlToObject(document.location.href);
-            // urlObject.query = urlObject.query || {};
-            // if(urlObject.query && urlObject.query.webmap){
-                 // configOptions.webmap = urlObject.query.webmap;
-            // }
             if( newSelectedWebMapId !== null)
             {
                 if(AgoNewWindowConfig.isChannelInitialized() == false){
@@ -128,14 +110,8 @@ function initPlaces() {
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
                     
                     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
-                        
-                        var url = "?id=" + newSelectedWebMapId + mph.getGlobalsForUrl() + "&channel=" + channel;
-                        console.log("open new ArcGIS window with URI " + url);
-                        console.log("using channel " + channel);
-                        AgoNewWindowConfig.setUrl(url);
-                        // window.open("http://localhost:3035/arcgis/" + url, "MashMash", "top=1, left=1, height=400,width=500");
-                        window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, "top=1, left=1, height=570,width=450");
-                    });
+                        openAgoWindow(channel);
+                        });
                 }
                 else{
                     openAgoWindow(AgoNewWindowConfig.masherChannel(false));
@@ -150,38 +126,29 @@ function initPlaces() {
             
                 console.debug(AgoNewWindowConfig);
                 var centerLatLng = new google.maps.LatLng(41.8, -87.7);
-                var qlat = AgoNewWindowConfig.lat();
-                var qlon = AgoNewWindowConfig.lon();
-                var ll = null;
-                var ur = null;
+                var initZoom = 13;
                 
-                if(qlat != ''){
+                if(AgoNewWindowConfig.testUrlArgs()){
+                    var qlat = AgoNewWindowConfig.lat();
+                    var qlon = AgoNewWindowConfig.lon();
                     centerLatLng = new google.maps.LatLng(qlat, qlon);
                     var bnds = AgoNewWindowConfig.getBoundsFromUrl();
                     console.log("getBoundsFromUrl..................");
                     console.debug(bnds);
-                    ll = new google.maps.LatLng(bnds.lly, bnds.llx);
-                    ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    var zoomStr = AgoNewWindowConfig.zoom();
+                    initZoom = parseInt(zoomStr, 10);
                 }
-                
-                // invalidateMapWrapper();
                 
                 var mapOptions = {
                   center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
-                  zoom: 13,
+                  zoom: initZoom,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 console.log("create a google map with option: " + mapOptions.mapTypeId);
                 gMap = new google.maps.Map(document.getElementById("map_canvas"),
                     mapOptions);
                     
-                // if(qlat != ''){
-                    // var gmbnds = new google.maps.LatLngBounds(ll, ur);
-                    // console.debug(gmbnds);
-                    // gMap.fitBounds(gmbnds);
-                    // console.debug(gMap.getBounds());
-                // }
                 invalidateMapWrapper();
                     
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
@@ -203,7 +170,17 @@ function initPlaces() {
                         'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition},
                         pusherChannel, null);  
             }
-        } 
+        }
+
+        function openAGOWindow(channel){
+            var url = "?id=" + newSelectedWebMapId + MapHosterGoogle.getGlobalsForUrl() + "&channel=" + channel;
+            console.log("open new ArcGIS window with URI " + url);
+            console.log("using channel " + channel);
+            AgoNewWindowConfig.setUrl(url);
+            AgoNewWindowConfig.setChannel(channel);
+            window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+        }
+        
         function invalidateMapWrapper(){
             function getElemDimension(itm, dim){
                 var elem = document.getElementById(itm);
@@ -247,4 +224,3 @@ function initPlaces() {
 
 }).call(this);
 
-// window.onload = function(){initialize()};

@@ -21,7 +21,8 @@ var details = {
     userId : null,
     referrerId : null,
     nextWindowName : 0,
-    hideWebSiteOnStartup : false
+    hideWebSiteOnStartup : false,
+    smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570}
 };
     
 
@@ -238,6 +239,11 @@ var details = {
             },
             getRandomInt : function (min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
+            },
+            getSmallFormDimensions : function (){
+                var d = details.smallFormDimensions;
+                var ltwh = String.format('top={0}, left={1}, height={2},width{3}');
+                return ltwh;
             },
             showConfigDetails: function(msg){
                 console.log(msg);

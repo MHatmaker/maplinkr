@@ -48,15 +48,13 @@ define('GeoCoder', function () {
             mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
             console.debug(mphmap);
             showLoading();
-            // mphmap.setView([41.8, -87.7], 13);
                         
 			geoCoder =  GeoCoder; //.nominatim();
-        
-            var qlat = AgoNewWindowConfig.lat();
-            var qlon = AgoNewWindowConfig.lon();
-            var qzoom = AgoNewWindowConfig.zoom();;
             
-            if(qlat != ''){
+            if(AgoNewWindowConfig.testUrlArgs()){
+                var qlat = AgoNewWindowConfig.lat();
+                var qlon = AgoNewWindowConfig.lon();
+                var qzoom = AgoNewWindowConfig.zoom();;
                 mphmap.setView([qlat, qlon], qzoom);
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
@@ -66,7 +64,6 @@ define('GeoCoder', function () {
              }
              console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
              
-            // self.updateGlobals("ctor", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
 
             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -358,7 +355,6 @@ define('GeoCoder', function () {
             popup = L.popup();
         }
 
-        // MapHosterLeaflet.prototype.setPusherClient = function (pusher, channel)
         function setPusherClient(pusher, channel)
         {   
             selfPusherDetails.pusher = pusher;
@@ -370,8 +366,6 @@ define('GeoCoder', function () {
             for (var key in evtDct) {
                     pusher.subscribe( key, evtDct[key]);
                 }
-            // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
-            // pusher.subscribe( 'client-MapClickEvent', retrievedClick);
             console.log("reset MapHosterLeaflet setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
         }
         // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
