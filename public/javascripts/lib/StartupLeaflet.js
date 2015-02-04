@@ -82,9 +82,7 @@
                         {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
                         'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,
                         'client-NewMapPosition' : MapHosterLeaflet.retrievedNewPosition},
-                        pusherChannel, null);  
-                         
-                // stomper = new StompClient(mph);
+                        pusherChannel, null); ;
             }
         }
         
@@ -112,4 +110,3 @@
 
 }).call(this);
 
-// window.onload = function(){initialize()};
