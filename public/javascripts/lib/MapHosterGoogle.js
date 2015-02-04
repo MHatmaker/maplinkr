@@ -308,7 +308,9 @@
                 if(selfPusherDetails.pusher)
                 {
                     var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
-                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                    var referrerId = AgoNewWindowConfig.getUserId();
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                        "referrerId" : referrerId };
                     console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -349,17 +351,19 @@
             function retrievedClick(clickPt)
             {
                 var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
-                console.log("Back in retrievedClick - You clicked the map at " +  clickPt.x + ", " + clickPt.y);
+                console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
                 var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
                 
                 var popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
-                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
-                if(popDetails != null){
+                var content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
+                if(popDetails != null && clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                     popDetails.infoWnd.close();
                     popDetails.infoMarker.setMap(null);
                 }
-                popDetails = markerInfoPopup(popPt, content, "Received Pushed Click");
-                popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+                if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
+                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from " + clickPt.referrerId);
+                    popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+                }
             }
         
             function getEventDictionary(){

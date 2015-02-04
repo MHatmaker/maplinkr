@@ -154,12 +154,12 @@
         }
         
         var screenPt = null;
-        var fixedLL = null;
+        var fixedLLG = null;
         
         function showClickResult(content){
             if(content == null){
                 mphmap.infoWindow.setTitle("Ready to Push Click");
-                mphmap.infoWindow.setContent("lat/lon : " + fixedLL.lat + ", " + fixedLL.lon);
+                mphmap.infoWindow.setContent("lat/lon : " + fixedLLG.lat + ", " + fixedLLG.lon);
             }
             else{
                 mphmap.infoWindow.setContent(content);
@@ -168,9 +168,11 @@
         
             if(selfPusherDetails.pusher)
             {
-                var latlng = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
-                console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', latlng);
+                var referrerId = AgoNewWindowConfig.getUserId();
+                var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
+                        "referrerId" : referrerId };
+                console.log("You clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
+                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
             }
         }
         
@@ -187,7 +189,7 @@
             var cntrpt = new esri.geometry.Point(p.x, p.y, new esri.SpatialReference({wkid:4326}));
             console.log("clicked Pt " + mapPt.x + ", " + mapPt.y);
             console.log("converted Pt " + cntrpt.x + ", " + cntrpt.y);
-            fixedLL = utils.toFixed(cntrpt.x,cntrpt.y, 3);
+            fixedLLG = utils.toFixed(cntrpt.x,cntrpt.y, 3);
             geoLocator.locationToAddress(esri.geometry.webMercatorToGeographic(e.mapPoint), 100);
          /*    
             // mphmap.infoWindow.setTitle("Coordinates");
@@ -225,7 +227,7 @@
             // var screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry); 
 
             
-            mphmap.infoWindow.setTitle("Received Pushed Click");
+            mphmap.infoWindow.setTitle("Received Pushed Click from " + clickPt.referrerId);
             mphmap.infoWindow.setContent("lat/lon : " + clickPt.y + ", " + clickPt.x);
             
             mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));

@@ -149,7 +149,9 @@ define('GeoCoder', function () {
                 }
                 if(selfPusherDetails.pusher){
                     var fixedLL = utils.toFixed(r.lon, r.lat, 6);
-                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0"};
+                    var referrerId = AgoNewWindowConfig.getUserId();
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                        "referrerId" : referrerId };
                     console.log("You clicked the map at " + r.lat + ", " + r.lon);
                     console.debug(pushLL);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
@@ -206,12 +208,14 @@ define('GeoCoder', function () {
         
         function retrievedClick(clickPt)
         {
-            console.log("Back in retrievedClick - You clicked the map at " +  clickPt.x + ", " + clickPt.y);
+            console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
             var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
-            popup
-                .setLatLng(latlng)
-                .setContent("Received Pushed Click " + latlng.toString())
-                .openOn(mphmap);
+            if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
+                popup
+                    .setLatLng(latlng)
+                    .setContent("Received Pushed Click from " + clickPt.referrerId + " at " + latlng.toString())
+                    .openOn(mphmap);
+            }
         }
         function retrievedBounds(xj)
         {
