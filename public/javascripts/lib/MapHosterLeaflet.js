@@ -326,6 +326,15 @@ define('GeoCoder', function () {
 
         function markerInfoPopup(pos, content, hint)
         {
+            if(selfPusherDetails.pusher)
+            {
+                var fixedLL = utils.toFixed(pos.lng, pos.lat, 6);
+                var referrerId = AgoNewWindowConfig.getUserId();
+                var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                    "referrerId" : referrerId };
+                console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+            }
             var allContent = '<h3>' + hint + '</h3>' + content;
             L.marker(pos).addTo(mphmap)
                 .bindPopup(allContent).openPopup();

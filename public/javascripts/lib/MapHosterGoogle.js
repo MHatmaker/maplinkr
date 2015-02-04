@@ -572,7 +572,16 @@
                     title: title
                 });
                 google.maps.event.addListener(marker, 'click', function() {
-                  infowindow.open(mphmap,marker);
+                    if(selfPusherDetails.pusher)
+                    {
+                        var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
+                        var referrerId = AgoNewWindowConfig.getUserId();
+                        var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                            "referrerId" : referrerId };
+                        console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                    }
+                    infowindow.open(mphmap,marker);
                 });
             return { "infoWnd" : infowindow, "infoMarker" : marker};
         }
