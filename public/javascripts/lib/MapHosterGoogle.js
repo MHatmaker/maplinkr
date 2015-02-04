@@ -188,12 +188,10 @@
             mphmap.setCenter(center);
             
             function retrievedPlaces(results, status) {
-                console.log("back in callback from PlacesService");
+                console.log("back in callback from PlacesService with status " + status);
                 console.log("results length : ");
                 console.log(results.length);
                 console.log(results);
-                console.log("returned status is");
-                console.log(status);
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     if(results.length > 0){
                         console.log("results length : ");
@@ -327,9 +325,12 @@
                             content = results[1].formatted_address;
                             showClickResult(content, popPt);
                         }
+                        else{
+                            showClickResult(content, popPt);
+                        }
                     }
                 });
-                showClickResult(content, popPt);
+                // showClickResult(content, popPt);
             }
             function extractBounds(action)
             {
