@@ -311,7 +311,7 @@
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                         "referrerId" : referrerId };
-                    console.log("You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             }
@@ -361,7 +361,7 @@
                     popDetails.infoMarker.setMap(null);
                 }
                 if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
-                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from " + clickPt.referrerId);
+                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from user " + clickPt.referrerId);
                     popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
                 }
             }

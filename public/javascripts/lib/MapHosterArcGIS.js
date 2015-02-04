@@ -171,7 +171,7 @@
                 var referrerId = AgoNewWindowConfig.getUserId();
                 var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
                         "referrerId" : referrerId };
-                console.log("You clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
+                console.log("You, " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
             }
         }
@@ -226,9 +226,10 @@
             
             // var screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry); 
 
-            
-            mphmap.infoWindow.setTitle("Received Pushed Click from " + clickPt.referrerId);
-            mphmap.infoWindow.setContent("lat/lon : " + clickPt.y + ", " + clickPt.x);
+            if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
+                mphmap.infoWindow.setTitle("Received Pushed Click");
+                mphmap.infoWindow.setContent("from user " + clickPt.referrerId + " at lat/lon : " + clickPt.y + ", " + clickPt.x);
+            }
             
             mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));
             // popup

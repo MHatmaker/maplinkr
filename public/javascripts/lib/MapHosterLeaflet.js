@@ -152,7 +152,7 @@ define('GeoCoder', function () {
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                         "referrerId" : referrerId };
-                    console.log("You clicked the map at " + r.lat + ", " + r.lon);
+                    console.log("You, " + referrerId + ", clicked the map at " + r.lat + ", " + r.lon);
                     console.debug(pushLL);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -213,7 +213,7 @@ define('GeoCoder', function () {
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                 popup
                     .setLatLng(latlng)
-                    .setContent("Received Pushed Click from " + clickPt.referrerId + " at " + latlng.toString())
+                    .setContent("Received Pushed Click from user " + clickPt.referrerId + " at " + latlng.toString())
                     .openOn(mphmap);
             }
         }
