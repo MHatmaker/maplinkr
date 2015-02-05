@@ -326,20 +326,30 @@ define('GeoCoder', function () {
 
         function markerInfoPopup(pos, content, hint)
         {
-            if(selfPusherDetails.pusher)
-            {
-                var fixedLL = utils.toFixed(pos.lng, pos.lat, 6);
-                var referrerId = AgoNewWindowConfig.getUserId();
-                var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                    "referrerId" : referrerId };
-                console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-            }
-            var allContent = '<h3>' + hint + '</h3>' + content;
-            L.marker(pos).addTo(mphmap)
-                .bindPopup(allContent).openPopup();
+            var allContent = '<h3>' + hint + '</h3>' + content + '<br><button >Share</button>';
+            var mrkr = L.marker(pos).addTo(mphmap);
+            var contextPos = pos;
+                        
+            var container = $('<div />');
+            container.on('click', function() {
+                if(selfPusherDetails.pusher)
+                {
+                    var fixedLL = utils.toFixed(contextPos[1], contextPos[0], 6);
+                    var referrerId = AgoNewWindowConfig.getUserId();
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                        "referrerId" : referrerId };
+                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                }
+            });
+            
+            container.html(allContent);
+            container.append($('<span class="bold">').text(" :)"));
+            
+            mrkr.bindPopup(container[0]);
+            mrkr.openPopup();
         }
-
+                
         function addInitialSymbols()
         {   
             var hint = "Seanery Beanery Industrial Row";
