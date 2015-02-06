@@ -555,34 +555,44 @@
         function markerInfoPopup(pos, content, title)
         {
             var popId = "id" + title;
+            var shareBtnId = "idShare" + title;
+            var showMeStr = "showMe";
             var contentString = '<div id="content">'+
                     '<h5 id="' + popId + '">' + title + '</h5>'+
                     '<div id="bodyContent">'+
-                    content +
+                    content + '<br><button id="' + shareBtnId + '" >Share</button>' +
                     '</div>'+
                     '</div>';
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
+                    
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
 
-                var marker = new google.maps.Marker({
-                    position: pos,
-                    map: mphmap,
-                    title: title
-                });
-                google.maps.event.addListener(marker, 'click', function() {
-                    if(selfPusherDetails.pusher)
-                    {
-                        var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
-                        var referrerId = AgoNewWindowConfig.getUserId();
-                        var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                            "referrerId" : referrerId };
-                        console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-                    }
-                    infowindow.open(mphmap,marker);
-                });
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: mphmap,
+                title: title
+            });
+            var showSomething = function (){
+                if(selfPusherDetails.pusher)
+                {
+                    var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
+                    var referrerId = AgoNewWindowConfig.getUserId();
+                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                        "referrerId" : referrerId };
+                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                }
+            };
+                
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(contentString);
+                infowindow.open(mphmap,this);
+                
+                var btnShare = document.getElementById(shareBtnId);
+                btnShare.onclick=function(){showSomething();};
+            });
             return { "infoWnd" : infowindow, "infoMarker" : marker};
         }
 
