@@ -18,8 +18,10 @@
             cntrxG,
             cntryG,
             bounds,
-            userZoom = true;
-            var geoLocator = null;
+            userZoom = true,
+            selectedMarkerId = 101,
+            initialActionListHtml = '',
+            geoLocator = null;
             
         var selfPusherDetails = {
             channel : null,
@@ -157,6 +159,16 @@
         var fixedLLG = null;
         
         function showClickResult(content){
+            var actionList = document.getElementsByClassName('actionList')[0];
+            console.debug(actionList);
+            var shareBtnId = 'shareSomehtingId' + selectedMarkerId;
+            var addedShareBtn = '<button id="' + shareBtnId + '" >Share</button>';
+            if(selectedMarkerId == 101){
+                initialActionListHtml = actionList.innerHTML;
+            }
+            selectedMarkerId += 1;
+            actionList.innerHTML = initialActionListHtml + addedShareBtn;
+            
             if(content == null){
                 mphmap.infoWindow.setTitle("Ready to Push Click");
                 mphmap.infoWindow.setContent("lat/lon : " + fixedLLG.lat + ", " + fixedLLG.lon);
@@ -164,8 +176,22 @@
             else{
                 mphmap.infoWindow.setContent(content);
             }
+            var showSomething = function (){
+                if(selfPusherDetails.pusher)
+                {
+                    var referrerId = AgoNewWindowConfig.getUserId();
+                    var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
+                            "referrerId" : referrerId };
+                    console.log("You, " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
+                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                }
+            };
+            
             mphmap.infoWindow.show(screenPt, mphmap.getInfoWindowAnchor(screenPt));
         
+            var btnShare = document.getElementById(shareBtnId);
+            btnShare.onclick=function(){showSomething();};
+                
             if(selfPusherDetails.pusher)
             {
                 var referrerId = AgoNewWindowConfig.getUserId();
