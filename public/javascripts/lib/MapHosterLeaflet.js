@@ -150,9 +150,10 @@ define('GeoCoder', function () {
                 if(selfPusherDetails.pusher){
                     var fixedLL = utils.toFixed(r.lon, r.lat, 6);
                     var referrerId = AgoNewWindowConfig.getUserId();
+                    var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                         "referrerId" : referrerId };
-                    console.log("You, " + referrerId + ", clicked the map at " + r.lat + ", " + r.lon);
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     console.debug(pushLL);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -213,7 +214,7 @@ define('GeoCoder', function () {
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                 popup
                     .setLatLng(latlng)
-                    .setContent("Received Pushed Click from user " + clickPt.referrerId + " at " + latlng.toString())
+                    .setContent("Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString())
                     .openOn(mphmap);
             }
         }
@@ -336,9 +337,10 @@ define('GeoCoder', function () {
                 {
                     var fixedLL = utils.toFixed(contextPos[1], contextPos[0], 6);
                     var referrerId = AgoNewWindowConfig.getUserId();
+                    var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                         "referrerId" : referrerId };
-                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             });

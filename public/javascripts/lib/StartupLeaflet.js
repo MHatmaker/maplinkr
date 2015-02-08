@@ -49,8 +49,9 @@
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
                     
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
-                        openAgoWindow(channel);
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel, userName){
+                        AgoNewWindowConfig.setUserName(userName);
+                        openAgoWindow(channel, userName);
                         });
                 }
                 else{
@@ -82,16 +83,20 @@
                         {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
                         'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,
                         'client-NewMapPosition' : MapHosterLeaflet.retrievedNewPosition},
-                        pusherChannel, null); ;
+                        pusherChannel, function(channel, userName){
+                                AgoNewWindowConfig.userName(userName);
+                                }
+                            );
             }
         }
         
-        function openAGOWindow(channel){
-            var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.getGlobalsForUrl() + "&channel=" + channel;
+        function openAGOWindow(channel, userName){
+            var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName;
             console.log("open new ArcGIS window with URI " + url);
-            console.log("using channel " + channel);
+            console.log("using channel " + channel + " with user name " + userName);
             AgoNewWindowConfig.setUrl(url);
             AgoNewWindowConfig.setChannel(channel);
+            AgoNewWindowConfig.userName(userName);
             window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
         }
 

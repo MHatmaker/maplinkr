@@ -180,9 +180,10 @@
                 if(selfPusherDetails.pusher)
                 {
                     var referrerId = AgoNewWindowConfig.getUserId();
+                    var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
                             "referrerId" : referrerId };
-                    console.log("You, " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             };
@@ -195,9 +196,10 @@
             if(selfPusherDetails.pusher)
             {
                 var referrerId = AgoNewWindowConfig.getUserId();
+                var referrerName = AgoNewWindowConfig.getUserName();
                 var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
                         "referrerId" : referrerId };
-                console.log("You, " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
             }
         }
@@ -254,7 +256,7 @@
 
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                 mphmap.infoWindow.setTitle("Received Pushed Click");
-                mphmap.infoWindow.setContent("from user " + clickPt.referrerId + " at lat/lon : " + clickPt.y + ", " + clickPt.x);
+                mphmap.infoWindow.setContent("from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at lat/lon : " + clickPt.y + ", " + clickPt.x);
             }
             
             mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));

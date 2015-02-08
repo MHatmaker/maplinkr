@@ -101,11 +101,12 @@
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    function(channel){
-                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                    function(channel, userName){
+                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName + "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
                         console.log("open new ArcGIS window with URI " + url);
-                        console.log("using channel " + channel);
+                        console.log("using channel " + channel + "with userName " + userName);
                         AgoNewWindowConfig.setUrl(url);
+                        AgoNewWindowConfig.userName(userName);
                         if(displayDestination == 'New Pop-up Window'){
                             var baseUrl = AgoNewWindowConfig.getbaseurl();
                             window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
@@ -342,9 +343,10 @@
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
                         'client-NewMapPosition' : curmph.retrievedNewPosition},
-                        pusherChannel, function(callbackChannel){
+                        pusherChannel, function(callbackChannel, userName){
                             console.log("callback - don't need to setPusherClient");
                             console.log("It was a side effect of the createPusherClient:PusherClient process");
+                            AgoNewWindowConfig.userName(userName);
                             MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
                         });  
                    

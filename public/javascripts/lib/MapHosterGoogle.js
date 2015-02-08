@@ -309,9 +309,10 @@
                 {
                     var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
                     var referrerId = AgoNewWindowConfig.getUserId();
+                    var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId };
-                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                        "referrerId" : referrerId, "referrerName" : referrerName };
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             }
@@ -361,7 +362,7 @@
                     popDetails.infoMarker.setMap(null);
                 }
                 if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
-                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from user " + clickPt.referrerId);
+                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId);
                     popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
                 }
             }
@@ -579,9 +580,10 @@
                 {
                     var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
                     var referrerId = AgoNewWindowConfig.getUserId();
+                    var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                         "referrerId" : referrerId };
-                    console.log("You, " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             };

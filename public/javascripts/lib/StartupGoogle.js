@@ -109,12 +109,13 @@ function initPlaces() {
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
                     
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel){
-                        openAgoWindow(channel);
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel, userName){
+                        AgoNewWindowConfig.setUserName(userName);
+                        openAgoWindow(channel, userName);
                         });
                 }
                 else{
-                    openAgoWindow(AgoNewWindowConfig.masherChannel(false));
+                    openAgoWindow(AgoNewWindowConfig.masherChannel(false), userName);
                 }
             }
             else
@@ -168,16 +169,20 @@ function initPlaces() {
                         {'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
                         'client-MapClickEvent' : MapHosterGoogle.retrievedClick,
                         'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition},
-                        pusherChannel, null);  
+                        pusherChannel, function(channel, userName){
+                                AgoNewWindowConfig.userName(userName);
+                                }
+                            );
             }
         }
 
-        function openAGOWindow(channel){
-            var url = "?id=" + newSelectedWebMapId + MapHosterGoogle.getGlobalsForUrl() + "&channel=" + channel;
+        function openAGOWindow(channel, userName){
+            var url = "?id=" + newSelectedWebMapId + MapHosterGoogle.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName;
             console.log("open new ArcGIS window with URI " + url);
-            console.log("using channel " + channel);
+            console.log("using channel " + channel + " with user name " + userName);
             AgoNewWindowConfig.setUrl(url);
             AgoNewWindowConfig.setChannel(channel);
+            AgoNewWindowConfig.userName(userName);
             window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
         }
         

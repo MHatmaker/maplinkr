@@ -20,6 +20,7 @@ var details = {
     isInitialUser : true,
     userId : null,
     referrerId : null,
+    userName : '',
     nextWindowName : 0,
     hideWebSiteOnStartup : false,
     smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570}
@@ -218,6 +219,13 @@ var details = {
             setReferrerId : function(id){
                 details.referrerId = id;
             },
+            getUserName : function(){
+                return details.userName;
+            },
+            setUserName : function(name){
+                details.userName = name;
+            },
+
             
             getInitialUserStatus : function(){
                 return details.isInitialUser;

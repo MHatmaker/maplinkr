@@ -32,6 +32,7 @@
             $scope.data = {
                 privateChannelMashover : 'mashchannel',
                 prevChannel : 'mashchannel',
+                userName : 'NoName',
                 whichDismiss : "Cancel"
             };
                      
@@ -51,7 +52,9 @@
 
             $scope.onAcceptChannel = function(){
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
-                selfdict.pusher = selfdict.PusherClient(selfdict.eventDct, $scope.data.privateChannelMashover, 
+                selfdict.pusher = selfdict.PusherClient(selfdict.eventDct, 
+                    $scope.data.privateChannelMashover, 
+                    $scope.data.userName, 
                     selfdict.callbackFunction);
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
@@ -99,7 +102,7 @@
             return areWeInitialized;
         }
         
-        StompSetupCtrl.prototype.PusherClient = function(eventDct, channel, cbfn)
+        StompSetupCtrl.prototype.PusherClient = function(eventDct, channel, userName, cbfn)
         {
             console.log("PusherClient");
             this.eventDct = eventDct;
@@ -107,6 +110,7 @@
             self.callbackfunction = cbfn;
             self.eventDct = eventDct;
             self.channel = channel;
+            self.userName = userName;
             if(channel[0] == '/')
             {
                 var chlength = channel.length;
@@ -202,7 +206,7 @@
             selfdict.mph.setPusherClient(pusher, self.CHANNEL);
             selfdict.eventDct = selfdict.mph.getEventDictionary();
             if(self.callbackfunction != null){
-                self.callbackfunction(self.CHANNEL);
+                self.callbackfunction(self.CHANNEL, self.userName);
             }
             return pusher;
         }; 
@@ -251,12 +255,14 @@
                     <div class="modal-content"> \
                       <div class="modal-header"> \
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                        <h3>Create a Pusher Channel ID :</h3> \
                       </div> \
                       <div class="modal-body"> \
+                        <h3>Create a Pusher Channel ID :</h3> \
                         <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'mashchannel\'"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
-                      </div> \
+                        <h3>Enter a User Name :</h3> \
+                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName=\'NoName\'"> \
+                        <div>user name : {{data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
@@ -334,6 +340,12 @@
                                 // console.debug(localScope.$parent.data);
                             });
                             
+                            scope.$watch("data.userName", function (newValue, oldValue) 
+                            {
+                                if( ! angular.isUndefinedOrNull(newValue)){
+                                    localScope.$parent.data.userName = newValue;
+                                }
+                            });
                             scope.$watch('scope.$parent.selfdict.scope.showDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
