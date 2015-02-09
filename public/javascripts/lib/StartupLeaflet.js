@@ -83,10 +83,12 @@
                         {'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
                         'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,
                         'client-NewMapPosition' : MapHosterLeaflet.retrievedNewPosition},
-                        pusherChannel, function(channel, userName){
-                                AgoNewWindowConfig.userName(userName);
+                        pusherChannel,  
+                        "NoNameYet",
+                        function(channel, userName){
+                                AgoNewWindowConfig.setUserName(userName);
                                 }
-                            );
+                        );
             }
         }
         

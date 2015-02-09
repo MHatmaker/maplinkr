@@ -169,10 +169,12 @@ function initPlaces() {
                         {'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
                         'client-MapClickEvent' : MapHosterGoogle.retrievedClick,
                         'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition},
-                        pusherChannel, function(channel, userName){
-                                AgoNewWindowConfig.userName(userName);
+                        pusherChannel, 
+                        "NoNameYet",
+                        function(channel, userName){
+                                AgoNewWindowConfig.setUserName(userName);
                                 }
-                            );
+                        );
             }
         }
 

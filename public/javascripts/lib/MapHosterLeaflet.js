@@ -152,7 +152,7 @@ define('GeoCoder', function () {
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId };
+                        "referrerId" : referrerId, "referrerName" :  referrerName };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     console.debug(pushLL);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
@@ -339,7 +339,7 @@ define('GeoCoder', function () {
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId };
+                        "referrerId" : referrerId, "referrerName" :  referrerName };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -378,6 +378,10 @@ define('GeoCoder', function () {
             // }).addTo(mphmap).bindPopup("I am a polygon.");
 
             popup = L.popup();
+        }
+        
+        function setUserName(name){
+            AgoNewWindowConfig.setUserName(name);
         }
 
         function setPusherClient(pusher, channel)
@@ -472,7 +476,8 @@ define('GeoCoder', function () {
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
-                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
+                  setPusherClient: setPusherClient, setUserName : setUserName, 
+                  getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, publishPosition : publishPosition, getCenter : getCenter };
     });
 

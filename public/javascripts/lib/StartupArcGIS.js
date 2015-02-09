@@ -343,12 +343,15 @@
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
                         'client-NewMapPosition' : curmph.retrievedNewPosition},
-                        pusherChannel, function(callbackChannel, userName){
+                        pusherChannel,  
+                        "NoNameYet",
+                        function(callbackChannel, userName){
                             console.log("callback - don't need to setPusherClient");
                             console.log("It was a side effect of the createPusherClient:PusherClient process");
-                            AgoNewWindowConfig.userName(userName);
+                            AgoNewWindowConfig.setUserName(userName);
                             MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
-                        });  
+                        }
+                        ); 
                    
             }
             else

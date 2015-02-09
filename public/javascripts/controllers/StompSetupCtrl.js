@@ -16,7 +16,8 @@
             'pusher' : null,
             'callbackFunction' : null, 
             'isInitialized' : false,
-            'PusherClient' : null
+            'PusherClient' : null,
+            'userName' : ''
             };
         var scopeDict = {};
 
@@ -35,6 +36,7 @@
                 userName : 'NoName',
                 whichDismiss : "Cancel"
             };
+            selfdict.userName = $scope.data.userName;
                      
             $scope.preserveState = function(){
                 console.log("preserveState");
@@ -52,6 +54,7 @@
 
             $scope.onAcceptChannel = function(){
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
+                selfdict.userName = $scope.data.userName;
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct, 
                     $scope.data.privateChannelMashover, 
                     $scope.data.userName, 
@@ -199,14 +202,16 @@
                     console.log("set pusher client for hoster type:")
                     console.debug(allMapTypes[i]);
                     allMapTypes[i].setPusherClient(pusher, self.CHANNEL);
+                    allMapTypes[i].setUserName(self.userName);
                 }
             }
                                   
             console.log("CurrentMapTypeService got mph, call setPusherClient");
             selfdict.mph.setPusherClient(pusher, self.CHANNEL);
+            selfdict.mph.setUserName(selfdict.userName);
             selfdict.eventDct = selfdict.mph.getEventDictionary();
             if(self.callbackfunction != null){
-                self.callbackfunction(self.CHANNEL, self.userName);
+                self.callbackfunction(self.CHANNEL, selfdict.userName);
             }
             return pusher;
         }; 
@@ -227,12 +232,13 @@
         };
           
         
-        StompSetupCtrl.prototype.createPusherClient = function(eventDct, pusherChannel, cbfn)
+        StompSetupCtrl.prototype.createPusherClient = function(eventDct, pusherChannel, initName, cbfn)
         {
             console.log("StompSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
             selfdict.callbackFunction = cbfn;
-            selfdict.pusher = StompSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, cbfn);
+            selfdict.pusher = StompSetupCtrl.prototype.PusherClient(
+                eventDct, pusherChannel, initName,cbfn);
             return selfdict.pusher;
         };
                 

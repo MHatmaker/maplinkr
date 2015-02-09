@@ -182,7 +182,7 @@
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
-                            "referrerId" : referrerId };
+                            "referrerId" : referrerId, "referrerName" : referrerName };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -198,7 +198,7 @@
                 var referrerId = AgoNewWindowConfig.getUserId();
                 var referrerName = AgoNewWindowConfig.getUserName();
                 var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
-                        "referrerId" : referrerId };
+                        "referrerId" : referrerId, "referrerName" : referrerName };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
             }
@@ -472,6 +472,9 @@
             circle([51.508, -0.11], 100);
         }
         
+        function setUserName(name){
+            AgoNewWindowConfig.setUserName(name);
+        }
  
         // MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
         function setPusherClient(pusher, channel)
@@ -547,7 +550,7 @@
                   resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary, getGlobalPositionComponents : getGlobalPositionComponents,
+                  getEventDictionary : getEventDictionary, setUserName : setUserName,getGlobalPositionComponents : getGlobalPositionComponents,
                   publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter};
     });
 

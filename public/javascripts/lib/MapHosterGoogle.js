@@ -582,7 +582,7 @@
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId };
+                        "referrerId" : referrerId, "referrerName" : referrerName };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
@@ -618,6 +618,10 @@
             // this.circle([51.508, -0.11], 500);
         }
 
+        function setUserName(name){
+            AgoNewWindowConfig.setUserName(name);
+        }
+        
         // MapHosterGoogle.prototype.setPusherClient = function (pusher, channel)
         function setPusherClient(pusher, channel)
         {   
@@ -706,7 +710,8 @@
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
-                  setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
+                  setPusherClient: setPusherClient, setUserName : setUserName, 
+                  getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
                   getEventDictionary : getEventDictionary, publishPosition : publishPosition,
                   placesQuery : placesQuery, firePlacesQuery : firePlacesQuery };
     });
