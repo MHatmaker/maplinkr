@@ -67,6 +67,7 @@
         console.log("before domready, href is " + location.href);
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
+
         var userId = getRandomInt(1, 100);
         AgoNewWindowConfig.setUserId(userId);
         

@@ -49,7 +49,8 @@
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
                     
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel, userName){
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), 
+                    AgoNewWindowConfig.getUserName(), function(channel, userName){
                         AgoNewWindowConfig.setUserName(userName);
                         openAgoWindow(channel, userName);
                         });
@@ -84,7 +85,7 @@
                         'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,
                         'client-NewMapPosition' : MapHosterLeaflet.retrievedNewPosition},
                         pusherChannel,  
-                        "NoNameYet",
+                        AgoNewWindowConfig.getUserName(), 
                         function(channel, userName){
                                 AgoNewWindowConfig.setUserName(userName);
                                 }

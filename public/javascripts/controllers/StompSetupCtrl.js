@@ -25,6 +25,7 @@
             console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = 'mashchannel';
             selfdict.scope = $scope;
+            selfdict.scope.userName = selfdict.userName;
             selfdict.pusher = null;
             selfdict.isInitialized = areWeInitialized = false;
             scopeDict['rootScope'] = $rootScope;
@@ -33,7 +34,7 @@
             $scope.data = {
                 privateChannelMashover : 'mashchannel',
                 prevChannel : 'mashchannel',
-                userName : 'NoName',
+                userName : selfdict.userName,
                 whichDismiss : "Cancel"
             };
             selfdict.userName = $scope.data.userName;
@@ -217,9 +218,11 @@
         }; 
         selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
         
-        StompSetupCtrl.prototype.setupPusherClient = function(eventDct, cbfn)
+        StompSetupCtrl.prototype.setupPusherClient = function(eventDct, userName, cbfn)
         {
             selfdict.eventDct = eventDct;
+            selfdict.userName = userName;
+            selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
             console.log("toggleShow from " + selfdict.scope.showDialog);
             scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');
@@ -236,9 +239,10 @@
         {
             console.log("StompSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
+            selfdict.userName = initName;
             selfdict.callbackFunction = cbfn;
             selfdict.pusher = StompSetupCtrl.prototype.PusherClient(
-                eventDct, pusherChannel, initName,cbfn);
+                eventDct, pusherChannel, initName, cbfn);
             return selfdict.pusher;
         };
                 
@@ -267,7 +271,7 @@
                         <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'mashchannel\'"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
-                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName=\'NoName\'"> \
+                        <input type="text" name="input" ng-model="$parent.data.userName", ng-init="data.userName="$parent.data.userName"> \
                         <div>user name : {{data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
@@ -285,6 +289,7 @@
                     },
                     link: function (scope, element, attrs) {
                         var localScope = scope;
+                        localScope.$parent.data.privateChannelMashover 
                         //Hide or show the modal
                         scope.showModal = function (visible, elem) {
                             if (!elem){

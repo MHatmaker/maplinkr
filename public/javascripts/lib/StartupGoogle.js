@@ -109,7 +109,8 @@ function initPlaces() {
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
                     
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), function(channel, userName){
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(), 
+                        AgoNewWindowConfig.getUserName(), function(channel, userName){
                         AgoNewWindowConfig.setUserName(userName);
                         openAgoWindow(channel, userName);
                         });
@@ -170,7 +171,7 @@ function initPlaces() {
                         'client-MapClickEvent' : MapHosterGoogle.retrievedClick,
                         'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition},
                         pusherChannel, 
-                        "NoNameYet",
+                        AgoNewWindowConfig.getUserName(), 
                         function(channel, userName){
                                 AgoNewWindowConfig.setUserName(userName);
                                 }

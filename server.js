@@ -127,6 +127,8 @@ urls = (
   '/pusher/auth/?', 'AuthHandler'
 )
      */
+     
+                
     self.createRoutes = function() {
         self.routes = { };
 
@@ -145,6 +147,7 @@ urls = (
         // };
 
         // JSON API
+        self.routes['/username'] = api.getUserName;
 
         // self.routes['/pusher/auth'] = api.getAuth;
 

@@ -19,10 +19,11 @@
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
         'controllers/GoogleSearchDirective',
-        'lib/GeoCoder'
+        'lib/GeoCoder',
+        'javascripts/lib/AgoNewWindowConfig'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, WebSiteDescriptionCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -51,6 +52,24 @@
             var $inj = angular.injector(['app']);
             var $http = $inj.get('$http');
             GeoCoder.start(App, $http);
+                    
+            $http({method: 'GET', url: '/username'}).
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available.
+                console.log('username: ', data.name );
+                AgoNewWindowConfig.setUserId(data.id );
+                AgoNewWindowConfig.setUserName(data.name );
+                // alert('got user name ' + data.name);
+            }).
+            error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                console.log('Oops and error', data);
+                alert('Oops' + data.name);
+            });
+  
+            
             return AppController;
         }
 
