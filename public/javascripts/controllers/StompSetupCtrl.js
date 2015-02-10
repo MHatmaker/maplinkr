@@ -268,7 +268,7 @@
                       </div> \
                       <div class="modal-body"> \
                         <h3>Create a Pusher Channel ID :</h3> \
-                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover=\'mashchannel\'"> \
+                        <input type="text" name="input" ng-model="$parent.data.privateChannelMashover", ng-init="data.privateChannelMashover="$parent.data.privateChannelMashover"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
                         <input type="text" name="input" ng-model="$parent.data.userName", ng-init="data.userName="$parent.data.userName"> \
