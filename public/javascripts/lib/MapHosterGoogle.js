@@ -260,6 +260,7 @@
                 }
             }
             selfMethods["placesQuery"] = placesQuery;
+            var infowindow = new google.maps.InfoWindow({content: " "});
                     
             function placeMarkers(places){
                 for (var i = 0, marker; marker = markers[i]; i++) {
@@ -285,11 +286,40 @@
                         title: place.name,
                         position: place.geometry.location
                     });
+                    
+                    var markerContents = {'title' : place.name};
+                    markers.push(marker);
+                    makeInfoWindowEvent(mphmap, infowindow, marker.title, marker);
 
-                      markers.push(marker);
-
-                      bounds.extend(place.geometry.location);
+                    bounds.extend(place.geometry.location);
                 }
+            }
+            
+            
+            
+            function makeInfoWindowEvent(map, infowindow, contentString, marker) {
+                var shareInfo = function (){
+                    if(selfPusherDetails.pusher)
+                    {
+                        var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
+                        var referrerId = AgoNewWindowConfig.getUserId();
+                        var referrerName = AgoNewWindowConfig.getUserName();
+                        var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                            "referrerId" : referrerId, "referrerName" : referrerName };
+                        console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                    }
+                };
+            
+                google.maps.event.addListener(marker, 'click', function() {
+                    var shareBtnId = contentString + 'id';
+                    var contents = contentString + '<br><button id="' + shareBtnId + '" >Share</button>';
+                    infowindow.setContent(contents);
+                    infowindow.open(map, marker);
+                    
+                    var btnShare = document.getElementById(shareBtnId);
+                    btnShare.onclick=function(){shareInfo();};
+                });
             }
         }
         
@@ -557,7 +587,6 @@
         {
             var popId = "id" + title;
             var shareBtnId = "idShare" + title;
-            var showMeStr = "showMe";
             var contentString = '<div id="content">'+
                     '<h5 id="' + popId + '">' + title + '</h5>'+
                     '<div id="bodyContent">'+

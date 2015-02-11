@@ -58,7 +58,7 @@
                     // this callback will be called asynchronously
                     // when the response is available.
                 console.log('username: ', data.name );
-                AgoNewWindowConfig.setUserId(data.id );
+                // AgoNewWindowConfig.setUserId(data.id );
                 AgoNewWindowConfig.setUserName(data.name );
                 // alert('got user name ' + data.name);
             }).

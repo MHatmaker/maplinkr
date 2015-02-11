@@ -35,6 +35,7 @@
                 privateChannelMashover : 'mashchannel',
                 prevChannel : 'mashchannel',
                 userName : selfdict.userName,
+                prevUserName : selfdict.userName,
                 whichDismiss : "Cancel"
             };
             selfdict.userName = $scope.data.userName;
@@ -44,6 +45,8 @@
                 // $scope.data.whichDismiss = 'Cancel';
                 $scope.data.prevChannel = $scope.data.privateChannelMashover.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.privateChannelMashover);
+                $scope.data.prevChannel = $scope.data.userName.slice(0);
+                console.log("preserve " + $scope.data.prevUserName + " from " + $scope.data.userName);
             };
 
             $scope.restoreState = function(){
@@ -51,6 +54,8 @@
                 // $scope.data.whichDismiss = 'Accept';
                 console.log("restore " + $scope.data.privateChannelMashover + " from " + $scope.data.prevDstSel);
                 $scope.data.privateChannelMashover = $scope.data.prevChannel.slice(0);
+                console.log("restore " + $scope.data.userName + " from " + $scope.data.prevDstSel);
+                $scope.data.userName = $scope.data.prevUserName.slice(0);
             };
 
             $scope.onAcceptChannel = function(){
@@ -268,11 +273,11 @@
                       </div> \
                       <div class="modal-body"> \
                         <h3>Create a Pusher Channel ID :</h3> \
-                        <input type="text" name="input" ng-model="$parent.data.privateChannelMashover", ng-init="data.privateChannelMashover="$parent.data.privateChannelMashover"> \
-                        <div>channel name : {{data.privateChannelMashover}}</div> \
+                        <input type="text" name="input" ng-model="$parent.data.privateChannelMashover", ng-init="$parent.data.privateChannelMashover"> \
+                        <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
-                        <input type="text" name="input" ng-model="$parent.data.userName", ng-init="data.userName="$parent.data.userName"> \
-                        <div>user name : {{data.userName}}</div> \
+                        <input type="text" name="input" ng-model="$parent.data.userName", ng-init="$parent.data.userName"> \
+                        <div>user name : {{$parent.data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
@@ -289,7 +294,6 @@
                     },
                     link: function (scope, element, attrs) {
                         var localScope = scope;
-                        localScope.$parent.data.privateChannelMashover 
                         //Hide or show the modal
                         scope.showModal = function (visible, elem) {
                             if (!elem){
