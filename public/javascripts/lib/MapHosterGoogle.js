@@ -260,7 +260,7 @@
                 }
             }
             selfMethods["placesQuery"] = placesQuery;
-            var infowindow = new google.maps.InfoWindow({content: " "});
+            // var infowindow = new google.maps.InfoWindow({content: " "});
                     
             function placeMarkers(places){
                 for (var i = 0, marker; marker = markers[i]; i++) {
@@ -284,203 +284,191 @@
                         map: mphmap,
                         icon: image,
                         title: place.name,
+                        address : place.formatted_address,
                         position: place.geometry.location
                     });
                     
-                    var markerContents = {'title' : place.name};
                     markers.push(marker);
-                    makeInfoWindowEvent(mphmap, infowindow, marker.title, marker);
+                    markerInfoPopup(place.geometry.location, marker.address, marker.title, marker);
 
                     bounds.extend(place.geometry.location);
                 }
             }
             
             
+        }
+    
+        function gotDragEnd(){
+            console.log("dragend event hit");
+            setBounds('pan');
+        }
+        
+        function showClickResult(content, popPt, marker){
+            if(popDetails != null){
+                popDetails.infoWnd.close();
+                popDetails.infoMarker.setMap(null);
+            }
+            popDetails = markerInfoPopup(popPt, content, "Ready to Push Click", marker);
+            // popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+            // if(selfPusherDetails.pusher)
+            // {
+                // var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
+                // var referrerId = AgoNewWindowConfig.getUserId();
+                // var referrerName = AgoNewWindowConfig.getUserName();
+                // var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                    // "referrerId" : referrerId, "referrerName" : referrerName };
+                // console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                // selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+            // }
+        }
+        
+        function onMapClick(e) 
+        {
+            var popPt = e.latLng;
+            var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
+            var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
+            geoCoder.geocode({'latLng': popPt}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {            
+                        var marker = new google.maps.Marker({
+                            map: mphmap,
+                            title: "",
+                            address : results[0].formatted_address,
+                            position: popPt
+                        });
+
+                        content = results[0].formatted_address;
+                        showClickResult(content, popPt, marker);
+                    }
+                    else{
+                        showClickResult(content, popPt);
+                    }
+                }
+            });
+            // showClickResult(content, popPt);
+        }
+        function extractBounds(action)
+        {
+            var zm = mphmap.getZoom();
+            var cntr = mphmap.getCenter();
+            var fixedLL = utils.toFixed(cntr.lng(),cntr.lat(), 6);
+            var xtntDict = {'src' : 'google', 
+                'zoom' : zm, 
+                'lon' : fixedLL.lon, 
+                'lat' : fixedLL.lat,
+                'scale': scale2Level[zm].scale,
+                'action': action};
+            return xtntDict;
+        }
             
-            function makeInfoWindowEvent(map, infowindow, contentString, marker) {
-                var shareInfo = function (){
+        function retrievedClick(clickPt)
+        {
+            var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
+            console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
+            var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
+            
+            var popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
+            var content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
+            if(clickPt.title){
+                content += '<br>' + clickPt.title;
+            }
+            if(clickPt.address){
+                content += '<br>' + clickPt.address;
+            }
+            if(popDetails != null && clickPt.referrerId != AgoNewWindowConfig.getUserId()){
+                popDetails.infoWnd.close();
+                popDetails.infoMarker.setMap(null);
+            }
+            if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
+                popDetails = markerInfoPopup(popPt, content, "Received from user " + clickPt.referrerName + ", " + clickPt.referrerId);
+                popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+            }
+        }
+    
+        function getEventDictionary(){
+            var $inj = angular.injector(['app']);
+            var evtSvc = $inj.get('StompEventHandlerService');
+            var eventDct = evtSvc.getEventDct();
+            return eventDct;
+        }
+        function retrievedBoundsInternal(xj)
+        {
+            console.log("Back in retrievedBounds");
+            var zm = xj.zoom
+            var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+            var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
+            document.getElementById("mppos").innerHTML = view;
+            if(cmp == false)
+            {
+                var tmpLon = cntrxG;
+                var tmpLat = cntryG;
+                var tmpZm = zmG;
+                
+                updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
+                userZoom = false;
+                var cntr = new google.maps.LatLng(xj.lat, xj.lon);
+                // userZoom = true;
+                if(xj.action == 'pan')
+                {
+                    if(tmpZm != zm)
+                    {
+                        mphmap.setZoom(zm);
+                    }
+                    mphmap.setCenter(cntr);
+                }
+                else
+                {
+                    if(tmpLon != xj.lon || tmpLat != xj.lat)
+                    {
+                        mphmap.setCenter(cntr);
+                    }
+                    mphmap.setZoom(zm);
+                }
+                userZoom = true;
+            }
+        }
+
+        function setBounds(action)
+        {
+            if(mapReady == true) // && stomp && stomp.ready == true)
+            {
+                // runs this code after you finishing the zoom
+                var xtExt = extractBounds(action);
+                var xtntJsonStr = JSON.stringify(xtExt);
+                console.log("extracted bounds " + xtntJsonStr);
+                var cmp = compareExtents("setBounds", xtExt);
+                if(cmp == false)
+                {
+                    console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
                     if(selfPusherDetails.pusher)
                     {
-                        var fixedLL = utils.toFixed(marker.position.lng(), marker.position.lat(), 6);
-                        var referrerId = AgoNewWindowConfig.getUserId();
-                        var referrerName = AgoNewWindowConfig.getUserName();
-                        var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                            "referrerId" : referrerId, "referrerName" : referrerName };
-                        console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
-                };
-            
-                google.maps.event.addListener(marker, 'click', function() {
-                    var shareBtnId = contentString + 'id';
-                    var contents = contentString + '<br><button id="' + shareBtnId + '" >Share</button>';
-                    infowindow.setContent(contents);
-                    infowindow.open(map, marker);
-                    
-                    var btnShare = document.getElementById(shareBtnId);
-                    btnShare.onclick=function(){shareInfo();};
-                });
+                    updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+                }
             }
         }
         
-            function gotDragEnd(){
-                console.log("dragend event hit");
-                setBounds('pan');
-            }
-            
-            function showClickResult(content, popPt){
-                if(popDetails != null){
-                    popDetails.infoWnd.close();
-                    popDetails.infoMarker.setMap(null);
-                }
-                popDetails = markerInfoPopup(popPt, content, "Ready to Push Click");
-                popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
-                if(selfPusherDetails.pusher)
-                {
-                    var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
-                    var referrerId = AgoNewWindowConfig.getUserId();
-                    var referrerName = AgoNewWindowConfig.getUserName();
-                    var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId, "referrerName" : referrerName };
-                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                    selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-                }
-            }
-            
-            function onMapClick(e) 
-            {
-                var popPt = e.latLng;
-                var fixedLL = utils.toFixed(popPt.lng(), popPt.lat(), 6);
-                var content = "You clicked the map at " + fixedLL.lat + ", " + fixedLL.lon;
-                geoCoder.geocode({'latLng': popPt}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[1]) {
-                            content = results[1].formatted_address;
-                            showClickResult(content, popPt);
-                        }
-                        else{
-                            showClickResult(content, popPt);
-                        }
-                    }
-                });
-                // showClickResult(content, popPt);
-            }
-            function extractBounds(action)
-            {
-                var zm = mphmap.getZoom();
-                var cntr = mphmap.getCenter();
-                var fixedLL = utils.toFixed(cntr.lng(),cntr.lat(), 6);
-                var xtntDict = {'src' : 'google', 
-                    'zoom' : zm, 
-                    'lon' : fixedLL.lon, 
-                    'lat' : fixedLL.lat,
-                    'scale': scale2Level[zm].scale,
-                    'action': action};
-                return xtntDict;
-            }
-                
-            function retrievedClick(clickPt)
-            {
-                var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
-                console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
-                var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
-                
-                var popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
-                var content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
-                if(popDetails != null && clickPt.referrerId != AgoNewWindowConfig.getUserId()){
-                    popDetails.infoWnd.close();
-                    popDetails.infoMarker.setMap(null);
-                }
-                if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
-                    popDetails = markerInfoPopup(popPt, content, "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId);
-                    popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
-                }
-            }
-        
-            function getEventDictionary(){
-                var $inj = angular.injector(['app']);
-                var evtSvc = $inj.get('StompEventHandlerService');
-                var eventDct = evtSvc.getEventDct();
-                return eventDct;
-            }
-            function retrievedBoundsInternal(xj)
-            {
-                console.log("Back in retrievedBounds");
-                var zm = xj.zoom
-                var cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
-                var view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-                document.getElementById("mppos").innerHTML = view;
-                if(cmp == false)
-                {
-                    var tmpLon = cntrxG;
-                    var tmpLat = cntryG;
-                    var tmpZm = zmG;
-                    
-                    updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
-                    userZoom = false;
-                    var cntr = new google.maps.LatLng(xj.lat, xj.lon);
-                    // userZoom = true;
-                    if(xj.action == 'pan')
-                    {
-                        if(tmpZm != zm)
-                        {
-                            mphmap.setZoom(zm);
-                        }
-                        mphmap.setCenter(cntr);
-                    }
-                    else
-                    {
-                        if(tmpLon != xj.lon || tmpLat != xj.lat)
-                        {
-                            mphmap.setCenter(cntr);
-                        }
-                        mphmap.setZoom(zm);
-                    }
-                    userZoom = true;
-                }
+        function getBoundsZoomLevel(bounds)
+        {
+            var GLOBE_HEIGHT = 256; // Height of a google map that displays the entire world when zoomed all the way out
+            var GLOBE_WIDTH = 256; // Width of a google map that displays the entire world when zoomed all the way out
+
+            var ne = bounds.getNorthEast();
+            var sw = bounds.getSouthWest();
+
+            var latAngle = ne.lat() - sw.lat();
+            if (latAngle < 0) {
+                latAngle += 360;
             }
 
-            function setBounds(action)
-            {
-                if(mapReady == true) // && stomp && stomp.ready == true)
-                {
-                    // runs this code after you finishing the zoom
-                    var xtExt = extractBounds(action);
-                    var xtntJsonStr = JSON.stringify(xtExt);
-                    console.log("extracted bounds " + xtntJsonStr);
-                    var cmp = compareExtents("setBounds", xtExt);
-                    if(cmp == false)
-                    {
-                        console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
-                        if(selfPusherDetails.pusher)
-                        {
-                            selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
-                        }
-                        updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
-                    }
-                }
-            }
-            
-            function getBoundsZoomLevel(bounds)
-            {
-                var GLOBE_HEIGHT = 256; // Height of a google map that displays the entire world when zoomed all the way out
-                var GLOBE_WIDTH = 256; // Width of a google map that displays the entire world when zoomed all the way out
+            var lngAngle = ne.lng() - sw.lng();
 
-                var ne = bounds.getNorthEast();
-                var sw = bounds.getSouthWest();
+            var latZoomLevel = Math.floor(Math.log(mphmap.height * 360 / latAngle / GLOBE_HEIGHT) / Math.LN2);
+            var lngZoomLevel = Math.floor(Math.log(mphmap.width * 360 / lngAngle / GLOBE_WIDTH) / Math.LN2);
 
-                var latAngle = ne.lat() - sw.lat();
-                if (latAngle < 0) {
-                    latAngle += 360;
-                }
-
-                var lngAngle = ne.lng() - sw.lng();
-
-                var latZoomLevel = Math.floor(Math.log(mphmap.height * 360 / latAngle / GLOBE_HEIGHT) / Math.LN2);
-                var lngZoomLevel = Math.floor(Math.log(mphmap.width * 360 / lngAngle / GLOBE_WIDTH) / Math.LN2);
-
-                return (latZoomLevel < lngZoomLevel) ? latZoomLevel : lngZoomLevel;
-            }
+            return (latZoomLevel < lngZoomLevel) ? latZoomLevel : lngZoomLevel;
+        }
 
         function collectScales(levels)
         {
@@ -583,7 +571,7 @@
             crcl.setMap(mphmap);
         }
 
-        function markerInfoPopup(pos, content, title)
+        function markerInfoPopup(pos, content, title, mrkr)
         {
             var popId = "id" + title;
             var shareBtnId = "idShare" + title;
@@ -599,7 +587,7 @@
                 content: contentString
             });
 
-            var marker = new google.maps.Marker({
+            var marker = mrkr ? mrkr : new google.maps.Marker({
                 position: pos,
                 map: mphmap,
                 title: title
@@ -611,7 +599,8 @@
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId, "referrerName" : referrerName };
+                        "referrerId" : referrerId, "referrerName" : referrerName,
+                        'address' : marker.address, 'title' : marker.title };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }

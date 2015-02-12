@@ -211,10 +211,17 @@ define('GeoCoder', function () {
         {
             console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
             var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
+            var content = "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString();
+            if(clickPt.title){
+                content += '<br>' + clickPt.title;
+            }
+            if(clickPt.address){
+                content += '<br>' + clickPt.address;
+            }
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                 popup
                     .setLatLng(latlng)
-                    .setContent("Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString())
+                    .setContent(content)
                     .openOn(mphmap);
             }
         }
