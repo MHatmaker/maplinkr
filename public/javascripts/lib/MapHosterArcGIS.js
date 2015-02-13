@@ -159,6 +159,7 @@
         var fixedLLG = null;
         
         function showClickResult(content){
+            var contextContent = content;
             var actionList = document.getElementsByClassName('actionList')[0];
             console.debug(actionList);
             var shareBtnId = 'shareSomehtingId' + selectedMarkerId;
@@ -182,8 +183,9 @@
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
-                            "referrerId" : referrerId, "referrerName" : referrerName };
-                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                            "referrerId" : referrerId, "referrerName" : referrerName,
+                            'address' : contextContent };
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             };
@@ -192,16 +194,18 @@
         
             var btnShare = document.getElementById(shareBtnId);
             btnShare.onclick=function(){showSomething();};
-                
+              /*   
             if(selfPusherDetails.pusher)
             {
                 var referrerId = AgoNewWindowConfig.getUserId();
                 var referrerName = AgoNewWindowConfig.getUserName();
                 var pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
-                        "referrerId" : referrerId, "referrerName" : referrerName };
-                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                        "referrerId" : referrerId, "referrerName" : referrerName,
+                            'address' : contextContent };
+                    console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLLG.lat + ", " + fixedLLG.lon);
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-            }
+            } 
+            */
         }
         
         function onMapClick(e)
@@ -255,8 +259,16 @@
             // var screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry); 
 
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
-                mphmap.infoWindow.setTitle("Received Pushed Click");
-                mphmap.infoWindow.setContent("from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at lat/lon : " + clickPt.y + ", " + clickPt.x);
+                var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
+                var content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
+                if(clickPt.title){
+                    content += '<br>' + clickPt.title;
+                }
+                if(clickPt.address){
+                    content += '<br>' + clickPt.address;
+                }
+                mphmap.infoWindow.setTitle("Received from user " + clickPt.referrerName + ", " + clickPt.referrerId);
+                mphmap.infoWindow.setContent(content);
             }
             
             mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));

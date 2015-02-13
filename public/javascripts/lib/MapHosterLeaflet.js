@@ -41,6 +41,8 @@ define('GeoCoder', function () {
             channel : null,
             pusher : null
         };
+        var markers = [];
+        var popups = [];
                     
         function configureMap(lmap) 
         {
@@ -334,29 +336,59 @@ define('GeoCoder', function () {
 
         function markerInfoPopup(pos, content, hint)
         {
-            var allContent = '<h3>' + hint + '</h3>' + content + '<br><button >Share</button>';
+            var shareBtnId = "idShare" + hint;
+            var contentId = "idContent" + hint;
+            var contextHint = hint;
+            var contextContent = content;
+            var allContent = '<h3>' + hint + '</h3><div id="' + contentId + '" >' + content + '</div><br><button class="trigger" id="' + shareBtnId + '">Share</button>';
             var mrkr = L.marker(pos).addTo(mphmap);
             var contextPos = pos;
                         
-            var container = $('<div />');
-            container.on('click', function() {
+            var showSomething = function (){
                 if(selfPusherDetails.pusher)
                 {
                     var fixedLL = utils.toFixed(contextPos[1], contextPos[0], 6);
                     var referrerId = AgoNewWindowConfig.getUserId();
                     var referrerName = AgoNewWindowConfig.getUserName();
                     var pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                        "referrerId" : referrerId, "referrerName" :  referrerName };
+                        "referrerId" : referrerId, "referrerName" :  referrerName,
+                        'address' : contextContent, 'title' : contextHint };
                     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
+            };
+            
+            var container = $('<div />');
+            container.on('click', function() {
+                if(this.id != ""){
+                    
+                }showSomething();
+            });
+            container.html(allContent);
+            
+            var popup = L.popup().setContent(container[0]);
+            mrkr.bindPopup(popup);
+            markers.push(mrkr);
+            popups.push(popup);
+            mphmap.on('popupopen', function(){
+                // alert('pop pop pop');
+                console.debug(popup);
+                var btnShare = document.getElementById(shareBtnId);
+                if(btnShare){
+                    btnShare.onclick=function(){
+                        showSomething();
+                    };
+                }
             });
             
-            container.html(allContent);
-            container.append($('<span class="bold">').text(" :)"));
+            // var btnShare = document.getElementById(shareBtnId);
+            // btnShare.onclick=function(){showSomething();};
             
-            mrkr.bindPopup(container[0]);
-            mrkr.openPopup();
+            // mphmap.on('click', '.trigger', function() {
+                // alert('Hello from Toronto!');
+                // showSomething();
+            // });
+            // mrkr.openPopup();
         }
                 
         function addInitialSymbols()
