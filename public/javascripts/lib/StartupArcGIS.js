@@ -107,7 +107,7 @@
                         console.log("open new ArcGIS window with URI " + url);
                         console.log("using channel " + channel + "with userName " + userName);
                         AgoNewWindowConfig.setUrl(url);
-                        AgoNewWindowConfig.userName(userName);
+                        AgoNewWindowConfig.setUserName(userName);
                         if(displayDestination == 'New Pop-up Window'){
                             var baseUrl = AgoNewWindowConfig.getbaseurl();
                             window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());

@@ -245,7 +245,9 @@
             console.log("StompSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
             selfdict.userName = initName;
-            selfdict.scope.data.userName = initName;
+            if(selfdict.scope){
+                selfdict.scope.data.userName = initName;
+            }
             selfdict.callbackFunction = cbfn;
             selfdict.pusher = StompSetupCtrl.prototype.PusherClient(
                 eventDct, pusherChannel, initName, cbfn);
