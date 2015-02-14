@@ -350,7 +350,7 @@
                             console.log("callback - don't need to setPusherClient");
                             console.log("It was a side effect of the createPusherClient:PusherClient process");
                             AgoNewWindowConfig.setUserName(userName);
-                            MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
+                            // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
                         }
                         ); 
                    
