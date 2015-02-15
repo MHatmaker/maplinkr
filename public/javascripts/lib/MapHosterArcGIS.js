@@ -163,7 +163,7 @@
             var actionList = document.getElementsByClassName('actionList')[0];
             console.debug(actionList);
             var shareBtnId = 'shareSomehtingId' + selectedMarkerId;
-            var addedShareBtn = '<button id="' + shareBtnId + '" >Share</button>';
+            var addedShareBtn = '<button class="btn-primary" id="' + shareBtnId + '" >Share</button>';
             if(selectedMarkerId == 101){
                 initialActionListHtml = actionList.innerHTML;
             }

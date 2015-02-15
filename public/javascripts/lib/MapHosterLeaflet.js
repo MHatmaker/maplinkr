@@ -340,7 +340,7 @@ define('GeoCoder', function () {
             var contentId = "idContent" + hint;
             var contextHint = hint;
             var contextContent = content;
-            var allContent = '<h3>' + hint + '</h3><div id="' + contentId + '" >' + content + '</div><br><button class="trigger" id="' + shareBtnId + '">Share</button>';
+            var allContent = '<h4  style="color:forestgreen">' + hint + '</h4><div id="' + contentId + '" >' + content + '</div><br><button class="trigger  btn-primary" id="' + shareBtnId + '">Share</button>';
             var mrkr = L.marker(pos).addTo(mphmap);
             var contextPos = pos;
                         

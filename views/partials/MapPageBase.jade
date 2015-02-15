@@ -31,13 +31,13 @@ block append content
             div(id="idExpPlugButton", class="navButton", ng-click="onExpPlugClick()", style="padding: 0.01em 0.8em 0.01em 0.01em;")
               span(style='cursor: pointer; cursor: hand;')
                 figure
-                  figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                  figcaption(class='btn-primary', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandPlug}}
                   img(src="../stylesheets/images/{{verbageExpandCollapse}}.png", id='verbageExpandCollapseImgId', class="expandoimage", style=" margin: 0.01em 0.1em  0.01em 0.4em;")
             div(id="idExpSiteButton", class="navButton", ng-click="onExpSiteClick()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
               span(style='cursor: pointer; cursor: hand;')
                 figure
-                  figcaption(style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                  figcaption(class='btn-primary', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandSite}}
                   img(src="../stylesheets/images/{{webSiteVisible}}.png", class="expandoimage", style="margin: 0.01em 0.1em 0.01em 0.41em;")
 
@@ -193,12 +193,12 @@ block append content
                                         span
                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
                                             
-                                            input(type="button", class="signInClass", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;', value='{{signInOutGrp}}')
+                                            input(type="button", class="btn-primary", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;font-size:80%', value='{{signInOutGrp}}')
                                              
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", ng-click="findArcGISGroup();")
+                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn-primary', ng-click="findArcGISGroup();")
 
                                         div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                             div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
@@ -212,12 +212,12 @@ block append content
                                         span
                                             label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
                                             
-                                            input(type="button", class="signInClass", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;', value='{{signInOutMap}}')
+                                            input(type="button", class="btn-primary", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;font-size:80%', value='{{signInOutMap}}')
 
                                         h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", ng-click="findArcGISGroupMaps();")
+                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn-primary', ng-click="findArcGISGroupMaps();")
 
                                         div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                             div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    

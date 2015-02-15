@@ -582,9 +582,9 @@
             var popId = "id" + title;
             var shareBtnId = "idShare" + title;
             var contentString = '<div id="content">'+
-                    '<h5 id="' + popId + '">' + title + '</h5>'+
-                    '<div id="bodyContent">'+
-                    content + '<br><button class=sharebutton id="' + shareBtnId + '" >Share</button>' +
+                    '<h4 id="' + popId + '" style="color:forestgreen">' + title + '</h4>'+
+                    '<div id="bodyContent" style="color:darkmagenta">'+
+                    content + '<br><button class="sharebutton btn-primary" id="' + shareBtnId + '" >Share</button>' +
                     '</div>'+
                     '</div>';
 
