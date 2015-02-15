@@ -29,7 +29,7 @@ exports.setPusher = function(pshr){
                 {'name' : 'Pear', 'inuse' : false},
                 {'name' : 'Cherry', 'inuse' : false},
                 {'name' : 'Boysenberry', 'inuse' : false},
-                {'name' : 'Blakberry', 'inuse' : false},
+                {'name' : 'Blackberry', 'inuse' : false},
                 {'name' : 'Watermelon', 'inuse' : false},
                 {'name' : 'Cantaloupe', 'inuse' : false},
                 {'name' : 'Strawberry', 'inuse' : false},
@@ -38,7 +38,12 @@ exports.setPusher = function(pshr){
                 {'name' : 'Quince', 'inuse' : false},
                 {'name' : 'Grape', 'inuse' : false},
                 {'name' : 'Mango', 'inuse' : false},
-                {'name' : 'Kiwi', 'inuse' : false}
+                {'name' : 'Kiwi', 'inuse' : false},
+                {'name' : 'Coconut', 'inuse' : false},
+                {'name' : 'Fig', 'inuse' : false},
+                {'name' : 'Guava', 'inuse' : false},
+                {'name' : 'Kumquat', 'inuse' : false},
+                {'name' : 'Nectarine', 'inuse' : false}
                 ];
                 
 exports.getUserName = function(req, res){

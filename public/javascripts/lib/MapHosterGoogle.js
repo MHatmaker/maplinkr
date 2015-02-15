@@ -382,9 +382,15 @@
             if(clickPt.referrerId != AgoNewWindowConfig.getUserId()){
                 popDetails = markerInfoPopup(popPt, content, "Received from user " + clickPt.referrerName + ", " + clickPt.referrerId);
                 popDetails.infoWnd.open(mphmap, popDetails.infoMarker);
+                
+                var btnShare = document.getElementsByClassName('sharebutton')[0];
+                if(btnShare){
+                    console.debug(btnShare);
+                    btnShare.style.visibility = 'hidden';
+                }
             }
         }
-    
+        
         function getEventDictionary(){
             var $inj = angular.injector(['app']);
             var evtSvc = $inj.get('StompEventHandlerService');
@@ -578,7 +584,7 @@
             var contentString = '<div id="content">'+
                     '<h5 id="' + popId + '">' + title + '</h5>'+
                     '<div id="bodyContent">'+
-                    content + '<br><button id="' + shareBtnId + '" >Share</button>' +
+                    content + '<br><button class=sharebutton id="' + shareBtnId + '" >Share</button>' +
                     '</div>'+
                     '</div>';
 
@@ -611,6 +617,15 @@
                 infowindow.open(mphmap,this);
                 
                 var btnShare = document.getElementById(shareBtnId);
+                var referrerId = AgoNewWindowConfig.getReferrerId();
+                var usrId = AgoNewWindowConfig.getUserId();
+                if(referrerId && referrerId != usrId){
+                    if(btnShare){
+                        console.debug(btnShare);
+                        btnShare.style.visibility = 'hidden';
+                    }
+                
+                }
                 btnShare.onclick=function(){showSomething();};
             });
             return { "infoWnd" : infowindow, "infoMarker" : marker};

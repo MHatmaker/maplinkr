@@ -359,11 +359,11 @@ define('GeoCoder', function () {
             };
             
             var container = $('<div />');
-            container.on('click', function() {
-                if(this.id != ""){
+            // container.on('click', function() {
+                // if(this.id != ""){
                     
-                }showSomething();
-            });
+                // }showSomething();
+            // });
             container.html(allContent);
             
             var popup = L.popup().setContent(container[0]);
@@ -373,7 +373,16 @@ define('GeoCoder', function () {
             mphmap.on('popupopen', function(){
                 // alert('pop pop pop');
                 console.debug(popup);
+                var referrerId = AgoNewWindowConfig.getReferrerId();
+                var usrId = AgoNewWindowConfig.getUserId();
                 var btnShare = document.getElementById(shareBtnId);
+                if(referrerId && referrerId != usrId){
+                    if(btnShare){
+                        console.debug(btnShare);
+                        btnShare.style.visibility = 'hidden';
+                    }
+                
+                }
                 if(btnShare){
                     btnShare.onclick=function(){
                         showSomething();
