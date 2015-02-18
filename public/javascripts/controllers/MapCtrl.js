@@ -24,7 +24,7 @@
             'full' : '100%'
         };
         var selfMethods = {};
-
+/* 
         function resizeMap(isMapExpanded, map){
             if(isMapExpanded){
                 angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
@@ -46,7 +46,7 @@
                 map.resize();
             currentMapType.resizeMapPane(isMapExpanded);
         }
-
+ */
         function MapCtrl($scope, $routeParams) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             // alert("MapCtrl initializing");
@@ -130,7 +130,7 @@
                 // }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 // resizeMap($scope.isMapExpanded, $scope.map);
-                currentMapType.resizeVerbage($scope.isMapExpanded);
+                currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
             $scope.$on('CollapseVerbageEvent', function(event, args) {

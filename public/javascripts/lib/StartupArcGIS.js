@@ -257,6 +257,7 @@
                   slider: true,
                   nav: false,
                   wrapAround180:true
+                  
                 },
                 ignorePopups:false,
                 bingMapsKey: configOptions.bingMapsKey,
@@ -286,6 +287,19 @@
                 console.log("response title " + response.itemInfo.item.title);
                 dojo.connect(aMap, "onUpdateStart", showLoading);
                 dojo.connect(aMap, "onUpdateEnd", hideLoading);
+               /*  
+            var resizeTimer;
+            var mapcan = dijit.byId('map_canvas');
+            console.debug(mapcan);
+            dojo.connect(dijit.byId('map_canvas'), 'resize', function() {  //resize the map if the div is resized
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout( function() {
+                    console.log("resize handler hit");
+                    aMap.resize();
+                    aMap.reposition();
+                }, 500);
+            });
+             */
                 if (aMap.loaded) {
                     initUI();
                 } else {
@@ -367,6 +381,21 @@
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
+            
+            var resizeTimer;
+            var mpDiv = document.getElementById("map_wrapper");
+            // var mpDivNG = angular.element(mpDiv)[0];
+            console.debug(mpDiv);
+            // dojo.connect(mpDivNG, 'resize', function() {  //resize the map if the div is resized
+            mpDiv.onresize( function(){
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout( function() {
+                    console.log("resize handler hit");
+                    aMap.resize();
+                    aMap.reposition();
+                }, 500);
+            });
+            
         }
           
                     

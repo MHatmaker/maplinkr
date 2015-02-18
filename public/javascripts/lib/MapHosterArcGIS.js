@@ -538,6 +538,23 @@
         
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
+            
+            var mpWrap = document.getElementById("map_wrapper");
+            var wdth = angular.element(document.getElementById("map_wrapper")).css('width');
+            console.log(wdth);
+            // var mpCan = document.getElementById("map_canvas");
+            // var mpCanRoot = document.getElementById("map_canvas_root");
+            // mpCanRoot.style.height = mpCan.style.height = mpWrap.style.height;
+            // mpCanRoot.style.width = mpCan.style.width = mpWrap.style.width;
+            
+            var mpCan = document.getElementById("map_canvas");
+            var mpCanWdth = mpCan.clientWidth;
+            var mpCanHgt = mpWrap.clientHeight;
+            console.log(mpCanWdth);
+            var mpCanRoot = document.getElementById("map_canvas_root");
+            mpCanRoot.style.height = mpCanHgt;
+            mpCanRoot.style.width = mpCanWdth;
+            
             var tmpLon = cntrxG;
             var tmpLat = cntryG;
             var tmpZm = zmG;
@@ -549,6 +566,13 @@
         
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
+            
+            var mpWrap = document.getElementById("map_wrapper");
+            // var mpCan = document.getElementById("map_canvas");
+            // var mpCanRoot = document.getElementById("map_canvas_root");
+            // mpCanRoot.style.height = mpCan.style.height = mpWrap.style.height;
+            // mpCanRoot.style.width = mpCan.style.width = mpWrap.style.width;
+            
             var tmpLon = cntrxG;
             var tmpLat = cntryG;
             var tmpZm = zmG;
