@@ -115,8 +115,8 @@
                 
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
-                $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
-                                                               'verbage' : status['plugin']});
+                // $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
+                //                                               'verbage' : status['plugin']});
                 setTimeout(function(){
                     $scope.$apply(function(){
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
@@ -132,6 +132,8 @@
                         }
                         console.log("onExpSiteClick adjustments - colHgt : " + colHgt);
                         });
+                        $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
+                                                               'verbage' : status['plugin']});
                     },1000);
             }
             

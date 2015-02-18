@@ -79,6 +79,8 @@
         var pusherChannel = null;
         var pusher = null;
         var loading;
+        var mpDiv = null;
+        var resizeTimer = null;
             
         function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
         {
@@ -382,8 +384,7 @@
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
             
-            var resizeTimer;
-            var mpDiv = document.getElementById("map_wrapper");
+            mpDiv = document.getElementById("map_wrapper");
             // var mpDivNG = angular.element(mpDiv)[0];
             console.debug(mpDiv);
             // dojo.connect(mpDivNG, 'resize', function() {  //resize the map if the div is resized
@@ -395,6 +396,8 @@
                     aMap.reposition();
                 }, 500);
             });
+            console.log("onResize should be hooked to map_wrapper div");
+            console.debug(mpDiv);
             
         }
           
