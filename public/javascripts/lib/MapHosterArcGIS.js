@@ -22,8 +22,6 @@
             selectedMarkerId = 101,
             initialActionListHtml = '',
             geoLocator = null;
-            var resizeTimer = null;
-            var mpWrap = null;
             
         var selfPusherDetails = {
             channel : null,
@@ -134,12 +132,6 @@
                     showClickResult(null);
                 }
             });
-            // mphmap.on("load", function(mphmap) {
-                // onMapContainerResize(mphmap);
-            // });
-            // setupMapContainerResize(mphmap);
-            
-            mpWrap = document.getElementById("map_wrapper");
             mapReady = true;
             userZoom = true;
         }
@@ -214,26 +206,6 @@
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
             } 
             */
-        }
-        
-        // function onMapContainerResize(aMap){
-        function setupMapContainerResize(aMap){
-            var contextResizeTimer = resizeTimer;
-            var map = aMap;
-            mpWrap = document.getElementById("map_wrapper");
-            // var mpDivNG = angular.element(mpDiv)[0];
-            console.debug(mpWrap);
-            // dojo.connect(mpDivNG, 'resize', function() {  //resize the map if the div is resized
-            mpWrap.onresize( function(map){
-                clearTimeout(contextResizeTimer);
-                var innerMap = map;
-                contextResizeTimer = setTimeout( function() {
-                    console.log("resize handler hit");
-                    innerMap.resize();
-                    innerMap.reposition();
-                }, 500);
-            });
-            console.log("mpWrap.onresize should not be null now");
         }
         
         function onMapClick(e)
@@ -567,38 +539,29 @@
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             
-            // var mpWrap = document.getElementById("map_wrapper");
-            // var wdth = angular.element(document.getElementById("map_wrapper")).css('width');
-            // console.log(wdth);
+            var mpWrap = document.getElementById("map_wrapper");
+            var wdth = angular.element(document.getElementById("map_wrapper")).css('width');
+            console.log(wdth);
             // var mpCan = document.getElementById("map_canvas");
             // var mpCanRoot = document.getElementById("map_canvas_root");
             // mpCanRoot.style.height = mpCan.style.height = mpWrap.style.height;
             // mpCanRoot.style.width = mpCan.style.width = mpWrap.style.width;
             
             var mpCan = document.getElementById("map_canvas");
-            var mpWrapWdth = mpWrap.clientWidth;
-            var mpWrapHgt = mpWrap.clientHeight;
-            console.log(mpWrapWdth);
+            var mpCanWdth = mpCan.clientWidth;
+            var mpCanHgt = mpWrap.clientHeight;
+            console.log(mpCanWdth);
             var mpCanRoot = document.getElementById("map_canvas_root");
-            // mpCanRoot.clientHeight = mpWrapHgt;
-            // mpCanRoot.clientWidth =  mpCanWdth;
-            // mpCan.clientHeight = mpWrapHgt;
-            // mpCan.clientWidth = mpCanWdth;
-            
-            mpCanRoot.style.height = mpWrapHgt;
-            mpCanRoot.style.width =  mpWrapWdth;
-            mpCan.style.height = mpWrapHgt;
-            mpCan.style.width = mpWrapWdth;
+            mpCanRoot.style.height = mpCanHgt;
+            mpCanRoot.style.width = mpCanWdth;
             
             var tmpLon = cntrxG;
             var tmpLat = cntryG;
             var tmpZm = zmG;
             
             var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
-            if(mphmap){
-                mphmap.resize();
-                mphmap.centerAndZoom(cntr, tmpZm);
-            }
+            mphmap.resize();
+            mphmap.centerAndZoom(cntr, tmpZm);
         }
         
         function resizeVerbageHorizontal(isMapExpanded){
@@ -615,10 +578,8 @@
             var tmpZm = zmG;
             
             var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
-            if(mphmap){
-                mphmap.resize();
-                mphmap.centerAndZoom(cntr, tmpZm);
-            }
+            mphmap.resize();
+            mphmap.centerAndZoom(cntr, tmpZm);
         }
 
         return { start: init, config : configureMap,
