@@ -170,7 +170,7 @@
             var contextContent = content;
             var actionList = document.getElementsByClassName('actionList')[0];
             console.debug(actionList);
-            var shareBtnId = 'shareSomehtingId' + selectedMarkerId;
+            var shareBtnId = 'shareSomethingId' + selectedMarkerId;
             var addedShareBtn = '<button class="btn-primary" id="' + shareBtnId + '" >Share</button>';
             if(selectedMarkerId == 101){
                 initialActionListHtml = actionList.innerHTML;
@@ -183,6 +183,9 @@
                 mphmap.infoWindow.setContent("lat/lon : " + fixedLLG.lat + ", " + fixedLLG.lon);
             }
             else{
+                if(actionList.className == 'actionList hidden'){
+                    content = content + '<br>' + addedShareBtn;
+                }
                 mphmap.infoWindow.setContent(content);
             }
             var showSomething = function (){
