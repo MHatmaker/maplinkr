@@ -383,7 +383,7 @@
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
-            
+            /* 
             mpDiv = document.getElementById("map_wrapper");
             // var mpDivNG = angular.element(mpDiv)[0];
             console.debug(mpDiv);
@@ -398,7 +398,7 @@
             });
             console.log("onResize should be hooked to map_wrapper div");
             console.debug(mpDiv);
-            
+             */
         }
           
                     
