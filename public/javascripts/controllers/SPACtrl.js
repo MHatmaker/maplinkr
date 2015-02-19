@@ -132,8 +132,11 @@
                         }
                         console.log("onExpSiteClick adjustments - colHgt : " + colHgt);
                         });
-                        $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
-                                                               'verbage' : status['plugin']});
+                        $scope.$apply(function(){
+                            console.log("broadcast('WebSiteVisibilityEvent')");
+                            $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
+                                                                   'verbage' : status['plugin']});
+                            }, 1000);
                     },1000);
             }
             

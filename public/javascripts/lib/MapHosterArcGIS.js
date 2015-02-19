@@ -555,18 +555,21 @@
             // mpCanRoot.style.height = mpCan.style.height = mpWrap.style.height;
             // mpCanRoot.style.width = mpCan.style.width = mpWrap.style.width;
             
+            // mpWrap.resize();
             var mpCanWdth = mpWrap.clientWidth;
             var mpCanHgt = mpWrap.clientHeight;
             console.log(mpCanWdth);
             // var mpCan = document.getElementById("map_canvas");
             // var mpCanRoot = document.getElementById("map_canvas_root");
             
-            // mpCanRoot.style.height = mpCanHgt;
-            // mpCanRoot.style.width = mpCanWdth;
-            mpCanRoot.clientHeightt = mpCanHgt;
-            mpCanRoot.clientWidth = mpCanWdth;
-            mpCan.clientHeightt = mpCanHgt;
-            mpCan.clientWidth = mpCanWdth;
+            mpCanRoot.style.height = '100%'; //mpCanHgt;
+            mpCanRoot.style.width = mpCanWdth;
+            mpCan.style.height = '100%'; //mpCanHgt;
+            mpCan.style.width = mpCanWdth;
+            // mpCanRoot.clientHeight = mpCanHgt;
+            // mpCanRoot.clientWidth = mpCanWdth;
+            // mpCan.clientHeight = mpCanHgt;
+            // mpCan.clientWidth = mpCanWdth;
             
             var tmpLon = cntrxG;
             var tmpLat = cntryG;
