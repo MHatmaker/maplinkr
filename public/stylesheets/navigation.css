@@ -10,8 +10,6 @@
   list-style: none;
   margin: 0; 
   
-  background: lightblue;
-  
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -28,7 +26,6 @@
   text-align: center;
   display: block;
   padding: 0.5em;
-  color: white;
 }
 
 .navigation .havButton:hover {

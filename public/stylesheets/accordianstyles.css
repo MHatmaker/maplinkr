@@ -4,34 +4,34 @@ ul {
 }
 
 .acc.li {
-    border: 1px solid #000;
-    background-color: #ffddee;
-    color: #222200;
     font-size: 0.75em;
 }
 
 
-    .acc.scrollable {
-        width: 100%;
-        height: 100%;
-        margin: 2px;
-        padding: 2px;
-        overflow: auto;
-    }
+.acc.scrollable {
+    width: 100%;
+    height: 100%;
+    margin: 2px;
+    padding: 2px;
+    overflow: auto;
+}
 
 .panel-group,
 .panel-collapse,
 .panel-body {
-    background-color: #eeddee;
-    color: #333;
+    font-weight:bolder;
+    background: #E1BEE7; 
+    color: #727272;
+    border-color: #B6B6B6;
 }
 
 .panel-group,
 .panel-default > 
 .panel-heading {
     font-weight:bolder;
-    background-color: #ffddfb;
-    color: #222;
+    background: #9C27B0; 
+    color: #FFFFFF;
+    border-color: #B6B6B6;
 }
 
 accdiongroup {

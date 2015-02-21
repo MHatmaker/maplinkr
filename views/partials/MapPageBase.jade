@@ -43,7 +43,7 @@ block append content
 
         div(class="container-website")
       
-            #idContainerPrimary(class="container-primary")
+            #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
                 #idSiteTopRow(class="container-newscell", style="flex: 0.2; display:{{SiteVis}};")
                     div(class="container-newscellhead").
                         Linea Quae Est in Summitate
@@ -86,7 +86,7 @@ block append content
                     #idFooter(class="container-newscellhead").
                         The rest of this awesome web site contents featuring{{currentTab.title}}     
                   
-            div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
+            div(id="Verbage", class="container-plugin masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
                 div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
               
               
@@ -95,16 +95,16 @@ block append content
                     div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", style="display: none; position:relative", id="DestWndDialog", data-backdrop="true")
                                     
                     #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
-                        accordion(id="Accdian", style="height:100%;width:100%;", close-others="true")
-                            accordion-group(id="AccdianNews", class="accdiongroup", is-open="status.isNewsOpen")
-                                accordion-heading
+                        accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor masher_lightprimarycolor")
+                            accordion-group(id="AccdianNews", class="accdiongroup masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor", is-open="status.isNewsOpen")
+                                accordion-heading(class="masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor")
                                      | <b>Mashover Release News</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
                                 div(style='font-size:0.75em;border:2px solid red;margin:1px;padding:2px;')
                                     h4(style="color:red") Latest Release
                                     h5(style="color:red")
                                         | Release notes will appear here as new features are added to the Mash-over plug-in.
-                                    h5(style="color:red")
+                                    h5
                                         | Select the Mash-over Instruction accordion pane below some step-by-step help.
                                     
                                 h4 OTHER GREAT STUFF

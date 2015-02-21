@@ -4,24 +4,24 @@ extends layout
 block content
         
     #idMasherCtrl(ng-controller="MasherCtrl")
-        #idMasterSite(class="container-mastersite")
+        #idMasterSite(class="container-mastersite masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor")
         
             #idMasterSiteControlRow(style="flex:1;", ng-cloak, class="ng-cloak")
             
                 #idMasterSiteExpander(class="mastersitecontrol-expander")
-                    #idExpButtonSum(class="havButton", ng-click="summmaryCollapser()")
+                    #idExpButtonSum(class="havButton masher_accentcolor", ng-click="summmaryCollapser()")
                         span(style='cursor: pointer; cursor: hand;')
                             figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
                                 img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="flex:1; margin: 0.01em 0.5em  0.01em  0.05em;")
-                                figcaption(class="btn-primary", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandSum}} Summary
+                                figcaption(class="masher_accentcolor", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandSum}} Summary
                             
                 #idNavigatorExpander(class="mastersitecontrol-expander")
-                    #idExpButtonNav(class="havButton", ng-click="onExpNavClick()")
+                    #idExpButtonNav(class="havButton masher_accentcolor", ng-click="onExpNavClick()")
                         span(style='cursor: pointer; cursor: hand;')
                             figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
                                 img(src="../stylesheets/images/{{ExpandNav}}.png", class="expandoimage"
                                   style="flex:1; margin: 0.01em 0.5em  0.01em  1.2em;")
-                                figcaption(class="btn-primary", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandNav}} Navigator
+                                figcaption(class="masher_accentcolor", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandNav}} Navigator
                     
             #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", style="display:{{MasterSiteVis}}")
                 .background
@@ -42,8 +42,8 @@ block content
                     div(ng-cloak, class="ng-cloak", class="tabselectionview")
                         div(id="currentTabSelectedId", style="float: left; font-weight: bold; margin-top: 0.5em; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} 
                         img(src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px')
-                        input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='margin-left:40px; font-weight: bold;', class='btn-primary', value='Tell  Me About The Website')
-                        input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='margin-left:40px; font-weight: bold;', class='btn-primary', value='Show Me The Website')
+                        input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='margin-left:40px; font-weight: bold;', class='masher_accentcolor', value='Tell  Me About The Website')
+                        input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='margin-left:40px; font-weight: bold;', class='masher_accentcolor', value='Show Me The Website')
                         
                     
           
