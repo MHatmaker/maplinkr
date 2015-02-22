@@ -26,6 +26,8 @@
   text-align: center;
   display: block;
   padding: 0.5em;
+  color: #FFFFFF;
+  background: #6E9096;
 }
 
 .navigation .havButton:hover {

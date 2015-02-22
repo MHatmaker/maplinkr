@@ -20,6 +20,24 @@ ul {
 .panel-collapse,
 .panel-body {
     font-weight:bolder;
+    background: #D5E3E3; 
+    color: #A0743C;
+    border-color: #17244D;
+}
+
+.panel-group,
+.panel-default > 
+.panel-heading {
+    font-weight:bolder;
+    background: #52455D; 
+    color: #A2A9B0;
+    border-color: #17244D;
+}
+/* 
+.panel-group,
+.panel-collapse,
+.panel-body {
+    font-weight:bolder;
     background: #E1BEE7; 
     color: #727272;
     border-color: #B6B6B6;
@@ -33,7 +51,7 @@ ul {
     color: #FFFFFF;
     border-color: #B6B6B6;
 }
-
+ */
 accdiongroup {
     height:100%;
     width:100%;

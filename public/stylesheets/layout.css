@@ -1,4 +1,4 @@
-
+/* 
 .masher_darkprimarycolor     { background: #7B1FA2; }
 .masher_defaultprimarycolor  { background: #9C27B0; }
 .masher_lightprimarycolor    { background: #E1BEE7; }
@@ -7,16 +7,27 @@
 .masher_primarytextcolor     { color: #212121; }
 .masher_secondarytextcolor   { color: #727272; }
 .masher_dividercolor         { border-color: #B6B6B6; }
+ */
+
+.masher_darkprimarycolor     { background: #212024; }
+.masher_defaultprimarycolor  { background: #52455D; }
+.masher_lightprimarycolor    { background: #D5E3E3; }
+.masher_textprimarycolor     { color: #A2A9B0; }
+.masher_accentcolor          { background: #6E9096; }
+.masher_primarytextcolor     { color: #66718A; }
+.masher_secondarytextcolor   { color: #A0743C; }
+.masher_dividercolor         { border-color: #17244D; }
+.masher_fallbacktextcolor    { color: #FFFFFF; }
 
 
 .subwebsite_darkprimarycolor    { background: #00796B; }
 .subwebsite_defaultprimarycolor { background: #009688; }
 .subwebsite_lightprimarycolor   { background: #B2DFDB; }
 .subwebsite_textprimarycolor    { color: #FFFFFF; }
-.subwebsite_accentcolor          { background: #00BCD4; }
+.subwebsite_accentcolor         { background: #00BCD4; }
 .subwebsite_primarytextcolor    { color: #212121; }
 .subwebsite_secondarytextcolor  { color: #727272; }
-.subwebsite_dividercolor         { border-color: #B6B6B6; }
+.subwebsite_dividercolor        { border-color: #B6B6B6; border-style: solid; border-width: 2px; }
 
 
 
@@ -84,6 +95,10 @@
           opacity:0.4;
         }
             
+    .btn{
+       color: #FFFFFF;
+       background: #6E9096;
+    }
       div.transbox
             {
           padding: 30px 50px;

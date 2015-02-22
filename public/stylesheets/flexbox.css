@@ -112,6 +112,7 @@ body {
   font-size:11pt;
   font-weight:bold; 
   text-align: center;
+  border-color: #B6B6B6; border-style: solid; border-width: 2px;
 }
 
 .container-newscellbody {
@@ -120,6 +121,7 @@ body {
   flex : 4;
   overflow: auto;
   font-size:11pt;
+  border-color: #B6B6B6; border-style: solid; border-width: 2px;
 }
 
 .newscelllatin {

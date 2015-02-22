@@ -31,20 +31,20 @@ block append content
             div(id="idExpPlugButton", class="navButton", ng-click="onExpPlugClick()", style="padding: 0.01em 0.8em 0.01em 0.01em;")
               span(style='cursor: pointer; cursor: hand;')
                 figure
-                  figcaption(class='btn-primary', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                  figcaption(class='btn', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandPlug}}
                   img(src="../stylesheets/images/{{verbageExpandCollapse}}.png", id='verbageExpandCollapseImgId', class="expandoimage", style=" margin: 0.01em 0.1em  0.01em 0.4em;")
             div(id="idExpSiteButton", class="navButton", ng-click="onExpSiteClick()", style="padding: 0.01em 0.01em 0.01em 0.01em;")
               span(style='cursor: pointer; cursor: hand;')
                 figure
-                  figcaption(class='btn-primary', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
+                  figcaption(class='btn', style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.01em;").
                     {{ExpandSite}}
                   img(src="../stylesheets/images/{{webSiteVisible}}.png", class="expandoimage", style="margin: 0.01em 0.1em 0.01em 0.41em;")
 
         div(class="container-website")
       
             #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
-                #idSiteTopRow(class="container-newscell", style="flex: 0.2; display:{{SiteVis}};")
+                #idSiteTopRow(class="container-newscell subwebsite_dividercolor", style="flex: 0.2; display:{{SiteVis}};")
                     div(class="container-newscellhead").
                         Linea Quae Est in Summitate
                     div(class="container-newscellbody newscelllatin" style="opacity: 0.4;").
@@ -110,7 +110,7 @@ block append content
                                 h4 OTHER GREAT STUFF
                                 br
                                 
-                                img(ng-src="../stylesheets/images/NewsPapers.jpg", width="95%" height="95%")
+                                img(ng-src="../stylesheets/images/WindowWashers.png", width="95%" height="95%")
                                 
                                 br
                                 h5 Wallace and Gromit Use Mash-over.
@@ -193,12 +193,12 @@ block append content
                                         span
                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
                                             
-                                            input(type="button", class="btn-primary", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;font-size:80%', value='{{signInOutGrp}}')
+                                            input(type="button", class="btn", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;font-size:80%', value='{{signInOutGrp}}')
                                              
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
-                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn-primary', ng-click="findArcGISGroup();")
+                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn', ng-click="findArcGISGroup();")
 
                                         div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                             div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
@@ -212,12 +212,12 @@ block append content
                                         span
                                             label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
                                             
-                                            input(type="button", class="btn-primary", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;font-size:80%', value='{{signInOutMap}}')
+                                            input(type="button", class="btn", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;font-size:80%', value='{{signInOutMap}}')
 
                                         h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
-                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn-primary', ng-click="findArcGISGroupMaps();")
+                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn', ng-click="findArcGISGroupMaps();")
 
                                         div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
                                             div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
@@ -252,7 +252,7 @@ block append content
                                         Fetch the link to the current ArcGIS Online map:
                                     textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden; resize: vertical;", ng-model="urlText", required)
                                     br
-                                    button(class="btn btn-primary", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
+                                    button(class="btn", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
                                     #UrlInstructions(style="display:none")
                                         label(style='font-size:12pt;margin:2px').The url is now focused and selected.
                                         label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
@@ -265,7 +265,7 @@ block append content
                                 div(ng-controller="StompSetupCtrl")
                                     p(style='font-size:0.75em;margin:0.3em').
                                         Set or change the Pusher communications channel.
-                                    button(class="btn btn-primary", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
+                                    button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
                                         
                             accordion-group(id="UrlTransmitterId", class="accdiongroup", is-open="status.isUrlTransmitterOpen")
                                 accordion-heading
@@ -274,4 +274,4 @@ block append content
                                 div(ng-controller="TransmitNewUrlCtrl")
                                     p(style='font-size:0.75em;margin:0.3em').
                                         Publish the current map Url to Pusher communications channel subscribers.
-                                    button(class="btn btn-primary", style='width:100%;', ng-click="publishUrl()", value="Publish Url") Publish Url
+                                    button(class="btn", style='width:100%;', ng-click="publishUrl()", value="Publish Url") Publish Url
