@@ -12,7 +12,7 @@
             App.directive('linkerdisplayer', function ($compile){
                 return {
                   restrict: 'E',
-                  template: '<img id="linkerDirectiveId" class="mapLinker"  style="position: absolute;left:300px;top: 150px; width: 30px; height 30px;" src="../stylesheets/images/Expand.png">',
+                  template: '<img id="linkerDirectiveId" class="mapLinker"  style="position: relative;left: 300px;top: 300px; width: 30px; height: 30px; z-index: 10"  ng-click="linkerClicked()" src="../stylesheets/images/Expand.png">',
                   replace: true,
                   link: function(scope, element) {
                     scope.add = function(){
@@ -20,12 +20,9 @@
                       console.debug(element);
                       element.after($compile('<linkerdisplayer></linkerdisplayer>')(scope));
                     }
-                    scope.$on('displayLinkerClickEvent', function(event, args){
-                        alert('searchClickEvent in LinkerDisplayDirective');
-                        console.log('searchClickEvent in LinkerDisplayDirective ' + args);
-                        // $scope.$apply(function () {
-                            // $scope.current = args;
-                        });
+                    scope.linkerClicked = function(){
+                        scope.$emit('displayLinkerEvent');
+                    }
                   }
                 }
               });

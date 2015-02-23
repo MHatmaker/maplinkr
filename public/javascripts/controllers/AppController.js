@@ -19,13 +19,14 @@
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
         'controllers/GoogleSearchDirective',
+        'controllers/MapMaximizerDirective',
         'controllers/LinkerDisplayDirective',
         'lib/GeoCoder',
         'javascripts/lib/AgoNewWindowConfig'
         ], 
     function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, 
             WebSiteDescriptionCtrl, SPACtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, LinkerDisplayDirective, GeoCoder, AgoNewWindowConfig) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, LinkerDisplayDirective, MapMaximizerDirective, GeoCoder, AgoNewWindowConfig) {
         console.log('AppController define');
 
         function AppController($scope) {}
@@ -72,6 +73,7 @@
             EmailCtrl.start(App);
             GoogleSearchDirective.start(App);
             LinkerDisplayDirective.start(App);
+            MapMaximizerDirective.start(App);
             MapCtrl.start(App);
             GeoCoder.start(App, $http);
   

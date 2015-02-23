@@ -100,6 +100,10 @@
               }
             })
             
+            $scope.$on('displayLinkerEvent', function(event, data){
+                $scope.onExpSiteClick();
+            });
+            
             $scope.onExpSiteClick = function(){
                 console.log("status['website'] before " + status['website']);
                 if(status['website'] == 'flex'){
@@ -143,6 +147,10 @@
                         */
                     },1000);
             }
+            
+            $scope.$on('mapMaximizerEvent', function(event, data){
+                $scope.onExpPlugClick();
+            });
             
             $scope.onExpPlugClick = function(){
                 if($scope.VerbVis == 'flex'){
