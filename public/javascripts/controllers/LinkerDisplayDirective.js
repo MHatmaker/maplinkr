@@ -12,7 +12,7 @@
             App.directive('linkerdisplayer', function ($compile){
                 return {
                   restrict: 'E',
-                  template: '<img id="linkerDirectiveId" class="mapLinker"  style="position: relative;left: 300px;top: 300px; width: 30px; height: 30px; z-index: 10"  ng-click="linkerClicked()" src="../stylesheets/images/Expand.png">',
+                  template: '<img id="linkerDirectiveId" style="position: absolute; right:20px; top: 150px; width: 30px; height: 30px; z-index: 10" ng-click="linkerClicked()" src="../stylesheets/images/Expand.png">',
                   replace: true,
                   link: function(scope, element) {
                     scope.add = function(){

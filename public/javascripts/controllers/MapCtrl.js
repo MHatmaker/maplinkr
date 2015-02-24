@@ -91,6 +91,7 @@
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
             currentMapType.resizeWebSite($scope.isMapExpanded);
+            reparentCustomControls($scope);
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -130,6 +131,7 @@
                 // }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 // resizeMap($scope.isMapExpanded, $scope.map);
+                // placeCustomControls(mapWrp);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
@@ -147,6 +149,7 @@
                      // $scope.MapWdth = mapSize['full']; 
                 // }
                 // resizeMap($scope.isMapExpanded, $scope.map);
+                // placeCustomControls(mapWrp);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
             
@@ -172,6 +175,39 @@
             
             selfMethods["setSearchQuery"] = $scope.setSearchQuery;
             console.debug(selfMethods);
+        }
+        
+        function reparentCustomControls(scope){
+            var cnvs = angular.element(document.getElementById("map_canvas"));
+            var mpwrap = angular.element(document.getElementById("mapWrp"));
+            var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+            var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+            
+            cnvs.append(lnkr);
+            cnvs.append(minmaxr);
+            mpwrap.remove(lnkr);
+            mpwrap.remove(minmaxr);
+            lnkr[0].onclick = function(){
+                scope.$emit('displayLinkerEvent');
+            };
+            minmaxr[0].onclick = function(){
+                scope.$emit('mapMaximizerEvent');
+            };
+        }
+        
+        function placeCustomControls(mapWrp){
+        
+            // var right = mapWrp.css('right') - 20;
+            
+            var rgtCol = angular.element(document.getElementById("idRightCol"));
+            var rightColWidth = rgtCol.css('width') + 20;
+            
+            var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+            var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+            var hstr = String.format("{0}px", utils.toFixedOne(rightColWidth, 0));
+            
+            lnkr.css({"right": hstr});
+            minmaxr.css({"right": hstr});
         }
         
         function setSearchQuery(q){

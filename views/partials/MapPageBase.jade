@@ -69,14 +69,16 @@ block append content
                                         img(ng-src="../stylesheets/images/NewsPapers.jpg")
                                
                             #idCenterCol(class="container-mapcol" style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; border: solid orange")
-                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{$parent.bodyColHeight}}px;width:100%;vertical-align:top;")
+                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{$parent.bodyColHeight}}px;width:100%;vertical-align:top; position: absolute")
                                     
                                     gmsearch
+                               
+                                    #map_canvas(style="height:100%;width:100%;margin:0px; position: relative")
+                                    
+                                        img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+                                        
                                     linkerdisplayer
                                     mapmaximizer
-                                    #map_canvas(style="height:100%;width:100%;margin:0px;")
-                               
-                                        img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                               
                             #idRightCol(class="container-rightcol aside", style="overflow-y: auto; display:{{SiteVis}};  height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscellhead" style=" overflow:auto; flex:1;").
