@@ -100,7 +100,7 @@
               }
             })
             
-            $scope.$on('displayLinkerEvent', function(event, data){
+            $scope.$on('mapMaximizerEvent', function(event, data){
                 $scope.onExpSiteClick();
             });
             
@@ -148,7 +148,7 @@
                     },1000);
             }
             
-            $scope.$on('mapMaximizerEvent', function(event, data){
+            $scope.$on('displayLinkerEvent', function(event, data){
                 $scope.onExpPlugClick();
             });
             

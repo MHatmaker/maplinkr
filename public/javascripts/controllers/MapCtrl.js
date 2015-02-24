@@ -177,22 +177,48 @@
             console.debug(selfMethods);
         }
         
+        
         function reparentCustomControls(scope){
             var cnvs = angular.element(document.getElementById("map_canvas"));
             var mpwrap = angular.element(document.getElementById("mapWrp"));
-            var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-            var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+            var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
+            var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+            // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
             
-            cnvs.append(lnkr);
-            cnvs.append(minmaxr);
-            mpwrap.remove(lnkr);
-            mpwrap.remove(minmaxr);
-            lnkr[0].onclick = function(){
+            var templateLnkr = '<div id="linkerDirectiveId"> \
+                  <input style="color: black; font-size: 0.7em; position: absolute; right:80px; top: 155px; width: 60px; height: 20px; \
+                  z-index: 10" value="Show Linker" > \
+                  </input> \
+                  <img style="position: absolute; right:20px; top: 150px; width: 30px; height: 30px; z-index: 10"  src="../stylesheets/images/Expand.png"> \
+                  </div>';
+                  
+            var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
+                  <input style="color: black; font-size: 0.7em; position: absolute; right:80px; top: 185px; width: 60px; height: 20px; \
+                  z-index: 10" value="Max Map" > \
+                  </input> \
+                  <img  style="position: absolute; right:20px;top: 180px; width: 30px; height: 30px; z-index: 10" src="../stylesheets/images/Expand.png"> \
+                  </div>';
+                  
+            // var lnkr1 = angular.copy(lnkr0);
+            // var minmaxr1 = angular.copy(minmaxr0);
+            // var lnkr = cnvs.append(lnkr0);
+            var lnkr1 = angular.element(templateLnkr);
+            var lnkr = cnvs.append(lnkr1);
+            var minmaxr1 = angular.element(templateMinMaxr);
+            var minmaxr = cnvs.append(minmaxr1);
+            lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+            minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+            
+            // lnkr[0].onclick = function(){
+            lnkr.bind('click', function(){
+                console.log('lnkr[0].onclick   displayLinkerEvent');
                 scope.$emit('displayLinkerEvent');
-            };
-            minmaxr[0].onclick = function(){
+            });
+            // minmaxr.onclick = function(){
+            minmaxr.bind('click',  function(){
+                console.log('minmaxr[0].onclick   mapMaximizerEvent');
                 scope.$emit('mapMaximizerEvent');
-            };
+            });
         }
         
         function placeCustomControls(mapWrp){
