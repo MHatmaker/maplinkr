@@ -18,6 +18,7 @@
                     'google' : StartupGoogle,
                     'arcgis' : StartupArcGIS};
         var currentMapType = null;
+        var whichCanvas = 'map_canvas';
         var mapSize = {
             'small' : '40%',
             'medium' : '70%',
@@ -52,6 +53,8 @@
             // alert("MapCtrl initializing");
             var mptp = $scope.currentTab.maptype;
             $scope.gsearchVisible = mptp == 'google' ?  'block' : 'none';
+            whichCanvas = mptp == 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+            
             var gmquery = AgoNewWindowConfig.query();
             if(gmquery != ''){
                 $scope.gsearch = {'query' : gmquery};
@@ -91,7 +94,7 @@
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
             currentMapType.resizeWebSite($scope.isMapExpanded);
-            reparentCustomControls($scope);
+            placeCustomControls($scope);
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -131,7 +134,6 @@
                 // }
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 // resizeMap($scope.isMapExpanded, $scope.map);
-                // placeCustomControls(mapWrp);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
             });
             
@@ -149,7 +151,6 @@
                      // $scope.MapWdth = mapSize['full']; 
                 // }
                 // resizeMap($scope.isMapExpanded, $scope.map);
-                // placeCustomControls(mapWrp);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
             });
             
@@ -178,30 +179,26 @@
         }
         
         
-        function reparentCustomControls(scope){
-            var cnvs = angular.element(document.getElementById("map_canvas"));
+        function placeCustomControls(scope){
+            var cnvs = angular.element(document.getElementById(whichCanvas));
             var mpwrap = angular.element(document.getElementById("mapWrp"));
             var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
             var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
             // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
             
             var templateLnkr = '<div id="linkerDirectiveId"> \
-                  <input style="color: black; font-size: 0.7em; position: absolute; right:80px; top: 155px; width: 60px; height: 20px; \
-                  z-index: 10" value="Show Linker" > \
+                  <input class="lnkmaxcontrol_label" value="Show Linker" > \
                   </input> \
-                  <img style="position: absolute; right:20px; top: 150px; width: 30px; height: 30px; z-index: 10"  src="../stylesheets/images/Expand.png"> \
+                  <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/Expand.png"> \
                   </div>';
                   
             var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                  <input style="color: black; font-size: 0.7em; position: absolute; right:80px; top: 185px; width: 60px; height: 20px; \
-                  z-index: 10" value="Max Map" > \
+                  <input class="lnkmaxcontrol_label" style=" top: 65px;" value="Max Map" > \
                   </input> \
-                  <img  style="position: absolute; right:20px;top: 180px; width: 30px; height: 30px; z-index: 10" src="../stylesheets/images/Expand.png"> \
+                  <img class="lnkmaxcontrol_symbol" style="top: 65px;" \
+                  src="../stylesheets/images/Expand.png"> \
                   </div>';
                   
-            // var lnkr1 = angular.copy(lnkr0);
-            // var minmaxr1 = angular.copy(minmaxr0);
-            // var lnkr = cnvs.append(lnkr0);
             var lnkr1 = angular.element(templateLnkr);
             var lnkr = cnvs.append(lnkr1);
             var minmaxr1 = angular.element(templateMinMaxr);
@@ -209,18 +206,17 @@
             lnkr = angular.element(document.getElementById("linkerDirectiveId"));
             minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
             
-            // lnkr[0].onclick = function(){
             lnkr.bind('click', function(){
                 console.log('lnkr[0].onclick   displayLinkerEvent');
                 scope.$emit('displayLinkerEvent');
             });
-            // minmaxr.onclick = function(){
+
             minmaxr.bind('click',  function(){
                 console.log('minmaxr[0].onclick   mapMaximizerEvent');
                 scope.$emit('mapMaximizerEvent');
             });
         }
-        
+        /* 
         function placeCustomControls(mapWrp){
         
             // var right = mapWrp.css('right') - 20;
@@ -235,7 +231,7 @@
             lnkr.css({"right": hstr});
             minmaxr.css({"right": hstr});
         }
-        
+         */
         function setSearchQuery(q){
             console.log("setSearchQuery");
             selfMethods["setSearchQuery"](q);

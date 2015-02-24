@@ -31,138 +31,156 @@
 
 
 
-      html,body {
-        height:100%;
-        width:100%;
-        margin:0;
-        padding:0;
-        font-size: 100%;
-      }
-      body {
-        font-size:1em;
-        overflow:hidden;
-        font-family:"Arial Narrow", Helvetica, Arial sans-serif;
-      }
+html,body {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-size: 100%;
+}
+body {
+    font-size:1em;
+    overflow:hidden;
+    font-family:"Arial Narrow", Helvetica, Arial sans-serif;
+}
 
-      #header {
-        overflow:hidden;
-        height:70px;
-        margin:0;
-      }
+#header {
+    overflow:hidden;
+    height:70px;
+    margin:0;
+}
 
-      #title {
-        color:#FFF;
-        font-size:30px;
-        font-weight:bolder;
-        text-align:left;
-        padding-top:10px;
-        padding-left:25px;
-        text-shadow:0 1px 0 #333;
-      }
+#title {
+    color:#FFF;
+    font-size:30px;
+    font-weight:bolder;
+    text-align:left;
+    padding-top:10px;
+    padding-left:25px;
+    text-shadow:0 1px 0 #333;
+}
 
-      #subtitle {
-        font-size:16px;
-        color:#333;
-        padding-left:25px;
-        padding-top:5px;
-      }
+#subtitle {
+    font-size:16px;
+    color:#333;
+    padding-left:25px;
+    padding-top:5px;
+}
 
-      #map_canvas {
-        border:solid 4px #666;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
-        border-radius:6px;
-        margin:0px;   /*15px 20px 15px 20px;*/
-        padding:0;
-      }
-      #verbagePan {
-        border:solid 4px #666;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
-        border-radius:6px;
-        margin:5px;   /*15px 20px 15px 20px;*/
-        padding:5px;
-      }
-      .ngCellText {
-        font-size:10px;
-        }
-      
-     #mashbox
-            {
-          background-image: url(images/bigmasher.png);
-          background-size: 100% 100%;
-          border: 2px solid black;
-          opacity:0.4;
-        }
-            
-    .btn{
-       color: #FFFFFF;
-       background: #6E9096;
-    }
-      div.transbox
-            {
-          padding: 30px 50px;
-          margin: 30px 50px;
-          background-color: #ffffff;
-          border: 1px solid black;
-          background:rgba(255,255,255,0.7);
-          filter:alpha(opacity=99); /* For IE8 and earlier */
-        }
-            
-      td p
-            {
-          margin: 30px 40px;
-          font-weight: bold;
-          font-size: 150%; 
-          font-family:Arial;
-        }
+map_canvas {
+    border:solid 4px #666;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px;
+    margin:0px;   /*15px 20px 15px 20px;*/
+    padding:0;
+}
+
+#verbagePan {
+    border:solid 4px #666;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px;
+    margin:5px;   /*15px 20px 15px 20px;*/
+    padding:5px;
+}
+
+.ngCellText {
+    font-size:10px;
+}
+  
+#mashbox{
+    background-image: url(images/bigmasher.png);
+    background-size: 100% 100%;
+    border: 2px solid black;
+    opacity:0.4;
+}
         
-      img.svg-menu
-           {
-          width: 2.25em;
-          height: 1.25em;
-      }
-      
-      .hide-content 
-            {
-           position: absolute !important;
-           top: -9999px !important;
-           left: -9999px !important;
-           width: 0em;
-           height 0em;
-        }
+.btn{
+   color: #FFFFFF;
+   background: #6E9096;
+}
+
+div.transbox{
+    padding: 30px 50px;
+    margin: 30px 50px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    background:rgba(255,255,255,0.7);
+    filter:alpha(opacity=99); /* For IE8 and earlier */
+}
         
-      .reveal-content 
-            {
-           position: relative;
-           top: 0px;
-           left: 0px;
-           width: 30%;
-           height 100%;
-        }
-        
-      .max-map-width
-            {
-            width: 100%;
-       }
-       /* Fix for Bootstrap 3 with Angular UI Bootstrap */
+td p{
+    margin: 30px 40px;
+    font-weight: bold;
+    font-size: 150%; 
+    font-family:Arial;
+}
+    
+img.svg-menu{
+    width: 2.25em;
+    height: 1.25em;
+}
+  
+.hide-content {
+   position: absolute !important;
+   top: -9999px !important;
+   left: -9999px !important;
+   width: 0em;
+   height 0em;
+}
+    
+.reveal-content 
+   position: relative;
+   top: 0px;
+   left: 0px;
+   width: 30%;
+   height 100%;
+}
+    
+.max-map-width{
+    width: 100%;
+}
+   /* Fix for Bootstrap 3 with Angular UI Bootstrap */
 
-        .modal { 
-            display: block;
-        }
+.modal { 
+   display: block;
+}
 
-        /* Custom dialog/modal headers */
+    /* Custom dialog/modal headers */
 
-        .dialog-header-error { background-color: #d2322d; }
-        .dialog-header-wait { background-color: #428bca; }
-        .dialog-header-notify { background-color: #eeeeee; }
-        .dialog-header-confirm { background-color: #333333; }
-            .dialog-header-error span, .dialog-header-error h4,
-            .dialog-header-wait span, .dialog-header-wait h4,
-            .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+.dialog-header-error span, .dialog-header-error h4,
+.dialog-header-wait span, .dialog-header-wait h4,
+.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
 
-        /* Ease Display */
+/* Ease Display */
 
-        .pad { padding: 25px; }
+.pad { padding: 25px; }
 
-       
+.lnkmaxcontrol_label {
+    z-index: 10;
+    color: black; 
+    font-size: 0.7em; 
+    font-weight: bold;
+    position: absolute; 
+    right:40px; 
+    top: 30px; 
+    width: 75px; 
+    height: 20px;
+    margin-right: 10px;
+}
+
+.lnkmaxcontrol_symbol {
+    z-index: 10;
+    position: absolute; 
+    right:20px; 
+    top: 30px; 
+    width: 20px; 
+    height: 20px;
+}
+
+   
