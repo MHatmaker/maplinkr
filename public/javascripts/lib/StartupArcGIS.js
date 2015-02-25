@@ -59,57 +59,27 @@
             if(aMap){
                 MapHosterArcGIS.resizeVerbage(isMapExpanded);
                 
-                var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-                var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+                // var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+                // var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 
-                var cnvs = angular.element(document.getElementById('map_canvas_root'));
-                var mpcanvas = angular.element(document.getElementById("map_canvas"));
-                var canElem = document.getElementById("map_canvas");
+                // var cnvs = angular.element(document.getElementById('map_canvas_root'));
+                // var mpcanvas = angular.element(document.getElementById("map_canvas"));
+                // var canElem = document.getElementById("map_canvas");
                 // canElem.resize();
-                var djtmapcan = dojo.byId("map_wrapper");
-                // if(djtmapcan)
-                    // djtmapcan.resize();
-
-                // var mpcanvasWidth = mpcanvas[0].clientWidth;
-                // mpcanvas.css('width', '100%');
-                // cnvs.css('width', '100%');
-                
-                
-                lnkr.remove();
-                minmaxr.remove();
-                window.resizeBy(0, 0);
+                // var djtmapcan = dojo.byId("map_wrapper");
                 
                 window.setTimeout(function() {
-                    var $inj = angular.injector(['app']);
-                    var ctrlSvc = $inj.get('ControllerService');
-                    var mapCtrl = ctrlSvc.getController();
-                    mapCtrl.placeCustomControls();
                     
-                    cnvs.css('width', '100%');
+                    // cnvs.css('width', '100%');
                     MapHosterArcGIS.resizeVerbage(isMapExpanded);
-                    cnvs.css('width', '100%');
-                    window.resizeBy(0, 0);
+                    // cnvs.css('width', '100%');
+                    // window.resizeBy(0, 0);
                     
-                    mpcanvas = angular.element(document.getElementById("map_canvas"));
-                    cnvs = angular.element(document.getElementById('map_canvas_root'));
-                    cnvs[0].clientWidth = mpcanvas[0].clientWidth;
-                    cnvs.css('width', '100%');
+                    // mpcanvas = angular.element(document.getElementById("map_canvas"));
+                    // cnvs = angular.element(document.getElementById('map_canvas_root'));
+                    // cnvs[0].clientWidth = mpcanvas[0].clientWidth;
+                    // cnvs.css('width', '100%');
                 }, 1000); 
-                
-               /*  
-                var labels = document.getElementsByClassName('lnkmaxcontrol_label');
-                var symbols = document.getElementsByClassName('lnkmaxcontrol_symbol');
-                
-                var colRgt = angular.element(document.getElementById('idRightCol'));
-                var colRgtWidth = colRgt[0].clientWidth;
-                console.log('colRgtWidth ' + colRgtWidth);
-                var lnkrRight = lnkr.css('right');
-                // console.log('lnkrRight ' + lnkrRight);
-                // lnkr.css('right', colRgtWidth + lnkrRight);
-                // minmaxr.css('right', colRgtWidth + lnkrRight);
-                angular.element(labels[0]).css('right', colRgtWidth + lnkrRight);
-                angular.element(labels[1]).css('right', colRgtWidth + lnkrRight);
-                 */
             }
         }
         function resizeMapPane(isMapExpanded){
