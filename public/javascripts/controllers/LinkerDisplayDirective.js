@@ -11,13 +11,11 @@
             console.log('LinkerDisplayDirective init');
             App.directive('linkerdisplayer', function ($compile){
                 return {
-                  restrict: 'E',
-                  template: '<div id="linkerDirectiveId"> \
-                  <input style="color: black; font-size: 0.7em; position: absolute; right:80px; top: 155px; width: 50px; height: 20px; \
-                  z-index: 10" value="Show Linker" > \
-                  </input> \
-                  <img style="position: absolute; right:20px; top: 150px; width: 30px; height: 30px; z-index: 10" ng-click="linkerClicked()" src="../stylesheets/images/Expand.png"> \
-                  </div>',
+                  restrict: '<div id="linkerDirectiveId"> \
+                      <input class="lnkmaxcontrol_label" value={{$scope.$parent.data.ExpandPlug}} > \
+                      </input> \
+                      <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
+                      </div>',
                   replace: true,
                   link: function(scope, element) {
                     scope.add = function(){

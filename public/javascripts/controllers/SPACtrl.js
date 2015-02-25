@@ -13,16 +13,23 @@
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.isNavigatorCollapsed = false;
             $scope.verbageExpandCollapse = "Expand";
-            $scope.webSiteVisible = "Collapse";
+            $scope.webSiteVisible = "Expand";
             
-            $scope.ExpandSite = "Hide WebSite";
-            $scope.ExpandPlug = "Show Plugin";
+            $scope.ExpandSite = "Max Map";
+            $scope.ExpandPlug = "Show Linker";
             $scope.VerbVis = "none";
             $scope.MasterSiteVis = "inline";
             $scope.SiteVis = "flex";
             $scope.mapColWidth = "inherit";
             $scope.hideWebSiteOnStartup = false;   
                             
+            $scope.data = {
+                verbageExpandCollapse : "Expand",
+                webSiteVisible : "Expand",
+                ExpandSite : 'Max Map',
+                ExpandPlug : 'Show Linker'
+            };
+            
             var status = {
                 'website' : "flex",
                 'plugin' : "none",
@@ -48,35 +55,35 @@
                 console.log(msgstr)
              }
                 
-                $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
+             $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
                 
             function onShowPlugin(e, from, to, msg){ 
                 status['plugin'] = $scope.VerbVis = "flex";
-                $scope.ExpandPlug = "Hide Plugin";
-                $scope.verbageExpandCollapse = "Collapse";
+                $scope.data.ExpandPlug = $scope.ExpandPlug = "Hide Linker";
+                $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse = "Collapse";
                 printStatus('Show Plug-in!');
              }
              
             function onHidePlugin(e, from, to, msg){ 
                 status['plugin'] = $scope.VerbVis = "none";
-                $scope.ExpandPlug = "Show Plugin";
-                $scope.verbageExpandCollapse  = "Expand";
+                $scope.data.ExpandPlug = $scope.ExpandPlug = "Show Linker";
+                $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse  = "Expand";
                 printStatus('Hide Plug-in!');
              }
                 
             function onShowWebSite(e, from, to, msg){ 
                 status['website'] = $scope.SiteVis = "flex";
                 $scope.mapColWidth = "inherit";
-                $scope.ExpandSite = "Hide WebSite" ;
-                $scope.webSiteVisible = "Collapse";
+                $scope.data.ExpandSite = $scope.ExpandSite = "Max Map" ;
+                $scope.data.webSiteVisible = $scope.webSiteVisible = "Expand";
                 printStatus('Show Web Site!');
              }
                 
             function onHideWebSite(e, from, to, msg){ 
                 status['website'] = $scope.SiteVis = "none";
                 $scope.mapColWidth = "100%";
-                $scope.ExpandSite = "Show WebSite";
-                $scope.webSiteVisible = "Expand";
+                $scope.data.ExpandSite = $scope.ExpandSite = "Min Map";
+                $scope.data.webSiteVisible = $scope.webSiteVisible = "Collapse";
                 printStatus('Hide Web Site!');
              }
             

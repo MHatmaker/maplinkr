@@ -12,7 +12,12 @@
             App.directive('mapmaximizer', function ($compile){
                 return {
                   restrict: 'E',
-                  template: '<img id="mapmaximizerDirectiveId" style="position: absolute; right:20px;top: 180px; width: 30px; height: 30px; z-index: 10"  ng-click="mapmaximizerClicked()" src="../stylesheets/images/Expand.png">',
+                  template: '<div id="mapmaximizerDirectiveId"> \
+                      <input class="lnkmaxcontrol_label" style=" top: 65px;" value="{{$scope.$parent.data.ExpandSite}}" > \
+                      </input> \
+                      <img class="lnkmaxcontrol_symbol" style="top: 65px;" \
+                      src="../stylesheets/images/{{$scope.$parent.data.webSiteVisible}}.png"> \
+                      </div>',
                   replace: true,
                   link: function(scope, element) {
                     scope.add = function(){

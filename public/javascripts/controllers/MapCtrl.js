@@ -48,7 +48,7 @@
             currentMapType.resizeMapPane(isMapExpanded);
         }
  */
-        function MapCtrl($scope, $routeParams) {
+        function MapCtrl($scope, $routeParams, $compile) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             // alert("MapCtrl initializing");
             var mptp = $scope.currentTab.maptype;
@@ -137,6 +137,7 @@
                 // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
+                refreshMinMax();
             });
             
             $scope.$on('CollapseVerbageEvent', function(event, args) {
@@ -154,6 +155,7 @@
                 // }
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
+                refreshLinker();
             });
             
             $scope.$on('searchClickEvent', function(event, args){
@@ -171,6 +173,20 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch['query']);
             }
             
+            function refreshLinker(){
+                var lnkrText = document.getElementById("idLinkerText");
+                var lnkrSymbol = document.getElementById("idLinkerSymbol");
+                lnkrText.value = $scope.$parent.data.ExpandPlug;
+                lnkrSymbol.src="../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
+            }
+            
+            function refreshMinMax(){
+                var minMaxText = document.getElementById("idMinMaxText");
+                var minMaxSymbol = document.getElementById("idMinMaxSymbol");
+                minMaxText.value = $scope.$parent.data.ExpandSite;
+                minMaxSymbol.src="../stylesheets/images/" + $scope.$parent.data.webSiteVisible + ".png";
+            }
+            
             function placeCustomControls(){
                 var contextScope = $scope;
                 var cnvs = angular.element(document.getElementById(whichCanvas));
@@ -178,23 +194,31 @@
                 var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
                 
+                var parentScope = $scope.$parent;
+                
                 var templateLnkr = '<div id="linkerDirectiveId"> \
-                      <input class="lnkmaxcontrol_label" value="Show Linker" > \
+                      <input id="idLinkerText" class="lnkmaxcontrol_label" value={{$scope.$parent.data.ExpandPlug}} > \
                       </input> \
-                      <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/Expand.png"> \
+                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
                       </div>';
                       
                 var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                      <input class="lnkmaxcontrol_label" style=" top: 65px;" value="Max Map" > \
+                      <input id="idMinMaxText" class="lnkmaxcontrol_label" style=" top: 65px;" value="{{$scope.$parent.data.ExpandSite}}" > \
                       </input> \
-                      <img class="lnkmaxcontrol_symbol" style="top: 65px;" \
-                      src="../stylesheets/images/Expand.png"> \
+                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 65px;" \
+                      src="../stylesheets/images/{{$scope.$parent.data.webSiteVisible}}.png"> \
                       </div>';
                       
                 var lnkr1 = angular.element(templateLnkr);
+                var lnkrC = $compile(lnkr1);
                 var lnkr = cnvs.append(lnkr1);
+                lnkrC($scope);
+                
                 var minmaxr1 = angular.element(templateMinMaxr);
+                var minmaxrC = $compile(minmaxr1);
                 var minmaxr = cnvs.append(minmaxr1);
+                minmaxrC($scope);
+                
                 lnkr = angular.element(document.getElementById("linkerDirectiveId"));
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 
@@ -207,6 +231,8 @@
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
                     contextScope.$emit('mapMaximizerEvent');
                 });
+                refreshLinker();
+                refreshMinMax();
             }
             selfMethods["placeCustomControls"] = placeCustomControls;
             console.debug(selfMethods);
@@ -219,7 +245,7 @@
         
         function init(App) {
             console.log('MapCtrl init');
-            App.controller('MapCtrl', ['$scope', '$routeParams', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', MapCtrl]);
             return MapCtrl;
         }
 
