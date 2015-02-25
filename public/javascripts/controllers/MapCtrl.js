@@ -94,7 +94,9 @@
             console.debug($scope.map);
             // resizeMap($scope.isMapExpanded, $scope.map);
             currentMapType.resizeWebSite($scope.isMapExpanded);
-            placeCustomControls($scope);
+            if(mptp != 'arcgis'){
+                placeCustomControls();
+            }
             
             var tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -169,72 +171,50 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch['query']);
             }
             
-            $scope.setSearchQuery = function(q){
-                $scope.gsearch['query'] = q;
-                AgoNewWindowConfig.setQuery($scope.gsearch['query']);
+            function placeCustomControls(){
+                var contextScope = $scope;
+                var cnvs = angular.element(document.getElementById(whichCanvas));
+                var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
+                var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+                // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
+                
+                var templateLnkr = '<div id="linkerDirectiveId"> \
+                      <input class="lnkmaxcontrol_label" value="Show Linker" > \
+                      </input> \
+                      <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/Expand.png"> \
+                      </div>';
+                      
+                var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
+                      <input class="lnkmaxcontrol_label" style=" top: 65px;" value="Max Map" > \
+                      </input> \
+                      <img class="lnkmaxcontrol_symbol" style="top: 65px;" \
+                      src="../stylesheets/images/Expand.png"> \
+                      </div>';
+                      
+                var lnkr1 = angular.element(templateLnkr);
+                var lnkr = cnvs.append(lnkr1);
+                var minmaxr1 = angular.element(templateMinMaxr);
+                var minmaxr = cnvs.append(minmaxr1);
+                lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+                minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+                
+                lnkr.bind('click', function(){
+                    console.log('lnkr[0].onclick   displayLinkerEvent');
+                    contextScope.$emit('displayLinkerEvent');
+                });
+
+                minmaxr.bind('click',  function(){
+                    console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                    contextScope.$emit('mapMaximizerEvent');
+                });
             }
-            
-            selfMethods["setSearchQuery"] = $scope.setSearchQuery;
+            selfMethods["placeCustomControls"] = placeCustomControls;
             console.debug(selfMethods);
         }
-        
-        
-        function placeCustomControls(scope){
-            var cnvs = angular.element(document.getElementById(whichCanvas));
-            var mpwrap = angular.element(document.getElementById("mapWrp"));
-            var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
-            var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-            // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
-            
-            var templateLnkr = '<div id="linkerDirectiveId"> \
-                  <input class="lnkmaxcontrol_label" value="Show Linker" > \
-                  </input> \
-                  <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/Expand.png"> \
-                  </div>';
-                  
-            var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                  <input class="lnkmaxcontrol_label" style=" top: 65px;" value="Max Map" > \
-                  </input> \
-                  <img class="lnkmaxcontrol_symbol" style="top: 65px;" \
-                  src="../stylesheets/images/Expand.png"> \
-                  </div>';
-                  
-            var lnkr1 = angular.element(templateLnkr);
-            var lnkr = cnvs.append(lnkr1);
-            var minmaxr1 = angular.element(templateMinMaxr);
-            var minmaxr = cnvs.append(minmaxr1);
-            lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-            minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-            
-            lnkr.bind('click', function(){
-                console.log('lnkr[0].onclick   displayLinkerEvent');
-                scope.$emit('displayLinkerEvent');
-            });
-
-            minmaxr.bind('click',  function(){
-                console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                scope.$emit('mapMaximizerEvent');
-            });
-        }
-        /* 
-        function placeCustomControls(mapWrp){
-        
-            // var right = mapWrp.css('right') - 20;
-            
-            var rgtCol = angular.element(document.getElementById("idRightCol"));
-            var rightColWidth = rgtCol.css('width') + 20;
-            
-            var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-            var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-            var hstr = String.format("{0}px", utils.toFixedOne(rightColWidth, 0));
-            
-            lnkr.css({"right": hstr});
-            minmaxr.css({"right": hstr});
-        }
-         */
-        function setSearchQuery(q){
-            console.log("setSearchQuery");
-            selfMethods["setSearchQuery"](q);
+                
+        MapCtrl.prototype.placeCustomControls = function (){
+            console.log("placeCustomControls");
+            selfMethods["placeCustomControls"]();
         }
         
         function init(App) {
@@ -243,7 +223,7 @@
             return MapCtrl;
         }
 
-        return { start: init, setSearchQuery : setSearchQuery };
+        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls };
 
     });
 

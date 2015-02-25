@@ -5,7 +5,7 @@
     var selfDetails = {};
     var aMap = null;
     console.log('StartupGArcGIS setup');
-    require(['lib/MapHosterArcGIS', 'lib/utils']);
+    require(['lib/MapHosterArcGIS', 'lib/utils', 'controllers/MapCtrl']);
         
     dojo.require("esri.map");
     dojo.require("dijit.layout.BorderContainer");
@@ -29,15 +29,18 @@
         'lib/AgoNewWindowConfig', 
         'lib/utils',
         'controllers/TabsCtrl',
+        'controllers/MapCtrl',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl) {
+    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl, MapCtrl) {
         console.log('StartupArcGIS defined');
         
         var CHANNEL = '/mapxtnt/';
         var loading;
         var newSelectedWebMapId = "";
         var mapCreated = null;
+        var mapCtrlContext = MapCtrl;
+        var tabCtrlContext = TabsCtrl;
         
         selfDetails.mph = null; 
 
@@ -53,8 +56,61 @@
                 MapHosterArcGIS.resizeWebSite(isMapExpanded);
         }
         function resizeVerbageHorizontal(isMapExpanded){
-            if(aMap)
+            if(aMap){
                 MapHosterArcGIS.resizeVerbage(isMapExpanded);
+                
+                var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+                var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+                
+                var cnvs = angular.element(document.getElementById('map_canvas_root'));
+                var mpcanvas = angular.element(document.getElementById("map_canvas"));
+                var canElem = document.getElementById("map_canvas");
+                // canElem.resize();
+                var djtmapcan = dojo.byId("map_wrapper");
+                // if(djtmapcan)
+                    // djtmapcan.resize();
+
+                // var mpcanvasWidth = mpcanvas[0].clientWidth;
+                // mpcanvas.css('width', '100%');
+                // cnvs.css('width', '100%');
+                
+                
+                lnkr.remove();
+                minmaxr.remove();
+                window.resizeBy(0, 0);
+                
+                window.setTimeout(function() {
+                    var $inj = angular.injector(['app']);
+                    var ctrlSvc = $inj.get('ControllerService');
+                    var mapCtrl = ctrlSvc.getController();
+                    mapCtrl.placeCustomControls();
+                    
+                    cnvs.css('width', '100%');
+                    MapHosterArcGIS.resizeVerbage(isMapExpanded);
+                    cnvs.css('width', '100%');
+                    window.resizeBy(0, 0);
+                    
+                    mpcanvas = angular.element(document.getElementById("map_canvas"));
+                    cnvs = angular.element(document.getElementById('map_canvas_root'));
+                    cnvs[0].clientWidth = mpcanvas[0].clientWidth;
+                    cnvs.css('width', '100%');
+                }, 1000); 
+                
+               /*  
+                var labels = document.getElementsByClassName('lnkmaxcontrol_label');
+                var symbols = document.getElementsByClassName('lnkmaxcontrol_symbol');
+                
+                var colRgt = angular.element(document.getElementById('idRightCol'));
+                var colRgtWidth = colRgt[0].clientWidth;
+                console.log('colRgtWidth ' + colRgtWidth);
+                var lnkrRight = lnkr.css('right');
+                // console.log('lnkrRight ' + lnkrRight);
+                // lnkr.css('right', colRgtWidth + lnkrRight);
+                // minmaxr.css('right', colRgtWidth + lnkrRight);
+                angular.element(labels[0]).css('right', colRgtWidth + lnkrRight);
+                angular.element(labels[1]).css('right', colRgtWidth + lnkrRight);
+                 */
+            }
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupArcGIS.resizeMapPane : invalidateSize with current isMapExpanded = " + isMapExpanded);
@@ -383,6 +439,11 @@
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
+            
+            var $inj = angular.injector(['app']);
+            var ctrlSvc = $inj.get('ControllerService');
+            var mapCtrl = ctrlSvc.getController();
+            mapCtrl.placeCustomControls();
             /* 
             mpDiv = document.getElementById("map_wrapper");
             // var mpDivNG = angular.element(mpDiv)[0];

@@ -173,6 +173,14 @@ var selectedMapType = 'arcgis';
                     MapHosterGoogle.firePlacesQuery();
                 }
                 return {getQueryDct: getQueryDct, setQuery : setQuery, clickSearch : clickSearch };
+            }).
+            
+            factory("ControllerService", function($rootScope){
+                var getController = function() {
+                    return MapCtrl;
+                }
+                
+                return {getController: getController};
             });
                 
             App.directive('autoFocus', function($timeout) {
