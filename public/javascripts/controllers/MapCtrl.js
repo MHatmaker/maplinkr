@@ -198,7 +198,7 @@
                 
                 var parentScope = $scope.$parent;
                 
-                var templateLnkr = '<div id="linkerDirectiveId"> \
+                var templateLnkr = '<div id="linkerDirectiveId" > \
                       <input id="idLinkerText" class="lnkmaxcontrol_label" value={{$scope.$parent.data.ExpandPlug}} > \
                       </input> \
                       <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
@@ -222,15 +222,35 @@
                 // minmaxrC($scope);
                 
                 lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+                lnkr[0].onmouseover = function(){
+                    var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
+                    lnkrLabel[0].style.background='#6E9096';
+                    lnkrLabel[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    var crsr = lnkrLabel[0].style.cursor;
+                    var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
+                    lnkrSymbol[0].style.background='#6E9096';
+                    lnkrSymbol[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                }
+                lnkr[0].onmouseout = function(){
+                    var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
+                    lnkrLabel[0].style.background='';
+                    lnkrLabel[0].style.cursor = "";
+                    var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
+                    lnkrSymbol[0].style.background='';
+                    lnkrSymbol[0].style.cursor = "";
+                }
+                
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 
                 lnkr.bind('click', function(){
                     console.log('lnkr[0].onclick   displayLinkerEvent');
+                    event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
                 });
 
                 minmaxr.bind('click',  function(){
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                    event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
                 });
                 refreshLinker();
