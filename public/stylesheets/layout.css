@@ -183,6 +183,18 @@ img.svg-menu{
     height: 20px;
 }
 
+#lnkrcursor {
+     cursor: none;
+     width: 25px;
+     height: 25px;
+     background: url("/stylesheets/images/Expand.png") no-repeat left top;
+     position: absolute;
+     display: none;
+     top: 0;
+     left: 0;
+     z-index: 10000;
+}
+
    /* 
 #linkerDirectiveId: hover {
     background: #6E9096;

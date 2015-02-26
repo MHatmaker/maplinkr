@@ -225,11 +225,13 @@
                 lnkr[0].onmouseover = function(){
                     var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
                     lnkrLabel[0].style.background='#6E9096';
-                    lnkrLabel[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    // lnkrLabel[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
                     var crsr = lnkrLabel[0].style.cursor;
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='#6E9096';
-                    lnkrSymbol[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    // lnkrSymbol[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    var crsrElem =  $('#lnkrcursor');
+                    crsrElem.show();
                 }
                 lnkr[0].onmouseout = function(){
                     var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
@@ -238,6 +240,7 @@
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='';
                     lnkrSymbol[0].style.cursor = "";
+                    $('#lnkrcursor').hide();
                 }
                 
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
