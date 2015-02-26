@@ -120,6 +120,8 @@
                 
                 // var btn = document.getElementById("idExpSiteButton");
                 // btn.click();
+                refreshLinker();
+                refreshMinMax();
             });
             
             $scope.$on('WebSiteVisibilityEvent', function(event, args){
@@ -210,14 +212,14 @@
                       </div>';
                       
                 var lnkr1 = angular.element(templateLnkr);
-                var lnkrC = $compile(lnkr1);
+                // var lnkrC = $compile(lnkr1);
                 var lnkr = cnvs.append(lnkr1);
-                lnkrC($scope);
+                // lnkrC($scope);
                 
                 var minmaxr1 = angular.element(templateMinMaxr);
-                var minmaxrC = $compile(minmaxr1);
+                // var minmaxrC = $compile(minmaxr1);
                 var minmaxr = cnvs.append(minmaxr1);
-                minmaxrC($scope);
+                // minmaxrC($scope);
                 
                 lnkr = angular.element(document.getElementById("linkerDirectiveId"));
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
