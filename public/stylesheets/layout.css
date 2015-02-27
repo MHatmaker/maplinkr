@@ -187,7 +187,7 @@ img.svg-menu{
      cursor: none;
      width: 25px;
      height: 25px;
-     background: url("/stylesheets/images/Expand.png") no-repeat left top;
+     background: url("../stylesheets/images/Expand.png") no-repeat left top;
      position: absolute;
      display: none;
      top: 0;

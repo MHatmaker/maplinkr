@@ -222,7 +222,7 @@
                 // minmaxrC($scope);
                 
                 lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-                lnkr[0].onmouseover = function(){
+                lnkr[0].onmouseenter = function(){
                     var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
                     lnkrLabel[0].style.background='#6E9096';
                     // lnkrLabel[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
@@ -230,7 +230,9 @@
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='#6E9096';
                     // lnkrSymbol[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    // var crsrElem = angular.element(document.getElementById("lnkrcursor"));
                     var crsrElem =  $('#lnkrcursor');
+                    // crsrElem[0].style.display = 'block';
                     crsrElem.show();
                 }
                 lnkr[0].onmouseout = function(){
@@ -240,7 +242,13 @@
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='';
                     lnkrSymbol[0].style.cursor = "";
+                    // var crsrElem = angular.element(document.getElementById("lnkrcursor"));
                     $('#lnkrcursor').hide();
+                    // crsrElem[0].style.display = 'none';
+                }
+                
+                lnkr[0].onmousemove = function(e){
+                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
                 }
                 
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
