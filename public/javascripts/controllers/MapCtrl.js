@@ -178,14 +178,14 @@
             function refreshLinker(){
                 var lnkrText = document.getElementById("idLinkerText");
                 var lnkrSymbol = document.getElementById("idLinkerSymbol");
-                lnkrText.value = $scope.$parent.data.ExpandPlug;
+                lnkrText.innerHTML = $scope.$parent.data.ExpandPlug;
                 lnkrSymbol.src="../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
             }
             
             function refreshMinMax(){
                 var minMaxText = document.getElementById("idMinMaxText");
                 var minMaxSymbol = document.getElementById("idMinMaxSymbol");
-                minMaxText.value = $scope.$parent.data.ExpandSite;
+                minMaxText.innerHTML = $scope.$parent.data.ExpandSite;
                 minMaxSymbol.src="../stylesheets/images/" + $scope.$parent.data.webSiteVisible + ".png";
             }
             
@@ -199,15 +199,15 @@
                 var parentScope = $scope.$parent;
                 
                 var templateLnkr = '<div id="linkerDirectiveId" > \
-                      <input id="idLinkerText" class="lnkmaxcontrol_label" value={{$scope.$parent.data.ExpandPlug}} > \
-                      </input> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
+                      <label id="idLinkerText" class="lnkmaxcontrol_label" > \ {{$scope.$parent.data.ExpandPlug}} \
+                      </label> \
+                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" \ src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
                       </div>';
                       
                 var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                      <input id="idMinMaxText" class="lnkmaxcontrol_label" style=" top: 65px;" value="{{$scope.$parent.data.ExpandSite}}" > \
-                      </input> \
-                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 65px;" \
+                      <label id="idMinMaxText" class="lnkmaxcontrol_label" style=" top: 125px;" value="{{$scope.$parent.data.ExpandSite}}" > \
+                      </label> \
+                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 125px;" \
                       src="../stylesheets/images/{{$scope.$parent.data.webSiteVisible}}.png"> \
                       </div>';
                       
@@ -225,26 +225,24 @@
                 lnkr[0].onmouseenter = function(){
                     var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
                     lnkrLabel[0].style.background='#6E9096';
-                    // lnkrLabel[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
+                    lnkrLabel[0].style.color='white';
                     var crsr = lnkrLabel[0].style.cursor;
+                    lnkrLabel[0].style.cursor = "none";
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='#6E9096';
-                    // lnkrSymbol[0].style.cursor = "url('../stylesheets/images/Expand.png'), auto";
-                    // var crsrElem = angular.element(document.getElementById("lnkrcursor"));
+                    lnkrSymbol[0].style.cursor = "none";
                     var crsrElem =  $('#lnkrcursor');
-                    // crsrElem[0].style.display = 'block';
                     crsrElem.show();
                 }
                 lnkr[0].onmouseout = function(){
                     var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
                     lnkrLabel[0].style.background='';
+                    lnkrLabel[0].style.color='black';
                     lnkrLabel[0].style.cursor = "";
                     var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
                     lnkrSymbol[0].style.background='';
                     lnkrSymbol[0].style.cursor = "";
-                    // var crsrElem = angular.element(document.getElementById("lnkrcursor"));
                     $('#lnkrcursor').hide();
-                    // crsrElem[0].style.display = 'none';
                 }
                 
                 lnkr[0].onmousemove = function(e){
@@ -253,16 +251,50 @@
                 
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 
-                lnkr.bind('click', function(){
+                minmaxr[0].onmouseenter = function(){
+                    var minmaxrLabel = angular.element(document.getElementById("idMinMaxText"));
+                    minmaxrLabel[0].style.background='#6E9096';
+                    minmaxrLabel[0].style.color='white';
+                    minmaxrLabel[0].style.cursor = "none";
+                    var crsr = minmaxrLabel[0].style.cursor;
+                    var minmaxrSymbol = angular.element(document.getElementById("idMinMaxSymbol"));
+                    minmaxrSymbol[0].style.background='#6E9096';
+                    minmaxrSymbol[0].style.cursor = "none";
+                    $('#lnkrcursor').show();
+                }
+                minmaxr[0].onmouseout = function(){
+                    var minmaxrLabel = angular.element(document.getElementById("idMinMaxText"));
+                    minmaxrLabel[0].style.background='';
+                    minmaxrLabel[0].style.color='black';
+                    minmaxrLabel[0].style.cursor = "";
+                    var minmaxrSymbol = angular.element(document.getElementById("idMinMaxSymbol"));
+                    minmaxrSymbol[0].style.background='';
+                    minmaxrSymbol[0].style.cursor = "";
+                    $('#lnkrcursor').hide();
+                }
+                
+                lnkr[0].onmousemove = function(e){
+                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
+                }
+                
+                minmaxr[0].onmousemove = function(e){
+                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
+                }
+                
+                lnkr.bind('mouseup', function(){
                     console.log('lnkr[0].onclick   displayLinkerEvent');
                     event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
+                    var crsr = $('#lnkrcursor')[0];
+                    crsr.style.display = 'none';
                 });
 
-                minmaxr.bind('click',  function(){
+                minmaxr.bind('mouseup',  function(){
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
                     event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
+                    var crsr = $('#lnkrcursor')[0];
+                    crsr.style.display = 'none';
                 });
                 refreshLinker();
                 refreshMinMax();
