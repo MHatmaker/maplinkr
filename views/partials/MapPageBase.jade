@@ -58,10 +58,10 @@ block append content
                                     div(class="container-newscellhead", style="color:red;").
                                         WHAT'S NEW?
                                     div(class="container-newscellbody").
-                                        We now have WebMap mash-over capabilities
+                                        We now have WebMap MapLinkr capabilities
                                       
-                                        Click on the "Expand Control Pane" and "Hide Web Site" icons.
-                                        Then Select the Mash-over Instruction accordion pane for all the latest.
+                                        Click on the "Show Linker" and "Max Map" icons.
+                                        Then Select the MapLinkr Instruction accordion pane for all the latest.
                                    
                                     div(class="container-newscellhead" style="color: black; font-weight: bold;").
                                         OTHER STUFF
@@ -86,7 +86,7 @@ block append content
                                   molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et     tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros            feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus.         Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend.     Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet          lacinia odio diam idrisus. 
                               
                     #idFooter(class="container-newscellhead").
-                        The rest of this awesome web site contents featuring{{currentTab.title}}     
+                        All the below-the-fold web site contents    
                   
             div(id="Verbage", class="container-plugin masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
                 div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
@@ -100,14 +100,14 @@ block append content
                         accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor masher_lightprimarycolor")
                             accordion-group(id="AccdianNews", class="accdiongroup masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor", is-open="status.isNewsOpen")
                                 accordion-heading(class="masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor")
-                                     | <b>Mashover Release News</b>
+                                     | <b>MapLinkr Release News</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewsOpen, 'glyphicon-chevron-right': !status.isNewsOpen}")
                                 div(style='font-size:0.75em;border:2px solid red;margin:1px;padding:2px;')
                                     h4(style="color:red") Latest Release
                                     h5(style="color:red")
-                                        | Release notes will appear here as new features are added to the Mash-over plug-in.
+                                        | Release notes will appear here as new features are added to the MapLinkr plug-in.
                                     h5
-                                        | Select the Mash-over Instruction accordion pane below some step-by-step help.
+                                        | Select the MapLinkr Instruction accordion pane below for step-by-step help.
                                     
                                 h4 OTHER GREAT STUFF
                                 br
@@ -115,26 +115,26 @@ block append content
                                 img(ng-src="../stylesheets/images/WindowWashers.png", width="95%" height="95%")
                                 
                                 br
-                                h5 Wallace and Gromit Use Mash-over.
+                                h5 Wallace and Gromit Use MapLinkr.
                                 p(style='font-size:0.75em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
                                     Wallace and Gromit have improved the efficiency of their window washing service by incorporating community maps of reported dirty windows.
                                 br
 
                             accordion-group(id="fillerPane", class="accdiongroup", style="overflow-y:true;"  is-open="status.isInstructionsOpen")
                                 accordion-heading
-                                     | <b>Mash-over Instructions</b>
+                                     | <b>MapLinkr Instructions</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isInstructionsOpen, 'glyphicon-chevron-right': !status.isInstructionsOpen}")
-                                h3 Using Mash-over
+                                h3 Using MapLinkr
 
-                                p(style='font-size:0.75em;margin:0.3em').                              
-                                    | Mash-overs allow viewing mulitple synchronized maps in separate windows.  The maps can use 
+                                p(style='font-size:0.75em;margin:0.3em')                              
+                                    | MapLinkr allows viewing mulitple synchronized maps in separate windows.  The maps can use 
                                     |  base maps or different themes for overlays.  Unlike standard layer overlays in a 
                                     | single viewer, the base layers and overlays do not interfere with the visibility or 
                                     | of other selected layers.
 
-                                p(style='font-size:0.75em;margin:0.3em;').
-                                    | Mash-overs can be created from three map viewer sources, if the viewer system incorporates
-                                    | the mash-over plug-in.
+                                p(style='font-size:0.75em;margin:0.3em;')
+                                    | Linked maps can be created from three map viewer sources, if the viewer system incorporates
+                                    | the MapLinkr plug-in.
 
                                 ul#MapTypes(style="height:100%")
                                     li(class="acc li") 1 An ArcGIS webmap viewer - such as this viewer.
@@ -195,15 +195,15 @@ block append content
                                         span
                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
                                             
-                                            input(type="button", class="btn", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:25%;font-size:80%', value='{{signInOutGrp}}')
+                                            input(type="button", class="btn", id="signInGroup", name="signInGroup", ng-click='signInFromGroupTab();', style='width:30%;font-size:80%', value='{{signInOutGrp}}')
                                              
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
                                             input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn', ng-click="findArcGISGroup();")
 
-                                        div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
-                                            div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:5px;")
+                                        div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
+                                            div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:1px;")
 
                             accordion-group(id="MapSearcherPane", class="accdiongroup", is-open="status.isMapSearchOpen")
                                 accordion-heading
@@ -214,15 +214,15 @@ block append content
                                         span
                                             label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
                                             
-                                            input(type="button", class="btn", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:25%;font-size:80%', value='{{signInOutMap}}')
+                                            input(type="button", class="btn", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:30%;font-size:80%', value='{{signInOutMap}}')
 
                                         h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                         span
                                             input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
                                             input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn', ng-click="findArcGISGroupMaps();")
 
-                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#ffaaee;", ng-style="getGridStyleWrapper()")
-                                            div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:5px;")    
+                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
+                                            div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:1px;")    
                             accordion-group(id="sharingInstructionPane", class="accdiongroup", is-open="status.isSharingInstructionsOpen")
                                 accordion-heading
                                      | <b>Sharing Overview</b>
@@ -234,9 +234,9 @@ block append content
                                     
                                 ul#StepsSharing(style="height:100%")
                                 
-                                    li(class="acc li") 1. Open the "Copy Map Link" accordion pane. The url for the current WebMap will be inserted in the text field and will be focused and selected.
+                                    li(class="acc li") 1. Open the "Copy MapLinkr Url" accordion pane. The url for the current host site will be inserted in the text field and will be focused and selected.
                                     li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard. 
-                                    li(class="acc li") 3. Paste the link in an email to collaborators. 
+                                    li(class="acc li") 3. Paste the link in a text message or email to collaborators or in a shared chat window. 
                                    
                                 p(style='font-size:0.75em;margin:0.3em').
                                     The url includes the name of the Pusher channel that you have selected.  As users open  the link, they will be subscribing to share map clicks, pans and zooms with all other users as any user manipulates any map view.
@@ -247,7 +247,7 @@ block append content
                                 br
                             accordion-group(id="MailSenderId", class="accdiongroup",  is-open="status.isCopyMapLinkOpen")
                                 accordion-heading
-                                     | <b>Copy Map Link</b>
+                                     | <b>Copy MapLinkr Url</b>
                                      i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isCopyMapLinkOpen, 'glyphicon-chevron-right': !status.isCopyMapLinkOpen}")
                                 form(name="emailForm", ng-controller="EmailCtrl")
                                     label(style='font-size:12pt;margin:4px').

@@ -121,7 +121,7 @@
             };
             
             $scope.getGridStyleGroup = function () {
-                var height = $scope.calculateHeights() - 20;
+                var height = $scope.calculateHeights() - 8;
                 var heightStr = String(height) + "px";
                 // console.log("heightStr - getGridStyleGroup : " + heightStr);
                 return {

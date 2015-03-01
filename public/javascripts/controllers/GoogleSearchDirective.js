@@ -12,7 +12,7 @@
             App.directive('gmsearch', function ($compile){
                 return {
                   restrict: 'E',
-                  template: '<input id="pac-input" class="gmsearchcontrols" type="text" placeholder="Search Box"  style="display: {{gsearchVisible}};"  ng-model="gsearch.query" ng-change="queryChanged()" auto-focus >',
+                  template: '<input id="pac-input" class="gmsearchcontrols" type="text" placeholder="Search Box"  style="display: {{gsearchVisible}}; color: black;"  ng-model="gsearch.query" ng-change="queryChanged()" auto-focus >',
                   replace: true,
                   link: function(scope, element) {
                     scope.add = function(){

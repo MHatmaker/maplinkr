@@ -125,7 +125,7 @@ angular.isUndefinedOrNull = function(val) {
             }
             
             $scope.getGridStyleMap = function () {
-                var height = $scope.calculateHeights() - 20;
+                var height = $scope.calculateHeights() - 8;
                 var heightStr = String(height) + "px";
                 return {
                     height: heightStr
