@@ -25,8 +25,11 @@ block content
                     
             #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", style="display:{{MasterSiteVis}}")
                 .background
-                    div(id="mashbox", class="transbox", style="margin: 30px 40px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")
-                        p Synchronizing Maps From a Variety of Map Systems
+                    div(id="mashbox", class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")
+                        div(style="display : flex; flex-direction: column;")
+                            div(style="color : #333333; flex : 1") MapLinkr
+                            div(style="flex : 4; visibility : hidden; font-size : 200%") Do not show this
+                            div(style="color : #333333; flex : 1") Linking and Synchronizing Multiple Maps, Collaborators, Map Systems
                         
                     div
                         div(ng-controller="TabsCtrl")
