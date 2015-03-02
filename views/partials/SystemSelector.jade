@@ -2,12 +2,9 @@
     http://plnkr.co/edit/LlPyVtYwMvAF6ilKUmdD?p=preview              >>>>> plunker
 
 
-block stylesblock
-    link(rel='stylesheet', href="/stylesheets/LayoutTests.css")
-    
 style.
     h2 {
-        color: chocolate;
+        color: #66718A;
     }
 style.img.   
     transparent {
@@ -21,19 +18,19 @@ block append content
 div( style="height:100%;width:100%;")
     h2(align="center")
         | MashOver Web Site Simulator
-    h3( align="center", style="color: chocolate")
+    h3( align="center", style="color: #66718A")
         | Selecting a map type from the tabs above will simulate a web site in this container.
-    div(style="border:2px solid green; margin: 8px; height:100%;")
+    div(style="border:2px solid #17244D; margin: 8px; height:100%;")
         h4  Depending on the tab selected, the web site will host a Google Map, Open Source map, or ArcGIS Online map.
         
         span
             p 
                 | The Collapse/Expand button  
                 img(ng-src="../stylesheets/images/Collapse.png", width="1.5%" height="2%")
-                |  at the top will open or close the web site selection tabs container above.
+                |  at the top will minimize or maximize the web site selection tabs container above.
     
-    div(style="border:2px solid green; margin: 8px; height:100%;")
-        p After selecting a map type, the map will appear on the left of the screen.  An accordion container on the right side will display some other web site verbage.  The container also contains instructions on how to use the system.  Finally, it contains expandable panels that allow the user to search ArcGIS Online for interesting map layers and map groups.
+    div(style="border:2px solid #17244D; margin: 8px; height:100%;")
+        p After selecting a map type, the simulated web site will appear on the left of the screen.  The web site contains a map in the center column.  The map features a button that will display the MapLinkr control in an accordion container on the right side.  The expandable panels include MapLinkr use instructions.  Other MapLinkr panels present the user with tools to share maps with collaborators, and tools to search ArcGIS Online for interesting map layers and map groups.
     
-        p After a search is conducted, selecting a map layer will display a dialog for directing the new layer to the same window, a new window, or a new tab.  It will also prompt for a channel name to allow all opened maps to synchronize over web sockets.
+        p Clicking the Map Max button on the map expanads the map display over the web site.  The MapLinkr tools provide capabilities for opening synchronized maps in the same window, in a new tab, or in a new window.
 

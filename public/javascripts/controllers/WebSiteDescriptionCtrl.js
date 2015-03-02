@@ -85,7 +85,7 @@
                         <h4>This sample Web Site powered by <img src="{{$parent.data.image}}">  {{$parent.data.mapType}} is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \
-                        <p style="border-style:solid; border-color:#287EC7;padding: 5px"> \
+                        <p style="border-style:solid; padding: 5px"> \
                             {{$parent.data.description}} \
                         </p> \
                         <p> \
