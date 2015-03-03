@@ -141,7 +141,15 @@ block append content
                                     li(class="acc li") 2  A web page with a google map display.
                                     li(class="acc li") 3  A web page with an open source map display.
                                     
-                                h3( style="text-align:left") Steps
+                                h3( style="text-align:left") Steps for Google and Leaflet maps
+                                p(style='font-size:0.75em;margin:0.3em')  
+                                
+                                    | Pan and zoom a Google or Leaflet map to the desired extent.  In a Google map display, the search tool will appear.  Enter a search category to display search results on the map.
+                                    
+                                p(style='font-size:0.75em;margin:0.3em')  
+                                    | Further sharing instructions are provided under the "Sharing Overview" accordion pane.
+                                
+                                h3( style="text-align:left") Steps for ArcGIS Online search
 
                                 ul#StepsList(style="height:100%")
                                     li(class="acc li") 1. Open the accordion pane for group search.  Enter a search term and click the submit button.
@@ -173,16 +181,16 @@ block append content
                                                     p(style='margin:1em').                              
                                                         The newly selected map is opened in a map viewer in a new popup  window.  Although this is not a full-featured new web browser instance, it provides complete functionality as a synchronized map viewer.  If  popups are turned off, use sequence described under the "New Tab" option above.
                                                 
-                                    li(class="acc li") 4. Create a Pusher channel:
-                                        p(style='margin:0.2em;'). A second dialog opens, requesting a Pusher channel name.  Specify a name that  will be unique for the shared session.
-                                    
-                                    li(class="acc li") 5. Experiment with synchronized maps:
-                                    
-                                        ul#StepsListSynch(style="height:100%")
+                                    li(class="acc li;style=font-weight:bolder;font-size:0.5em") 4. Create a Pusher channel:
+                                        p(style='margin:0.2em;font-weight:bolder;font-size:0.7em'). A second dialog opens, requesting a Pusher channel name.  Specify a name that  will be unique for the shared session.
                                         
-                                            li(class="acc li", style="font-size:1.0em;") a. Resize and move any open map viewer windows so that they are simultaneously visible.
-                                            li(class="acc li", style="font-size:1.0em;") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
-                                            li(class="acc li", style="font-size:1.0em;") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
+                                h3( style="text-align:left;font-weight:500") Experiment with synchronized maps:  
+                                                                                                    
+                                ul#StepsListSynch(style="height:100%;font-size:0.75em")
+                                
+                                    li(class="acc li", style="font-size:1.0em;") a. Resize and move any open map viewer windows so that they are simultaneously visible.
+                                    li(class="acc li", style="font-size:1.0em;") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
+                                    li(class="acc li", style="font-size:1.0em;") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
 
                             
                                 
@@ -230,8 +238,20 @@ block append content
                                 h3 Concepts and Features
                                 
                                 p(style='font-size:0.75em;margin:0.3em').                              
-                                    Multiple users can view synchronized maps in web browsers on other devices.  After  finding an ArcGIS WebMap that you want to share:
+                                    Multiple users can view synchronized maps in web browsers on other devices.  After  finding (1) a Google Map or Leaflet Map or (2) an ArcGIS WebMap that you want to share:
                                     
+                                h5 For Google or Leaflet Map
+                                
+                                p(style='font-size:0.75em;margin:0.3em'). 
+                                    After selecting a map exent and zoom level (and optionally performing a spatial query using the Google search too), perform two steps:
+                                    
+                                ul#StepsForPublishing(style="height:100%")
+                                
+                                    li(class="acc li") 1. If you haven't subscribed to a Pusher channel or entered a user/collaborator name, open the "Set Pusher Channel" accordion pane, and follow the instructions to enter these details.
+                                    li(class="acc li") 2. Open the "Publish Current Url" accordion pane and click the "Publish Url" button.  This will open a new window with the current zoom, extent, and search returns on the publisher's system, and will open the same new window on all collaborators' systems. 
+                                    
+                                h5 For ArcGIS Online Webmap
+                                
                                 ul#StepsSharing(style="height:100%")
                                 
                                     li(class="acc li") 1. Open the "Copy MapLinkr Url" accordion pane. The url for the current host site will be inserted in the text field and will be focused and selected.
@@ -243,6 +263,9 @@ block append content
                                     
                                 p(style='font-size:0.75em;margin:0.3em').
                                     The Pusher channel can also be set without opening a new map viewer by opening the "Set  Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.  This step is necessary if you and your collaborators want to synchronize map views where all collaborators already have synchronize-capable maps open.
+                                    
+                                p(style='font-size:0.75em;margin:0.3em').
+                                    At any time a user has opened a new ArcGIS map and desires to share the map with collaborators, the "Publish Current Url" pane provides the necessary tool.  The user opens the accordion pane in the window containing the map to be shared and clicks the "Publish Url" button.
 
                                 br
                             accordion-group(id="MailSenderId", class="accdiongroup",  is-open="status.isCopyMapLinkOpen")
