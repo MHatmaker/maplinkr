@@ -5,9 +5,9 @@
     console.log('PositionViewCtrl setup');
     define(['angular', 'lib/utils'], function(angular, utils) {
         console.log('PositionViewCtrl define');
-        
+
         var selfMethods = {};
-        
+
         var curDetails = {
             zm : 'zm',
             scl : 'scl',
@@ -19,29 +19,29 @@
         var keyToUpdate = 'coords';
         function PositionViewCtrl($scope) {
             console.debug('PositionViewCtrl - initialize dropdown for position selections');
-            
+
             $scope.viewOptions = [
-            { 
+            {
               type : 'zoom level',
               key : 'zm',
               value : 'zm, scale'
             },
-            { 
+            {
               type : 'map center',
               key : 'cntr',
               value : 'cntrlng, cntrlat'
             },
-            { 
+            {
               type : 'mouse coords',
               key : 'coords',
               value : 'evlng, evlat'
             }
             ];
-            
-            $scope.currentViewOption = $scope.viewOptions[2]; 
+
+            $scope.currentViewOption = $scope.viewOptions[2];
             $scope.positionView = "position info";
             $scope.expBtnHeight = 1.2; // utils.getButtonHeight(1.5); //'verbageExpandCollapseImgId');
-            
+
             $scope.updateDetails = {
                 'zm' : function(opt){curDetails['zm'] = opt['zm']; curDetails['scl'] = opt['scl'];},
                 'cntr' : function(opt) {curDetails['cntrlng'] = opt['cntrlng']; curDetails['cntrlat'] = opt['cntrlat'];},
@@ -62,11 +62,11 @@
                     $scope.positionView = formatted;
                 }
             };
-            
+
             function fmtView(){
                 $scope.formatView[$scope.currentViewOption.key]( curDetails);
             }
-           
+
             $scope.setPostionDisplayType = function() {
                 //alert("changed " + $scope.selectedOption.value);
                 // $scope.positionView = $scope.selectedOption.value;
@@ -74,7 +74,7 @@
                 var curKey = $scope.currentViewOption.key;
                 $scope.formatView[curKey](curDetails);
             };
-            
+
             $scope.updatePosition = function(key, val){
                 // console.log("in updatePosition");
                 if(key == 'zm' || key == 'cntr'){
@@ -100,13 +100,20 @@
                     this.$apply(fn);
                 }
             };
-        
-            selfMethods["updatePosition"] = $scope.updatePosition;
-        
+
+            if(selfMethods["updatePosition"]){
+                selfMethods["updatePosition"] = $scope.updatePosition;
+            }
+            else{
+              selfMethods["updatePosition"] = $scope.updatePosition;
+            }
+
         };
-          
+
         PositionViewCtrl.prototype.updatePosition = function (key, val){
-            selfMethods["updatePosition"](key, val);
+            if(selfMethods["updatePosition"]){
+                selfMethods["updatePosition"](key, val);
+            }
         }
 
         function init(App) {

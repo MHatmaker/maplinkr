@@ -13,16 +13,8 @@ block content
                         span(style='cursor: pointer; cursor: hand;')
                             figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
                                 img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="flex:1; margin: 0.01em 0.5em  0.01em  0.05em;")
-                                figcaption(class="btn", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandSum}} Summary
-                            
-                #idNavigatorExpander(class="mastersitecontrol-expander")
-                    #idExpButtonNav(class="havButton", ng-click="onExpNavClick()")
-                        span(style='cursor: pointer; cursor: hand;')
-                            figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
-                                img(src="../stylesheets/images/{{ExpandNav}}.png", class="expandoimage"
-                                  style="flex:1; margin: 0.01em 0.5em  0.01em  1.2em;")
-                                figcaption(class="btn", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandNav}} Navigator
-                    
+                                figcaption(class="btn", style="flex:15;float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;") {{ExpandSum}} Summary and/or Website Selection Options
+                                                
             #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", style="display:{{MasterSiteVis}}")
                 .background
                     div(id="mashbox", class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center; color: #00ff00;")

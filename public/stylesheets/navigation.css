@@ -8,15 +8,15 @@
 /* Large */
 .navigation {
   list-style: none;
-  margin: 0; 
-  
+  margin: 0;
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   flex-flow: row wrap;
-  
+
   -webkit-flex-flow: row wrap;
   justify-content: flex-start;
 }
@@ -52,27 +52,24 @@
     flex-flow: column wrap;
     padding: 0;
   }
-  
-  .navigation a { 
-    text-align: center; 
+
+  .navigation a {
+    text-align: center;
     padding: 10px;
-    border-top: 1px solid rgba(255,255,255,0.3); 
-    border-bottom: 1px solid rgba(0,0,0,0.1); 
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 
-  .navigation .havButton { 
-    text-align: center; 
+  .navigation .havButton {
+    text-align: center;
     padding: 4px;
-    border-top: 1px solid rgba(255,255,255,0.3); 
-    border-bottom: 1px solid rgba(0,0,0,0.1); 
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 
-  
+
   .navigation li:last-of-type a {
     border-bottom: none;
   }
   
-  .posViewVisible {
-    display : none;
-  }
 }

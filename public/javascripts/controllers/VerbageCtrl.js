@@ -8,7 +8,7 @@
     console.log('VerbageCtrl setup');
     define(['angular'], function(angular) {
         console.log('VerbageCtrl define');
-        
+
         function VerbageCtrl($scope) {
             console.debug('VerbageCtrl - initialize collapsed bool');
             // alert('VerbageCtrl - initialize some tabs');
@@ -17,8 +17,8 @@
             // $scope.isGroupSearchOpen = false;
             // $scope.isMapSearchOpen = false;
             $scope.oneAtATime = true;
-            
-            
+
+
             $scope.$on('CollapseVerbageEvent', function(event, args) {
                 $scope.VerbVis = args.verbage;
             });
@@ -41,16 +41,17 @@
                 isSharingInstructionsOpen: false,
                 isCopyMapLinkOpen: false,
                 isSetChannelOpen: false,
-                isUrlTransmitterOpen: false
+                isUrlTransmitterOpen: false,
+                isPositionViewCtrlOpen: false
             };
         };
-        
+
         function init(App) {
             console.log('VerbageCtrl init');
             App.controller('VerbageCtrl', ['$scope', VerbageCtrl]);
             return VerbageCtrl;
         }
-    
+
 
         return { start: init };
 

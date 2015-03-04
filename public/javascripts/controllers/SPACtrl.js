@@ -8,34 +8,32 @@
     define(['angular', 'lib/AgoNewWindowConfig', 'lib/fsm', 'lib/utils'], function(angular, AgoNewWindowConfig, finstatmach, utils) {
         console.log('SPACtrl define');
         var selfMethods = {};
-        
+
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
-            $scope.isNavigatorCollapsed = false;
             $scope.verbageExpandCollapse = "Expand";
             $scope.webSiteVisible = "Expand";
-            
+
             $scope.ExpandSite = "Max Map";
             $scope.ExpandPlug = "Show Linker";
             $scope.VerbVis = "none";
             $scope.MasterSiteVis = "inline";
             $scope.SiteVis = "flex";
             $scope.mapColWidth = "inherit";
-            $scope.hideWebSiteOnStartup = false;   
-                            
+            $scope.hideWebSiteOnStartup = false;
+
             $scope.data = {
                 verbageExpandCollapse : "Expand",
                 webSiteVisible : "Expand",
                 ExpandSite : 'Max Map',
                 ExpandPlug : 'Show Linker'
             };
-            
+
             var status = {
                 'website' : "flex",
-                'plugin' : "none",
-                'navigator' : 'flex'
+                'plugin' : "none"
                 };
-                
+
             var verbageWidth = {
                 true : '70%',
                 false : '0%'
@@ -46,47 +44,47 @@
                 };
             var innerTableAdjustment = 20;
             var colHeightAdjustment = 40;
-                
-            function printStatus(msg){ 
-                var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}", 
+
+            function printStatus(msg){
+                var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
                          msg, status['website'], status['plugin']);
                 console.log(msgstr)
                 msgstr = String.format("verbage {0}, website {1}", verbageWidth[status['plugin'] == 'flex'], websiteVisibility[status['website'] == 'flex']);
                 console.log(msgstr)
              }
-                
+
              $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse =  status['plugin'] == 'flex' ? "Collapse" : "Expand";
-                
-            function onShowPlugin(e, from, to, msg){ 
+
+            function onShowPlugin(e, from, to, msg){
                 status['plugin'] = $scope.VerbVis = "flex";
                 $scope.data.ExpandPlug = $scope.ExpandPlug = "Hide Linker";
                 $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse = "Collapse";
                 printStatus('Show Plug-in!');
              }
-             
-            function onHidePlugin(e, from, to, msg){ 
+
+            function onHidePlugin(e, from, to, msg){
                 status['plugin'] = $scope.VerbVis = "none";
                 $scope.data.ExpandPlug = $scope.ExpandPlug = "Show Linker";
                 $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse  = "Expand";
                 printStatus('Hide Plug-in!');
              }
-                
-            function onShowWebSite(e, from, to, msg){ 
+
+            function onShowWebSite(e, from, to, msg){
                 status['website'] = $scope.SiteVis = "flex";
                 $scope.mapColWidth = "inherit";
                 $scope.data.ExpandSite = $scope.ExpandSite = "Max Map" ;
                 $scope.data.webSiteVisible = $scope.webSiteVisible = "Expand";
                 printStatus('Show Web Site!');
              }
-                
-            function onHideWebSite(e, from, to, msg){ 
+
+            function onHideWebSite(e, from, to, msg){
                 status['website'] = $scope.SiteVis = "none";
                 $scope.mapColWidth = "100%";
                 $scope.data.ExpandSite = $scope.ExpandSite = "Min Map";
                 $scope.data.webSiteVisible = $scope.webSiteVisible = "Collapse";
                 printStatus('Hide Web Site!');
              }
-            
+
             var fsm = finstatmach.create({
               'initial': 'FullWebSite',
               'events': [
@@ -106,11 +104,11 @@
                 'onhidewebsite': onHideWebSite
               }
             })
-            
+
             $scope.$on('mapMaximizerEvent', function(event, data){
                 $scope.onExpSiteClick();
             });
-            
+
             $scope.onExpSiteClick = function(){
                 console.log("status['website'] before " + status['website']);
                 if(status['website'] == 'flex'){
@@ -119,11 +117,11 @@
                     fsm.onshowwebsite();;
                 }
                 console.log("status['website'] after  " + status['website']);
-                
+
                 utils.displayHeights("####  onExpSiteClick  ###");
                 utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
-                
+                var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
+
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 // $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
@@ -131,7 +129,7 @@
                 setTimeout(function(){
                     $scope.$apply(function(){
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                        var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                        var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
@@ -145,7 +143,7 @@
                         });
                         $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                                                                'verbage' : status['plugin']});
-                        /*                                      
+                        /*
                         $scope.$apply(function(){
                             console.log("broadcast('WebSiteVisibilityEvent')");
                             $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
@@ -154,11 +152,11 @@
                         */
                     },1000);
             }
-            
+
             $scope.$on('displayLinkerEvent', function(event, data){
                 $scope.onExpPlugClick();
             });
-            
+
             $scope.onExpPlugClick = function(){
                 if($scope.VerbVis == 'flex'){
                     fsm.onhideplugin();
@@ -168,16 +166,16 @@
                 }
                 utils.displayHeights("####  onExpPlugClick  ###");
                 utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
-                                                 
+                var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
+
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
-                                                            
+
                 setTimeout(function(){
                     $scope.$apply(function(){
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                        var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                        var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.displayHeights("####  onExpPlugClick after timeout  ###");
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
@@ -191,12 +189,11 @@
                         console.log("onExpPlugClick adjustments - colHgt : " + colHgt);
                         });
                     },1000);
-                    
+
             };
-            
+
             $scope.$on('CollapseSummaryEvent', function(event, args) {
                 $scope.MasterSiteVis = args.mastersitevis;
-                status['navigator'] = args.navVis;
                 console.log("on CollapseSummaryEvent, call adjustHeights");
                 var innerScope = $scope;
                 setTimeout(function(){
@@ -205,36 +202,23 @@
                         utils.displayHeights("####  CollapseSummaryEvent  ###");
                         adjustHeights($scope, true);
                         });
-                    },1000);  
-                
-            });
-            
-            $scope.$on('CollapseNavigatorEvent', function(event, args) {
-                $scope.MasterSiteVis = args.mastersitevis;
-                status['navigator'] = args.navVis;
-                setTimeout(function(){
-                    $scope.$apply(function(){
-                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                        utils.displayHeights("####  CollapseNavigatorEvent  ###");
-                        adjustHeights($scope);
-                        // utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
-                        });
                     },1000);
+
             });
-            
+
             $scope.$on('CollapseSummaryCompletionEvent', function(event, args){
                 if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
                     AgoNewWindowConfig.setHideWebSiteOnStartup(false);
                     $scope.onExpSiteClick();
                 }
             });
-            
+
             $scope.$on('windowResized', function() {
                 utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
                 utils.displayHeights("####  windowResized Event  ###");
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
-                
+
                 setTimeout(function(){
                     $scope.$apply(function(){
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
@@ -242,33 +226,33 @@
                         // utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
                         });
                     },1000);
-                    
+
                 console.log("windowResized method in SPACtrl.js");
-                
+
                 // utils.calculateComponentHeights($scope.MasterSiteVis, status['website']);
                 // utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
                 // utils.setElementHeight('idMasterSite', 90, '%');
                 // adjustHeights($scope);
             });
-               
+
             $scope.siteCollapser = function(tf){
                 $scope.hideWebSiteOnStartup = tf;
                 // $scope.onExpSiteClick();
             };
-            selfMethods["siteCollapser"] = $scope.siteCollapser; 
-            
+            selfMethods["siteCollapser"] = $scope.siteCollapser;
+
             function adjustHeights(scope, invalidateMapPane){
                 /* From flexbox.js plunker  */
-                var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], scope.MasterSiteVis, status['website']);
+                var colHgt = utils.getAvailableSiteColumnHeights(scope.MasterSiteVis, status['website']);
                 scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
-                
+
                 setTimeout(function(){
                     $scope.$apply(function(){
                         // $scope.bodyColHeight = colHgt;
                         // $scope.bodyColHeight = colHgt;
                         // utils.setElementHeight('idBody', colHgt - 20);
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                        var colHgt = utils.getAvailableSiteColumnHeights(status['navigator'], $scope.MasterSiteVis, status['website']);
+                        var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
@@ -289,19 +273,19 @@
                     },1000);
             }
         };
-        
+
         function hideWebsite(){
             console.log("hideWebsite");
-            
+
             selfMethods["siteCollapser"](true);
         }
-        
+
         function init(App) {
             console.log('SPACtrl init');
             App.controller('SPACtrl', ['$scope', SPACtrl]);
             return SPACtrl;
         }
-    
+
 
         return { start: init, hideWebsite : hideWebsite };
 
