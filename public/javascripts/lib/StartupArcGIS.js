@@ -5,8 +5,8 @@
     var selfDetails = {};
     var aMap = null;
     console.log('StartupGArcGIS setup');
-    require(['lib/MapHosterArcGIS', 'lib/utils', 'controllers/MapCtrl']);
-        
+    require(['lib/MapHosterArcGIS', 'lib/utils']);
+
     dojo.require("esri.map");
     dojo.require("dijit.layout.BorderContainer");
     dojo.require("dijit.layout.AccordionContainer");
@@ -22,27 +22,25 @@
     dojo.require("dgrid/Selection");
     dojo.require("dijit.Dialog");
     dojo.require("dojo.parser");
-    
+
     define([
         'lib/MapHosterArcGIS',
         'controllers/StompSetupCtrl',
-        'lib/AgoNewWindowConfig', 
+        'lib/AgoNewWindowConfig',
         'lib/utils',
         'controllers/TabsCtrl',
-        'controllers/MapCtrl',
         'angular',
         'esri/map'
-    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl, MapCtrl) {
+    ], function(MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl) {
         console.log('StartupArcGIS defined');
-        
+
         var CHANNEL = '/mapxtnt/';
         var loading;
         var newSelectedWebMapId = "";
         var mapCreated = null;
-        var mapCtrlContext = MapCtrl;
         var tabCtrlContext = TabsCtrl;
-        
-        selfDetails.mph = null; 
+
+        selfDetails.mph = null;
 
         function configit(nmpid){
             console.log("nmpid " + nmpid);
@@ -50,7 +48,7 @@
         function getMap(){
             return aMap;
         }
-        
+
         function resizeWebSiteVertical(isMapExpanded){
             if(aMap)
                 MapHosterArcGIS.resizeWebSite(isMapExpanded);
@@ -58,47 +56,47 @@
         function resizeVerbageHorizontal(isMapExpanded){
             if(aMap){
                 MapHosterArcGIS.resizeVerbage(isMapExpanded);
-                
+
                 // var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
                 // var minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-                
+
                 // var cnvs = angular.element(document.getElementById('map_canvas_root'));
                 // var mpcanvas = angular.element(document.getElementById("map_canvas"));
                 // var canElem = document.getElementById("map_canvas");
                 // canElem.resize();
                 // var djtmapcan = dojo.byId("map_wrapper");
-                
+
                 window.setTimeout(function() {
-                    
+
                     // cnvs.css('width', '100%');
                     MapHosterArcGIS.resizeVerbage(isMapExpanded);
                     // cnvs.css('width', '100%');
                     // window.resizeBy(0, 0);
-                    
+
                     // mpcanvas = angular.element(document.getElementById("map_canvas"));
                     // cnvs = angular.element(document.getElementById('map_canvas_root'));
                     // cnvs[0].clientWidth = mpcanvas[0].clientWidth;
                     // cnvs.css('width', '100%');
-                }, 1000); 
+                }, 1000);
             }
         }
         function resizeMapPane(isMapExpanded){
             console.log("StartupArcGIS.resizeMapPane : invalidateSize with current isMapExpanded = " + isMapExpanded);
         }
-        
+
 
         var stomp = null;
-        var mph = null; 
+        var mph = null;
 
         var map, urlObject;
         var configOptions;
-        
+
         var gridGroup;
         var gridMap;
         var selectedGroupId;
         var selectedWebMapId = "a4bb8a91ecfb4131aa544eddfbc2f1d0 "; //"e68ab88371e145198215a792c2d3c794";
         var previousSelectedWebMapId = selectedWebMapId;
-                
+
         var zoomWebMap = null;
         var pointWebMap = [null, null];
         var channel = null;
@@ -107,11 +105,11 @@
         var loading;
         var mpDiv = null;
         var resizeTimer = null;
-            
-        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle) 
+
+        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle)
         {
             var curmph = MapHosterArcGIS;
-            /* 
+            /*
             This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
              */
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
@@ -122,14 +120,14 @@
                     var serv = $inj.get('CurrentMapTypeService');
                     curmph = serv.getSelectedMapType();
                     }
-                    
-                    
+
+
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    AgoNewWindowConfig.getUserName(), 
+                    AgoNewWindowConfig.getUserName(),
                     function(channel, userName){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName + "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
                         console.log("open new ArcGIS window with URI " + url);
@@ -149,14 +147,14 @@
             }
             else
             {
-                /* 
+                /*
                 This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master site or opening the webmap from a url sent through a publish event.
                  */
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-                
+
                 initializePostProc(newSelectedWebMapId);
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');
@@ -171,18 +169,18 @@
             console.log("initializePostProc");
             if(newSelectedWebMapId && newSelectedWebMapId != null)
             {
-                var urlparams=dojo.queryToObject(window.location.search); 
+                var urlparams=dojo.queryToObject(window.location.search);
                 console.log("initializePostProc - urlparams");
                 console.log(urlparams);
-                
+
                 // Get the idWebMap from the url if it is present, otherwise return current webmapId
                 var idWebMap = AgoNewWindowConfig.webmapId(true);
-                
+
                 AgoNewWindowConfig.setMapHost('ArcGIS');
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType('arcgis');
-                
+
                 TabsCtrl.forceAGO();
                 /*
                     Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the AgoNewWindowConfig with ArcGIS-specific attributes.
@@ -191,7 +189,7 @@
                 {
                     if(idWebMap != newSelectedWebMapId)
                     {
-                        /* 
+                        /*
                         idWebMap should have been initiated through a replace current map selection
                         in the AGO group/map search process.
                          */
@@ -210,20 +208,20 @@
                         selectedWebMapId = idWebMap;
                         AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                     }
-                    
+
                     /*
-                    These accessors only return values from checking the url.  If it doesn't find them, 
+                    These accessors only return values from checking the url.  If it doesn't find them,
                     the value should be an empty string
                     */
                     var lonWebMap = AgoNewWindowConfig.lon();
                     var latWebMap = AgoNewWindowConfig.lat();
                     var zmw = AgoNewWindowConfig.zoom();
                     pusherChannel = AgoNewWindowConfig.masherChannel(true);
-                    
+
                     // alert("initializePostProc - pusherChannel = " + pusherChannel);
                     console.log("initializePostProc - pusherChannel = " + pusherChannel);
                     // AgoNewWindowConfig.setUrl(url);
-                    
+
                     if(lonWebMap && latWebMap && zoomWebMap)
                     {
                         /*
@@ -256,10 +254,10 @@
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
-            //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications. 
+            //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications.
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
 
-            //specify any default settings for your map 
+            //specify any default settings for your map
             //for example a bing maps key or a default web map id
             configOptions = {
                 // webmap: '4b99c1fb712d4fe694805717df5fadf2', // selectedWebMapId,
@@ -277,15 +275,15 @@
 
             //create the map using the web map id specified using configOptions or via the url parameter
             // var cpn = new dijit.layout.ContentPane({}, "map_canvas").startup();
-            
+
             // dijit.byId("map_canvas").addChild(cpn).placeAt("map_canvas").startup();
-            
+
             var mapDeferred = esri.arcgis.utils.createMap(configOptions.webmap, "map_canvas", {
                 mapOptions: {
                   slider: true,
                   nav: false,
                   wrapAround180:true
-                  
+
                 },
                 ignorePopups:false,
                 bingMapsKey: configOptions.bingMapsKey,
@@ -293,9 +291,9 @@
 
             });
             mapCreated = mapDeferred;
-            
+
             console.log("set up mapDeferred anonymous method");
-            mapDeferred.then(function (response) 
+            mapDeferred.then(function (response)
             {
                 console.log("mapDeferred.then");
                 if(previousSelectedWebMapId != selectedWebMapId)
@@ -315,7 +313,7 @@
                 console.log("response title " + response.itemInfo.item.title);
                 dojo.connect(aMap, "onUpdateStart", showLoading);
                 dojo.connect(aMap, "onUpdateEnd", hideLoading);
-               /*  
+               /*
             var resizeTimer;
             var mapcan = dijit.byId('map_canvas');
             console.debug(mapcan);
@@ -332,37 +330,37 @@
                     initUI();
                 } else {
                     dojo.connect(aMap, "onLoad", initUI);
-                }       
+                }
               }, function(error){
                     console.log('Create Map Failed: ' , dojo.toJson(error));
               });
         }
-            
-        function showLoading() 
+
+        function showLoading()
         {
             utils.showLoading() ;
             aMap.disableMapNavigation();
             aMap.hideZoomSlider();
         }
 
-        function hideLoading(error) 
+        function hideLoading(error)
         {
             utils.hideLoading(error);
             aMap.enableMapNavigation();
             aMap.showZoomSlider();
         }
 
-        function initUI(){   
+        function initUI(){
           //add scalebar or other components like a legend, overview map etc
             // dojo.parser.parse();
             console.debug(aMap);
-            
+
             /* Scalebar refuses to appear on map.  It appears outside the map on a bordering control.
             var scalebar = new esri.dijit.Scalebar({
                 map: aMap,
                 scalebarUnit:"english",
                 attachTo: "top-left"
-            });    
+            });
              */
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1] + ' zoom ' + zoomWebMap);
             console.log("selfDetails.mph : " + selfDetails.mph);
@@ -372,7 +370,7 @@
                 // alert("StartupArcGIS.initUI : selfDetails.mph == null");
                 selfDetails.mph = mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
-                // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap); 
+                // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
@@ -386,16 +384,16 @@
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
                         'client-NewMapPosition' : curmph.retrievedNewPosition},
-                        pusherChannel,  
-                        AgoNewWindowConfig.getUserName(), 
+                        pusherChannel,
+                        AgoNewWindowConfig.getUserName(),
                         function(callbackChannel, userName){
                             console.log("callback - don't need to setPusherClient");
                             console.log("It was a side effect of the createPusherClient:PusherClient process");
                             AgoNewWindowConfig.setUserName(userName);
                             // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
                         }
-                        ); 
-                   
+                        );
+
             }
             else
             {
@@ -409,12 +407,12 @@
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
-            
+
             var $inj = angular.injector(['app']);
             var ctrlSvc = $inj.get('ControllerService');
             var mapCtrl = ctrlSvc.getController();
             mapCtrl.placeCustomControls();
-            /* 
+            /*
             mpDiv = document.getElementById("map_wrapper");
             // var mpDivNG = angular.element(mpDiv)[0];
             console.debug(mpDiv);
@@ -431,12 +429,12 @@
             console.debug(mpDiv);
              */
         }
-          
-                    
+
+
         function initializePreProc()
         {
             console.log('initializePreProc entered');
-            // var urlparams=dojo.queryToObject(window.location.search); 
+            // var urlparams=dojo.queryToObject(window.location.search);
             // console.debug(urlparams);
             // var idWebMap=urlparams['?id'];
             var idWebMap = AgoNewWindowConfig.webmapId(true);
