@@ -118,7 +118,7 @@ var MasherNodeApp = function() {
 
     /**
      *  Create the routing table entries + handlers for the application.
-     
+
 urls = (
     '/', 'Index',
   '/leaflet/?', 'Leaflet',
@@ -127,8 +127,8 @@ urls = (
   '/pusher/auth/?', 'AuthHandler'
 )
      */
-     
-                
+
+
     self.createRoutes = function() {
         self.routes = { };
 
@@ -187,7 +187,7 @@ urls = (
         // self.initDB();
         console.log("server is initialized");
     };
-    
+
     self.initSomeJade = function() {
         self.app.set('views', __dirname + '/views');
         self.app.set('view engine', 'jade');
@@ -219,7 +219,7 @@ urls = (
         // Create the express server and routes.
         self.initializeServer();
     };
-    /* 
+    /*
     self.initDB = function() {
         // Make our db accessible to our router
         self.app.use(function(req,res,next){
@@ -243,7 +243,7 @@ urls = (
     self.start = function() {
         //  Start the app on the specific interface (and port).
         console.log("now start");
-        /* 
+        /*
         self.app.listen(self.port, self.ipaddress, function() {
             console.log('%s: Node server started on %s:%d ...',
                         Date(Date.now() ), self.ipaddress, self.port);
@@ -268,4 +268,3 @@ var zapp = new MasherNodeApp();
 zapp.initialize();
 module.exports = zapp.app;
 zapp.start();
-

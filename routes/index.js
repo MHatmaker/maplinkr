@@ -5,6 +5,12 @@ exports.index = function(req, res){
   res.render('index');
 };
 
+exports.indexchannel = function(req, res){
+  console.log("exports.indexchannel");
+  var name = req.params.name;
+  console.log(name);
+  res.render('/' + name);
+};
 
 exports.agonewwindow = function(req, res){
   console.log("exports.agonewwindow");

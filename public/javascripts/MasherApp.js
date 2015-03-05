@@ -85,7 +85,11 @@
             var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl(); // sets id in config object
             // AgoNewWindowConfig.setUserId(referrerId);
             AgoNewWindowConfig.setInitialUserStatus(false);
-            // AgoNewWindowConfig.setReferrerId(referrerId);
+            var channel = AgoNewWindowConfig.getChannelFromUrl();
+            if(channel != ''){
+              AgoNewWindowConfig.setChannel(channel);
+          }
+
         }
         console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
         console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());

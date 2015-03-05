@@ -25,13 +25,13 @@ var details = {
     hideWebSiteOnStartup : false,
     smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570}
 };
-    
+
 
 (function () {
     'use strict';
     console.debug('AgoNewWindowConfig.js setup method');
     var nextWindowName = 'MishMash ';
-   /*  
+   /*
     var locationPath = "/";
     //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
     console.log(location.pathname);
@@ -42,7 +42,7 @@ var details = {
     define([
     ], function (Color, Symbol) {
             console.debug('AgoNewWindowConfig define fn');
-            
+
             function search(searchDetails){
                 console.log("setSearch from " + details.search + " to " + searchDetails);
                 details.search = searchDetails.substring(0);
@@ -63,7 +63,7 @@ var details = {
                 // alert("getParameterByName('id') = " + rslt);
                 // alert(rslt.length);
                 // alert(rslt.length != 0);
-                
+
                 console.log("getParameterByName('id') = " + rslt);
                 console.log(rslt.length);
                 console.log(rslt.length != 0);
@@ -73,6 +73,12 @@ var details = {
                 // alert(getParameterByName('channel'));
                 // alert(details.masherChannel);
                 return newWindow ? getParameterByName('channel') : details.masherChannel;
+            },
+
+            getChannelFromUrl : function(){
+                details.masherChannel = getParameterByName('channel');
+                details.masherChannelInitialized = true;
+                return details.masherChannel;
             },
             setChannel : function(chnl){
                 if(masherChannelInitialized == false){
@@ -226,7 +232,7 @@ var details = {
                 details.userName = name;
             },
 
-            
+
             getInitialUserStatus : function(){
                 return details.isInitialUser;
             },
@@ -270,7 +276,7 @@ var details = {
                     "lon :" + details.lon + '\n' +
                     "lat : " + details.lat + "\n" +
                     "zoom : " + details.zoom);
-                    
+
             }
         };
     });
