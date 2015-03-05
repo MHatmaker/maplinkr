@@ -1,4 +1,7 @@
 
+
+var portalForSearch;
+
 (function() {
     'use strict';
     var locationPath = "/";
@@ -93,9 +96,10 @@
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);
+            portalForSearch = portal;
             console.info('start the bootstrapper');
             console.debug(bootstrap);
-            readyForSearchGrid(portal);
+            //readyForSearchGrid(portal);
             // readyForSearchGridMap(portal);
             bootstrap.start();
         });
