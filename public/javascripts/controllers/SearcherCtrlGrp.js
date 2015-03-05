@@ -8,6 +8,7 @@
         'lib/utils',
     ], function(angular, utils) {
         console.log('SearcherCtrlGrp define');
+        var selfDict = {'portal': null}
 
         function SearcherCtrlGrp($scope) {
             $scope.findGrpDisabled = false;
@@ -20,6 +21,8 @@
 
             var self = this;
             self.scope = $scope;
+            var portalForSearch = selfDict.portal;
+            $scope.portalForSearch = selfDict.portal;
           /*
             var layoutPlugin = new ngGridLayoutPlugin();
 
@@ -238,20 +241,24 @@
                 console.log("showMapResults");
                 $scope.$emit('OpenMapPaneEvent', { 'respData' : response });
             };
+            selfDict['setPortal'] = function(portal){
+                portalForSearch = portal;
+            }
         }
 
-        function init(App) {
+        function init(App, portalForSearch) {
             console.log('SearcherCtrlGrp init');
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
             App.controller('SearcherCtrlGrp',  ['$scope', SearcherCtrlGrp]);
             // SearcherCtrlGrp.CurrentWebMapIdService= CurrentWebMapIdService;
+            selfDict.portal = portalForSearch;
             return SearcherCtrlGrp;
         }
 
         return { start: init };
 
-    });
+  });
 
 }).call(this);

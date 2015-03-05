@@ -16,6 +16,8 @@ angular.isUndefinedOrNull = function(val) {
         var heightCalculations = {};
         heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
         var scopeDict = {};
+        var selfDict = {'portal': null}
+        var portalForSearch = null;
 
         // function SearcherCtrlMap($scope, $modal311) {
         function SearcherCtrlMap($scope, $rootScope) {
@@ -30,6 +32,8 @@ angular.isUndefinedOrNull = function(val) {
 
             var self = this;
             self.scope = $scope;
+            var portalForSearch = selfDict.portal;
+            $scope.portalForSearch = selfDict.portal;
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
@@ -264,7 +268,7 @@ angular.isUndefinedOrNull = function(val) {
             };
         }
 
-        function init(App) {
+        function init(App, portalForSearch) {
             console.log('SearcherCtrlMap init');
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
@@ -272,6 +276,7 @@ angular.isUndefinedOrNull = function(val) {
             App.controller('SearcherCtrlMap',  ['$scope', '$rootScope', SearcherCtrlMap]);
 
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
+            selfDict.portal = portalForSearch;
             return SearcherCtrlMap;
         }
 

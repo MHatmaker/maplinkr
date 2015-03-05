@@ -23,14 +23,14 @@
         // 'controllers/LinkerDisplayDirective',
         'lib/GeoCoder',
         'javascripts/lib/AgoNewWindowConfig'
-        ], 
-    function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl, 
+        ],
+    function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
             WebSiteDescriptionCtrl, SPACtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
         console.log('AppController define');
 
         function AppController($scope) {}
-            
+
         function getUserName($http){
             $http({method: 'GET', url: '/username'}).
                 success(function(data, status, headers, config) {
@@ -48,8 +48,8 @@
                 alert('Oops' + data.name);
             });
         }
-            
-        function init(App) {
+
+        function init(App, portalForSearch) {
             console.log('AppController init');
             var $inj = angular.injector(['app']);
             var $http = $inj.get('$http');
@@ -61,8 +61,8 @@
             // MapCtrl.start(App);
             SPACtrl.start(App);
             VerbageCtrl.start(App);
-            SearcherCtrlGrp.start(App);
-            SearcherCtrlMap.start(App);
+            SearcherCtrlGrp.start(App, portalForSearch);
+            SearcherCtrlMap.start(App, portalForSearch);
             if(StompSetupCtrl.isInitialized() == false){
                 StompSetupCtrl.start(App);
             }
@@ -76,8 +76,8 @@
             // MapMaximizerDirective.start(App);
             MapCtrl.start(App);
             GeoCoder.start(App, $http);
-  
-            
+
+
             return AppController;
         }
 

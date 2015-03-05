@@ -20,30 +20,30 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterArcGIS'
     ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
-        
-        function init() {
+
+        function init(portalForSearch) {
             // var App = angular.module('app', ['ui.bootstrap']);
             console.debug('bootstrap init method');
-            
+
             // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
-            
-            var eventDct = 
+
+            var eventDct =
                     {'client-MapXtntEvent' : null,
                     'client-MapClickEvent' : null,
                     'client-NewMapPosition' : null};
-                        
+
             var mapRestUrlToType = {'Leaflet': 'leaflet',
                         'GoogleMap' : 'google',
                         'ArcGIS' : 'arcgis'};
-                            
+
             var googleQueryDct = {'query' : null};
-            
+
             var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                 function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
                     console.debug('App module route provider');
                     var isCollapsed = false;
-                     
+
                     $routeProvider.
                       when('/', {
                         templateUrl: 'partials/SystemSelector.jade',
@@ -55,16 +55,16 @@ var selectedMapType = 'arcgis';
                             console.log("when string is " + '/partials/agonewwindow/:id');
                             console.log("params = " + params.id);
                             console.log("prepare to return " + '/partials/agonewwindow' + params.id);
-                            return '/partials/agonewwindow' + params.id; 
+                            return '/partials/agonewwindow' + params.id;
                         },
                         controller: App.MasherCtrl, reloadOnSearch: true
                       }).
                       when('/views/partials/:id',  {
-                        templateUrl: function(params){ 
+                        templateUrl: function(params){
                             console.log("when string is " + '/views/partials/:id');
                             console.log(" params.id : " +  params.id);
                             console.log("prepare to return " + '/partials/' + params.id);
-                            return '/partials/' + params.id; 
+                            return '/partials/' + params.id;
                         },
                         controller: App.MapCtrl, reloadOnSearch: true
                       }).
@@ -73,15 +73,15 @@ var selectedMapType = 'arcgis';
                       }).
                       otherwise({
                           redirectTo: '/'
-                      }); 
-                             
+                      });
+
                     $locationProvider.html5Mode(true);
                     console.debug('Here we are at the end of routeProvider logic');
-                    
+
                 }
             ]).
-            
-            
+
+
             factory("CurrentWebMapIdService", function(){
                 var currentWebMapId = "fooWebMapId";
                 return {
@@ -93,21 +93,21 @@ var selectedMapType = 'arcgis';
                 var mapTypes = {'leaflet': MapHosterLeaflet,
                             'google' : MapHosterGoogle,
                             'arcgis' : MapHosterArcGIS};
-                            
+
                 var mapRestUrl = {'leaflet': 'Leaflet',
                             'google' : 'GoogleMap',
                             'arcgis' : 'ArcGIS'};
-                            
+
                 var currentMapType = 'arcgis';
                 var previousMapType = 'arcgis';
-                
-                
+
+
                 var getMapTypes = function(){
                     var values = Object.keys(mapTypes).map(function(key){
                         return mapTypes[key];
                         });
                     return values;
-                    
+
                     // var mapTypeValues = [];
                     // for (var key in mapTypes){
                         // mapTypeValues.push(mapTypes[key]);
@@ -137,24 +137,24 @@ var selectedMapType = 'arcgis';
                 }
                 return { getMapTypes: getMapTypes, getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey, getMapRestUrl : getMapRestUrl };
             }).
-                
-            
+
+
              factory("StompEventHandlerService", function(){
-                        
+
                 var getEventDct = function(){
                     return eventDct;
                 }
-                
+
                 var addEvent = function(evt, handler){
                     eventDct[evt] = handler;
                 }
-                
+
                 var getHandler = function(evt){
                     return eventDct[evt];
                 }
                 return { getEventDct : getEventDct, addEvent : addEvent, getHandler : getHandler};
             }).
-            
+
             factory("GoogleQueryService", function($rootScope){
                 var getQueryDct = function() {
                     return googleQueryDct;
@@ -174,15 +174,15 @@ var selectedMapType = 'arcgis';
                 }
                 return {getQueryDct: getQueryDct, setQuery : setQuery, clickSearch : clickSearch };
             }).
-            
+
             factory("ControllerService", function($rootScope){
                 var getController = function() {
                     return MapCtrl;
                 }
-                
+
                 return {getController: getController};
             });
-                
+
             App.directive('autoFocus', function($timeout) {
                 return {
                     restrict: 'AC',
@@ -194,18 +194,18 @@ var selectedMapType = 'arcgis';
                     }
                 };
             });
-            
-            AppController.start(App);
+
+            AppController.start(App, portalForSearch);
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);
-            
+
             console.log("url is " + location.search);
             var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             AgoNewWindowConfig.setDestinationPreference('New Pop-up Window');
             if(isNewAgoWindow){
                 var maphost = AgoNewWindowConfig.maphost();
                 console.log('maphost : ' + maphost);
-                                
+
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
@@ -216,7 +216,7 @@ var selectedMapType = 'arcgis';
                     var searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
                 }
-                    
+
                 MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
                 AgoNewWindowConfig.setHideWebSiteOnStartup(true);
