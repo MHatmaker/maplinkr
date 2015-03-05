@@ -157,7 +157,7 @@ angular.isUndefinedOrNull = function(val) {
                 q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
                 num: 20
               };
-              portal.queryItems(params).then(function (data) {
+              portalForSearch.queryItems(params).then(function (data) {
                     $scope.showMapResults(data);
                 });
             };
@@ -169,16 +169,16 @@ angular.isUndefinedOrNull = function(val) {
               self.portal = portalForSearch;
 
               if ($scope.signInOutMap.indexOf('In') !== -1) {
-                portal.signIn().then(function (loggedInUser) {
+                portalForSearch.signIn().then(function (loggedInUser) {
                     $scope.$emit('SignInOutEmitEvent'); //out
-                  findArcGISGroupMaps(portal, $scope.searchTermMap);   // update results
+                  findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);   // update results
                 }, function (error) {  //error so reset sign in link
                     $scope.$emit('SignInOutEmitEvent'); //in
                 });
               } else {
-                portal.signOut().then(function (portalInfo) {
+                portalForSearch.signOut().then(function (portalInfo) {
                     $scope.$emit('SignInOutEmitEvent'); //in
-                    findArcGISGroupMaps(portal, $scope.searchTermMap);
+                    findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);
                 });
               }
             };
@@ -238,6 +238,7 @@ angular.isUndefinedOrNull = function(val) {
                     $scope.redrawGrid();
 
                  }
+                utils.hideLoading();
             };
             $scope.safeApply = function(fn) {
                 var phase = this.$root.$$phase;

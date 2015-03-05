@@ -2,21 +2,21 @@
 (function() {
     'use strict';
     var locationPath = "/";
-    
+
     define('angular', function () {
         if (angular) {
             return angular;
         }
         return {};
     });
-    
+
     require({
         async: true,
         //aliases: [['text', 'dojo/text']],
         packages: [{
             name: 'controllers',
             location: locationPath + 'javascripts/controllers'
-        }, 
+        },
         {
             name: 'lib',
             location: locationPath + 'javascripts/lib'
@@ -36,7 +36,7 @@
         }
          */
         // ,
-        // { 
+        // {
             // name: 'dojo',
             // location: '//ajax.googleapis.com/ajax/libs/dojo/1.9.3/'
         // }
@@ -46,7 +46,7 @@
     require([
         "dojo",
         "dojo/domReady",
-        "esri/arcgis/Portal", 
+        "esri/arcgis/Portal",
         'javascripts/lib/AgoNewWindowConfig',
         'javascripts/bootstrap',
         'lib/GeoCoder',
@@ -62,7 +62,7 @@
         console.log(bootstrap);
         console.log('AgoNewWindowConfig initialization');
         AgoNewWindowConfig.showConfigDetails('MasherApp startup before modifying default settings');
-        
+
         console.log("before domready, url is " + location.search);
         console.log("before domready, href is " + location.href);
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
@@ -70,7 +70,7 @@
 
         var userId = getRandomInt(1, 100);
         AgoNewWindowConfig.setUserId(userId);
-        
+
         if(location.search == ''){
             AgoNewWindowConfig.setInitialUserStatus(true);
             AgoNewWindowConfig.setprotocol(location.protocol);
@@ -88,7 +88,7 @@
         console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
-        
+
         AgoNewWindowConfig.showConfigDetails('MasherApp startup after modifying default settings');
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
@@ -96,7 +96,7 @@
             console.info('start the bootstrapper');
             console.debug(bootstrap);
             readyForSearchGrid(portal);
-            readyForSearchGridMap(portal);
+            // readyForSearchGridMap(portal);
             bootstrap.start();
         });
     });

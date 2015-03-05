@@ -1,4 +1,4 @@
-
+/*
     //display a list of Maps that match the input user name
     function showMapResults(response) {
 	  utils.hideLoading();
@@ -78,7 +78,7 @@
 	{
 		alert("thumbnail clicked");
 	}
-	
+
     function renderMapTable(obj, options) {
       var template = '<div class="thumbnail"><img src="${0}" width="50" height="50" /></div><div class="title" >${1}<span> <i> (${2} ) </i></span></div><div class="summary">${3} </div>';
       var summary = obj.snippet || '';
@@ -88,7 +88,7 @@
         innerHTML : dojo.string.substitute(template,[thumbnail,obj.title,obj.owner,summary])
       });
     }
-/* 
+/*
     function findArcGISGroupMaps() {
       utils.showLoading()
       var keyword = dojo.byId('mapFinder').value;
@@ -100,7 +100,8 @@
 			showMapResults(data);
 		});
     } */
-	
+
+/*
 	function findMapsForGroup(gId)
 	{
       var params = {
@@ -108,11 +109,11 @@
          num:20  //find 40 items - max is 100
         };
         portal.queryGroups(params).then(function(groups){
-        //get group title and thumbnail url 
+        //get group title and thumbnail url
         if (groups.results.length > 0) {
           group = groups.results[0];
-          
-          //Retrieve the web maps and applications from the group and display 
+
+          //Retrieve the web maps and applications from the group and display
           var params = {
             q: ' type:"Web Map" -type:"Web Mapping Application"',
             num: 10
@@ -147,9 +148,9 @@
         });
       }
     }
-
+*/
     //dojo.ready(function () {
-    
+
     function readyForSearchGridMap(portal){
       // esri.config.defaults.io.proxyUrl = '../proxy/proxy.ashx';
       esri.config.defaults.io.proxyUrl = "/arcgisserver/apis/javascript/proxy/proxy.ashx";
