@@ -16,7 +16,7 @@ angular.isUndefinedOrNull = function(val) {
         var heightCalculations = {};
         heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
         var scopeDict = {};
-        var selfDict = {'portal': null}
+        // var selfDict = {'portal': null}
         var portalForSearch = null;
 
         // function SearcherCtrlMap($scope, $modal311) {
@@ -32,8 +32,8 @@ angular.isUndefinedOrNull = function(val) {
 
             var self = this;
             self.scope = $scope;
-            var portalForSearch = selfDict.portal;
-            $scope.portalForSearch = selfDict.portal;
+            // var portalForSearch = selfDict.portal;
+            // $scope.portalForSearch = selfDict.portal;
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
@@ -170,7 +170,7 @@ angular.isUndefinedOrNull = function(val) {
             // gets private groups as well
             $scope.signInFromMapTab = function() {
               console.log("signInFromMapTab");
-              self.portal = portalForSearch;
+              // self.portal = portalForSearch;
 
               if ($scope.signInOutMap.indexOf('In') !== -1) {
                 portalForSearch.signIn().then(function (loggedInUser) {
@@ -268,7 +268,7 @@ angular.isUndefinedOrNull = function(val) {
             };
         }
 
-        function init(App, portalForSearch) {
+        function init(App, portal) {
             console.log('SearcherCtrlMap init');
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
@@ -276,7 +276,8 @@ angular.isUndefinedOrNull = function(val) {
             App.controller('SearcherCtrlMap',  ['$scope', '$rootScope', SearcherCtrlMap]);
 
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
-            selfDict.portal = portalForSearch;
+            // selfDict.portal = portalForSearch;
+            portalForSearch = portal;
             return SearcherCtrlMap;
         }
 
