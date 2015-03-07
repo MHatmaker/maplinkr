@@ -11,14 +11,14 @@ define('GeoCoder', function () {
     }
     return {};
 });
-    
+
 (function() {
     "use strict";
     console.log("ready to require stuff in MapHosterLeaflet");
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig'], 
-    
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig'],
+
         function(PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig) {
 
         var scale2Level = [],
@@ -43,16 +43,16 @@ define('GeoCoder', function () {
         };
         var markers = [];
         var popups = [];
-                    
-        function configureMap(lmap) 
+
+        function configureMap(lmap)
         {
             console.debug("ready to show mphmap");
             mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
             console.debug(mphmap);
             showLoading();
-                        
+
 			geoCoder =  GeoCoder; //.nominatim();
-            
+
             if(AgoNewWindowConfig.testUrlArgs()){
                 var qlat = AgoNewWindowConfig.lat();
                 var qlon = AgoNewWindowConfig.lon();
@@ -65,7 +65,7 @@ define('GeoCoder', function () {
                 updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
              }
              console.log( mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
-             
+
             showGlobals("Prior to new Map");
 
             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -73,7 +73,7 @@ define('GeoCoder', function () {
             // L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
             var lyr = L.tileLayer(osmUrl, {
                 maxZoom: 18,
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ï¿½ <a href="http://cloudmade.com">CloudMade</a>'
             }).addTo(mphmap);
             lyr.on("loading", function( e ) {
                     showLoading()}  );
@@ -85,9 +85,9 @@ define('GeoCoder', function () {
             zoomLevels = maxZoom - minZoom + 1;
             collectScales();
             bounds = mphmap.getBounds(); // returns LatLngBounds  -- also check getBoundsZoom(bounds, inside? bool)
-            
+
             addInitialSymbols();
-            
+
             console.log("again " + mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
             mphmapCenter = mphmap.getCenter();
             mphmap.on("mousemove", function( e ) {
@@ -100,7 +100,7 @@ define('GeoCoder', function () {
                     setBounds('zoom', null);
                 }
             });
-            
+
             mphmap.on("moveend", function( e ) {
                 if(userZoom == true){
                     setBounds('pan', e.latlng);
@@ -113,8 +113,8 @@ define('GeoCoder', function () {
         function hideLoading(){
             utils.hideLoading();
         }
-        
-        function onMouseMove( e) 
+
+        function onMouseMove( e)
         {
             var ltln = e.latlng;
             var fixedLL = utils.toFixed(ltln.lng,ltln.lat, 3);
@@ -125,7 +125,7 @@ define('GeoCoder', function () {
             var fixedCntrLL = utils.toFixed(cntr.lng,cntr.lat, 3);
             var cntrlng = fixedCntrLL.lon;
             var cntrlat = fixedCntrLL.lat;
-             
+
             PositionViewCtrl.update('coords', {
                 'zm' : zm,
                 'scl' : scale2Level[zm].scale,
@@ -135,7 +135,7 @@ define('GeoCoder', function () {
                 'evlat' : evlat
             });
         }
-        
+
         function showClickResult(r){
             if (r) {
                 console.log("showClickResultp at " + r.lat + ", " + r.lon);
@@ -161,8 +161,8 @@ define('GeoCoder', function () {
                 }
             }
         }
-            
-        function onMapClick(e) 
+
+        function onMapClick(e)
         {
 			geoCoder.reverse(e.latlng, mphmap.options.crs.scale(mphmap.getZoom())).
                 then(function(results) {
@@ -190,7 +190,7 @@ define('GeoCoder', function () {
                 //console.debug(sendRet);
             }
         }
-        
+
         function extractBounds(action, latlng)
         {
             var zm = mphmap.getZoom();
@@ -200,15 +200,15 @@ define('GeoCoder', function () {
             // var cntr = action == 'pan' ? latlng : mphmap.getCenter();
             var cntr = mphmap.getCenter();
             var fixedLL = utils.toFixed(cntr.lng,cntr.lat, 3);
-            var xtntDict = {'src' : 'leaflet_osm', 
-                'zoom' : zm, 
-                'lon' : fixedLL.lon, 
+            var xtntDict = {'src' : 'leaflet_osm',
+                'zoom' : zm,
+                'lon' : fixedLL.lon,
                 'lat' : fixedLL.lat,
                 'scale': scale2Level[zm].scale,
                 'action': action};
             return xtntDict;
         }
-        
+
         function retrievedClick(clickPt)
         {
             console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
@@ -239,11 +239,11 @@ define('GeoCoder', function () {
                 var tmpLon = cntrxG;
                 var tmpLat = cntryG;
                 var tmpZm = zmG;
-                
+
                 updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                 userZoom = false;
                 var cntr = new L.LatLng(xj.lat, xj.lon);
-                
+
                 if(xj.action == 'pan')
                 {
                     mphmap.setView(cntr, zm);
@@ -261,10 +261,10 @@ define('GeoCoder', function () {
                 }
                 userZoom = true;
             }
-            
+
             AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
-        
+
         function getEventDictionary(){
             var $inj = angular.injector(['app']);
             var evtSvc = $inj.get('StompEventHandlerService');
@@ -286,7 +286,7 @@ define('GeoCoder', function () {
                 sc2lv.push(obj);
             }
         }
-         
+
         // MapHosterLeaflet.prototype.updateGlobals = function(msg, cntrx, cntry, zm)
         function updateGlobals(msg, cntrx, cntry, zm)
         {
@@ -315,7 +315,7 @@ define('GeoCoder', function () {
             });
             AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
-        
+
         function showGlobals(cntxt)
         {
             console.log( cntxt + " Globals : lon " + cntrxG + " lat " + cntryG + " zoom " + zmG);
@@ -343,7 +343,7 @@ define('GeoCoder', function () {
             var allContent = '<h4  style="color:forestgreen">' + hint + '</h4><div id="' + contentId + '" >' + content + '</div><br><button class="trigger  btn-primary" id="' + shareBtnId + '">Share</button>';
             var mrkr = L.marker(pos).addTo(mphmap);
             var contextPos = pos;
-                        
+
             var showSomething = function (){
                 if(selfPusherDetails.pusher)
                 {
@@ -357,15 +357,15 @@ define('GeoCoder', function () {
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
                 }
             };
-            
+
             var container = $('<div />');
             // container.on('click', function() {
                 // if(this.id != ""){
-                    
+
                 // }showSomething();
             // });
             container.html(allContent);
-            
+
             var popup = L.popup().setContent(container[0]);
             mrkr.bindPopup(popup);
             markers.push(mrkr);
@@ -381,7 +381,7 @@ define('GeoCoder', function () {
                         console.debug(btnShare);
                         btnShare.style.visibility = 'hidden';
                     }
-                
+
                 }
                 if(btnShare){
                     btnShare.onclick=function(){
@@ -389,26 +389,26 @@ define('GeoCoder', function () {
                     };
                 }
             });
-            
+
             // var btnShare = document.getElementById(shareBtnId);
             // btnShare.onclick=function(){showSomething();};
-            
+
             // mphmap.on('click', '.trigger', function() {
                 // alert('Hello from Toronto!');
                 // showSomething();
             // });
             // mrkr.openPopup();
         }
-                
+
         function addInitialSymbols()
-        {   
+        {
             var hint = "Seanery Beanery Industrial Row";
             markerInfoPopup([41.790, -87.735], "Seanery Beanery with spectacular view of abandoned industrial site", hint);
             hint = "Seanery Beanery For Discriminating Beaners";
             markerInfoPopup([41.810, -87.715], "Seanery Beanery located adjacent to great entertainment venues", hint);
             hint = "Seanery Beanery For Walking Averse";
             markerInfoPopup([41.785, -87.70], "Seanery Beanery located close to the pedicab terminal", hint);
-            
+
             // L.circle([51.508, -0.11], 500, {
                 // color: 'red',
                 // fillColor: '#f03',
@@ -427,15 +427,16 @@ define('GeoCoder', function () {
 
             popup = L.popup();
         }
-        
+
         function setUserName(name){
             AgoNewWindowConfig.setUserName(name);
         }
 
         function setPusherClient(pusher, channel)
-        {   
+        {
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
+            AgoNewWindowConfig.setChannel(channel);
             
             var $inj = angular.injector(['app']);
             var evtSvc = $inj.get('StompEventHandlerService');
@@ -450,10 +451,10 @@ define('GeoCoder', function () {
         {
             console.log(" MapHosterLeaflet.prototype.getGlobalsForUrl");
             console.log("&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG);
-            return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG; 
+            return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG;
         }
-        
-        
+
+
         function publishPosition(pos)
         {
             if(selfPusherDetails.pusher)
@@ -461,7 +462,7 @@ define('GeoCoder', function () {
                 console.log("MapHosterLeaflet.publishPosition");
                 // pos['maphost'] = 'Leaflet';
                 console.log(pos);
-                
+
                 var lfltBounds = mphmap.getBounds();
                 console.debug(lfltBounds);
                 if(lfltBounds)
@@ -473,45 +474,45 @@ define('GeoCoder', function () {
                     lfltBounds.ymin = sw.lat;
                     lfltBounds.xmax = ne.lng;
                     lfltBounds.ymax = ne.lat;
-                
+
                     var bnds = {'llx' :sw.lng, 'lly' : sw.lat,
                                  'urx' : ne.lng, 'ury' : ne.lat};
                     AgoNewWindowConfig.setBounds(bnds);
                 }
-                
+
                 var bnds = AgoNewWindowConfig.getBoundsForUrl();
                 pos.search += bnds;
-                
+
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }
-                
+
         }
-        
+
         function getCenter(){
             var pos = { 'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG};
             console.log("return accurate center from getCenter()");
             console.debug(pos);
             return pos;
         }
-        
+
         function MapHosterLeaflet()
         {
             var self = this;
             this.pusher = null;
             // selfPusherDetails.pusher = null;
             userZoom = true;
-                            
+
             // this.getGlobalsForUrl = function()
             // {
-                // return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG; 
+                // return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG;
             // }
         }
-        
+
         function init() {
             return MapHosterLeaflet;
         }
-        
-        
+
+
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
             mphmap.invalidateSize(false);
@@ -523,12 +524,10 @@ define('GeoCoder', function () {
 
         return { start: init, config : configureMap,
                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick, 
-                  setPusherClient: setPusherClient, setUserName : setUserName, 
+                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
+                  setPusherClient: setPusherClient, setUserName : setUserName,
                   getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, publishPosition : publishPosition, getCenter : getCenter };
     });
 
 }).call(this);
-
-    

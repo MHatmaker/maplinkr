@@ -81,7 +81,7 @@ var details = {
                 return details.masherChannel;
             },
             setChannel : function(chnl){
-                if(masherChannelInitialized == false){
+                if(details.masherChannelInitialized == false){
                     details.masherChannelInitialized = true;
                 }
                 details.masherChannel = chnl;

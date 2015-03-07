@@ -350,6 +350,23 @@
             aMap.showZoomSlider();
         }
 
+        function placeCustomControls(){
+            var $inj = angular.injector(['app']);
+            var ctrlSvc = $inj.get('ControllerService');
+            var mapCtrl = ctrlSvc.getController();
+            mapCtrl.placeCustomControls();
+            //
+            // var lnkrText = document.getElementById("idLinkerText");
+            // var lnkrSymbol = document.getElementById("idLinkerSymbol");
+            // var refreshDelay = 2000;
+            // if(lnkrSymbol && lnkrText){
+            //     refreshDelay = 10;
+            // }
+            // setTimeout(function(){
+            //   mapCtrl.placeCustomControls();
+            // }, refreshDelay);
+          }
+
         function initUI(){
           //add scalebar or other components like a legend, overview map etc
             // dojo.parser.parse();
@@ -380,6 +397,7 @@
                     var serv = $inj.get('CurrentMapTypeService');
                     curmph = serv.getSelectedMapType();
                     }
+                placeCustomControls();
                 pusher = StompSetupCtrl.createPusherClient(
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
@@ -408,10 +426,8 @@
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
             }
 
-            var $inj = angular.injector(['app']);
-            var ctrlSvc = $inj.get('ControllerService');
-            var mapCtrl = ctrlSvc.getController();
-            mapCtrl.placeCustomControls();
+            placeCustomControls();
+
             /*
             mpDiv = document.getElementById("map_wrapper");
             // var mpDivNG = angular.element(mpDiv)[0];
