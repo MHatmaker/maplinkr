@@ -140,6 +140,7 @@ urls = (
         self.routes['/'] = routesJade.index;
         //self.routes['partials/SystemSelector'] = routesJade.partials;
         self.routes['/partials/:name'] = routesJade.partials;
+        self.routes['/indexchannel/:name'] = routesJade.indexchannel;
 
         // self.routes['/'] = function(req, res) {
             // res.setHeader('Content-Type', 'text/html');

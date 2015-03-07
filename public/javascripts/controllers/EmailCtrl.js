@@ -9,9 +9,9 @@
         var context = {};
 
         function EmailCtrl($scope) {
-            context.fullUrl = AgoNewWindowConfig.gethref();
-            var channel = AgoNewWindowConfig.masherChannel();
-            context.fullUrl += "&channel=" + channel;
+            context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
+            // var channel = AgoNewWindowConfig.masherChannel();
+            // context.fullUrl += "&channel=" + channel;
             $scope.urlText = context.fullUrl;
             resizeTextArea();
 
@@ -20,13 +20,25 @@
                 textarea.style.height = (textarea.scrollHeight) + 'px';
             };
 
+            function assembleUrl(){
+                var updtUrl = AgoNewWindowConfig.getUpdatedUrl();
+                return updtUrl;
+            }
+
             $scope.fetchUrl = function(){
-                context.fullUrl = AgoNewWindowConfig.gethref();
-                // context.urlText = $scope.urlText;
-                var channel = AgoNewWindowConfig.masherChannel();
-                context.fullUrl += "?channel=" + channel;
+                context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
                 $scope.urlText = context.fullUrl;
-                resizeTextArea();
+                var contextScope = $scope;
+                $scope.safeApply(function(){
+                    //contextScope.urlText = context.fullUrl;
+                    resizeTextArea();
+                });
+                setTimeout(function(){
+                    //contextScope.urlText = context.fullUrl;
+                    resizeTextArea();
+                }, 1000);
+
+                // resizeTextArea();
                 var docEl = document.getElementById("UrlCopyFieldID");
                 console.debug(docEl);
                 var urlEl = angular.element(docEl);
@@ -36,14 +48,31 @@
                 console.log("url : " + context.fullUrl);
                 var labelDiv = angular.element(document.getElementById("UrlInstructions"));
                 labelDiv.css({"display" : "inline-block"});
-
             }
+
+            $scope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                  if(phase == '$apply' || phase == '$digest') {
+                      if(fn && (typeof(fn) === 'function')) {
+                          fn();
+                      }
+                  } else {
+                    this.$apply(fn);
+                }
+            };
+
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
-                context.fullUrl = AgoNewWindowConfig.gethref();
-                var channel = AgoNewWindowConfig.masherChannel();
-                context.fullUrl += "?channel=" + channel;
+                context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
                 $scope.urlText = context.fullUrl;
-                resizeTextArea();
+                var contextScope = $scope;
+                $scope.safeApply(function(){
+                    // contextScope.urlText = context.fullUrl;
+                    resizeTextArea();
+                });
+                setTimeout(function(){
+                    // contextScope.urlText = context.fullUrl;
+                    resizeTextArea();
+                }, 1000);
             });
         }
 
