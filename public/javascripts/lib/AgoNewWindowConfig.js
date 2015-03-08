@@ -203,6 +203,15 @@ var details = {
                 console.log(updatedUrl);
                 return updatedUrl;
             },
+            getUpdatedRawUrl : function(){
+                var n = details.webmapId.length;
+                var id = details.webmapId.substr(0, n-1);
+                var updatedUrl = "?id=" + id + "&lon=" + details.lon + "&lat=" + details.lat + "&zoom=" + details.zoom + "&channel=" + details.masherChannel;
+                //var updatedUrl = "AMPSNDlon=" + details.lon + "AMPSNDlat=" + details.lat + "AMPSNDzoom=" + details.zoom + "AMPSNDchannel=" + details.masherChannel;
+                console.log(updatedUrl);
+                return updatedUrl;
+            },
+
             getDestinationPreference : function(){
                 return details.destPref;
             },
@@ -263,7 +272,7 @@ var details = {
                 console.log(msg);
                 console.log(
                     'isInitialUser ' + details.isInitialUser + "\n" ,
-                    "userId : "  + details.userId + "\n" +
+                    " : "  + details.userId + "\n" +
                     "referrerId : "  + details.referrerId + "\n" +
                     "locationPath : "  + details.locationPath + "\n" +
                     "host : "  + details.host + "\n" +

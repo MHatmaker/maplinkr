@@ -9,25 +9,34 @@
         var context = {};
 
         function EmailCtrl($scope) {
-            context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
+            // context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
             // var channel = AgoNewWindowConfig.masherChannel();
             // context.fullUrl += "&channel=" + channel;
-            $scope.urlText = context.fullUrl;
-            resizeTextArea();
+            $scope.urlText = ""; //context.fullUrl;
+            //resizeTextArea();
 
             function resizeTextArea() {
                 var textarea = document.getElementById('UrlCopyFieldID');
+                // textarea.innerHTML = context.fullUrl;
+                // textarea.innerText = context.fullUrl;
                 textarea.style.height = (textarea.scrollHeight) + 'px';
             };
 
             function assembleUrl(){
-                var updtUrl = AgoNewWindowConfig.getUpdatedUrl();
+                console.log("gethref : ");
+                console.log(AgoNewWindowConfig.gethref());
+                var updtUrl = AgoNewWindowConfig.gethref() +  AgoNewWindowConfig.getUpdatedRawUrl();
+                console.log("Raw Updated url");
+                console.log(updtUrl);
                 return updtUrl;
             }
 
             $scope.fetchUrl = function(){
                 context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
                 $scope.urlText = context.fullUrl;
+                console.log("$scope.urlText");
+                console.log($scope.urlText);
+                /*
                 var contextScope = $scope;
                 $scope.safeApply(function(){
                     //contextScope.urlText = context.fullUrl;
@@ -37,8 +46,8 @@
                     //contextScope.urlText = context.fullUrl;
                     resizeTextArea();
                 }, 1000);
-
-                // resizeTextArea();
+                */
+                resizeTextArea();
                 var docEl = document.getElementById("UrlCopyFieldID");
                 console.debug(docEl);
                 var urlEl = angular.element(docEl);
@@ -62,8 +71,11 @@
             };
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
-                context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
+                context.fullUrl = assembleUrl();
                 $scope.urlText = context.fullUrl;
+                console.log("$scope.urlText");
+                console.log($scope.urlText);
+                /*
                 var contextScope = $scope;
                 $scope.safeApply(function(){
                     // contextScope.urlText = context.fullUrl;
@@ -73,6 +85,8 @@
                     // contextScope.urlText = context.fullUrl;
                     resizeTextArea();
                 }, 1000);
+                */
+                resizeTextArea();
             });
         }
 

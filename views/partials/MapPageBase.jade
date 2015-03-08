@@ -253,8 +253,8 @@ block append content
                                 form(name="emailForm", ng-controller="EmailCtrl")
                                     label(style='font-size:12pt;margin:4px').
                                         Fetch the link to the current ArcGIS Online map:
-                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden; resize: vertical;", ng-model="urlText", required)
-                                    br
+                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden;resize: vertical;", ng-model="urlText", required)
+                                    
                                     button(class="btn", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
                                     #UrlInstructions(style="display:none")
                                         label(style='font-size:12pt;margin:2px').The url is now focused and selected.
