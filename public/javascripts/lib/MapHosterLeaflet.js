@@ -437,7 +437,7 @@ define('GeoCoder', function () {
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
             AgoNewWindowConfig.setChannel(channel);
-            
+
             var $inj = angular.injector(['app']);
             var evtSvc = $inj.get('StompEventHandlerService');
             var evtDct = evtSvc.getEventDct();

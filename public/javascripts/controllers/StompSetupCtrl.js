@@ -62,6 +62,7 @@
             $scope.onAcceptChannel = function(){
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.userName = $scope.data.userName;
+                AgoNewWindowConfig.setChannel($scope.data.privateChannelMashover);
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
                     $scope.data.privateChannelMashover,
                     $scope.data.userName,
