@@ -5,7 +5,7 @@ String.format = function() {
     // will and always has to be the first argument.
     var theString = arguments[0];
     // console.debug(arguments[0]);
-    
+
     // start with the second argument (i = 1)
     for (var i = 1; i < arguments.length; i++) {
         // "gm" = RegEx options for Global search (more than one instance)
@@ -13,7 +13,7 @@ String.format = function() {
         var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
         theString = theString.replace(regEx, arguments[i]);
     }
-    
+
     return theString;
 };
 
@@ -36,9 +36,9 @@ String.format = function() {
             var contentsText = 'The {0} tab opens a typical web page displaying typical web page stuff, including a div with {1}  programmed with {2} embedded in it.';
 
             $scope.tabs = [
-            { 
+            {
               maptype : 'google',
-              title:'Google Maps', 
+              title:'Google Maps',
               site: 'Web Site featuring a Google Map',
               content: String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
               url: "/views/partials/GoogleMap.jade",
@@ -47,9 +47,9 @@ String.format = function() {
               active: true,
               disabled: false
             },
-            { 
+            {
               maptype : 'leaflet',
-              title:'Leaflet/OSM Maps', 
+              title:'Leaflet/OSM Maps',
               site: 'Web Site featuring a Leaflet Map',
               content: String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
               url: "/views/partials/Leaflet.jade",
@@ -58,9 +58,9 @@ String.format = function() {
               active: false,
               disabled: false
             },
-            { 
+            {
               maptype : 'arcgis',
-              title:'ArcGIS Web Maps', 
+              title:'ArcGIS Web Maps',
               site: 'Web Site featuring an ArcGIS Online Map',
               content: String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
               url: "/views/partials/ArcGIS.jade",
@@ -70,11 +70,11 @@ String.format = function() {
               disabled: false
             }
             ];
-            
-            $scope.currentTab = $scope.tabs[0]; 
+
+            $scope.currentTab = $scope.tabs[0];
             $scope.$parent.currentTab = $scope.currentTab;
             console.log("currentTab - url initialized to " + $scope.currentTab.url);
-            
+
             var $inj = angular.injector(['app']);
             var serv = $inj.get('CurrentMapTypeService');
             serv.setCurrentMapType($scope.currentTab.maptype);
@@ -85,7 +85,7 @@ String.format = function() {
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType($scope.currentTab.maptype);
-            
+
                 console.debug("clicked on tab : " + tb.url);
             }
             $scope.isActiveTab = function(tabUrl) {
@@ -93,7 +93,7 @@ String.format = function() {
                 return tabUrl == $scope.currentTab.url;
             }
             console.log("onClickTab and isActiveTab defined ");
-                                    
+
             $scope.forceMapSystem = function(mapSystem){
             // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
             // Resets the $locationPath under the ng-view.
@@ -106,7 +106,7 @@ String.format = function() {
                 $location.path(newPath);
             }
             selfMethods["forceMapSystem"] = $scope.forceMapSystem;
-                            
+
             $scope.forceAGO = function(){
             // Simulate a click on the ArcGIS mapSystem "Show the Map" button under the map system tabs.
             // Does not reset the $locationPath under the ng-view
@@ -119,17 +119,17 @@ String.format = function() {
             }
             selfMethods["forceAGO"] = $scope.forceAGO;
             console.debug(selfMethods);
-           
+
         };
 
         TabsCtrl.prototype.forceMapSystem = function (mapSystem){
             selfMethods["forceMapSystem"](mapSystem);
         }
-        
+
         TabsCtrl.prototype.forceAGO = function (mapSystem){
             selfMethods["forceAGO"]();
         }
-        
+
         function init(App) {
             console.log('TabsCtrl init');
             App.controller('TabsCtrl', ['$scope', '$location', TabsCtrl]);

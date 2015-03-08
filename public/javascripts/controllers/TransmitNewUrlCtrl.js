@@ -42,7 +42,7 @@
                 updtUrl += '&maphost=' + curmapsys;
                 var referrerId = AgoNewWindowConfig.getReferrerId();
                 updtUrl += '&referrerId=' + referrerId;
-                var channel = AgoNewWindowConfig.getChannel();
+                var channel = AgoNewWindowConfig.getChannelFromUrl();
                 updtUrl += '&channel=' + channel;
                 var nativeCenter = curmph.getCenter();
                 AgoNewWindowConfig.setPosition(nativeCenter);

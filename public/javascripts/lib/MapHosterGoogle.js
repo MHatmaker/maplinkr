@@ -77,6 +77,18 @@
                     AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
                     showGlobals("after collectScales");
                 }
+                else
+                {
+                    if(response)
+                    {
+                        alert("getMaxZoomAtLatLng service returned status other than OK");
+                        alert(response['status']);
+                    }
+                    else
+                    {
+                        alert("getMaxZoomAtLatLng service returned null")
+                    }
+                }
             });
 
             google.maps.event.trigger(mphmap, 'resize');

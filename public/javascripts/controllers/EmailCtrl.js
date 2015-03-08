@@ -28,6 +28,12 @@
                 var updtUrl = AgoNewWindowConfig.gethref() +  AgoNewWindowConfig.getUpdatedRawUrl();
                 console.log("Raw Updated url");
                 console.log(updtUrl);
+                var $inj = angular.injector(['app']);
+                var serv = $inj.get('CurrentMapTypeService');
+                var curmph = serv.getSelectedMapType();
+                var curmapsys = serv.getMapRestUrl();
+                updtUrl += '&maphost=' + curmapsys;
+
                 return updtUrl;
             }
 

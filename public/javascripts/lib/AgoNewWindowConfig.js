@@ -199,15 +199,18 @@ var details = {
                 return {'llx' : llx, 'lly' : lly, 'urx' : urx, 'ury' : ury};
             },
             getUpdatedUrl : function(){
-                var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}", details.webmapId,details.lon, details.lat, details.zoom, details.masherChannel);
+                var n = details.webmapId.length;
+                var id = details.webmapId.substr(0, n-1);
+                var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}",
+                    id, details.lon, details.lat, details.zoom, details.masherChannel);
                 console.log(updatedUrl);
                 return updatedUrl;
             },
             getUpdatedRawUrl : function(){
                 var n = details.webmapId.length;
                 var id = details.webmapId.substr(0, n-1);
-                var updatedUrl = "?id=" + id + "&lon=" + details.lon + "&lat=" + details.lat + "&zoom=" + details.zoom + "&channel=" + details.masherChannel;
-                //var updatedUrl = "AMPSNDlon=" + details.lon + "AMPSNDlat=" + details.lat + "AMPSNDzoom=" + details.zoom + "AMPSNDchannel=" + details.masherChannel;
+                var updatedUrl = "?id=" + id + "&lon=" + details.lon + "&lat=" + details.lat +
+                    "&zoom=" + details.zoom + "&channel=" + details.masherChannel;
                 console.log(updatedUrl);
                 return updatedUrl;
             },
