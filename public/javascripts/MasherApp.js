@@ -82,6 +82,9 @@
             AgoNewWindowConfig.setReferrerId(userId);
         }
         else{
+            AgoNewWindowConfig.setprotocol(location.protocol);
+            AgoNewWindowConfig.sethost(location.host);
+            AgoNewWindowConfig.sethostport(location.port);
             var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl(); // sets id in config object
             // AgoNewWindowConfig.setUserId(referrerId);
             AgoNewWindowConfig.setInitialUserStatus(false);

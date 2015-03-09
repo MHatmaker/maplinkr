@@ -198,6 +198,7 @@ var details = {
                 var ury = getParameterByName('ury');
                 return {'llx' : llx, 'lly' : lly, 'urx' : urx, 'ury' : ury};
             },
+            
             getUpdatedUrl : function(){
                 var n = details.webmapId.length;
                 var id = details.webmapId.substr(0, n-1);
