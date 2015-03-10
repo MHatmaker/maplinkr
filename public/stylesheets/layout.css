@@ -1,4 +1,4 @@
-/* 
+/*
 .masher_darkprimarycolor     { background: #7B1FA2; }
 .masher_defaultprimarycolor  { background: #9C27B0; }
 .masher_lightprimarycolor    { background: #E1BEE7; }
@@ -88,7 +88,7 @@ map_canvas {
 .ngCellText {
     font-size:10px;
 }
-  
+
 #mashbox{
    /*  background-image: url(images/bigmasher.png); */
     background-image: url(images/ChainImageOut.png);
@@ -96,7 +96,7 @@ map_canvas {
     border: 2px solid black;
     opacity:0.4;
 }
-        
+
 .btn{
    color: #FFFFFF;
    background: #6E9096;
@@ -110,19 +110,19 @@ div.transbox{
     background:rgba(255,255,255,0.7);
     filter:alpha(opacity=99); /* For IE8 and earlier */
 }
-        
+
 td p{
     margin: 30px 40px;
     font-weight: bold;
-    font-size: 150%; 
+    font-size: 150%;
     font-family:Arial;
 }
-    
+
 img.svg-menu{
     width: 2.25em;
     height: 1.25em;
 }
-  
+
 .hide-content {
    position: absolute !important;
    top: -9999px !important;
@@ -130,21 +130,21 @@ img.svg-menu{
    width: 0em;
    height 0em;
 }
-    
-.reveal-content 
+
+.reveal-content
    position: relative;
    top: 0px;
    left: 0px;
    width: 30%;
    height 100%;
 }
-    
+
 .max-map-width{
     width: 100%;
 }
    /* Fix for Bootstrap 3 with Angular UI Bootstrap */
 
-.modal { 
+.modal {
    display: block;
 }
 
@@ -164,37 +164,37 @@ img.svg-menu{
 
 .lnkmaxcontrol_label {
     z-index: 10;
-    color: black; 
+    color: black;
     background: white;
     background-color: white;
     border:solid;
     border-color: #cccccc;
     border-width: 1px;
-    font-size: 0.7em; 
+    font-size: 0.7em;
     font-weight: bold;
-    position: absolute; 
-    right:40px; 
-    top: 80px; 
-    width: 75px; 
+    position: absolute;
+    right:40px;
+    top: 80px;
+    width: 75px;
     height: 20px;
     margin-right: 10px;
 }
 
 .lnkmaxcontrol_symbol {
     z-index: 10;
-    position: absolute; 
-    right:20px; 
-    top: 80px; 
-    width: 20px; 
+    position: absolute;
+    right:20px;
+    top: 80px;
+    width: 20px;
     height: 20px;
 }
 
 #lnkrcursor {
      cursor: none;
-     
+
      width: 18px;
      height: 18px;
-     
+
      background: url("../stylesheets/images/LinkerCursor.png") no-repeat left top;
      position: absolute;
      display: none;
@@ -203,7 +203,7 @@ img.svg-menu{
      z-index: 10000;
 }
 
-   /* 
+   /*
 #linkerDirectiveId: hover {
     background: #6E9096;
 }
@@ -212,3 +212,7 @@ img.svg-menu{
     background: #6E9096;
 }
  */
+
+ .leaflet-popup-content{
+     color : #A2A9B0;
+ }
