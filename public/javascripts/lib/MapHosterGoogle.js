@@ -56,39 +56,51 @@
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
              else{
-                updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
+                updateGlobals("init with hard-coded values", -87.700001, 41.800001,  13);
              }
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
             // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
 
             // Maybe it will work at this point!!!
-            minZoom = maxZoom = zoomLevels = 0;
-            var zsvc = new google.maps.MaxZoomService();
-            var cntr = new google.maps.LatLng(cntryG, cntrxG);
 
-            zsvc.getMaxZoomAtLatLng(cntr, function(response)
-            {
-                if (response && response['status'] == google.maps.MaxZoomStatus.OK)
+            minZoom = maxZoom = zoomLevels = 0;
+
+            maxZoom = 21;
+            zoomLevels = maxZoom - minZoom;
+            collectScales(zoomLevels);
+            AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
+            showGlobals("after collectScales");
+
+            google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function(){
+                var zsvc = new google.maps.MaxZoomService();
+                var cntr = new google.maps.LatLng(cntryG, cntrxG);
+
+                zsvc.getMaxZoomAtLatLng(cntr, function(response)
                 {
-                    maxZoom = response['zoom'];
-                    zoomLevels = maxZoom - minZoom;
-                    collectScales(zoomLevels);
-                    AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
-                    showGlobals("after collectScales");
-                }
-                else
-                {
-                    if(response)
+                    if (response && response['status'] == google.maps.MaxZoomStatus.OK)
                     {
-                        alert("getMaxZoomAtLatLng service returned status other than OK");
-                        alert(response['status']);
+                        maxZoom = response['zoom'];
+                        zoomLevels = maxZoom - minZoom;
+                        collectScales(zoomLevels);
+                        AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
+                        showGlobals("after collectScales");
                     }
                     else
                     {
-                        alert("getMaxZoomAtLatLng service returned null")
+                        if(response)
+                        {
+                            // alert("getMaxZoomAtLatLng service returned status other than OK");
+                            console.log("getMaxZoomAtLatLng service returned status other than OK");
+                            console.log(response['status']);
+                        }
+                        else
+                        {
+                            alert("getMaxZoomAtLatLng service returned null")
+                        }
+
                     }
-                }
+                  });
             });
 
             google.maps.event.trigger(mphmap, 'resize');
