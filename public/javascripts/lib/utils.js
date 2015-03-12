@@ -219,7 +219,10 @@
             console.log("hide loading");
             esri.hide(loading);
         };
-
+        
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
         return {
             showHeights : showHeights,
             getDocHeight : getDocHeight,
@@ -236,7 +239,8 @@
             toFixed : toFixedTwo,
             toFixedOne: toFixedOne,
             showLoading : showLoading,
-            hideLoading : hideLoading
+            hideLoading : hideLoading,
+            getRandomInt : getRandomInt
         }
     });
 }).call(this);

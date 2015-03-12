@@ -11,7 +11,7 @@ exports.getAuth = function(req, res) {
     var channel = req.body.channel_name;
     var auth = pusherRef.authenticate( socketId, channel );
     res.send( auth );
-};  
+};
 
 exports.setPusher = function(pshr){
     console.log("setPusher");
@@ -45,23 +45,18 @@ exports.setPusher = function(pshr){
                 {'name' : 'Kumquat', 'inuse' : false},
                 {'name' : 'Nectarine', 'inuse' : false}
                 ];
-                
+
+var seqNo = 0;
+var namesLength = userNames.length;
+
 exports.getUserName = function(req, res){
     console.log("API getUserName");
     console.log('%s %s %s', req.method, req.url, req.path);
-    var validUser = false;
-    while(validUser == false){
-        var seqNo = Math.floor(Math.random() * userNames.length);
-        var nextName = userNames[seqNo];
-        if(nextName.inuse == false){
-            validUser = true;
-            userNames[seqNo].inuse = true;
-            console.log('seqNo ' + seqNo + ' name ' + userNames[seqNo].name);
-            res.json({'id' : seqNo, 'name' : userNames[seqNo].name});
-        }
+    if(seqNo == namesLength){
+        seqNo = 0;
+        console.log("reset seqNo to zero");
     }
-    if(validUser == false){
-        res.json({'id' : 'bad id', 'name' : 'No names available'});
-    }
+    console.log("return seqNo %s, name %s", seqNo, userNames[seqNo].name);
+    res.json({'id' : seqNo, 'name' : userNames[seqNo].name});
+    seqNo++;
 };
-    

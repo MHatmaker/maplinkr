@@ -39,8 +39,8 @@ var details = {
     console.log(locationPath);
     console.log("webmapId " + webmapId + " channel " + masherChannel);
  */
-    define([
-    ], function (Color, Symbol) {
+    define(['lib/utils'
+  ], function (utils, Color, Symbol) {
             console.debug('AgoNewWindowConfig define fn');
 
             function search(searchDetails){
@@ -198,7 +198,7 @@ var details = {
                 var ury = getParameterByName('ury');
                 return {'llx' : llx, 'lly' : lly, 'urx' : urx, 'ury' : ury};
             },
-            
+
             getUpdatedUrl : function(){
                 var n = details.webmapId.length;
                 var id = details.webmapId.substr(0, n-1);
@@ -253,7 +253,7 @@ var details = {
                 details.isInitialUser = tf;
             },
             getNextWindowName : function(){
-                var nextNum = getRandomInt(100, 200);
+                var nextNum = utils.getRandomInt(100, 200);
                 var nextName = nextWindowName + nextNum;
                 console.log("Open new window with name " + nextName);
                 return nextName;

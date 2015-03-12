@@ -71,15 +71,12 @@
         AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
         AgoNewWindowConfig.setSearch(location.search);
 
-        var userId = getRandomInt(1, 100);
-        AgoNewWindowConfig.setUserId(userId);
-
         if(location.search == ''){
             AgoNewWindowConfig.setInitialUserStatus(true);
             AgoNewWindowConfig.setprotocol(location.protocol);
             AgoNewWindowConfig.sethost(location.host);
             AgoNewWindowConfig.sethostport(location.port);
-            AgoNewWindowConfig.setReferrerId(userId);
+            AgoNewWindowConfig.setReferrerId(-99);
         }
         else{
             AgoNewWindowConfig.setprotocol(location.protocol);
@@ -94,7 +91,7 @@
           }
 
         }
-        console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
+        // console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
         console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
         AgoNewWindowConfig.sethref(location.href);
         AgoNewWindowConfig.sethostport(location.port);
@@ -113,7 +110,3 @@
     });
 
 }).call(this);
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}

@@ -40,6 +40,11 @@
                 // AgoNewWindowConfig.setUserId(data.id );
                 AgoNewWindowConfig.setUserName(data.name );
                 // alert('got user name ' + data.name);
+                AgoNewWindowConfig.setUserId(data.id);
+                var refId = AgoNewWindowConfig.getReferrerId();
+                if(refId == -99){
+                    AgoNewWindowConfig.setReferrerId(data.id);
+                }
             }).
             error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs
