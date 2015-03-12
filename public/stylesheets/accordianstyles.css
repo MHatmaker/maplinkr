@@ -20,34 +20,44 @@ ul {
 .panel-collapse,
 .panel-body {
     font-weight:bolder;
-    background: #D5E3E3; 
+    color: #A8A8A9;
+    border-color: #17244D;
+    background: #D5E3E3;
+    /*
+    background: #D5E3E3;
     color: #A0743C;
     border-color: #17244D;
+    */
 }
 
 .panel-group,
-.panel-default > 
+.panel-default >
 .panel-heading {
+    color: #A8A8A9;
+    border-color: #17244D;
+    background: #D5E3E3;
     font-weight:bolder;
-    background: #52455D; 
+    /*
+    background: #52455D;
     color: #A2A9B0;
     border-color: #17244D;
+    */
 }
-/* 
+/*
 .panel-group,
 .panel-collapse,
 .panel-body {
     font-weight:bolder;
-    background: #E1BEE7; 
+    background: #E1BEE7;
     color: #727272;
     border-color: #B6B6B6;
 }
 
 .panel-group,
-.panel-default > 
+.panel-default >
 .panel-heading {
     font-weight:bolder;
-    background: #9C27B0; 
+    background: #9C27B0;
     color: #FFFFFF;
     border-color: #B6B6B6;
 }
