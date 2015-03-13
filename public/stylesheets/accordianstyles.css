@@ -20,7 +20,7 @@ ul {
 .panel-collapse,
 .panel-body {
     font-weight:bolder;
-    color: #A8A8A9;
+    color: #A2A9B0;
     border-color: #17244D;
     background: #D5E3E3;
     /*
@@ -33,7 +33,7 @@ ul {
 .panel-group,
 .panel-default >
 .panel-heading {
-    color: #A8A8A9;
+    color: #A2A9B0;
     border-color: #17244D;
     background: #D5E3E3;
     font-weight:bolder;

@@ -1,25 +1,5 @@
-/*
-.masher_darkprimarycolor     { background: #7B1FA2; }
-.masher_defaultprimarycolor  { background: #9C27B0; }
-.masher_lightprimarycolor    { background: #E1BEE7; }
-.masher_textprimarycolor     { color: #FFFFFF; }
-.masher_accentcolor          { background: #7C4DFF; }
-.masher_primarytextcolor     { color: #212121; }
-.masher_secondarytextcolor   { color: #727272; }
-.masher_dividercolor         { border-color: #B6B6B6; }
- */
-/*
- &mixin .mixmasher_darkprimarycolor     { background: #212024; }
- &mixin .mixmasher_defaultprimarycolor  { background: #FDFDFD; }
- &mixin .mixmasher_lightprimarycolor    { background: #D5E3E3; }
- &mixin .mixmasher_textprimarycolor     { color: #A8A8A9; }
- &mixin .mixmasher_accentcolor          { background: #F19228; }
- &mixin .mixmasher_primarytextcolor     { color: #434035; }
- &mixin .mixmasher_secondarytextcolor   { color: #A0743C; }
- &mixin .mixmasher_dividercolor         { border-color: #17244D; }
- &mixin .mixmasher_fallbacktextcolor    { color: #FDFDFD; }
-*/
 
+/*
  .masher_darkprimarycolor     { background: #212024; }
  .masher_defaultprimarycolor  { background: #FDFDFD; }
  .masher_lightprimarycolor    { background: #D5E3E3; }
@@ -29,8 +9,9 @@
  .masher_secondarytextcolor   { color: #A0743C; }
  .masher_dividercolor         { border-color: #17244D; }
  .masher_fallbacktextcolor    { color: #FDFDFD; }
+ */
 
-/*
+
 .masher_darkprimarycolor     { background: #212024; }
 .masher_defaultprimarycolor  { background: #52455D; }
 .masher_lightprimarycolor    { background: #D5E3E3; }
@@ -38,9 +19,9 @@
 .masher_accentcolor          { background: #6E9096; }
 .masher_primarytextcolor     { color: #66718A; }
 .masher_secondarytextcolor   { color: #A0743C; }
-.masher_dividercolor         { border-color: #17244D; }.masher_darkprimarycolor     { background: #212024; }
+.masher_dividercolor         { border-color: #17244D; }
 .masher_fallbacktextcolor    { color: #FFFFFF; }
-*/
+
 
 .subwebsite_darkprimarycolor    { background: #00796B; }
 .subwebsite_defaultprimarycolor { background: #009688; }
@@ -121,12 +102,12 @@ map_canvas {
 
 div.mashbackground{
     color: #222222;
-    background: #a8a8a9;
+    background: #A2A9B0;
 }
 
 .btn{
-   color: #FDFDFD;
-   background: #F19228;
+   color: #52455D;
+   background: #6E9096;
 }
 
 div.transbox{
