@@ -255,7 +255,6 @@ var details = {
             getNextWindowName : function(){
                 var nextNum = utils.getRandomInt(100, 200);
                 var nextName = nextWindowName + nextNum;
-                console.log("Open new window with name " + nextName);
                 return nextName;
             },
             setHideWebSiteOnStartup : function(tf){
