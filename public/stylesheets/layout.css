@@ -108,6 +108,11 @@ div.mashbackground{
 .btn{
    color: #52455D;
    background: #6E9096;
+   font-weight: 800;
+}
+
+.btn:hover{
+  background: #D5E3E3;
 }
 
 div.transbox{

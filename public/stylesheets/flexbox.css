@@ -233,7 +233,7 @@ body {
 .container-plugin {
   color: #A2A9B0;
   border-color: #17244D;
-  background: #D5E3E3;
+  /*background: #6E9096;*/
   /* display: flex; */
   flex-direction: column;
   justify-content: top;
