@@ -129,7 +129,15 @@
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                     AgoNewWindowConfig.getUserName(),
                     function(channel, userName){
-                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName + "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                        var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                          "&channel=" + channel + "&userName=" + userName +
+                          "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                        // if(referringMph){
+                        //     url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
+                        //     "&channel=" + channel + "&userName=" + userName +
+                        //     "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                        // }
+
                         console.log("open new ArcGIS window with URI " + url);
                         console.log("using channel " + channel + "with userName " + userName);
                         AgoNewWindowConfig.setUrl(url);

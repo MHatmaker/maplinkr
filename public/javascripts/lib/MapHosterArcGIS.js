@@ -551,6 +551,9 @@
         function resizeWebSiteVertical(isMapExpanded){
             console.log('resizeWebSiteVertical');
 
+            mpWrap = document.getElementById("map_wrapper");
+            mpCan = document.getElementById("map_canvas");
+            mpCanRoot = document.getElementById("map_canvas_root");
             var mpCanWdth = mpWrap.clientWidth;
             var mpCanHgt = mpWrap.clientHeight;
             console.log(mpCanWdth);
@@ -564,9 +567,11 @@
             var tmpLat = cntryG;
             var tmpZm = zmG;
 
-            var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
-            mphmap.resize();
-            mphmap.centerAndZoom(cntr, tmpZm);
+            if(tmpZm && tmpZm != 'undefined'){
+                var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+                mphmap.resize();
+                mphmap.centerAndZoom(cntr, tmpZm);
+            }
         }
 
         function resizeVerbageHorizontal(isMapExpanded){

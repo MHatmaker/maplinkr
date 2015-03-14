@@ -53,7 +53,12 @@ angular.isUndefinedOrNull = function(val) {
             $scope.$on('DestinationSelectorEvent', function(event, args) {
                 var destWnd = args.destWnd;
                 console.log("onAcceptDestination " + destWnd);
-                StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle);
+                //
+                // var $inj = angular.injector(['app']);
+                // var serv = $inj.get('CurrentMapTypeService');
+                // var mph = serv.getSelectedMapType();
+                //
+                StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle); //, mph);
             });
 
             $scope.mapGriddata = [];

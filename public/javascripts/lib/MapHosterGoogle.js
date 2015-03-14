@@ -638,13 +638,12 @@
                 var btnShare = document.getElementById(shareBtnId);
                 var referrerId = AgoNewWindowConfig.getReferrerId();
                 var usrId = AgoNewWindowConfig.getUserId();
-                if(referrerId && referrerId != usrId){
-                    if(btnShare){
-                        console.debug(btnShare);
-                        btnShare.style.visibility = 'hidden';
-                    }
-
-                }
+                // if(referrerId && referrerId != usrId){
+                    // if(btnShare){
+                    //     console.debug(btnShare);
+                    //     btnShare.style.visibility = 'hidden';
+                    // }
+                // }
                 btnShare.onclick=function(){showSomething();};
             });
             return { "infoWnd" : infowindow, "infoMarker" : marker};
