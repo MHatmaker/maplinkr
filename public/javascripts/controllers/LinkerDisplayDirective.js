@@ -5,16 +5,16 @@
     define([
         'angular'
     ], function(angular) {
-        console.log('LinkerDisplayDirective define'); 
+        console.log('LinkerDisplayDirective define');
         
         function init(App) {
             console.log('LinkerDisplayDirective init');
             App.directive('linkerdisplayer', function ($compile){
                 return {
                   restrict: '<div id="linkerDirectiveId"> \
-                      <input class="lnkmaxcontrol_label" value={{$scope.$parent.data.ExpandPlug}} > \
+                      <input > \
                       </input> \
-                      <img class="lnkmaxcontrol_symbol" src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
+                      <img> \
                       </div>',
                   replace: true,
                   link: function(scope, element) {
@@ -36,5 +36,3 @@
     });
 
 }).call(this);
-
-       

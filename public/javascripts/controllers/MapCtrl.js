@@ -120,8 +120,16 @@
 
                 // var btn = document.getElementById("idExpSiteButton");
                 // btn.click();
-                refreshLinker();
-                refreshMinMax();
+                // refreshLinker();
+                // refreshMinMax();
+                var refreshDelay = 5000;
+                setTimeout(function(){
+                    // $scope.$apply(function(){
+                    console.log("REFRESH LINKER AND MINMAX");
+                    refreshLinker();
+                    refreshMinMax();
+                // } );
+              }, refreshDelay);
             });
 
             $scope.$on('WebSiteVisibilityEvent', function(event, args){
@@ -179,8 +187,12 @@
                 var lnkrText = document.getElementById("idLinkerText");
                 var lnkrSymbol = document.getElementById("idLinkerSymbol");
                 if(lnkrSymbol && lnkrText){
-                    lnkrText.innerHTML = $scope.$parent.data.ExpandPlug;
-                    lnkrSymbol.src="../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
+                    var lnkrTxt =  $scope.$parent.data.ExpandPlug;
+                    lnkrText.innerHTML = lnkrTxt;
+                    console.log("refresh Linker Text with " + lnkrText.innerHTML);
+                    var lnkrSmbl = "../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
+                    lnkrSymbol.src = lnkrSmbl;
+                    console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }
             }
 
@@ -189,7 +201,9 @@
                 var minMaxSymbol = document.getElementById("idMinMaxSymbol");
                 if(minMaxText && minMaxSymbol){
                     minMaxText.innerHTML = $scope.$parent.data.ExpandSite;
+                    console.log("refresh MinMax Text with " + minMaxText.innerHTML);
                     minMaxSymbol.src="../stylesheets/images/" + $scope.$parent.data.webSiteVisible + ".png";
+                    console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
                 }
             }
 
@@ -203,13 +217,14 @@
                 var parentScope = $scope.$parent;
 
                 var templateLnkr = '<div id="linkerDirectiveId" > \
-                      <label id="idLinkerText" class="lnkmaxcontrol_label" > \ {{$scope.$parent.data.ExpandPlug}} \
+                      <label id="idLinkerText" class="lnkmaxcontrol_label" > \
                       </label> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" \ src="../stylesheets/images/{{$scope.$parent.data.verbageExpandCollapse}}.png"> \
+                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" \
                       </div>';
 
                 var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                      <label id="idMinMaxText" class="lnkmaxcontrol_label" style=" top: 125px;" value="{{$scope.$parent.data.ExpandSite}}" > \
+                      <label id="idMinMaxText" class="lnkmaxcontrol_label" \
+                      style=" top: 125px;" value="{{$scope.$parent.data.ExpandSite}}" > \
                       </label> \
                       <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 125px;" \
                       src="../stylesheets/images/{{$scope.$parent.data.webSiteVisible}}.png"> \

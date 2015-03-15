@@ -106,7 +106,7 @@
         var mpDiv = null;
         var resizeTimer = null;
 
-        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle)
+        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle, referringMph)
         {
             var curmph = MapHosterArcGIS;
             /*
@@ -405,7 +405,7 @@
                     var serv = $inj.get('CurrentMapTypeService');
                     curmph = serv.getSelectedMapType();
                     }
-                placeCustomControls();
+                placeCustomControls();  // TEST REMOVING THIS ON 3/5
                 pusher = StompSetupCtrl.createPusherClient(
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
@@ -432,9 +432,9 @@
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
+                placeCustomControls();  // MOVED TEMPORARILY on 3/15
             }
 
-            placeCustomControls();
 
             /*
             mpDiv = document.getElementById("map_wrapper");
