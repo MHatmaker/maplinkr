@@ -554,23 +554,28 @@
             mpWrap = document.getElementById("map_wrapper");
             mpCan = document.getElementById("map_canvas");
             mpCanRoot = document.getElementById("map_canvas_root");
-            var mpCanWdth = mpWrap.clientWidth;
-            var mpCanHgt = mpWrap.clientHeight;
-            console.log(mpCanWdth);
+            if(mpCanRoot){
+                var mpCanWdth = mpWrap.clientWidth;
+                var mpCanHgt = mpWrap.clientHeight;
+                console.log(mpCanWdth);
 
-            mpCanRoot.style.height = '100%'; //mpCanHgt;
-            mpCanRoot.style.width = mpCanWdth;
-            mpCan.style.height = '100%'; //mpCanHgt;
-            mpCan.style.width = mpCanWdth;
+                mpCanRoot.style.height = '100%'; //mpCanHgt;
+                mpCanRoot.style.width = mpCanWdth;
+                mpCan.style.height = '100%'; //mpCanHgt;
+                mpCan.style.width = mpCanWdth;
 
-            var tmpLon = cntrxG;
-            var tmpLat = cntryG;
-            var tmpZm = zmG;
+                var tmpLon = cntrxG;
+                var tmpLat = cntryG;
+                var tmpZm = zmG;
 
-            if(tmpZm && tmpZm != 'undefined'){
-                var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
-                mphmap.resize();
-                mphmap.centerAndZoom(cntr, tmpZm);
+                if(tmpZm && tmpZm != 'undefined'){
+                    var cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+                    mphmap.resize();
+                    mphmap.centerAndZoom(cntr, tmpZm);
+                }
+            }
+            else{
+                console.log("resizeWebSiteVertical cannot resize yet without valid map_canvas_root");
             }
         }
 
