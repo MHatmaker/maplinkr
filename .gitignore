@@ -25,6 +25,7 @@ views/partials/header.jade
 templates/*
 node_modules/*
 index.html
+tags
 public/stylesheets/esri.css
 public/stylesheets/FavIcon.css
 public/stylesheets/Grid960.css
@@ -39,4 +40,3 @@ kdiff3DiffTools.txt
 .git.dot
 GitVersionTree.exe
 views/DestSelectModalDlg.html
-
