@@ -115,12 +115,11 @@
             if(displayDestination == 'New Pop-up Window' || displayDestination == 'New Tab')
             {
                 // This branch handles creating a parallel ArcGIS Online webmap initiated from an AGO group and map search.
-                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                // if(AgoNewWindowConfig.isChannelInitialized() == false){
                     var $inj = angular.injector(['app']);
                     var serv = $inj.get('CurrentMapTypeService');
                     curmph = serv.getSelectedMapType();
-                    }
-
+                    // }
 
                 var $inj = angular.injector(['app']);
                 var evtSvc = $inj.get('StompEventHandlerService');
@@ -132,11 +131,11 @@
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
                           "&channel=" + channel + "&userName=" + userName +
                           "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                        // if(referringMph){
-                        //     url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
-                        //     "&channel=" + channel + "&userName=" + userName +
-                        //     "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                        // }
+                        if(referringMph){
+                            url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
+                            "&channel=" + channel + "&userName=" + userName +
+                            "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                        }
 
                         console.log("open new ArcGIS window with URI " + url);
                         console.log("using channel " + channel + "with userName " + userName);
@@ -479,6 +478,10 @@
             {
                 console.log("found idWebMap");
                 console.log("use " + idWebMap);
+                zoomWebMap = AgoNewWindowConfig.zoom();
+                var llon = AgoNewWindowConfig.lon();
+                var llat = AgoNewWindowConfig.lat();
+                pointWebMap = [llon, llat];
                 initialize(idWebMap, '', '');
             }
         }

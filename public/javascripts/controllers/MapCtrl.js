@@ -122,7 +122,7 @@
                 // btn.click();
                 // refreshLinker();
                 // refreshMinMax();
-                var refreshDelay = 5000;
+                var refreshDelay = 1000;
                 setTimeout(function(){
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
@@ -224,10 +224,9 @@
 
                 var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
                       <label id="idMinMaxText" class="lnkmaxcontrol_label" \
-                      style=" top: 125px;" value="{{$scope.$parent.data.ExpandSite}}" > \
+                      style=" top: 125px;" > \
                       </label> \
                       <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 125px;" \
-                      src="../stylesheets/images/{{$scope.$parent.data.webSiteVisible}}.png"> \
                       </div>';
 
                 var lnkr1 = angular.element(templateLnkr);
