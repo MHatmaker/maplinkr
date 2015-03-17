@@ -25,6 +25,10 @@ body {
 
 .mastersite-summary{
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   flex : 3;
   overflow: auto;
@@ -33,6 +37,10 @@ body {
 
 .container-mastersite {
   display: flex; /* or inline-flex */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   /*width:100%;*/
  /* height:100%;*/
@@ -42,6 +50,10 @@ body {
   @media all and (max-width: 600px) {
   .container-mastersite {
     display: flex; /* or inline-flex */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     flex-direction: column;
     overflow-y:auto;
     /*width:100%;*/
@@ -83,6 +95,10 @@ body {
 
 .container-website {
   display: flex; /* or inline-flex */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex: 40;
   flex-direction: row;
   /*width:100%;*/
@@ -92,6 +108,10 @@ body {
 
 .container-primary {
   display: flex; /* or inline-flex */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   flex: 1;
   padding : 2px;
@@ -99,6 +119,10 @@ body {
 
 .container-newscell {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   flex : 1;
   padding:2px;
@@ -106,6 +130,10 @@ body {
 
 .container-newscellhead {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   flex : 1;
   overflow-y: auto;
@@ -117,6 +145,10 @@ body {
 
 .container-newscellbody {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex-direction: column;
   flex : 4;
   overflow: auto;
@@ -148,12 +180,20 @@ body {
 
 .container-leftcol {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   justify-content: center;
   flex-direction: column;
 }
 
 .container-mapcol {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   justify-content: flex-start;
   align-items : stretch;
   flex-direction: column;
@@ -161,6 +201,10 @@ body {
 
 .container-rightcol {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   /*justify-content: center;*/
   flex-direction: column;
 }
@@ -247,6 +291,10 @@ body {
 
 .container-mapcolheading {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex : 1;
   font-size:11pt;
   font-weight:bold;
@@ -256,6 +304,10 @@ body {
 
 .container-mapholder {
   display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex : 10;
   height: auto;
   overflow: hidden;
@@ -263,6 +315,10 @@ body {
 
 .embedded-image {
   display : flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   flex : 4;
   width:100%;
   height:auto;
