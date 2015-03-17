@@ -126,7 +126,7 @@
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    AgoNewWindowConfig.getUserName(),
+                AgoNewWindowConfig.getUserName(),
                     function(channel, userName){
                         var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
                           "&channel=" + channel + "&userName=" + userName +
@@ -400,11 +400,11 @@
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
                 var curmph = null;
-                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                // if(AgoNewWindowConfig.isChannelInitialized() == false){
                     var $inj = angular.injector(['app']);
                     var serv = $inj.get('CurrentMapTypeService');
                     curmph = serv.getSelectedMapType();
-                    }
+                    // }
                 placeCustomControls();  // TEST REMOVING THIS ON 3/5
                 pusher = StompSetupCtrl.createPusherClient(
                         {'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
