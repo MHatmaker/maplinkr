@@ -339,6 +339,7 @@
                     dojo.connect(aMap, "onLoad", initUI);
                 }
               }, function(error){
+                    alert("Create Map Failed ");
                     console.log('Create Map Failed: ' , dojo.toJson(error));
               });
         }

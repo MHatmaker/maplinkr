@@ -201,7 +201,10 @@ var details = {
 
             getUpdatedUrl : function(){
                 var n = details.webmapId.length;
-                var id = details.webmapId.substr(0, n-1);
+                var id = details.webmapId;
+                if(id[n-1] == ' '){
+                    id = details.webmapId.substr(0, n-1);
+                }
                 var updatedUrl = String.format("?id={0}&lon={1}&lat={2}&zoom={3}&channel={4}",
                     id, details.lon, details.lat, details.zoom, details.masherChannel);
                 console.log(updatedUrl);
