@@ -131,19 +131,19 @@
       function getComponentHeights(sumVis, siteVis){
         var totalHgt = 0;
         if(sumVis == "inline"){
-          if(siteVis == 'flex'){
-            totalHgt = hgtComponents.totalHgt;
+          if(siteVis == 'none'){
+            totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
           }
           else{
-            totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
+            totalHgt = hgtComponents.totalHgt;
           }
         }
         else{  // sumVis == "none"
-          if(siteVis == 'flex'){
-            totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
+          if(siteVis == 'none'){
+            totalHgt = hgtComponents.idMasterSiteExpander;
           }
           else{
-            totalHgt = hgtComponents.idMasterSiteExpander;
+            totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
           }
         }
 
@@ -153,32 +153,29 @@
       function getAvailableSiteColumnHeights( sumVis, siteVis){
         var colHgt = 0;
         if( sumVis == "inline"){
-          if(siteVis == 'flex'){
-            var colHgtB = hgtComponents.idMasterSite - hgtComponents.totalHgt;
-            colHgt = colHgtB;
-            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
-          }
-          else{ // siteVis == "none"
+          if(siteVis == 'none'){
             var colHgtBB = hgtComponents.idMasterSite -  hgtComponents.idMasterSiteExpander
               - hgtComponents.idMasterSiteSummary;
             colHgt = colHgtBB;
-            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
+            }
+            else{
+              var colHgtB = hgtComponents.idMasterSite - hgtComponents.totalHgt;
+              colHgt = colHgtB;
           }
         }
         else{ // sumVis == "none"
-          if(siteVis == 'flex'){
+          if(siteVis == 'none'){
+            var colHgtAA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
+               - hgtComponents.idFooter;
+            colHgt = colHgtAA;
+          }
+          else{ // siteVis == "flex, etc."
             var colHgtA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
                - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
             colHgt = colHgtA
-            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
-          }
-          else{ // siteVis == "none"
-            var colHgtAA = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
-                 - hgtComponents.idFooter;
-            colHgt = colHgtAA;
-            showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
           }
         }
+        showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
         // displayHeights("####getAvailableSiteColumnHeights###");
         return colHgt;
       }
@@ -219,7 +216,7 @@
             console.log("hide loading");
             esri.hide(loading);
         };
-        
+
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }

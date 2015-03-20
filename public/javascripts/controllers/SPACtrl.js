@@ -49,7 +49,9 @@
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
                          msg, status['website'], status['plugin']);
                 console.log(msgstr)
-                msgstr = String.format("verbage {0}, website {1}", verbageWidth[status['plugin'] == 'flex'], websiteVisibility[status['website'] == 'flex']);
+                msgstr = String.format("verbage {0}, website {1}",
+                  verbageWidth[status['plugin'] == 'flex'],
+                  websiteVisibility[status['website'] == 'flex']);
                 console.log(msgstr)
              }
 

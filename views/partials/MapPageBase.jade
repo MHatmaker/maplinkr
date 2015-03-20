@@ -23,15 +23,14 @@ block append content
         div(class="container-website")
       
             #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
-                #idSiteTopRow(class="container-newscell subwebsite_dividercolor", 
-                    ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
-                    style="flex: 0.2;")
+                #idSiteTopRow(class="container-newscell subwebsite_dividercolor flex0pt2", 
+                    ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
                     div(class="container-newscellhead").
                         Linea Quae Est in Summitate
                     div(class="container-newscellbody newscelllatin" style="opacity: 0.4;").
                         molestie at, fringilla in, sodales eu, elit.  Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat                    augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus  euismod, magna nulla viverra libero, sit amet lacinia odio diam id risus.  
                         
-                div(style="flex : 3")
+                div(class="flex3")
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="width: {{mapColWidth}};")
                             #idLeftCol(class="container-leftcol aside", 
@@ -64,10 +63,10 @@ block append content
                             #idRightCol(class="container-rightcol aside", 
                                 ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
                                 style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
-                                div(class="container-newscellhead" style=" overflow:auto; flex:1;").
+                                div(class="container-newscellhead flex1", style="overflow:auto;").
                                     A Iure Instructi Sunt Visum
                                   
-                                div(class="container-newscellbody newscelllatin" style="border:2px solid blue;flex: 5; overflow-y:auto; opacity: 0.4;").
+                                div(class="container-newscellbody newscelllatin flex5", style="border:2px solid blue; overflow-y:auto; opacity: 0.4;").
                                   molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et     tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros            feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus.         Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend.     Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet          lacinia odio diam idrisus. 
                               
                     #idFooter(class="container-newscellhead").
@@ -295,8 +294,8 @@ block append content
                                                                 
                                         div(class="navButton").
                                           {{currentTab.site}}
-                                        div(class="navButton posViewVisible")
-                                          input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='flex:0.6; font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
+                                        div(class="navButton posViewVisible flex0pt6")
+                                          input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
                                         div(class="navButton posViewVisible")
                                           select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()", style="font-size:0.75em; margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;")
                             
