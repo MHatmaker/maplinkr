@@ -23,7 +23,9 @@ block append content
         div(class="container-website")
       
             #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
-                #idSiteTopRow(class="container-newscell subwebsite_dividercolor", style="flex: 0.2; display:{{SiteVis}};")
+                #idSiteTopRow(class="container-newscell subwebsite_dividercolor", 
+                    ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                    style="flex: 0.2;")
                     div(class="container-newscellhead").
                         Linea Quae Est in Summitate
                     div(class="container-newscellbody newscelllatin" style="opacity: 0.4;").
@@ -32,7 +34,9 @@ block append content
                 div(style="flex : 3")
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="width: {{mapColWidth}};")
-                            #idLeftCol(class="container-leftcol aside", style="display:{{SiteVis}};height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
+                            #idLeftCol(class="container-leftcol aside", 
+                                ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                                style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscell")
                                     div(class="container-newscellhead", style="color:red;").
                                         WHAT'S NEW?
@@ -57,7 +61,9 @@ block append content
                                     
                                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                                                                       
-                            #idRightCol(class="container-rightcol aside", style="overflow-y: auto; display:{{SiteVis}};  height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
+                            #idRightCol(class="container-rightcol aside", 
+                                ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                                style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscellhead" style=" overflow:auto; flex:1;").
                                     A Iure Instructi Sunt Visum
                                   
