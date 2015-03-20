@@ -24,7 +24,7 @@ block append content
       
             #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
                 #idSiteTopRow(class="container-newscell subwebsite_dividercolor", 
-                    ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                    ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
                     style="flex: 0.2;")
                     div(class="container-newscellhead").
                         Linea Quae Est in Summitate
@@ -35,7 +35,7 @@ block append content
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="width: {{mapColWidth}};")
                             #idLeftCol(class="container-leftcol aside", 
-                                ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
                                 style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscell")
                                     div(class="container-newscellhead", style="color:red;").
@@ -62,7 +62,7 @@ block append content
                                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
                                                                       
                             #idRightCol(class="container-rightcol aside", 
-                                ng-class="{'website-hidden': !SiteVis, 'website-shown': SiteVis}",
+                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
                                 style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscellhead" style=" overflow:auto; flex:1;").
                                     A Iure Instructi Sunt Visum

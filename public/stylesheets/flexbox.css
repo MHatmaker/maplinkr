@@ -189,11 +189,6 @@ body {
 }
 
 .container-newscell {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   flex-direction: column;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
@@ -208,11 +203,6 @@ body {
 }
 
 .container-newscellhead {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   flex-direction: column;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
@@ -231,11 +221,6 @@ body {
 }
 
 .container-newscellbody {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   flex-direction: column;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
