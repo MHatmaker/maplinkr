@@ -1,11 +1,16 @@
 
-* { box-sizing: border-box; }
-
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+/*
 .posViewVisible {
     display: flex;
 }
-
+*/
 /* Large */
+/*
 .navigation {
   list-style: none;
   margin: 0;
@@ -37,15 +42,19 @@
 .navigation a:hover {
   background: darken(deepskyblue, 2%);
 }
+*/
 
 /* Medium screens */
+/*
 @media all and (max-width: 800px) {
   .navigation {
     justify-content: space-around;
   }
 }
+*/
 
 /* Small screens */
+/*
 @media all and (max-width: 600px) {
   .navigation {
     -webkit-flex-flow: column wrap;
@@ -71,5 +80,6 @@
   .navigation li:last-of-type a {
     border-bottom: none;
   }
-  
+
 }
+*/
