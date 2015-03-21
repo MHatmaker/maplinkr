@@ -3,7 +3,6 @@ block stylesblock append
     link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
     link(rel='stylesheet', href='/stylesheets/gridstyle.css')
     link(rel='stylesheet', href='/stylesheets/flexbox.css')
-    link(rel='stylesheet', href='/stylesheets/navigation.css')
     
 style.panel-heading.panel-title.
     accordion-toggle{
@@ -288,14 +287,13 @@ block append content
                                 accordion-heading
                                     | <b>Current Position</b>
                                     i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isPositionViewCtrlOpen, 'glyphicon-chevron-right': !status.isPositionViewCtrlOpen}")
-                                div(ng-controller="PositionViewCtrl")
                                     
-                                    #idNavPos(class="navigation", ng-controller="PositionViewCtrl", ng-cloak, class="ng-cloak")
-                                                                
-                                        div(class="navButton").
-                                          {{currentTab.site}}
-                                        div(class="navButton posViewVisible flex0pt6")
-                                          input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
-                                        div(class="navButton posViewVisible")
-                                          select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()", style="font-size:0.75em; margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;")
+                                #idNavPos(ng-controller="PositionViewCtrl", ng-cloak, class="ng-cloak")
+                                                            
+                                    div
+                                      {{currentTab.site}}
+                                    div(class="posViewVisible flex0pt6")
+                                      input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
+                                    div(class="posViewVisible")
+                                      select(ng-model="currentViewOption", ng-options="option.type for option in viewOptions", ng-change="setPostionDisplayType()", style="font-size:0.75em; margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;")
                             
