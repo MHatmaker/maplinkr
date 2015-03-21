@@ -299,7 +299,7 @@
                     $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
                 }
 
-                lnkr.bind('mouseup', function(){
+                lnkr.bind('mouseup', function(event){
                     console.log('lnkr[0].onclick   displayLinkerEvent');
                     event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
@@ -307,7 +307,7 @@
                     crsr.style.display = 'none';
                 });
 
-                minmaxr.bind('mouseup',  function(){
+                minmaxr.bind('mouseup',  function(event){
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
                     event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
