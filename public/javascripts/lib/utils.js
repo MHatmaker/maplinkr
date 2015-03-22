@@ -110,6 +110,17 @@
             elem.visible = flexnone == 'flex' ? 'visible' : 'none';
         }
 
+        function recalculateTopRow(flexnone){
+            if(flexnone == 'none'){
+                setVisible('idSiteTopRow', 'flex');
+                topRowHeight = getElemHeight("idSiteTopRow");
+                setVisible('idSiteTopRow', 'none');
+            }
+            else{
+                topRowHeight = getElemHeight("idSiteTopRow");
+            }
+        }
+        
         function getTopRowHeight(){
             console.log("top row height ||||||||||||||  " + hgtComponents.idSiteTopRow);
             return hgtComponents.idSiteTopRow;
@@ -255,7 +266,8 @@
             toFixedOne: toFixedOne,
             showLoading : showLoading,
             hideLoading : hideLoading,
-            getRandomInt : getRandomInt
+            getRandomInt : getRandomInt,
+            recalculateTopRow : recalculateTopRow
         }
     });
 }).call(this);
