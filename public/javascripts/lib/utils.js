@@ -103,6 +103,7 @@
         }
 
         function getTopRowHeight(){
+            console.log("top row height ||||||||||||||  " + hgtComponents.idSiteTopRow);
             return hgtComponents.idSiteTopRow;
         }
 
@@ -113,6 +114,29 @@
         function getMasterSiteHeight(){
             return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
         }
+
+              //
+            //   function getComponentHeights(sumVis, siteVis){
+            //     var totalHgt = 0;
+            //     if(sumVis == "inline"){
+            //       if(siteVis == 'none'){
+            //         totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
+            //       }
+            //       else{
+            //         totalHgt = hgtComponents.totalHgt;
+            //       }
+            //     }
+            //     else{  // sumVis == "none"
+            //       if(siteVis == 'none'){
+            //         totalHgt = hgtComponents.idMasterSiteExpander;
+            //       }
+            //       else{
+            //         totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
+            //       }
+            //     }
+              //
+            //     return totalHgt;
+            //   }
 
         function calculateComponentHeights(sumvis, sitevis){
             var totalHgt = 0;
@@ -126,29 +150,6 @@
             console.log("master site height : " + hgtComponents.idMasterSite);
             // displayHeights("####calculateComponentHeights###");
         }
-
-
-      function getComponentHeights(sumVis, siteVis){
-        var totalHgt = 0;
-        if(sumVis == "inline"){
-          if(siteVis == 'none'){
-            totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
-          }
-          else{
-            totalHgt = hgtComponents.totalHgt;
-          }
-        }
-        else{  // sumVis == "none"
-          if(siteVis == 'none'){
-            totalHgt = hgtComponents.idMasterSiteExpander;
-          }
-          else{
-            totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
-          }
-        }
-
-        return totalHgt;
-      }
 
       function getAvailableSiteColumnHeights( sumVis, siteVis){
         var colHgt = 0;
@@ -226,7 +227,7 @@
             getButtonHeight : getButtonHeight,
             displayHeights : displayHeights,
             calculateComponentHeights : calculateComponentHeights,
-            getComponentHeights : getComponentHeights,
+//            getComponentHeights : getComponentHeights,
             getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
             getTopRowHeight : getTopRowHeight,
             getFooterHeight : getFooterHeight,

@@ -22,12 +22,16 @@ block append content
         div(class="container-website")
       
             #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
-                #idSiteTopRow(class="container-newscell subwebsite_dividercolor flex0pt2", 
+                #idSiteTopRow(class="flex1 container-toprow", 
                     ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
-                    div(class="container-newscellhead").
-                        Linea Quae Est in Summitate
-                    div(class="container-newscellbody newscelllatin" style="opacity: 0.4;").
-                        molestie at, fringilla in, sodales eu, elit.  Curabitur mattis lorem et est. Quisque et tortor. Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat                    augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus  euismod, magna nulla viverra libero, sit amet lacinia odio diam id risus.  
+                    div(class="container-newscell")
+                        div(class="container-newscellhead").
+                            Linea Quae Est in Summitate
+                        div(class="container-newscellbody newscelllatin" style="opacity: 0.4;")
+                            p.
+                                molestie at, fringilla in, sodales eu, elit.  Curabitur mattis lorem et est. Quisque et tortor. 
+                            p.
+                                Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus  euismod, magna nulla viverra libero, sit amet lacinia odio diam id risus.  
                         
                 div(class="flex3")
                     #idContainerBody(class="container-body")
@@ -38,11 +42,13 @@ block append content
                                 div(class="container-newscell")
                                     div(class="container-newscellhead", style="color:red;").
                                         WHAT'S NEW?
-                                    div(class="container-newscellbody").
-                                        We now have WebMap MapLinkr capabilities
-                                      
-                                        Click on the "Show Linker" and "Max Map" icons.
-                                        Then Select the MapLinkr Instruction accordion pane for all the latest.
+                                    div(class="container-newscellbody")
+                                        p.
+                                            We now have WebMap MapLinkr capabilities
+                                        p.
+                                            Click on the "Show Linker" and "Max Map" icons.
+                                        p.
+                                            Then Select the MapLinkr Instruction accordion pane for all the latest.
                                    
                                     div(class="container-newscellhead" style="color: black; font-weight: bold;").
                                         OTHER STUFF
@@ -61,7 +67,7 @@ block append content
                                                                       
                             #idRightCol(class="container-rightcol aside", 
                                 ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
-                                style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
+v                                style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
                                 div(class="container-newscellhead flex1", style="overflow:auto;").
                                     A Iure Instructi Sunt Visum
                                   

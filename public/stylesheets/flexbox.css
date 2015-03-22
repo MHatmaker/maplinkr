@@ -271,6 +271,17 @@ body {
     display: -webkit-flex;*/
 }
 
+.container-toprow {
+  justify-content: center;
+  /*-webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;*/
+  flex-direction: column;
+  /*-webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;*/
+}
+
 .container-leftcol {
   justify-content: center;
   /*-webkit-box-pack: center;
