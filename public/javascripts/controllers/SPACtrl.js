@@ -121,10 +121,11 @@
                 console.log("status['website'] after  " + status['website']);
 
                 utils.displayHeights("####  onExpSiteClick  ###");
-                utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
 
-                $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                // var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
+
+                // $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                 // $scope.webSiteVisible = status['website'] == 'flex' ? "Collapse" : "Expand";
                 // $scope.$broadcast('WebSiteVisibilityEvent', { 'website' : status['website'],
                 //                                               'verbage' : status['plugin']});
@@ -137,9 +138,13 @@
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         utils.setElementHeight('idFooter', utils.getFooterHeight());
                         if(status['website'] == 'flex'){
+                            console.log("expanding website.........");
                             utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                             utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
+                        }
+                        else{
+                            console.log("hiding website.........");
                         }
                         console.log("onExpSiteClick adjustments - colHgt : " + colHgt);
                         });

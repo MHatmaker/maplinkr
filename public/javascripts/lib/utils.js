@@ -7,6 +7,9 @@
 
         function() {
 
+        var alreadyCalculated = false;
+        var topRowHeight = 0;
+
         var hgtComponents = {
             "totalHgt" : null,
             "idMasterSite" : null,
@@ -102,6 +105,11 @@
             elem.setAttribute("style","height:" + hstr);
         }
 
+        function setVisible(itm, flexnone){
+            var elem = document.getElementById(itm);
+            elem.visible = flexnone == 'flex' ? 'visible' : 'none';
+        }
+
         function getTopRowHeight(){
             console.log("top row height ||||||||||||||  " + hgtComponents.idSiteTopRow);
             return hgtComponents.idSiteTopRow;
@@ -141,13 +149,22 @@
         function calculateComponentHeights(sumvis, sitevis){
             var totalHgt = 0;
             var hgt = 0;
+            setVisible("idSiteTopRow", sitevis);
+            var currentTopRowHeight = 0;
+            if(alreadyCalculated == false){
+                topRowHeight = getElemHeight("idSiteTopRow");
+                alreadyCalculated = true;
+            }
+            currentTopRowHeight = sitevis == 'flex' ? topRowHeight : 0;
             hgtComponents.idMasterSite = getDocHeight(); // - 30;
             hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
-            hgtComponents.idSiteTopRow =  hgt = getElemHeight("idSiteTopRow"); totalHgt += hgt;
+            hgtComponents.idSiteTopRow =  hgt = currentTopRowHeight; totalHgt += hgt;
             hgtComponents.idFooter =  hgt = getElemHeight("idFooter") + 10;  totalHgt += hgt;
             hgtComponents.totalHgt = totalHgt;
-            console.log("master site height : " + hgtComponents.idMasterSite);
+            console.log("calculateComponentHeights : sitevis, " + sitevis);
+            console.log("calculateComponentHeights : master site height, " + hgtComponents.idMasterSite);
+            console.log("calculateComponentHeights : top row height, " + hgtComponents.idSiteTopRow)
             // displayHeights("####calculateComponentHeights###");
         }
 
