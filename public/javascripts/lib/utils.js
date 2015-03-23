@@ -108,19 +108,35 @@
         function setVisible(itm, flexnone){
             var elem = document.getElementById(itm);
             elem.visible = flexnone == 'flex' ? 'visible' : 'none';
+            elem.style.display = flexnone == 'flex' ? 'visible' : 'none';
         }
 
         function recalculateTopRow(flexnone){
+            var topRow = document.getElementById("idSiteTopRow");
+            console.log("initial height : " + getElemHeight("idSiteTopRow") + ", " + topRow.clientHeight);
             if(flexnone == 'none'){
+                console.log("recalculateTopRow setting to none")
                 setVisible('idSiteTopRow', 'flex');
-                topRowHeight = getElemHeight("idSiteTopRow");
+                topRowHeight = topRow.clientHeight;
+                console.log("set topRowHeight to interim value " + topRowHeight);
                 setVisible('idSiteTopRow', 'none');
             }
             else{
+                console.log("recalculateTopRow setting to flex")
                 topRowHeight = getElemHeight("idSiteTopRow");
+                setVisible('idSiteTopRow', 'none');
+                topRowHeight = topRow.scrollHeight; //getElemHeight("idSiteTopRow");
+                console.log("set topRowHeight to interim value " + topRowHeight);
+                setVisible('idSiteTopRow', 'flex');
+                setTimeout(function(){
+                    console.log("???????????? in timeout for recalc");
+                    var tpr = document.getElementById("idSiteTopRow");
+                    topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
+                }, 5000);
             }
+            console.log("final height : " + getElemHeight("idSiteTopRow") + ", " + topRow.scrollHeight);
         }
-        
+
         function getTopRowHeight(){
             console.log("top row height ||||||||||||||  " + hgtComponents.idSiteTopRow);
             return hgtComponents.idSiteTopRow;
@@ -166,6 +182,8 @@
                 topRowHeight = getElemHeight("idSiteTopRow");
                 alreadyCalculated = true;
             }
+            var tpr = document.getElementById("idSiteTopRow");
+            topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
             currentTopRowHeight = sitevis == 'flex' ? topRowHeight : 0;
             hgtComponents.idMasterSite = getDocHeight(); // - 30;
             hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
