@@ -139,7 +139,7 @@
                         utils.setElementHeight('idFooter', utils.getFooterHeight());
                         if(status['website'] == 'flex'){
                             console.log("expanding website.........");
-                            utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
+                            // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                             utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
@@ -188,7 +188,7 @@
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
-                            utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
+                            // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                             utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idFooter', utils.getFooterHeight());
@@ -266,7 +266,7 @@
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
-                            utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
+                            // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                             utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
                             utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }

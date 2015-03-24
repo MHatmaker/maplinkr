@@ -176,7 +176,7 @@
         function calculateComponentHeights(sumvis, sitevis){
             var totalHgt = 0;
             var hgt = 0;
-            setVisible("idSiteTopRow", sitevis);
+            // setVisible("idSiteTopRow", sitevis);
             var currentTopRowHeight = 0;
             if(alreadyCalculated == false){
                 topRowHeight = getElemHeight("idSiteTopRow");
