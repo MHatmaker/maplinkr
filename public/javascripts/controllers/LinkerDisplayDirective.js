@@ -6,12 +6,13 @@
         'angular'
     ], function(angular) {
         console.log('LinkerDisplayDirective define');
-        
+
         function init(App) {
             console.log('LinkerDisplayDirective init');
             App.directive('linkerdisplayer', function ($compile){
                 return {
-                  restrict: '<div id="linkerDirectiveId"> \
+                  restrict: 'E',
+                  template: '<div id="linkerDirectiveId"> \
                       <input > \
                       </input> \
                       <img> \

@@ -211,22 +211,21 @@
                 var contextScope = $scope;
                 var cnvs = angular.element(document.getElementById(whichCanvas));
                 var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
-                var minmaxr0 = angular.element(document.getElementById("mapmaximizerDirectiveId"));
+                var minmaxr0 = angular.element(document.getElementById("lnkmaximizerDirectiveId"));
                 // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
 
                 var parentScope = $scope.$parent;
 
                 var templateLnkr = '<div id="linkerDirectiveId" > \
-                      <label id="idLinkerText" class="lnkmaxcontrol_label" > \
+                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin" > \
                       </label> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol" \
+                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" > \
                       </div>';
 
                 var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                      <label id="idMinMaxText" class="lnkmaxcontrol_label" \
-                      style=" top: 125px;" > \
+                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" > \
                       </label> \
-                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol" style="top: 125px;" \
+                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" > \
                       </div>';
 
                 var lnkr1 = angular.element(templateLnkr);
