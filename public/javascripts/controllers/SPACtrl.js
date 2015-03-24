@@ -221,7 +221,7 @@
             });
 
             $scope.$on('windowResized', function() {
-                utils.recalculateTopRow($scope.SiteVis);
+                // utils.recalculateTopRow($scope.SiteVis);
                 utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                 var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
                 utils.displayHeights("####  windowResized Event  ###");
@@ -229,7 +229,7 @@
 
                 setTimeout(function(){
                     $scope.$apply(function(){
-                        utils.recalculateTopRow($scope.SiteVis);
+                        // utils.recalculateTopRow($scope.SiteVis);
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                         adjustHeights($scope);
                         // utils.setElementHeight('idMasherCtrl', utils.getMasterSiteHeight());
