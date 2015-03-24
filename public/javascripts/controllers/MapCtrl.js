@@ -212,106 +212,44 @@
                 var cnvs = angular.element(document.getElementById(whichCanvas));
                 var lnkr0 = angular.element(document.getElementById("linkerDirectiveId"));
                 var minmaxr0 = angular.element(document.getElementById("lnkmaximizerDirectiveId"));
-                // var elemParent = lnkr0[0].parentNode; //angular.element.parent(lnkr0);
 
                 var parentScope = $scope.$parent;
 
                 var templateLnkr = '<div id="linkerDirectiveId" > \
-                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin" > \
+                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
+                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                       </label> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" > \
+                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
+                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
                       </div>';
 
-                var templateMinMaxr = '<div id="mapmaximizerDirectiveId"> \
-                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" > \
+                var templateMinMaxr = '<div id="mapmaximizerDirectiveId" > \
+                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
+                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                       </label> \
-                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" > \
+                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                       </div>';
 
                 var lnkr1 = angular.element(templateLnkr);
-                // var lnkrC = $compile(lnkr1);
                 var lnkr = cnvs.append(lnkr1);
-                // lnkrC($scope);
 
                 var minmaxr1 = angular.element(templateMinMaxr);
-                // var minmaxrC = $compile(minmaxr1);
                 var minmaxr = cnvs.append(minmaxr1);
-                // minmaxrC($scope);
 
                 lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-                lnkr[0].onmouseenter = function(){
-                    var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
-                    lnkrLabel[0].style.background='#6E9096';
-                    lnkrLabel[0].style.color='white';
-                    var crsr = lnkrLabel[0].style.cursor;
-                    lnkrLabel[0].style.cursor = "none";
-                    var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
-                    lnkrSymbol[0].style.background='#6E9096';
-                    lnkrSymbol[0].style.cursor = "none";
-                    var crsrElem =  $('#lnkrcursor');
-                    crsrElem.show();
-                }
-                lnkr[0].onmouseout = function(){
-                    var lnkrLabel = angular.element(document.getElementById("idLinkerText"));
-                    lnkrLabel[0].style.background='';
-                    lnkrLabel[0].style.color='black';
-                    lnkrLabel[0].style.cursor = "";
-                    var lnkrSymbol = angular.element(document.getElementById("idLinkerSymbol"));
-                    lnkrSymbol[0].style.background='';
-                    lnkrSymbol[0].style.cursor = "";
-                    $('#lnkrcursor').hide();
-                }
-
-                lnkr[0].onmousemove = function(e){
-                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
-                }
 
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-
-                minmaxr[0].onmouseenter = function(){
-                    var minmaxrLabel = angular.element(document.getElementById("idMinMaxText"));
-                    minmaxrLabel[0].style.background='#6E9096';
-                    minmaxrLabel[0].style.color='white';
-                    minmaxrLabel[0].style.cursor = "none";
-                    var crsr = minmaxrLabel[0].style.cursor;
-                    var minmaxrSymbol = angular.element(document.getElementById("idMinMaxSymbol"));
-                    minmaxrSymbol[0].style.background='#6E9096';
-                    minmaxrSymbol[0].style.cursor = "none";
-                    $('#lnkrcursor').show();
-                }
-                minmaxr[0].onmouseout = function(){
-                    var minmaxrLabel = angular.element(document.getElementById("idMinMaxText"));
-                    minmaxrLabel[0].style.background='';
-                    minmaxrLabel[0].style.color='black';
-                    minmaxrLabel[0].style.cursor = "";
-                    var minmaxrSymbol = angular.element(document.getElementById("idMinMaxSymbol"));
-                    minmaxrSymbol[0].style.background='';
-                    minmaxrSymbol[0].style.cursor = "";
-                    $('#lnkrcursor').hide();
-                }
-
-                lnkr[0].onmousemove = function(e){
-                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
-                }
-
-                minmaxr[0].onmousemove = function(e){
-                    $('#lnkrcursor').css('left', e.clientX - 7).css('top', e.clientY - 35);
-                }
-
                 lnkr.bind('mouseup', function(event){
                     console.log('lnkr[0].onclick   displayLinkerEvent');
                     event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
-                    var crsr = $('#lnkrcursor')[0];
-                    crsr.style.display = 'none';
                 });
 
                 minmaxr.bind('mouseup',  function(event){
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
                     event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
-                    var crsr = $('#lnkrcursor')[0];
-                    crsr.style.display = 'none';
                 });
 
                 var lnkrText = document.getElementById("idLinkerText");
