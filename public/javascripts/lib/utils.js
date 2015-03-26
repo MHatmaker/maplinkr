@@ -108,7 +108,7 @@
         function setVisible(itm, flexnone){
             var elem = document.getElementById(itm);
             elem.visible = flexnone == 'flex' ? 'visible' : 'none';
-            elem.style.display = flexnone == 'flex' ? 'visible' : 'none';
+            elem.style.display = flexnone;
         }
 
         function recalculateTopRow(flexnone){
@@ -127,14 +127,16 @@
                 setVisible('idSiteTopRow', 'none');
                 topRowHeight = topRow.scrollHeight; //getElemHeight("idSiteTopRow");
                 console.log("set topRowHeight to interim value " + topRowHeight);
+                console.log("top row while hidden has clientHeight " + topRow.clientHeight);
                 setVisible('idSiteTopRow', 'flex');
                 topRow.style.display = 'flex';
-                setTimeout(function(){
+                // setTimeout(function(){
                     console.log("???????????? in timeout for recalc");
                     var tpr = document.getElementById("idSiteTopRow");
                     topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
+                    console.log("top row after reshowing has clientHeight " + tpr.clientHeight);
                     tpr.style.height = topRowHeight + "px";
-                }, 5000);
+                // }, 500);
             }
             console.log("final height : " + getElemHeight("idSiteTopRow") + ", " + topRow.scrollHeight);
         }
