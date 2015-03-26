@@ -136,12 +136,12 @@
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
-                        utils.setElementHeight('idFooter', utils.getFooterHeight());
+                        // utils.setElementHeight('idFooter', utils.getFooterHeight());
                         if(status['website'] == 'flex'){
                             console.log("expanding website.........");
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
-                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
                         else{
                             console.log("hiding website.........");
@@ -189,9 +189,9 @@
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
-                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
-                            utils.setElementHeight('idFooter', utils.getFooterHeight());
+                            // utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idFooter', utils.getFooterHeight());
                         }
                         console.log("onExpPlugClick adjustments - colHgt : " + colHgt);
                         });
@@ -267,8 +267,8 @@
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                         if(status['website'] == 'flex'){
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
-                            utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
-                            utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
+                            // utils.setElementHeight('idRightCol', colHgt - colHeightAdjustment);
                         }
                         console.log("adjustHeights colHgt : " + colHgt);
                         if(invalidateMapPane && invalidateMapPane == true){
