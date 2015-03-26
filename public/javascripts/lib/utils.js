@@ -128,10 +128,12 @@
                 topRowHeight = topRow.scrollHeight; //getElemHeight("idSiteTopRow");
                 console.log("set topRowHeight to interim value " + topRowHeight);
                 setVisible('idSiteTopRow', 'flex');
+                topRow.style.display = 'flex';
                 setTimeout(function(){
                     console.log("???????????? in timeout for recalc");
                     var tpr = document.getElementById("idSiteTopRow");
                     topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
+                    tpr.style.height = topRowHeight + "px";
                 }, 5000);
             }
             console.log("final height : " + getElemHeight("idSiteTopRow") + ", " + topRow.scrollHeight);
@@ -150,29 +152,6 @@
             return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
         }
 
-              //
-            //   function getComponentHeights(sumVis, siteVis){
-            //     var totalHgt = 0;
-            //     if(sumVis == "inline"){
-            //       if(siteVis == 'none'){
-            //         totalHgt = hgtComponents.totalHgt - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
-            //       }
-            //       else{
-            //         totalHgt = hgtComponents.totalHgt;
-            //       }
-            //     }
-            //     else{  // sumVis == "none"
-            //       if(siteVis == 'none'){
-            //         totalHgt = hgtComponents.idMasterSiteExpander;
-            //       }
-            //       else{
-            //         totalHgt = hgtComponents.totalHgt - hgtComponents.idMasterSiteSummary;
-            //       }
-            //     }
-              //
-            //     return totalHgt;
-            //   }
-
         function calculateComponentHeights(sumvis, sitevis){
             var totalHgt = 0;
             var hgt = 0;
@@ -182,6 +161,7 @@
                 topRowHeight = getElemHeight("idSiteTopRow");
                 alreadyCalculated = true;
             }
+            recalculateTopRow(sitevis);
             var tpr = document.getElementById("idSiteTopRow");
             topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
             currentTopRowHeight = sitevis == 'flex' ? topRowHeight : 0;
