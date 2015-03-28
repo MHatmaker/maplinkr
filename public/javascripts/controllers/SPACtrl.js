@@ -19,7 +19,7 @@
             $scope.VerbVis = "none";
             $scope.MasterSiteVis = "inline";
             $scope.SiteVis = "flex";
-            $scope.mapColWidth = "inherit";
+            $scope.webSiteWidth = "inherit";
             $scope.hideWebSiteOnStartup = false;
 
             $scope.data = {
@@ -42,8 +42,8 @@
                 true : 'true',
                 false : 'false'
                 };
-            var innerTableAdjustment = 20;
-            var colHeightAdjustment = 40;
+            var innerTableAdjustment = 0; //20;
+            var colHeightAdjustment = 0; //40;
 
             function printStatus(msg){
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
@@ -61,6 +61,9 @@
                 status['plugin'] = $scope.VerbVis = "flex";
                 $scope.data.ExpandPlug = $scope.ExpandPlug = "Hide Linker";
                 $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse = "Collapse";
+                var centerCol = document.getElementById('idCenterCol');
+                var mapWrap = document.getElementById('map_wrapper');
+
                 printStatus('Show Plug-in!');
              }
 
@@ -73,7 +76,7 @@
 
             function onShowWebSite(e, from, to, msg){
                 status['website'] = $scope.SiteVis = "flex";
-                $scope.mapColWidth = "inherit";
+                $scope.webSiteWidth = "inherit";
                 $scope.data.ExpandSite = $scope.ExpandSite = "Max Map" ;
                 $scope.data.webSiteVisible = $scope.webSiteVisible = "Expand";
                 printStatus('Show Web Site!');
@@ -81,7 +84,7 @@
 
             function onHideWebSite(e, from, to, msg){
                 status['website'] = $scope.SiteVis = "none";
-                $scope.mapColWidth = "100%";
+                $scope.webSiteWidth = "100%";
                 $scope.data.ExpandSite = $scope.ExpandSite = "Min Map";
                 $scope.data.webSiteVisible = $scope.webSiteVisible = "Collapse";
                 printStatus('Hide Web Site!');
@@ -136,6 +139,7 @@
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+                        $scope.bodyColHeight = colHgt;
                         // utils.setElementHeight('idFooter', utils.getFooterHeight());
                         if(status['website'] == 'flex'){
                             console.log("expanding website.........");
@@ -176,6 +180,7 @@
                 var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
 
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                $scope.bodyColHeight = colHgt;
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
 
@@ -187,6 +192,16 @@
                         utils.displayHeights("####  onExpPlugClick after timeout  ###");
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+                        var centerCol = document.getElementById('idCenterCol');
+                        var mapWrap = document.getElementById('map_wrapper');
+                        var centerWidth = centerCol.clientWidth;
+                        // mapWrap.style.width = centerWidth;
+
+                        var wstr = String.format("{0}{1}", centerWidth, 'px');
+                        // elem.css({"height": hstr});
+                        mapWrap.setAttribute("style","width" + wstr);
+                        console.log("we just set the map wrapper width to the center col width of " + wstr);
+
                         if(status['website'] == 'flex'){
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());
                             // utils.setElementHeight('idLeftCol', colHgt - colHeightAdjustment);
@@ -194,6 +209,9 @@
                             // utils.setElementHeight('idFooter', utils.getFooterHeight());
                         }
                         console.log("onExpPlugClick adjustments - colHgt : " + colHgt);
+
+                        // $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
+                        //                                              'verbage' : status['plugin']});
                         });
                     },1000);
 
@@ -257,7 +275,7 @@
 
                 setTimeout(function(){
                     $scope.$apply(function(){
-                        // $scope.bodyColHeight = colHgt;
+                        $scope.bodyColHeight = colHgt;
                         // $scope.bodyColHeight = colHgt;
                         // utils.setElementHeight('idBody', colHgt - 20);
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);

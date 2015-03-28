@@ -35,10 +35,9 @@ block append content
                         
                 div(class="flex3")
                     #idContainerBody(class="container-body")
-                        #idBody(class="bodyMap", style="width: {{mapColWidth}};")
+                        #idBody(class="bodyMap", style="width: {{webSiteWidth}};")
                             #idLeftCol(class="container-leftcol aside", 
-                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
-                                style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
+                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
                                 div(class="container-newscell")
                                     div(class="container-newscellhead", style="color:red;").
                                         WHAT'S NEW?
@@ -55,8 +54,9 @@ block append content
                                     div(class="container-newscellbody") 
                                         img(ng-src="../stylesheets/images/NewsPapers.jpg")
                                
-                            #idCenterCol(class="container-mapcol" style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px; border: solid orange")
-                                div(class="container-mapholder", id="map_wrapper", ng-controller="MapCtrl", style="height:{{$parent.bodyColHeight}}px;width:100%;vertical-align:top; position: absolute")
+                            #idCenterCol(class="container-mapcol", style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
+                                #map_wrapper(class="container-mapholder",  ng-controller="MapCtrl",
+                                    style="height:{{$parent.bodyColHeight}}px;width:100%; vertical-align:top; position: absolute;")
                                     
                                     gmsearch
                                     #lnkrcursor
@@ -67,16 +67,15 @@ block append content
                                                                       
                             #idRightCol(class="container-rightcol aside", 
                                 ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
-v                                style="overflow-y: auto; height: {{bodyColHeight}}px; max-height: {{bodyColHeight}}px;")
+v                                style="overflow-y: auto;")
                                 div(class="container-newscellhead flex1", style="overflow:auto;").
                                     A Iure Instructi Sunt Visum
                                   
                                 div(class="container-newscellbody newscelllatin flex5", style="border:2px solid blue; overflow-y:auto; opacity: 0.4;").
                                   molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et     tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros            feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus.         Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend.     Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet          lacinia odio diam idrisus. 
                               
-                #idFooter(class="container-newscell")
-                    div(class="container-newscellbody").
-                        All the below-the-fold web site contents    
+                #idFooter.
+                    All the below-the-fold web site contents    
                   
             div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
                 div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
