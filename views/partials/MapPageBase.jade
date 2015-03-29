@@ -54,9 +54,9 @@ block append content
                                     div(class="container-newscellbody") 
                                         img(ng-src="../stylesheets/images/NewsPapers.jpg")
                                
-                            #idCenterCol(class="container-mapcol", style="height:{{bodyColHeight}}px;max-height: {{bodyColHeight}}px;")
+                            #idCenterCol(class="container-mapcol", style="height:100%; width:100%;")
                                 #map_wrapper(class="container-mapholder",  ng-controller="MapCtrl",
-                                    style="height:{{$parent.bodyColHeight}}px;width:100%; vertical-align:top; position: absolute;")
+                                    style="height:100%; width:100%; vertical-align:top; position: absolute;")
                                     
                                     gmsearch
                                     #lnkrcursor

@@ -181,6 +181,7 @@
 
                 $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                 $scope.bodyColHeight = colHgt;
+
                 $scope.$broadcast('CollapseVerbageEvent', { 'website' : status['website'],
                                                              'verbage' : status['plugin']});
 
@@ -192,15 +193,17 @@
                         utils.displayHeights("####  onExpPlugClick after timeout  ###");
                         utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+
+                        // This stuff has to be inside the callback after the timeout event
                         var centerCol = document.getElementById('idCenterCol');
                         var mapWrap = document.getElementById('map_wrapper');
                         var centerWidth = centerCol.clientWidth;
-                        // mapWrap.style.width = centerWidth;
+                        var flexWidth = utils.toFixedOne(centerWidth * 0.6, 0);
+                        mapWrap.style.width = flexWidth;
+                        mapWrap.clientWidth = flexWidth;
 
-                        var wstr = String.format("{0}{1}", centerWidth, 'px');
-                        // elem.css({"height": hstr});
-                        mapWrap.setAttribute("style","width" + wstr);
-                        console.log("we just set the map wrapper width to the center col width of " + wstr);
+                        utils.setElementWidth('map_wrapper', flexWidth, 'px');
+                        console.log("we just set the map wrapper width to the center col width of " + flexWidth);
 
                         if(status['website'] == 'flex'){
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());

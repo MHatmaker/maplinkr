@@ -105,6 +105,14 @@
             elem.setAttribute("style","height:" + hstr);
         }
 
+        function setElementWidth(itm, wdth, units){
+            // var elem = angular.element(document.getElementById(itm))[0];
+            if(typeof(units)==='undefined') units = 'px';
+            var elem = document.getElementById(itm);
+            var wstr = String.format("{0}{1}", wdth, units);
+            // elem.css({"height": hstr});
+        }
+
         function setVisible(itm, flexnone){
             var elem = document.getElementById(itm);
             elem.visible = flexnone == 'flex' ? 'visible' : 'none';
@@ -262,6 +270,7 @@
             getMasterSiteHeight : getMasterSiteHeight,
             getElemHeight : getElemHeight,
             setElementHeight : setElementHeight,
+            setElementWidth : setElementWidth,
             toFixed : toFixedTwo,
             toFixedOne: toFixedOne,
             showLoading : showLoading,
