@@ -195,12 +195,12 @@
                         utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
 
                         // This stuff has to be inside the callback after the timeout event
-                        var centerCol = document.getElementById('idCenterCol');
-                        var mapWrap = document.getElementById('map_wrapper');
-                        var centerWidth = centerCol.clientWidth;
-                        var flexWidth = utils.toFixedOne(centerWidth * 0.6, 0);
-                        mapWrap.style.width = flexWidth;
-                        mapWrap.clientWidth = flexWidth;
+                        // var centerCol = document.getElementById('idCenterCol');
+                        // var mapWrap = document.getElementById('map_wrapper');
+                        // var centerWidth = centerCol.clientWidth;
+                        // var flexWidth = utils.toFixedOne(centerWidth * 0.6, 0);
+                        // mapWrap.style.width = flexWidth;
+                        // mapWrap.clientWidth = flexWidth;
 
                         utils.setElementWidth('map_wrapper', flexWidth, 'px');
                         console.log("we just set the map wrapper width to the center col width of " + flexWidth);

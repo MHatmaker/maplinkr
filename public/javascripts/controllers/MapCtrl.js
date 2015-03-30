@@ -242,13 +242,13 @@
                 minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
                 lnkr.bind('mouseup', function(event){
                     console.log('lnkr[0].onclick   displayLinkerEvent');
-                    event.stopPropagation();
+                    // event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
                 });
 
                 minmaxr.bind('mouseup',  function(event){
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                    event.stopPropagation();
+                    // event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
                 });
 
