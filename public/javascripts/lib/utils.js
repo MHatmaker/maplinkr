@@ -175,7 +175,7 @@
             // var tpr = document.getElementById("idSiteTopRow");
             // topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
             // currentTopRowHeight = sitevis == 'flex' ? topRowHeight : 0;
-            hgtComponents.idMasterSite = getDocHeight(); // - 30;
+            hgtComponents.idMasterSite = getDocHeight(); - 30;
             hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
             hgtComponents.idSiteTopRow =  hgt =getElemHeight('idSiteTopRow'); // currentTopRowHeight; totalHgt += hgt;

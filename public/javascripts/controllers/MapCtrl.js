@@ -215,7 +215,7 @@
 
                 var parentScope = $scope.$parent;
 
-                var templateLnkr = '<div id="linkerDirectiveId" > \
+                var templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
                       <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
                           style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                       </label> \
@@ -223,7 +223,7 @@
                           style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
                       </div>';
 
-                var templateMinMaxr = '<div id="mapmaximizerDirectiveId" > \
+                var templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
                       <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
                           style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                       </label> \
@@ -237,20 +237,21 @@
                 var minmaxr1 = angular.element(templateMinMaxr);
                 var minmaxr = cnvs.append(minmaxr1);
 
-                lnkr = angular.element(document.getElementById("linkerDirectiveId"));
+                var lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
 
-                minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-                lnkr.bind('mouseup', function(event){
+                lnkrdiv.addEventListener('click', function (event) {
                     console.log('lnkr[0].onclick   displayLinkerEvent');
-                    // event.stopPropagation();
+                    event.stopPropagation();
                     contextScope.$emit('displayLinkerEvent');
-                });
+                 });
 
-                minmaxr.bind('mouseup',  function(event){
-                    console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                    // event.stopPropagation();
-                    contextScope.$emit('mapMaximizerEvent');
-                });
+                 var mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
+
+                 mnmxdiv.addEventListener('click', function (event) {
+                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                     event.stopPropagation();
+                     contextScope.$emit('mapMaximizerEvent');
+                  });
 
                 var lnkrText = document.getElementById("idLinkerText");
                 var lnkrSymbol = document.getElementById("idLinkerSymbol");
