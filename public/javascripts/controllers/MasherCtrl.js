@@ -107,7 +107,7 @@
 
                 // if(AgoNewWindowConfig.getInitialUserStatus() == true){
                     if(pos.referrerId != AgoNewWindowConfig.getUserId()){
-                        window.open(completeUrl, nextWindowName, "top=1, left=1, height=570,width=450");
+                        window.open(completeUrl, nextWindowName,  AgoNewWindowConfig.getSmallFormDimensions());
                         console.log("after call to window.open with initial user status true");
                     }
                     else{

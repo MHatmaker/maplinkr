@@ -271,7 +271,8 @@ var details = {
             },
             getSmallFormDimensions : function (){
                 var d = details.smallFormDimensions;
-                var ltwh = String.format('top={0}, left={1}, height={2},width{3}');
+                var ltwh = String.format('top={0}, left={1}, height={2},width={3}',
+                    d.top, d.left, d.height, d.width);
                 return ltwh;
             },
             showConfigDetails: function(msg){
