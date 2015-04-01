@@ -32,7 +32,10 @@
 .subwebsite_secondarytextcolor  { color: #727272; }
 .subwebsite_dividercolor        { border-color: #B6B6B6; border-style: solid; border-width: 2px; }
 
-
+[ng-cloak]
+{
+  display: none !important;
+}
 
 html,body {
     height:100%;

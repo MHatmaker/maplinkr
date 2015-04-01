@@ -88,8 +88,9 @@
             var channel = AgoNewWindowConfig.getChannelFromUrl();
             if(channel != ''){
               AgoNewWindowConfig.setChannel(channel);
-          }
-
+            }
+            AgoNewWindowConfig.setStartupView(false, false);
+            console.log("AGONEWWINDOWCONFIG.SETSTARTUPVIEW")
         }
         // console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
         console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());

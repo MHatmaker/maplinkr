@@ -11,28 +11,62 @@
 
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
-            $scope.verbageExpandCollapse = "Expand";
-            $scope.webSiteVisible = "Expand";
-
-            $scope.ExpandSite = "Max Map";
-            $scope.ExpandPlug = "Show Linker";
-            $scope.VerbVis = "none";
-            $scope.MasterSiteVis = "inline";
-            $scope.SiteVis = "flex";
-            $scope.webSiteWidth = "inherit";
-            $scope.hideWebSiteOnStartup = false;
-
             $scope.data = {
                 verbageExpandCollapse : "Expand",
                 webSiteVisible : "Expand",
                 ExpandSite : 'Max Map',
                 ExpandPlug : 'Show Linker'
             };
-
             var status = {
                 'website' : "flex",
                 'plugin' : "none"
                 };
+            var innerTableAdjustment = 0; //20;
+            var colHeightAdjustment = 0;
+
+            var startupView = AgoNewWindowConfig.getStartupView();
+            if(startupView.summary == true){
+                $scope.MasterSiteVis = "inline";
+            }
+            else{
+                $scope.MasterSiteVis = "none";
+            }
+
+            if(startupView.website == true){
+                $scope.webSiteVisible = "Expand";
+                $scope.data.webSiteVisible = "Expand";
+                $scope.SiteVis = "flex";
+                status.website = "flex";
+                $scope.ExpandSite = "Min Map";
+                $scope.data.ExpandSite = "Min Map";
+                $scope.hideWebSiteOnStartup = true;
+            }
+            else{
+                $scope.webSiteVisible = "Collapse";
+                $scope.data.webSiteVisible = "Collapse";
+                $scope.SiteVis = "none";
+                status.website = "none";
+                $scope.ExpandSite = "Max Map";
+                $scope.data.ExpandSite = "Max Map";
+                $scope.hideWebSiteOnStartup = false;
+                setTimeout(function(){
+                    $scope.$apply(function(){
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                    var colHgt = utils.getAvailableSiteColumnHeights( $scope.MasterSiteVis, status['website']);
+                    $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                    utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
+                    utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+                    $scope.bodyColHeight = colHgt;
+                    },1000);
+                });
+            }
+            $scope.verbageExpandCollapse = "Expand";
+
+            $scope.ExpandPlug = "Show Linker";
+            $scope.VerbVis = "none";
+
+            $scope.webSiteWidth = "inherit";
+
 
             var verbageWidth = {
                 true : '70%',
@@ -42,8 +76,6 @@
                 true : 'true',
                 false : 'false'
                 };
-            var innerTableAdjustment = 0; //20;
-            var colHeightAdjustment = 0; //40;
 
             function printStatus(msg){
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
@@ -202,8 +234,9 @@
                         // mapWrap.style.width = flexWidth;
                         // mapWrap.clientWidth = flexWidth;
 
-                        utils.setElementWidth('map_wrapper', flexWidth, 'px');
-                        console.log("we just set the map wrapper width to the center col width of " + flexWidth);
+                        // This utility method seems to do the right thing, rather than all the code above.
+//                        utils.setElementWidth('map_wrapper', flexWidth, 'px');
+//                        console.log("we just set the map wrapper width to the center col width of " + flexWidth);
 
                         if(status['website'] == 'flex'){
                             // utils.setElementHeight('idSiteTopRow', utils.getTopRowHeight());

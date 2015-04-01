@@ -23,7 +23,8 @@ var details = {
     userName : '',
     nextWindowName : 0,
     hideWebSiteOnStartup : false,
-    smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570}
+    smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570},
+    startupView : {'summary' : true, 'website' : true}
 };
 
 
@@ -275,6 +276,14 @@ var details = {
                     d.top, d.left, d.height, d.width);
                 return ltwh;
             },
+            setStartupView : function(sum, site){
+                details.startupView.summary = sum;
+                details.startupView.website = site;
+            },
+            getStartupView : function(){
+                return details.startupView;
+            },
+
             showConfigDetails: function(msg){
                 console.log(msg);
                 console.log(

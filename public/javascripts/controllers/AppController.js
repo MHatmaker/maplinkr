@@ -7,11 +7,11 @@
         'angular',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
+        'controllers/SPACtrl',
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
         'controllers/VerbageCtrl',
         'controllers/WebSiteDescriptionCtrl',
-        'controllers/SPACtrl',
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
         'controllers/StompSetupCtrl',
@@ -19,13 +19,11 @@
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
         'controllers/GoogleSearchDirective',
-        // 'controllers/MapMaximizerDirective',
-        // 'controllers/LinkerDisplayDirective',
         'lib/GeoCoder',
         'javascripts/lib/AgoNewWindowConfig'
         ],
-    function(angular, MasherCtrl, TabsCtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
-            WebSiteDescriptionCtrl, SPACtrl,
+    function(angular, MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
+            WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
         console.log('AppController define');
 
@@ -62,9 +60,10 @@
             WebSiteDescriptionCtrl.start(App);
             MasherCtrl.start(App);
             TabsCtrl.start(App);
+            SPACtrl.start(App);
             PositionViewCtrl.start(App);
             // MapCtrl.start(App);
-            SPACtrl.start(App);
+
             VerbageCtrl.start(App);
             SearcherCtrlGrp.start(App, portalForSearch);
             SearcherCtrlMap.start(App, portalForSearch);

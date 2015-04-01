@@ -26,11 +26,12 @@
             console.debug('MasherCtrl - initialize collapsed bool');
             // alert('MasherCtrl - initialize some tabs');
 
-            $scope.ExpandSum = "Collapse";
-            $scope.MasterSiteVis = "inline";
+            var startupView = AgoNewWindowConfig.getStartupView();
+            $scope.ExpandSum = startupView.summary == true? "Collapse" : "Expand";
+            $scope.MasterSiteVis = startupView.Website ? "inline" : 'none';
+            $scope.isCollapsed = ! startupView.summary;
 
             $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
-            $scope.isCollapsed = false;
 
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
@@ -38,7 +39,9 @@
 
             $scope.$on('$viewContentLoaded', function(){
                 if(isFirstViewing == false){
-                    $scope.summmaryCollapser();
+                    if(startupView.summary == true){
+                        $scope.summmaryCollapser();
+                    }
                 }
                 else{
                     isFirstViewing = false;
@@ -136,7 +139,11 @@
         function startMapSystem(){
             console.log("startMapSystem");
             isFirstViewing = false;
-            selfMethods["summmaryCollapser"]();
+
+            var startupView = AgoNewWindowConfig.getStartupView();
+            if(startupView.summary == true){
+                selfMethods["summmaryCollapser"]();
+            }
         }
 
         function onNewMapPosition(pos){
