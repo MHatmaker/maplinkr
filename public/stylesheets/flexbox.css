@@ -8,6 +8,24 @@ body {
     float : left;
 }
 
+  @media all and (max-width: 350px) {
+     .body {
+          font-size:0.5em;
+      }
+    .expandoimage {
+        height: 1.1em;
+        width : 1.1em;
+    }
+    .btn{
+       font-size: 0.75em;
+    }
+    /*
+    .container-mapcol    {
+      flex: 2;
+      }
+      */
+  }
+
 .mastersitecontrol-expander{
   flex : 1;
   /*-webkit-box-flex: 1;
