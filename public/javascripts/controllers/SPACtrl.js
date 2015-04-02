@@ -37,18 +37,18 @@
                 $scope.data.webSiteVisible = "Expand";
                 $scope.SiteVis = "flex";
                 status.website = "flex";
-                $scope.ExpandSite = "Min Map";
-                $scope.data.ExpandSite = "Min Map";
-                $scope.hideWebSiteOnStartup = true;
+                $scope.ExpandSite = "Max Map";
+                $scope.data.ExpandSite = "Miax Map";
+                $scope.hideWebSiteOnStartup = false;
             }
             else{
                 $scope.webSiteVisible = "Collapse";
                 $scope.data.webSiteVisible = "Collapse";
                 $scope.SiteVis = "none";
                 status.website = "none";
-                $scope.ExpandSite = "Max Map";
-                $scope.data.ExpandSite = "Max Map";
-                $scope.hideWebSiteOnStartup = false;
+                $scope.ExpandSite = "Min Map";
+                $scope.data.ExpandSite = "Min Map";
+                $scope.hideWebSiteOnStartup = true;
                 setTimeout(function(){
                     $scope.$apply(function(){
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
@@ -58,6 +58,9 @@
                     utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
                     $scope.bodyColHeight = colHgt;
                     },1000);
+
+                    $scope.$broadcast('CollapseSummaryCompletionEvent');
+
                 });
             }
             $scope.verbageExpandCollapse = "Expand";
@@ -268,7 +271,7 @@
             });
 
             $scope.$on('CollapseSummaryCompletionEvent', function(event, args){
-                if(AgoNewWindowConfig.getHideWebSiteOnStartup() == true){
+                if(AgoNewWindowConfig.getHideWebSiteOnStartup() == false){
                     AgoNewWindowConfig.setHideWebSiteOnStartup(false);
                     $scope.onExpSiteClick();
                 }

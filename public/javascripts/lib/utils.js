@@ -178,7 +178,7 @@
             hgtComponents.idMasterSite = getDocHeight(); // - 30;
             hgtComponents.idMasterSiteExpander =  hgt = getElemHeight("idMasterSiteControlRow"); totalHgt += hgt;
             hgtComponents.idMasterSiteSummary =  hgt = getElemHeight("idMasterSiteSummary"); totalHgt += hgt;
-            hgtComponents.idSiteTopRow =  hgt =getElemHeight('idSiteTopRow'); // currentTopRowHeight; totalHgt += hgt;
+            hgtComponents.idSiteTopRow =  hgt =getElemHeight('idSiteTopRow'); totalHgt += hgt;
             hgtComponents.idFooter =  hgt = getElemHeight("idFooter") + 10;  totalHgt += hgt;
             hgtComponents.totalHgt = totalHgt;
             console.log("calculateComponentHeights : sitevis, " + sitevis);
