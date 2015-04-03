@@ -34,6 +34,13 @@
                 var curmapsys = serv.getMapRestUrl();
                 updtUrl += '&maphost=' + curmapsys;
 
+                var gmQuery = AgoNewWindowConfig.getQuery();
+                if(gmQuery != ''){
+                    updtUrl += "&gmquery=" + gmQuery;
+                    var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                    updtUrl += bnds;
+                }
+
                 return updtUrl;
             }
 
