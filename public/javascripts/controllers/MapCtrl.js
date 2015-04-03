@@ -165,6 +165,7 @@
                 // }
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeVerbage($scope.isMapExpanded);
+                window.resizeBy(0, 0);
                 refreshLinker();
             });
 
@@ -177,6 +178,10 @@
                 // $scope.$apply(function () {
                     // $scope.current = AgoNewWindowConfig.getQuery();
                 // });
+            });
+
+            $scope.$on('minmaxDirtyEvent', function(event, args){
+                refreshMinMax();
             });
 
             $scope.queryChanged = function(){
