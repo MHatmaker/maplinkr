@@ -83,8 +83,8 @@
                         maxZoom = response['zoom'];
                         zoomLevels = maxZoom - minZoom;
                         collectScales(zoomLevels);
-                        AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - after collectScales');
-                        showGlobals("after collectScales");
+                        AgoNewWindowConfig.showConfigDetails('MapHosterGoogle zsvc.getMaxZoomAtLatLng - after collectScales');
+                        showGlobals("after zsvc.getMaxZoomAtLatLng collectScales");
                     }
                     else
                     {
