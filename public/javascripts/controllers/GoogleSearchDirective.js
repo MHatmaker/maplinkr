@@ -5,8 +5,8 @@
     define([
         'angular'
     ], function(angular) {
-        console.log('GoogleSearchDirective define'); 
-        
+        console.log('GoogleSearchDirective define');
+
         function init(App) {
             console.log('GoogleSearchDirective init');
             App.directive('gmsearch', function ($compile){
@@ -37,8 +37,8 @@
 
 }).call(this);
 
-       
-/* 
+
+/*
 angular.module("main", []).controller("MyCtrl", function($scope) {
     $scope.test = 'Test Message';
 }).directive("ngPortlet", function ($compile) {
@@ -55,7 +55,7 @@ angular.module("main", []).controller("MyCtrl", function($scope) {
 });
  */
 
-/* 
+/*
 angular.module('demo', []).
   controller('demoController', function($scope) {
     $scope.inputs = [{

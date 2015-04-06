@@ -115,10 +115,11 @@
             // Listen for the event fired when the user selects an item from the
             // pick list. Retrieve the matching places for that item.
             google.maps.event.addListener(searchBox, 'places_changed', function() {
+                console.log("MapHosterGoogle 'places_changed' listener");
                 console.log("before searchBox.getPlaces()");
                 if(searchFiredFromUrl == true){
+                    console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
                     var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                    console.log("getBoundsFromUrl..................");
                     console.debug(bnds);
                     var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
                     var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
@@ -132,6 +133,14 @@
                     console.log("places length : ");
                     console.log(places.length);
                     placeMarkers(places);
+                }
+                else{
+                    console.log('searchBox.getPlaces() still returned no results');
+                    console.debug(places);
+                    var pacnpt = $('#pac-input');
+                    console.log('trigger keypress event on pac-input');
+                    pacnpt.trigger(jQuery.Event('keypress', {which: 20}));
+                    pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
                 }
             });
 
@@ -234,9 +243,10 @@
                 searchInput.value = 'foo';
                 var text = AgoNewWindowConfig.query();
 
+                console.log("getBoundsFromUrl..................in MapHosterGoogle.firePlacesQuery");
                 var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                console.log("getBoundsFromUrl..................");
                 console.debug(bnds);
+
                 var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
                 var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
                 var gBnds = new google.maps.LatLngBounds(ll, ur);
@@ -249,6 +259,7 @@
                 // var joinedText = text.concat('&nbsp\r');    //'&#10'); //joined);
                 searchInput.value = text; //joinedText;
                 console.log(searchInput.value);
+                console.log("set bounds and trigger the places_changed event");
                 searchBox.setBounds(gBnds);
                 google.maps.event.trigger(searchBox, 'places_changed');
             }

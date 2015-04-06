@@ -170,10 +170,23 @@
             });
 
             $scope.$on('searchClickEvent', function(event, args){
+                console.log("MapCtrl 'searchClickEvent' handler");
                 var element = document.getElementById('pac-input');
                 if(element){
                     element.focus();
                 }
+                // element.trigger({ type : 'keypress', which : 13 });
+                var pacnpt = $('#pac-input');
+                if(pacnpt){
+                    pacnpt.focus();
+                }
+                console.log('trigger keypress event on pac-input');
+                pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
+                var paccon = $('#pac-container');
+                console.log('trigger keydown event on pac_container');
+                paccon.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
+                // google.maps.event.trigger(searchBox, { type : 'keypress', which : 13 });
+
                 // alert('searchClickEvent in MapCtrl with ' + args);
                 // $scope.$apply(function () {
                     // $scope.current = AgoNewWindowConfig.getQuery();

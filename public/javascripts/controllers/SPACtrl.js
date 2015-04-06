@@ -222,7 +222,7 @@
 
                 setTimeout(function(){
                     $scope.$apply(function(){
-                        utils.calculateComponentHeights($svcope.MasterSiteVis, $scope.SiteVis);
+                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
                         var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status['website']);
                         $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
                         utils.displayHeights("####  onExpPlugClick after timeout  ###");
