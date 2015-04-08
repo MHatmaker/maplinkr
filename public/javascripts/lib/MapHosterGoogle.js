@@ -31,6 +31,7 @@
         var geoCoder = null;
         var gplaces = null;
         var searchBox = null;
+        var searchInput = null;
         var searchFiredFromUrl = false;
 
         var selfPusherDetails = {
@@ -75,6 +76,67 @@
             google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function(){
                 var zsvc = new google.maps.MaxZoomService();
                 var cntr = new google.maps.LatLng(cntryG, cntrxG);
+                console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
+
+                mapReady = true;
+                var center = mphmap.getCenter();
+                google.maps.event.trigger(mphmap, 'resize');
+                mphmap.setCenter(center);
+                addInitialSymbols();
+                google.maps.event.trigger(mphmap, 'resize');
+                mphmap.setCenter(center);
+
+                // Listen for the event fired when the user selects an item from the
+                // pick list. Retrieve the matching places for that item.
+                google.maps.event.addListener(searchBox, 'places_changed', function() {
+                    console.log("MapHosterGoogle 'places_changed' listener");
+                    console.log("before searchBox.getPlaces()");
+                    if(searchFiredFromUrl == true){
+                        console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
+                        var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                        console.debug(bnds);
+                        var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                        var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                        var gBnds = new google.maps.LatLngBounds(ll, ur);
+                        searchBox.setBounds(gBnds);
+                        searchFiredFromUrl = false;
+
+                        var qtext = AgoNewWindowConfig.query();
+                        // searchInput.value = qtext;
+
+                        var pacnpt = $('#pac-input');
+                        pacnpt.value = qtext;
+                        pacnpt.focus();
+                        var paccon = $('#pac-container');
+                        // console.debug(paccon);
+                        // console.debug(paccon.contents());
+                        var firstResult = $(".pac-container .pac-item:first").text();
+                        console.debug(firstResult);
+                        console.log('trigger keypress event on pac-input');
+                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:13, which: 13}));
+                        console.log('trigger keydown event on pac_container');
+                        // pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
+                        // pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
+                        paccon.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
+                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
+                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:13, which: 13}));
+                    }
+                    var places = searchBox.getPlaces();
+                    console.log("after searchBox.getPlaces()");
+                    if(places && places.length > 0){
+                        console.log("places length : ");
+                        console.log(places.length);
+                        placeMarkers(places);
+                    }
+                    else{
+                        console.log('searchBox.getPlaces() still returned no results');
+                        console.debug(places);
+                        // var pacnpt = $('#pac-input');
+                        // console.log('trigger keypress event on pac-input');
+                        // pacnpt.trigger(jQuery.Event('keypress', {which: 20}));
+                        // pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
+                    }
+                });
 
                 zsvc.getMaxZoomAtLatLng(cntr, function(response)
                 {
@@ -101,48 +163,16 @@
 
                     }
                   });
+                  firePlacesQuery();
             });
+            // google.maps.event.trigger(mphmap, 'resize');
 
-            google.maps.event.trigger(mphmap, 'resize');
-
-            var searchInput = /** @type {HTMLInputElement} */(
+            searchInput = /** @type {HTMLInputElement} */(
                 document.getElementById('pac-input'));
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
-
+            searchInput.value = '';
             searchBox = new gplaces.SearchBox(
             /** @type {HTMLInputElement} */(searchInput));
-
-            // Listen for the event fired when the user selects an item from the
-            // pick list. Retrieve the matching places for that item.
-            google.maps.event.addListener(searchBox, 'places_changed', function() {
-                console.log("MapHosterGoogle 'places_changed' listener");
-                console.log("before searchBox.getPlaces()");
-                if(searchFiredFromUrl == true){
-                    console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
-                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                    console.debug(bnds);
-                    var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
-                    var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
-                    var gBnds = new google.maps.LatLngBounds(ll, ur);
-                    searchBox.setBounds(gBnds);
-                    searchFiredFromUrl = false;
-                }
-                var places = searchBox.getPlaces();
-                console.log("after searchBox.getPlaces()");
-                if(places && places.length > 0){
-                    console.log("places length : ");
-                    console.log(places.length);
-                    placeMarkers(places);
-                }
-                else{
-                    console.log('searchBox.getPlaces() still returned no results');
-                    console.debug(places);
-                    var pacnpt = $('#pac-input');
-                    console.log('trigger keypress event on pac-input');
-                    pacnpt.trigger(jQuery.Event('keypress', {which: 20}));
-                    pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
-                }
-            });
 
             // Bias the SearchBox results towards places that are within the bounds of the
             // current map's viewport.
@@ -206,14 +236,6 @@
                 onMapClick(event);
                 }
             );
-
-            mapReady = true;
-            var center = mphmap.getCenter();
-            google.maps.event.trigger(mphmap, 'resize');
-            mphmap.setCenter(center);
-            addInitialSymbols();
-            google.maps.event.trigger(mphmap, 'resize');
-            mphmap.setCenter(center);
 
             function retrievedPlaces(results, status) {
                 console.log("back in callback from PlacesService with status " + status);

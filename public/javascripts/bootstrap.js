@@ -169,8 +169,8 @@ var selectedMapType = 'arcgis';
                     var spaElem = document.getElementById('spa_window');
                     var spaElemA = angular.element(spaElem);
                     var spaScope = spaElemA.scope();
-                    spaScope.$broadcast('searchClickEvent', gmquery);
-                    MapHosterGoogle.firePlacesQuery();
+                    // spaScope.$broadcast('searchClickEvent', gmquery);
+                    // MapHosterGoogle.firePlacesQuery();
                 }
                 return {getQueryDct: getQueryDct, setQuery : setQuery, clickSearch : clickSearch };
             }).
