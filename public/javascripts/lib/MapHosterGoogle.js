@@ -40,6 +40,11 @@
         };
         var popDetails = null;
         var selfMethods = {};
+        var queryPlaces = {
+            location: null,
+            bounds: null,
+            query: 'what do you want?'
+        };
 
         AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - startup');
 
@@ -85,56 +90,47 @@
                 addInitialSymbols();
                 google.maps.event.trigger(mphmap, 'resize');
                 mphmap.setCenter(center);
+                var gmQuery = AgoNewWindowConfig.query();
+                console.log('gmQuery contains ' + gmQuery);
+                if(gmQuery != ''){
+                    searchFiredFromUrl = true;
+                }
+                if(searchFiredFromUrl == true){
+                    console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
+                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                    console.debug(bnds);
+                    var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    var gBnds = new google.maps.LatLngBounds(ll, ur);
+                    searchFiredFromUrl = false;
+
+                    var qtext = AgoNewWindowConfig.query();
+
+                    var pacnpt = $('#pac-input');
+                    pacnpt.value = qtext;
+                    // pacnpt.focus();
+                    queryPlaces.bounds = gBnds;
+                    queryPlaces.query = qtext;
+                    queryPlaces.location = center;
+                    var service = new google.maps.places.PlacesService(mphmap);
+                    service.textSearch(queryPlaces, placesQueryCallback);
+                }
 
                 // Listen for the event fired when the user selects an item from the
                 // pick list. Retrieve the matching places for that item.
                 google.maps.event.addListener(searchBox, 'places_changed', function() {
                     console.log("MapHosterGoogle 'places_changed' listener");
                     console.log("before searchBox.getPlaces()");
-                    if(searchFiredFromUrl == true){
-                        console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
-                        var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                        console.debug(bnds);
-                        var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
-                        var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
-                        var gBnds = new google.maps.LatLngBounds(ll, ur);
-                        searchBox.setBounds(gBnds);
-                        searchFiredFromUrl = false;
 
-                        var qtext = AgoNewWindowConfig.query();
-                        // searchInput.value = qtext;
 
-                        var pacnpt = $('#pac-input');
-                        pacnpt.value = qtext;
-                        pacnpt.focus();
-                        var paccon = $('#pac-container');
-                        // console.debug(paccon);
-                        // console.debug(paccon.contents());
-                        var firstResult = $(".pac-container .pac-item:first").text();
-                        console.debug(firstResult);
-                        console.log('trigger keypress event on pac-input');
-                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:13, which: 13}));
-                        console.log('trigger keydown event on pac_container');
-                        // pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
-                        // pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
-                        paccon.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
-                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:40, which:40}));
-                        pacnpt.trigger(jQuery.Event('keydown', {keyCode:13, which: 13}));
-                    }
                     var places = searchBox.getPlaces();
                     console.log("after searchBox.getPlaces()");
                     if(places && places.length > 0){
-                        console.log("places length : ");
-                        console.log(places.length);
+                        console.log('searchBox.getPlaces() returned : ' + places.length);
                         placeMarkers(places);
                     }
                     else{
                         console.log('searchBox.getPlaces() still returned no results');
-                        console.debug(places);
-                        // var pacnpt = $('#pac-input');
-                        // console.log('trigger keypress event on pac-input');
-                        // pacnpt.trigger(jQuery.Event('keypress', {which: 20}));
-                        // pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
                     }
                 });
 
@@ -163,7 +159,7 @@
 
                     }
                   });
-                  firePlacesQuery();
+                //   firePlacesQuery();
             });
             // google.maps.event.trigger(mphmap, 'resize');
 
@@ -273,12 +269,6 @@
                 var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
                 var gBnds = new google.maps.LatLngBounds(ll, ur);
 
-                // var arr= [];
-                // console.debug(arr);
-                // arr.push('\r'); //0x0d);
-                // arr.push('\n'); //0x0a);
-                // var joined = arr.join('');
-                // var joinedText = text.concat('&nbsp\r');    //'&#10'); //joined);
                 searchInput.value = text; //joinedText;
                 console.log(searchInput.value);
                 console.log("set bounds and trigger the places_changed event");
@@ -313,6 +303,19 @@
             }
             selfMethods["placesQuery"] = placesQuery;
             // var infowindow = new google.maps.InfoWindow({content: " "});
+
+            function placesQueryCallback(results, status){
+                console.log('status is ' + status);
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    if(results && results.length > 0){
+                        console.log('PlacesService returned ' + results.length);
+                        placeMarkers(results);
+                    }
+                    else{
+                        console.log('placesService() returned no results');
+                    }
+                }
+            }
 
             function placeMarkers(places){
                 for (var i = 0, marker; marker = markers[i]; i++) {
