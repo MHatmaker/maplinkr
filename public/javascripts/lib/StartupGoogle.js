@@ -157,11 +157,6 @@ function initPlaces() {
                 mph = MapHosterGoogle.start();
                 MapHosterGoogle.config(gMap, google, google.maps.places);
                 MapHosterGoogle.resizeWebSite(true);
-                console.log("finished resizeWebSite, time for placesQuery");
-                // alert("finished resizeWebSite, time for placesQuery");
-                // if(AgoNewWindowConfig.query() != ''){
-                //     MapHosterGoogle.placesQuery();
-                // }
 
                 pusherChannel = AgoNewWindowConfig.masherChannel(false);
                 console.debug(pusherChannel);

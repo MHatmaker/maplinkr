@@ -159,9 +159,7 @@
 
                     }
                   });
-                //   firePlacesQuery();
             });
-            // google.maps.event.trigger(mphmap, 'resize');
 
             searchInput = /** @type {HTMLInputElement} */(
                 document.getElementById('pac-input'));
@@ -232,77 +230,6 @@
                 onMapClick(event);
                 }
             );
-
-            function retrievedPlaces(results, status) {
-                console.log("back in callback from PlacesService with status " + status);
-                console.log("results length : ");
-                console.log(results.length);
-                console.log(results);
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    if(results.length > 0){
-                        console.log("results length : ");
-                        console.log(results.length);
-                        placeMarkers(results);
-                    }
-                }
-                else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-                    console.log("PlacesService nearbySearch returned no results.");
-                    // var gmQuery = AgoNewWindowConfig.query();
-
-                    var $inj = angular.injector(['app']);
-                    var qSvc = $inj.get('GoogleQueryService');
-                    console.debug(qSvc);
-                    qSvc.clickSearch();
-                }
-            }
-
-            function firePlacesQuery(){
-                searchFiredFromUrl = true;
-                searchInput.value = 'foo';
-                var text = AgoNewWindowConfig.query();
-
-                console.log("getBoundsFromUrl..................in MapHosterGoogle.firePlacesQuery");
-                var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                console.debug(bnds);
-
-                var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
-                var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
-                var gBnds = new google.maps.LatLngBounds(ll, ur);
-
-                searchInput.value = text; //joinedText;
-                console.log(searchInput.value);
-                console.log("set bounds and trigger the places_changed event");
-                searchBox.setBounds(gBnds);
-                google.maps.event.trigger(searchBox, 'places_changed');
-            }
-            selfMethods["firePlacesQuery"] = firePlacesQuery;
-
-            function placesQuery(){
-                var gmQuery = AgoNewWindowConfig.query();
-                console.log('gmQuery contains ' + gmQuery);
-                if(gmQuery != ''){
-                    var bnds = AgoNewWindowConfig.getBoundsFromUrl();
-                    console.log("getBoundsFromUrl..................");
-                    console.debug(bnds);
-                    var ll = new google.maps.LatLng(bnds.lly, bnds.llx);
-                    var ur = new google.maps.LatLng(bnds.ury, bnds.urx);
-                    var gmbnds = new google.maps.LatLngBounds(ll, ur);
-                    console.debug(gmbnds);
-
-                    var request = {
-                        // location: queryLatLng,
-                        bounds : gmbnds,
-                        // radius: 1500,
-                        types: [gmQuery]
-                    };
-                    console.debug(request);
-
-                    var service = new gplaces.PlacesService(mphmap);
-                    service.nearbySearch(request, retrievedPlaces);
-                }
-            }
-            selfMethods["placesQuery"] = placesQuery;
-            // var infowindow = new google.maps.InfoWindow({content: " "});
 
             function placesQueryCallback(results, status){
                 console.log('status is ' + status);
@@ -759,13 +686,6 @@
         {
             return retrievedBoundsInternal(xj);
         }
-        function placesQuery(){
-            selfMethods["placesQuery"]();
-        }
-        function firePlacesQuery(){
-            selfMethods["firePlacesQuery"]();
-        }
-
 
         function MapHosterGoogle()
         {
@@ -800,8 +720,7 @@
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, setUserName : setUserName,
                   getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
-                  getEventDictionary : getEventDictionary, publishPosition : publishPosition,
-                  placesQuery : placesQuery, firePlacesQuery : firePlacesQuery };
+                  getEventDictionary : getEventDictionary, publishPosition : publishPosition};
     });
 
 }).call(this);
