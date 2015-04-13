@@ -19,6 +19,7 @@
                 var textarea = document.getElementById('UrlCopyFieldID');
                 // textarea.innerHTML = context.fullUrl;
                 // textarea.innerText = context.fullUrl;
+                textarea.value = context.fullUrl;
                 textarea.style.height = (textarea.scrollHeight) + 'px';
             };
 
@@ -47,7 +48,7 @@
             $scope.fetchUrl = function(){
                 context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
                 $scope.urlText = context.fullUrl;
-                console.log("$scope.urlText");
+                console.log("in fetchUrl - check $scope.urlText");
                 console.log($scope.urlText);
                 /*
                 var contextScope = $scope;
@@ -66,8 +67,9 @@
                 var urlEl = angular.element(docEl);
                 console.debug(urlEl);
                 urlEl[0].select();
-                console.log("fetchUrl : " + context.urlText);
+                console.log("fetchUrl found context.urlText : " + context.urlText);
                 console.log("url : " + context.fullUrl);
+                console.log("url : " + context.urlText);
                 var labelDiv = angular.element(document.getElementById("UrlInstructions"));
                 labelDiv.css({"display" : "inline-block"});
             }
@@ -86,20 +88,25 @@
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
                 context.fullUrl = assembleUrl();
                 $scope.urlText = context.fullUrl;
-                console.log("$scope.urlText");
+                console.log("watching $scope.urlText");
                 console.log($scope.urlText);
-                /*
+
                 var contextScope = $scope;
+                /*
                 $scope.safeApply(function(){
                     // contextScope.urlText = context.fullUrl;
                     resizeTextArea();
                 });
-                setTimeout(function(){
-                    // contextScope.urlText = context.fullUrl;
-                    resizeTextArea();
-                }, 1000);
                 */
-                resizeTextArea();
+                setTimeout(function(){
+                    $scope.safeApply(function(){
+                        contextScope.urlText = context.fullUrl;
+                        resizeTextArea();
+                    });
+                }, 1000);
+
+
+                // resizeTextArea();
             });
         }
 
