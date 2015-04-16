@@ -6,20 +6,40 @@
     console.log('EmailCtrl setup');
     define(['angular', 'lib/AgoNewWindowConfig'], function(angular, AgoNewWindowConfig) {
         console.log('EmailCtrl define');
-        var context = {};
 
         function EmailCtrl($scope) {
             // context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
             // var channel = AgoNewWindowConfig.masherChannel();
             // context.fullUrl += "&channel=" + channel;
-            $scope.urlText = ""; //context.fullUrl;
+            // $scope.urlText = ""; //context.fullUrl;
+            $scope.urlContext = {
+                'urlText' : ''
+            };
+            var context = {
+                'fullUrl' : ''
+            };
+
             //resizeTextArea();
 
             function resizeTextArea() {
                 var textarea = document.getElementById('UrlCopyFieldID');
+                // var anElem = angular.element(textarea);
+                // anElem.scope().$apply();
                 // textarea.innerHTML = context.fullUrl;
-                // textarea.innerText = context.fullUrl;
+                // textarea.innerText = $scope.urlContext.fullUrl;
+                // textarea.value = $scope.urlContext.fullUrl;
                 textarea.value = context.fullUrl;
+                /*
+                setTimeout(function(){
+                    // $scope.safeApply(function(){
+
+                    $scope.$apply(function(){
+                        $scope.urlContext.urlText = context.fullUrl;
+                        textarea.style.height = (textarea.scrollHeight) + 'px';
+                    });
+                }, 1000);
+                */
+                // $scope.urlContext.urlText = context.fullUrl;
                 textarea.style.height = (textarea.scrollHeight) + 'px';
             };
 
@@ -47,9 +67,9 @@
 
             $scope.fetchUrl = function(){
                 context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
-                $scope.urlText = context.fullUrl;
-                console.log("in fetchUrl - check $scope.urlText");
-                console.log($scope.urlText);
+                $scope.urlContext.urlText = context.fullUrl;
+                console.log("in fetchUrl - check $scope.urlContext.urlText");
+                console.log($scope.urlContext.urlText);
                 /*
                 var contextScope = $scope;
                 $scope.safeApply(function(){
@@ -67,9 +87,9 @@
                 var urlEl = angular.element(docEl);
                 console.debug(urlEl);
                 urlEl[0].select();
-                console.log("fetchUrl found context.urlText : " + context.urlText);
+                console.log("fetchUrl found context.urlText : " + $scope.urlContext.urlText);
                 console.log("url : " + context.fullUrl);
-                console.log("url : " + context.urlText);
+                console.log("url : " + $scope.urlContext.urlText);
                 var labelDiv = angular.element(document.getElementById("UrlInstructions"));
                 labelDiv.css({"display" : "inline-block"});
             }
@@ -85,28 +105,33 @@
                 }
             };
 
+            var contextScope = $scope; //.$parent;
+
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
                 context.fullUrl = assembleUrl();
-                $scope.urlText = context.fullUrl;
-                console.log("watching $scope.urlText");
-                console.log($scope.urlText);
+                $scope.urlContext.urlText = context.fullUrl;
+                console.log("watching $scope.urlContext.urlText");
+                console.log($scope.urlContext.urlText);
 
-                var contextScope = $scope;
+                // var contextScope = $scope;
                 /*
                 $scope.safeApply(function(){
                     // contextScope.urlText = context.fullUrl;
                     resizeTextArea();
                 });
                 */
+                contextScope.urlContext.urlText = context.fullUrl;
+                // $scope.$digest();
                 setTimeout(function(){
-                    $scope.safeApply(function(){
-                        contextScope.urlText = context.fullUrl;
+                    contextScope.safeApply(function(){
+                        contextScope.urlContext.urlText = context.fullUrl;
+                        console.log("SETTIMEOUT CALLBACK with text " + contextScope.urlContext.urlText );
                         resizeTextArea();
                     });
                 }, 1000);
 
 
-                // resizeTextArea();
+                resizeTextArea();
             });
         }
 

@@ -158,7 +158,7 @@
                         }
 
                     }
-                  });
+                })
             });
 
             searchInput = /** @type {HTMLInputElement} */(
