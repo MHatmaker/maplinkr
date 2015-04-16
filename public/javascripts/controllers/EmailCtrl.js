@@ -95,18 +95,21 @@
                 labelDiv.css({"display" : "inline-block"});
             }
 
+            var contextScope = $scope; //.$parent;
+
             $scope.safeApply = function(fn) {
                 var phase = this.$root.$$phase;
                   if(phase == '$apply' || phase == '$digest') {
                       if(fn && (typeof(fn) === 'function')) {
+                          console.log('typeof is function');
                           fn();
                       }
                   } else {
-                    this.$apply(fn);
+                      console.log('out of phase and digest');
+                      this.$apply(fn);
+                      contextScope.$apply(fn);
                 }
             };
-
-            var contextScope = $scope; //.$parent;
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
                 context.fullUrl = assembleUrl();
@@ -125,16 +128,17 @@
                 /*
                 contextScope.urlContext.urlText = context.fullUrl;
                 // $scope.$digest();
-                setTimeout(function(){
+                */
+                // setTimeout(function(){
                     contextScope.safeApply(function(){
-                        contextScope.urlContext.urlText = context.fullUrl;
+                        // contextScope.urlContext.urlText = context.fullUrl.substr(0);
                         console.log("SETTIMEOUT CALLBACK with text " + contextScope.urlContext.urlText );
                         resizeTextArea();
                     });
-                }, 1000);
-                */
+                // }, 1000);
 
-                resizeTextArea();
+
+                // resizeTextArea();
             });
         }
 
