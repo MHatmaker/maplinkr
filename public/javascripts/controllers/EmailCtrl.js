@@ -12,11 +12,12 @@
             // var channel = AgoNewWindowConfig.masherChannel();
             // context.fullUrl += "&channel=" + channel;
             // $scope.urlText = ""; //context.fullUrl;
-            $scope.urlContext = {
-                'urlText' : ''
-            };
             var context = {
                 'fullUrl' : ''
+            };
+
+            $scope.urlContext = {
+                'urlText' : ''
             };
 
             //resizeTextArea();
@@ -28,7 +29,7 @@
                 // textarea.innerHTML = context.fullUrl;
                 // textarea.innerText = $scope.urlContext.fullUrl;
                 // textarea.value = $scope.urlContext.fullUrl;
-                textarea.value = context.fullUrl;
+                // textarea.value = context.fullUrl;
                 /*
                 setTimeout(function(){
                     // $scope.safeApply(function(){
@@ -109,9 +110,10 @@
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
                 context.fullUrl = assembleUrl();
-                $scope.urlContext.urlText = context.fullUrl;
+                contextScope.urlContext.urlText = context.fullUrl.substr(0);
                 console.log("watching $scope.urlContext.urlText");
                 console.log($scope.urlContext.urlText);
+                console.log(contextScope.urlContext.urlText);
 
                 // var contextScope = $scope;
                 /*
@@ -120,6 +122,7 @@
                     resizeTextArea();
                 });
                 */
+                /*
                 contextScope.urlContext.urlText = context.fullUrl;
                 // $scope.$digest();
                 setTimeout(function(){
@@ -129,7 +132,7 @@
                         resizeTextArea();
                     });
                 }, 1000);
-
+                */
 
                 resizeTextArea();
             });
