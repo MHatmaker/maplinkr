@@ -262,7 +262,7 @@ v                                style="overflow-y: auto;")
                                 div(name="emailForm", ng-controller="EmailCtrl")
                                     label(style='font-size:12pt;margin:4px').
                                         Fetch the link to the current ArcGIS Online map:
-                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow: hidden;resize: vertical;", ng-model="urlContext.urlText", required)
+                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow-y: scroll; overflow-x: none; resize: none; width: 100%; height: 120px;", ng-model="urlContext.urlText", required)
                                     
                                     button(class="btn", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
                                     #UrlInstructions(style="display:none")

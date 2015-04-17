@@ -25,7 +25,10 @@
             function assembleUrl(){
                 console.log("gethref : ");
                 console.log(AgoNewWindowConfig.gethref());
-                var updtUrl = AgoNewWindowConfig.gethref() +  AgoNewWindowConfig.getUpdatedRawUrl();
+                var updtUrl = AgoNewWindowConfig.gethref();
+                if(updtUrl.indexOf('?') < 0){
+                    updtUrl +=  AgoNewWindowConfig.getUpdatedRawUrl();
+                }
                 console.log("Raw Updated url");
                 console.log(updtUrl);
                 var $inj = angular.injector(['app']);
@@ -45,11 +48,6 @@
             }
 
             $scope.fetchUrl = function(){
-                // context.fullUrl = assembleUrl(); // AgoNewWindowConfig.gethref();
-                // $scope.urlContext.urlText = context.fullUrl;
-                // console.log("in fetchUrl - check $scope.urlContext.urlText");
-                // console.log($scope.urlContext.urlText);
-                //
                 // resizeTextArea();
                 var docEl = document.getElementById("UrlCopyFieldID");
                 console.debug(docEl);
@@ -88,7 +86,7 @@
 
                 contextScope.safeApply(function(){
                     console.log("SAFEAPPLY CALLBACK with text " + contextScope.urlContext.urlText );
-                    resizeTextArea();
+                    // resizeTextArea();
                 });
             });
         }
