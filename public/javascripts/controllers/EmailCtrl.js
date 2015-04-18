@@ -83,11 +83,11 @@
                 console.log("watching $scope.urlContext.urlText");
                 console.log($scope.urlContext.urlText);
                 console.log(contextScope.urlContext.urlText);
-
-                contextScope.safeApply(function(){
-                    console.log("SAFEAPPLY CALLBACK with text " + contextScope.urlContext.urlText );
-                    // resizeTextArea();
-                });
+                //
+                // contextScope.safeApply(function(){
+                //     console.log("SAFEAPPLY CALLBACK with text " + contextScope.urlContext.urlText );
+                //     // resizeTextArea();
+                // });
             });
         }
 

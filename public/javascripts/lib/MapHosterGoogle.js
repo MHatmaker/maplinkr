@@ -122,8 +122,12 @@
                     console.log("MapHosterGoogle 'places_changed' listener");
                     console.log("before searchBox.getPlaces()");
 
-
+                    var bounds = searchBox.getBounds();
+                    console.log(formatBounds(bounds));
+                    // var bnds = {'llx' : bounds.getSouthWest().lng() , 'lly' : bounds.getSouthWest().lat(),
+                    //              'urx' : bounds.getNorthEast().lng() , 'ury' : bounds.getNorthEast().lat()};
                     var places = searchBox.getPlaces();
+
                     console.log("after searchBox.getPlaces()");
                     if(places && places.length > 0){
                         console.log('searchBox.getPlaces() returned : ' + places.length);
@@ -713,6 +717,12 @@
             var center = mphmap.getCenter();
             google.maps.event.trigger(mphmap, 'resize');
             mphmap.setCenter(center);
+        }
+        function formatBounds(b){
+            var s = String.format("ll : {0}, {1}, ru : {2}, {3}",
+                b.getSouthWest().lng() ,b.getSouthWest().lat(),
+                b.getNorthEast().lng(), b.getNorthEast().lat());
+            return s;
         }
 
         return { start: init, config : configureMap,
