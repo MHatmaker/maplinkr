@@ -68,6 +68,15 @@ var selectedMapType = 'arcgis';
                         },
                         controller: App.MapCtrl, reloadOnSearch: true
                       }).
+                      when('/templates/:id',  {
+                        templateUrl: function(params){
+                            console.log("when string is " + '/templates/:id');
+                            console.log(" params.id : " +  params.id);
+                            console.log("prepare to return " + '/templates/' + params.id);
+                            return '/templates/' + params.id;
+                        },
+                        controller: App.DestWndSetupCtrl, reloadOnSearch: true
+                      }).
                       when('/contact', {
                           controller: EmailCtrl
                       }).

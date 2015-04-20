@@ -82,7 +82,7 @@ v                                style="overflow-y: auto;")
               
                     div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
                     
-                    div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", style="display: none; position:relative", id="DestWndDialog", data-backdrop="true")
+                    div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl", modal-mdata="mData", role="dialog", class="modal", id="DestWndDialog", style="display: none; position:relative", data-backdrop="true")
                                     
                     #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
                         accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup")
@@ -295,8 +295,8 @@ v                                style="overflow-y: auto;")
                                     
                                 #idNavPos(ng-controller="PositionViewCtrl", ng-cloak, class="ng-cloak")
                                                             
-                                    div
-                                      {{currentTab.site}}
+                                    div.
+                                        {{currentTab.site}}
                                     div(class="posViewVisible flex0pt6")
                                       input(id = 'mppos', type='text', name='cursPos', disabled, ng-model="positionView", style='font-size:0.65em;text-align:right;margin-right: 0.5em; padding: 0.01em 0.5em 0.01em 0.5em;')
                                     div(class="posViewVisible")

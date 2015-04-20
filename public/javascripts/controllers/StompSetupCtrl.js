@@ -270,6 +270,7 @@
             App.controller('StompSetupCtrl',  ['$scope', '$modal', '$rootScope', StompSetupCtrl]);
 
             App.directive("modalShowPusher", function () {
+                console.log("setting up directive modalShowPusher");
                 var tpl = ' \
                   <div class="modal-dialog", style="width: 100%;"> \
                     <div class="modal-content"> \

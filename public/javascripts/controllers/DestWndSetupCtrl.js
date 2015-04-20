@@ -8,8 +8,8 @@
     define([
         'angular'
     ], function(angular) {
-        console.log('DestWndSetupCtrl define');  
-        
+        console.log('DestWndSetupCtrl define');
+
         var selfdict = {};
         selfdict.isInitialized = areWeInitialized = false;
         var scopeDict = {};
@@ -19,7 +19,7 @@
             selfdict.scope = $scope;
             selfdict.isInitialized = areWeInitialized = false;
             scopeDict['rootScope'] = $rootScope;
-        
+
             // selfdict.callbackFunction = null;
             $scope.showDestDialog = false;
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
@@ -29,7 +29,7 @@
                 whichDismiss : "Cancel",
                 dlg2show : "SelectWndDlg"
             };
-                     
+
             $scope.preserveState = function(){
                 console.log("preserveState");
                 // $scope.data.whichDismiss = 'Cancel';
@@ -44,22 +44,23 @@
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
             $scope.$on('ShowWindowSelectorModalEvent', function(){
-                $scope.safeApply(function(){
-                    $scope.showDestDialog = true;
-                });
+                $scope.showDestDialog = true;
+                // $scope.safeApply(function(){
+                //     $scope.showDestDialog = true;
+                // });
             });
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
             };
-            
+
             $scope.hitEnter = function(evt){
                 if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,''))){
                     $scope.save();
                 }
             }; // end hitEnter
-            
+
             $scope.safeApply = function(fn) {
                 var phase = this.$root.$$phase;
                   if(phase == '$apply' || phase == '$digest') {
@@ -70,53 +71,52 @@
                     this.$apply(fn);
                 }
             };
-        }  
-          
+        }
+
         DestWndSetupCtrl.prototype.isInitialized = function(){
             return areWeInitialized;
         }
-        
+
         function init(App) {
-            console.log('SearcherCtrlMap init');
-            console.debug(App);
+            console.log('DestWndSetupCtrl init');
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
-            console.debug(CurrentWebMapIdService);
-            
+
             selfdict.isInitialized = areWeInitialized = true;
             App.controller('DestWndSetupCtrl',  ['$scope', '$modal', '$rootScope', DestWndSetupCtrl]);
-            
+
             App.directive("modalShowDest", function () {
-                var tpl = ' \
-                  <div class="modal-dialog", style="width: 100%;"> \
-                    <div class="modal-content"> \
-                      <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                        <h3>Open a new map in :</h3> \
-                      </div> \
-                      <div class="modal-body"> \
-                        <div class="btn-group btn-group-vertical"> \
-                              <span data-ng-repeat="dest in $parent.destSelections"> \
-                                  <input name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel" ng-init="$parent.data.dstSel=\'Same Window\'"/> \
-                                    {{dest}} \
-                                  <br/> \
-                              </span> \
-                        </div> \
-                        <div>selected: {{data.dstSel}}</div> \
-                      </div> \
-                      <div class="modal-footer"> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
-                      </div> \
-                    </div><!-- /.modal-content --> \
-                  </div><!-- /.modal-dialog --> \
-                ';
+                console.log("setting up directive modalShowDest");
+                function getContentUrl() {
+                    console.log("find file modalShowDest html");
+                    return '/templates/DestSelectDlgGen.html';
+               }
                 return {
                     restrict: "A",
-                    template : tpl,
+                    /*
+                    It will check the cache for inlined templates and if one is not found
+                    it will make an xhr to the url to fetch the template.
+                    The url with "/" prefix is relative to the domain, without the "/" prefix
+                    it will be relative to the main ("index.html") page or
+                    base url (if you use location in the html5 mode).
+                    */
+                    // templateUrl : './DestSelectDlgGen.html',
+                    templateUrl : '/templates/DestSelectDlgGen',
+                    // template : '<ng-include src="getContentUrl()"/>',
+                    replace : true,
+                    transclude: true,
                     scope: {
                         modalVisible: "=",
                         modalMdata: "="
                     },
+
+                    controller: function($scope) {
+                        console.log("setting up directive modalShowDest controller");
+                        $scope.getContentUrl = function() {
+                            console.log("find file modalShowDest html");
+                            return '/templates/DestSelectDlgGen.html';
+                       }
+                   },
+
                     link: function (scope, element, attrs) {
                         var localScope = scope;
                         //Hide or show the modal
@@ -125,10 +125,17 @@
                                 elem = element;
 
                             if (visible)
-                                $(elem).modal311("show");                     
+                                $(elem).modal311("show");
                             else
                                 $(elem).modal311("hide");
                         }
+
+                        scope.$on('ShowWindowSelectorModalEvent', function(){
+                            localScope.showDestDialog = true;
+                            // $scope.safeApply(function(){
+                            //     $scope.showDestDialog = true;
+                            // });
+                        });
 
                         //Check to see if the modal-visible attribute exists
                         if (!attrs.modalVisible)
@@ -162,14 +169,14 @@
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
-                             /* 
+
                             scope.$watch('scope.$parent.showDestDialog', function (newValue, oldValue) {
                                 console.log("scope.$watch newValue : " + newValue);
                                 console.log("scope.$watch 'scope.$parent.showDestDialog' : " + scope.$parent.showDestDialog);
                                 scope.showModal(newValue);
                                 //attrs.modalVisible = false;
                             });
-                              */
+
 
                         }
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
@@ -191,10 +198,10 @@
 
                 };
             });
-            
+
             return DestWndSetupCtrl;
         }
-        
+
         return { start: init,
                   isInitialized : DestWndSetupCtrl.prototype.isInitialized};
 
