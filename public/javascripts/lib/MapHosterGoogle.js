@@ -11,8 +11,9 @@
         , 'controllers/PositionViewCtrl'
         , 'controllers/MapCtrl'
         , 'lib/utils'
-        , 'lib/AgoNewWindowConfig'
-        ], function(angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig) {
+        , 'lib/AgoNewWindowConfig',
+        'controllers/StompSetupCtrl'
+    ], function(angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig, StompSetupCtrl) {
 
         var
             mphmap,
@@ -54,6 +55,8 @@
             gplaces = googPlaces;
             geoCoder = new google.maps.Geocoder();
             var markers = [];
+            var self = this;
+            var placesFromSearch = [];
 
             if(AgoNewWindowConfig.testUrlArgs()){
                 var qlat = AgoNewWindowConfig.lat();
@@ -116,6 +119,49 @@
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
 
+                var onAcceptDestination = function(displayDestination){
+                    var destWnd = displayDestination;
+                    var curmph = self;
+                    var newSelectedWebMapId = 'SomeID';
+                    if(destWnd == 'New Pop-up Window' || destWnd == 'New Tab'){
+                        var $inj = angular.injector(['app']);
+                        var evtSvc = $inj.get('StompEventHandlerService');
+                        evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                        evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                            AgoNewWindowConfig.getUserName(),
+                            function(channel, userName){
+                                var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                                  "&channel=" + channel + "&userName=" + userName +
+                                  "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+
+                                var gmQuery = AgoNewWindowConfig.getQuery();
+                                if(gmQuery != ''){
+                                    url += "&gmquery=" + gmQuery;
+                                    var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                                    url += bnds;
+                                }
+                                console.log("open new Google window with URI " + url);
+                                console.log("using channel " + channel + "with userName " + userName);
+                                AgoNewWindowConfig.setUrl(url);
+                                AgoNewWindowConfig.setUserName(userName);
+                                if(destWnd == "New Pop-up Window"){
+                                    var baseUrl = AgoNewWindowConfig.getbaseurl();
+                                    window.open(baseUrl + "/google/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                                }
+                                else if(destWnd == "New Tab"){
+                                    var baseUrl = AgoNewWindowConfig.getbaseurl();
+                                    window.open(baseUrl + "google/" + url, '_blank')
+                                    window.focus();
+                                }
+
+                        });
+                    }
+                    else {  //(destWnd == "Same Window")
+                        placeMarkers(placesFromSearch);
+                    }
+                }
+
                 // Listen for the event fired when the user selects an item from the
                 // pick list. Retrieve the matching places for that item.
                 google.maps.event.addListener(searchBox, 'places_changed', function() {
@@ -126,19 +172,17 @@
                     console.log(formatBounds(bounds));
                     // var bnds = {'llx' : bounds.getSouthWest().lng() , 'lly' : bounds.getSouthWest().lat(),
                     //              'urx' : bounds.getNorthEast().lng() , 'ury' : bounds.getNorthEast().lat()};
-                    var places = searchBox.getPlaces();
+                    placesFromSearch = searchBox.getPlaces();
 
                     console.log("after searchBox.getPlaces()");
-                    if(places && places.length > 0){
+                    if(placesFromSearch && placesFromSearch.length > 0){
                         var $inj = angular.injector(['app']);
                         var gmQSvc = $inj.get('GoogleQueryService');
                         var scope = gmQSvc.getQueryDestinationDialogScope();
                         scope.$apply(function(){
                             // rootScope.$broadcast('ShowWindowSelectorModalEvent');
-                            scope.showDialog();
+                            scope.showDialog(onAcceptDestination);
                         });
-                        console.log('searchBox.getPlaces() returned : ' + places.length);
-                        placeMarkers(places);
                     }
                     else{
                         console.log('searchBox.getPlaces() still returned no results');

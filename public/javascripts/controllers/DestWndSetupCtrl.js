@@ -22,6 +22,7 @@
 
             // selfdict.callbackFunction = null;
             $scope.showDestDialog = false;
+            $scope.choiceCallback = null;
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
@@ -50,7 +51,8 @@
                 // });
             });
 
-            $scope.showDialog = function(){
+            $scope.showDialog = function(choiceCallback){
+                $scope.choiceCallback = choiceCallback;
                 $scope.showDestDialog = true;
             }
             $rootScope.$on('ShowWindowSelectorModalEvent', function(){
@@ -59,7 +61,12 @@
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
-                scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
+                if($scope.choiceCallback){
+                    $scope.choiceCallback($scope.data.dstSel);
+                }
+                else{
+                    scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
+                }
             };
 
             $scope.hitEnter = function(evt){
@@ -84,8 +91,9 @@
             return areWeInitialized;
         }
 
-        DestWndSetupCtrl.prototype.showDialog = function(){
-            Rscope.showDialog();
+        DestWndSetupCtrl.prototype.showDialog = function(choiceCallback){
+            $scope.$scope.choiceCallback = choiceCallback;
+            scope.showDialog($scope.choiceCallback);
         }
 
         function init(App) {
