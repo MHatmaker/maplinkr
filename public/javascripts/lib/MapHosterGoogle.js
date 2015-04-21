@@ -130,6 +130,13 @@
 
                     console.log("after searchBox.getPlaces()");
                     if(places && places.length > 0){
+                        var $inj = angular.injector(['app']);
+                        var gmQSvc = $inj.get('GoogleQueryService');
+                        var scope = gmQSvc.getQueryDestinationDialogScope();
+                        scope.$apply(function(){
+                            // rootScope.$broadcast('ShowWindowSelectorModalEvent');
+                            scope.showDialog();
+                        });
                         console.log('searchBox.getPlaces() returned : ' + places.length);
                         placeMarkers(places);
                     }

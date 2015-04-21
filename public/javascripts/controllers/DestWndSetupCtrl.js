@@ -50,6 +50,13 @@
                 // });
             });
 
+            $scope.showDialog = function(){
+                $scope.showDestDialog = true;
+            }
+            $rootScope.$on('ShowWindowSelectorModalEvent', function(){
+                $scope.showDestDialog = true;
+            });
+
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
@@ -77,6 +84,10 @@
             return areWeInitialized;
         }
 
+        DestWndSetupCtrl.prototype.showDialog = function(){
+            Rscope.showDialog();
+        }
+
         function init(App) {
             console.log('DestWndSetupCtrl init');
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
@@ -86,10 +97,6 @@
 
             App.directive("modalShowDest", function () {
                 console.log("setting up directive modalShowDest");
-                function getContentUrl() {
-                    console.log("find file modalShowDest html");
-                    return '/templates/DestSelectDlgGen.html';
-               }
                 return {
                     restrict: "A",
                     /*
@@ -99,8 +106,8 @@
                     it will be relative to the main ("index.html") page or
                     base url (if you use location in the html5 mode).
                     */
-                    // templateUrl : './DestSelectDlgGen.html',
-                    templateUrl : '/templates/DestSelectDlgGen',
+
+                    templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
                     // template : '<ng-include src="getContentUrl()"/>',
                     replace : true,
                     transclude: true,
@@ -203,6 +210,7 @@
         }
 
         return { start: init,
+                  showDialog : DestWndSetupCtrl.prototype.showDialog,
                   isInitialized : DestWndSetupCtrl.prototype.isInitialized};
 
     });

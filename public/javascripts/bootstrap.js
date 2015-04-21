@@ -36,7 +36,7 @@ var selectedMapType = 'arcgis';
                         'GoogleMap' : 'google',
                         'ArcGIS' : 'arcgis'};
 
-            var googleQueryDct = {'query' : null};
+            var googleQueryDct = {'query' : null, 'rootScope': null};
 
             var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
@@ -165,6 +165,15 @@ var selectedMapType = 'arcgis';
             }).
 
             factory("GoogleQueryService", function($rootScope){
+                googleQueryDct.rootScope = $rootScope;
+                var getRootScope = function(){
+                    return googleQueryDct.rootScope;
+                }
+                var getQueryDestinationDialogScope = function(){
+                    var e = document.getElementById('DestWndDialogGoogle');
+                    var scope = angular.element(e).scope();
+                    return scope;
+                }
                 var getQueryDct = function() {
                     return googleQueryDct;
                 }
@@ -180,7 +189,9 @@ var selectedMapType = 'arcgis';
                     var spaScope = spaElemA.scope();
                     // spaScope.$broadcast('searchClickEvent', gmquery);
                 }
-                return {getQueryDct: getQueryDct, setQuery : setQuery, clickSearch : clickSearch };
+                return {getQueryDct: getQueryDct, setQuery : setQuery,
+                    getQueryDestinationDialogScope : getQueryDestinationDialogScope,
+                    getRootScope : getRootScope, clickSearch : clickSearch };
             }).
 
             factory("ControllerService", function($rootScope){
