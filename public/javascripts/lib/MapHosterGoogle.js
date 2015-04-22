@@ -178,11 +178,14 @@
                     if(placesFromSearch && placesFromSearch.length > 0){
                         var $inj = angular.injector(['app']);
                         var gmQSvc = $inj.get('GoogleQueryService');
+                        gmQSvc.setDialogVisibility();
                         var scope = gmQSvc.getQueryDestinationDialogScope();
+                        setTimeout(function() {
                         scope.$apply(function(){
                             // rootScope.$broadcast('ShowWindowSelectorModalEvent');
                             scope.showDialog(onAcceptDestination);
                         });
+                    }, 100);
                     }
                     else{
                         console.log('searchBox.getPlaces() still returned no results');

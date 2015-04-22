@@ -174,6 +174,13 @@ var selectedMapType = 'arcgis';
                     var scope = angular.element(e).scope();
                     return scope;
                 }
+
+                var setDialogVisibility = function(){
+                    var e = document.getElementById('Verbage');
+                    var scope = angular.element(e).scope();
+                    return scope.VerbVis = 'flex';
+                }
+
                 var getQueryDct = function() {
                     return googleQueryDct;
                 }
@@ -191,6 +198,7 @@ var selectedMapType = 'arcgis';
                 }
                 return {getQueryDct: getQueryDct, setQuery : setQuery,
                     getQueryDestinationDialogScope : getQueryDestinationDialogScope,
+                    setDialogVisibility : setDialogVisibility,
                     getRootScope : getRootScope, clickSearch : clickSearch };
             }).
 
