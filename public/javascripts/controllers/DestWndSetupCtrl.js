@@ -61,8 +61,10 @@
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
+                var callback = $scope.choiceCallback;
                 if($scope.choiceCallback){
-                    $scope.choiceCallback($scope.data.dstSel);
+                    $scope.choiceCallback = null;
+                    callback($scope.data.dstSel);
                 }
                 else{
                     scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
