@@ -14,7 +14,7 @@ var Pusher = require( 'pusher' );
 // var nodemailer = require("nodemailer");
 // var smtpTransport = require('nodemailer-smtp-transport');
 
-var routesJade = require('./routes');
+var routesJade = require('./routes/index.js');
 var api = require('./routes/api');
 // var contact = require('./routes/contact');  // Contact Form
 
