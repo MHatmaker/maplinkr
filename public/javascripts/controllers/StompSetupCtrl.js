@@ -283,7 +283,7 @@
                         <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
                         <input type="text" name="input" ng-model="$parent.data.userName", ng-init="$parent.data.userName"> \
-                        <div>user name : {{$parent.data.userName}}</div> \
+                        <div style="color: #17244D; margin-top: 10px;">USER NAME : {{$parent.data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
                         <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
