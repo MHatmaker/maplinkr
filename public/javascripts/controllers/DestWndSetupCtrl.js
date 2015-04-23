@@ -108,8 +108,8 @@
             App.directive("modalShowDest", function () {
                 console.log("setting up directive modalShowDest");
                 return {
-                    restrict: "A",
-                    /*
+                    restrict: "A",   /* why doesn't "E" work? */
+                     /*
                     It will check the cache for inlined templates and if one is not found
                     it will make an xhr to the url to fetch the template.
                     The url with "/" prefix is relative to the domain, without the "/" prefix
