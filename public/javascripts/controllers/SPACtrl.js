@@ -1,8 +1,8 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
 /*jslint unparam: true*/
-var console = (window.console = window.console || {});
-var setTimeout = (window.setTimeout = window.setTimeout || {});
+// var console = (window.console = window.console || {});
+// var setTimeout = (window.setTimeout = window.setTimeout || {});
 
 (function () {
     "use strict";
