@@ -28,5 +28,5 @@ exports.templates = function (req, res) {
 console.log("exports.templates");
 var name = req.params.name;
 console.log(name);
-res.render('templates/' + name + '.jade');
+res.render('Templates/' + name + '.jade');
 };
