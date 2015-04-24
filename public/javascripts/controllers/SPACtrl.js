@@ -1,6 +1,8 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
 /*jslint unparam: true*/
+var console = (window.console = window.console || {});
+var setTimeout = (window.setTimeout = window.setTimeout || {});
 
 (function () {
     "use strict";
@@ -89,6 +91,30 @@
                 $scope.data.verbageExpandCollapse = $scope.verbageExpandCollapse = "Collapse";
 
                 printStatus('Show Plug-in!');
+            }
+
+            function adjustHeights(scope, invalidateMapPane) {
+                /* From flexbox.js plunker  */
+                var outerColHgt = utils.getAvailableSiteColumnHeights(scope.MasterSiteVis, status.website);
+                scope.innerTblHeight = outerColHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.bodyColHeight = outerColHgt;
+                        // $scope.bodyColHeight = colHgt;
+                        // utils.setElementHeight('idBody', colHgt - 20);
+                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
+                        var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status.website);
+                        $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
+                        utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
+                        utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
+                        console.log("adjustHeights colHgt : " + colHgt);
+                        if (invalidateMapPane && invalidateMapPane === true) {
+                            console.log("NNNOOOWWW invalidateMapPane with CollapseSummaryCompletionEvent");
+                            $scope.$broadcast('CollapseSummaryCompletionEvent');
+                        }
+                    });
+                }, 1000);
             }
 
             function onHidePlugin(e, from, to, msg) {
@@ -250,29 +276,6 @@
             };
             selfMethods.siteCollapser = $scope.siteCollapser;
 
-            function adjustHeights(scope, invalidateMapPane) {
-                /* From flexbox.js plunker  */
-                var outerColHgt = utils.getAvailableSiteColumnHeights(scope.MasterSiteVis, status.website);
-                scope.innerTblHeight = outerColHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
-
-                setTimeout( function () {
-                    $scope.$apply(function () {
-                        $scope.bodyColHeight = outerColHgt;
-                        // $scope.bodyColHeight = colHgt;
-                        // utils.setElementHeight('idBody', colHgt - 20);
-                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.SiteVis);
-                        var colHgt = utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, status.website);
-                        $scope.innerTblHeight = colHgt + utils.getTopRowHeight() + utils.getFooterHeight() - innerTableAdjustment;
-                        utils.setElementHeight('idCenterCol', colHgt - colHeightAdjustment);
-                        utils.setElementHeight('map_wrapper', colHgt - colHeightAdjustment);
-                        console.log("adjustHeights colHgt : " + colHgt);
-                        if (invalidateMapPane && invalidateMapPane === true) {
-                            console.log("NNNOOOWWW invalidateMapPane with CollapseSummaryCompletionEvent");
-                            $scope.$broadcast('CollapseSummaryCompletionEvent');
-                        }
-                    });
-                }, 1000);
-            }
         };
 
         function hideWebsite() {
