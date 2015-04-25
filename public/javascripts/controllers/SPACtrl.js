@@ -1,6 +1,6 @@
 
 // <<<<<<<<<<<<<<<<<   http://plnkr.co/edit/V5alqOODGmnLbKiK2YY7?p=preview  >>>>>>>>>>>>>>>>>>
-/*jslint unparam: true*/
+
 // var console = (window.console = window.console || {});
 // var setTimeout = (window.setTimeout = window.setTimeout || {});
 
@@ -276,7 +276,7 @@
             };
             selfMethods.siteCollapser = $scope.siteCollapser;
 
-        };
+        }
 
         function hideWebsite() {
             console.log("hideWebsite");
