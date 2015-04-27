@@ -4,7 +4,7 @@
     var isFirstViewing = true;
 
     console.log('MasherCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function(angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
+    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
         console.log('MasherCtrl define');
         var selfMethods = {},
             descriptions = {
@@ -124,27 +124,27 @@
             selfMethods.onNewMapPosition = $scope.onNewMapPosition;
         }
 
-        MasherCtrl.prototype.windowResized = function () {
-            selfMethods.windowResized();
-        }
+        // MasherCtrl.prototype.windowResized = function () {
+        //     selfMethods.windowResized();
+        // }
 
         function init(App) {
             console.log('MasherCtrl init');
             App.controller('MasherCtrl', ['$scope', '$location', MasherCtrl]);
 
             //calling tellAngular on resize event
-            window.onresize = MasherCtrl.prototype.windowResized;
+            window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
 
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService');
 
-            evtSvc.addEvent('client-NewMapPosition', onNewMapPosition);
+            evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
             App.directive('modalShowPopupblockdlg', function () {
                 return {
                     template : 'ModalDialogPopupBlocked',
 
-                    restrict: 'A',
+                    restrict: 'E',
                     transclude: true,
                     replace: true,
                     scope: true,
@@ -159,7 +159,7 @@
                             }
                         });
                     }
-                }
+                };
             });
 
             return MasherCtrl;
