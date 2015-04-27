@@ -15,7 +15,8 @@ block content
                             figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
                                 img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="margin: 0.01em 0.5em  0.01em  0.05em;")
                                 figcaption(class="btn", style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;font-weight: 800;") {{ExpandSum}} Summary Master Website Options
-                                                
+                    
+            div(modal-show-popupblockdlg="", modal-visible="$parent.showPopupBlockerDialog", class="modal330", role="dialog", class="modal", id="PopupBlockerDialog", ng-controller="MasherCtrl", style="display: none; position:relative", data-backdrop="true")
             #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': isCollapsed, 'mastersite-shown': !isCollapsed}")
                 .mashbackground
                     #mashbox(class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")
