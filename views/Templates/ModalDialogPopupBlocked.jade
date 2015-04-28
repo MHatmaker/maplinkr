@@ -5,7 +5,7 @@ div(class="modal-dialog", style="width: 100%;")
 
             h4 You need to disable popup blocker for this URL :
         div(class="modal-body")
-            div(style="color: #17244D; margin-top: 10px;") URL: {{data.dstSel}}
+            div(style="color: #17244D; margin-top: 10px;") URL: {{$parent.data.blockedUrl}}
         div(class="modal-footer")
-            button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Accept'; $parent.preserveState()", data-dismiss="modal") Accept
-            button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Cancel'; $parent.restoreState()", data-dismiss="modal")  Cancel
+            button(type="button", class="btn btn-primary", ng-click="$parent.ok()", data-dismiss="modal") Accept
+            button(type="button", class="btn btn-primary", ng-click="$parent.cancel()", data-dismiss="modal")  Cancel

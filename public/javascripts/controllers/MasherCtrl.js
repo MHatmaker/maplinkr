@@ -15,18 +15,27 @@
 
         function MasherCtrl($scope, $location, $route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
-            // alert('MasherCtrl - initialize some tabs');
 
             var startupView = AgoNewWindowConfig.getStartupView();
             $scope.ExpandSum = startupView.summary === true ? "Collapse" : "Expand";
             $scope.MasterSiteVis = startupView.Website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
             $scope.showPopupBlockerDialog = false;
+            $scope.data = {'blockedUrl': 'place holder'};
 
-            $scope.CatchClick = function () {
-                alert("Caught in MasherCtrl");
+            $scope.catchClick = function () {
+                // alert("Caught in MasherCtrl");
+                $scope.showPopupBlockerDialog = true;
+                $('#PopupBlockerDialog').modal311('show');
             };
 
+            $scope.ok = function () {
+                $scope.showPopupBlockerDialog = false;
+            };
+
+            $scope.cancel = function () {
+                $scope.showPopupBlockerDialog = false;
+            };
             $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
             $scope.currentTab = null;
@@ -79,16 +88,20 @@
             $scope.$on('WebSiteDescriptionEvent', function () {
                 console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                var showElem = document.getElementById('showMeTheMap'),
-                    showElemA = angular.element(showElem),
-                    showElem0 = showElemA[0];
+                // var showElem = document.getElementById('showMeTheMap'),
+                //     showElemA = angular.element(showElem),
+                //     showElem0 = showElemA[0];
+                //
+                // showElem0.click();
+                $scope.catchClick();
 
-                // $location.path($scope.currentTab.url);
-                showElem0.click();
             });
 
             function handlePopupBlocked() {
-
+                console.log('in function handlePopupBlocked');
+                alert('in function handlePopupBlocked');
+                $scope.showPopupBlockerDialog = true;
+                $('#PopupBlockerDialog').modal311('show');
             }
 
             $scope.onNewMapPosition = function (pos) {
@@ -107,6 +120,7 @@
                 console.log("userId = " + AgoNewWindowConfig.getUserId() + " referrerId = " + AgoNewWindowConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
                 console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
                 console.log("Open new window with name " + nextWindowName);
+                $scope.data.blockedUrl = completeUrl;
 
                 if (pos.referrerId !== AgoNewWindowConfig.getUserId()) {
                     wnd = window.open(completeUrl, nextWindowName,
@@ -140,24 +154,64 @@
 
             evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
-            App.directive('modalShowPopupblockdlg', function () {
+            App.directive('modalshowpopupblockdlg', function () {
                 return {
-                    template : 'ModalDialogPopupBlocked',
+                    templateUrl : '/Templates/ModalDialogPopupBlocked',
 
                     restrict: 'E',
                     transclude: true,
                     replace: true,
-                    scope: true,
+                    scope: {
+                        modalVisible: "="
+                    },
                     link: function postLink(scope, element, attrs) {
                         // scope.title = attrs.title;
-
-                        scope.$watch(attrs.visible, function (value) {
-                            if (value === true) {
-                                $(element).modal311('show');
-                            } else {
-                                $(element).modal311('hide');
+                        //Hide or show the modal
+                        scope.showModal = function (visible, elem) {
+                            if (!elem) {
+                                elem = element;
                             }
-                        });
+                            if (visible) {
+                                $(elem).modal311("show");
+                            } else {
+                                $(elem).modal311("hide");
+                            }
+                        };
+
+                        if (!attrs.modalVisible) {
+                            //The attribute isn't defined, show the modal by default
+                            scope.showModal(true);
+
+                        } else {
+                            scope.$watch(attrs.visible, function (value) {
+                                if (value === true) {
+                                    $(element).modal311('show');
+                                } else {
+                                    $(element).modal311('hide');
+                                }
+                            });
+                            scope.$watch('scope.$parent.showPopupBlockerDialog', function (newValue, oldValue) {
+                                console.log("scope.$watch newValue : " + newValue);
+                                console.log("scope.$watch 'scope.$parent.showPopupBlockerDialog' : " + scope.$parent.showPopupBlockerDialog);
+                                // scope.showModal(newValue);
+                                //attrs.modalVisible = false;
+                            });
+
+                            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+                            $(element).on('hidden.bs.modal', function () {
+                                scope.$apply(function () {
+                                    scope.$parent[attrs.visible] = false;
+                                });
+                            });
+                            $(element).on('hidden.bs.modal', function () {
+                                scope.$apply(function () {
+                                    scope.$parent[attrs.visible] = true;
+                                });
+                            });
+                            $(element).on('loaded.bs.modal', function () {
+                                alert('Modal is successfully loaded!');
+                            });
+                        }
                     }
                 };
             });
