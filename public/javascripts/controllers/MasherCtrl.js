@@ -21,7 +21,12 @@
             $scope.MasterSiteVis = startupView.Website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
             $scope.showPopupBlockerDialog = false;
-            $scope.data = {'blockedUrl': 'place holder'};
+            $scope.data = {
+                'blockedUrl': 'place holder',
+                'completeUrl': 'completeslashdoturl',
+                'nextWindowName': 'InitialWindowName',
+                'popupDimensions': 'popdimensions'
+            };
 
             $scope.catchClick = function () {
                 // alert("Caught in MasherCtrl");
@@ -31,6 +36,8 @@
 
             $scope.ok = function () {
                 $scope.showPopupBlockerDialog = false;
+                window.open($scope.data.completeUrl, $scope.data.nextWindowName,
+                    $scope.data.popupDimensions);
             };
 
             $scope.cancel = function () {
@@ -88,19 +95,22 @@
             $scope.$on('WebSiteDescriptionEvent', function () {
                 console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                // var showElem = document.getElementById('showMeTheMap'),
-                //     showElemA = angular.element(showElem),
-                //     showElem0 = showElemA[0];
-                //
-                // showElem0.click();
-                $scope.catchClick();
+                var showElem = document.getElementById('showMeTheMap'),
+                    showElemA = angular.element(showElem),
+                    showElem0 = showElemA[0];
+
+                showElem0.click();
+                // $scope.catchClick();  for testing dialog without an actual popup block event
 
             });
 
-            function handlePopupBlocked() {
+            function handlePopupBlocked(completeUrl, nextWindowName, dimensions) {
                 console.log('in function handlePopupBlocked');
                 alert('in function handlePopupBlocked');
                 $scope.showPopupBlockerDialog = true;
+                $scope.data.completeUrl = completeUrl;
+                $scope.data.nextWindowName = nextWindowName;
+                $scope.data.popupDimensions = dimensions;
                 $('#PopupBlockerDialog').modal311('show');
             }
 
