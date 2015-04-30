@@ -724,16 +724,19 @@
         {
             if(selfPusherDetails.pusher)
             {
-                console.log("MapHosterLeaflet.publishPosition");
+                console.log("MapHosterGoogle.publishPosition");
                 console.log(pos);
 
                 var gmQuery = AgoNewWindowConfig.getQuery();
                 if(gmQuery != ''){
+                    console.log("adding gmQuery : " + qmQuery);
                     pos['gmquery'] = gmQuery;
                     pos.search += "&gmquery=" + gmQuery;
                     var bnds = AgoNewWindowConfig.getBoundsForUrl();
                     pos.search += bnds;
                 }
+                console.log('After adding gmQuery');
+                console.debug(pos.search);
 
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
             }
