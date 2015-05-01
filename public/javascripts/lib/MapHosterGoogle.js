@@ -729,7 +729,7 @@
 
                 var gmQuery = AgoNewWindowConfig.getQuery();
                 if(gmQuery != ''){
-                    console.log("adding gmQuery : " + qmQuery);
+                    console.log("adding gmQuery : " + gmQuery);
                     pos['gmquery'] = gmQuery;
                     pos.search += "&gmquery=" + gmQuery;
                     var bnds = AgoNewWindowConfig.getBoundsForUrl();
