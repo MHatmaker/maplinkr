@@ -1,3 +1,4 @@
+/*global define */
 
 (function () {
     "use strict";
@@ -99,8 +100,8 @@
                     showElemA = angular.element(showElem),
                     showElem0 = showElemA[0];
 
-                showElem0.click();
-                // $scope.catchClick();  for testing dialog without an actual popup block event
+                //showElem0.click();
+                $scope.catchClick();  // for testing dialog without an actual popup block event
 
             });
 
@@ -248,4 +249,4 @@
 
     });
 
-}).call(this);
+}()).call(this);

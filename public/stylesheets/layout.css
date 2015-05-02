@@ -240,3 +240,24 @@ img.svg-menu{
  .leaflet-popup-content{
      color : #A2A9B0;
  }
+
+ .browserimg {
+  -webkit-clip-path: inset(1px 492px 1px 0px);
+  clip-path: inset(1px 492px 1px 0px);
+  /* Also can take single values to make all sides the same,
+  or 2 values (vert/horz), or 3 values (top/horz/bottom). */
+}
+
+.browserimg.gglchrome {
+ -webkit-clip-path: inset(1px 196px 1px 196px);
+ clip-path: inset(1px 196px 1px 196px);
+ margin-left: -196px;
+ margin-right: -196px;
+ }
+
+.browserimg.mozff {
+ -webkit-clip-path: inset(1px 294px 1px 98px);
+ clip-path: inset(1px 294px 1px 98px);
+ margin-left: -98px;
+ margin-right: -294px;
+ }

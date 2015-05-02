@@ -1,4 +1,5 @@
 
+/*global define */
 
 (function () {
     "use strict";
@@ -55,7 +56,7 @@
                 console.log("fetchUrl with : " + context.fullUrl);
 
                 labelDiv.css({"display" : "inline-block"});
-            }
+            };
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
                 context.fullUrl = assembleUrl();
@@ -78,4 +79,9 @@
 
     });
 
-}).call(this);
+}()).call(this);
+
+/*
+  Plunker that manages to get textarea updated from change in the scope variable.
+ http://plnkr.co/edit/YnXZQm78M9nMqd9uOURz?p=preview
+*/
