@@ -249,15 +249,29 @@ img.svg-menu{
 }
 
 .browserimg.gglchrome {
- -webkit-clip-path: inset(1px 120px 1px 120px);
- clip-path: inset(1px 120px 1px 120px);
- margin-left: -120px;
- margin-right: -120px;
+   -webkit-clip-path: inset(1px 120px 1px 120px);
+   clip-path: inset(1px 120px 1px 120px);
+   margin-left: -120px;
+   margin-right: -120px;
  }
 
 .browserimg.mozff {
- -webkit-clip-path: inset(1px 180px 1px 48px);
- clip-path: inset(1px 180px 1px 48px);
- margin-left: -60px;
- margin-right: -180px;
+   -webkit-clip-path: inset(1px 180px 1px 48px);
+   clip-path: inset(1px 180px 1px 48px);
+   margin-left: -60px;
+   margin-right: -180px;
+ }
+
+ .browserimg.msie {
+   -webkit-clip-path: inset(1px 240px 1px 1px);
+   clip-path: inset(1px 240px 1px 1px);
+   margin-left: -1px;
+   margin-right: -240px;
+ }
+
+.browserimg.sfri {
+   -webkit-clip-path: inset(1px 60px 1px 190px);
+   clip-path: inset(1px 60px 1px 180px);
+   margin-left: -190px;
+   margin-right: -60px;
  }

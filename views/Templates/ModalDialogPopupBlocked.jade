@@ -8,9 +8,11 @@ div(class="modal-dialog", style="width: 100%;")
             div(style="color: #17244D; margin-top: 10px;") URL: {{$parent.data.blockedUrl}}
             
             div.
-                Look at the page top for instructions for allowing a specific site or
+                Check the page top or address bar for instructions for allowing a specific site or
             div.
                 Right Click on the link for browser-specific instructions.
+                
+            br
                 
             div(style="float: left;")
                 
@@ -31,6 +33,24 @@ div(class="modal-dialog", style="width: 100%;")
                         img(src='../stylesheets/images/browserimages.jpg', class="browserimg mozff")
                     div(style="float: left; margin-top: -30px; margin-left: 60px;").
                         Firefox
+                
+            div
+                br
+                a(href='http://www.techieshelp.com/turn-off-pop-up-block-in-internet-explorer-9/')
+                    
+                    div(style="margin-top: 1px;")
+                        img(src='../stylesheets/images/browserimages.jpg', class="browserimg msie")
+                    div(style="float: left; margin-top: -30px; margin-left: 60px;").
+                        Internet Explorer
+    
+            div
+                br
+                a(href='http://www.technipages.com/safari-enabledisable-pop-up-blocker')
+                    
+                    div(style="margin-top: 1px;")
+                        img(src='../stylesheets/images/browserimages.jpg', class="browserimg sfri")
+                    div(style="float: left; margin-top: -30px; margin-left: 60px;").
+                        Safari (does not allow site exceptions)
 
 
         div(class="modal-footer")
