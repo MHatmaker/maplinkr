@@ -4,6 +4,8 @@
 // var console = (window.console = window.console || {});
 // var setTimeout = (window.setTimeout = window.setTimeout || {});
 
+/*global define */
+
 (function () {
     "use strict";
 
@@ -293,4 +295,6 @@
         return { start: init, hideWebsite : hideWebsite };
     });
 
-}).call(this);
+}());
+
+// }).call(this);

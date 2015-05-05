@@ -96,9 +96,9 @@
             $scope.$on('WebSiteDescriptionEvent', function () {
                 console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                var showElem = document.getElementById('showMeTheMap'),
-                    showElemA = angular.element(showElem),
-                    showElem0 = showElemA[0];
+                // var showElem = document.getElementById('showMeTheMap'),
+                //     showElemA = angular.element(showElem),
+                //     showElem0 = showElemA[0];
 
                 //showElem0.click();
                 $scope.catchClick();  // for testing dialog without an actual popup block event
@@ -248,5 +248,5 @@
         return { start: init, startMapSystem: startMapSystem, onNewMapPosition : onNewMapPosition };
 
     });
-
-}()).call(this);
+}());
+// }()).call(this);

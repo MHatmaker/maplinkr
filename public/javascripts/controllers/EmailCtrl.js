@@ -79,7 +79,8 @@
 
     });
 
-}()).call(this);
+}());
+// }()).call(this);
 
 /*
   Plunker that manages to get textarea updated from change in the scope variable.
