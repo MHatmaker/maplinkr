@@ -160,7 +160,11 @@ angular.isUndefinedOrNull = function(val) {
 
             $scope.findArcGISGroupMaps = function(portal, searchTermMap) {
               utils.showLoading();
-              var keyword = searchTermMap; //dojo.byId('mapFinder').value;
+              var mf = document.getElementById('mapFinder');
+              var mfa = angular.element(mf);
+              var scopeMF = mfa.scope().$apply();
+
+              var keyword = mf.value; // searchTermMap; //dojo.byId('mapFinder').value;
               var params = {
                 q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
                 num: 20
