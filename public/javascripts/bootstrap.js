@@ -1,7 +1,8 @@
+/*global define */
 
 var selectedMapType = 'arcgis';
 
-(function() {
+(function () {
     "use strict";
 
     console.debug('bootstrap setup method');
@@ -18,7 +19,8 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function(angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig, EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+    ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
+            EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {
@@ -27,198 +29,233 @@ var selectedMapType = 'arcgis';
 
             // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
 
-            var eventDct =
-                    {'client-MapXtntEvent' : null,
-                    'client-MapClickEvent' : null,
-                    'client-NewMapPosition' : null};
+            var eventDct = {
+                'client-MapXtntEvent' : null,
+                'client-MapClickEvent' : null,
+                'client-NewMapPosition' : null
+            },
 
-            var mapRestUrlToType = {'Leaflet': 'leaflet',
-                        'GoogleMap' : 'google',
-                        'ArcGIS' : 'arcgis'};
+                mapRestUrlToType = {
+                    'Leaflet': 'leaflet',
+                    'GoogleMap' : 'google',
+                    'ArcGIS' : 'arcgis'
+                },
 
-            var googleQueryDct = {'query' : null, 'rootScope': null};
+                googleQueryDct = {'query' : null, 'rootScope': null},
 
-            var App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
+                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
+
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
-                function($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
-                    console.debug('App module route provider');
-                    var isCollapsed = false;
+                        function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
+                        console.debug('App module route provider');
 
-                    $routeProvider.
-                      when('/', {
-                        templateUrl: 'partials/SystemSelector.jade',
-                        // templateUrl: '/',
-                        controller: App.MasherCtrl, reloadOnSearch: true
-                      }).
-                      when('/partials/agonewwindow/:id',  {
-                        templateUrl: function(params){
-                            console.log("when string is " + '/partials/agonewwindow/:id');
-                            console.log("params = " + params.id);
-                            console.log("prepare to return " + '/partials/agonewwindow' + params.id);
-                            return '/partials/agonewwindow' + params.id;
-                        },
-                        controller: App.MasherCtrl, reloadOnSearch: true
-                      }).
-                      when('/views/partials/:id',  {
-                        templateUrl: function(params){
-                            console.log("when string is " + '/views/partials/:id');
-                            console.log(" params.id : " +  params.id);
-                            console.log("prepare to return " + '/partials/' + params.id);
-                            return '/partials/' + params.id;
-                        },
-                        controller: App.MapCtrl, reloadOnSearch: true
-                      }).
-                      when('/templates/:id',  {
-                        templateUrl: function(params){
-                            console.log("when string is " + '/templates/:id');
-                            console.log(" params.id : " +  params.id);
-                            console.log("prepare to return " + '/templates/' + params.id);
-                            return '/templates/' + params.id;
-                        },
-                        controller: App.DestWndSetupCtrl, reloadOnSearch: true
-                      }).
-                      when('/contact', {
-                          controller: EmailCtrl
-                      }).
-                      otherwise({
-                          redirectTo: '/'
-                      });
+                        $routeProvider.
+                            when('/', {
+                                templateUrl : 'partials/SystemSelector.jade',
+                                // templateUrl: '/',
+                                controller : App.MasherCtrl,
+                                reloadOnSearch: true
+                            }).
+                            when('/partials/agonewwindow/:id',  {
+                                templateUrl: function (params) {
+                                    console.log("when string is " + '/partials/agonewwindow/:id');
+                                    console.log("params = " + params.id);
+                                    console.log("prepare to return " + '/partials/agonewwindow' + params.id);
+                                    return '/partials/agonewwindow' + params.id;
+                                },
+                                controller: App.MasherCtrl,
+                                reloadOnSearch: true
+                            }).
+                            when('/views/partials/:id',  {
+                                templateUrl: function (params) {
+                                    console.log("when string is " + '/views/partials/:id');
+                                    console.log(" params.id : " +  params.id);
+                                    console.log("prepare to return " + '/partials/' + params.id);
+                                    return '/partials/' + params.id;
+                                },
+                                controller: App.MapCtrl,
+                                reloadOnSearch: true
+                            }).
+                            when('/templates/:id',  {
+                                templateUrl: function (params) {
+                                    console.log("when string is " + '/templates/:id');
+                                    console.log(" params.id : " +  params.id);
+                                    console.log("prepare to return " + '/templates/' + params.id);
+                                    return '/templates/' + params.id;
+                                },
+                                controller: App.DestWndSetupCtrl,
+                                reloadOnSearch: true
+                            }).
+                            when('/contact', {
+                                controller: EmailCtrl
+                            }).
+                            otherwise({
+                                redirectTo: '/'
+                            });
 
-                    $locationProvider.html5Mode(true);
-                    console.debug('Here we are at the end of routeProvider logic');
+                        $locationProvider.html5Mode(true);
+                        console.debug('Here we are at the end of routeProvider logic');
 
-                }
-            ]).
+                    }
+                    ]).
 
 
-            factory("CurrentWebMapIdService", function(){
-                var currentWebMapId = "fooWebMapId";
-                return {
-                        setCurrentWebMapId : function(newId){ currentWebMapId = newId; },
-                        getCurrentWebMapId : function(){ return currentWebMapId;}
-                 };
-             }).
-             factory("CurrentMapTypeService", function(){
-                var mapTypes = {'leaflet': MapHosterLeaflet,
-                            'google' : MapHosterGoogle,
-                            'arcgis' : MapHosterArcGIS};
+                factory("CurrentWebMapIdService", function () {
+                    var currentWebMapId = "fooWebMapId";
+                    return {
+                        setCurrentWebMapId : function (newId) { currentWebMapId = newId; },
+                        getCurrentWebMapId : function () { return currentWebMapId; }
+                    };
+                }).
+                factory("CurrentMapTypeService", function () {
+                    var mapTypes = {
+                        'leaflet': MapHosterLeaflet,
+                        'google' : MapHosterGoogle,
+                        'arcgis' : MapHosterArcGIS
+                    },
 
-                var mapRestUrl = {'leaflet': 'Leaflet',
+                        mapRestUrl = {
+                            'leaflet': 'Leaflet',
                             'google' : 'GoogleMap',
-                            'arcgis' : 'ArcGIS'};
+                            'arcgis' : 'ArcGIS'
+                        },
 
-                var currentMapType = 'arcgis';
-                var previousMapType = 'arcgis';
+                        currentMapType = 'arcgis',
+                        previousMapType = 'arcgis',
+                        isNewAgoWindow,
+                        maphost,
+                        $inj,
+                        serv,
+                        gmquery,
+                        searchService,
+
+                        getMapTypes = function () {
+                            var values = Object.keys(mapTypes).map(function (key) {
+                                return mapTypes[key];
+                            });
+                            return values;
+
+                            // var mapTypeValues = [];
+                            // for (var key in mapTypes){
+                                // mapTypeValues.push(mapTypes[key]);
+                            // return mapTypes;
+                        },
+                        getMapType = function () {
+                            return mapTypes[currentMapType];
+                        },
+                        getMapTypeKey = function () {
+                            return selectedMapType;
+                        },
+                        getMapRestUrl = function () {
+                            return mapRestUrl[selectedMapType];
+                        },
+                        setMapType = function (mpt) {
+                            previousMapType = currentMapType;
+                            selectedMapType = mpt;
+                            currentMapType = mpt;
+                            console.log("selectedMapType set to " + selectedMapType);
+                        },
+                        getPreviousMapType = function () {
+                            return mapTypes[previousMapType];
+                        },
+                        getSelectedMapType = function () {
+                            console.log("getSelectedMapType : " + selectedMapType);
+                            return mapTypes[selectedMapType];
+                        };
+                    return {
+                        getMapTypes: getMapTypes,
+                        getCurrentMapType : getMapType,
+                        setCurrentMapType : setMapType,
+                        getPreviousMapType : getPreviousMapType,
+                        getSelectedMapType : getSelectedMapType,
+                        getMapTypeKey : getMapTypeKey,
+                        getMapRestUrl : getMapRestUrl
+                    };
+                }).
 
 
-                var getMapTypes = function(){
-                    var values = Object.keys(mapTypes).map(function(key){
-                        return mapTypes[key];
-                        });
-                    return values;
+                factory("StompEventHandlerService", function () {
+                    var getEventDct = function () {
+                        return eventDct;
+                    },
 
-                    // var mapTypeValues = [];
-                    // for (var key in mapTypes){
-                        // mapTypeValues.push(mapTypes[key]);
-                    // return mapTypes;
-                }
-                var getMapType = function(){
-                    return mapTypes[currentMapType];
-                }
-                var getMapTypeKey = function(){
-                    return selectedMapType;
-                }
-                var getMapRestUrl = function(){
-                    return mapRestUrl[selectedMapType];
-                }
-                var setMapType = function(mpt){
-                    previousMapType = currentMapType;
-                    selectedMapType = mpt;
-                    currentMapType = mpt;
-                    console.log("selectedMapType set to " + selectedMapType);
-                }
-                var getPreviousMapType = function(){
-                    return mapTypes[previousMapType];
-                }
-                var getSelectedMapType = function(){
-                    console.log("getSelectedMapType : " + selectedMapType);
-                    return mapTypes[selectedMapType];
-                }
-                return { getMapTypes: getMapTypes, getCurrentMapType : getMapType, setCurrentMapType : setMapType, getPreviousMapType : getPreviousMapType, getSelectedMapType : getSelectedMapType, getMapTypeKey : getMapTypeKey, getMapRestUrl : getMapRestUrl };
-            }).
+                        addEvent = function (evt, handler) {
+                            eventDct[evt] = handler;
+                        },
 
+                        getHandler = function (evt) {
+                            return eventDct[evt];
+                        };
+                    return {
+                        getEventDct : getEventDct,
+                        addEvent : addEvent,
+                        getHandler : getHandler
+                    };
+                }).
 
-             factory("StompEventHandlerService", function(){
+                factory("GoogleQueryService", function ($rootScope) {
+                    googleQueryDct.rootScope = $rootScope;
+                    var getRootScope = function () {
+                        return googleQueryDct.rootScope;
+                    },
+                        getQueryDestinationDialogScope = function () {
+                            var e = document.getElementById('DestWndDialogGoogle'),
+                                scope = angular.element(e).scope();
+                            return scope;
+                        },
 
-                var getEventDct = function(){
-                    return eventDct;
-                }
+                        setDialogVisibility = function () {
+                            var e = document.getElementById('Verbage'),
+                                scope = angular.element(e).scope();
+                            scope.VerbVis = 'flex';
+                        },
 
-                var addEvent = function(evt, handler){
-                    eventDct[evt] = handler;
-                }
+                        getQueryDct = function () {
+                            return googleQueryDct;
+                        },
+                        setQuery = function (q) {
+                            // alert('setQuery' + q);
+                            googleQueryDct.query = q;
+                        };
+                    return {
+                        getQueryDct: getQueryDct,
+                        setQuery : setQuery,
+                        getQueryDestinationDialogScope : getQueryDestinationDialogScope,
+                        setDialogVisibility : setDialogVisibility,
+                        getRootScope : getRootScope
+                    };
+                }).
 
-                var getHandler = function(evt){
-                    return eventDct[evt];
-                }
-                return { getEventDct : getEventDct, addEvent : addEvent, getHandler : getHandler};
-            }).
+                factory("ControllerService", function ($rootScope) {
+                    var getController = function () {
+                        return MapCtrl;
+                    };
 
-            factory("GoogleQueryService", function($rootScope){
-                googleQueryDct.rootScope = $rootScope;
-                var getRootScope = function(){
-                    return googleQueryDct.rootScope;
-                }
-                var getQueryDestinationDialogScope = function(){
-                    var e = document.getElementById('DestWndDialogGoogle');
-                    var scope = angular.element(e).scope();
-                    return scope;
-                }
+                    return {getController: getController};
+                });
 
-                var setDialogVisibility = function(){
-                    var e = document.getElementById('Verbage');
-                    var scope = angular.element(e).scope();
-                    return scope.VerbVis = 'flex';
-                }
-
-                var getQueryDct = function() {
-                    return googleQueryDct;
-                }
-                var setQuery = function(q){
-                    // alert('setQuery' + q);
-                    googleQueryDct.query = q;
-                }
-                var clickSearch = function(){
-                    var gmquery = AgoNewWindowConfig.query();
-                    // alert('clickSearch ready to broadcast ' + gmquery);
-                    var spaElem = document.getElementById('spa_window');
-                    var spaElemA = angular.element(spaElem);
-                    var spaScope = spaElemA.scope();
-                    // spaScope.$broadcast('searchClickEvent', gmquery);
-                }
-                return {getQueryDct: getQueryDct, setQuery : setQuery,
-                    getQueryDestinationDialogScope : getQueryDestinationDialogScope,
-                    setDialogVisibility : setDialogVisibility,
-                    getRootScope : getRootScope, clickSearch : clickSearch };
-            }).
-
-            factory("ControllerService", function($rootScope){
-                var getController = function() {
-                    return MapCtrl;
-                }
-
-                return {getController: getController};
-            });
-
-            App.directive('autoFocus', function($timeout) {
+            App.directive('autoFocus', function ($timeout) {
                 return {
                     restrict: 'AC',
-                    link: function(_scope, _element) {
+                    link: function (locscope, locelement) {
                         console.log("directive autoFocus");
-                        $timeout(function(){
-                            _element[0].focus();
+                        $timeout(function () {
+                            locelement[0].focus();
                         }, 0);
                     }
+                };
+            });
+            App.directive('ngEnter', function () {
+                return function (scope, element, attrs) {
+                    element.bind("keydown keypress", function (event) {
+                        if (event.which === 13) {
+                            scope.$apply(function () {
+                                scope.$eval(attrs.ngEnter);
+                            });
+
+                            event.preventDefault();
+                        }
+                    });
                 };
             });
 
@@ -227,20 +264,20 @@ var selectedMapType = 'arcgis';
             angular.bootstrap(document.body, ['app']);
 
             console.log("url is " + location.search);
-            var isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
+            isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             AgoNewWindowConfig.setDestinationPreference('New Pop-up Window');
             if(isNewAgoWindow){
-                var maphost = AgoNewWindowConfig.maphost();
+                maphost = AgoNewWindowConfig.maphost();
                 console.log('maphost : ' + maphost);
 
-                var $inj = angular.injector(['app']);
-                var serv = $inj.get('CurrentMapTypeService');
+                $inj = angular.injector(['app']);
+                serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
                 console.log('maptype' + mapRestUrlToType[maphost]);
 
                 if(maphost == 'GoogleMap'){
-                    var gmquery = AgoNewWindowConfig.query();
-                    var searchService = $inj.get('GoogleQueryService');
+                    gmquery = AgoNewWindowConfig.query();
+                    searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
                 }
 

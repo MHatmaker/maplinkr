@@ -1,62 +1,56 @@
+/*global define */
 
-angular.isUndefinedOrNull = function(val) {
-    return angular.isUndefined(val) || val === null
+angular.isUndefinedOrNull = function (val) {
+    "use strict";
+    return angular.isUndefined(val) || val === null;
 };
 
-(function() {
+(function () {
     "use strict";
 
     console.log('SearcherCtrlMap setup');
     define([
         'angular',
         'lib/StartupArcGIS',
-        'lib/utils',
-    ], function(angular, StartupArcGIS, utils) {
+        'lib/utils'
+    ], function (angular, StartupArcGIS, utils) {
         console.log('SearcherCtrlMap define');
-        var heightCalculations = {};
-        heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
-        var scopeDict = {};
-        // var selfDict = {'portal': null}
-        var portalForSearch = null;
+        var scopeDict = {},
+            portalForSearch = null,
+            heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
 
-        // function SearcherCtrlMap($scope, $modal311) {
         function SearcherCtrlMap($scope, $rootScope) {
-            // console.log("debug $modal");
-            // console.debug($modal311);
+            var self = this,
+                selectedWebMapId = "Nada ID",
+                selectedWebMapTitle = "Nada Title";
+
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
 
             $scope.isMapAccPanelOpen = false;
             $scope.signInOutMap = "Sign In";
-            scopeDict['rootScope'] = $rootScope;
+            scopeDict.rootScope = $rootScope;
 
-            var self = this;
             self.scope = $scope;
-            // var portalForSearch = selfDict.portal;
-            // $scope.portalForSearch = selfDict.portal;
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
-            var selectedWebMapId = "Nada ID";
-            var selectedWebMapTitle = "Nada Title";
 
-
-            $scope.mapSelectionChanged = function(rowItem,event){
+            $scope.mapSelectionChanged = function (rowItem, event) {
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title);
                 // previousSelectedWebMapId = selectedWebMapId;
                 selectedWebMapId = rowItem.entity.id;
                 selectedWebMapTitle = rowItem.entity.title;
                 $scope.openWindowSelectionDialog(rowItem.entity.id, rowItem.entity.title);
-            }
+            };
 
-            $scope.$on('DestinationSelectorEvent', function(event, args) {
-                var destWnd = args.destWnd;
+            $scope.$on('DestinationSelectorEvent', function (event, args) {
+                var destWnd = args.destWnd,
+                    $inj = angular.injector(['app']),
+                    serv = $inj.get('CurrentMapTypeService'),
+                    selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
-
-                var $inj = angular.injector(['app']);
-                var serv = $inj.get('CurrentMapTypeService');
-                var selMph = serv.getSelectedMapType();
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             });
 
@@ -76,74 +70,77 @@ angular.isUndefinedOrNull = function(val) {
                 enableColumnResize : true,
 
                 columnDefs: [
-                    {field:'thumbnail',
-                     width: '50px',
-                     displayName:'Img',
-                     resizable: false,
-                     cellTemplate: $scope.imgWebMapTmplt},
-                    {field:'snippet',
-                     width: '40%',
-                     displayName:'Description'},
-                    {field:'title',
-                     width: '40%',
-                     displayName:'Map Title'},
-                    {field:'id',
-                     visible: false,
-                     width : '0',
-                     displayName:'ID'}
+                    {
+                        field : 'thumbnail',
+                        width : '50px',
+                        displayName : 'Img',
+                        resizable : false,
+                        cellTemplate : $scope.imgWebMapTmplt
+                    },
+                    {
+                        field : ' snippet',
+                        width : '40%',
+                        displayName : 'Description'
+                    },
+                    {
+                        field : 'title',
+                        width : '40%',
+                        displayName : 'Map Title'
+                    },
+                    {
+                        field : 'id',
+                        visible : false,
+                        width : '0',
+                        displayName : 'ID'
+                    }
                 ]
 
             };
 
+            $scope.calculateInstructionHeight = function () {
+                var label = angular.element(document.getElementById("mapSearchLabel")),
+                    instructions = document.getElementById("mapSrchInstId"),
 
-            var portal = null;
-
-            $scope.calculateInstructionHeight = function(){
-                var label = angular.element(document.getElementById("mapSearchLabel"));
-                var instructions = document.getElementById("mapSrchInstId");
-
-                var instructionsHgt = instructions.offsetHeight;
-                // console.log("instructionsHgt " + instructionsHgt);
-                var srcTerm = angular.element(document.getElementById("mapFinder"));
-                var hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
+                    instructionsHgt = instructions.offsetHeight,
+                    // console.log("instructionsHgt " + instructionsHgt);
+                    srcTerm = angular.element(document.getElementById("mapFinder")),
+                    hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
                 // console.log("Instructions height : " + hgt);
                 return hgt;
-            }
+            };
 
-            $scope.calculateHeights = function(){
-                var vrbg = angular.element(document.getElementById("Verbage"));
-                var accHead = angular.element(document.getElementById("AccdianNews"));;
-                var srchWrap = angular.element(document.getElementById("searchToolWrapperMap"));
-                var marginborder = (1 + 1) * 2;
-                var accinnermarginborder = (1 + 9) * 2;
-                var instructionsHgt =  $scope.calculateInstructionHeight();
-                var acc0 = accHead[0];
-                var acc0Hgt = acc0.offsetHeight;
+            $scope.calculateHeights = function () {
+                var vrbg = angular.element(document.getElementById("Verbage")),
+                    accHead = angular.element(document.getElementById("AccdianNews")),
+                    marginborder = (1 + 1) * 2,
+                    accinnermarginborder = (1 + 9) * 2,
+                    instructionsHgt =  $scope.calculateInstructionHeight(),
                 // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
-                var gridTopHgt = 30 + 20; // ngTopPanel + ngViewPort
-                var availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
-                                    4 * (accHead[0].offsetHeight + marginborder);
+                    gridTopHgt = 30 + 20, // ngTopPanel + ngViewPort
+                    availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
+                                    4 * (accHead[0].offsetHeight + marginborder),
                 // console.log("availableHgt" + availableHgt);
-                var rowHeight = 50;
-                var headerHeight = 34;
-                var height = +($scope.mapGriddata.length * rowHeight + headerHeight);
+                    rowHeight = 50,
+                    headerHeight = 34,
+                    height = +($scope.mapGriddata.length * rowHeight + headerHeight);
+
                 if (height > availableHgt) {
                     height = availableHgt;
                 }
                 return height;
-            }
+            };
 
             $scope.getGridStyleMap = function () {
-                var height = $scope.calculateHeights() - 8;
-                var heightStr = String(height) + "px";
+                var height = $scope.calculateHeights() - 8,
+                    heightStr = String(height) + "px";
                 return {
                     height: heightStr
                 };
             };
 
             $scope.getGridStyleWrapper = function () {
-                var height = $scope.calculateHeights();
-                var heightStr = String(height) + "px";
+                var height = $scope.calculateHeights(),
+                    heightStr = String(height) + "px";
                 return {
                     height: heightStr
                 };
@@ -158,58 +155,59 @@ angular.isUndefinedOrNull = function(val) {
                 }, 250);
             };
 
-            $scope.findArcGISGroupMaps = function(portal, searchTermMap) {
-              utils.showLoading();
-              var mf = document.getElementById('mapFinder');
-              var mfa = angular.element(mf);
-              var scopeMF = mfa.scope().$apply();
-
-              var keyword = mf.value; // searchTermMap; //dojo.byId('mapFinder').value;
-              var params = {
-                q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
-                num: 20
-              };
-              portalForSearch.queryItems(params).then(function (data) {
+            $scope.findArcGISGroupMaps = function (portal, searchTermMap) {
+                utils.showLoading();
+                var mf = document.getElementById('mapFinder'),
+                    mfa = angular.element(mf),
+                    keyword,
+                    params = {};
+                mfa.scope().$apply();
+                keyword = mf.value; // searchTermMap; //dojo.byId('mapFinder').value;
+                params = {
+                    q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
+                    num: 20
+                };
+                portalForSearch.queryItems(params).then(function (data) {
                     $scope.showMapResults(data);
                 });
             };
 
 
             // gets private groups as well
-            $scope.signInFromMapTab = function() {
-              console.log("signInFromMapTab");
-              // self.portal = portalForSearch;
+            $scope.signInFromMapTab = function () {
+                console.log("signInFromMapTab");
+                // self.portal = portalForSearch;
 
-              if ($scope.signInOutMap.indexOf('In') !== -1) {
-                portalForSearch.signIn().then(function (loggedInUser) {
-                    $scope.$emit('SignInOutEmitEvent'); //out
-                  findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);   // update results
-                }, function (error) {  //error so reset sign in link
-                    $scope.$emit('SignInOutEmitEvent'); //in
-                });
-              } else {
-                portalForSearch.signOut().then(function (portalInfo) {
-                    $scope.$emit('SignInOutEmitEvent'); //in
-                    findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);
-                });
-              }
+                if ($scope.signInOutMap.indexOf('In') !== -1) {
+                    portalForSearch.signIn().then(function (loggedInUser) {
+                        $scope.$emit('SignInOutEmitEvent'); //out
+                        findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);   // update results
+                    }, function (error) {  //error so reset sign in link
+                        $scope.$emit('SignInOutEmitEvent'); //in
+                    });
+                } else {
+                    portalForSearch.signOut().then(function (portalInfo) {
+                        $scope.$emit('SignInOutEmitEvent'); //in
+                        findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);
+                    });
+                }
             };
 
-            $scope.$on('SignInOutBroadcastEvent', function(event, isSignedIn) {
-                if(isSignedIn){
+            $scope.$on('SignInOutBroadcastEvent', function (event, isSignedIn) {
+                if (isSignedIn) {
                     $scope.signInOutMap = "Sign Out";
-                }else{
+                } else {
                     $scope.signInOutMap = "Sign In";
                 }
             });
 
-            $scope.$on('OpenMapPaneCommand', function(event, args) {
+            $scope.$on('OpenMapPaneCommand', function (event, args) {
                 $scope.showMapResults(args.respData);
             });
 
             //display a list of groups that match the input user name
 
-            $scope.showMapResults = function(response) {
+            $scope.showMapResults = function (response) {
                 // utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
@@ -217,17 +215,16 @@ angular.isUndefinedOrNull = function(val) {
                 console.log("response.total " + response.total);
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
-                    var i = response.total;
                     var mpdata = [];
                     mpdata = dojo.map(response.results, function (map) {
-                      return {
-                        'snippet': map.snippet,
-                        'title': map.title,
-                        'url': map.itemUrl,
-                        'thumbnail': map.thumbnailUrl || '',
-                        'id': map.id,
-                        'owner': map.owner
-                      }
+                        return {
+                            'snippet': map.snippet,
+                            'title': map.title,
+                            'url': map.itemUrl,
+                            'thumbnail': map.thumbnailUrl || '',
+                            'id': map.id,
+                            'owner': map.owner
+                        };
                     });
                     // $scope.calculateHeights();
                     //create the grid
@@ -236,9 +233,9 @@ angular.isUndefinedOrNull = function(val) {
                     // $scope.redrawGrid();
                     // $scope.updateLayout();
                     if (!$scope.$$phase) {
-                        $scope.$apply(function(){
-                                $scope.mapGriddata = mpdata;
-                            });
+                        $scope.$apply(function () {
+                            $scope.mapGriddata = mpdata;
+                        });
                     }
                     // $scope.getGridStyleMap();
                     // $scope.getGridStyleWrapper();
@@ -249,16 +246,16 @@ angular.isUndefinedOrNull = function(val) {
                     // }
                     $scope.redrawGrid();
 
-                 }
+                }
                 utils.hideLoading();
             };
-            $scope.safeApply = function(fn) {
+            $scope.safeApply = function (fn) {
                 var phase = this.$root.$$phase;
-                  if(phase == '$apply' || phase == '$digest') {
-                      if(fn && (typeof(fn) === 'function')) {
-                          fn();
-                      }
-                  } else {
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
                     this.$apply(fn);
                 }
             };
