@@ -1,4 +1,5 @@
 /*global define */
+/*global dojo */
 
 angular.isUndefinedOrNull = function (val) {
     "use strict";
@@ -16,8 +17,8 @@ angular.isUndefinedOrNull = function (val) {
     ], function (angular, StartupArcGIS, utils) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
-            portalForSearch = null,
-            heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
+            portalForSearch = null;
+            // heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
 
         function SearcherCtrlMap($scope, $rootScope) {
             var self = this,
@@ -78,7 +79,7 @@ angular.isUndefinedOrNull = function (val) {
                         cellTemplate : $scope.imgWebMapTmplt
                     },
                     {
-                        field : ' snippet',
+                        field : 'snippet',
                         width : '40%',
                         displayName : 'Description'
                     },
@@ -107,6 +108,17 @@ angular.isUndefinedOrNull = function (val) {
                     hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
                 // console.log("Instructions height : " + hgt);
                 return hgt;
+            };
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
             };
 
             $scope.calculateHeights = function () {
@@ -161,7 +173,7 @@ angular.isUndefinedOrNull = function (val) {
                     mfa = angular.element(mf),
                     keyword,
                     params = {};
-                mfa.scope().$apply();
+                mfa.scope().safeApply();
                 keyword = mf.value; // searchTermMap; //dojo.byId('mapFinder').value;
                 params = {
                     q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
@@ -181,14 +193,14 @@ angular.isUndefinedOrNull = function (val) {
                 if ($scope.signInOutMap.indexOf('In') !== -1) {
                     portalForSearch.signIn().then(function (loggedInUser) {
                         $scope.$emit('SignInOutEmitEvent'); //out
-                        findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);   // update results
+                        $scope.findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);   // update results
                     }, function (error) {  //error so reset sign in link
                         $scope.$emit('SignInOutEmitEvent'); //in
                     });
                 } else {
                     portalForSearch.signOut().then(function (portalInfo) {
                         $scope.$emit('SignInOutEmitEvent'); //in
-                        findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);
+                        $scope.findArcGISGroupMaps(portalForSearch, $scope.searchTermMap);
                     });
                 }
             };
@@ -249,16 +261,6 @@ angular.isUndefinedOrNull = function (val) {
                 }
                 utils.hideLoading();
             };
-            $scope.safeApply = function (fn) {
-                var phase = this.$root.$$phase;
-                if (phase === '$apply' || phase === '$digest') {
-                    if (fn && (typeof fn === 'function')) {
-                        fn();
-                    }
-                } else {
-                    this.$apply(fn);
-                }
-            };
 
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (selectedWebMapId, selectedMapTitle) {
@@ -289,5 +291,5 @@ angular.isUndefinedOrNull = function (val) {
         return { start: init };
 
     });
-
-}).call(this);
+}());
+// }).call(this);

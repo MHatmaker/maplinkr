@@ -41,6 +41,13 @@ var selectedMapType = 'arcgis';
                     'ArcGIS' : 'arcgis'
                 },
 
+                isNewAgoWindow,
+                maphost,
+                $inj,
+                serv,
+                gmquery,
+                searchService,
+
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
                 App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
@@ -122,12 +129,6 @@ var selectedMapType = 'arcgis';
 
                         currentMapType = 'arcgis',
                         previousMapType = 'arcgis',
-                        isNewAgoWindow,
-                        maphost,
-                        $inj,
-                        serv,
-                        gmquery,
-                        searchService,
 
                         getMapTypes = function () {
                             var values = Object.keys(mapTypes).map(function (key) {
@@ -266,7 +267,7 @@ var selectedMapType = 'arcgis';
             console.log("url is " + location.search);
             isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
             AgoNewWindowConfig.setDestinationPreference('New Pop-up Window');
-            if(isNewAgoWindow){
+            if (isNewAgoWindow) {
                 maphost = AgoNewWindowConfig.maphost();
                 console.log('maphost : ' + maphost);
 
@@ -275,7 +276,7 @@ var selectedMapType = 'arcgis';
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
                 console.log('maptype' + mapRestUrlToType[maphost]);
 
-                if(maphost == 'GoogleMap'){
+                if (maphost === 'GoogleMap') {
                     gmquery = AgoNewWindowConfig.query();
                     searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
@@ -285,7 +286,7 @@ var selectedMapType = 'arcgis';
                 TabsCtrl.forceMapSystem(maphost);
                 AgoNewWindowConfig.setHideWebSiteOnStartup(true);
                 // SpaCtrl.hideWebsite();
-            };
+            }
             return App;
         }
 
@@ -293,4 +294,6 @@ var selectedMapType = 'arcgis';
 
     });
 
-}).call(this);
+}());
+
+// }).call(this);
