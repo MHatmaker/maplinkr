@@ -194,7 +194,7 @@ block append content
                                              
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span
-                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp")
+                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp", ng-enter="findArcGISGroup();")
                                             input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn', ng-click="findArcGISGroup();")
 
                                         div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
@@ -213,7 +213,7 @@ block append content
 
                                         h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                         span
-                                            input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap")
+                                            input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap", ng-enter="findArcGISGroupMaps()")
                                             input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn', ng-click="findArcGISGroupMaps();")
 
                                         div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
