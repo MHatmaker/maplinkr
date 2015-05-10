@@ -1,6 +1,6 @@
+/*global define */
 
-
-(function() {
+(function () {
     "use strict";
 
     console.log('StompSetup setup');
@@ -8,7 +8,7 @@
     define([
         'angular',
         'lib/AgoNewWindowConfig'
-    ], function(angular, AgoNewWindowConfig) {
+    ], function (angular, AgoNewWindowConfig) {
         console.log('StompSetupCtrl define');
 
         var selfdict = {
@@ -19,8 +19,8 @@
             'isInitialized' : false,
             'PusherClient' : null,
             'userName' : ''
-            };
-        var scopeDict = {};
+        },
+            scopeDict = {};
 
         function StompSetupCtrl($scope, $modal, $rootScope){
             console.log("in StompSetupCtrl");
@@ -63,6 +63,7 @@
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.userName = $scope.data.userName;
                 AgoNewWindowConfig.setChannel($scope.data.privateChannelMashover);
+                AgoNewWindowConfig.setNameChannelAccepted(true);
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
                     $scope.data.privateChannelMashover,
                     $scope.data.userName,

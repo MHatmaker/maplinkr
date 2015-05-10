@@ -9,6 +9,7 @@ var isGoogleLoaded = false;
 var isPlacesLoaded = false;
 
 function loadScript(scrpt, loadedTest, callback) {
+    "use strict";
     var script = document.createElement('script');
     script.type = 'text/javascript';
     console.log('loadScript before append');
@@ -103,7 +104,7 @@ function initPlaces() {
 
             if( newSelectedWebMapId !== null)
             {
-                if(AgoNewWindowConfig.isChannelInitialized() == false){
+                if(AgoNewWindowConfig.isNameChannelAccepted() === false){
                     var $inj = angular.injector(['app']);
                     var evtSvc = $inj.get('StompEventHandlerService');
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);

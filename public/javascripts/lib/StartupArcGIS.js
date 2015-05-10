@@ -426,11 +426,11 @@
                     }
                 };
 
-                if (AgoNewWindowConfig.isChannelInitialized() === false) {
+                if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                         AgoNewWindowConfig.getUserName(), openNewDisplay);
                 } else {
-                    openNewDisplay();
+                    openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
                 }
             } else {
                 /*
