@@ -94,6 +94,8 @@
                 google.maps.event.trigger(mphmap, 'resize');
                 mphmap.setCenter(center);
                 var gmQuery = AgoNewWindowConfig.query();
+                var destWnd = null;
+                var newSelectedWebMapId = 'SomeID';
                 console.log('gmQuery contains ' + gmQuery);
                 if(gmQuery != ''){
                     searchFiredFromUrl = true;
@@ -119,43 +121,47 @@
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
 
+                var openNewDisplay = function (channel, userName){
+                    var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                      "&channel=" + channel + "&userName=" + userName +
+                      "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+
+                    var gmQuery = AgoNewWindowConfig.getQuery();
+                    if(gmQuery != ''){
+                        url += "&gmquery=" + gmQuery;
+                        var bnds = AgoNewWindowConfig.getBoundsForUrl();
+                        url += bnds;
+                    }
+                    console.log("open new Google window with URI " + url);
+                    console.log("using channel " + channel + "with userName " + userName);
+                    AgoNewWindowConfig.setUrl(url);
+                    AgoNewWindowConfig.setUserName(userName);
+                    if(destWnd == "New Pop-up Window"){
+                        var baseUrl = AgoNewWindowConfig.getbaseurl();
+                        window.open(baseUrl + "/google/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                    }
+                    else if(destWnd == "New Tab"){
+                        var baseUrl = AgoNewWindowConfig.getbaseurl();
+                        window.open(baseUrl + "google/" + url, '_blank')
+                        window.focus();
+                    }
+
+                }
+
                 var onAcceptDestination = function(displayDestination){
-                    var destWnd = displayDestination;
+                    destWnd = displayDestination;
                     var curmph = self;
-                    var newSelectedWebMapId = 'SomeID';
                     if(destWnd == 'New Pop-up Window' || destWnd == 'New Tab'){
+                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                         var $inj = angular.injector(['app']);
                         var evtSvc = $inj.get('StompEventHandlerService');
                         evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                         evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
                         StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                            AgoNewWindowConfig.getUserName(),
-                            function(channel, userName){
-                                var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
-                                  "&channel=" + channel + "&userName=" + userName +
-                                  "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-
-                                var gmQuery = AgoNewWindowConfig.getQuery();
-                                if(gmQuery != ''){
-                                    url += "&gmquery=" + gmQuery;
-                                    var bnds = AgoNewWindowConfig.getBoundsForUrl();
-                                    url += bnds;
-                                }
-                                console.log("open new Google window with URI " + url);
-                                console.log("using channel " + channel + "with userName " + userName);
-                                AgoNewWindowConfig.setUrl(url);
-                                AgoNewWindowConfig.setUserName(userName);
-                                if(destWnd == "New Pop-up Window"){
-                                    var baseUrl = AgoNewWindowConfig.getbaseurl();
-                                    window.open(baseUrl + "/google/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
-                                }
-                                else if(destWnd == "New Tab"){
-                                    var baseUrl = AgoNewWindowConfig.getbaseurl();
-                                    window.open(baseUrl + "google/" + url, '_blank')
-                                    window.focus();
-                                }
-
-                        });
+                            AgoNewWindowConfig.getUserName(), openNewDisplay);
+                        } else {
+                            openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+                        }
                     }
                     else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
