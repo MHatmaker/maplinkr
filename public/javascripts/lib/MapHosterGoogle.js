@@ -57,6 +57,7 @@
             var markers = [];
             var self = this;
             var placesFromSearch = [];
+            var popups = [];
 
             if(AgoNewWindowConfig.testUrlArgs()){
                 var qlat = AgoNewWindowConfig.lat();
@@ -126,7 +127,9 @@
                     wndIndex += 1;
                     var gmQuery = AgoNewWindowConfig.getQuery(),
                         curmph = self,
-                        url = "?id=" + newSelectedWebMapId + wndIndex + curmph.getGlobalsForUrl() +
+                        wndName = newSelectedWebMapId + wndIndex,
+                        tmpWndName = '',
+                        url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                             "&channel=" + channel + "&userName=" + userName +
                             "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
 
@@ -141,7 +144,8 @@
                     AgoNewWindowConfig.setUserName(userName);
                     if(destWnd == "New Pop-up Window"){
                         var baseUrl = AgoNewWindowConfig.getbaseurl();
-                        window.open(baseUrl + "/google/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                        tmpWndName = window.open(baseUrl + "/google/" + url,  wndName, AgoNewWindowConfig.getSmallFormDimensions());
+                        popups.push(tmpWndName);
                     }
                     else if(destWnd == "New Tab"){
                         var baseUrl = AgoNewWindowConfig.getbaseurl();
