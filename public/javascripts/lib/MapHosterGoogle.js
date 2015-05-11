@@ -96,6 +96,7 @@
                 var gmQuery = AgoNewWindowConfig.query();
                 var destWnd = null;
                 var newSelectedWebMapId = 'SomeID';
+                var wndIndex = 0;
                 console.log('gmQuery contains ' + gmQuery);
                 if(gmQuery != ''){
                     searchFiredFromUrl = true;
@@ -122,11 +123,13 @@
                 }
 
                 var openNewDisplay = function (channel, userName){
-                    var url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
-                      "&channel=" + channel + "&userName=" + userName +
-                      "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                    wndIndex += 1;
+                    var gmQuery = AgoNewWindowConfig.getQuery(),
+                        curmph = self,
+                        url = "?id=" + newSelectedWebMapId + wndIndex + curmph.getGlobalsForUrl() +
+                            "&channel=" + channel + "&userName=" + userName +
+                            "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
 
-                    var gmQuery = AgoNewWindowConfig.getQuery();
                     if(gmQuery != ''){
                         url += "&gmquery=" + gmQuery;
                         var bnds = AgoNewWindowConfig.getBoundsForUrl();
@@ -153,12 +156,12 @@
                     var curmph = self;
                     if(destWnd == 'New Pop-up Window' || destWnd == 'New Tab'){
                         if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                        var $inj = angular.injector(['app']);
-                        var evtSvc = $inj.get('StompEventHandlerService');
-                        evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                        evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                            AgoNewWindowConfig.getUserName(), openNewDisplay);
+                            var $inj = angular.injector(['app']);
+                            var evtSvc = $inj.get('StompEventHandlerService');
+                            evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                            evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                                AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
                         }
