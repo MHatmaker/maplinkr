@@ -17,7 +17,7 @@
     "node": false,
     "nomen": false,
     "passfail": false,
-    "plusplus": false,
+    "plusplus": true,
     "predef": [
         "angular",
         "$"
