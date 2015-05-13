@@ -15,10 +15,8 @@
 
         var mphmap = null,
             mapReady = true,
-            initialPan = true,
             scale2Level = [],
             zoomLevels = 0,
-            minZoom = 0,
             zmG,
             cntrxG,
             cntryG,
@@ -64,6 +62,7 @@
         }
 
         function initMap(value, precision) {
+            /*jslint nomen: true */  // for dangling _
             var tileInfo = mphmap.__tileInfo,
                 lods = tileInfo.lods,
                 sc2lv;
@@ -259,7 +258,6 @@
             showGlobals("Prior to startup centerAndZoom");
             mphmap.centerAndZoom(startCenter, zmG);
             showGlobals("After centerAndZoom");
-            initialPan = true;
 
             initMap("mapDiv_layer0");
             geoLocator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -412,7 +410,7 @@
                     }
                 } else {
                     if (tmpLon !== xj.lon || tmpLat !== xj.lat) {
-                        // var tmpCenter = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+                        // var tmpCenter = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid: 4326}));
                         mphmap.centerAndZoom(cntr, zm);
                     } else {
                         mphmap.setZoom(zm);
@@ -476,25 +474,33 @@
                 esri.symbol.SimpleFillSymbol.STYLE_SOLID,
                 new esri.symbol.SimpleLineSymbol(
                     esri.symbol.SimpleLineSymbol.STYLE_DASHDOT,
-                    new dojo.Color([0, 0, 255]), 4),
-                    new dojo.Color([0, 0, 255, 0.25]));
+                    new dojo.Color(
+                        [0, 0, 255]
+                    ),
+                    4
+                ),
+                new dojo.Color([0, 0, 255, 0.25])
+            );
 
             mphmap.graphics.add(new esri.Graphic(pgn, polygonSymbol));
         }
 
         function circle(cntr, rds) {
-            var source = new Proj4js.Proj('EPSG:4326'),
+            var source = new Proj4js.Proj('EPSG: 4326'),
                 dest = new Proj4js.Proj('GOOGLE'),
                 p = new Proj4js.Point(cntr[1], cntr[0]),
                 pt,
                 ptSymbol;
 
             Proj4js.transform(source, dest, p);
-            pt = new esri.geometry.Point(p.x, p.y, new esri.SpatialReference({wkid:102100}));
+            pt = new esri.geometry.Point(p.x, p.y, new esri.SpatialReference({wkid: 102100}));
             ptSymbol = new esri.symbol.SimpleMarkerSymbol(
-                esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, rds,
+                esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE,
+                rds,
                 new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-                new dojo.Color([255,0,0]), 4), new dojo.Color([127, 0, 0,0.25]));
+                    new dojo.Color([255, 0, 0]), 4),
+                new dojo.Color([127, 0, 0, 0.25])
+            );
             mphmap.graphics.add(new esri.Graphic(pt, ptSymbol));
         }
 
@@ -529,7 +535,9 @@
                 evtSvc = $inj.get('StompEventHandlerService');
                 evtDct = evtSvc.getEventDct();
                 for (key in evtDct) {
-                    pusher.subscribe(key, evtDct[key]);
+                    if (evtDct.hasOwnProperty(key)) {
+                        pusher.subscribe(key, evtDct[key]);
+                    }
                 }
 
                 // pusher.subscribe( 'client-MapXtntEvent', retrievedBounds);
@@ -571,15 +579,15 @@
                 tmpLat = cntryG,
                 tmpZm = zmG,
                 cntr,
-                mpCanWdth,
-                mpCanHgt;
+                mpCanWdth;
+                // mpCanHgt;
 
             mpWrap = document.getElementById("map_wrapper");
             mpCan = document.getElementById("map_canvas");
             mpCanRoot = document.getElementById("map_canvas_root");
             if (mpCanRoot) {
                 mpCanWdth = mpWrap.clientWidth;
-                mpCanHgt = mpWrap.clientHeight;
+                // mpCanHgt = mpWrap.clientHeight;
                 console.log(mpCanWdth);
 
                 mpCanRoot.style.height = '100%'; //mpCanHgt;
@@ -588,7 +596,7 @@
                 mpCan.style.width = mpCanWdth;
 
                 if (tmpZm && tmpZm !== 'undefined') {
-                    cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+                    cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid: 4326}));
                     mphmap.resize();
                     mphmap.centerAndZoom(cntr, tmpZm);
                 }
@@ -601,9 +609,9 @@
             console.log('resizeVerbageHorizontal');
 
             var tmpLon = cntrxG,
-                 tmpLat = cntryG,
-                 tmpZm = zmG,
-                 cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid:4326}));
+                tmpLat = cntryG,
+                tmpZm = zmG,
+                cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid: 4326}));
 
             mphmap.resize();
             mphmap.centerAndZoom(cntr, tmpZm);
@@ -613,7 +621,7 @@
                   resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
-                  getEventDictionary : getEventDictionary, setUserName : setUserName,getGlobalPositionComponents : getGlobalPositionComponents,
+                  getEventDictionary : getEventDictionary, setUserName : setUserName, getGlobalPositionComponents : getGlobalPositionComponents,
                   publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter};
     });
 }());
