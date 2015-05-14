@@ -168,9 +168,12 @@
         function showClickResult(content) {
             var contextContent = content,
                 actionList = document.getElementsByClassName('actionList')[0],
+                contentNode = document.getElementsByClassName('contentPane')[0],
                 shareBtnId = 'shareSomethingId' + selectedMarkerId,
                 addedShareBtn = '<button class="btn-primary" id="' + shareBtnId + '" >Share</button>',
-                showSomething = null;
+                showSomething = null,
+                addedContent,
+                addedContentNode;
 
             console.debug(actionList);
             if (selectedMarkerId === 101) {
@@ -180,13 +183,17 @@
             actionList.innerHTML = initialActionListHtml + addedShareBtn;
 
             if (content === null) {
+                addedContent = "Share lat/lon : " + fixedLLG.lat + ", " + fixedLLG.lon;
                 mphmap.infoWindow.setTitle("Ready to Push Click");
                 mphmap.infoWindow.setContent("lat/lon : " + fixedLLG.lat + ", " + fixedLLG.lon);
             } else {
-                if (actionList.className === 'actionList hidden') {
-                    content = content + '<br>' + addedShareBtn;
-                }
-                mphmap.infoWindow.setContent(content);
+                addedContent = 'Share address : ' + content;
+                // if (actionList.className === 'actionList hidden') {
+                //     addedContent = content + '<br>' + addedShareBtn;
+                // }
+                addedContentNode = document.createTextNode(addedContent);
+                contentNode.appendChild(addedContentNode);
+                // mphmap.infoWindow.setContent(content);
             }
             showSomething = function () {
                 var referrerId,

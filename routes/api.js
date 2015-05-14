@@ -20,7 +20,7 @@ exports.setPusher = function(pshr){
 
      var userNames = [
                 {'name' : 'Orange', 'inuse' : false},
-                {'name' : 'Grapename', 'inuse' : false},
+                {'name' : 'Grapefruit', 'inuse' : false},
                 {'name' : 'Tangelo', 'inuse' : false},
                 {'name' : 'Lemon', 'inuse' : false},
                 {'name' : 'Lime', 'inuse' : false},
@@ -58,5 +58,18 @@ exports.getUserName = function(req, res){
     }
     console.log("return seqNo %s, name %s", seqNo, userNames[seqNo].name);
     res.json({'id' : seqNo, 'name' : userNames[seqNo].name});
+    seqNo++;
+};
+
+
+exports.getUserId = function(req, res){
+    console.log("API getUserId");
+    console.log('%s %s %s', req.method, req.url, req.path);
+    if(seqNo == namesLength){
+        seqNo = 0;
+        console.log("reset seqNo to zero");
+    }
+    console.log("return seqNo %s ", seqNo);
+    res.json({'id' : seqNo});
     seqNo++;
 };

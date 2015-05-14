@@ -256,7 +256,12 @@ var details = {
                 setReferrerId : function (id) {
                     details.referrerId = id;
                 },
+
                 getUserName : function () {
+                    return details.userName;
+                },
+                getUserNameFromUrl : function () {
+                    details.userName = getParameterByName('userName');
                     return details.userName;
                 },
                 setUserName : function (name) {
@@ -301,7 +306,7 @@ var details = {
                     console.log(msg);
                     console.log(
                         'isInitialUser ' + details.isInitialUser + "\n",
-                        " : "  + details.userId + "\n" +
+                        "  userId : "  + details.userId + ', userName ' + details.userName + "\n" +
                             "referrerId : "  + details.referrerId + "\n" +
                             "locationPath : "  + details.locationPath + "\n" +
                             "host : "  + details.host + "\n" +
