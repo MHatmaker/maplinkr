@@ -66,7 +66,7 @@
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
              else{
-                updateGlobals("init with hard-coded values", -87.700001, 41.800001,  13);
+                updateGlobals("init with hard-coded values", -87.623294, 41.880146,  13);
              }
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
@@ -686,15 +686,15 @@
 
         function addInitialSymbols()
         {
-            var popPt = new google.maps.LatLng(41.795, -87.695);
-            var hint = "Deep Fried Butter Steaks";
-            markerInfoPopup(popPt, "128 oz steaks with 4 cubes of butter on top on a bed of deep fried onion rings.", hint);
-            popPt = new google.maps.LatLng(41.805, -87.705);
-            hint = "Raw Fish and Seaweed";
-            markerInfoPopup(popPt, "We throw whatever comes out of the water on your plate.", hint);
-            popPt = new google.maps.LatLng(41.825, -87.725);
-            hint = "Nothing But Vegetables";
-            markerInfoPopup(popPt, "If it isn't an animal or mineral, we have it.", hint);
+            var popPt = new google.maps.LatLng(41.890283, -87.625842);
+            var hint = "Lofty Thoughts";
+            markerInfoPopup(popPt, "Creativity is inspired by collapsing ceilings and rubble walls.", hint);
+            popPt = new google.maps.LatLng(41.888941, -87.620692);
+            hint = "Drafty Sweatbox";
+            markerInfoPopup(popPt, "Climate control as nature intended.", hint);
+            popPt = new google.maps.LatLng(41.884979, -87.620950);
+            hint = "Blank Wall Vistas";
+            markerInfoPopup(popPt, "Panarama views are over-rated if you prefer exposed brick.", hint);
             // this.polygon([
                 // [51.509, -0.08],
                 // [51.503, -0.06],
