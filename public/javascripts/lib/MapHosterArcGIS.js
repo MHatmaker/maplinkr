@@ -36,19 +36,6 @@
                 channel : null,
                 pusher : null
             };
-        /*
-        proj4.defs('urn:x-ogc:def:crs:EPSG:4326', proj4.defs('EPSG:4326'));
-        proj4.defs(
-            [
-                [
-                    'EPSG:4326',
-                    '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees'],
-                [
-                    'EPSG:4269',
-                    '+title=NAD83 (long/lat) +proj=longlat +a=6378137.0 +b=6356752.31414036 +ellps=GRS80 +datum=NAD83 +units=degrees'
-                ]
-        ]);
-        */
 
         function updateGlobals(msg, cntrx, cntry, zm) {
             console.log("updateGlobals ");
@@ -91,14 +78,13 @@
         }
 
         function extractBounds(zm, cntr, action) {
-            var source = proj4.Proj('GOOGLE'), //proj4('GOOGLE'),
-                // = proj4('EPSG:4326'),
-                dest = proj4.Proj('WGS84'), //proj4('WGS84'),
-                p, // = new proj4.toPoint([cntr.x, cntr.y]),
+            var source = proj4.Proj('GOOGLE'),
+                dest = proj4.Proj('WGS84'),
+                p = new proj4.toPoint([cntr.x, cntr.y]),
                 cntrpt,
                 fixedLL,
                 xtntDict = {};
-            p = new proj4.toPoint([cntr.x, cntr.y]);
+
             console.log("proj4.transform " + p.x + ", " + p.y);
             try {
                 proj4.transform(source, dest, p);
@@ -159,13 +145,13 @@
         function onMapClick(e) {
             var mapPt = {x : e.mapPoint.x, y : e.mapPoint.y},
                 source = new proj4.Proj('GOOGLE'),
-                dest = new proj4.Proj('EPSG:4326'),
+                dest = new proj4.Proj('WGS84'),
                 p,
                 cntrpt;
             screenPt = e.screenPoint;
             console.log("e.screenPoint");
             console.debug(e.screenPoint);
-            p = new proj4.Point(e.mapPoint.x, e.mapPoint.y);
+            p = new proj4.toPoint([e.mapPoint.x, e.mapPoint.y]);
             proj4.transform(source, dest, p);
             cntrpt = new esri.geometry.Point(p.x, p.y, new esri.SpatialReference({wkid: 4326}));
             console.log("clicked Pt " + mapPt.x + ", " + mapPt.y);
@@ -482,7 +468,7 @@
 
         function polygon(coords) {
             var latLonPts = [],
-                source = new proj4.Proj('EPSG:4326'),
+                source = new proj4.Proj('WGS84'),
                 dest = new proj4.Proj('GOOGLE'),
                 polygonJson,
                 pgn,
@@ -492,7 +478,7 @@
                 pt;
 
             for (i = 0; i < coords.length; i++) {
-                p = new proj4.Point(coords[i][1], coords[i][0]);
+                p = new proj4.toPoint([coords[i][1], coords[i][0]]);
                 proj4.transform(source, dest, p);
                 pt = new esri.geometry.Point(p.x, p.y, new esri.SpatialReference({wkid: 102100}));
                 latLonPts.push([pt.x, pt.y]);
@@ -515,9 +501,9 @@
         }
 
         function circle(cntr, rds) {
-            var source = new proj4.Proj('EPSG:4326'),
+            var source = new proj4.Proj('WGS84'),
                 dest = new proj4.Proj('GOOGLE'),
-                p = new proj4.Point(cntr[1], cntr[0]),
+                p = new proj4.toPoint([cntr[1], cntr[0]]),
                 pt,
                 ptSymbol;
 
