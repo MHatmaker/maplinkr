@@ -70,7 +70,7 @@
              }
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");
-            // google.maps.event.addListener(mphmap, 'dragend', gotDragEnd);
+            // google.maps.event.addListener(mphmap, 'end', gotDragEnd);
 
             // Maybe it will work at this point!!!
 
@@ -251,6 +251,7 @@
             });
 
             google.maps.event.addListener(mphmap, 'dragend', function() {
+                console.log("DRAG END");
                 if(userZoom == true){
                     setBounds('pan');
                 }
