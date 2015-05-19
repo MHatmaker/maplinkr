@@ -128,7 +128,8 @@ function initPlaces() {
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 
                 console.debug(AgoNewWindowConfig);
-                var centerLatLng = new google.maps.LatLng(41.8, -87.7);
+                // var centerLatLng = new google.maps.LatLng(41.8, -87.7);
+                var centerLatLng = new google.maps.LatLng(41.880146, -87.623294);
                 var initZoom = 13;
 
                 if(AgoNewWindowConfig.testUrlArgs()){
