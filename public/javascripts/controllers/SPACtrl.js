@@ -27,7 +27,7 @@
                 'plugin' : "none"
             },
                 innerTableAdjustment = 0, //20;
-                colHeightAdjustment = 0,
+                colHeightAdjustment = 15,
                 startupView = AgoNewWindowConfig.getStartupView(),
                 fsm = null;
 
