@@ -36,6 +36,7 @@
                 console.log("Raw Updated url");
                 console.log(updtUrl);
                 updtUrl += '&maphost=' + curmapsys;
+                updtUrl += '&referrerId=-99';
 
 
                 if (gmQuery !== '') {

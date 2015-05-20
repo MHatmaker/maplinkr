@@ -83,6 +83,7 @@
             AgoNewWindowConfig.sethost(location.host);
             AgoNewWindowConfig.sethostport(location.port);
             var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl(); // sets id in config object
+            var referrerName = AgoNewWindowConfig.getReferrerNameFromUrl(); // sets id in config object
             // AgoNewWindowConfig.setUserId(referrerId);
             AgoNewWindowConfig.setInitialUserStatus(false);
             var channel = AgoNewWindowConfig.getChannelFromUrl();

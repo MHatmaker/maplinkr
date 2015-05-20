@@ -133,7 +133,9 @@
                 console.log("Open new window with name " + nextWindowName);
                 $scope.data.blockedUrl = completeUrl;
 
-                if (pos.referrerId !== AgoNewWindowConfig.getUserId()) {
+                // if (pos.referrerId !== AgoNewWindowConfig.getUserId()) {
+                if (pos.referrerName !== AgoNewWindowConfig.getUserName()) {
+                    completeUrl += "&userName=" + AgoNewWindowConfig.getUserName();
                     wnd = window.open(completeUrl, nextWindowName,
                         AgoNewWindowConfig.getSmallFormDimensions());
                     if (!wnd || wnd === 'undefined') {

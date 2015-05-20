@@ -268,6 +268,11 @@ var details = {
                     details.userName = name;
                 },
 
+                getReferrerNameFromUrl : function () {
+                    details.referrerName = getParameterByName('referrerName');
+                    return details.referrerName;
+                },
+
                 getInitialUserStatus : function () {
                     return details.isInitialUser;
                 },

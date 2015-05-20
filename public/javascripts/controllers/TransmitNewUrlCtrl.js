@@ -42,6 +42,8 @@
                 updtUrl += '&maphost=' + curmapsys;
                 var referrerId = AgoNewWindowConfig.getReferrerId();
                 updtUrl += '&referrerId=' + referrerId;
+                var referrerName = AgoNewWindowConfig.getUserName();
+                updtUrl += '&referrerName=' + referrerName;
 
                 var nativeCenter = curmph.getCenter();
                 AgoNewWindowConfig.setPosition(nativeCenter);
@@ -50,6 +52,7 @@
                 newPos.search = updtUrl;
                 newPos.maphost = curmapsys;
                 newPos.referrerId = referrerId;
+                newPos.referrerName = referrerName;
 
                 curmph.publishPosition(newPos);
             }
