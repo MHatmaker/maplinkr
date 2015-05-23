@@ -49,8 +49,9 @@ function initPlaces() {
     define([
         'lib/MapHosterGoogle',
         'controllers/StompSetupCtrl',
-        'lib/AgoNewWindowConfig'
-    ], function(MapHosterGoogle, StompSetupCtrl, AgoNewWindowConfig) {
+        'lib/AgoNewWindowConfig',
+        'lib/utils'
+    ], function(MapHosterGoogle, StompSetupCtrl, AgoNewWindowConfig, utils) {
         console.log('StartupGoogle define');
         var CHANNEL = '/mapxtnt/';
         var mph = null;
@@ -143,15 +144,18 @@ function initPlaces() {
                     initZoom = parseInt(zoomStr, 10);
                 }
 
+                var mpcanhgt = utils.getElemHeight('map_canvas');
+                console.log("mpcanhgt before new google.map is " + mpcanhgt);
+
                 var mapOptions = {
                   center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
                   // center: new google.maps.LatLng(51.50, -0.09),
                   zoom: initZoom,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
+                invalidateMapWrapper();
                 console.log("create a google map with option: " + mapOptions.mapTypeId);
-                gMap = new google.maps.Map(document.getElementById("map_canvas"),
-                    mapOptions);
+                gMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 invalidateMapWrapper();
 
@@ -204,9 +208,19 @@ function initPlaces() {
             var element = 'map_wrapper';
             console.log("MapHosterGoogle map_wrapper : invalidateSize");
             // gMap.invalidateSize(true);
-            var cnvsHgt = getElemDimension(element, 'height');
-            console.log('reset ' + element + ' height to ' + cnvsHgt + 1);
-            setElementDimension(element, 'height', cnvsHgt  + 1);
+            var wrapHgt = getElemDimension(element, 'height') + 1;
+            console.log('reset ' + element + ' height to ' + wrapHgt);
+            setElementDimension(element, 'height', wrapHgt);
+
+            var wrapWdth = getElemDimension(element, 'width');
+            console.log('reset ' + element + ' width to ' + wrapWdth);
+            setElementDimension(element, 'width', wrapWdth);
+
+            element = 'map_canvas';
+            // gMap.invalidateSize(true);
+            var cnvsHgt = wrapHgt; //getElemDimension(element, 'height') + 1;
+            console.log('reset ' + element + ' height to ' + cnvsHgt);
+            setElementDimension(element, 'height', cnvsHgt);
 
             var cnvsWdth = getElemDimension(element, 'width');
             console.log('reset ' + element + ' width to ' + cnvsWdth);
