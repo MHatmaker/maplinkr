@@ -104,7 +104,7 @@
                 var center = mphmap.getCenter();
                 google.maps.event.trigger(mphmap, 'resize');
                 mphmap.setCenter(center);
-                // addInitialSymbols();
+                addInitialSymbols();
                 google.maps.event.trigger(mphmap, 'resize');
                 mphmap.setCenter(center);
                 var gmQuery = AgoNewWindowConfig.query();

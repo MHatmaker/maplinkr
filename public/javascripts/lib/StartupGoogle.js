@@ -153,11 +153,20 @@ function initPlaces() {
                   zoom: initZoom,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                invalidateMapWrapper();
+
+                var canelem = document.getElementById('map_canvas');
+                // console.log("before first invalidate : " + canelem.clientHeight);
+                // invalidateMapWrapper();
+                canelem = document.getElementById('map_canvas');
+                console.log("before map create : " + canelem.clientHeight);
                 console.log("create a google map with option: " + mapOptions.mapTypeId);
                 gMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                canelem = document.getElementById('map_canvas');
+                console.log("before second invalidate : " + canelem.clientHeight);
 
-                invalidateMapWrapper();
+                // invalidateMapWrapper();
+                // canelem = document.getElementById('map_canvas');
+                // console.log("after second invalidate : " + canelem.clientHeight);
 
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 mph = MapHosterGoogle.start();
@@ -218,9 +227,9 @@ function initPlaces() {
 
             element = 'map_canvas';
             // gMap.invalidateSize(true);
-            var cnvsHgt = wrapHgt; //getElemDimension(element, 'height') + 1;
-            console.log('reset ' + element + ' height to ' + cnvsHgt);
-            setElementDimension(element, 'height', cnvsHgt);
+            // var cnvsHgt = '100'; // wrapHgt; //getElemDimension(element, 'height') + 1;
+            // console.log('reset ' + element + ' height to ' + cnvsHgt + '%');
+            // setElementDimension(element, 'height', cnvsHgt, '%');
 
             var cnvsWdth = getElemDimension(element, 'width');
             console.log('reset ' + element + ' width to ' + cnvsWdth);
