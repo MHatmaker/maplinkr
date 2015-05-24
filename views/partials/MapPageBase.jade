@@ -262,13 +262,15 @@ block append content
                                 div(name="emailForm", ng-controller="EmailCtrl")
                                     label(style='font-size:12pt;margin:4px').
                                         Fetch the link to the current ArcGIS Online map:
-                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow-y: scroll; overflow-x: none; resize: none; width: 100%; height: 120px;", required)
-                                    
                                     button(class="btn", style='width:100%;', ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
+                                    
                                     #UrlInstructions(style="display:none")
                                         label(style='font-size:12pt;margin:2px').The url is now focused and selected.
                                         label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
                                         label(style='font-size:12pt;margin:2px').Then paste the link into an email, text message, or chat session.
+                                        
+                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow-y: scroll; overflow-x: none; resize: none; width: 100%; height: 120px;", required)
+                                    
                                         
                             accordion-group(id="ChannelSetterId", class="accdiongroup", is-open="status.isSetChannelOpen")
                                 accordion-heading

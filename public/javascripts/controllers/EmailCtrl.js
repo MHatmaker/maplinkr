@@ -60,11 +60,18 @@
             };
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
-                context.fullUrl = assembleUrl();
+                var labelDiv = angular.element(document.getElementById("UrlInstructions"));
 
-                console.log("watching status.isCopyMapLinkOpen");
-                console.log(context.fullUrl);
-                resizeTextArea();
+                if ($scope.status.isCopyMapLinkOpen) {
+                    context.fullUrl = assembleUrl();
+
+                    console.log("watching status.isCopyMapLinkOpen");
+                    console.log(context.fullUrl);
+                    console.log('status.isCopyMapLinkOpen is ' + $scope.status.isCopyMapLinkOpen);
+                    resizeTextArea();
+                } else {
+                    labelDiv.css({"display" : "none"});
+                }
             });
         }
 
