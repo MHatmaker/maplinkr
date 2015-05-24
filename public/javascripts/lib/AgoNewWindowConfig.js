@@ -132,6 +132,10 @@ var details = {
                 query: function () {
                     return getParameterByName('gmquery');
                 },
+                getQueryFromUrl: function () {
+                    details.query = getParameterByName('gmquery');
+                    return details.query;
+                },
                 setPosition: function (position) {
                     details.lon = position.lon;
                     details.lat = position.lat;

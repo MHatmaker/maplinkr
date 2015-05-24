@@ -277,7 +277,7 @@ var selectedMapType = 'arcgis';
                 console.log('maptype' + mapRestUrlToType[maphost]);
 
                 if (maphost === 'GoogleMap') {
-                    gmquery = AgoNewWindowConfig.query();
+                    gmquery = AgoNewWindowConfig.getQueryFromUrl();
                     searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
                 }
