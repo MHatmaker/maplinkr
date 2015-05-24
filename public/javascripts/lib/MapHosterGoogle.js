@@ -64,7 +64,7 @@
                 var qlat = AgoNewWindowConfig.lat();
                 var qlon = AgoNewWindowConfig.lon();
                 var qzoom = AgoNewWindowConfig.zoom();
-                initZoom = qzoom;
+                initZoom = parseInt(qzoom, 10);
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
              }
              else{
@@ -260,7 +260,7 @@
                 // var center = mphmap.getCenter();
                 var firstCntr = new google.maps.LatLng(cntryG, cntrxG);
                 mphmap.setCenter(firstCntr);
-                mphmap.setZoom(12);
+                // mphmap.setZoom(12);
                 mphmap.setZoom(initZoom);
                 console.log("bounds in idle");
                 console.debug(mphmap.getBounds());
