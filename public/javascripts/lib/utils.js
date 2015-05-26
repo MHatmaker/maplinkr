@@ -122,6 +122,24 @@
                 // elem.css({"height": hstr});
             }
 
+            function getElementDimension(itm, dim) {
+                var elem = document.getElementById(itm),
+                    ElemDim = dim === 'height' ? elem.clientHeight : elem.clientWidth;
+                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
+                return ElemDim;
+            }
+
+            function setElementDimension(itm, dim, value, units) {
+                var elem, dimstr;
+                if (units === undefined) {
+                    units = 'px';
+                }
+                elem = document.getElementById(itm);
+                dimstr = String.format("{0} : {1}{2}", dim, value, units);
+                console.log("dim string : " + dimstr);
+                elem.setAttribute("style", dimstr);
+            }
+
             function setVisible(itm, flexnone) {
                 var elem = document.getElementById(itm);
                 elem.visible = flexnone === 'flex' ? 'visible' : 'none';
@@ -269,6 +287,8 @@
                 getElemHeight : getElemHeight,
                 setElementHeight : setElementHeight,
                 setElementWidth : setElementWidth,
+                setElementDimension : setElementDimension,
+                getElementDimension : getElementDimension,
                 toFixed : toFixedTwo,
                 toFixedOne: toFixedOne,
                 showLoading : showLoading,

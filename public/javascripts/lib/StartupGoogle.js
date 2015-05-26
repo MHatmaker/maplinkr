@@ -199,41 +199,27 @@ function initPlaces() {
         }
 
         function invalidateMapWrapper(){
-            function getElemDimension(itm, dim){
-                var elem = document.getElementById(itm);
-                var ElemDim = dim == 'height' ? elem.clientHeight : elem.clientWidth;
-                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
-                return ElemDim;
-            }
-
-            function setElementDimension(itm, dim, value, units){
-                if(typeof(units)==='undefined') units = 'px';
-                var elem = document.getElementById(itm);
-                var dimstr = String.format("{0} : {1}{2}", dim, value, units);
-                console.log("dim string : " + dimstr);
-                elem.setAttribute("style", dimstr);
-            }
 
             var element = 'map_wrapper';
             console.log("MapHosterGoogle map_wrapper : invalidateSize");
             // gMap.invalidateSize(true);
-            var wrapHgt = getElemDimension(element, 'height') + 1;
+            var wrapHgt = utils.getElementDimension(element, 'height') + 1;
             console.log('reset ' + element + ' height to ' + wrapHgt);
-            setElementDimension(element, 'height', wrapHgt);
+            utils.setElementDimension(element, 'height', wrapHgt);
 
-            var wrapWdth = getElemDimension(element, 'width');
+            var wrapWdth = utils.getElementDimension(element, 'width');
             console.log('reset ' + element + ' width to ' + wrapWdth);
-            setElementDimension(element, 'width', wrapWdth);
+            utils.setElementDimension(element, 'width', wrapWdth);
 
             element = 'map_canvas';
             // gMap.invalidateSize(true);
-            // var cnvsHgt = '100'; // wrapHgt; //getElemDimension(element, 'height') + 1;
+            // var cnvsHgt = '100'; // wrapHgt; //utils.getElementDimension(element, 'height') + 1;
             // console.log('reset ' + element + ' height to ' + cnvsHgt + '%');
-            // setElementDimension(element, 'height', cnvsHgt, '%');
+            // utils.setElementDimension(element, 'height', cnvsHgt, '%');
 
-            var cnvsWdth = getElemDimension(element, 'width');
+            var cnvsWdth = utils.getElementDimension(element, 'width');
             console.log('reset ' + element + ' width to ' + cnvsWdth);
-            setElementDimension(element, 'width', cnvsWdth);
+            utils.setElementDimension(element, 'width', cnvsWdth);
         }
 
         function StartupGoogle() {

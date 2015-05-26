@@ -845,10 +845,27 @@
         }
         function resizeVerbageHorizontal(isMapExpanded){
             console.log('resizeVerbageHorizontal');
+            /*
+            var element = 'map_wrapper',
+                wrapWdth = utils.getElementDimension(element, 'width');
+            console.log('reset ' + element + ' width to ' + wrapWdth);
+            utils.setElementDimension(element, 'width', wrapWdth);
+
+            var wrapHgt = utils.getElementDimension(element, 'height') + 1;
+            console.log('reset ' + element + ' height to ' + wrapHgt);
+            utils.setElementDimension(element, 'height', wrapHgt);
+
             // mphmap.invalidateSize(true);
+
             var center = mphmap.getCenter();
             google.maps.event.trigger(mphmap, 'resize');
             mphmap.setCenter(center);
+
+            element = 'map_canvas';
+            var cnvsWdth = utils.getElementDimension(element, 'width');
+            console.log('reset ' + element + ' width to ' + cnvsWdth);
+            utils.setElementDimension(element, 'width', cnvsWdth);
+            */
         }
         function formatBounds(b){
             var s = String.format("ll : {0}, {1}, ru : {2}, {3}",
