@@ -29,7 +29,7 @@
             cntrxG,
             cntryG,
             bounds,
-            channel,
+            // channel,
             userZoom = true,
             geoCoder = null,
             gplaces = null,
@@ -42,7 +42,7 @@
                 pusher : null
             },
             popDetails = null,
-            selfMethods = {},
+            // selfMethods = {},
             queryPlaces = {
                 location: null,
                 bounds: null,
@@ -677,11 +677,12 @@
             }
         }
 
-
+        /*
         function gotDragEnd() {
             console.log("dragend event hit");
             setBounds('pan');
         }
+        */
 
         function retrievedClick(clickPt) {
             var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6),
@@ -844,17 +845,19 @@
         }
 
         function publishPosition(pos) {
+            var gmQuery,
+                pubBounds;
             if (selfPusherDetails.pusher) {
                 console.log("MapHosterGoogle.publishPosition");
                 console.log(pos);
 
-                var gmQuery = AgoNewWindowConfig.getQuery();
-                if (gmQuery != '') {
+                gmQuery = AgoNewWindowConfig.getQuery();
+                if (gmQuery !== '') {
                     console.log("adding gmQuery : " + gmQuery);
-                    pos['gmquery'] = gmQuery;
+                    pos.gmquery = gmQuery;
                     pos.search += "&gmquery=" + gmQuery;
-                    var bnds = AgoNewWindowConfig.getBoundsForUrl();
-                    pos.search += bnds;
+                    pubBounds = AgoNewWindowConfig.getBoundsForUrl();
+                    pos.search += pubBounds;
                 }
                 console.log('After adding gmQuery');
                 console.debug(pos.search);
@@ -864,13 +867,11 @@
 
         }
 
-        function retrievedBounds(xj)
-        {
+        function retrievedBounds(xj) {
             return retrievedBoundsInternal(xj);
         }
 
-        function MapHosterGoogle()
-        {
+        function MapHosterGoogle() {
             mapReady = false;
             bounds = null;
             userZoom = true;
@@ -883,12 +884,13 @@
         function resizeWebSiteVertical(isMapExpanded) {
             console.log('resizeWebSiteVertical');
             // map.invalidateSize(true);
-            var center = mphmap.getCenter();
-            var bnds = mphmap.getBounds();
-            console.debug(bnds);
+            var resizeCenter = mphmap.getCenter(),
+                resizeBounds = mphmap.getBounds();
+            console.debug(resizeBounds);
             google.maps.event.trigger(mphmap, 'resize');
-            mphmap.setCenter(center);
+            mphmap.setCenter(resizeCenter);
         }
+
         function resizeVerbageHorizontal(isMapExpanded) {
             console.log('resizeVerbageHorizontal');
             /*
@@ -914,12 +916,21 @@
             */
         }
 
-        return { start: init, config : configureMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
-                  retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
-                  setPusherClient: setPusherClient, setUserName : setUserName,
-                  getGlobalsForUrl: getGlobalsForUrl, getCenter : getCenter,
-                  getEventDictionary : getEventDictionary, publishPosition : publishPosition};
+        return {
+            start: init,
+            config : configureMap,
+            resizeWebSite: resizeWebSiteVertical,
+            resizeVerbage: resizeVerbageHorizontal,
+            retrievedBounds: retrievedBounds,
+            retrievedClick: retrievedClick,
+            setPusherClient: setPusherClient,
+            setUserName : setUserName,
+            getGlobalsForUrl: getGlobalsForUrl,
+            getCenter : getCenter,
+            getEventDictionary : getEventDictionary,
+            publishPosition : publishPosition
+        };
     });
 
-}).call(this);
+}());
+// }).call(this);
