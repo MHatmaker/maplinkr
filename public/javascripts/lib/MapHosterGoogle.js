@@ -371,11 +371,11 @@
 
                 mapReady = true;
                 center = mphmap.getCenter();
-                google.maps.event.trigger(mphmap, 'resize');
-                mphmap.setCenter(center);
+                // google.maps.event.trigger(mphmap, 'resize');
+                // mphmap.setCenter(center);
                 addInitialSymbols();
-                google.maps.event.trigger(mphmap, 'resize');
-                mphmap.setCenter(center);
+                // google.maps.event.trigger(mphmap, 'resize');
+                // mphmap.setCenter(center);
                 gmQuery = AgoNewWindowConfig.query();
                 destWnd = null;
                 newSelectedWebMapId = 'SomeID';
@@ -534,7 +534,7 @@
                 google.maps.event.removeListener(listener);
             });
 
-            google.maps.event.trigger(mphmap, 'resize');
+            // google.maps.event.trigger(mphmap, 'resize');
             // var firstZoom = mphmap.getZoom();
             // console.log('firstZoom is ' + firstZoom);
             // mphmap.setZoom( firstZoom - 1 );

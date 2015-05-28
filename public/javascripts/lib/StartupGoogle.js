@@ -71,9 +71,11 @@ function initPlaces() {
         function resizeWebSiteVertical(isMapExpanded){
             MapHosterGoogle.resizeWebSite(isMapExpanded);
         }
+        /*
         function resizeVerbageHorizontal(isMapExpanded){
             MapHosterGoogle.resizeVerbage(isMapExpanded);
         }
+        */
         function resizeMapPane(isMapExpanded){
 
             console.log("StartupGoogle.resizeMapPane : invalidateSize stub");
@@ -230,7 +232,7 @@ function initPlaces() {
         }
 
         return { start: init, config : configure, getMap: getMap,
-                 resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
+                 resizeWebSite: resizeWebSiteVertical,// resizeVerbage: resizeVerbageHorizontal,
                  resizeMapPane: resizeMapPane};
 
     });
