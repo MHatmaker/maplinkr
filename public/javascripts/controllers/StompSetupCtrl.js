@@ -128,7 +128,9 @@
                 handler,
                 i,
                 chlength = channel.length,
-                channelsub = channel.substring(1);
+                channelsub = channel.substring(1),
+                maptypekey,
+                maptypeobj;
             console.log("PusherClient");
             this.eventDct = eventDct;
 
@@ -215,11 +217,12 @@
             console.log("BEWARE OF SIDE EFFECTS");
             console.log("Attempt to setPusherClient for all defined map types");
             for (i = 0; i < mptLength; i++) {
-                if (allMapTypes[i] !== "undefined") {
-                    console.log("set pusher client for hoster type:");
-                    console.debug(allMapTypes[i]);
-                    allMapTypes[i].setPusherClient(pusher, self.CHANNEL);
-                    allMapTypes[i].setUserName(self.userName);
+                maptypekey = allMapTypes[i].type;
+                maptypeobj = allMapTypes[i].mph;
+                console.log("set pusher client for hoster type: " + maptypekey);
+                if (maptypeobj && maptypeobj !== "undefined") {
+                    maptypeobj.setPusherClient(pusher, self.CHANNEL);
+                    maptypeobj.setUserName(self.userName);
                 }
             }
 

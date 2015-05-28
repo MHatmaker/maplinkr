@@ -132,7 +132,7 @@ var selectedMapType = 'arcgis';
 
                         getMapTypes = function () {
                             var values = Object.keys(mapTypes).map(function (key) {
-                                return mapTypes[key];
+                                return {'type' : key, 'mph' : mapTypes[key]};
                             });
                             return values;
 
