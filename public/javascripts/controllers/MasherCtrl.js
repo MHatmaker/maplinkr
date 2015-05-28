@@ -19,7 +19,7 @@
 
             var startupView = AgoNewWindowConfig.getStartupView();
             $scope.ExpandSum = startupView.summary === true ? "Collapse" : "Expand";
-            $scope.MasterSiteVis = startupView.Website ? "inline" : 'none';
+            $scope.MasterSiteVis = startupView.website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
             $scope.showPopupBlockerDialog = false;
             $scope.data = {
@@ -61,7 +61,7 @@
             });
 
             $scope.summmaryCollapser = function () {
-                $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
+                // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
                 $scope.ExpandSum = $scope.ExpandSum === "Expand" ? "Collapse" : "Expand";
 
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);

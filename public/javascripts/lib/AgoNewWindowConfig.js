@@ -327,7 +327,8 @@ var details = {
                             "masherChannel : "  + details.masherChannel + "\n" +
                             "lon :" + details.lon + '\n' +
                             "lat : " + details.lat + "\n" +
-                            "zoom : " + details.zoom
+                            "zoom : " + details.zoom +
+                            "startupView.summary : " + details.startupView.summary + ", startupView.website : " + details.startupView.website
                     );
 
                 }
