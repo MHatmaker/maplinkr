@@ -81,7 +81,8 @@ var selectedMapType = 'arcgis';
                                     return '/partials/' + params.id;
                                 },
                                 controller: App.MapCtrl,
-                                reloadOnSearch: true
+                                reloadOnSearch: true,
+                                disableCache: true
                             }).
                             when('/templates/:id',  {
                                 templateUrl: function (params) {

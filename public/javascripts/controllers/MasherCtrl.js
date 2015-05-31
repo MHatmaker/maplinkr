@@ -14,7 +14,7 @@
                 'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
             };
 
-        function MasherCtrl($scope, $location, $route, $routeParams, $window) {
+        function MasherCtrl($scope, $location, $window, $route, $templateCache) {  //$route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = AgoNewWindowConfig.getStartupView();
@@ -80,10 +80,20 @@
             selfMethods.windowResized = $scope.windowResized;
 
             $scope.showMeTheMapClicked = function () {
+                var currentPageTemplate;
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                $location.path($scope.currentTab.url);
+                $location.path($scope.currentTab.url, true).replace();
+                // $scope.$apply();
+                // $window.location.href = $scope.currentTab.url;
+                // $window.location.reload();
                 // $scope.summmaryCollapser();
+
+                // currentPageTemplate = $route.current.loadedTemplateUrl;
+                // console.log("currentPageTemplate : " + currentPageTemplate);
+                // $templateCache.remove(currentPageTemplate);
+                // $route.reload();
+                // $location.path($scope.currentTab.url, true).replace();
             };
 
             $scope.describeTheWebsiteClicked = function () {
@@ -157,7 +167,7 @@
 
         function init(App) {
             console.log('MasherCtrl init');
-            App.controller('MasherCtrl', ['$scope', '$location', MasherCtrl]);
+            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', MasherCtrl]);
 
             //calling tellAngular on resize event
             window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
