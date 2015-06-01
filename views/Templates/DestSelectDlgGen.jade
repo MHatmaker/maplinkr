@@ -7,8 +7,10 @@ div(class="modal-dialog", style="width: 100%;")
         div(class="modal-body")
             div(class="btn-group btn-group-vertical")
                 span(data-ng-repeat="dest in $parent.destSelections")
-                    input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel", ng-init="$parent.data.dstSel='Same Window'").
-                    {{dest}}
+                    input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel", ng-init="$parent.data.dstSel='Same Window'")
+                    
+                    |{{dest}}
+                    
                     br
             br
             div(style="color: #17244D; margin-top: 10px;") SELECTED: {{data.dstSel}}
