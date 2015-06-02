@@ -215,9 +215,9 @@ function initPlaces() {
 
             element = 'map_canvas';
             // gMap.invalidateSize(true);
-            // var cnvsHgt = '100'; // wrapHgt; //utils.getElementDimension(element, 'height') + 1;
-            // console.log('reset ' + element + ' height to ' + cnvsHgt + '%');
-            // utils.setElementDimension(element, 'height', cnvsHgt, '%');
+            var cnvsHgt = '100'; // wrapHgt; //utils.getElementDimension(element, 'height') + 1;
+            console.log('reset ' + element + ' height to ' + wrapHgt + 'px'); //cnvsHgt + '%');
+            utils.setElementDimension(element, 'height', wrapHgt); // cnvsHgt, '%');
 
             var cnvsWdth = utils.getElementDimension(element, 'width');
             console.log('reset ' + element + ' width to ' + cnvsWdth);
