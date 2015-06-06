@@ -314,7 +314,8 @@
                 qlon,
                 qzoom,
                 initZoom = 13,
-                listener;
+                listener,
+                currentVerbVis = false;
 
             if (AgoNewWindowConfig.testUrlArgs()) {
                 qlat = AgoNewWindowConfig.lat();
@@ -439,6 +440,8 @@
                         tmpWndName = '',
                         baseUrl,
                         displayBnds,
+                        $inj,
+                        gmQSvc,
                         url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                         "&channel=" + channel + "&userName=" + userName +
                         "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
@@ -464,12 +467,17 @@
                             window.focus();
                         }
                     }
+                    if(currentVerbVis === 'none') {
+                        $inj = angular.injector(['app']);
+                        gmQSvc = $inj.get('GoogleQueryService');
+                        gmQSvc.setDialogVisibility(false);
+                    }
 
                 };
 
                 onAcceptDestination = function (displayDestination) {
                     destWnd = displayDestination;
-                    var curmph = self, $inj, evtSvc;
+                    var curmph = self, $inj, evtSvc, gmQSvc;
                     if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
                         if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                             $inj = angular.injector(['app']);
@@ -480,9 +488,20 @@
                                 AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+
+                            if(currentVerbVis === 'none') {
+                                $inj = angular.injector(['app']);
+                                gmQSvc = $inj.get('GoogleQueryService');
+                                gmQSvc.setDialogVisibility(false);
+                            }
                         }
                     } else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
+                        if(currentVerbVis === 'none') {
+                            $inj = angular.injector(['app']);
+                            gmQSvc = $inj.get('GoogleQueryService');
+                            gmQSvc.setDialogVisibility(false);
+                        }
                     }
                 };
 
@@ -505,7 +524,7 @@
                     if (placesFromSearch && placesFromSearch.length > 0) {
                         $inj = angular.injector(['app']);
                         gmQSvc = $inj.get('GoogleQueryService');
-                        gmQSvc.setDialogVisibility();
+                        currentVerbVis = gmQSvc.setDialogVisibility(true);
                         scope = gmQSvc.getQueryDestinationDialogScope();
                         setTimeout(function () {
                             scope.$apply(function () {
