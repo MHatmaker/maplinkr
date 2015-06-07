@@ -28,7 +28,7 @@
             zmG,
             cntrxG,
             cntryG,
-            bounds,
+            // bounds,
             // channel,
             userZoom = true,
             geoCoder = null,
@@ -60,7 +60,7 @@
             if (gmBounds) {
                 ne = gmBounds.getNorthEast();
                 sw = gmBounds.getSouthWest();
-                bounds = gmBounds;
+                // bounds = gmBounds;
                 gmBounds.xmin = sw.lng();
                 gmBounds.ymin = sw.lat();
                 gmBounds.xmax = ne.lng();
@@ -467,7 +467,7 @@
                             window.focus();
                         }
                     }
-                    if(currentVerbVis === 'none') {
+                    if (currentVerbVis === 'none') {
                         $inj = angular.injector(['app']);
                         gmQSvc = $inj.get('GoogleQueryService');
                         gmQSvc.setDialogVisibility(false);
@@ -489,7 +489,7 @@
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
 
-                            if(currentVerbVis === 'none') {
+                            if (currentVerbVis === 'none') {
                                 $inj = angular.injector(['app']);
                                 gmQSvc = $inj.get('GoogleQueryService');
                                 gmQSvc.setDialogVisibility(false);
@@ -497,7 +497,7 @@
                         }
                     } else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
-                        if(currentVerbVis === 'none') {
+                        if (currentVerbVis === 'none') {
                             $inj = angular.injector(['app']);
                             gmQSvc = $inj.get('GoogleQueryService');
                             gmQSvc.setDialogVisibility(false);
@@ -678,7 +678,7 @@
                 onMapClick(event);
             });
 
-
+            /*
             function createBounds() {
                 var createdBounds = new google.maps.LatLngBounds(),
                     testPts = [
@@ -694,8 +694,8 @@
                 }
                 return createdBounds;
             }
+            */
         }
-
         /*
         function gotDragEnd() {
             console.log("dragend event hit");
@@ -775,7 +775,7 @@
             }
         }
 
-
+/*
         function getBoundsZoomLevel(bounds) {
             var GLOBE_HEIGHT = 256, // Height of a google map that displays the entire world when zoomed all the way out
                 GLOBE_WIDTH = 256, // Width of a google map that displays the entire world when zoomed all the way out
@@ -795,9 +795,9 @@
 
             return (latZoomLevel < lngZoomLevel) ? latZoomLevel : lngZoomLevel;
         }
+*/
 
-
-
+        /*
         function polygon(coords) {
             var arrayLatLng = [],
                 i,
@@ -829,7 +829,7 @@
 
             crcl.setMap(mphmap);
         }
-
+        */
 
 
         function setUserName(name) {
@@ -844,7 +844,9 @@
                 evtDct = evtSvc.getEventDct(),
                 key;
             for (key in evtDct) {
-                pusher.subscribe(key, evtDct[key]);
+                if (evtDct.hasOwnProperty(key)) {
+                    pusher.subscribe(key, evtDct[key]);
+                }
             }
             selfPusherDetails.pusher = pusher;
             selfPusherDetails.channel = channel;
@@ -892,7 +894,7 @@
 
         function MapHosterGoogle() {
             mapReady = false;
-            bounds = null;
+            // bounds = null;
             userZoom = true;
         }
 
