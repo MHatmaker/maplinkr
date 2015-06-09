@@ -11,10 +11,11 @@
     // }
     // return {};
 // });
-
+/*
 var isGoogleLoaded = false,
     isPlacesLoaded = false;
-
+*/
+/*
 function loadScript(scrpt, loadedTest, callback) {
     "use strict";
     var script = document.createElement('script');
@@ -46,7 +47,7 @@ function initPlaces() {
     "use strict";
     console.log('skipScript');
 }
-
+*/
 // window.onload = loadScript;
 
 (function () {

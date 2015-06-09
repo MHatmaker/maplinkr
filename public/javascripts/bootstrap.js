@@ -211,8 +211,8 @@ var selectedMapType = 'arcgis';
                                 scope = angular.element(e).scope(),
                                 previousVisibility = scope.VerbVis;
                             scope.VerbVis = tf ? 'flex' : 'none';
-                            if (tf === false){
-                                angular.element(e).css({'display' : 'none'})
+                            if (tf === false) {
+                                angular.element(e).css({'display' : 'none'});
                             }
                             return previousVisibility;
                         },
