@@ -1,24 +1,24 @@
+/*global define */
 
-
-(function() {
+(function () {
     "use strict";
 
     console.log('DestWndSetupCtrl setup');
     var areWeInitialized = false;
     define([
         'angular'
-    ], function(angular) {
+    ], function (angular) {
         console.log('DestWndSetupCtrl define');
 
-        var selfdict = {};
+        var selfdict = {},
+            scopeDict = {};
         selfdict.isInitialized = areWeInitialized = false;
-        var scopeDict = {};
 
-        function DestWndSetupCtrl($scope, $modal, $rootScope){
+        function DestWndSetupCtrl($scope, $modal, $rootScope) {
             console.log("in DestWndSetupCtrl");
             selfdict.scope = $scope;
             selfdict.isInitialized = areWeInitialized = false;
-            scopeDict['rootScope'] = $rootScope;
+            scopeDict.rootScope = $rootScope;
 
             // selfdict.callbackFunction = null;
             $scope.showDestDialog = false;
@@ -26,74 +26,72 @@
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
-                prevDstSel :$scope.destSelections[0].slice(0),
+                prevDstSel : $scope.destSelections[0].slice(0),
                 whichDismiss : "Cancel",
                 dlg2show : "SelectWndDlg",
                 title : 'do we have a title?',
-                icon : none
+                icon : null
             };
 
-            $scope.preserveState = function(){
+            $scope.preserveState = function () {
                 console.log("preserveState");
                 // $scope.data.whichDismiss = 'Cancel';
                 $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
-            $scope.restoreState = function(){
+            $scope.restoreState = function () {
                 console.log("restoreState");
                 // $scope.data.whichDismiss = 'Accept';
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
 
-            $scope.showDialog = function(choiceCallback){
+            $scope.showDialog = function (choiceCallback) {
                 $scope.choiceCallback = choiceCallback;
                 $scope.showDestDialog = true;
-            }
+            };
 
-            $scope.onAcceptDestination = function(){
+            $scope.onAcceptDestination = function () {
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 var callback = $scope.choiceCallback;
-                if($scope.choiceCallback){
+                if ($scope.choiceCallback) {
                     $scope.choiceCallback = null;
                     callback($scope.data.dstSel);
-                }
-                else{
+                } else {
                     scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
                 }
             };
 
-            $scope.hitEnter = function(evt){
-                if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,''))){
+            $scope.hitEnter = function (evt) {
+                if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
                     $scope.save();
                 }
             }; // end hitEnter
 
-            $scope.safeApply = function(fn) {
+            $scope.safeApply = function (fn) {
                 var phase = this.$root.$$phase;
-                  if(phase == '$apply' || phase == '$digest') {
-                      if(fn && (typeof(fn) === 'function')) {
-                          fn();
-                      }
-                  } else {
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
                     this.$apply(fn);
                 }
             };
         }
 
-        DestWndSetupCtrl.prototype.isInitialized = function(){
+        DestWndSetupCtrl.prototype.isInitialized = function () {
             return areWeInitialized;
-        }
+        };
 
-        DestWndSetupCtrl.prototype.showDialog = function(choiceCallback){
+        DestWndSetupCtrl.prototype.showDialog = function (choiceCallback) {
             $scope.$scope.choiceCallback = choiceCallback;
             scope.showDialog($scope.choiceCallback);
         }
 
         function init(App) {
             console.log('DestWndSetupCtrl init');
-            var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
 
             selfdict.isInitialized = areWeInitialized = true;
             App.controller('DestWndSetupCtrl',  ['$scope', '$modal', '$rootScope', DestWndSetupCtrl]);
@@ -119,50 +117,45 @@
                         modalMdata: "="
                     },
 
-                    controller: function($scope) {
+                    controller: function ($scope) {
                         console.log("setting up directive modalShowDest controller");
-                        $scope.getContentUrl = function() {
+                        $scope.getContentUrl = function () {
                             console.log("find file modalShowDest html");
                             return '/templates/DestSelectDlgGen.html';
-                       }
-                   },
+                        };
+                    },
 
                     link: function (scope, element, attrs) {
                         var localScope = scope;
                         //Hide or show the modal
                         scope.showModal = function (visible, elem) {
-                            if (!elem)
+                            if (!elem) {
                                 elem = element;
-
-                            if (visible)
+                            }
+                            if (visible) {
                                 $(elem).modal311("show");
-                            else
+                            } else {
                                 $(elem).modal311("hide");
-                        }
+                            }
+                        };
 
-                        scope.$on('ShowWindowSelectorModalEvent', function(event, args){
+                        scope.$on('ShowWindowSelectorModalEvent', function (event, args) {
                             var title = args.title,
                                 icon = args.thumbnail;
                             localScope.data.title = title;
                             localScope.data.icon = icon;
                             console.log('local scope.$on received title : ' + title);
 
-                            localScope.$parent.safeApply(function(){
+                            localScope.$parent.safeApply(function () {
                                 localScope.$parent.showDestDialog = true;
                             });
                         });
 
                         //Check to see if the modal-visible attribute exists
-                        if (!attrs.modalVisible)
-                        {
-
+                        if (!attrs.modalVisible) {
                             //The attribute isn't defined, show the modal by default
                             scope.showModal(true);
-
-                        }
-                        else
-                        {
-
+                        } else {
                             //Watch for changes to the modal-visible attribute
                             scope.$watch("modalVisible", function (newValue, oldValue) {
                                 scope.showModal(newValue);
@@ -172,15 +165,17 @@
                             });
                             //Watch for changes to the modal-mdata attribute
                             scope.$watch("modalMdata", function (newValue, oldValue) {
-                                if( ! angular.isUndefinedOrNull(newValue))
-                                  localScope.$parent.data = newValue;
+                                if (!angular.isUndefinedOrNull(newValue)) {
+                                    localScope.$parent.data = newValue;
+                                }
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
                             //Watch for changes to the modal-mdata attribute
                             scope.$watch("data.dstSel", function (newValue, oldValue) {
-                                if( ! angular.isUndefinedOrNull(newValue))
-                                  localScope.$parent.data.dstSel = newValue;
+                                if (!angular.isUndefinedOrNull(newValue)) {
+                                    localScope.$parent.data.dstSel = newValue;
+                                }
                                 console.log("watch modalMdata scope.$parent data  : ");
                                 console.debug(localScope.$parent.data);
                             });
@@ -197,15 +192,15 @@
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
                         $(element).on('hidden.bs.modal', function () {
                             scope.modalVisible = localScope.$parent.showDestDialog = localScope.showDestDialog =false;
-                            console.log("hide event called")
-                            if (!scope.$$phase && !scope.$root.$$phase){
+                            console.log("hide event called");
+                            if (!scope.$$phase && !scope.$root.$$phase) {
                                 scope.$apply();
                             }
                             scope.$apply();
                             console.log("hidden modalMdata : ");
                             console.debug(scope.$parent.data);
                             console.log("whichDismiss : " + scope.$parent.data.whichDismiss);
-                            if(scope.$parent.data.whichDismiss == "Accept"){
+                            if (scope.$parent.data.whichDismiss === "Accept") {
                                 scope.$parent.onAcceptDestination();
                             }
                         });
@@ -217,10 +212,11 @@
             return DestWndSetupCtrl;
         }
 
-        return { start: init,
-                  showDialog : DestWndSetupCtrl.prototype.showDialog,
-                  isInitialized : DestWndSetupCtrl.prototype.isInitialized};
+        return {
+            start: init,
+            showDialog : DestWndSetupCtrl.prototype.showDialog,
+            isInitialized : DestWndSetupCtrl.prototype.isInitialized
+        };
 
     });
-
-}).call(this);
+}());
