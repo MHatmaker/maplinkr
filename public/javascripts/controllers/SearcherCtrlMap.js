@@ -43,7 +43,13 @@ angular.isUndefinedOrNull = function (val) {
                 // previousSelectedWebMapId = selectedWebMapId;
                 selectedWebMapId = rowItem.entity.id;
                 selectedWebMapTitle = rowItem.entity.title;
-                $scope.openWindowSelectionDialog(rowItem.entity.id, rowItem.entity.title);
+                $scope.openWindowSelectionDialog(
+                    {
+                        'id' : rowItem.entity.id,
+                        'title' : rowItem.entity.title,
+                        'snippet' : rowItem.snippet,
+                        'thumbnail' : rowItem.thumbnail
+                    });
             };
 
             $scope.$on('DestinationSelectorEvent', function (event, args) {
@@ -263,13 +269,13 @@ angular.isUndefinedOrNull = function (val) {
             };
 
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
-            $scope.openWindowSelectionDialog = function (selectedWebMapId, selectedMapTitle) {
+            $scope.openWindowSelectionDialog = function (info) {
 
                 console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
                 // console.log("toggleShow from " + $scope.showDialog);
                 // $scope.safeApply(function(){
                     // $scope.showDialog = ! $scope.showDialog;
-                scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent');
+                scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
                 // });
                 // console.log("toggleShow after apply " + $scope.showDialog);
             };

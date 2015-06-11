@@ -28,7 +28,8 @@
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel :$scope.destSelections[0].slice(0),
                 whichDismiss : "Cancel",
-                dlg2show : "SelectWndDlg"
+                dlg2show : "SelectWndDlg",
+                'title' : 'do we have a title?'
             };
 
             $scope.preserveState = function(){
@@ -44,20 +45,11 @@
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
-            $scope.$on('ShowWindowSelectorModalEvent', function(){
-                $scope.showDestDialog = true;
-                // $scope.safeApply(function(){
-                //     $scope.showDestDialog = true;
-                // });
-            });
 
             $scope.showDialog = function(choiceCallback){
                 $scope.choiceCallback = choiceCallback;
                 $scope.showDestDialog = true;
             }
-            $rootScope.$on('ShowWindowSelectorModalEvent', function(){
-                $scope.showDestDialog = true;
-            });
 
             $scope.onAcceptDestination = function(){
                 console.log("onAcceptDestination " + $scope.data.dstSel);
@@ -147,11 +139,14 @@
                                 $(elem).modal311("hide");
                         }
 
-                        scope.$on('ShowWindowSelectorModalEvent', function(){
-                            localScope.showDestDialog = true;
-                            // $scope.safeApply(function(){
-                            //     $scope.showDestDialog = true;
-                            // });
+                        scope.$on('ShowWindowSelectorModalEvent', function(event, args){
+                            var title = args.title;
+                            localScope.data.title = title;
+                            console.log('local scope.$on received title : ' + title);
+
+                            localScope.$parent.safeApply(function(){
+                                localScope.$parent.showDestDialog = true;
+                            });
                         });
 
                         //Check to see if the modal-visible attribute exists

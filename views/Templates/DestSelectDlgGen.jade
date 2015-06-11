@@ -5,6 +5,9 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
             
             h4 Open a new map in :
         div(class="modal-body")
+            div(style="color: #17244D; margin-top: 10px;") SHOW? 
+            
+                |{{data.title}}
             div(class="btn-group btn-group-vertical")
                 span(data-ng-repeat="dest in $parent.destSelections")
                     input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel", ng-init="$parent.data.dstSel='Same Window'")
