@@ -47,8 +47,8 @@ angular.isUndefinedOrNull = function (val) {
                     {
                         'id' : rowItem.entity.id,
                         'title' : rowItem.entity.title,
-                        'snippet' : rowItem.snippet,
-                        'thumbnail' : rowItem.thumbnail
+                        'snippet' : rowItem.entity.snippet,
+                        'thumbnail' : rowItem.entity.thumbnail
                     });
             };
 

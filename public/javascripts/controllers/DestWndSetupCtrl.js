@@ -29,7 +29,8 @@
                 prevDstSel :$scope.destSelections[0].slice(0),
                 whichDismiss : "Cancel",
                 dlg2show : "SelectWndDlg",
-                'title' : 'do we have a title?'
+                title : 'do we have a title?',
+                icon : none
             };
 
             $scope.preserveState = function(){
@@ -140,8 +141,10 @@
                         }
 
                         scope.$on('ShowWindowSelectorModalEvent', function(event, args){
-                            var title = args.title;
+                            var title = args.title,
+                                icon = args.thumbnail;
                             localScope.data.title = title;
+                            localScope.data.icon = icon;
                             console.log('local scope.$on received title : ' + title);
 
                             localScope.$parent.safeApply(function(){
