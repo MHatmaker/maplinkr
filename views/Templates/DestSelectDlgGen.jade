@@ -6,7 +6,17 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
                 span
                     img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
                     
-                    |{{data.title}}
+                    |{{data.title}} 
+                    
+                span
+                    i(ng-show="showMapDetail", ng-click="showMapDetail=!showMapDetail",
+                        class="pull-left glyphicon", style='margin-right : 10px; display: inline-block;',
+                        ng-class="{'glyphicon-chevron-down'}")
+                    i(ng-show="!showMapDetail", ng-click="showMapDetail=!showMapDetail",
+                        class="pull-left glyphicon", style='margin-right : 10px; display: inline-block;',
+                        ng-class="{'glyphicon-chevron-right'}")
+                    href(ng-click="showMapDetail=!showMapDetail") details:
+                    div(ng-show="showMapDetail") {{data.snippet}}
             
             h4 Open a new map in :
         div(class="modal-body")
