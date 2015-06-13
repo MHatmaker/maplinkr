@@ -3,8 +3,10 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
         div(class="modal-header")
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
             div(style="color: #17244D; margin-top: 5px;")
-                
-                |{{data.title}}
+                span
+                    img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
+                    
+                    |{{data.title}}
             
             h4 Open a new map in :
         div(class="modal-body")

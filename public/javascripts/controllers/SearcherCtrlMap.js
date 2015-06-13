@@ -23,7 +23,8 @@ angular.isUndefinedOrNull = function (val) {
         function SearcherCtrlMap($scope, $rootScope) {
             var self = this,
                 selectedWebMapId = "Nada ID",
-                selectedWebMapTitle = "Nada Title";
+                selectedWebMapTitle = "Nada Title",
+                pos;
 
             $scope.findMapDisabled = false;
             $scope.searchTermMap = "Chicago Crime";
@@ -49,7 +50,8 @@ angular.isUndefinedOrNull = function (val) {
                         'title' : rowItem.entity.title,
                         'snippet' : rowItem.entity.snippet,
                         'thumbnail' : rowItem.entity.thumbnail
-                    });
+                    }
+                );
             };
 
             $scope.$on('DestinationSelectorEvent', function (event, args) {
@@ -103,6 +105,15 @@ angular.isUndefinedOrNull = function (val) {
                 ]
 
             };
+
+            console.log("window width " + window.innerWidth);
+
+            pos = $scope.gridMapOptions.columnDefs.map(function (e) { return e.field; }).indexOf('snippet');
+            if (window.innerWidth > 500) {
+                $scope.gridMapOptions.columnDefs[pos].visible = true;
+            } else {
+                $scope.gridMapOptions.columnDefs[pos].visible = false;
+            }
 
             $scope.calculateInstructionHeight = function () {
                 var label = angular.element(document.getElementById("mapSearchLabel")),
@@ -226,6 +237,7 @@ angular.isUndefinedOrNull = function (val) {
             //display a list of groups that match the input user name
 
             $scope.showMapResults = function (response) {
+                var mpdata = [];
                 // utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
@@ -233,7 +245,8 @@ angular.isUndefinedOrNull = function (val) {
                 console.log("response.total " + response.total);
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
-                    var mpdata = [];
+                    mpdata = [];
+
                     mpdata = dojo.map(response.results, function (map) {
                         return {
                             'snippet': map.snippet,
@@ -244,6 +257,8 @@ angular.isUndefinedOrNull = function (val) {
                             'owner': map.owner
                         };
                     });
+
+
                     // $scope.calculateHeights();
                     //create the grid
                     $scope.mapGriddata = [];
@@ -262,6 +277,7 @@ angular.isUndefinedOrNull = function (val) {
                                 // $scope.mapGriddata = mpdata;
                             // });
                     // }
+
                     $scope.redrawGrid();
 
                 }
