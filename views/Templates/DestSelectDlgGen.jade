@@ -4,31 +4,36 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
             div(style="color: #17244D; margin-top: 5px;")
                 span
-                    img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
+                    img(ng-src="{{$parent.data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
                     
-                    |{{data.title}} 
+                    |{{$parent.data.title}} 
                     
-                span
-                    i(ng-show="showMapDetail", ng-click="showMapDetail=!showMapDetail",
-                        class="pull-left glyphicon", style='margin-right : 10px; display: inline-block;',
-                        ng-class="{'glyphicon-chevron-down'}")
-                    i(ng-show="!showMapDetail", ng-click="showMapDetail=!showMapDetail",
-                        class="pull-left glyphicon", style='margin-right : 10px; display: inline-block;',
-                        ng-class="{'glyphicon-chevron-right'}")
-                    href(ng-click="showMapDetail=!showMapDetail") details:
-                    div(ng-show="showMapDetail") {{data.snippet}}
-            
-            h4 Open a new map in :
         div(class="modal-body")
-            div(class="btn-group btn-group-vertical")
-                span(data-ng-repeat="dest in $parent.destSelections")
-                    input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.data.dstSel", ng-init="$parent.data.dstSel='Same Window'")
-                    
-                    |{{dest}}
-                    
-                    br
-            br
-            div(style="color: #17244D; margin-top: 10px;") Current Selection: {{data.dstSel}}
+            
+            accordion(close-others="true")
+                accordion-group
+                    accordion-heading
+                        |Details
+                        i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $parent.$parent.$parent.status.detailsOpen, 'glyphicon-chevron-right': !$parent.$parent.$parent.status.detailsOpen}")
+                    accordion-body
+                        |{{$parent.$parent.$parent.data.snippet}}
+                accordion-group
+                    accordion-heading
+                        |Select option for new map display:
+                        i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.destChoicesOpen, 'glyphicon-chevron-right': !status.destChoicesOpen}")
+
+                    accordion-body
+                        div(class="btn-group btn-group-vertical")
+                            span(data-ng-repeat="dest in $parent.$parent.$parent.destSelections")
+                                input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.$parent.$parent.data.dstSel", ng-init="$parent.$parent.$parent.data.dstSel='Same Window'")
+                                
+                                |{{dest}}
+                                
+                                br
+                        br
+                        
+            div(style="color: #17244D; margin-top: 10px;font-weight: bold") Current Selection: {{data.dstSel}}
+
         div(class="modal-footer")
             button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Accept'; $parent.preserveState()", data-dismiss="modal") Accept
             button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Cancel'; $parent.restoreState()", data-dismiss="modal")  Cancel

@@ -34,6 +34,10 @@
                 snippet : 'nothing in snippet',
                 showDetail : '+'
             };
+            $scope.status = {
+                'detailsOpen' : false,
+                'destChoicesOpen' : false
+            };
 
             $scope.preserveState = function () {
                 console.log("preserveState");
@@ -145,9 +149,9 @@
                             var title = args.title,
                                 icon = args.thumbnail,
                                 snippet = args.snippet;
-                            localScope.data.title = title;
-                            localScope.data.icon = icon;
-                            localScope.data.snippet = snippet;
+                            localScope.$parent.data.title = title;
+                            localScope.$parent.data.icon = icon;
+                            localScope.$parent.data.snippet = snippet;
                             console.log('local scope.$on received title : ' + title);
 
                             localScope.$parent.safeApply(function () {
