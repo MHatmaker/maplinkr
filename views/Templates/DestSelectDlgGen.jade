@@ -14,13 +14,15 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
                 accordion-group
                     accordion-heading
                         |Details
-                        i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $parent.$parent.$parent.status.detailsOpen, 'glyphicon-chevron-right': !$parent.$parent.$parent.status.detailsOpen}")
+                        i(class="pull-right glyphicon", ng-click="onShowDetailsClick()",
+                            ng-class="{'glyphicon-chevron-down': status.detailsOpen, 'glyphicon-chevron-right': !status.detailsOpen}")
                     accordion-body
                         |{{$parent.$parent.$parent.data.snippet}}
                 accordion-group
                     accordion-heading
                         |Select option for new map display:
-                        i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.destChoicesOpen, 'glyphicon-chevron-right': !status.destChoicesOpen}")
+                        i(class="pull-right glyphicon", ng-click="onDestChoiceClick()",
+                            ng-class="{'glyphicon-chevron-down': status.destChoicesOpen, 'glyphicon-chevron-right': !status.destChoicesOpen}")
 
                     accordion-body
                         div(class="btn-group btn-group-vertical")

@@ -34,10 +34,6 @@
                 snippet : 'nothing in snippet',
                 showDetail : '+'
             };
-            $scope.status = {
-                'detailsOpen' : false,
-                'destChoicesOpen' : false
-            };
 
             $scope.preserveState = function () {
                 console.log("preserveState");
@@ -129,6 +125,26 @@
                             console.log("find file modalShowDest html");
                             return '/templates/DestSelectDlgGen.html';
                         };
+
+                        $scope.status = {
+                            'detailsOpen' : false,
+                            'destChoicesOpen' : false
+                        };
+                        $scope.onShowDetailsClick = function () {
+                            $scope.status.detailsOpen = !$scope.status.detailsOpen;
+                            if ($scope.status.detailsOpen && $scope.status.destChoicesOpen) {
+                                $scope.status.destChoicesOpen = false;
+                            }
+                            // $scope.status.destChoicesOpen = !$scope.status.destChoicesOpen;
+                        }
+
+                        $scope.onDestChoiceClick = function () {
+                            $scope.status.destChoicesOpen = !$scope.status.destChoicesOpen;
+                            if ($scope.status.destChoicesOpen && $scope.status.detailsOpen) {
+                                $scope.status.detailsOpen = false;
+                            }
+                            // $scope.status.detailsOpen = !$scope.status.detailsOpen;
+                        }
                     },
 
                     link: function (scope, element, attrs) {
@@ -143,6 +159,9 @@
                             } else {
                                 $(elem).modal311("hide");
                             }
+                            scope.$parent.safeApply(function () {
+                                scope.status.detailsOpen = scope.status.destChoicesOpen = false;
+                            });
                         };
 
                         scope.$on('ShowWindowSelectorModalEvent', function (event, args) {
@@ -152,6 +171,10 @@
                             localScope.$parent.data.title = title;
                             localScope.$parent.data.icon = icon;
                             localScope.$parent.data.snippet = snippet;
+                            localScope.$parent.safeApply(function () {
+                                localScope.status.detailsOpen = localScope.status.destChoicesOpen = false;
+                            });
+                            // localScope.status.detailsOpen = localScope.status.destChoicesOpen = false;
                             console.log('local scope.$on received title : ' + title);
 
                             localScope.$parent.safeApply(function () {
@@ -200,6 +223,7 @@
                         //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
                         $(element).on('hidden.bs.modal', function () {
                             scope.modalVisible = localScope.$parent.showDestDialog = localScope.showDestDialog =false;
+                            scope.status.detailsOpen = scope.status.destChoicesOpen = false;
                             console.log("hide event called");
                             if (!scope.$$phase && !scope.$root.$$phase) {
                                 scope.$apply();
