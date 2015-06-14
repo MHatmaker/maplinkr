@@ -130,6 +130,7 @@
                             'detailsOpen' : false,
                             'destChoicesOpen' : false
                         };
+                        /*
                         $scope.onShowDetailsClick = function () {
                             $scope.status.detailsOpen = !$scope.status.detailsOpen;
                             if ($scope.status.detailsOpen && $scope.status.destChoicesOpen) {
@@ -145,6 +146,7 @@
                             }
                             // $scope.status.detailsOpen = !$scope.status.detailsOpen;
                         }
+                        */
                     },
 
                     link: function (scope, element, attrs) {
@@ -154,14 +156,15 @@
                             if (!elem) {
                                 elem = element;
                             }
+                            scope.status.detailsOpen = scope.status.destChoicesOpen = false;
+                            scope.$parent.safeApply(function () {
+                                scope.status.detailsOpen = scope.status.destChoicesOpen = false;
+                            });
                             if (visible) {
                                 $(elem).modal311("show");
                             } else {
                                 $(elem).modal311("hide");
                             }
-                            scope.$parent.safeApply(function () {
-                                scope.status.detailsOpen = scope.status.destChoicesOpen = false;
-                            });
                         };
 
                         scope.$on('ShowWindowSelectorModalEvent', function (event, args) {
