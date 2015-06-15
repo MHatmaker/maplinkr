@@ -227,6 +227,9 @@
                         $(element).on('hidden.bs.modal', function () {
                             scope.modalVisible = localScope.$parent.showDestDialog = localScope.showDestDialog =false;
                             scope.status.detailsOpen = scope.status.destChoicesOpen = false;
+                            scope.$parent.data.title = '';
+                            scope.$parent.data.icon = null;
+                            scope.$parent.data.snippet = '';
                             console.log("hide event called");
                             if (!scope.$$phase && !scope.$root.$$phase) {
                                 scope.$apply();
