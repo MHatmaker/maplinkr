@@ -94,6 +94,8 @@
         };
 
         DestWndSetupCtrl.prototype.showDialog = function (choiceCallback) {
+
+            /*global $scope */
             $scope.$scope.choiceCallback = choiceCallback;
             $scope.showDialog($scope.choiceCallback);
         };
