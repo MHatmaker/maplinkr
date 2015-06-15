@@ -529,7 +529,15 @@
                         setTimeout(function () {
                             scope.$apply(function () {
                                 // rootScope.$broadcast('ShowWindowSelectorModalEvent');
-                                scope.showDialog(onAcceptDestination);
+                                scope.showDialog(
+                                    onAcceptDestination,
+                                    {
+                                        'id' : null,
+                                        'title' : searchInput.value,
+                                        'snippet' : 'No snippet available',
+                                        'thumbnail' : 'stylesheets/images/googlemap.png'
+                                    }
+                                );
                             });
                         }, 100);
                     } else {

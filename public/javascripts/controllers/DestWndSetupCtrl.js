@@ -49,8 +49,14 @@
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
 
-            $scope.showDialog = function (choiceCallback) {
+            $scope.showDialog = function (choiceCallback, args) {
                 $scope.choiceCallback = choiceCallback;
+                var title = args.title,
+                    icon = args.thumbnail,
+                    snippet = args.snippet;
+                $scope.data.title = title;
+                $scope.data.icon = icon;
+                $scope.data.snippet = snippet;
                 $scope.showDestDialog = true;
             };
 
@@ -89,8 +95,8 @@
 
         DestWndSetupCtrl.prototype.showDialog = function (choiceCallback) {
             $scope.$scope.choiceCallback = choiceCallback;
-            scope.showDialog($scope.choiceCallback);
-        }
+            $scope.showDialog($scope.choiceCallback);
+        };
 
         function init(App) {
             console.log('DestWndSetupCtrl init');
