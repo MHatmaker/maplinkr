@@ -910,6 +910,10 @@
             return MapHosterGoogle;
         }
 
+        function removeEventListeners() {
+            // mphmap.removeListener();
+        }
+
         function resizeWebSiteVertical(isMapExpanded) {
             console.log('resizeWebSiteVertical');
             // map.invalidateSize(true);
@@ -957,7 +961,8 @@
             getGlobalsForUrl: getGlobalsForUrl,
             getCenter : getCenter,
             getEventDictionary : getEventDictionary,
-            publishPosition : publishPosition
+            publishPosition : publishPosition,
+            removeEventListeners : removeEventListeners
         };
     });
 

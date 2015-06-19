@@ -543,6 +543,11 @@ define('GeoCoder', function () {
                 return MapHosterLeaflet;
             }
 
+            function removeEventListeners() {
+                mphmap.removeEventListener();
+                mphmap.zoomControl.removeFrom(mphmap);
+            }
+
             function resizeWebSiteVertical(isMapExpanded) {
                 console.log('resizeWebSiteVertical');
                 mphmap.invalidateSize(false);
@@ -565,7 +570,8 @@ define('GeoCoder', function () {
                 getGlobalsForUrl: getGlobalsForUrl,
                 getEventDictionary : getEventDictionary,
                 publishPosition : publishPosition,
-                getCenter : getCenter
+                getCenter : getCenter,
+                removeEventListeners : removeEventListeners
             };
         });
 }());

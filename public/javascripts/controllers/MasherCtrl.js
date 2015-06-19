@@ -80,10 +80,19 @@
             selfMethods.windowResized = $scope.windowResized;
 
             $scope.showMeTheMapClicked = function () {
-                var currentPageTemplate;
+                // var currentPageTemplate;
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                $location.path($scope.currentTab.url, true).replace();
+
+                $location.path($scope.currentTab.url, true);
+                $location.replace();
+                $route.reload();
+
+                // $scope.$apply(function() {
+                //     $location.path($scope.currentTab.url, true);
+                //     $location.replace();
+                // });
+                // $window.location = $scope.currentTab.url;
                 // $scope.$apply();
                 // $window.location.href = $scope.currentTab.url;
                 // $window.location.reload();
@@ -106,9 +115,9 @@
             $scope.$on('WebSiteDescriptionEvent', function () {
                 console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
-                // var showElem = document.getElementById('showMeTheMap'),
-                //     showElemA = angular.element(showElem),
-                //     showElem0 = showElemA[0];
+                var showElem = document.getElementById('showMeTheMap'),
+                    showElemA = angular.element(showElem),
+                    showElem0 = showElemA[0];
 
                 showElem0.click();
                 // $scope.catchClick();  // for testing dialog without an actual popup block event

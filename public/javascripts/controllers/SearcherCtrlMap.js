@@ -60,6 +60,7 @@ angular.isUndefinedOrNull = function (val) {
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
+                selMph.removeEventListeners();
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             });
 

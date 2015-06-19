@@ -588,6 +588,10 @@
             return MapHosterArcGIS;
         }
 
+        function removeEventListeners() {
+            // mphmap.removeListener();
+        }
+
         function resizeWebSiteVertical(isMapExpanded) {
             console.log('resizeWebSiteVertical');
             var tmpLon = cntrxG,
@@ -637,7 +641,9 @@
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, setUserName : setUserName, getGlobalPositionComponents : getGlobalPositionComponents,
-                  publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter};
+                  publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter,
+                  removeEventListeners : removeEventListeners
+                  };
     });
 }());
 
