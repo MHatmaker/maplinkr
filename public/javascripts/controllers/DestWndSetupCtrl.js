@@ -51,12 +51,10 @@
 
             $scope.showDialog = function (choiceCallback, args) {
                 $scope.choiceCallback = choiceCallback;
-                var title = args.title,
-                    icon = args.thumbnail,
-                    snippet = args.snippet;
-                $scope.data.title = title;
-                $scope.data.icon = icon;
-                $scope.data.snippet = snippet;
+
+                $scope.data.title = args.title;
+                $scope.data.icon = args.icon;
+                $scope.data.snippet = args.snippet;
                 $scope.showDestDialog = true;
             };
 

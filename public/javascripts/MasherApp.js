@@ -89,6 +89,7 @@
             var channel = AgoNewWindowConfig.getChannelFromUrl();
             if(channel != ''){
               AgoNewWindowConfig.setChannel(channel);
+              AgoNewWindowConfig.setNameChannelAccepted(true);
             }
             AgoNewWindowConfig.setStartupView(false, false);
             console.log("AGONEWWINDOWCONFIG.SETSTARTUPVIEW")

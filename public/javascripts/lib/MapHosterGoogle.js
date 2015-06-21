@@ -37,6 +37,7 @@
             searchInput = null,
             searchFiredFromUrl = false,
 
+            wndIndex = 0,
             selfPusherDetails = {
                 channel : null,
                 pusher : null
@@ -358,7 +359,6 @@
                     gmQuery = AgoNewWindowConfig.query(),
                     destWnd = null,
                     newSelectedWebMapId = 'SomeID',
-                    wndIndex,
                     bnds,
                     gBnds,
                     ll,
@@ -367,6 +367,7 @@
                     qtext,
                     service,
                     openNewDisplay,
+                    setupNewDisplay,
                     onAcceptDestination;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
@@ -406,7 +407,7 @@
                 //
                 // addInitialSymbols();
                 // mphmap.setZoom(initZoom);
-                wndIndex = 0;
+                // wndIndex = 0;
                 console.log('gmQuery contains ' + gmQuery);
                 if (gmQuery !== '') {
                     searchFiredFromUrl = true;
@@ -432,8 +433,18 @@
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
 
-                openNewDisplay = function (channel, userName) {
-                    wndIndex += 1;
+                function setVerbageVisibility(tf) {
+                    var $inj,
+                        gmQSvc;
+                    if (currentVerbVis === 'none') {
+                        $inj = angular.injector(['app']);
+                        gmQSvc = $inj.get('GoogleQueryService');
+                        gmQSvc.setDialogVisibility(tf);
+                    }
+                }
+
+                setupNewDisplay = function(channel, userName, wndIndex) {
+
                     var
                         curmph = self,
                         wndName = newSelectedWebMapId + wndIndex,
@@ -467,11 +478,30 @@
                             window.focus();
                         }
                     }
-                    if (currentVerbVis === 'none') {
-                        $inj = angular.injector(['app']);
-                        gmQSvc = $inj.get('GoogleQueryService');
-                        gmQSvc.setDialogVisibility(false);
-                    }
+                    setVerbageVisibility(false);
+                    // if (currentVerbVis === 'none') {
+                    //     $inj = angular.injector(['app']);
+                    //     gmQSvc = $inj.get('GoogleQueryService');
+                    //     gmQSvc.setDialogVisibility(false);
+                    // }
+
+                }
+
+                openNewDisplay = function (channel, userName) {
+                    // wndIndex += 1;
+                    var $inj = angular.injector(['app']),
+                        $http = $inj.get('$http');
+
+                    $http({method: 'GET', url: '/wndseqno'}).
+                        success(function (data, status, headers, config) {
+                            setupNewDisplay(channel, userName, data.wndNameSeqNo);
+                        }).
+                        error(function (data, status, headers, config) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            console.log('Oops and error', data);
+                            alert('Oops getting next window sequence number ' + data.wndseqno);
+                        });
 
                 };
 
@@ -484,24 +514,30 @@
                             evtSvc = $inj.get('StompEventHandlerService');
                             evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                             evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+
+                            gmQSvc = $inj.get('GoogleQueryService');
+                            currentVerbVis = gmQSvc.setDialogVisibility(true);
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
 
-                            if (currentVerbVis === 'none') {
-                                $inj = angular.injector(['app']);
-                                gmQSvc = $inj.get('GoogleQueryService');
-                                gmQSvc.setDialogVisibility(false);
-                            }
+                            setVerbageVisibility(false);
+                            // if (currentVerbVis === 'none') {
+                            //     $inj = angular.injector(['app']);
+                            //     gmQSvc = $inj.get('GoogleQueryService');
+                            //     gmQSvc.setDialogVisibility(false);
+                            // }
                         }
+
                     } else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
-                        if (currentVerbVis === 'none') {
-                            $inj = angular.injector(['app']);
-                            gmQSvc = $inj.get('GoogleQueryService');
-                            gmQSvc.setDialogVisibility(false);
-                        }
+                        setVerbageVisibility(false);
+                        // if (currentVerbVis === 'none') {
+                        //     $inj = angular.injector(['app']);
+                        //     gmQSvc = $inj.get('GoogleQueryService');
+                        //     gmQSvc.setDialogVisibility(false);
+                        // }
                     }
                 };
 
@@ -524,7 +560,7 @@
                     if (placesFromSearch && placesFromSearch.length > 0) {
                         $inj = angular.injector(['app']);
                         gmQSvc = $inj.get('GoogleQueryService');
-                        currentVerbVis = gmQSvc.setDialogVisibility(true);
+                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
                         scope = gmQSvc.getQueryDestinationDialogScope();
                         setTimeout(function () {
                             scope.$apply(function () {

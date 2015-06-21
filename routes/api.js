@@ -48,6 +48,7 @@ exports.setPusher = function(pshr){
 
 var seqNo = 0;
 var namesLength = userNames.length;
+var wndNameSeqNo = 0;
 
 exports.getUserName = function(req, res){
     console.log("API getUserName");
@@ -72,4 +73,12 @@ exports.getUserId = function(req, res){
     console.log("return seqNo %s ", seqNo);
     res.json({'id' : seqNo});
     seqNo++;
+};
+
+exports.getNextWindowSeqNo = function(req, res){
+    console.log("API wndNameSeqNo");
+
+    console.log("return wndNameSeqNo %s ", wndNameSeqNo);
+    res.json({'wndNameSeqNo' : wndNameSeqNo});
+    wndNameSeqNo++;
 };

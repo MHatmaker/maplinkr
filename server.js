@@ -151,6 +151,7 @@ urls = (
         // JSON API
         self.routes['/username'] = api.getUserName;
         self.routes['/userid'] = api.getUserId;
+        self.routes['/wndseqno'] = api.getNextWindowSeqNo;
 
         // self.routes['/pusher/auth'] = api.getAuth;
 
