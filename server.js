@@ -1,37 +1,39 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
-var fs      = require('fs');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var http = require('http');
-var path = require('path');
-var socketio  = require('socket.io');
-var Pusher = require( 'pusher' );
+    fs      = require('fs');
+    favicon = require('static-favicon');
+    logger = require('morgan');
+    cookieParser = require('cookie-parser');
+    bodyParser = require('body-parser');
+    http = require('http');
+    path = require('path');
+    socketio  = require('socket.io');
+    Pusher = require( 'pusher' ),
+    pusher,
+    MasherNodeApp;
 
-// var nodemailer = require("nodemailer");
-// var smtpTransport = require('nodemailer-smtp-transport');
+//     nodemailer = require("nodemailer");
+//     smtpTransport = require('nodemailer-smtp-transport');
 
-var routesJade = require('./routes/index.js');
-var api = require('./routes/api');
-// var contact = require('./routes/contact');  // Contact Form
+    routesJade = require('./routes/index.js');
+    api = require('./routes/api');
+//     contact = require('./routes/contact');  // Contact Form
 
-var resource = require('express-resource');
+    resource = require('express-resource');
 
 app_id = '40938'
 app_key = '5c6bad75dc0dd1cec1a6'
 app_secret = '54546672d0196be97f6a'
 
-var pusher = new Pusher( { appId: app_id, key: app_key, secret: app_secret } );
+pusher = new Pusher( { appId: app_id, key: app_key, secret: app_secret } );
 
 api.setPusher(pusher);
 
 /**
  *  Define the sample application.
  */
-var MasherNodeApp = function() {
+MasherNodeApp = function() {
 
     //  Scope.
     var self = this;

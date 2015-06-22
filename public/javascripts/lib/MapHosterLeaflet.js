@@ -50,6 +50,7 @@ define('GeoCoder', function () {
                 markers = [],
                 popups = [],
                 mrkr;
+                // currentVerbVis = false;
 
             function showLoading() {
                 utils.showLoading();
@@ -323,10 +324,22 @@ define('GeoCoder', function () {
                 }
             }
 
+            function setVerbageVisibility(tf) {
+                var $inj,
+                    gmQSvc;
+                // if (currentVerbVis === 'none') {
+                $inj = angular.injector(['app']);
+                gmQSvc = $inj.get('GoogleQueryService');
+                gmQSvc.setDialogVisibility(tf);
+                // }
+            }
+
             function retrievedClick(clickPt) {
                 console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
                 var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y),
                     content = "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString();
+
+                setVerbageVisibility(false);
                 if (clickPt.title) {
                     content += '<br>' + clickPt.title;
                 }

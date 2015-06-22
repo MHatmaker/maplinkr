@@ -295,7 +295,7 @@ angular.isUndefinedOrNull = function (val) {
                     scope = gmQSvc.getQueryDestinationDialogScope('arcgis');
                 console.log("toggleShow from " + scope.showDialog);
                 // scope.showDialog = !scope.showDialog;
-                scope.safeApply(function(){
+                scope.safeApply(function () {
                     // scope.showDialog = !scope.showDialog;
                     // scope.showDestDialog = !scope.showDestDialog;
                     scope.showDialog(null, info);

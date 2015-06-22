@@ -245,7 +245,8 @@
         }
         function configureMap(xtntMap, zoomWebMap, pointWebMap) {
             console.log("configureMap");
-            var qlat, qlon, qzoom, startCenter, cntr, xtnt, address; //, location;
+            var qlat, qlon, qzoom, startCenter, cntr, xtnt, address;
+                // currentVerbVis = false;; //, location;
             mphmap = xtntMap;
             mapReady = false;
             // alert("before first update globals");
@@ -346,9 +347,15 @@
             mpCanRoot = document.getElementById("map_canvas_root");
         }
 
-
-
-
+        function setVerbageVisibility(tf) {
+            var $inj,
+                gmQSvc;
+            // if (currentVerbVis === 'none') {
+            $inj = angular.injector(['app']);
+            gmQSvc = $inj.get('GoogleQueryService');
+            gmQSvc.setDialogVisibility(tf);
+            // }
+        }
 
         function retrievedClick(clickPt) {
             console.log("Back in retrievedClick");
@@ -367,6 +374,7 @@
 
             console.log("screenGeo");
             console.debug(screenGeo);
+            setVerbageVisibility(false);
 
             //      screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry);
 
@@ -590,6 +598,7 @@
 
         function removeEventListeners() {
             // mphmap.removeListener();
+            console.log("empty function removeEventListners");
         }
 
         function resizeWebSiteVertical(isMapExpanded) {

@@ -754,6 +754,7 @@
                 btnShare;
             console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
             // latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
+            setVerbageVisibility(false);
 
             popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
             content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
