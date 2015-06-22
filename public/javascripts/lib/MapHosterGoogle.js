@@ -561,7 +561,7 @@
                         $inj = angular.injector(['app']);
                         gmQSvc = $inj.get('GoogleQueryService');
                         // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        scope = gmQSvc.getQueryDestinationDialogScope();
+                        scope = gmQSvc.getQueryDestinationDialogScope('google');
                         setTimeout(function () {
                             scope.$apply(function () {
                                 // rootScope.$broadcast('ShowWindowSelectorModalEvent');

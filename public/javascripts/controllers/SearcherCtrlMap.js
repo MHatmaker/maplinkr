@@ -49,7 +49,7 @@ angular.isUndefinedOrNull = function (val) {
                         'id' : rowItem.entity.id,
                         'title' : rowItem.entity.title,
                         'snippet' : rowItem.entity.snippet,
-                        'thumbnail' : rowItem.entity.thumbnail
+                        'icon' : rowItem.entity.thumbnail
                     }
                 );
             };
@@ -288,13 +288,21 @@ angular.isUndefinedOrNull = function (val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
 
-                console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
-                // console.log("toggleShow from " + $scope.showDialog);
-                // $scope.safeApply(function(){
-                    // $scope.showDialog = ! $scope.showDialog;
-                scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
+                // console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
+                var $inj = angular.injector(['app']),
+                    gmQSvc = $inj.get('GoogleQueryService'),
+                // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                    scope = gmQSvc.getQueryDestinationDialogScope('arcgis');
+                console.log("toggleShow from " + scope.showDialog);
+                // scope.showDialog = !scope.showDialog;
+                scope.safeApply(function(){
+                    // scope.showDialog = !scope.showDialog;
+                    // scope.showDestDialog = !scope.showDestDialog;
+                    scope.showDialog(null, info);
+                });
+                // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
                 // });
-                // console.log("toggleShow after apply " + $scope.showDialog);
+                console.log("toggleShow after apply " + $scope.showDialog);
             };
         }
 
