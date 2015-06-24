@@ -1,40 +1,55 @@
 #!/bin/env node
 //  OpenShift sample Node application
-var express = require('express');
-    fs      = require('fs');
-    favicon = require('static-favicon');
-    logger = require('morgan');
-    cookieParser = require('cookie-parser');
-    bodyParser = require('body-parser');
-    http = require('http');
-    path = require('path');
-    socketio  = require('socket.io');
-    Pusher = require( 'pusher' ),
+
+/*global require */
+/*global process */
+/*global readFileSync */
+/*global module */
+/*jslint nomen: true*/
+/*global __dirname */
+
+var express = require('express'),
+    fs      = require('fs'),
+    favicon = require('static-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    http = require('http'),
+    path = require('path'),
+    socketio  = require('socket.io'),
+    Pusher = require('pusher'),
     pusher,
+    MasherNodeAppj,
+    routesJade,
+    api,
+    resource,
+    app_id,
+    app_key,
+    app_secret,
     MasherNodeApp;
 
 //     nodemailer = require("nodemailer");
 //     smtpTransport = require('nodemailer-smtp-transport');
 
-    routesJade = require('./routes/index.js');
-    api = require('./routes/api');
+routesJade = require('./routes/index.js');
+api = require('./routes/api');
 //     contact = require('./routes/contact');  // Contact Form
 
-    resource = require('express-resource');
+resource = require('express-resource');
 
-app_id = '40938'
-app_key = '5c6bad75dc0dd1cec1a6'
-app_secret = '54546672d0196be97f6a'
+app_id = '40938';
+app_key = '5c6bad75dc0dd1cec1a6';
+app_secret = '54546672d0196be97f6a';
 
-pusher = new Pusher( { appId: app_id, key: app_key, secret: app_secret } );
+pusher = new Pusher({appId: app_id, key: app_key, secret: app_secret});
 
 api.setPusher(pusher);
 
 /**
  *  Define the sample application.
  */
-MasherNodeApp = function() {
-
+MasherNodeApp = function () {
+    "use strict";
     //  Scope.
     var self = this;
 
@@ -46,7 +61,7 @@ MasherNodeApp = function() {
     /**
      *  Set up server IP address and port # using env variables/defaults.
      */
-    self.setupVariables = function() {
+    self.setupVariables = function () {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP  || '127.0.0.1';
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 3035;
@@ -54,21 +69,23 @@ MasherNodeApp = function() {
         console.log(self.port);
         console.log(self.ipaddress);
 
-        if (typeof self.ipaddress === "undefined") {
+        if (self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
-        };
+        }
     };
 
 
     /**
      *  Populate the cache.
      */
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
+    self.populateCache = function () {
+        if (self.zcache === "undefined") {
+            self.zcache = {
+                'index.html': ''
+            };
         }
 
         //  Local cache for static content.
@@ -80,7 +97,9 @@ MasherNodeApp = function() {
      *  Retrieve entry (content) from cache.
      *  @param {string} key  Key identifying content to retrieve from cache.
      */
-    self.cache_get = function(key) { return self.zcache[key]; };
+    self.cache_get = function (key) {
+        return self.zcache[key];
+    };
 
 
     /**
@@ -88,28 +107,31 @@ MasherNodeApp = function() {
      *  Terminate server on receipt of the specified signal.
      *  @param {string} sig  Signal to terminate on.
      */
-    self.terminator = function(sig){
+    self.terminator = function (sig) {
         if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
-           process.exit(1);
+            console.log('%s: Received %s - terminating sample app ...', Date(Date.now()), sig);
+            process.exit(1);
         }
-        console.log('%s: Node server stopped.', Date(Date.now()) );
+        console.log('%s: Node server stopped.', Date(Date.now()));
     };
 
 
     /**
      *  Setup termination handlers (for exit and a list of signals).
      */
-    self.setupTerminationHandlers = function(){
+    self.setupTerminationHandlers = function () {
         //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
+        process.on('exit', function () {
+            self.terminator();
+        });
 
         // Removed 'SIGPIPE' from the list - bugz 852598.
         ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element, index, array) {
-            process.on(element, function() { self.terminator(element); });
+             'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+            ].forEach(function (element, index, array) {
+            process.on(element, function () {
+                self.terminator(element);
+            });
         });
     };
 
@@ -131,10 +153,10 @@ urls = (
      */
 
 
-    self.createRoutes = function() {
+    self.createRoutes = function () {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
+        self.routes['/asciimo'] = function (req, res) {
             var link = "http://i.imgur.com/kmbjB.png";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
@@ -157,15 +179,15 @@ urls = (
 
         // self.routes['/pusher/auth'] = api.getAuth;
 
-        self.app.post('/pusher/auth', function(req, res){
+        self.app.post('/pusher/auth', function (req, res) {
             console.log('getAuth');
             console.log('%s %s %s', req.method, req.url, req.path);
             console.log('req.body.socket_id is %s', req.body.socket_id);
             console.log('req.body.channel_name is %s', req.body.channel_name);
-            var socketId = req.body.socket_id;
-            var channel = req.body.channel_name;
-            var auth = pusher.auth( socketId, channel );
-            res.send( auth );
+            var socketId = req.body.socket_id,
+                channel = req.body.channel_name,
+                auth = pusher.auth(socketId, channel);
+            res.send(auth);
         });
         // self.app.post('/contact', contact.process);  // Contact form route
 
@@ -181,25 +203,28 @@ urls = (
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
-    self.initializeServer = function() {
+    self.initializeServer = function () {
+        var r;
         self.app = express(); //.createServer();
         self.initSomeJade();
         self.createRoutes();
 
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+        for (r in self.routes) {
+            if (self.routes.hasOwnProperty(r)) {
+                self.app.get(r, self.routes[r]);
+            }
         }
         // self.initDB();
         console.log("server is initialized");
     };
 
-    self.initSomeJade = function() {
+    self.initSomeJade = function () {
         self.app.set('views', __dirname + '/views');
         self.app.set('view engine', 'jade');
         self.app.set('view options', {
             layout: false
-          });
+        });
 
         self.app.use(favicon());
         self.app.use(logger('dev'));
@@ -217,7 +242,7 @@ urls = (
     /**
      *  Initializes the sample application.
      */
-    self.initialize = function() {
+    self.initialize = function () {
         self.setupVariables();
         self.populateCache();
         self.setupTerminationHandlers();
@@ -246,7 +271,7 @@ urls = (
     /**
      *  Start the server (starts up the sample application).
      */
-    self.start = function() {
+    self.start = function () {
         //  Start the app on the specific interface (and port).
         console.log("now start");
         /*
@@ -255,11 +280,11 @@ urls = (
                         Date(Date.now() ), self.ipaddress, self.port);
         });
          */
-        var server    = self.app.listen(self.port, self.ipaddress);
-        var io        = require('socket.io').listen(server);
+        var server = self.app.listen(self.port, self.ipaddress),
+            io = require('socket.io').listen(server);
 
         io.sockets.on('connection', function (socket) {
-          console.log('io.sockets.on is connecting?');
+            console.log('io.sockets.on is connecting?');
         });
     };
 

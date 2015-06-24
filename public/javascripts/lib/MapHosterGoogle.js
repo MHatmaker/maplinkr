@@ -37,7 +37,6 @@
             searchInput = null,
             searchFiredFromUrl = false,
 
-            wndIndex = 0,
             selfPusherDetails = {
                 channel : null,
                 pusher : null
@@ -436,14 +435,16 @@
                 function setVerbageVisibility(tf) {
                     var $inj,
                         gmQSvc;
+                    $inj = angular.injector(['app']);
+                    gmQSvc = $inj.get('GoogleQueryService');
                     if (currentVerbVis === 'none') {
-                        $inj = angular.injector(['app']);
-                        gmQSvc = $inj.get('GoogleQueryService');
+                        gmQSvc.setDialogVisibility(tf);
+                    } else {
                         gmQSvc.setDialogVisibility(tf);
                     }
                 }
 
-                setupNewDisplay = function(channel, userName, wndIndex) {
+                setupNewDisplay = function (channel, userName, wndIndex) {
 
                     var
                         curmph = self,
@@ -451,8 +452,8 @@
                         tmpWndName = '',
                         baseUrl,
                         displayBnds,
-                        $inj,
-                        gmQSvc,
+                        // $inj,
+                        // gmQSvc,
                         url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                         "&channel=" + channel + "&userName=" + userName +
                         "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
@@ -485,7 +486,7 @@
                     //     gmQSvc.setDialogVisibility(false);
                     // }
 
-                }
+                };
 
                 openNewDisplay = function (channel, userName) {
                     // wndIndex += 1;
@@ -751,10 +752,14 @@
             var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6),
                 content,
                 popPt,
-                btnShare;
+                btnShare,
+                $inj,
+                linkrSvc;
             console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
             // latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
-            setVerbageVisibility(false);
+            $inj = angular.injector(['app']);
+            linkrSvc = $inj.get('LinkrService');
+            linkrSvc.hideLinkr();
 
             popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
             content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;

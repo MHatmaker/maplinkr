@@ -201,7 +201,7 @@ var selectedMapType = 'arcgis';
                         return googleQueryDct.rootScope;
                     },
                         getQueryDestinationDialogScope = function (mapsys) {
-                            var elemID = mapsys === 'google'? 'DestWndDialogGoogle' : 'DestWndDialogArcGIS',
+                            var elemID = mapsys === 'google' ? 'DestWndDialogGoogle' : 'DestWndDialogArcGIS',
                                 e = document.getElementById(elemID),
                                 scope = angular.element(e).scope();
                             return scope;
@@ -232,6 +232,24 @@ var selectedMapType = 'arcgis';
                         setDialogVisibility : setDialogVisibility,
                         getRootScope : getRootScope
                     };
+                }).
+
+                factory("LinkrService", function ($rootScope) {
+                    var lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
+                        scope = angular.element(lnkrdiv).scope(),
+                        getLinkrScope,
+                        hideLinkr;
+
+                    getLinkrScope = function () {
+                        return scope;
+                    };
+                    hideLinkr = function () {
+                        var data = {'visibility' : 'none'};
+
+                        scope.$emit('displayLinkerEvent', data);
+                    };
+
+                    return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr};
                 }).
 
                 factory("ControllerService", function ($rootScope) {

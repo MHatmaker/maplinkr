@@ -195,11 +195,15 @@
             };
 
             $scope.$on('displayLinkerEvent', function (event, data) {
-                $scope.onExpPlugClick();
+                var visibility = 'whatever';
+                if (data && data.visibility) {
+                    visibility = data.visibility;
+                }
+                $scope.onExpPlugClick(visibility);
             });
 
-            $scope.onExpPlugClick = function () {
-                if ($scope.VerbVis === 'flex') {
+            $scope.onExpPlugClick = function (visibility) {
+                if ($scope.VerbVis === 'flex' || visibility === 'none') {
                     fsm.onhideplugin();
                 } else {
                     fsm.onshowplugin();
