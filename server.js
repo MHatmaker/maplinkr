@@ -82,7 +82,7 @@ MasherNodeApp = function () {
      *  Populate the cache.
      */
     self.populateCache = function () {
-        if (self.zcache === "undefined") {
+        if (!self.zcache) {
             self.zcache = {
                 'index.html': ''
             };

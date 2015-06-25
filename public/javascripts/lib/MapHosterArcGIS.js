@@ -370,11 +370,15 @@
                 mppt = new esri.geometry.Point(clickPt.x, clickPt.y),
                 screenGeo = new esri.geometry.toScreenGeometry(mphmap.geographicExtent, wdt, hgt, mppt),
                 fixedLL,
-                content;
+                content,
+                 $inj,
+                linkrSvc;
 
             console.log("screenGeo");
             console.debug(screenGeo);
-            setVerbageVisibility(false);
+            $inj = angular.injector(['app']);
+            linkrSvc = $inj.get('LinkrService');
+            linkrSvc.hideLinkr();
 
             //      screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry);
 

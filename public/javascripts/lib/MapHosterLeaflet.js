@@ -337,9 +337,13 @@ define('GeoCoder', function () {
             function retrievedClick(clickPt) {
                 console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
                 var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y),
+                    $inj,
+                    linkrSvc,
                     content = "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString();
 
-                setVerbageVisibility(false);
+                $inj = angular.injector(['app']);
+                linkrSvc = $inj.get('LinkrService');
+                linkrSvc.hideLinkr();
                 if (clickPt.title) {
                     content += '<br>' + clickPt.title;
                 }
