@@ -76,7 +76,11 @@
             }; // end hitEnter
 
             $scope.safeApply = function (fn) {
-                var phase = this.$root.$$phase;
+                var phase = 'nophase';
+                if(this.$root){
+                    phase = this.$root.$$phase;
+                }
+
                 if (phase === '$apply' || phase === '$digest') {
                     if (fn && (typeof fn === 'function')) {
                         fn();
@@ -157,15 +161,16 @@
 
                     link: function (scope, element, attrs) {
                         var localScope = scope;
+                        scope.$parent.showDestDialog = false;
                         //Hide or show the modal
                         scope.showModal = function (visible, elem) {
                             if (!elem) {
                                 elem = element;
                             }
                             scope.status.detailsOpen = scope.status.destChoicesOpen = false;
-                            scope.$parent.safeApply(function () {
-                                scope.status.detailsOpen = scope.status.destChoicesOpen = false;
-                            });
+                            // scope.$parent.safeApply(function () {
+                            //     scope.status.detailsOpen = scope.status.destChoicesOpen = false;
+                            // });
                             if (visible) {
                                 $(elem).modal311("show");
                             } else {
