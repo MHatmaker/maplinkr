@@ -26,13 +26,16 @@ block append content
                     ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
                     div(class="container-newscell")
                         div(class="container-newscellhead").
-                            Linea Quae Est in Summitate
-                        div(class="container-newscellbody newscelllatin" style="opacity: 0.4;")
-                            p.
-                                molestie at, fringilla in, sodales eu, elit.  Curabitur mattis lorem et est. Quisque et tortor. 
-                            p.
-                                Integer bibendum vulputate odio. Nam nec ipsum. Vestibulum mollis eros feugiat augue. Integer fermentum odio lobortis odio. Nullam mollis nisl non metus. Maecenas nec nunc eget pede ultrices blandit. Ut non purus ut elit convallis eleifend. Fusce tincidunt, justo quis tempus  euismod, magna nulla viverra libero, sit amet lacinia odio diam id risus.  
-                        
+                            Linea Quae Est in Summitate with {{curMapSys}}
+                        div(class="container-newscellbody newscelllatin" style="opacity: 0.8;")
+                            div(style="display: flex; flex-direction: column;")
+                                div(class="flex1", style="display: flex; flex-flow: row wrap; justify-content: space-around;")
+                                    img(ng-src="../stylesheets/images/AptsDotCom.png")
+                                    img(ng-src="../stylesheets/images/CatVideoOfTheWeekDotCom.png")
+                                    img(ng-src="../stylesheets/images/TripAdvisorDotCom.png")
+                                div(class="flex5").
+                                    Why does this outfit get to stick its advertisement link in our website.  Why don't they just go and advertise on gambling and conspiracy websites.  Maybe they should advertise on cat video sites.  Actually, putting a Golden Retriever in the advertisement seems to work 100% of the time.  Apartments.com might even replace their logo with a smiling Golden Retriever.
+                  
                 div(class="flex3")
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="width: {{webSiteWidth}};")
@@ -73,11 +76,15 @@ block append content
                             #idRightCol(class="container-rightcol aside", 
                                 ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
                                 style="overflow-y: auto;")
-                                div(class="container-newscellhead flex1", style="overflow:auto;").
-                                    A Iure Instructi Sunt Visum
+                                div(class="container-newscellhead flex1", style="overflow:auto;")
+                                    div
+                                        A Iure Instructi Sunt Visum
                                   
-                                div(class="container-newscellbody newscelllatin flex5", style="border:2px solid blue; overflow-y:auto; opacity: 0.4;").
-                                  molestie at, fringilla in, sodales eu, elit.Curabitur mattis lorem et est. Quisque et     tortor. Integer bibendumvulputate odio. Nam nec ipsum. Vestibulum mollis eros            feugiataugue. Integer fermentum odio lobortis odio. Nullam mollis nisl nonmetus.         Maecenas nec nunc eget pede ultrices blandit. Ut non purusut elit convallis eleifend.     Fusce tincidunt, justo quis tempuseuismod, magna nulla viverra libero, sit amet          lacinia odio diam idrisus. 
+                                div(class="container-newscellbody newscelllatin flex5", style="border:2px solid blue; overflow-y:auto; opacity: 0.8;")
+                                    div
+                                        img(ng-src="../stylesheets/images/ZillowDotCom.png")
+                                    div.
+                                        Why does this outfit get to stick its advertisement link in our website.  Why don't they just go and advertise on gambling and conspiracy websites.  Maybe they should advertise on cat video sites.  Actually, putting a Golden Retriever in the advertisement seems to work 100% of the time.  Apartments.com might even replace their logo with a smiling Golden Retriever.
                               
                 #idFooter.
                     All the below-the-fold web site contents    

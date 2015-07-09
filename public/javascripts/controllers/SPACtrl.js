@@ -74,7 +74,11 @@
             $scope.VerbVis = "none";
 
             $scope.webSiteWidth = "inherit";
+            $scope.curMapSys = "Google";
 
+            function setCurrentMapType(mapsys) {
+                $scope.curMapSys = mapsys;
+            }
             function printStatus(msg) {
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
                          msg, status.website, status.plugin);
@@ -293,6 +297,12 @@
         function init(App) {
             console.log('SPACtrl init');
             App.controller('SPACtrl', ['$scope', SPACtrl]);
+
+            var $inj = angular.injector(['app']);
+            var serv = $inj.get('CurrentMapTypeService');
+            var curmph = serv.getSelectedMapType();
+            var curmapsys = serv.getMapRestUrl();
+            SPACtrl.setCurrentMapType(curmapsys);
             return SPACtrl;
         }
 
