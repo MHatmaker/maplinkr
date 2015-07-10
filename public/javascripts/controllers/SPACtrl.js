@@ -29,7 +29,10 @@
                 innerTableAdjustment = 0, //20;
                 colHeightAdjustment = 15,
                 startupView = AgoNewWindowConfig.getStartupView(),
-                fsm = null;
+                fsm = null,
+                curmapsys,
+                $inj,
+                serv;
 
 
             if (startupView.summary === true) {
@@ -37,6 +40,11 @@
             } else {
                 $scope.MasterSiteVis = "none";
             }
+
+            $inj = angular.injector(['app']);
+            serv = $inj.get('CurrentMapTypeService');
+            curmapsys = serv.getMapRestUrl();
+            $scope.curMapSys = curmapsys;
 
             if (startupView.website === true) {
                 $scope.webSiteVisible = "Expand";
@@ -74,11 +82,7 @@
             $scope.VerbVis = "none";
 
             $scope.webSiteWidth = "inherit";
-            $scope.curMapSys = "Google";
 
-            function setCurrentMapType(mapsys) {
-                $scope.curMapSys = mapsys;
-            }
             function printStatus(msg) {
                 var msgstr = String.format("{0}... site ? : {1}, plugin ? : {2}",
                          msg, status.website, status.plugin);
@@ -298,11 +302,6 @@
             console.log('SPACtrl init');
             App.controller('SPACtrl', ['$scope', SPACtrl]);
 
-            var $inj = angular.injector(['app']);
-            var serv = $inj.get('CurrentMapTypeService');
-            var curmph = serv.getSelectedMapType();
-            var curmapsys = serv.getMapRestUrl();
-            SPACtrl.setCurrentMapType(curmapsys);
             return SPACtrl;
         }
 
