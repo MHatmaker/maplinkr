@@ -26,8 +26,8 @@ String.format = function() {
         var selfMethods = {};
         var mapSystemDct = {
             'GoogleMap' : 0,
-            'Leaflet' : 1,
-            'ArcGIS' : 2
+            'ArcGIS' : 1,
+            'Leaflet' : 2,
         };
 
         function TabsCtrl($scope, $location) {
@@ -48,17 +48,6 @@ String.format = function() {
               disabled: false
             },
             {
-              maptype : 'leaflet',
-              title:'Leaflet/OSM Maps',
-              site: 'Web Site featuring a Leaflet Map',
-              content: String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
-              url: "/views/partials/Leaflet.jade",
-              imgSrc:  "stylesheets/images/Leaflet.png",
-              imgAlt: "Leaflet/OSM Maps",
-              active: false,
-              disabled: false
-            },
-            {
               maptype : 'arcgis',
               title:'ArcGIS Web Maps',
               site: 'Web Site featuring an ArcGIS Online Map',
@@ -66,6 +55,17 @@ String.format = function() {
               url: "/views/partials/ArcGIS.jade",
               imgSrc: "stylesheets/images/arcgis.png",
               imgAlt: "ArcGIS Web Maps",
+              active: false,
+              disabled: false
+            },
+            {
+              maptype : 'leaflet',
+              title:'Leaflet/OSM Maps',
+              site: 'Web Site featuring a Leaflet Map',
+              content: String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
+              url: "/views/partials/Leaflet.jade",
+              imgSrc:  "stylesheets/images/Leaflet.png",
+              imgAlt: "Leaflet/OSM Maps",
               active: false,
               disabled: false
             }

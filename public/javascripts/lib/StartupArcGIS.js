@@ -464,7 +464,7 @@
                 console.log("use " + selectedWebMapId);
                 // pointWebMap = [-87.7, lat=41.8];
                 pointWebMap = [-87.7, 41.8];
-                zoomWebMap = 13;
+                zoomWebMap = 15;
                 initialize(selectedWebMapId, '', '');
             } else {
                 console.log("found idWebMap");

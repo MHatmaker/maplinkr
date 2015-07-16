@@ -142,8 +142,8 @@ function initPlaces() {
 
                 console.debug(AgoNewWindowConfig);
                 // var centerLatLng = new google.maps.LatLng(41.8, -87.7);
-                centerLatLng = new google.maps.LatLng(41.880146, -87.623294);
-                initZoom = 13;
+                centerLatLng = new google.maps.LatLng(41.888996, -87.623294);
+                initZoom = 15;
 
                 if (AgoNewWindowConfig.testUrlArgs()) {
                     qlat = AgoNewWindowConfig.lat();

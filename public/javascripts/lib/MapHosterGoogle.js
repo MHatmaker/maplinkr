@@ -313,7 +313,7 @@
                 qlat,
                 qlon,
                 qzoom,
-                initZoom = 13,
+                initZoom = 15,
                 listener,
                 currentVerbVis = false;
 
@@ -324,7 +324,7 @@
                 initZoom = parseInt(qzoom, 10);
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
             } else {
-                updateGlobals("init with hard-coded values", -87.623294, 41.880146,  13);
+                updateGlobals("init with hard-coded values", -87.623294, 41.888996,  13);
             }
             firstCntr = new google.maps.LatLng(cntryG, cntrxG);
             mphmap.panTo(firstCntr);
