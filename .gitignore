@@ -42,3 +42,12 @@ GitVersionTree.exe
 GCDR.js
 MPHLflt.js
 views/DestSelectModalDlg.html
+
+MapLinkr/*
+hooks/*
+npm-debug.log
+plugins/*
+public/javascripts/lib/ionic/*
+script.js
+.swp
+
