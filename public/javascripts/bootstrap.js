@@ -13,7 +13,7 @@ var selectedMapType = 'arcgis';
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
-        'controllers/SpaCtrl',
+        'controllers/SPACtrl',
         'controllers/MapCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
