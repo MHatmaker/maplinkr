@@ -9,7 +9,13 @@
     console.log('MasherCtrl setup');
     define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
         console.log('MasherCtrl define');
-        var selfMethods = {};
+        var selfMethods = {},
+            descriptions = {
+            'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
+            'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
+            'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
+        };
+
 
         function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal) {  //$route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
@@ -27,11 +33,7 @@
                 selfdict : {
                     mapType : "",
                     imgSrc : "",
-                    descriptions : {
-                        'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
-                        'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
-                        'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
-                    }
+                    description : ""
                 }
             };
 
@@ -113,20 +115,22 @@
 
             $scope.describeTheWebsiteClicked = function () {
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
+//                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
                 $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
-                $scope.data.selfdict.imgSrc = $scope.currentTab.maptype;
+                $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
+                $scope.data.selfdict.description = descriptions[$scope.currentTab.maptype];
 
                 var tmplt = ' \
                     <div class="modal-content"> \
                       <div class="modal-header"> \
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                        <h4>This sample Web Site powered by <img src="{{$scope.data.image}}">  {{$scope.data.mapType}} is showing us :</h3> \
+                        <h4>This sample Web Site powered by <img src="{{data.image}}">  {{data.mapType}} is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \
                         <p style="border-style:solid; padding: 5px"> \
-                            {{$scope.data.description}} \
+                            {{data.description}} \
                         </p> \
                         <p> \
                             Clicking on a location icon pops up available, relevant information at that address. \
@@ -140,9 +144,12 @@
                 ',
 
                     modalInstance = $uibModal.open({
-                        template: tmplt,
-                        controller: 'WebSiteDescriptionCtrl',
-                        resolve: {
+                        template : tmplt,
+                        controller : 'WebSiteDescriptionCtrl',
+                        size : 'sm',
+                        backdrop : 'false',
+//                        appendTo : hostElement,
+                        resolve : {
                             data: function () {
                                 return $scope.data.selfdict;
                             }

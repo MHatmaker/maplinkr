@@ -162,7 +162,7 @@ img.svg-menu{
 
 .modal {
    display: block;
-   background-color : #fff;
+   background-color : transparent;
    color: #A2A9B0;
 }
 

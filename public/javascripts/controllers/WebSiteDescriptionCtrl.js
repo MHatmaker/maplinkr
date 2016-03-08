@@ -16,7 +16,7 @@
             $scope.data = {
                 whichSite : "",
                 whichDismiss : "Cancel",
-                description : "Initial description",
+                description : data.description,
                 image : data.imgSrc,
                 mapType : data.mapType
             };
