@@ -50,7 +50,7 @@ var selectedMapType = 'arcgis';
 
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
-                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
+                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router', 'ngAnimate'])
 
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                         function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {

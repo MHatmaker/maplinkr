@@ -12,6 +12,12 @@
         }
         return {};
     });
+    // define('ui.bootstrap.modal', function () {
+    //     if (ui.bootstrap.modal) {
+    //         return ui.bootstrap.modal;
+    //     }
+    //     return {};
+    // });
 
     require({
         async: true,

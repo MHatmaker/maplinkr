@@ -1,4 +1,6 @@
 /*global define */
+/*global $uibModal */
+/*golbal $uibModalInstance */
 
 (function () {
     "use strict";
@@ -7,14 +9,9 @@
     console.log('MasherCtrl setup');
     define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
         console.log('MasherCtrl define');
-        var selfMethods = {},
-            descriptions = {
-                'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
-                'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
-                'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
-            };
+        var selfMethods = {};
 
-        function MasherCtrl($scope, $location, $window, $route, $templateCache) {  //$route, $routeParams, $window) {
+        function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal) {  //$route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = AgoNewWindowConfig.getStartupView();
@@ -26,7 +23,16 @@
                 'blockedUrl': 'place holder',
                 'completeUrl': 'completeslashdoturl',
                 'nextWindowName': 'InitialWindowName',
-                'popupDimensions': 'popdimensions'
+                'popupDimensions': 'popdimensions',
+                selfdict : {
+                    mapType : "",
+                    imgSrc : "",
+                    descriptions : {
+                        'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
+                        'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
+                        'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
+                    }
+                }
             };
 
             $scope.catchClick = function () {
@@ -107,9 +113,48 @@
 
             $scope.describeTheWebsiteClicked = function () {
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
-                WebSiteDescriptionCtrl.setDescription(descriptions[$scope.currentTab.maptype], $scope.currentTab.imgSrc);
-                $scope.showDescriptionDialog = true;
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
+
+                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
+                $scope.data.selfdict.imgSrc = $scope.currentTab.maptype;
+
+                var tmplt = ' \
+                    <div class="modal-content"> \
+                      <div class="modal-header"> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                        <h4>This sample Web Site powered by <img src="{{$scope.data.image}}">  {{$scope.data.mapType}} is showing us :</h3> \
+                      </div> \
+                      <div class="modal-body"> \
+                        <p style="border-style:solid; padding: 5px"> \
+                            {{$scope.data.description}} \
+                        </p> \
+                        <p> \
+                            Clicking on a location icon pops up available, relevant information at that address. \
+                        </p> \
+                      </div> \
+                      <div class="modal-footer"> \
+                        <button type="button" class="btn btn-primary" ng-click="accept()">Accept</button> \
+                        <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button> \
+                      </div> \
+                    </div><!-- /.modal-content --> \
+                ',
+
+                    modalInstance = $uibModal.open({
+                        template: tmplt,
+                        controller: 'WebSiteDescriptionCtrl',
+                        resolve: {
+                            data: function () {
+                                return $scope.data.selfdict;
+                            }
+                        }
+                    });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+
             };
 
             $scope.$on('WebSiteDescriptionEvent', function () {
@@ -176,7 +221,7 @@
 
         function init(App) {
             console.log('MasherCtrl init');
-            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', MasherCtrl]);
+            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
 
             //calling tellAngular on resize event
             window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
