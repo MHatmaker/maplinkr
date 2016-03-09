@@ -2,20 +2,20 @@ extends layout
 
 
 block content
-        
+
     #idMasherCtrl(ng-controller="MasherCtrl", ng-cloak, class="ng-cloak")
         #idMasterSite(class="container-mastersite masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor",
             ng-cloak, class="ng-cloak")
-        
+
             #idMasterSiteControlRow(ng-cloak, class="ng-cloak")
-            
+
                 #idMasterSiteExpander(class="mastersitecontrol-expander")
                     #idExpButtonSum(class="havButton", ng-click="summmaryCollapser()")
                         span(style='cursor: pointer; cursor: hand;')
                             figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
                                 img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="margin: 0.01em 0.5em  0.01em  0.05em;")
                                 figcaption(class="btn", style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;font-weight: 800;") {{ExpandSum}} Summary Master Website Options
-                    
+
             modalshowpopupblockdlg(modal-visible="$parent.showPopupBlockerDialog", class="modal330", role="dialog", class="modal", id="PopupBlockerDialog", style="display: none; position:relative", data-backdrop="true")
             #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': isCollapsed, 'mastersite-shown': !isCollapsed}")
                 .mashbackground
@@ -24,7 +24,7 @@ block content
                             img(src="../stylesheets/images/LogoSnipBlackText.png", style="height: 30px")
                             div(style="visibility : hidden; font-size : 200%") Do not show this
                             div Linking and Synchronizing Multiple Maps, Collaborators, Map Systems
-                        
+
                     div
                         div(ng-controller="TabsCtrl")
                             ul
@@ -34,16 +34,14 @@ block content
                                             img(ng-src="{{tab.imgSrc}}", style="margin: 2px 5px 6px 5px")
 
                 #mainView(ng-cloak, class="ng-cloak") {{currentTab.content}}
-                    div(modal-show-websitedescription="", modal-visible="$parent.showDescriptionDialog", class="modal330", ng-controller="WebSiteDescriptionCtrl", modal-mdata="mData", role="dialog", class="modal", id="WebSiteDescriptionDialog", style="display: none; position:relative", data-backdrop="true")
-                                    
+
                     div(ng-cloak, class="ng-cloak", class="tabselectionview")
-                        div(id="currentTabSelectedId", style="float: left; font-weight: bold; margin-top: 0.5em; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}} 
+                        div(id="currentTabSelectedId", style="float: left; font-weight: bold; margin-top: 0.5em; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}}
                         img(src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px')
                         input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='margin-left:40px; font-weight: bold;', class='btn', value='Tell  Me About The Website')
                         input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='margin-left:40px; font-weight: bold;', class='btn', value='Show Me The Website')
-                        
-                    
-          
+
+
+
             div(id="ngview_container", style="position:relative;height:100%;width:100%;", ng-cloak, class="ng-cloak")
                 ng-view
-            

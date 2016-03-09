@@ -6,7 +6,7 @@ html(style="height:100%;width:100%;")
         title Mashover Viewer
         block stylesblock
             link(rel='stylesheet', href="http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.css")
-            link(rel='stylesheet', href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css")
+            link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css")
             link(rel='stylesheet', href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/nihilo/nihilo.css")
             link(rel='stylesheet', href='//js.arcgis.com/3.10/js/esri/css/esri.css')
             link(rel='stylesheet', href='/stylesheets/SearchGrid.css')
@@ -17,24 +17,25 @@ html(style="height:100%;width:100%;")
             link(rel='stylesheet', href='/stylesheets/tabstyles.css')
             link(rel='stylesheet', href='/stylesheets/GoogleSearch.css')
             link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
-            
+
         block scriptsblock
             script(src='/javascripts/lib/DocDomain.js')
             script(src='/javascripts/lib/djConfig.js')
             script(src='http://js.pusherapp.com/2.2/pusher.min.js')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js')
             script(src='//serverapi.arcgisonline.com/jsapi/arcgis/?v=3.5compact')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.js')
-            script(src="//angular-ui.github.io/ui-router/release/angular-ui-router.js")
-  
-            script(src='http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js')
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js')
+            script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js')
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js')
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js")
+
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js')
             script(src='http://code.jquery.com/jquery-2.0.3.min.js')
             script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js')
             script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid-flexible-height.min.js')
             script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places')
-            
+
             script(src='/javascripts/MasherApp.js')
-        
+
     body(class="nihilo",style="height:100vh;width:100%;overflow-y:auto; font-size:1em;-webkit-text-size-adjust: 100%;", ng-cloak, class="ng-cloak")
         block content
