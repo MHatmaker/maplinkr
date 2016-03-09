@@ -158,23 +158,34 @@
 
                 modalInstance.result.then(function (selectedItem) {
                     $scope.selected = selectedItem;
+                    $scope.showMeTheMapClicked();
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
 
             };
 
-            $scope.$on('WebSiteDescriptionEvent', function () {
-                console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
-                console.debug($location);
-                var showElem = document.getElementById('showMeTheMap'),
-                    showElemA = angular.element(showElem),
-                    showElem0 = showElemA[0];
-
-                showElem0.click();
-                // $scope.catchClick();  // for testing dialog without an actual popup block event
-
-            });
+        // function showTheMap () {
+        //     console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
+        //     console.debug($location);
+        //     var showElem = document.getElementById('showMeTheMap'),
+        //         showElemA = angular.element(showElem),
+        //         showElem0 = showElemA[0];
+        //
+        //     showElem0.click();
+        //     // $scope.catchClick();  // for testing dialog without an actual popup block event
+        // }
+            // $scope.$on('WebSiteDescriptionEvent', function () {
+            //     console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
+            //     console.debug($location);
+            //     var showElem = document.getElementById('showMeTheMap'),
+            //         showElemA = angular.element(showElem),
+            //         showElem0 = showElemA[0];
+            //
+            //     showElem0.click();
+            //     // $scope.catchClick();  // for testing dialog without an actual popup block event
+            //
+            // });
 
             function handlePopupBlocked(completeUrl, nextWindowName, dimensions) {
                 console.log('in function handlePopupBlocked');
