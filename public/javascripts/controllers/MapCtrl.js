@@ -9,12 +9,13 @@
     define([
         'angular',
         'esri/map',
+        'controllers/DestWndSetupCtrl',
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
         'lib/utils',
         'lib/AgoNewWindowConfig'
-    ], function (angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
+    ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -52,7 +53,7 @@
         }
  */
 
-        function MapCtrl($scope, $routeParams, $compile) {
+        function MapCtrl($scope, $routeParams, $compile, $uibModal) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
             // alert("MapCtrl initializing");
             var mptp = $scope.currentTab.maptype,
@@ -66,6 +67,41 @@
                 tmpltName,
                 elem,
                 aelem;
+
+            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.data = {
+                dstSel : $scope.destSelections[0].slice(0),
+                prevDstSel : $scope.destSelections[0].slice(0),
+                whichDismiss : "Cancel",
+                dlg2show : "SelectWndDlg",
+                title : 'do we have a title?',
+                icon : null,
+                snippet : 'nothing in snippet',
+                showDetail : '+',
+                selfdict : {
+                    title : 'do we have a title?',
+                    icon : null,
+                    snippet : 'nothing in snipper',
+                    mapType : $scope.currentTab.maptype, //.slice(1)
+                    imgSrc : $scope.currentTab.imgSrc,
+                    dstSel : $scope.destSelections[0].slice(0),
+                    destSelections : $scope.destSelections
+                }
+            };
+
+            $scope.preserveState = function () {
+                console.log("preserveState");
+                // $scope.data.whichDismiss = 'Cancel';
+                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
+                console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
+            };
+
+            $scope.restoreState = function () {
+                console.log("restoreState");
+                // $scope.data.whichDismiss = 'Accept';
+                console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
+                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
+            };
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -311,6 +347,39 @@
 
             $scope.queryChanged = function () {
                 AgoNewWindowConfig.setQuery($scope.gsearch.query);
+            };
+
+            $scope.showDestDialog = function () {
+                console.log("showDestDialog for currentTab " + $scope.currentTab.title);
+                $scope.preserveState();
+//                var hostElement = $document.find('mashbox').eq(0);
+                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
+
+                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
+                $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
+                $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
+
+                var modalInstance = $uibModal.open({
+                    templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
+                    controller : 'DestWndSetupCtrl',
+                    // size : 'sm',
+                    backdrop : 'false',
+//                        appendTo : hostElement,
+                    resolve : {
+                        data: function () {
+                            return $scope.data.selfdict;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedDestination) {
+                    $scope.selected = selectedDestination;
+                    $scope.showMeTheMapClicked();
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                    $scope.restoreState();
+                });
+
             };
 
         }

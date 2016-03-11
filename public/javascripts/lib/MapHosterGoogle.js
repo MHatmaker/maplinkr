@@ -572,7 +572,7 @@
                                         'id' : null,
                                         'title' : searchInput.value,
                                         'snippet' : 'No snippet available',
-                                        'thumbnail' : 'stylesheets/images/googlemap.png'
+                                        'icon' : 'stylesheets/images/googlemap.png'
                                     }
                                 );
                             });

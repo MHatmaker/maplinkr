@@ -25,6 +25,7 @@
                         scope.$on('searchClickEvent', function (event, args) {
                             // alert('searchClickEvent in GoogleSearchDirective');
                             console.log('searchClickEvent in GoogleSearchDirective ' + args);
+                            console.log("searchClickEvent is Handled in MapCtrl in queryChanged");
                             // $scope.$apply(function () {
                                 // $scope.current = args;
                         });
