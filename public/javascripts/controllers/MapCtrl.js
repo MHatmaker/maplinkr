@@ -69,23 +69,25 @@
                 aelem;
 
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.selected = "Same Window";
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel : $scope.destSelections[0].slice(0),
                 whichDismiss : "Cancel",
                 dlg2show : "SelectWndDlg",
-                title : 'do we have a title?',
+                title : '',
                 icon : null,
                 snippet : 'nothing in snippet',
                 showDetail : '+',
                 selfdict : {
                     title : 'do we have a title?',
                     icon : null,
-                    snippet : 'nothing in snipper',
+                    snippet : 'nothing in snippet',
                     mapType : $scope.currentTab.maptype, //.slice(1)
                     imgSrc : $scope.currentTab.imgSrc,
                     dstSel : $scope.destSelections[0].slice(0),
-                    destSelections : $scope.destSelections
+                    destSelections : $scope.destSelections,
+                    query : "no query yet"
                 }
             };
 
@@ -205,7 +207,7 @@
             if (gmquery !== '') {
                 $scope.gsearch = {'query' : gmquery};
             } else {
-                $scope.gsearch = {'query' : 'Search Box'};
+                $scope.gsearch = {'query' : 'SearcherBox'};
             }
             currentMapType = mapTypes[mptp];
             height = document.body.clientHeight;
@@ -349,15 +351,17 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch.query);
             };
 
-            $scope.showDestDialog = function () {
+            $scope.showDestDialog = function (callback, details) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
                 $scope.preserveState();
 //                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
                 $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
-                $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
+                $scope.data.selfdict.icon = $scope.currentTab.imgSrc;
                 $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
+                $scope.data.selfdict.query = $scope.gsearch.query;
+                $scope.data.selfdict.callback = callback;
 
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
@@ -374,7 +378,8 @@
 
                 modalInstance.result.then(function (selectedDestination) {
                     $scope.selected = selectedDestination;
-                    $scope.showMeTheMapClicked();
+                    // $scope.showMeTheMapClicked();
+                    $scope.data.selfdict.callback(selectedDestination);
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();
@@ -391,7 +396,7 @@
 
         function init(App) {
             console.log('MapCtrl init');
-            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', MapCtrl]);
             return MapCtrl;
         }
 

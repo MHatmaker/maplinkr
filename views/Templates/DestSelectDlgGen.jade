@@ -4,12 +4,12 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
             div(style="color: #17244D; margin-top: 5px;")
                 span
-                    img(ng-src="{{$parent.data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
-                    
-                    |{{$parent.data.title}} 
-                    
+                    img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
+
+                    |{{data.title}}
+
         div(class="modal-body")
-            
+
             accordion(close-others="true")
                 accordion-group(is-open='status.detailsOpen')
                     accordion-heading
@@ -18,7 +18,7 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
                             i(class="pull-right glyphicon",
                                 ng-class="{'glyphicon-chevron-down': status.detailsOpen, 'glyphicon-chevron-right': !status.detailsOpen}")
                     accordion-body
-                        |{{$parent.$parent.$parent.data.snippet}}
+                        |{{data.snippet}}
                 accordion-group(is-open='status.destChoicesOpen')
                     accordion-heading
                         div
@@ -28,16 +28,16 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
 
                     accordion-body
                         div(class="btn-group btn-group-vertical")
-                            span(data-ng-repeat="dest in $parent.$parent.$parent.destSelections")
-                                input(name="destSelected", type="radio", value="{{dest}}", ng-model="$parent.$parent.$parent.data.dstSel", ng-init="$parent.$parent.$parent.data.dstSel='Same Window'")
-                                
+                            span(data-ng-repeat="dest in destSelections")
+                                input(name="destSelected", type="radio", value="{{dest}}", ng-model="data.dstSel", ng-init="data.dstSel='Same Window'")
+
                                 |{{dest}}
-                                
+
                                 br
                         br
-                        
+
             div(style="color: #17244D; margin-top: 10px;font-weight: bold") Current Selection: {{data.dstSel}}
 
         div(class="modal-footer")
-            button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Accept'; $parent.preserveState()", data-dismiss="modal") Accept
-            button(type="button", class="btn btn-primary", ng-click="$parent.data.whichDismiss = 'Cancel'; $parent.restoreState()", data-dismiss="modal")  Cancel
+            button(type="button", class="btn btn-primary", ng-click="accept()") Accept
+            button(type="button", class="btn btn-primary", ng-click="cancel()")  Cancel

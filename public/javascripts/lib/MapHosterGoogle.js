@@ -566,7 +566,7 @@
                         setTimeout(function () {
                             scope.$apply(function () {
                                 // rootScope.$broadcast('ShowWindowSelectorModalEvent');
-                                scope.showDialog(
+                                scope.showDestDialog(
                                     onAcceptDestination,
                                     {
                                         'id' : null,

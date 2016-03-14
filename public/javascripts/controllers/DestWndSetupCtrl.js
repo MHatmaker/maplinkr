@@ -32,6 +32,11 @@
                 snippet : data.snippet,
                 showDetail : '+'
             };
+            $scope.status = {
+                'detailsOpen' : false,
+                'destChoicesOpen' : false
+            };
+
 
             $scope.preserveState = function () {
                 console.log("preserveState");
@@ -49,14 +54,6 @@
                 console.log("onAcceptDestination " + $scope.data.dstSel);
                 $uibModalInstance.close($scope.data.dstSel);
             };
-
-            //     var callback = $scope.choiceCallback;
-            //     if ($scope.choiceCallback) {
-            //         $scope.choiceCallback = null;
-            //         callback($scope.data.dstSel);
-            //     } else {
-            //         scopeDict.rootScope.$broadcast('DestinationSelectorEvent', { destWnd: $scope.data.dstSel });
-            //     }
 
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
@@ -79,55 +76,6 @@
 
             selfdict.isInitialized = areWeInitialized = true;
             App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', 'data', DestWndSetupCtrl]);
-
-            // scope.$on('ShowWindowSelectorModalEvent', function (event, args) {
-            //     var title = args.title,
-            //         icon = args.thumbnail,
-            //         snippet = args.snippet;
-            //     localScope.$parent.data.title = title;
-            //     localScope.$parent.data.icon = icon;
-            //     localScope.$parent.data.snippet = snippet;
-            //     localScope.$parent.safeApply(function () {
-            //         localScope.status.detailsOpen = localScope.status.destChoicesOpen = false;
-            //     });
-            //     // localScope.status.detailsOpen = localScope.status.destChoicesOpen = false;
-            //     console.log('local scope.$on received title : ' + title);
-            //
-            //     localScope.$parent.safeApply(function () {
-            //         localScope.$parent.showDestDialog = true;
-            //     });
-            // });
-
-            //Check to see if the modal-visible attribute exists
-            // if (!attrs.modalVisible) {
-            //     //The attribute isn't defined, show the modal by default
-            //     scope.showModal(true);
-            // } else {
-            //     //Watch for changes to the modal-visible attribute
-            //     scope.$watch("modalVisible", function (newValue, oldValue) {
-            //         scope.showModal(newValue);
-            //         console.log("watch modalVisible  : ");
-            //         console.debug(scope.$parent.data);
-            //         // scope.$parent.preserveState();
-            //     });
-            //     //Watch for changes to the modal-mdata attribute
-            //     scope.$watch("modalMdata", function (newValue, oldValue) {
-            //         if (!angular.isUndefinedOrNull(newValue)) {
-            //             localScope.$parent.data = newValue;
-            //         }
-            //         console.log("watch modalMdata scope.$parent data  : ");
-            //         console.debug(localScope.$parent.data);
-            //     });
-            //     //Watch for changes to the modal-mdata attribute
-            //     scope.$watch("data.dstSel", function (newValue, oldValue) {
-            //         if (!angular.isUndefinedOrNull(newValue)) {
-            //             localScope.$parent.data.dstSel = newValue;
-            //         }
-            //         console.log("watch modalMdata scope.$parent data  : ");
-            //         console.debug(localScope.$parent.data);
-            //     });
-            //
-            // };
 
             return DestWndSetupCtrl;
         }

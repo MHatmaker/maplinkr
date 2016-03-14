@@ -7,10 +7,12 @@
     "use strict";
 
     console.log('VerbageCtrl setup');
-    define(['angular'], function (angular) {
+    define(['angular',
+        'controllers/PusherCtrl'
+        ], function (angular) {
         console.log('VerbageCtrl define');
 
-        function VerbageCtrl($scope) {
+        function VerbageCtrl($scope, $uibModal) {
             console.debug('VerbageCtrl - initialize collapsed bool');
             // alert('VerbageCtrl - initialize some tabs');
             $scope.VerbVis = "none";
@@ -45,11 +47,59 @@
                 isUrlTransmitterOpen: false,
                 isPositionViewCtrlOpen: false
             };
+
+            $scope.showPusherSetupDialog = function () {
+                console.log("showPusherSetupDialog from VerbageCtrl");
+
+                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
+                $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
+
+                var tmplt = ' \
+                  <div class="modal-dialog", style="width: 100%;"> \
+                    <div class="modal-content"> \
+                      <div class="modal-header"> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                      </div> \
+                      <div class="modal-body"> \
+                        <h3>Create a Pusher Channel ID :</h3> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover"> \
+                        <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
+                        <h3>Enter a User Name :</h3> \
+                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName"> \
+                        <div style="color: #17244D; margin-top: 10px;">USER NAME : {{data.userName}}</div> \
+                      <div class="modal-footer"> \
+                        <button type="button" class="btn btn-primary" ng-click="accept()">Accept</button> \
+                        <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button> \
+                      </div> \
+                    </div><!-- /.modal-content --> \
+                  </div><!-- /.modal-dialog --> \
+                ',
+                    modalInstance = $uibModal.open({
+                        template : tmplt,
+                        controller : 'PusherCtrl',
+                        size : 'sm',
+                        backdrop : 'false',
+//                        appendTo : hostElement,
+                        resolve : {
+                            data: function () {
+                                return $scope.data;
+                            }
+                        }
+                    });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+
+                }, function () {
+                    console.log('Pusher Modal dismissed at: ' + new Date());
+                });
+
+            };
         }
 
         function init(App) {
             console.log('VerbageCtrl init');
-            App.controller('VerbageCtrl', ['$scope', VerbageCtrl]);
+            App.controller('VerbageCtrl', ['$scope', '$uibModal', VerbageCtrl]);
             return VerbageCtrl;
         }
 

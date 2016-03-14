@@ -66,10 +66,6 @@ block append content
                                     gmsearch
 
                                     #DestWndDialogGoogle
-                                    div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl",
-                                        modal-mdata="mData", role="dialog", class="modal", id="DestWndDialogGoogle",
-                                        style="display: none; position:relative", data-backdrop="true")
-
                                     #map_canvas(style="height:100%;width:100%;margin:0px;")
 
                                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
@@ -95,11 +91,8 @@ block append content
                 div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
 
                     #DestWndDialogArcGIS
-                    div(modal-show-dest="", modal-visible="showDestDialog", class="modal330",  ng-controller="DestWndSetupCtrl",
-                        modal-mdata="mData", role="dialog", class="modal", id="DestWndDialogArcGIS",
-                        style="display: none; position:relative", data-backdrop="true")
 
-                    div(modal-show-pusher="", modal-visible="$parent.showDialog", class="modal330", ng-controller="StompSetupCtrl", modal-pdata="pData", role="dialog", class="modal", id="PusherChannelerDialog", style="display: none; position:relative", data-backdrop="true")
+                    #PusherChannelDialog
 
                     #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
                         accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup")
@@ -226,12 +219,17 @@ block append content
                                         span
                                             label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
 
-                                            input(type="button", class="btn", id="signInMap", name="signInMap", ng-click='signInFromMapTab();', style='width:30%;font-size:80%', value='{{signInOutMap}}')
+                                            input(type="button", class="btn", id="signInMap",
+                                                name="signInMap", ng-click='signInFromMapTab();',
+                                                style='width:30%;font-size:80%', value='{{signInOutMap}}')
 
                                         h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
                                         span
-                                            input(name="mapFinder",  id="mapFinder", ng-model="searchTermMap", ng-enter="findArcGISGroupMaps()")
-                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit" value="Submit", id="mapFinderSubmit", class='btn', ng-click="findArcGISGroupMaps();")
+                                            input(name="mapFinder", id="mapFinder", ng-model="searchTermMap",
+                                                ng-enter="findArcGISGroupMaps()")
+                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit",
+                                                value="Submit", id="mapFinderSubmit",
+                                                class='btn', ng-click="findArcGISGroupMaps();")
 
                                         div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
                                             div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:1px;")
@@ -297,6 +295,7 @@ block append content
                                     p(style='font-size:0.75em;margin:0.3em').
                                         Set or change the Pusher communications channel.
                                     button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
+                                #PusherChannelDialog
 
                             accordion-group(id="UrlTransmitterId", class="accdiongroup", is-open="status.isUrlTransmitterOpen")
                                 accordion-heading

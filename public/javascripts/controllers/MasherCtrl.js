@@ -11,10 +11,10 @@
         console.log('MasherCtrl define');
         var selfMethods = {},
             descriptions = {
-            'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
-            'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
-            'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
-        };
+                'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
+                'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
+                'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
+            };
 
 
         function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal) {  //$route, $routeParams, $window) {
@@ -249,67 +249,67 @@
 
             evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
-            App.directive('modalshowpopupblockdlg', function () {
-                return {
-                    templateUrl : '/Templates/ModalDialogPopupBlocked',
-
-                    restrict: 'E',
-                    transclude: true,
-                    replace: true,
-                    scope: {
-                        modalVisible: "="
-                    },
-                    link: function postLink(scope, element, attrs) {
-                        // scope.title = attrs.title;
-                        //Hide or show the modal
-                        scope.showModal = function (visible, elem) {
-                            if (!elem) {
-                                elem = element;
-                            }
-                            if (visible) {
-                                $(elem).modal311("show");
-                            } else {
-                                $(elem).modal311("hide");
-                            }
-                        };
-
-                        if (!attrs.modalVisible) {
-                            //The attribute isn't defined, show the modal by default
-                            scope.showModal(true);
-
-                        } else {
-                            scope.$watch(attrs.visible, function (value) {
-                                if (value === true) {
-                                    $(element).modal311('show');
-                                } else {
-                                    $(element).modal311('hide');
-                                }
-                            });
-                            scope.$watch('scope.$parent.showPopupBlockerDialog', function (newValue, oldValue) {
-                                console.log("scope.$watch newValue : " + newValue);
-                                console.log("scope.$watch 'scope.$parent.showPopupBlockerDialog' : " + scope.$parent.showPopupBlockerDialog);
-                                // scope.showModal(newValue);
-                                //attrs.modalVisible = false;
-                            });
-
-                            //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-                            $(element).on('hidden.bs.modal', function () {
-                                scope.$apply(function () {
-                                    scope.$parent[attrs.visible] = false;
-                                });
-                            });
-                            $(element).on('hidden.bs.modal', function () {
-                                scope.$apply(function () {
-                                    scope.$parent[attrs.visible] = true;
-                                });
-                            });
-                            $(element).on('loaded.bs.modal', function () {
-                                alert('Modal is successfully loaded!');
-                            });
-                        }
-                    }
-                };
-            });
+            // App.directive('modalshowpopupblockdlg', function () {
+            //     return {
+            //         templateUrl : '/Templates/ModalDialogPopupBlocked',
+            //
+            //         restrict: 'E',
+            //         transclude: true,
+            //         replace: true,
+            //         scope: {
+            //             modalVisible: "="
+            //         },
+            //         link: function postLink(scope, element, attrs) {
+            //             // scope.title = attrs.title;
+            //             //Hide or show the modal
+            //             scope.showModal = function (visible, elem) {
+            //                 if (!elem) {
+            //                     elem = element;
+            //                 }
+            //                 if (visible) {
+            //                     $(elem).modal311("show");
+            //                 } else {
+            //                     $(elem).modal311("hide");
+            //                 }
+            //             };
+            //
+            //             if (!attrs.modalVisible) {
+            //                 //The attribute isn't defined, show the modal by default
+            //                 scope.showModal(true);
+            //
+            //             } else {
+            //                 scope.$watch(attrs.visible, function (value) {
+            //                     if (value === true) {
+            //                         $(element).modal311('show');
+            //                     } else {
+            //                         $(element).modal311('hide');
+            //                     }
+            //                 });
+            //                 scope.$watch('scope.$parent.showPopupBlockerDialog', function (newValue, oldValue) {
+            //                     console.log("scope.$watch newValue : " + newValue);
+            //                     console.log("scope.$watch 'scope.$parent.showPopupBlockerDialog' : " + scope.$parent.showPopupBlockerDialog);
+            //                     // scope.showModal(newValue);
+            //                     //attrs.modalVisible = false;
+            //                 });
+            //
+            //                 //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
+            //                 $(element).on('hidden.bs.modal', function () {
+            //                     scope.$apply(function () {
+            //                         scope.$parent[attrs.visible] = false;
+            //                     });
+            //                 });
+            //                 $(element).on('hidden.bs.modal', function () {
+            //                     scope.$apply(function () {
+            //                         scope.$parent[attrs.visible] = true;
+            //                     });
+            //                 });
+            //                 $(element).on('loaded.bs.modal', function () {
+            //                     alert('Modal is successfully loaded!');
+            //                 });
+            //             }
+            //         }
+            //     };
+            // });
 
             return MasherCtrl;
         }
