@@ -68,6 +68,7 @@
             $scope.onAcceptChannel = function () {
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.userName = $scope.data.userName;
+                self.CHANNEL = $scope.data.privateChannelMashover;
                 AgoNewWindowConfig.setChannel($scope.data.privateChannelMashover);
                 AgoNewWindowConfig.setNameChannelAccepted(true);
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
@@ -88,10 +89,10 @@
                       </div> \
                       <div class="modal-body"> \
                         <h3>Create a Pusher Channel ID :</h3> \
-                        <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init=".data.privateChannelMashover"> \
-                        <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover" ng-init="data.privateChannelMashover"> \
+                        <div>channel name : {{data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
-                        <input type="text" name="input" ng-model="data.userName", ng-init=".data.userName"> \
+                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName"> \
                         <div style="color: #17244D; margin-top: 10px;">USER NAME : {{data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="accept()">Accept</button> \
@@ -115,7 +116,9 @@
 
                 modalInstance.result.then(function (selectedItem) {
                     $scope.selected = selectedItem;
-
+                    selfdict.scope.data.userName = selectedItem.userName;
+                    selfdict.scope.data.privateChannelMashover = selectedItem.privateChannelMashover;
+                    selfdict.scope.onAcceptChannel();
                 }, function () {
                     console.log('Pusher Modal dismissed at: ' + new Date());
                 });
@@ -271,6 +274,7 @@
             selfdict.userName = userName;
             selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
+            selfdict.scope.displayPusherDialog();
         };
 
 
