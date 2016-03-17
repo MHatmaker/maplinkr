@@ -48,6 +48,82 @@
                 isPositionViewCtrlOpen: false
             };
 
+            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.selected = "Same Window";
+            $scope.data = {
+                dstSel : $scope.destSelections[0].slice(0),
+                prevDstSel : $scope.destSelections[0].slice(0),
+                whichDismiss : "Cancel",
+                dlg2show : "SelectWndDlg",
+                title : '',
+                icon : null,
+                snippet : 'nothing in snippet',
+                showDetail : '+',
+                selfdict : {
+                    title : 'do we have a title?',
+                    icon : null,
+                    snippet : 'nothing in snippet',
+                    mapType : $scope.currentTab.maptype, //.slice(1)
+                    imgSrc : $scope.currentTab.imgSrc,
+                    dstSel : $scope.destSelections[0].slice(0),
+                    destSelections : $scope.destSelections,
+                    query : "no query yet"
+                }
+            };
+
+            $scope.preserveState = function () {
+                console.log("preserveState");
+                // $scope.data.whichDismiss = 'Cancel';
+                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
+                console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
+            };
+
+            $scope.restoreState = function () {
+                console.log("restoreState");
+                // $scope.data.whichDismiss = 'Accept';
+                console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
+                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
+            };
+
+
+            $scope.showDestDialog = function (callback, details) {
+                console.log("showDestDialog for currentTab " + $scope.currentTab.title);
+                $scope.preserveState();
+//                var hostElement = $document.find('mashbox').eq(0);
+                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
+
+                $scope.data.selfdict.title = details.title;
+                $scope.data.selfdict.icon = details.icon;
+                $scope.data.selfdict.mapType = details.mapType;
+                $scope.data.selfdict.snippet = details.snippet;
+                $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
+                $scope.data.selfdict.callback = callback;
+
+                var modalInstance = $uibModal.open({
+                    templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
+                    controller : 'DestWndSetupCtrl',
+                    // size : 'sm',
+                    backdrop : 'false',
+//                        appendTo : hostElement,
+                    resolve : {
+                        data: function () {
+                            return $scope.data.selfdict;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedDestination) {
+                    $scope.selected = selectedDestination;
+                    // $scope.showMeTheMapClicked();
+                    $scope.data.selfdict.callback(
+                        {dstWnd : selectedDestination, selMph : $scope.data.selfdict.mapType});
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                    $scope.restoreState();
+                });
+
+            };
+
             $scope.showPusherSetupDialog = function () {
                 console.log("showPusherSetupDialog from VerbageCtrl");
 
@@ -63,7 +139,7 @@
                       <div class="modal-body"> \
                         <h3>Create a Pusher Channel ID :</h3> \
                         <input type="text" name="input" ng-model="data.privateChannelMashover", ng-init="data.privateChannelMashover"> \
-                        <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
+                        <div>channel name : {{data.privateChannelMashover}}</div> \
                         <h3>Enter a User Name :</h3> \
                         <input type="text" name="input" ng-model="data.userName", ng-init="data.userName"> \
                         <div style="color: #17244D; margin-top: 10px;">USER NAME : {{data.userName}}</div> \

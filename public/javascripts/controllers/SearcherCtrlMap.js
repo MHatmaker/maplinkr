@@ -13,8 +13,9 @@ angular.isUndefinedOrNull = function (val) {
     define([
         'angular',
         'lib/StartupArcGIS',
+        'lib/MapHosterArcGIS',
         'lib/utils'
-    ], function (angular, StartupArcGIS, utils) {
+    ], function (angular, StartupArcGIS, MapHosterArcGIS, utils) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
             portalForSearch = null;
@@ -49,20 +50,21 @@ angular.isUndefinedOrNull = function (val) {
                         'id' : rowItem.entity.id,
                         'title' : rowItem.entity.title,
                         'snippet' : rowItem.entity.snippet,
-                        'icon' : rowItem.entity.thumbnail
+                        'icon' : rowItem.entity.thumbnail,
+                        'mapType' : MapHosterArcGIS
                     }
                 );
             };
 
-            $scope.$on('DestinationSelectorEvent', function (event, args) {
-                var destWnd = args.destWnd,
-                    $inj = angular.injector(['app']),
-                    serv = $inj.get('CurrentMapTypeService'),
-                    selMph = serv.getSelectedMapType();
-                console.log("onAcceptDestination " + destWnd);
-                selMph.removeEventListeners();
+            $scope.onDestinationWindowSelected = function (args) {
+                var destWnd = args.dstWnd,
+                    selMph = args.selMph;
+            //         // $inj = angular.injector(['app']),
+            //         // serv = $inj.get('CurrentMapTypeService'),
+            //         // selMph = serv.getSelectedMapType();
+                console.log("onDestinationWindowSelected " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
-            });
+            };
 
             $scope.mapGriddata = [];
 
@@ -289,20 +291,12 @@ angular.isUndefinedOrNull = function (val) {
             $scope.openWindowSelectionDialog = function (info) {
 
                 // console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
-                var $inj = angular.injector(['app']),
-                    gmQSvc = $inj.get('GoogleQueryService'),
+                // var $inj = angular.injector(['app']),
+                //     gmQSvc = $inj.get('GoogleQueryService'),
                 // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                    scope = gmQSvc.getQueryDestinationDialogScope('arcgis');
-                console.log("toggleShow from " + scope.showDialog);
-                // scope.showDialog = !scope.showDialog;
-                scope.safeApply(function () {
-                    // scope.showDialog = !scope.showDialog;
-                    // scope.showDestDialog = !scope.showDestDialog;
-                    scope.showDialog(null, info);
-                });
+
+                $scope.showDestDialog($scope.onDestinationWindowSelected, info);
                 // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
-                // });
-                console.log("toggleShow after apply " + $scope.showDialog);
             };
         }
 
