@@ -4,7 +4,7 @@ ul {
 }
 
 .acc.li {
-    font-size: 0.75em;
+    font-size: 0.5em;
 }
 
 
@@ -36,7 +36,8 @@ ul {
     /*color: #A2A9B0;*/
     border-color: #17244D;
     background: #6E9096;
-    font-weight:bolder;
+    font-weight: 300;
+    font-size: 0.85em;
     /*
     background: #52455D;
     color: #A2A9B0;
@@ -62,8 +63,27 @@ ul {
     border-color: #B6B6B6;
 }
  */
+
+ .accdionheader .uib-accordion-header {
+     font-size: 0.85em;
+     font-weight: 300;
+ }
 accdiongroup {
     height:100%;
     width:100%;
     vertical-align:top;
+}
+
+.accdionchevron-right {
+    background-image: url(images/chevron-right.png);
+    background-color: #6E9096;
+    width: 25px;
+    height:25px;
+}
+.accdionchevron-down {
+    background-image: url(images/chevron-down.png);
+    background-color: #6E9096;
+    background-size: 100% 100%;
+    width: 25px;
+    height:25px;
 }

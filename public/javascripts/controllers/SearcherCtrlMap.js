@@ -59,9 +59,7 @@ angular.isUndefinedOrNull = function (val) {
             $scope.onDestinationWindowSelected = function (args) {
                 var destWnd = args.dstWnd,
                     selMph = args.selMph;
-            //         // $inj = angular.injector(['app']),
-            //         // serv = $inj.get('CurrentMapTypeService'),
-            //         // selMph = serv.getSelectedMapType();
+
                 console.log("onDestinationWindowSelected " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
@@ -290,11 +288,6 @@ angular.isUndefinedOrNull = function (val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
 
-                // console.log("in openWindowSelectionDialog - fire ShowWindowSelectorModalEvent");
-                // var $inj = angular.injector(['app']),
-                //     gmQSvc = $inj.get('GoogleQueryService'),
-                // currentVerbVis = gmQSvc.setDialogVisibility(true);
-
                 $scope.showDestDialog($scope.onDestinationWindowSelected, info);
                 // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
             };
@@ -317,4 +310,3 @@ angular.isUndefinedOrNull = function (val) {
 
     });
 }());
-// }).call(this);
