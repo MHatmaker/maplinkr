@@ -18,12 +18,12 @@ block append scriptsblock
             script(type="text/ng-template" id="accordion-template.jade")
                 div(class="panel {{panelClass || 'panel-default'}}")
                     div(class="panel-heading")
-                        h4(class="panel-title", style="font-size: 1.5em; font-weight: 700;")
+                        h4(class="panel-title", style="font-size: 1.5em; font-weight: 700; color: #0275d8;")
                             div(href tabindex="0", class="accordion-toggle", ng-click="toggleOpen()", uib-accordion-transclude="heading")
                                 span(ng-class="{'text-muted': isDisabled}"){{heading}}
                                     img(class="accdionchevron-right", ng-class="{'accdionchevron-down': isOpen, 'accdionchevron-right': !isOpen}")
                     div(class="panel-collapse collapse", uib-collapse="!isOpen")
-                        div(class="panel-body", style="text-align: right", ng-transclude)
+                        div(class="panel-body", style="text-align: left; font-size=1.0em;", ng-transclude)
 
 
 block append content
