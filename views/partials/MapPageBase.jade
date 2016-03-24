@@ -18,7 +18,7 @@ block append scriptsblock
             script(type="text/ng-template" id="accordion-template.jade")
                 div(class="panel {{panelClass || 'panel-default'}}")
                     div(class="panel-heading")
-                        h4(class="panel-title", style="font-size: 1.5em; font-weight: 700; color: #0275d8;")
+                        h4(class="panel-title", style="font-size: 1.25em; font-weight: 600; color: #0275d8;")
                             div(href tabindex="0", class="accordion-toggle", ng-click="toggleOpen()", uib-accordion-transclude="heading")
                                 span(ng-class="{'text-muted': isDisabled}"){{heading}}
                                     img(class="accdionchevron-right", ng-class="{'accdionchevron-down': isOpen, 'accdionchevron-right': !isOpen}")
@@ -107,9 +107,9 @@ block append content
 
                     #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
                         uib-accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup")
-                            uib-accordion-group(id="AccdianNews", template-url="accordion-template.jade", class="accdiongroup", heading="MapLinkr Release News", is-open="status.isNewsOpen")
+                            uib-accordion-group(id="AccdianNews", template-url="accordion-template.jade", class="accdiongroup", heading="MapLinkr News", is-open="status.isNewsOpen")
 
-                                div(style='font-size:0.75em;border:2px solid red;margin:1px;padding:2px;')
+                                div(style='font-size:1.25em;border:2px solid red;margin:1px;padding:2px;')
                                     h4(style="color:red") Latest Release
                                     h5(style="color:red")
                                         | Release notes will appear here as new features are added to the MapLinkr plug-in.
@@ -123,19 +123,19 @@ block append content
 
                                 br
                                 h5 Wallace and Gromit Use MapLinkr.
-                                p(style='font-size:0.75em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
+                                p(style='font-size: 1.2em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
                                     Wallace and Gromit have improved the efficiency of their window washing service by incorporating community maps of reported dirty windows.
                                 br
 
                             uib-accordion-group(id="fillerPane", template-url="accordion-template.jade", class="accdiongroup", heading="Using MapLinkr", style="overflow-y:true;"  is-open="status.isInstructionsOpen")
 
-                                p(style='font-size:0.75em;margin:0.3em')
+                                p(style='font-size:1.1em;margin:0.3em')
                                     | MapLinkr allows viewing mulitple synchronized maps in separate windows.  The maps can use
                                     |  base maps or different themes for overlays.  Unlike standard layer overlays in a
                                     | single viewer, the base layers and overlays do not interfere with the visibility
                                     | of other selected layers.
 
-                                p(style='font-size:0.75em;margin:0.3em;')
+                                p(style='font-size:1.1em;margin:0.3em;')
                                     | Linked maps can be created from three map viewer sources, if the viewer system incorporates
                                     | the MapLinkr plug-in.
 
@@ -149,7 +149,7 @@ block append content
 
                                     | Pan and zoom a Google or Leaflet map to the desired extent.  In a Google map display, the search tool will appear.  Enter a search category to display search results on the map.
 
-                                p(style='font-size:0.75em;margin:0.3em')
+                                p(style='font-size:1.1em;margin:0.3em')
                                     | Further sharing instructions are provided under the "Sharing Overview" accordion pane.
 
                                 h3( style="text-align:left") Steps for ArcGIS Online search
@@ -161,25 +161,16 @@ block append content
 
                                         div
                                             uib-accordion(close-others="true")
-                                                uib-accordion-group(id="sameWindowPaneID", class="accdiongroup",  is-open="$parent.status.isSameWindowPaneOpen")
-                                                    uib-accordion-heading(style='font-size:0.75em;')
-                                                        | <b>Same Window </b>
-                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isSameWindowPaneOpen, 'glyphicon-chevron-right': !status.isSameWindowPaneOpen}")
+                                                uib-accordion-group(id="sameWindowPaneID", template-url="accordion-template.jade", class="accdiongroup", heading="Same Window", is-open="$parent.status.isSameWindowPaneOpen")
 
                                                     p(style='margin:1em').
                                                         The newly selected map replaces the current map in the map viewer to the left.
-                                                uib-accordion-group(id="newTabPaneID", class="accdiongroup",  is-open="$parent.status.isNewTabPaneOpen")
-                                                    uib-accordion-heading(style='font-size:0.75em;')
-                                                        | <b>New Tab in Same Browser<b/>
-                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewTabPaneOpen, 'glyphicon-chevron-right': !status.isNewTabPaneOpen}")
+                                                uib-accordion-group(id="newTabPaneID", template-url="accordion-template.jade", class="accdiongroup",  heading="New Tab in Same Browser", is-open="$parent.status.isNewTabPaneOpen")
 
                                                     p(style='margin:1em').
                                                         The newly selected map opens in a new tab in the current browser.
                                                         Switch to the tab and drag the tab to the desktop, which displays the tab's contents in a completely new browser instance.  This is a fully functional web browser.
-                                                uib-accordion-group(id="newWindowPaneID", class="accdiongroup",  is-open="$parent.status.isNewWindowPaneOpen")
-                                                    uib-accordion-heading(style='font-size:0.75em;')
-                                                        | <b>New Window</b>
-                                                        i(class="pull-right glyphicon", ng-class="{'glyphicon-chevron-down': status.isNewWindowPaneOpen, 'glyphicon-chevron-right': !status.isNewWindowPaneOpen}")
+                                                uib-accordion-group(id="newWindowPaneID", template-url="accordion-template.jade", class="accdiongroup",  heading="New Window", is-open="$parent.status.isNewWindowPaneOpen")
 
                                                     p(style='margin:1em').
                                                         The newly selected map is opened in a map viewer in a new popup  window.  Although this is not a full-featured new web browser instance, it provides complete functionality as a synchronized map viewer.  If  popups are turned off, use sequence described under the "New Tab" option above.
@@ -235,12 +226,12 @@ block append content
                             uib-accordion-group(id="sharingInstructionPane", template-url="accordion-template.jade", class="accdiongroup", heading="Sharing Overview", is-open="status.isSharingInstructionsOpen")
                                 h3 Concepts and Features
 
-                                p(style='font-size:0.75em;margin:0.3em').
+                                p(style='font-size:1.25em;margin:0.3em').
                                     Multiple users can view synchronized maps in web browsers on other devices.  After  finding (1) a Google Map or Leaflet Map or (2) an ArcGIS WebMap that you want to share:
 
                                 h5 For Google or Leaflet Map
 
-                                p(style='font-size:0.75em;margin:0.3em').
+                                p(style='font-size:1.25em;margin:0.3em').
                                     After selecting a map exent and zoom level (and optionally performing a spatial query using the Google search too), perform two steps:
 
                                 ul#StepsForPublishing(style="height:100%")
@@ -256,13 +247,13 @@ block append content
                                     li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard.
                                     li(class="acc li") 3. Paste the link in a text message or email to collaborators or in a shared chat window.
 
-                                p(style='font-size:0.75em;margin:0.3em').
+                                p(style='font-size:1.25em;margin:0.3em').
                                     The url includes the name of the Pusher channel that you have selected.  As users open  the link, they will be subscribing to share map clicks, pans and zooms with all other users as any user manipulates any map view.
 
-                                p(style='font-size:0.75em;margin:0.3em').
+                                p(style='font-size:1.25em;margin:0.3em').
                                     The Pusher channel can also be set without opening a new map viewer by opening the "Set  Pusher Channel" accordion pane.  Share this channel name with collaborators to synchronize their displays with your display.  This step is necessary if you and your collaborators want to synchronize map views where all collaborators already have synchronize-capable maps open.
 
-                                p(style='font-size:0.75em;margin:0.3em').
+                                p(style='font-size:1.25em;margin:0.3em').
                                     At any time a user has opened a new ArcGIS map and desires to share the map with collaborators, the "Publish Current Url" pane provides the necessary tool.  The user opens the accordion pane in the window containing the map to be shared and clicks the "Publish Url" button.
 
                                 br
@@ -280,16 +271,16 @@ block append content
                                     textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow-y: scroll; overflow-x: none; resize: none; width: 100%; height: 120px;", required)
 
 
-                            uib-accordion-group(id="ChannelSetterId", template-url="accordion-template.jade", class="accdiongroup", heading="Set Pusher Channel", is-open="status.isSetChannelOpen")
+                            uib-accordion-group(id="ChannelSetterId", template-url="accordion-template.jade", class="accdiongroup", heading="Pusher Channel", is-open="status.isSetChannelOpen")
                                 div(ng-controller="StompSetupCtrl")
-                                    p(style='font-size:0.75em;margin:0.3em').
+                                    p(style='font-size:1.25em;margin:0.3em').
                                         Set or change the Pusher communications channel.
                                     button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
                                 #PusherChannelDialog
 
-                            uib-accordion-group(id="UrlTransmitterId", template-url="accordion-template.jade", class="accdiongroup", heading="Publish Current Url", is-open="status.isUrlTransmitterOpen")
+                            uib-accordion-group(id="UrlTransmitterId", template-url="accordion-template.jade", class="accdiongroup", heading="Publish Url", is-open="status.isUrlTransmitterOpen")
                                 div(ng-controller="TransmitNewUrlCtrl")
-                                    p(style='font-size:0.75em;margin:0.3em').
+                                    p(style='font-size:1.25em;margin:0.3em').
                                         Publish the current map Url to Pusher communications channel subscribers.
                                     button(class="btn", style='width:100%;', ng-click="publishUrl()", value="Publish Url") Publish Url
 
