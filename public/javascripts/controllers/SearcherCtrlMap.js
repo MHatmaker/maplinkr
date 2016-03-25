@@ -58,7 +58,12 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.onDestinationWindowSelected = function (args) {
                 var destWnd = args.dstWnd,
-                    selMph = args.selMph;
+                    $inj = angular.injector(['app']),
+                    serv = $inj.get('CurrentMapTypeService'),
+                    selMph = serv.getSelectedMapType();
+                console.log("onAcceptDestination " + destWnd);
+-               selMph.removeEventListeners();
+
 
                 console.log("onDestinationWindowSelected " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);

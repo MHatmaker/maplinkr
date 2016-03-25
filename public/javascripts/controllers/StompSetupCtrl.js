@@ -78,6 +78,10 @@
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
 
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+
             $scope.displayPusherDialog = function () {
                 // selfdict.scope.showModal(true);
                 console.log("displayPusherDialog");
@@ -85,18 +89,19 @@
                   <div class="modal-dialog", style="width: 100%;"> \
                     <div class="modal-content"> \
                       <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button> \
+                          <h4>Sharing Setup</h4> \
                       </div> \
                       <div class="modal-body"> \
-                        <h3>Create a Pusher Channel ID :</h3> \
-                        <input type="text" name="input" ng-model="data.privateChannelMashover" ng-init="data.privateChannelMashover"> \
+                        <h4>Create a Pusher Channel ID :</h4> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover" ng-init="data.privateChannelMashover" style="width: 100%"> \
                         <div>channel name : {{data.privateChannelMashover}}</div> \
-                        <h3>Enter a User Name :</h3> \
-                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName"> \
+                        <h4>Enter a User Name :</h4> \
+                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName" style="width: 100%"> \
                         <div style="color: #17244D; margin-top: 10px;">USER NAME : {{data.userName}}</div> \
                       <div class="modal-footer"> \
                         <button type="button" class="btn btn-primary" ng-click="accept()">Accept</button> \
-                        <button type="button" class="btn btn-primary" ng-click="cancel()"</button> \
+                        <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button> \
                       </div> \
                     </div><!-- /.modal-content --> \
                   </div><!-- /.modal-dialog --> \

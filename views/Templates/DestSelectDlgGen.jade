@@ -10,34 +10,21 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
 
         div(class="modal-body")
 
-            accordion(close-others="true")
-                accordion-group(is-open='status.detailsOpen')
-                    accordion-heading
-                        div
-                            |Details
-                            i(class="pull-right glyphicon",
-                                ng-class="{'glyphicon-chevron-down': status.detailsOpen, 'glyphicon-chevron-right': !status.detailsOpen}")
-                    accordion-body
-                        |{{data.snippet}}
-                accordion-group(is-open='status.destChoicesOpen')
-                    accordion-heading
-                        div
-                            |Select option for new map display:
-                            i(class="pull-right glyphicon",
-                                ng-class="{'glyphicon-chevron-down': status.destChoicesOpen, 'glyphicon-chevron-right': !status.destChoicesOpen}")
+            uib-accordion(close-others="true")
+                uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Details", is-open='status.detailsOpen')
+                    {{data.snippet}}
+                uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Select option for new map display", is-open='status.destChoicesOpen')
+                    div(class="btn-group btn-group-vertical")
+                        span(data-ng-repeat="dest in destSelections")
+                            input(name="destSelected", type="radio", value="{{dest}}", ng-model="data.dstSel", ng-init="data.dstSel='Same Window'")
 
-                    accordion-body
-                        div(class="btn-group btn-group-vertical")
-                            span(data-ng-repeat="dest in destSelections")
-                                input(name="destSelected", type="radio", value="{{dest}}", ng-model="data.dstSel", ng-init="data.dstSel='Same Window'")
+                            |{{dest}}
 
-                                |{{dest}}
-
-                                br
-                        br
+                            br
+                    br
 
             div(style="color: #17244D; margin-top: 10px;font-weight: bold") Current Selection: {{data.dstSel}}
 
         div(class="modal-footer")
             button(type="button", class="btn btn-primary", ng-click="accept()") Accept
-            button(type="button", class="btn btn-primary", ng-click="cancel()")  Cancel
+            button(type="button", class="btn btn-primary", ng-click="cancel()") Cancel
