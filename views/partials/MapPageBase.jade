@@ -18,10 +18,11 @@ block append scriptsblock
             script(type="text/ng-template" id="accordion-template.jade")
                 div(class="panel {{panelClass || 'panel-default'}}")
                     div(class="panel-heading")
-                        h4(class="panel-title", style="font-size: 1.25em; font-weight: 600; color: #0275d8;")
+                        h4(class="panel-title", style="font-size: 1.35em; font-weight: 600; color: #0202d8;")
                             div(href tabindex="0", class="accordion-toggle", ng-click="toggleOpen()", uib-accordion-transclude="heading")
-                                span(ng-class="{'text-muted': isDisabled}"){{heading}}
+                                span(style="width: 100%;")
                                     img(class="accdionchevron-right", ng-class="{'accdionchevron-down': isOpen, 'accdionchevron-right': !isOpen}")
+                                    span(ng-class="{'text-muted': isDisabled}"){{heading}}
                     div(class="panel-collapse collapse", uib-collapse="!isOpen")
                         div(class="panel-body", style="text-align: left; font-size=1.0em;", ng-transclude)
 
@@ -105,7 +106,7 @@ block append content
 
                     #PusherChannelDialog
 
-                    #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;")
+                    #idInnerPlugin( style="height:{{innerTblHeight}}px;width:100%;position:relative;overflow-y: auto;display: flex;")
                         uib-accordion(id="Accdian", style="height:100%;width:100%;", close-others="true", class="accdiongroup")
                             uib-accordion-group(id="AccdianNews", template-url="accordion-template.jade", class="accdiongroup", heading="MapLinkr News", is-open="status.isNewsOpen")
 
