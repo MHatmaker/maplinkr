@@ -37,7 +37,6 @@
                 'destChoicesOpen' : false
             };
 
-
             $scope.preserveState = function () {
                 console.log("preserveState");
                 $scope.data.prevDstSel = $scope.data.dstSel.slice(0);

@@ -8,7 +8,7 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
 
                     |{{data.title}}
 
-        div(class="modal-body")
+        div(class="modal-body", style="background-color: #6E9096")
 
             uib-accordion(close-others="true")
                 uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Details", is-open='status.detailsOpen')
@@ -16,9 +16,7 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
                 uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Select option for new map display", is-open='status.destChoicesOpen')
                     div(class="btn-group btn-group-vertical")
                         span(data-ng-repeat="dest in destSelections")
-                            input(name="destSelected", type="radio", value="{{dest}}", ng-model="data.dstSel", ng-init="data.dstSel='Same Window'")
-
-                            |{{dest}}
+                            label(class="btn btn-primary", uib-btn-radio="'{{dest}}'", ng-model="data.dstSel"){{dest}}
 
                             br
                     br

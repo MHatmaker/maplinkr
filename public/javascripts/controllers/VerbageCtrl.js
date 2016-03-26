@@ -60,7 +60,7 @@
                 snippet : 'nothing in snippet',
                 showDetail : '+',
                 selfdict : {
-                    title : 'do we have a title?',
+                    title : 'map has no title',
                     icon : null,
                     snippet : 'nothing in snippet',
                     mapType : $scope.currentTab.maptype, //.slice(1)
