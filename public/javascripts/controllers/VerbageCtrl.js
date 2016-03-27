@@ -53,19 +53,14 @@
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel : $scope.destSelections[0].slice(0),
-                title : '',
+                title : 'map has no title',
                 icon : null,
                 snippet : 'nothing in snippet',
-                selfdict : {
-                    title : 'map has no title',
-                    icon : null,
-                    snippet : 'nothing in snippet',
-                    mapType : $scope.currentTab.maptype, //.slice(1)
-                    imgSrc : $scope.currentTab.imgSrc,
-                    dstSel : $scope.destSelections[0].slice(0),
-                    destSelections : $scope.destSelections,
-                    query : "no query yet"
-                }
+                mapType : $scope.currentTab.maptype,
+                imgSrc : $scope.currentTab.imgSrc,
+                dstSel : $scope.destSelections[0].slice(0),
+                destSelections : $scope.destSelections,
+                query : "no query yet"
             };
 
             $scope.preserveState = function () {
@@ -83,7 +78,7 @@
             };
             $scope.updateState = function (selectedDestination) {
                 console.log("updateState");
-                $scope.selected = $scope.data.selfdict.dstSel = selectedDestination;
+                $scope.selected = selectedDestination;
                 $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
             }
 
@@ -93,11 +88,11 @@
 //                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
-                $scope.data.selfdict.title = details.title;
-                $scope.data.selfdict.icon = details.icon;
-                $scope.data.selfdict.mapType = details.mapType;
-                $scope.data.selfdict.snippet = details.snippet;
-                $scope.data.selfdict.callback = callback;
+                $scope.data.title = details.title;
+                $scope.data.icon = details.icon;
+                $scope.data.mapType = details.mapType;
+                $scope.data.snippet = details.snippet;
+                $scope.data.callback = callback;
 
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
@@ -107,7 +102,7 @@
 //                        appendTo : hostElement,
                     resolve : {
                         data: function () {
-                            return $scope.data.selfdict;
+                            return $scope.data;
                         }
                     }
                 });
@@ -115,8 +110,8 @@
                 modalInstance.result.then(function (selectedDestination) {
                     $scope.updateState(selectedDestination);
                     // $scope.showMeTheMapClicked();
-                    $scope.data.selfdict.callback(
-                        {dstWnd : selectedDestination, selMph : $scope.data.selfdict.mapType});
+                    $scope.data.callback(
+                        {dstWnd : selectedDestination, selMph : $scope.data.mapType});
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();
@@ -127,8 +122,8 @@
             $scope.showPusherSetupDialog = function () {
                 console.log("showPusherSetupDialog from VerbageCtrl");
 
-                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
-                $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
+                $scope.data.mapType = $scope.currentTab.maptype;
+                $scope.data.imgSrc = $scope.currentTab.imgSrc;
 
                 var tmplt = ' \
                   <div class="modal-dialog", style="width: 100%;"> \
