@@ -53,12 +53,9 @@
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel : $scope.destSelections[0].slice(0),
-                whichDismiss : "Cancel",
-                dlg2show : "SelectWndDlg",
                 title : '',
                 icon : null,
                 snippet : 'nothing in snippet',
-                showDetail : '+',
                 selfdict : {
                     title : 'map has no title',
                     icon : null,
@@ -73,18 +70,22 @@
 
             $scope.preserveState = function () {
                 console.log("preserveState");
-                // $scope.data.whichDismiss = 'Cancel';
+
                 $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
             $scope.restoreState = function () {
                 console.log("restoreState");
-                // $scope.data.whichDismiss = 'Accept';
+
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
-
+            $scope.updateState = function (selectedDestination) {
+                console.log("updateState");
+                $scope.selected = $scope.data.selfdict.dstSel = selectedDestination;
+                $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
+            }
 
             $scope.showDestDialog = function (callback, details) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
@@ -96,7 +97,6 @@
                 $scope.data.selfdict.icon = details.icon;
                 $scope.data.selfdict.mapType = details.mapType;
                 $scope.data.selfdict.snippet = details.snippet;
-                $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
                 $scope.data.selfdict.callback = callback;
 
                 var modalInstance = $uibModal.open({
@@ -113,7 +113,7 @@
                 });
 
                 modalInstance.result.then(function (selectedDestination) {
-                    $scope.selected = selectedDestination;
+                    $scope.updateState(selectedDestination);
                     // $scope.showMeTheMapClicked();
                     $scope.data.selfdict.callback(
                         {dstWnd : selectedDestination, selMph : $scope.data.selfdict.mapType});

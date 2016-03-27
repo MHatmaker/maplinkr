@@ -38,6 +38,7 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
+            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
 
             $scope.mapSelectionChanged = function (rowItem, event) {
                 console.debug(rowItem.entity);
@@ -51,7 +52,8 @@ angular.isUndefinedOrNull = function (val) {
                         'title' : rowItem.entity.title,
                         'snippet' : rowItem.entity.snippet,
                         'icon' : rowItem.entity.thumbnail,
-                        'mapType' : MapHosterArcGIS
+                        'mapType' : MapHosterArcGIS,
+                        'destSelections' : $scope.destSelections
                     }
                 );
             };

@@ -17,36 +17,17 @@
 
         function DestWndSetupCtrl($scope, $uibModalInstance, data) {
             console.log("in DestWndSetupCtrl");
-            selfdict.scope = $scope;
             selfdict.isInitialized = areWeInitialized = false;
-
-            // selfdict.callbackFunction = null;
-            $scope.showDestDialog = false;
-            $scope.choiceCallback = null;
-            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.destSelections = data.destSelections;
             $scope.data = {
-                dstSel : $scope.destSelections[0].slice(0),
-                prevDstSel : $scope.destSelections[0].slice(0),
+                dstSel : data.dstSel || $scope.destSelections[0].slice(0),
                 title : data.title,
                 icon : data.icon,
-                snippet : data.snippet,
-                showDetail : '+'
+                snippet : data.snippet
             };
             $scope.status = {
                 'detailsOpen' : false,
                 'destChoicesOpen' : false
-            };
-
-            $scope.preserveState = function () {
-                console.log("preserveState");
-                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
-                console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
-            };
-
-            $scope.restoreState = function () {
-                console.log("restoreState");
-                console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
-                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
 
             $scope.accept = function () {

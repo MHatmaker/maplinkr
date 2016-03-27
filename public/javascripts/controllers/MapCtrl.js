@@ -73,12 +73,9 @@
             $scope.data = {
                 dstSel : $scope.destSelections[0].slice(0),
                 prevDstSel : $scope.destSelections[0].slice(0),
-                whichDismiss : "Cancel",
-                dlg2show : "SelectWndDlg",
                 title : '',
                 icon : null,
                 snippet : 'nothing in snippet',
-                showDetail : '+',
                 selfdict : {
                     title : 'map has no title',
                     icon : null,
@@ -93,17 +90,22 @@
 
             $scope.preserveState = function () {
                 console.log("preserveState");
-                // $scope.data.whichDismiss = 'Cancel';
+
                 $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
             $scope.restoreState = function () {
                 console.log("restoreState");
-                // $scope.data.whichDismiss = 'Accept';
+
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
                 $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
             };
+            $scope.updateState = function (selectedDestination) {
+                console.log("updateState");
+                $scope.selected = $scope.data.selfdict.dstSel = selectedDestination;
+                $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
+            }
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -359,7 +361,7 @@
 
                 $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
                 $scope.data.selfdict.icon = $scope.currentTab.imgSrc;
-                $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
+                // $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
                 $scope.data.selfdict.query = $scope.gsearch.query;
                 $scope.data.selfdict.callback = callback;
 
@@ -377,8 +379,8 @@
                 });
 
                 modalInstance.result.then(function (selectedDestination) {
-                    $scope.selected = selectedDestination;
                     // $scope.showMeTheMapClicked();
+                    $scope.updateState(selectedDestination);
                     $scope.data.selfdict.callback(selectedDestination);
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
