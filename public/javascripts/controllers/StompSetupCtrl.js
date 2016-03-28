@@ -9,8 +9,9 @@
     var areWeInitialized = false;
     define([
         'angular',
-        'lib/AgoNewWindowConfig'
-    ], function (angular, AgoNewWindowConfig) {
+        'lib/AgoNewWindowConfig',
+        'controllers/PusherCtrl'
+    ], function (angular, AgoNewWindowConfig, pusherCtrl) {
         console.log('StompSetupCtrl define');
 
         var selfdict = {
@@ -22,21 +23,19 @@
             'PusherClient' : null,
             'userName' : ''
         },
-            scopeDict = {},
-
             $inj,
             serv,
             allMapTypes,
             mptLength;
 
-        function StompSetupCtrl($scope, $modal, $rootScope) {
+        function StompSetupCtrl($scope, $uibModal) {
             console.log("in StompSetupCtrl");
             $scope.privateChannelMashover = AgoNewWindowConfig.masherChannel();
             selfdict.scope = $scope;
             selfdict.scope.userName = selfdict.userName;
             selfdict.pusher = null;
             selfdict.isInitialized = areWeInitialized = false;
-            scopeDict.rootScope = $rootScope;
+
 
             $scope.showDialog = selfdict.scope.showDialog = false;
             $scope.data = {
@@ -51,9 +50,9 @@
             $scope.preserveState = function () {
                 console.log("preserveState");
                 // $scope.data.whichDismiss = 'Cancel';
-                $scope.data.prevChannel = $scope.data.privateChannelMashover.slice(0);
+                $scope.data.prevChannel = $scope.data.privateChannelMashover;
                 console.log("preserve " + $scope.data.prevChannel + " from " + $scope.data.privateChannelMashover);
-                $scope.data.prevChannel = $scope.data.userName.slice(0);
+                $scope.data.prevChannel = $scope.data.userName;
                 console.log("preserve " + $scope.data.prevUserName + " from " + $scope.data.userName);
             };
 
@@ -61,14 +60,15 @@
                 console.log("restoreState");
                 // $scope.data.whichDismiss = 'Accept';
                 console.log("restore " + $scope.data.privateChannelMashover + " from " + $scope.data.prevChannel);
-                $scope.data.privateChannelMashover = $scope.data.prevChannel.slice(0);
+                $scope.data.privateChannelMashover = $scope.data.prevChannel;
                 console.log("restore " + $scope.data.userName + " from " + $scope.data.prevChannel);
-                $scope.data.userName = $scope.data.prevUserName.slice(0);
+                $scope.data.userName = $scope.data.prevUserName;
             };
 
             $scope.onAcceptChannel = function () {
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.userName = $scope.data.userName;
+                self.CHANNEL = $scope.data.privateChannelMashover;
                 AgoNewWindowConfig.setChannel($scope.data.privateChannelMashover);
                 AgoNewWindowConfig.setNameChannelAccepted(true);
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
@@ -78,26 +78,63 @@
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
 
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+
             $scope.displayPusherDialog = function () {
                 // selfdict.scope.showModal(true);
+                console.log("displayPusherDialog");
+                var tmplt = ' \
+                  <div class="modal-dialog", style="width: 100%;"> \
+                    <div class="modal-content"> \
+                      <div class="modal-header"> \
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button> \
+                          <h4>Sharing Setup</h4> \
+                      </div> \
+                      <div class="modal-body"> \
+                        <h4>Create a Pusher Channel ID :</h4> \
+                        <input type="text" name="input" ng-model="data.privateChannelMashover" ng-init="data.privateChannelMashover" style="width: 100%"> \
+                        <div>channel name : {{data.privateChannelMashover}}</div> \
+                        <h4>Enter a User Name :</h4> \
+                        <input type="text" name="input" ng-model="data.userName", ng-init="data.userName" style="width: 100%"> \
+                        <div style="color: #17244D; margin-top: 10px;">USER NAME : {{data.userName}}</div> \
+                      <div class="modal-footer"> \
+                        <button type="button" class="btn btn-primary" ng-click="accept()">Accept</button> \
+                        <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button> \
+                      </div> \
+                    </div><!-- /.modal-content --> \
+                  </div><!-- /.modal-dialog --> \
+                ',
+                    modalInstance = $uibModal.open({
+                        template : tmplt,
+                        controller : 'PusherCtrl',
+                        size : 'sm',
+                        backdrop : 'false',
+//                        appendTo : hostElement,
+                        resolve : {
+                            data: function () {
+                                return $scope.data;
+                            }
+                        }
+                    });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                    selfdict.scope.data.userName = selectedItem.userName;
+                    selfdict.scope.data.privateChannelMashover = selectedItem.privateChannelMashover;
+                    selfdict.scope.onAcceptChannel();
+                }, function () {
+                    console.log('Pusher Modal dismissed at: ' + new Date());
+                });
+
                 $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
 
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
 
-                // selfdict.eventDct =
-                        // {'client-MapXtntEvent' : selfdict.mph.retrievedBounds,
-                        // 'client-MapClickEvent' : selfdict.mph.retrievedClick
-                        // };
-
-                selfdict.callbackFunction = null;
-                scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');
-                $scope.safeApply(function () {
-                    selfdict.scope.showDialog = $scope.showDialog = true;
-                });
             };
-
 
             $scope.hitEnter = function (evt) {
                 if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
@@ -242,14 +279,7 @@
             selfdict.userName = userName;
             selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
-            console.log("toggleShow from " + selfdict.scope.showDialog);
-            scopeDict.rootScope.$broadcast('ShowChannelSelectorEvent');
-            selfdict.scope.safeApply(function () {
-                selfdict.scope.showDialog = !selfdict.scope.showDialog;
-            });
-            console.log("toggleShow after apply " + selfdict.scope.showDialog);
-
-            // selfdict.scope.PusherClient(eventDct, selfdict.scope.privateChannelMashover, cbfn);
+            selfdict.scope.displayPusherDialog();
         };
 
 
@@ -276,127 +306,7 @@
                 // return;
             // }
             selfdict.isInitialized = areWeInitialized = true;
-            App.controller('StompSetupCtrl',  ['$scope', '$modal', '$rootScope', StompSetupCtrl]);
-
-            App.directive("modalShowPusher", function () {
-                console.log("setting up directive modalShowPusher");
-                var tpl = ' \
-                  <div class="modal-dialog", style="width: 100%;"> \
-                    <div class="modal-content"> \
-                      <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                      </div> \
-                      <div class="modal-body"> \
-                        <h3>Create a Pusher Channel ID :</h3> \
-                        <input type="text" name="input" ng-model="$parent.data.privateChannelMashover", ng-init="$parent.data.privateChannelMashover"> \
-                        <div>channel name : {{$parent.data.privateChannelMashover}}</div> \
-                        <h3>Enter a User Name :</h3> \
-                        <input type="text" name="input" ng-model="$parent.data.userName", ng-init="$parent.data.userName"> \
-                        <div style="color: #17244D; margin-top: 10px;">USER NAME : {{$parent.data.userName}}</div> \
-                      <div class="modal-footer"> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Accept\';$parent.preserveState()" data-dismiss="modal">Accept</button> \
-                        <button type="button" class="btn btn-primary" ng-click="$parent.data.whichDismiss = \'Cancel\';$parent.restoreState()" data-dismiss="modal">Cancel</button> \
-                      </div> \
-                    </div><!-- /.modal-content --> \
-                  </div><!-- /.modal-dialog --> \
-                ';
-                return {
-                    restrict: "A",
-                    template : tpl,
-                    scope: {
-                        modalVisible: "=",
-                        modalPdata: "="
-                    },
-                    link: function (scope, element, attrs) {
-                        var localScope = scope;
-                        //Hide or show the modal
-                        scope.showModal = function (visible, elem) {
-                            if (!elem) {
-                                elem = element;
-                                console.log("elem is now :");
-                                console.debug(elem);
-                                console.log("how about $(elem)?");
-                                var delem = $(elem);
-                                console.debug(delem);
-                            }
-                            if (visible) {
-                                localScope.$parent.data.userName = selfdict.userName;
-                                $(elem).modal311("show");
-                            } else {
-                                $(elem).modal311("hide");
-                            }
-                        };
-
-                        scope.$on('ShowChannelSelectorEvent', function () {
-                            scope.showModal(true);
-                        });
-
-                        selfdict.scope.showModal = scope.showModal;
-
-                        //Check to see if the modal-visible attribute exists
-                        if (!attrs.modalVisible) {
-                            //The attribute isn't defined, show the modal by default
-                            scope.showModal(true);
-
-                        } else {
-                            //Watch for changes to the modal-visible attribute
-                            scope.$watch("modalVisible", function (newValue, oldValue) {
-                                scope.showModal(newValue);
-                                // scope.$parent.showDialog = newValue;
-                                console.log("watch modalVisible  : ");
-                                console.debug(scope.$parent.data);
-                                // scope.$parent.preserveState();
-                            });
-                            //Watch for changes to the modal-mdata attribute
-                            scope.$watch("modalPdata", function (newValue, oldValue) {
-                                if (!angular.isUndefinedOrNull(newValue)) {
-                                    localScope.$parent.data = newValue;
-                                }
-                                console.log("watch modalMdata scope.$parent data  : ");
-                                console.debug(localScope.$parent.data);
-                            });
-                            //Watch for changes to the modal-mdata attribute
-                            scope.$watch("data.privateChannelMashover", function (newValue, oldValue) {
-                                if (!angular.isUndefinedOrNull(newValue)) {
-                                    localScope.$parent.data.privateChannelMashover = newValue;
-                                }
-                                // console.log("watch modalMdata scope.$parent data  : ");
-                                // console.debug(localScope.$parent.data);
-                            });
-
-                            scope.$watch("data.userName", function (newValue, oldValue) {
-                                if (!angular.isUndefinedOrNull(newValue)) {
-                                    localScope.$parent.data.userName = newValue;
-                                }
-                            });
-                            scope.$watch('scope.$parent.selfdict.scope.showDialog', function (newValue, oldValue) {
-                                console.log("scope.$watch newValue : " + newValue);
-                                console.log("scope.$watch 'scope.$parent.showDialog' : " + scope.$parent.showDialog);
-                                scope.showModal(newValue);
-                                //attrs.modalVisible = false;
-                            });
-
-                        }
-                        //Update the visible value when the dialog is closed through UI actions (Ok, cancel, etc.)
-                        $(element).on('hidden.bs.modal', function () {
-                            scope.modalVisible = localScope.$parent.showDialog = false;
-                            console.log("hide event called");
-                            if (!scope.$$phase && !scope.$root.$$phase) {
-                                scope.$apply();
-                            }
-                            scope.$apply();
-                            console.log("hidden modalMdata : ");
-                            console.debug(scope.$parent.data);
-                            console.log("whichDismiss : " + scope.$parent.data.whichDismiss);
-                            if (scope.$parent.data.whichDismiss === "Accept") {
-                                scope.$parent.onAcceptChannel();
-                            }
-                        });
-
-                    }
-
-                };
-            });
+            App.controller('StompSetupCtrl',  ['$scope', '$uibModal', StompSetupCtrl]);
 
             // StompSetupCtrl.self.scope = StompSetupCtrl.$scope;
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;

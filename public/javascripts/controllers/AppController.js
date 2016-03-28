@@ -17,6 +17,7 @@
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
         'controllers/StompSetupCtrl',
+        'controllers/PusherCtrl',
         'controllers/DestWndSetupCtrl',
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
@@ -26,7 +27,7 @@
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
             WebSiteDescriptionCtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, PusherCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
             console.log('AppController define');
 
             function AppController($scope) {
@@ -111,6 +112,7 @@
                 SearcherCtrlMap.start(App, portalForSearch);
                 if (StompSetupCtrl.isInitialized() === false) {
                     StompSetupCtrl.start(App);
+                    PusherCtrl.start(App);
                 }
                 if (DestWndSetupCtrl.isInitialized() === false) {
                     DestWndSetupCtrl.start(App);

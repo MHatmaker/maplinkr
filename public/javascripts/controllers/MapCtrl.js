@@ -9,12 +9,13 @@
     define([
         'angular',
         'esri/map',
+        'controllers/DestWndSetupCtrl',
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
         'lib/utils',
         'lib/AgoNewWindowConfig'
-    ], function (angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
+    ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -52,9 +53,9 @@
         }
  */
 
-        function MapCtrl($scope, $routeParams, $compile) {
+        function MapCtrl($scope, $routeParams, $compile, $uibModal) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
-            // alert("MapCtrl initializing");
+
             var mptp = $scope.currentTab.maptype,
                 gmquery = AgoNewWindowConfig.query(),
                 height,
@@ -66,6 +67,45 @@
                 tmpltName,
                 elem,
                 aelem;
+
+            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.selected = "Same Window";
+            $scope.data = {
+                dstSel : $scope.destSelections[0],
+                prevDstSel : $scope.destSelections[0],
+                title : 'map has no title',
+                icon : null,
+                snippet : 'nothing in snippet',
+                mapType : $scope.currentTab.maptype,
+                imgSrc : $scope.currentTab.imgSrc,
+                destSelections : $scope.destSelections,
+                query : "no query yet"
+
+            };
+
+            $scope.preserveState = function () {
+                console.log("preserveState");
+
+                $scope.data.prevDstSel = $scope.data.dstSel;
+                console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
+            };
+
+            $scope.restoreState = function () {
+                console.log("restoreState");
+
+                console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
+                $scope.data.dstSel = $scope.data.prevDstSel;
+            };
+            $scope.updateState = function (selectedDestination) {
+                console.log("updateState");
+                $scope.selected  = selectedDestination;
+                $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -101,9 +141,6 @@
 
                 var contextScope = $scope,
                     cnvs = angular.element(document.getElementById(whichCanvas)),
-                    // lnkr0 = angular.element(document.getElementById("linkerDirectiveId")),
-                    //minmaxr0 = angular.element(document.getElementById("lnkmaximizerDirectiveId")),
-                    // parentScope = $scope.$parent,
 
                     templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
                       <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
@@ -169,7 +206,7 @@
             if (gmquery !== '') {
                 $scope.gsearch = {'query' : gmquery};
             } else {
-                $scope.gsearch = {'query' : 'Search Box'};
+                $scope.gsearch = {'query' : 'SearcherBox'};
             }
             currentMapType = mapTypes[mptp];
             height = document.body.clientHeight;
@@ -313,6 +350,39 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch.query);
             };
 
+            $scope.showDestDialog = function (callback, details) {
+                console.log("showDestDialog for currentTab " + $scope.currentTab.title);
+                $scope.preserveState();
+//                var hostElement = $document.find('mashbox').eq(0);
+                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
+
+                $scope.data.mapType = $scope.currentTab.maptype;
+                $scope.data.icon = $scope.currentTab.imgSrc;
+                $scope.data.query = $scope.gsearch.query;
+                $scope.data.callback = callback;
+
+                var modalInstance = $uibModal.open({
+                    templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
+                    controller : 'DestWndSetupCtrl',
+                    backdrop : 'false',
+
+                    resolve : {
+                        data: function () {
+                            return $scope.data;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedDestination) {
+                    $scope.updateState(selectedDestination);
+                    $scope.data.callback(selectedDestination);
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                    $scope.restoreState();
+                });
+
+            };
+
         }
 
         MapCtrl.prototype.placeCustomControls = function () {
@@ -322,7 +392,7 @@
 
         function init(App) {
             console.log('MapCtrl init');
-            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', MapCtrl]);
             return MapCtrl;
         }
 
@@ -331,4 +401,3 @@
     });
 
 }());
-// }).call(this);
