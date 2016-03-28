@@ -1,7 +1,7 @@
 div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
     div(class="modal-content")
         div(class="modal-header")
-            button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
+            button(type="button", class="close", data-dismiss="modal", aria-hidden="true", ng-click="cancel()")&times
             div(style="color: #17244D; margin-top: 5px;")
                 span
                     img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")

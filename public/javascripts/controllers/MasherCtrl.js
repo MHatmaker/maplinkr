@@ -113,19 +113,23 @@
                 // $location.path($scope.currentTab.url, true).replace();
             };
 
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+
             $scope.describeTheWebsiteClicked = function () {
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
 //                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
-                $scope.data.selfdict.mapType = $scope.currentTab.maptype.slice(1);
+                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //slice(1);
                 $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
                 $scope.data.selfdict.description = descriptions[$scope.currentTab.maptype];
 
                 var tmplt = ' \
                     <div class="modal-content"> \
                       <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button> \
                         <h4>This sample Web Site powered by <img src="{{data.image}}">  {{data.mapType}} is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \

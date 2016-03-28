@@ -102,6 +102,11 @@
                 $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
             };
 
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+
+
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
                     lnkrSymbol = document.getElementById("idLinkerSymbol"),
