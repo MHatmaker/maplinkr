@@ -50,9 +50,9 @@
             $scope.preserveState = function () {
                 console.log("preserveState");
                 // $scope.data.whichDismiss = 'Cancel';
-                $scope.data.prevChannel = $scope.data.privateChannelMashover.slice(0);
+                $scope.data.prevChannel = $scope.data.privateChannelMashover; //.slice(0);
                 console.log("preserve " + $scope.data.prevChannel + " from " + $scope.data.privateChannelMashover);
-                $scope.data.prevChannel = $scope.data.userName.slice(0);
+                $scope.data.prevChannel = $scope.data.userName; //.slice(0);
                 console.log("preserve " + $scope.data.prevUserName + " from " + $scope.data.userName);
             };
 
@@ -60,9 +60,9 @@
                 console.log("restoreState");
                 // $scope.data.whichDismiss = 'Accept';
                 console.log("restore " + $scope.data.privateChannelMashover + " from " + $scope.data.prevChannel);
-                $scope.data.privateChannelMashover = $scope.data.prevChannel.slice(0);
+                $scope.data.privateChannelMashover = $scope.data.prevChannel; //.slice(0);
                 console.log("restore " + $scope.data.userName + " from " + $scope.data.prevChannel);
-                $scope.data.userName = $scope.data.prevUserName.slice(0);
+                $scope.data.userName = $scope.data.prevUserName; //.slice(0);
             };
 
             $scope.onAcceptChannel = function () {

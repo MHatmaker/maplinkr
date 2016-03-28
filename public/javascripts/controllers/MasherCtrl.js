@@ -118,7 +118,7 @@
 //                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
-                $scope.data.selfdict.mapType = $scope.currentTab.maptype; //.slice(1);
+                $scope.data.selfdict.mapType = $scope.currentTab.maptype.slice(1);
                 $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
                 $scope.data.selfdict.description = descriptions[$scope.currentTab.maptype];
 

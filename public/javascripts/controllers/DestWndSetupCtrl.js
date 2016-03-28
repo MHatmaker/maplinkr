@@ -17,7 +17,7 @@
             areWeInitialized = false;
             $scope.destSelections = data.destSelections;
             $scope.data = {
-                dstSel : data.dstSel || $scope.destSelections[0].slice(0),
+                dstSel : data.dstSel || $scope.destSelections[0],
                 title : data.title,
                 icon : data.icon,
                 snippet : data.snippet

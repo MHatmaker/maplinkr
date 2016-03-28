@@ -51,8 +51,8 @@
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.selected = "Same Window";
             $scope.data = {
-                dstSel : $scope.destSelections[0].slice(0),
-                prevDstSel : $scope.destSelections[0].slice(0),
+                dstSel : $scope.destSelections[0], //.slice(0),
+                prevDstSel : $scope.destSelections[0], //.slice(0),
                 title : 'map has no title',
                 icon : null,
                 snippet : 'nothing in snippet',
@@ -65,7 +65,7 @@
             $scope.preserveState = function () {
                 console.log("preserveState");
 
-                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
+                $scope.data.prevDstSel = $scope.data.dstSel; //.slice(0);
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
@@ -73,7 +73,7 @@
                 console.log("restoreState");
 
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
-                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
+                $scope.data.dstSel = $scope.data.prevDstSel; //.slice(0);
             };
             $scope.updateState = function (selectedDestination) {
                 console.log("updateState");
