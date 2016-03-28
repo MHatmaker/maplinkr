@@ -38,12 +38,11 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
-            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
 
             $scope.mapSelectionChanged = function (rowItem, event) {
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title);
-                // previousSelectedWebMapId = selectedWebMapId;
+
                 selectedWebMapId = rowItem.entity.id;
                 selectedWebMapTitle = rowItem.entity.title;
                 $scope.openWindowSelectionDialog(
@@ -52,8 +51,7 @@ angular.isUndefinedOrNull = function (val) {
                         'title' : rowItem.entity.title,
                         'snippet' : rowItem.entity.snippet,
                         'icon' : rowItem.entity.thumbnail,
-                        'mapType' : MapHosterArcGIS,
-                        'destSelections' : $scope.destSelections
+                        'mapType' : MapHosterArcGIS
                     }
                 );
             };
@@ -64,7 +62,7 @@ angular.isUndefinedOrNull = function (val) {
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
--               selMph.removeEventListeners();
+                selMph.removeEventListeners();
 
 
                 console.log("onDestinationWindowSelected " + destWnd);
@@ -295,7 +293,19 @@ angular.isUndefinedOrNull = function (val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
 
-                $scope.showDestDialog($scope.onDestinationWindowSelected, info);
+                // $scope.showDestDialog($scope.onDestinationWindowSelected, info);
+                $scope.showDestDialog(function (args) {
+                    var destWnd = args.dstWnd,
+                        $inj = angular.injector(['app']),
+                        serv = $inj.get('CurrentMapTypeService'),
+                        selMph = serv.getSelectedMapType();
+                    console.log("onAcceptDestination " + destWnd);
+                    selMph.removeEventListeners();
+
+                    console.log("onDestinationWindowSelected " + destWnd);
+                    StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
+                },
+                    info);
                 // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
             };
         }

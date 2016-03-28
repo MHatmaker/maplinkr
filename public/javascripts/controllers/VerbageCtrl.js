@@ -12,7 +12,7 @@
         ], function (angular) {
         console.log('VerbageCtrl define');
 
-        function VerbageCtrl($scope, $uibModal) {
+        function VerbageCtrl($scope, $uibModal, $uibModalStack) {
             console.debug('VerbageCtrl - initialize collapsed bool');
             // alert('VerbageCtrl - initialize some tabs');
             $scope.VerbVis = "none";
@@ -58,7 +58,6 @@
                 snippet : 'nothing in snippet',
                 mapType : $scope.currentTab.maptype,
                 imgSrc : $scope.currentTab.imgSrc,
-                dstSel : $scope.destSelections[0].slice(0),
                 destSelections : $scope.destSelections,
                 query : "no query yet"
             };
@@ -80,13 +79,11 @@
                 console.log("updateState");
                 $scope.selected = selectedDestination;
                 $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
-            }
+            };
 
             $scope.showDestDialog = function (callback, details) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
                 $scope.preserveState();
-//                var hostElement = $document.find('mashbox').eq(0);
-                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
                 $scope.data.title = details.title;
                 $scope.data.icon = details.icon;
@@ -97,9 +94,7 @@
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
                     controller : 'DestWndSetupCtrl',
-                    // size : 'sm',
                     backdrop : 'false',
-//                        appendTo : hostElement,
                     resolve : {
                         data: function () {
                             return $scope.data;
@@ -109,9 +104,13 @@
 
                 modalInstance.result.then(function (selectedDestination) {
                     $scope.updateState(selectedDestination);
-                    // $scope.showMeTheMapClicked();
+                    $uibModalStack.dismissAll("Really DISMISS");
                     $scope.data.callback(
-                        {dstWnd : selectedDestination, selMph : $scope.data.mapType});
+                        {
+                            dstWnd : selectedDestination,
+                            selMph : $scope.data.mapType
+                        }
+                    );
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();
@@ -150,7 +149,6 @@
                         controller : 'PusherCtrl',
                         size : 'sm',
                         backdrop : 'false',
-//                        appendTo : hostElement,
                         resolve : {
                             data: function () {
                                 return $scope.data;
@@ -160,7 +158,6 @@
 
                 modalInstance.result.then(function (selectedItem) {
                     $scope.selected = selectedItem;
-
                 }, function () {
                     console.log('Pusher Modal dismissed at: ' + new Date());
                 });
@@ -170,7 +167,7 @@
 
         function init(App) {
             console.log('VerbageCtrl init');
-            App.controller('VerbageCtrl', ['$scope', '$uibModal', VerbageCtrl]);
+            App.controller('VerbageCtrl', ['$scope', '$uibModal', '$uibModalStack', VerbageCtrl]);
             return VerbageCtrl;
         }
 

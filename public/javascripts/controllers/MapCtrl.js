@@ -55,7 +55,7 @@
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
-            // alert("MapCtrl initializing");
+
             var mptp = $scope.currentTab.maptype,
                 gmquery = AgoNewWindowConfig.query(),
                 height,
@@ -71,14 +71,13 @@
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.selected = "Same Window";
             $scope.data = {
-                dstSel : $scope.destSelections[0].slice(0),
-                prevDstSel : $scope.destSelections[0].slice(0),
+                dstSel : $scope.destSelections[0],
+                prevDstSel : $scope.destSelections[0],
                 title : 'map has no title',
                 icon : null,
                 snippet : 'nothing in snippet',
                 mapType : $scope.currentTab.maptype,
                 imgSrc : $scope.currentTab.imgSrc,
-                dstSel : $scope.destSelections[0].slice(0),
                 destSelections : $scope.destSelections,
                 query : "no query yet"
 
@@ -87,7 +86,7 @@
             $scope.preserveState = function () {
                 console.log("preserveState");
 
-                $scope.data.prevDstSel = $scope.data.dstSel.slice(0);
+                $scope.data.prevDstSel = $scope.data.dstSel;
                 console.log("preserve " + $scope.data.prevDstSel + " from " + $scope.data.dstSel);
             };
 
@@ -95,13 +94,13 @@
                 console.log("restoreState");
 
                 console.log("restore " + $scope.data.dstSel + " from " + $scope.data.prevDstSel);
-                $scope.data.dstSel = $scope.data.prevDstSel.slice(0);
+                $scope.data.dstSel = $scope.data.prevDstSel;
             };
             $scope.updateState = function (selectedDestination) {
                 console.log("updateState");
                 $scope.selected  = selectedDestination;
                 $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
-            }
+            };
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -137,9 +136,6 @@
 
                 var contextScope = $scope,
                     cnvs = angular.element(document.getElementById(whichCanvas)),
-                    // lnkr0 = angular.element(document.getElementById("linkerDirectiveId")),
-                    //minmaxr0 = angular.element(document.getElementById("lnkmaximizerDirectiveId")),
-                    // parentScope = $scope.$parent,
 
                     templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
                       <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
@@ -355,18 +351,16 @@
 //                var hostElement = $document.find('mashbox').eq(0);
                 // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
-                $scope.data.mapType = $scope.currentTab.maptype; //.slice(1);
+                $scope.data.mapType = $scope.currentTab.maptype;
                 $scope.data.icon = $scope.currentTab.imgSrc;
-                // $scope.data.selfdict.dstSel = $scope.destSelections[0].slice(0);
                 $scope.data.query = $scope.gsearch.query;
                 $scope.data.callback = callback;
 
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
                     controller : 'DestWndSetupCtrl',
-                    // size : 'sm',
                     backdrop : 'false',
-//                        appendTo : hostElement,
+
                     resolve : {
                         data: function () {
                             return $scope.data;
@@ -375,7 +369,6 @@
                 });
 
                 modalInstance.result.then(function (selectedDestination) {
-                    // $scope.showMeTheMapClicked();
                     $scope.updateState(selectedDestination);
                     $scope.data.callback(selectedDestination);
                 }, function () {
@@ -403,4 +396,3 @@
     });
 
 }());
-// }).call(this);

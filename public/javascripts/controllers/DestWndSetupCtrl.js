@@ -4,20 +4,17 @@
     "use strict";
 
     console.log('DestWndSetupCtrl setup');
-    var areWeInitialized = false,
-        selfdict = {
-            isInitialized : false
-        };
+    var areWeInitialized = false;
     define([
         'angular'
     ], function (angular) {
         console.log('DestWndSetupCtrl define');
 
-        selfdict.isInitialized = areWeInitialized = false;
+        areWeInitialized = false;
 
         function DestWndSetupCtrl($scope, $uibModalInstance, data) {
             console.log("in DestWndSetupCtrl");
-            selfdict.isInitialized = areWeInitialized = false;
+            areWeInitialized = false;
             $scope.destSelections = data.destSelections;
             $scope.data = {
                 dstSel : data.dstSel || $scope.destSelections[0].slice(0),
@@ -54,7 +51,7 @@
         function init(App) {
             console.log('DestWndSetupCtrl init');
 
-            selfdict.isInitialized = areWeInitialized = true;
+            areWeInitialized = true;
             App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', 'data', DestWndSetupCtrl]);
 
             return DestWndSetupCtrl;
