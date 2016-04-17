@@ -14,13 +14,19 @@ var selectedMapType = 'arcgis';
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
         'controllers/SPACtrl',
+        'controllers/LeftColCtrl',
+        'controllers/MapColCtrl',
+        'controllers/RightColCtrl',
         'controllers/MapCtrl',
+        'controllers/MapLinkrPluginCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
+
     ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
-            EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+            EmailCtrl, SpaCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
+            MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {

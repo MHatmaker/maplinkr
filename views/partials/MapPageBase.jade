@@ -52,25 +52,16 @@ block append content
                 div(class="flex3")
                     #idContainerBody(class="container-body")
                         #idBody(class="bodyMap", style="width: {{webSiteWidth}};")
-                            #idLeftCol(class="container-leftcol aside",
-                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
-                                div(class="container-newscell")
-                                    div(class="container-newscellhead", style="color:black; border: 3px solid red;").
-                                        What's New?
-                                    div(class="container-newscellbody")
-                                        p.
-                                            We now have WebMap MapLinkr capabilities
-                                        p.
-                                            Click on the "Show Linker" and "Max Map" icons.
-                                        p.
-                                            Then Select the MapLinkr Instruction accordion pane for all the latest.
-                                div(class="container-newscell")
-                                    div(class="container-newscellhead" style="color: black; font-weight: bold;").
-                                        OTHER STUFF
-                                    div(class="container-newscellbody")
-                                        img(ng-src="../stylesheets/images/NewsPapers.jpg")
 
-                            #idCenterCol(class="container-mapcol", style="height:100%; width:100%;")
+                            div(class="col-xs-12 col-sm-6 col-md-4", ng-controller="LeftColCtrl",
+                                style="display:{{$parent.leftColShowing}}")
+                                include LeftCol.jade
+
+                            #idCenterCol(class="col-xs-12 col-sm-6 col-md-4 container-mapcol",
+                                style="height:100%; width:100%;",
+                                ng-controller="MapColCtrl")
+                                style="display:{{$parent.MapColShowing}}")
+                                include MapCol.jade
 
                                 #map_wrapper(class="container-mapholder",  ng-controller="MapCtrl",
                                     style="height:100%; width:100%; vertical-align:top; position: absolute;")
@@ -82,20 +73,7 @@ block append content
 
                                         img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
 
-
-                            #idRightCol(class="container-rightcol aside",
-                                ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}",
-                                style="overflow-y: auto;")
-                                div(class="container-newscellhead flex1", style="overflow:auto;")
-                                    div.
-                                        Off to the Right
-
-                                div(class="container-newscellbody newscelllatin flex5", style="overflow-y:auto; opacity: 0.8;")
-                                    div
-                                        img(ng-src="../stylesheets/images/ZillowDotCom.png")
-                                    div.
-                                        Why does this outfit get to stick its advertisement link in our website.  Why don't they just go and advertise on gambling and conspiracy websites.  Maybe they should advertise on cat video sites.  Actually, putting a Golden Retriever in the advertisement seems to work 100% of the time.  Zillow.com might even replace their logo with a smiling Golden Retriever.
-
+  
                 #idFooter.
                     All the below-the-fold web site contents
 
