@@ -22,6 +22,12 @@
                 ExpandSite : 'Max Map',
                 ExpandPlug : 'Show Linker'
             };
+
+            $scope.data = {
+                expanded : false,
+                shrinkgrowtext : "Expand Map"
+            };
+
             var status = {
                 'website' : "flex",
                 'plugin' : "none"
@@ -134,6 +140,29 @@
                 printStatus('Hide Plug-in!');
             }
 
+            // from ModelessTest prooject
+
+            $scope.leftColShowing = 'block';
+            $scope.rightColShowing = 'block';
+            $scope.mapColDef = "col-xs-10 col-sm-6 col-md-4";
+
+            $scope.onExpandClicked = function () {
+                if ($scope.data.expanded === true) {
+                    $scope.data.expanded = false;
+                    $scope.leftColShowing = 'block';
+                    $scope.rightColShowing = 'block';
+                    $scope.mapColDef = "col-xs-12 col-sm-6 col-md-4";
+                    $scope.data.shrinkgrowtext = "Expand Map";
+
+                } else {
+                    $scope.data.expanded = true;
+                    $scope.leftColShowing = 'none';
+                    $scope.rightColShowing = 'none';
+                    $scope.mapColDef = "col-xs-12";
+                    $scope.data.shrinkgrowtext = "Shrink Map";
+                }
+
+            // Original broadcast and flex managment
             function onShowWebSite(e, from, to, msg) {
                 status.website = $scope.SiteVis = "flex";
                 $scope.webSiteWidth = "inherit";
