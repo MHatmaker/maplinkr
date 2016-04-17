@@ -19,6 +19,8 @@ public/javascripts/controllers/TabsInfoCommented.js
 public/javascripts/Incrementer.html
 public/javascripts/*.frags
 public/javascripts/Modal311.js
+public/javascripts/lib/Modal311.js
+public/javascripts/lib/modal330.js
 views/partials/extras/*
 views/partials/CodePenModals/*
 views/partials/header.jade
