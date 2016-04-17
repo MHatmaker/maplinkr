@@ -21,11 +21,12 @@
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = AgoNewWindowConfig.getStartupView();
-            $scope.ExpandSum = startupView.summary === true ? "Collapse" : "Expand";
             $scope.MasterSiteVis = startupView.website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
             $scope.showPopupBlockerDialog = false;
             $scope.data = {
+                'ExpandSum': startupView.summary === true ? "Collapse" : "Expand",
+                'isCollapsed': !startupView.summary,
                 'blockedUrl': 'place holder',
                 'completeUrl': 'completeslashdoturl',
                 'nextWindowName': 'InitialWindowName',
@@ -70,12 +71,17 @@
 
             $scope.summmaryCollapser = function () {
                 // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
-                $scope.ExpandSum = $scope.ExpandSum === "Expand" ? "Collapse" : "Expand";
-
-                console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
+                if ($scope.data.isCollapsed === true) {
+                    $scope.data.isCollapsed = false;
+                    $scope.data.ExpandSum = "Expand";
+                } else {
+                    $scope.data.isCollapsed = true;
+                    $scope.data.ExpandSum = "Collapse";
+                }
+                console.log("MasherCtrl isCollapsed before broadcast " + $scope.data.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
-                $scope.isCollapsed = !$scope.isCollapsed;
-                console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
+                // $scope.isCollapsed = !$scope.isCollapsed;
+                console.log("MasherCtrl isCollapsed after broadcast " + $scope.data.isCollapsed);
             };
             selfMethods.summmaryCollapser = $scope.summmaryCollapser;
 

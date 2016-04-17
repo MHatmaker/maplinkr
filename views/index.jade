@@ -10,14 +10,15 @@ block content
             #idMasterSiteControlRow(ng-cloak, class="ng-cloak")
 
                 #idMasterSiteExpander(class="mastersitecontrol-expander")
-                    #idExpButtonSum(class="havButton", ng-click="summmaryCollapser()")
-                        span(style='cursor: pointer; cursor: hand;')
-                            figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
-                                img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="margin: 0.01em 0.5em  0.01em  0.05em;")
-                                figcaption(class="btn", style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;font-weight: 800;") {{ExpandSum}} Summary Master Website Options
+                    button(type"button", class="btn btn-labeled btn-primary",
+                        ng-click="summmaryCollapser()")
+                        span(class="btn-label")
+                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !data.isCollapsed, \
+                            'fa-compress': data.isCollapsed}", style="padding-left: 0.5rem")
+                            | {{data.ExpandSum}}
 
 
-            #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': isCollapsed, 'mastersite-shown': !isCollapsed}")
+            #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
                 .mashbackground
                     #mashbox(class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")
                         div
