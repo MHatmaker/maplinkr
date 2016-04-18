@@ -1,9 +1,10 @@
-    #map_wrapper(class="container-mapholder",  ng-controller="MapCtrl",
-        style="height:100%; width:100%; vertical-align:top; position: absolute;")
+#map_wrapper(ng-controller="MapCtrl", class="{{$parent.mapColDef}}",
+    style="vertical-align:top; position: absolute;")
 
-        gmsearch
+    gmsearch
 
-        #DestWndDialogGoogle
-        #map_canvas(style="height:100%;width:100%;margin:0px;")
+    #DestWndDialogGoogle
+    #map_canvas(class="{{$parent.mapColDef}}", style="margin:0px;")
 
-            img#loadingImg(src="../stylesheets/images/loading.gif", style="position:absolute; right:512px; top:256px; z-index:100;")
+        img#loadingImg(src="../stylesheets/images/loading.gif",
+            style="position:absolute; right:512px; top:256px; z-index:100;")

@@ -22,7 +22,8 @@ block append scriptsblock
                             div(href tabindex="0", class="accordion-toggle", ng-click="toggleOpen()", uib-accordion-transclude="heading")
                                 span(style="width: 100%;")
                                     img(class="accdionchevron-right", ng-class="{'accdionchevron-down': isOpen, 'accdionchevron-right': !isOpen}")
-                                    span(ng-class="{'text-muted': isDisabled}"){{heading}}
+                                    span(ng-class="{'text-muted': isDisabled}")
+                                    | {{heading}}
                     div(class="panel-collapse collapse", uib-collapse="!isOpen")
                         div(class="panel-body", style="text-align: left; font-size=1.0em;", ng-transclude)
 
@@ -33,9 +34,10 @@ block append content
     #spa_window(class="wrapper-website", ng-controller="SPACtrl", ng-cloak, class="ng-cloak")
         div(class="container-website")
 
-            #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor subwebsite_textprimarycolor subwebsite_dividercolor")
-                #idSiteTopRow(class="flex1 container-toprow",
-                    ng-class="{'website-hidden': SiteVis=='none', 'website-shown': SiteVis=='flex'}")
+            #idContainerPrimary(class="container-primary subwebsite_defaultprimarycolor \
+                subwebsite_textprimarycolor subwebsite_dividercolor")
+                #idSiteTopRow(class="flex1 container-toprow", ng-controller="TopRowCtrl",
+                    style="display:{{$parent.topRowShowing}}")
                     div(class="container-newscell")
                         div(class="container-newscellhead").
                             This web site embeds MapLinkr using {{curMapSys}}
@@ -47,31 +49,32 @@ block append content
                                     img(ng-src="../stylesheets/images/NothingButGoldensDotCom.png")
                                     img(ng-src="../stylesheets/images/TripAdvisorDotCom.png")
                                 div(class="flex5").
-                                    Why does this outfit get to stick its advertisement link in our website.  Why don't they just go and advertise on gambling and conspiracy websites.  Maybe they should advertise on cat video sites.  Actually, putting a Golden Retriever in the advertisement seems to work 100% of the time.  Apartments.com might even replace their logo with a smiling Golden Retriever.
+                                    Why does this outfit get to stick its advertisement link in our
+                                        website.  Why don't they just go and advertise on gambling and
+                                        conspiracy websites.  Maybe they should advertise on cat video
+                                        sites.  Actually, putting a Golden Retriever in the advertisement
+                                        seems to work 100% of the time.  Apartments.com might even
+                                        replace their logo with a smiling Golden Retriever.
 
                 div(class="flex3")
                     #idContainerBody(class="container-body")
-                        #idBody(class="bodyMap", style="width: {{webSiteWidth}};")
+                        #idBody(class="bodyMap")
 
-                            div(class="col-xs-12 col-sm-6 col-md-4", ng-controller="LeftColCtrl",
+                            #idLeftCol(class="col-xs-12 col-sm-6 col-md-4",
+                                ng-controller="LeftColCtrl",
                                 style="display:{{$parent.leftColShowing}}")
                                 include LeftCol.jade
 
-                            #idCenterCol(class="col-xs-12 col-sm-6 col-md-4 container-mapcol",
-                                style="height:100%; width:100%;",
-                                ng-controller="MapColCtrl")
-                                style="display:{{$parent.MapColShowing}}")
+                            #idCenterCol(class="{{mapColDef}}",
+                                ng-controller="MapColCtrl",
+                                style="display:{{$parent.mapColShowing}}")
                                 include MapCol.jade
 
-                            #idRightCol(class="col-xs-12 col-sm-6 col-md-4 container-mapcol",
-                                style="height:100%; width:100%;",
-                                ng-controller="RightColCtrl")
-                                style="display:{{$parent.RightColShowing}}")
+                            #idRightCol(class="col-xs-12 col-sm-6 col-md-4",
+                                ng-controller="RightColCtrl",
+                                style="display:{{$parent.rightColShowing}}")
                                 include RightCol.jade
 
-            div(id="Verbage", class="container-plugin", style="display:{{VerbVis}}", ng-controller="VerbageCtrl")
-                div(style="border:2px solid blue; margin:2px;overflow-y: auto;")
+            #DestWndDialogArcGIS
 
-                    #DestWndDialogArcGIS
-
-                    #PusherChannelDialog
+            #PusherChannelDialog

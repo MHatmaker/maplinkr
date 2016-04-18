@@ -14,6 +14,7 @@ var selectedMapType = 'arcgis';
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
         'controllers/SPACtrl',
+        'controllers/TopRowCtrl',
         'controllers/LeftColCtrl',
         'controllers/MapColCtrl',
         'controllers/RightColCtrl',
@@ -25,7 +26,7 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterArcGIS'
 
     ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
-            EmailCtrl, SpaCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
+            EmailCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
             MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
