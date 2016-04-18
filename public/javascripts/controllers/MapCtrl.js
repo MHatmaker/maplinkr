@@ -213,22 +213,25 @@
             width = document.body.clientWidth;
             console.log(" document.body.client : width " + width + ", height " + height);
             mapWrp = angular.element(document.getElementById("map_wrapper"));
-            /*
+
             console.log("map_wrapper height");
             console.debug(mapWrp);
             var hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
             console.log(hstr);
             mapWrp.css({"height": hstr});
 
-                 */
+            
             // var parentScope = $scope.$parent;
             // var colHgt = parentScope.bodyColHeight;
             // var mapCnv = angular.element(document.getElementById("map_wrapper"));
             // mapCnv.css({"height": hstr});
             // $scope.MapWdth = mapSize['small'];
+
+            /*
             hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
             console.log(hstr);
             mapWrp.css({"width": hstr});
+            */
 
             stup = currentMapType.start();
             console.debug(stup);

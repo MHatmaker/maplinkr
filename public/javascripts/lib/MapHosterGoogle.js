@@ -800,7 +800,7 @@
                 cntr,
                 cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat}),
                 view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-            document.getElementById("mppos").innerHTML = view;
+            // document.getElementById("mppos").innerHTML = view;
             if (cmp === false) {
                 tmpLon = cntrxG;
                 tmpLat = cntryG;
