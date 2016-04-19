@@ -15,13 +15,14 @@ div(class="row")
                 i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !mldata.isOpen, \
                 'fa-compress': mldata.isOpen}", style="padding-left: 0.5rem")
 
+div(class="row")
     #map_wrapper(ng-controller="MapCtrl",
         style="vertical-align:top; position: absolute; width: 100%; height: 100%;")
 
-    gmsearch
+        gmsearch
 
-    #DestWndDialogGoogle
-    #map_canvas(class="{{$parent.mapColDef}}", style="margin:0px; width: 100%; height: 100%;")
+        #DestWndDialogGoogle
+        #map_canvas(class="{{$parent.mapColDef}}", style="margin:0px; width: 100%; height: 100%;")
 
-    img#loadingImg(src="../stylesheets/images/loading.gif",
-        style="position:absolute; right:512px; top:256px; z-index:100;")
+        img#loadingImg(src="../stylesheets/images/loading.gif",
+            style="position:absolute; right:512px; top:256px; z-index:100;")
