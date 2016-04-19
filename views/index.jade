@@ -13,8 +13,8 @@ block content
                     button(type"button", class="btn btn-labeled btn-primary",
                         ng-click="summmaryCollapser()")
                         span(class="btn-label")
-                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !data.isCollapsed, \
-                            'fa-compress': data.isCollapsed}", style="padding-left: 0.5rem")
+                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isCollapsed, \
+                            'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem")
                             | {{data.ExpandSum}}
 
 

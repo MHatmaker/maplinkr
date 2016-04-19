@@ -73,10 +73,10 @@
                 // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
                 if ($scope.data.isCollapsed === true) {
                     $scope.data.isCollapsed = false;
-                    $scope.data.ExpandSum = "Expand";
+                    $scope.data.ExpandSum = "Collapse";
                 } else {
                     $scope.data.isCollapsed = true;
-                    $scope.data.ExpandSum = "Collapse";
+                    $scope.data.ExpandSum = "Expand";
                 }
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.data.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});

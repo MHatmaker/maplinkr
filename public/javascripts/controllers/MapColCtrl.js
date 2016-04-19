@@ -102,6 +102,10 @@
                 ]
             }
 */
+            $scope.onExpandMapClicked = function () {
+                alert("onExpandMapClicked");
+            };
+
             $scope.onMapLinkrClicked = function () {
                 console.log("onMapLinkrClicked");
 

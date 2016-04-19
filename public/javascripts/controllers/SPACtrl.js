@@ -31,7 +31,7 @@
                 $scope.MasterSiteVis = "inline";
             } else {
                 $scope.MasterSiteVis = "none";
-            };
+            }
 
             $inj = angular.injector(['app']);
             serv = $inj.get('CurrentMapTypeService');
@@ -67,6 +67,27 @@
 
             // from ModelessTest prooject
 
+            $scope.onExpandMapClicked = function () {
+                console.log("onExpandMapClicked");
+                if ($scope.data.expanded === true) {
+                    $scope.data.expanded = false;
+                    $scope.topRowShowing = 'block';
+                    $scope.leftColShowing = 'block';
+                    $scope.mapColShowing = 'block';
+                    $scope.rightColShowing = 'block';
+                    $scope.mapColDef = "col-xs-12 col-sm-6 col-md-4";
+                    $scope.data.shrinkgrowtext = "Expand Map";
+
+                } else {
+                    $scope.data.expanded = true;
+                    $scope.topRowShowing = 'none';
+                    $scope.leftColShowing = 'none';
+                    $scope.mapColShowing = 'none';
+                    $scope.rightColShowing = 'none';
+                    $scope.mapColDef = "col-xs-12";
+                    $scope.data.shrinkgrowtext = "Shrink Map";
+                }
+            };
             $scope.onExpandClicked = function () {
                 if ($scope.data.expanded === true) {
                     $scope.data.expanded = false;

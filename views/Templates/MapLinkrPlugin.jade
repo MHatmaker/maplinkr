@@ -21,8 +21,8 @@ mixin collapseGroup(groupId, cardId, groupname, heading)
 
 
 div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
-    aria-labelledby="mapLinkrLabel", aria-hidden="true")
-    div(class="modal-content")
+    aria-labelledby="mapLinkrLabel", aria-hidden="true", style="margin-left: -10px; margin-right: -10px;")
+    div(class="modal-content", style="margin-left: -10px; margin-right: -10px;")
         div(class="modal-header")
             span
                 div(id="mapLinkrLabel", class="modal-title col-sm-12", style="font-size: 1.5rem")
@@ -30,7 +30,7 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                     button(type="button", class="close col-sm-1 col-xs-6",
                         data-dismiss="modal", aria-hidden="true", ng-click="cancel()") &times
 
-        div(class="modal-body")
+        div(class="modal-body", style="margin-left: -10px; margin-right: -10px;")
             div(id="mapLinkrInfo", role="tablist", aria-multiselectable="true")
                 +collapseGroup('idLatestNews', 'idLatestNewsCard', 'news', 'MapLinkr News')
                                 div(style='font-size:1.25em;border:2px solid red;margin:1px;padding:2px;')
