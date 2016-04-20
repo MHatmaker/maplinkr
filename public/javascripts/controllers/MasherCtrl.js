@@ -85,13 +85,32 @@
             };
             selfMethods.summmaryCollapser = $scope.summmaryCollapser;
 
-
-            console.debug(selfMethods);
-
             $scope.windowResized = function () {
-                $scope.$broadcast('windowResized');
+                var height = document.body.clientHeight,
+                    width = document.body.clientWidth,
+                    mapWrp = angular.element(document.getElementById("map_wrapper")),
+                    rightCol = angular.element(document.getElementById("idRightColOuter")),
+                    hstr = "",
+                    mq;
+
+                console.log(" document.body.client : width " + width + ", height " + height);
+                console.log("map_wrapper height");
+                console.debug(mapWrp);
+                hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
+                console.log(hstr);
+                mapWrp.css({"height": hstr});
+                var mq = window.matchMedia('@media all and (max-width: 700px)');
+                if(mq.matches) {
+                    // the width of browser is more then 700px
+                } else {
+                    // the width of browser is less then 700px
+                    rightCol.css({"top": hstr});
+                }
+
             };
-            selfMethods.windowResized = $scope.windowResized;
+            // selfMethods.windowResized = $scope.windowResized;
+            // window.addEventListener('resize', $scope.windowResized);
+
 
             $scope.showMeTheMapClicked = function () {
                 // var currentPageTemplate;
@@ -252,7 +271,7 @@
             App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
 
             //calling tellAngular on resize event
-            window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
+            // window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
 
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService');

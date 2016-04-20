@@ -56,11 +56,11 @@ block append content
                                         seems to work 100% of the time.  Apartments.com might even
                                         replace their logo with a smiling Golden Retriever.
 
-                div(class="flex3")
+                div
                     #idContainerBody(class="container-body container")
-                        #idBody(class="bodyMap row-eq-height")
+                        #idBody(class="bodyMap row")
 
-                            #idLeftCol(class="col-xs-12 col-sm-6 col-md-4",
+                            #idLeftColOuter(class="col-xs-12 col-sm-6 col-md-4",
                                 ng-controller="LeftColCtrl",
                                 style="display:{{$parent.leftColShowing}}")
                                 include LeftCol.jade
@@ -70,7 +70,7 @@ block append content
                                 style="display:{{$parent.mapColShowing}}")
                                 include MapCol.jade
 
-                            #idRightCol(class="col-xs-12 col-sm-6 col-md-4",
+                            #idRightColOuter(class="col-xs-12 col-sm-6 col-md-4",
                                 ng-controller="RightColCtrl",
                                 style="display:{{$parent.rightColShowing}}")
                                 include RightCol.jade
