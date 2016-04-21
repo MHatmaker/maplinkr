@@ -519,13 +519,13 @@
                             evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
                             gmQSvc = $inj.get('GoogleQueryService');
-                            scope = gmQSvc.getPusherDialogScope();
+                            // scope = gmQSvc.getPusherDialogScope();
                             // currentVerbVis = gmQSvc.setDialogVisibility(true);
                             // if (StompSetupCtrl.isInstantiated() == false) {
                             //     new StompSetupCtrl()
                             // }
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), scope, openNewDisplay);
+                                AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
 
@@ -569,21 +569,16 @@
                         gmQSvc = $inj.get('GoogleQueryService');
                         // currentVerbVis = gmQSvc.setDialogVisibility(true);
                         scope = gmQSvc.getQueryDestinationDialogScope('google');
-                        setTimeout(function () {
-                            scope.$apply(function () {
-                                // rootScope.$broadcast('ShowWindowSelectorModalEvent');
-                                scope.showDestDialog(
-                                    onAcceptDestination,
-                                    scope,
-                                    {
-                                        'id' : null,
-                                        'title' : searchInput.value,
-                                        'snippet' : 'No snippet available',
-                                        'icon' : 'stylesheets/images/googlemap.png'
-                                    }
-                                );
-                            });
-                        }, 100);
+                        scope.showDestDialog(
+                            onAcceptDestination,
+                            scope,
+                            {
+                                'id' : null,
+                                'title' : searchInput.value,
+                                'snippet' : 'No snippet available',
+                                'icon' : 'stylesheets/images/googlemap.png'
+                            }
+                        );
                     } else {
                         console.log('searchBox.getPlaces() still returned no results');
                     }

@@ -106,6 +106,9 @@
                 $modalInstance.dismiss('cancel');
             };
 
+            $scope.$on('displayLinkerEvent', function (event, data) {
+                refreshLinker();
+            });
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -113,10 +116,10 @@
                     lnkrTxt,
                     lnkrSmbl;
                 if (lnkrSymbol && lnkrText) {
-                    lnkrTxt =  $scope.$parent.data.ExpandPlug;
+                    lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
                     lnkrText.innerHTML = lnkrTxt;
                     console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
+                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.verbageExpandCollapse + ".png";
                     lnkrSymbol.src = lnkrSmbl;
                     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }
@@ -126,9 +129,9 @@
                 var minMaxText = document.getElementById("idMinMaxText"),
                     minMaxSymbol = document.getElementById("idMinMaxSymbol");
                 if (minMaxText && minMaxSymbol) {
-                    minMaxText.innerHTML = $scope.$parent.data.ExpandSite;
+                    minMaxText.innerHTML = $scope.$parent.$parent.data.ExpandSite;
                     console.log("refresh MinMax Text with " + minMaxText.innerHTML);
-                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.data.webSiteVisible + ".png";
+                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.$parent.data.webSiteVisible + ".png";
                     console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
                 }
             }
@@ -183,6 +186,8 @@
                     console.log('minmaxr[0].onclick   mapMaximizerEvent');
                     event.stopPropagation();
                     contextScope.$emit('mapMaximizerEvent');
+                    contextScope.$apply();
+                    refreshMinMax();
                 });
 
                 lnkrText = document.getElementById("idLinkerText");
@@ -196,9 +201,9 @@
                     refreshMinMax();
                 }, refreshDelay);
             }
+
             selfMethods.placeCustomControls = placeCustomControls;
             console.debug(selfMethods);
-
 
             $scope.gsearchVisible = mptp === 'google' ?  'block' : 'none';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
@@ -220,7 +225,7 @@
             console.log(hstr);
             mapWrp.css({"height": hstr});
 
-            
+
             // var parentScope = $scope.$parent;
             // var colHgt = parentScope.bodyColHeight;
             // var mapCnv = angular.element(document.getElementById("map_wrapper"));

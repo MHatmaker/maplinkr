@@ -62,17 +62,15 @@ block append content
 
                             #idLeftColOuter(class="col-xs-12 col-sm-6 col-md-4",
                                 ng-controller="LeftColCtrl",
-                                style="display:{{$parent.leftColShowing}}")
+                                style="display:{{$parent.data.leftColShowing}}")
                                 include LeftCol.jade
 
-                            #idCenterCol(class="{{mapColDef}}",
+                            #idCenterCol(class="{{$parent.data.mapColDef}}",
                                 ng-controller="MapColCtrl",
-                                style="display:{{$parent.mapColShowing}}")
+                                style="display:{{$parent.data.mapColShowing}}")
                                 include MapCol.jade
 
                             #idRightColOuter(class="col-xs-12 col-sm-6 col-md-4",
                                 ng-controller="RightColCtrl",
-                                style="display:{{$parent.rightColShowing}}")
+                                style="display:{{$parent.data.rightColShowing}}")
                                 include RightCol.jade
-
-            

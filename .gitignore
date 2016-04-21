@@ -52,4 +52,5 @@ plugins/*
 public/javascripts/lib/ionic/*
 script.js
 .swp
+gitpass
 

@@ -87,7 +87,8 @@
                 },
                 'callback' : null,
                 'isOpen' : false,
-                'mapLinkrBtnText' : 'Show MapLinkr'
+                'mapLinkrBtnText' : 'Show MapLinkr',
+                'ExpandPlug' : "Show MapLinkr"
             };
 /*
                 itmCollapsed = [
@@ -105,6 +106,10 @@
             $scope.onExpandMapClicked = function () {
                 alert("onExpandMapClicked");
             };
+
+            $scope.$on('displayLinkerEvent', function (event, data) {
+                $scope.onMapLinkrClicked();
+            });
 
             $scope.onMapLinkrClicked = function () {
                 console.log("onMapLinkrClicked");

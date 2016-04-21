@@ -23,7 +23,8 @@
             'isInitialized' : false,
             'PusherClient' : null,
             'userName' : '',
-            'isInstantiated' : false
+            'isInstantiated' : false,
+            displayPusherDialog : null
         },
             $inj,
             serv,
@@ -86,6 +87,7 @@
             };
 
             $scope.displayPusherDialog = function () {
+                // selfdict.scope = $scope;
                 // selfdict.scope.showModal(true);
                 console.log("displayPusherDialog");
                 var tmplt = ' \
@@ -138,6 +140,7 @@
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
 
             };
+            selfdict.displayPusherDialog = $scope.displayPusherDialog;
 
             $scope.hitEnter = function (evt) {
                 if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
@@ -281,13 +284,11 @@
         };
         selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
 
-        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, scope, cbfn) {
+        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
-            selfdict.scope = scope;
-            selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
-            selfdict.scope.displayPusherDialog();
+            selfdict.displayPusherDialog();
         };
 
 
