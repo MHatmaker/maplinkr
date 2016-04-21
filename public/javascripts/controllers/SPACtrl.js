@@ -23,7 +23,7 @@
                 leftColShowing : 'block',
                 mapColShowing : 'block',
                 rightColShowing : 'block',
-                mapColDef : 'col-xs-10 col-sm-6 col-md-4,'
+                mapColDef : 'col-xs-12 col-sm-6 col-md-4,'
             };
 
             var startupView = AgoNewWindowConfig.getStartupView(),
@@ -95,21 +95,37 @@
             //     $scope.onExpPlugClick(visibility);
             // });
 
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+
             $scope.windowResized = function () {
                 var height = document.body.clientHeight,
                     width = document.body.clientWidth,
-                    mapWrp = angular.element(document.getElementById("map_wrapper")),
+                    mapWrp = angular.element(document.getElementById("idCenterCol")),
                     rightCol = angular.element(document.getElementById("idRightColOuter")),
                     hstr = "",
                     mq;
 
+                height = height - utils.getElemHeight('idMasterSiteControlRow') -
+                    utils.getElemHeight('idMasterSiteSummary') -
+                    utils.getElemHeight('idSiteTopRow');
                 console.log(" document.body.client : width " + width + ", height " + height);
                 console.log("map_wrapper height");
                 console.debug(mapWrp);
-                hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
+                hstr = String.format("{0}px", utils.toFixedOne(height)); // * 0.7));
                 console.log(hstr);
                 mapWrp.css({"height": hstr});
-                mq = window.matchMedia('@media all and (max-width: 600px)');
+                $scope.safeApply();
+                /*
+                mq = window.matchMedia('@media all and (max-width: 700px)');
                 if (mq.matches) {
                     // the width of browser is more then 700px
                     rightCol.css({"top": 0});
@@ -117,7 +133,7 @@
                     // the width of browser is less then 700px
                     rightCol.css({"top": hstr});
                 }
-
+                */
             };
             selfMethods.windowResized = $scope.windowResized;
             window.addEventListener('resize', $scope.windowResized);

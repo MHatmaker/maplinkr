@@ -4,12 +4,12 @@ extends layout
 block content
 
     #idMasherCtrl(ng-controller="MasherCtrl", ng-cloak, class="ng-cloak")
-        #idMasterSite(class="container-mastersite masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor",
+        #idMasterSite(class="masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor",
             ng-cloak, class="ng-cloak")
 
             #idMasterSiteControlRow(ng-cloak, class="ng-cloak")
 
-                #idMasterSiteExpander(class="mastersitecontrol-expander")
+                #idMasterSiteExpander
                     button(type"button", class="btn btn-labeled btn-primary",
                         ng-click="summmaryCollapser()")
                         span(class="btn-label")
@@ -44,5 +44,6 @@ block content
 
 
 
-            div(id="ngview_container", style="position:relative;height:100%;width:100%;", ng-cloak, class="ng-cloak")
+            div(id="ngview_container",
+                style="position:relative;height:100%;width:100%;", ng-cloak, class="ng-cloak")
                 ng-view
