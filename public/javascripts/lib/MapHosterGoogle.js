@@ -367,7 +367,8 @@
                     service,
                     openNewDisplay,
                     setupNewDisplay,
-                    onAcceptDestination;
+                    onAcceptDestination,
+                    scope;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
                 mapReady = true;
@@ -433,6 +434,7 @@
                 }
 
                 function setVerbageVisibility(tf) {
+                    /*
                     var $inj,
                         gmQSvc;
                     $inj = angular.injector(['app']);
@@ -441,7 +443,7 @@
                         gmQSvc.setDialogVisibility(tf);
                     } else {
                         gmQSvc.setDialogVisibility(tf);
-                    }
+                    }*/
                 }
 
                 setupNewDisplay = function (channel, userName, wndIndex) {
@@ -517,9 +519,13 @@
                             evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
                             gmQSvc = $inj.get('GoogleQueryService');
-                            currentVerbVis = gmQSvc.setDialogVisibility(true);
+                            scope = gmQSvc.getPusherDialogScope();
+                            // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                            // if (StompSetupCtrl.isInstantiated() == false) {
+                            //     new StompSetupCtrl()
+                            // }
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), openNewDisplay);
+                                AgoNewWindowConfig.getUserName(), scope, openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
 
@@ -550,8 +556,8 @@
 
                     var checkBounds = searchBox.getBounds(),
                         $inj,
-                        gmQSvc,
-                        scope;
+                        gmQSvc;
+                        // scope;
                     console.log(formatBounds(checkBounds));
                     // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
                     //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
@@ -568,6 +574,7 @@
                                 // rootScope.$broadcast('ShowWindowSelectorModalEvent');
                                 scope.showDestDialog(
                                     onAcceptDestination,
+                                    scope,
                                     {
                                         'id' : null,
                                         'title' : searchInput.value,

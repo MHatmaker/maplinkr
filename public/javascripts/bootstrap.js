@@ -214,6 +214,13 @@ var selectedMapType = 'arcgis';
                             return scope;
                         },
 
+                        getPusherDialogScope = function () {
+                            var elemID = 'PusherChannelDialog',
+                                e = document.getElementById(elemID),
+                                scope = angular.element(e).scope();
+                            return scope;
+                        },
+
                         setDialogVisibility = function (tf) {
                             var e = document.getElementById('Verbage'),
                                 scope = angular.element(e).scope(),
@@ -236,6 +243,7 @@ var selectedMapType = 'arcgis';
                         getQueryDct: getQueryDct,
                         setQuery : setQuery,
                         getQueryDestinationDialogScope : getQueryDestinationDialogScope,
+                        getPusherDialogScope : getPusherDialogScope,
                         setDialogVisibility : setDialogVisibility,
                         getRootScope : getRootScope
                     };

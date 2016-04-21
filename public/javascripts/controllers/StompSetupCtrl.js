@@ -6,7 +6,8 @@
     "use strict";
 
     console.log('StompSetup setup');
-    var areWeInitialized = false;
+    var areWeInitialized = false,
+        areWeInstantiated = false;
     define([
         'angular',
         'lib/AgoNewWindowConfig',
@@ -21,7 +22,8 @@
             'callbackFunction' : null,
             'isInitialized' : false,
             'PusherClient' : null,
-            'userName' : ''
+            'userName' : '',
+            'isInstantiated' : false
         },
             $inj,
             serv,
@@ -30,6 +32,7 @@
 
         function StompSetupCtrl($scope, $uibModal) {
             console.log("in StompSetupCtrl");
+            selfdict.isInstantiated = areWeInitialized = true;
             $scope.privateChannelMashover = AgoNewWindowConfig.masherChannel();
             selfdict.scope = $scope;
             selfdict.scope.userName = selfdict.userName;
@@ -158,6 +161,10 @@
             return areWeInitialized;
         };
 
+        StompSetupCtrl.prototype.isInstantiated = function () {
+            return areWeInstantiated;
+        };
+
         StompSetupCtrl.prototype.PusherClient = function (eventDct, channel, userName, cbfn) {
             var pusher,
                 channelBind,
@@ -274,9 +281,10 @@
         };
         selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
 
-        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn) {
+        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, scope, cbfn) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
+            selfdict.scope = scope;
             selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
             selfdict.scope.displayPusherDialog();
@@ -315,7 +323,8 @@
 
         return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient,
                   createPusherClient : StompSetupCtrl.prototype.createPusherClient,
-                  isInitialized : StompSetupCtrl.prototype.isInitialized};
+                  isInitialized : StompSetupCtrl.prototype.isInitialized,
+                  isInstantiated : StompSetupCtrl.prototype.isInstantiated};
 
     });
 
