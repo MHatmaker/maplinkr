@@ -213,18 +213,21 @@
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
+            utils.getMapContainerHeight($scope);
+
             currentMapType = mapTypes[mptp];
+            /*
             height = document.body.clientHeight;
             width = document.body.clientWidth;
             console.log(" document.body.client : width " + width + ", height " + height);
-            mapWrp = angular.element(document.getElementById("map_wrapper"));
+            mapWrp = angular.element(document.getElementById("IDMapContainerRow"));
 
             console.log("map_wrapper height");
             console.debug(mapWrp);
             var hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
             console.log(hstr);
             mapWrp.css({"height": hstr});
-
+*/
 
             // var parentScope = $scope.$parent;
             // var colHgt = parentScope.bodyColHeight;

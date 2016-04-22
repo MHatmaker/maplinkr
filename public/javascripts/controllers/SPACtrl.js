@@ -77,6 +77,7 @@
                 } else {
                     setDisplayStyles(true);
                 }
+                $scope.windowResized();
             };
             $scope.onExpandClicked = function () {
                 if ($scope.data.expanded === true) {
@@ -107,23 +108,30 @@
             };
 
             $scope.windowResized = function () {
+                $scope.safeApply();
+                utils.getMapContainerHeight($scope);
+                /*
                 var height = document.body.clientHeight,
                     width = document.body.clientWidth,
-                    mapWrp = angular.element(document.getElementById("idCenterCol")),
+                    mapWrp = angular.element(document.getElementById("IDMapContainerRow")),
                     rightCol = angular.element(document.getElementById("idRightColOuter")),
                     hstr = "",
                     mq;
 
+                $scope.safeApply();
                 height = height - utils.getElemHeight('idMasterSiteControlRow') -
                     utils.getElemHeight('idMasterSiteSummary') -
-                    utils.getElemHeight('idSiteTopRow');
+                    utils.getElemHeight('idSiteTopRow') -
+                    utils.getElemHeight('IDLinkrButtonRow');
                 console.log(" document.body.client : width " + width + ", height " + height);
                 console.log("map_wrapper height");
                 console.debug(mapWrp);
                 hstr = String.format("{0}px", utils.toFixedOne(height)); // * 0.7));
                 console.log(hstr);
                 mapWrp.css({"height": hstr});
+                */
                 $scope.safeApply();
+
                 /*
                 mq = window.matchMedia('@media all and (max-width: 700px)');
                 if (mq.matches) {

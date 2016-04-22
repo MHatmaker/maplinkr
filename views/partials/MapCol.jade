@@ -1,5 +1,5 @@
 
-div(class="row")
+#IDLinkrButtonRow(class="row")
     div
         button(type="button", class="btn btn-labeled btn-primary",
             ng-click="$parent.onExpandMapClicked()")
@@ -15,7 +15,7 @@ div(class="row")
                 i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !mldata.isOpen, \
                 'fa-compress': mldata.isOpen}", style="padding-left: 0.5rem")
 
-div(class="row")
+#IDMapContainerRow(class="row")
     #map_wrapper(ng-controller="MapCtrl",
         style="vertical-align:top; position: absolute; width: 100%; height: 100%;")
 
