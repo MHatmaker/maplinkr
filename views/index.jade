@@ -10,13 +10,12 @@ block content
             #idMasterSiteControlRow(ng-cloak, class="ng-cloak")
 
                 #idMasterSiteExpander
-                    button(type"button", class="btn btn-labeled btn-primary",
+                    button(type"button", class="btn btn-labeled",
                         ng-click="summmaryCollapser()")
                         span(class="btn-label")
                             i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isCollapsed, \
-                            'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem")
-                            | {{data.ExpandSum}}
-
+                            'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                            | {{data.ExpandSum}}  MapLinkr Demo Master Website
 
             #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
                 .mashbackground

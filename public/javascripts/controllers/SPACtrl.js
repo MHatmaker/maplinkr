@@ -67,21 +67,26 @@
             setTimeout(function () {
                 $scope.$apply(setDisplayStyles);
             }, 1000);
-            $scope.$on('mapMaximizerEvent', function (event, data) {
-                $scope.onExpandMapClicked();
-            });
 
             // from ModelessTest project
-
-            $scope.onExpandMapClicked = function () {
-                console.log("onExpandMapClicked");
+            $scope.handleMapExpandShrinkEvents = function () {
                 if ($scope.data.expanded === true) {
                     setDisplayStyles(false);
                 } else {
                     setDisplayStyles(true);
                 }
                 $scope.windowResized();
+            }
+
+            $scope.onExpandMapClicked = function () {
+                console.log("onExpandMapClicked");
+                $scope.handleMapExpandShrinkEvents();
             };
+
+            $scope.$on('mapMaximizerEvent', function (event, data) {
+                $scope.handleMapExpandShrinkEvents();
+            });
+
             $scope.onExpandClicked = function () {
                 if ($scope.data.expanded === true) {
                     setDisplayStyles(false);
