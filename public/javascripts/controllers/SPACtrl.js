@@ -42,6 +42,7 @@
                 }
             };
             $scope.windowResized = function () {
+                window.resizeBy(0,0);
                 $scope.safeApply();
                 utils.getMapContainerHeight($scope);
                 setTimeout(function () {
@@ -96,7 +97,10 @@
                 } else {
                     $scope.setDisplayStyles(true);
                 }
-                $scope.windowResized();
+                // $scope.windowResized();
+                setTimeout(function () {
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                }, 1000);
             }
 
             $scope.onExpandMapClicked = function () {
@@ -116,7 +120,11 @@
                     $scope.setDisplayStyles(true);
                     $scope.data.mapColShowing = 'none';
                 }
-                $scope.windowResized();
+                setTimeout(function () {
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                }, 1000);
+
+                // $scope.windowResized();
             };
             // $scope.$on('displayLinkerEvent', function (event, data) {
             //     var visibility = 'whatever';
@@ -126,12 +134,15 @@
             //     $scope.onExpPlugClick(visibility);
             // });
 
-            $scope.siteCollapser = function (tf) {
+            $scope.summaryCollapser = function (tf) {
                 $scope.hideWebSiteOnStartup = tf;
                 utils.getMapContainerHeight($scope);
                 // $scope.onExpSiteClick();
+                setTimeout(function () {
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                }, 1000);
             };
-            selfMethods.siteCollapser = $scope.siteCollapser;
+            selfMethods.summaryCollapser = $scope.summaryCollapser;
 
             $scope.windowResized();
         }
@@ -139,7 +150,7 @@
         function hideWebsite() {
             console.log("hideWebsite");
 
-            selfMethods.siteCollapser(true);
+            selfMethods.summaryCollapser(true);
         }
 
         function init(App) {

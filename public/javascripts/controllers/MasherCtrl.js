@@ -82,9 +82,12 @@
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
                 // $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.data.isCollapsed);
+                setTimeout(function () {
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                }, 1000);
             };
             selfMethods.summmaryCollapser = $scope.summmaryCollapser;
-
+/*
             $scope.windowResized = function () {
                 var height = document.body.clientHeight,
                     width = document.body.clientWidth,
@@ -108,9 +111,19 @@
                 }
 
             };
+*/
+            $scope.windowResized = function () {
+                window.resizeBy(0,0);
+                $scope.safeApply();
+                utils.getMapContainerHeight($scope);
+                setTimeout(function () {
+                    $scope.$apply(console.log("Timer fired"));
+                }, 1000);
+                $scope.safeApply();
+            };
+
             // selfMethods.windowResized = $scope.windowResized;
             // window.addEventListener('resize', $scope.windowResized);
-
 
             $scope.showMeTheMapClicked = function () {
                 // var currentPageTemplate;

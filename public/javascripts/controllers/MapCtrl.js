@@ -301,7 +301,7 @@
                     this.$apply(fn);
                 }
             };
-            
+
             $scope.$on('WebSiteVisibilityEvent', function (event, args) {
                 console.log('WebSiteVisibilityEvent');
                 var VerbVis = args.verbage;
@@ -318,25 +318,6 @@
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
                 refreshMinMax();
-            });
-
-            $scope.$on('CollapseVerbageEvent', function (event, args) {
-                var VerbVis = args.verbage;
-                    // isWebSiteVisible = args.website === 'flex' ? true : false;
-                // $scope.isMapExpanded = ! $scope.isMapExpanded;
-                $scope.isMapExpanded = VerbVis === 'flex' ? false : true;
-                // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
-
-                // if(isWebSiteVisible){
-                     // $scope.MapWdth = VerbVis === 'none' ? mapSize['medium'] : mapSize['small'];
-                // }
-                // else{
-                     // $scope.MapWdth = mapSize['full'];
-                // }
-                // resizeMap($scope.isMapExpanded, $scope.map);
-                currentMapType.resizeVerbage($scope.isMapExpanded);
-                window.resizeBy(0, 0);
-                refreshLinker();
             });
 
             $scope.$on('searchClickEvent', function (event, args) {
