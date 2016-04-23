@@ -242,17 +242,24 @@
                     mapCanvas = angular.element(document.getElementById("map_canvas")),
                     rightCol = angular.element(document.getElementById("idRightColOuter")),
                     mapCanRoot = angular.element(document.getElementById("map_canvas_root")),
-                    hstr = "";
+                    hstr = "",
+                    mq;
 
                 // scope.safeApply();
-                height = document.body.clientHeight;
-                height = height - getElemHeight('idMasterSiteControlRow') -
-                    getElemHeight('idMasterSiteSummary') -
-                    getElemHeight('idSiteTopRow') -
-                    getElemHeight('IDLinkrButtonRow');
-                console.log(" document.body.client : width " + width + ", height " + height);
-                console.log("map container height");
-                console.debug(mapCon);
+                mq = window.matchMedia('@media all and (max-width: 700px)');
+                if(mq.matches) {
+                    // the width of browser is more then 700px
+                    height - height - getElemHeight('IDLinkrButtonRow');
+                } else {
+                    // the width of browser is less then 700px
+                    height = height - getElemHeight('idMasterSiteControlRow') -
+                        getElemHeight('idMasterSiteSummary') -
+                        getElemHeight('idSiteTopRow') -
+                        getElemHeight('IDLinkrButtonRow');
+                    console.log(" document.body.client : width " + width + ", height " + height);
+                    console.log("map container height");
+                    console.debug(mapCon);
+                }
                 hstr = String.format("{0}px",toFixedOne(height)); // * 0.7));
                 console.log(hstr);
                 // alert(hstr);

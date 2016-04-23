@@ -99,7 +99,7 @@
                 hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
                 console.log(hstr);
                 mapWrp.css({"height": hstr});
-                var mq = window.matchMedia('@media all and (max-width: 700px)');
+                mq = window.matchMedia('@media all and (max-width: 700px)');
                 if(mq.matches) {
                     // the width of browser is more then 700px
                 } else {

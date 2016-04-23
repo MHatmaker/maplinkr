@@ -433,19 +433,6 @@
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
 
-                function setVerbageVisibility(tf) {
-                    /*
-                    var $inj,
-                        gmQSvc;
-                    $inj = angular.injector(['app']);
-                    gmQSvc = $inj.get('GoogleQueryService');
-                    if (currentVerbVis === 'none') {
-                        gmQSvc.setDialogVisibility(tf);
-                    } else {
-                        gmQSvc.setDialogVisibility(tf);
-                    }*/
-                }
-
                 setupNewDisplay = function (channel, userName, wndIndex) {
 
                     var
@@ -481,13 +468,6 @@
                             window.focus();
                         }
                     }
-                    setVerbageVisibility(false);
-                    // if (currentVerbVis === 'none') {
-                    //     $inj = angular.injector(['app']);
-                    //     gmQSvc = $inj.get('GoogleQueryService');
-                    //     gmQSvc.setDialogVisibility(false);
-                    // }
-
                 };
 
                 openNewDisplay = function (channel, userName) {
@@ -528,23 +508,10 @@
                                 AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
-
-                            setVerbageVisibility(false);
-                            // if (currentVerbVis === 'none') {
-                            //     $inj = angular.injector(['app']);
-                            //     gmQSvc = $inj.get('GoogleQueryService');
-                            //     gmQSvc.setDialogVisibility(false);
-                            // }
                         }
 
                     } else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
-                        setVerbageVisibility(false);
-                        // if (currentVerbVis === 'none') {
-                        //     $inj = angular.injector(['app']);
-                        //     gmQSvc = $inj.get('GoogleQueryService');
-                        //     gmQSvc.setDialogVisibility(false);
-                        // }
                     }
                 };
 
