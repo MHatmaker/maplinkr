@@ -17,7 +17,7 @@
         function SPACtrl($scope) {
             console.debug('SPACtrl - initialize collapsed bool');
             $scope.data = {
-                expanded : false,
+                subsiteExpanded : false,
                 shrinkgrowtext : "Expand Map",
                 topRowShowing : 'block',
                 leftColShowing : 'block',
@@ -31,6 +31,26 @@
                 $inj,
                 serv;
 
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+            $scope.windowResized = function () {
+                $scope.safeApply();
+                utils.getMapContainerHeight($scope);
+                setTimeout(function () {
+                    $scope.$apply(console.log("Timer fired"));
+                }, 1000);
+                $scope.safeApply();
+            };
+            selfMethods.windowResized = $scope.windowResized;
+            window.addEventListener('resize', $scope.windowResized);
 
             if (startupView.summary === true) {
                 $scope.MasterSiteVis = "inline";
@@ -44,36 +64,37 @@
 
             $scope.curMapSys = curmapsys;
 
-            function setDisplayStyles(tf) {
+            $scope.setDisplayStyles = function (tf) {
                 var dsp = tf ? 'block' : 'none';
 
-                $scope.data.expanded = tf;
+                $scope.data.subsiteExpanded = tf;
                 $scope.webSiteVisible = $scope.data.webSiteVisible = tf ? "Expand" : "Collapse";
                 $scope.leftColShowing = $scope.topRowShowing = $scope.rightColShowing = dsp;
                 $scope.data.leftColShowing = $scope.data.topRowShowing = $scope.data.rightColShowing = dsp;
                 $scope.data.mapColDef = tf ? "col-xs-12 col-sm-6 col-md-4" : "col-xs-12";
                 $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
                 $scope.data.ExpandSite = $scope.ExpandSite = tf ? "Max Map" : "Min Map";
-                $scope.$broadcast('CollapseSummaryCompletionEvent');
+                utils.getMapContainerHeight($scope);
             }
             if (startupView.website === true) {
                 $scope.hideWebSiteOnStartup = false;
-                setDisplayStyles(true);
+                $scope.setDisplayStyles(true);
             } else {
                 $scope.hideWebSiteOnStartup = true;
                 $scope.data.mapColShowing = 'none';
-                setDisplayStyles(false);
+                $scope.setDisplayStyles(false);
             }
+            $scope.safeApply();
             setTimeout(function () {
-                $scope.$apply(setDisplayStyles);
+                $scope.$apply($scope.setDisplayStyles);
             }, 1000);
 
             // from ModelessTest project
             $scope.handleMapExpandShrinkEvents = function () {
-                if ($scope.data.expanded === true) {
-                    setDisplayStyles(false);
+                if ($scope.data.subsiteExpanded === true) {
+                    $scope.setDisplayStyles(false);
                 } else {
-                    setDisplayStyles(true);
+                    $scope.setDisplayStyles(true);
                 }
                 $scope.windowResized();
             }
@@ -88,14 +109,14 @@
             });
 
             $scope.onExpandClicked = function () {
-                if ($scope.data.expanded === true) {
-                    setDisplayStyles(false);
+                if ($scope.data.subsiteExpanded === true) {
+                    $scope.setDisplayStyles(false);
                     $scope.data.mapColShowing = 'block';
                 } else {
-                    setDisplayStyles(true);
+                    $scope.setDisplayStyles(true);
                     $scope.data.mapColShowing = 'none';
                 }
-                utils.getMapContainerHeight($scope);
+                $scope.windowResized();
             };
             // $scope.$on('displayLinkerEvent', function (event, data) {
             //     var visibility = 'whatever';
@@ -105,55 +126,6 @@
             //     $scope.onExpPlugClick(visibility);
             // });
 
-            $scope.safeApply = function (fn) {
-                var phase = this.$root.$$phase;
-                if (phase === '$apply' || phase === '$digest') {
-                    if (fn && (typeof fn === 'function')) {
-                        fn();
-                    }
-                } else {
-                    this.$apply(fn);
-                }
-            };
-
-            $scope.windowResized = function () {
-                $scope.safeApply();
-                utils.getMapContainerHeight($scope);
-                /*
-                var height = document.body.clientHeight,
-                    width = document.body.clientWidth,
-                    mapWrp = angular.element(document.getElementById("IDMapContainerRow")),
-                    rightCol = angular.element(document.getElementById("idRightColOuter")),
-                    hstr = "",
-                    mq;
-
-                $scope.safeApply();
-                height = height - utils.getElemHeight('idMasterSiteControlRow') -
-                    utils.getElemHeight('idMasterSiteSummary') -
-                    utils.getElemHeight('idSiteTopRow') -
-                    utils.getElemHeight('IDLinkrButtonRow');
-                console.log(" document.body.client : width " + width + ", height " + height);
-                console.log("map_wrapper height");
-                console.debug(mapWrp);
-                hstr = String.format("{0}px", utils.toFixedOne(height)); // * 0.7));
-                console.log(hstr);
-                mapWrp.css({"height": hstr});
-                */
-                $scope.safeApply();
-
-                /*
-                mq = window.matchMedia('@media all and (max-width: 700px)');
-                if (mq.matches) {
-                    // the width of browser is more then 700px
-                    rightCol.css({"top": 0});
-                } else {
-                    // the width of browser is less then 700px
-                    rightCol.css({"top": hstr});
-                }
-                */
-            };
-            selfMethods.windowResized = $scope.windowResized;
-            window.addEventListener('resize', $scope.windowResized);
             $scope.siteCollapser = function (tf) {
                 $scope.hideWebSiteOnStartup = tf;
                 utils.getMapContainerHeight($scope);
@@ -161,7 +133,7 @@
             };
             selfMethods.siteCollapser = $scope.siteCollapser;
 
-            // $scope.windowResized();
+            $scope.windowResized();
         }
 
         function hideWebsite() {

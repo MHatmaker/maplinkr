@@ -272,25 +272,36 @@
 
             $scope.$on('CollapseSummaryCompletionEvent', function (event, args) {
                 console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
-                utils.getMapContainerHeight($scope);
-                window.resizeBy(0, 0);
-                // currentMapType.resizeMapPane($scope.isMapExpanded);
-                currentMapType.resizeWebSite($scope.isMapExpanded);
 
-                // var btn = document.getElementById("idExpSiteButton");
-                // btn.click();
-                // refreshLinker();
-                // refreshMinMax();
                 var refreshDelay = 1000;
+                $scope.safeApply();
+
+                utils.getMapContainerHeight($scope);
                 setTimeout(function () {
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
                     refreshLinker();
                     refreshMinMax();
-                // } );
+                    $scope.safeApply();
+                    window.resizeBy(0, 0);
+                    // currentMapType.resizeMapPane($scope.isMapExpanded);
+                    $scope.safeApply();
+                    currentMapType.resizeWebSite($scope.isMapExpanded);
+
                 }, refreshDelay);
             });
 
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+            
             $scope.$on('WebSiteVisibilityEvent', function (event, args) {
                 console.log('WebSiteVisibilityEvent');
                 var VerbVis = args.verbage;
