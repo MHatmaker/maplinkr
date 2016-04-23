@@ -54,6 +54,7 @@
                 $scope.data.mapColDef = tf ? "col-xs-12 col-sm-6 col-md-4" : "col-xs-12";
                 $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
                 $scope.data.ExpandSite = $scope.ExpandSite = tf ? "Max Map" : "Min Map";
+                $scope.$broadcast('CollapseSummaryCompletionEvent');
             }
             if (startupView.website === true) {
                 $scope.hideWebSiteOnStartup = false;
@@ -63,7 +64,9 @@
                 $scope.data.mapColShowing = 'none';
                 setDisplayStyles(false);
             }
-
+            setTimeout(function () {
+                $scope.$apply(setDisplayStyles);
+            }, 1000);
             $scope.$on('mapMaximizerEvent', function (event, data) {
                 $scope.onExpandMapClicked();
             });
@@ -87,6 +90,7 @@
                     setDisplayStyles(true);
                     $scope.data.mapColShowing = 'none';
                 }
+                utils.getMapContainerHeight($scope);
             };
             // $scope.$on('displayLinkerEvent', function (event, data) {
             //     var visibility = 'whatever';
@@ -147,11 +151,12 @@
             window.addEventListener('resize', $scope.windowResized);
             $scope.siteCollapser = function (tf) {
                 $scope.hideWebSiteOnStartup = tf;
+                utils.getMapContainerHeight($scope);
                 // $scope.onExpSiteClick();
             };
             selfMethods.siteCollapser = $scope.siteCollapser;
 
-            $scope.windowResized();
+            // $scope.windowResized();
         }
 
         function hideWebsite() {

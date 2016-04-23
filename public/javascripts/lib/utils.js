@@ -245,6 +245,7 @@
                     hstr = "";
 
                 // scope.safeApply();
+                height = document.body.clientHeight;
                 height = height - getElemHeight('idMasterSiteControlRow') -
                     getElemHeight('idMasterSiteSummary') -
                     getElemHeight('idSiteTopRow') -
@@ -254,7 +255,7 @@
                 console.debug(mapCon);
                 hstr = String.format("{0}px",toFixedOne(height)); // * 0.7));
                 console.log(hstr);
-                alert(hstr);
+                // alert(hstr);
                 mapCon.css({"height": hstr});
                 mapWrap.css({"height": '100%'});
                 mapCanvas.css({"height": '100%'});

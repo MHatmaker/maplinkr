@@ -213,7 +213,7 @@
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
-            utils.getMapContainerHeight($scope);
+            // utils.getMapContainerHeight($scope);
 
             currentMapType = mapTypes[mptp];
             /*
@@ -272,6 +272,7 @@
 
             $scope.$on('CollapseSummaryCompletionEvent', function (event, args) {
                 console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
+                utils.getMapContainerHeight($scope);
                 window.resizeBy(0, 0);
                 // currentMapType.resizeMapPane($scope.isMapExpanded);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
