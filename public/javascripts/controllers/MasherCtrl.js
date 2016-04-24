@@ -62,14 +62,14 @@
             $scope.$on('$viewContentLoaded', function () {
                 if (isFirstViewing === false) {
                     if (startupView.summary === true) {
-                        $scope.summmaryCollapser();
+                        $scope.summaryCollapser();
                     }
                 } else {
                     isFirstViewing = false;
                 }
             });
 
-            $scope.summmaryCollapser = function () {
+            $scope.summaryCollapser = function () {
                 // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
                 if ($scope.data.isCollapsed === true) {
                     $scope.data.isCollapsed = false;
@@ -86,7 +86,7 @@
                     $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
                 }, 1000);
             };
-            selfMethods.summmaryCollapser = $scope.summmaryCollapser;
+            selfMethods.summaryCollapser = $scope.summaryCollapser;
 /*
             $scope.windowResized = function () {
                 var height = document.body.clientHeight,
@@ -142,7 +142,7 @@
                 // $scope.$apply();
                 // $window.location.href = $scope.currentTab.url;
                 // $window.location.reload();
-                // $scope.summmaryCollapser();
+                // $scope.summaryCollapser();
 
                 // currentPageTemplate = $route.current.loadedTemplateUrl;
                 // console.log("currentPageTemplate : " + currentPageTemplate);
@@ -361,7 +361,7 @@
             isFirstViewing = false;
 
             if (startupView.summary === true) {
-                selfMethods.summmaryCollapser();
+                selfMethods.summaryCollapser();
             }
         }
 

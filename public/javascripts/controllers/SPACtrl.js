@@ -80,14 +80,16 @@
             if (startupView.website === true) {
                 $scope.hideWebSiteOnStartup = false;
                 $scope.setDisplayStyles(true);
+                $scope.data.mapColShowing = 'block';
             } else {
                 $scope.hideWebSiteOnStartup = true;
-                $scope.data.mapColShowing = 'none';
+                $scope.data.mapColShowing = 'block';
                 $scope.setDisplayStyles(false);
             }
             $scope.safeApply();
             setTimeout(function () {
-                $scope.$apply($scope.setDisplayStyles);
+                window.resizeBy(0,0);
+                $scope.$apply(console.log("Initiating system with Collapsed website."));
             }, 1000);
 
             // from ModelessTest project
@@ -97,10 +99,9 @@
                 } else {
                     $scope.setDisplayStyles(true);
                 }
-                // $scope.windowResized();
                 setTimeout(function () {
                     $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 1000);
+                }, 500);
             }
 
             $scope.onExpandMapClicked = function () {
@@ -112,35 +113,13 @@
                 $scope.handleMapExpandShrinkEvents();
             });
 
-            $scope.onExpandClicked = function () {
-                if ($scope.data.subsiteExpanded === true) {
-                    $scope.setDisplayStyles(false);
-                    $scope.data.mapColShowing = 'block';
-                } else {
-                    $scope.setDisplayStyles(true);
-                    $scope.data.mapColShowing = 'none';
-                }
-                setTimeout(function () {
-                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 1000);
-
-                // $scope.windowResized();
-            };
-            // $scope.$on('displayLinkerEvent', function (event, data) {
-            //     var visibility = 'whatever';
-            //     if (data && data.visibility) {
-            //        visibility = data.visibility;
-            //     }
-            //     $scope.onExpPlugClick(visibility);
-            // });
-
             $scope.summaryCollapser = function (tf) {
                 $scope.hideWebSiteOnStartup = tf;
                 utils.getMapContainerHeight($scope);
                 // $scope.onExpSiteClick();
                 setTimeout(function () {
                     $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 1000);
+                }, 500);
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;
 
@@ -149,7 +128,7 @@
 
         function hideWebsite() {
             console.log("hideWebsite");
-
+            $scope.$emit('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
             selfMethods.summaryCollapser(true);
         }
 
