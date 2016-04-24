@@ -63,7 +63,6 @@
                 mapWrp,
                 hstr,
                 stup,
-                lflt,
                 tmpltName,
                 elem,
                 aelem;
@@ -138,7 +137,7 @@
 
             function placeCustomControls() {
                 /*jslint unparam: true*/
-                function stopLintUnusedComplaints(lnkr, minmaxr, lflt, aelem) {
+                function stopLintUnusedComplaints(lnkr, minmaxr, aelem) {
                     console.log("stopLintUnusedComplaints");
                 }
 
@@ -172,7 +171,7 @@
                     lnkrText,
                     lnkrSymbol,
                     refreshDelay;
-                stopLintUnusedComplaints(lnkr, minmaxr, lflt, aelem);
+                stopLintUnusedComplaints(lnkr, minmaxr, aelem);
 
                 lnkrdiv.addEventListener('click', function (event) {
                     console.log('lnkr[0].onclick   displayLinkerEvent');
@@ -243,14 +242,15 @@
 
             stup = currentMapType.start();
             console.debug(stup);
-            lflt = currentMapType.config(null);
-            $scope.map = currentMapType.getMap();
-            // $scope.map.width = mapSize['medium'];
-            // $scope.MapWdth = mapSize['small'];
-            $scope.isMapExpanded = false;
-            console.debug($scope.map);
-            // resizeMap($scope.isMapExpanded, $scope.map);
-            currentMapType.resizeWebSite($scope.isMapExpanded);
+            //
+            // currentMapType.config(null);
+            // $scope.map = currentMapType.getMap();
+            // // $scope.map.width = mapSize['medium'];
+            // // $scope.MapWdth = mapSize['small'];
+            // $scope.isMapExpanded = false;
+            // console.debug($scope.map);
+            // // resizeMap($scope.isMapExpanded, $scope.map);
+            // currentMapType.resizeWebSite($scope.isMapExpanded);
             if (mptp !== 'arcgis') {
                 placeCustomControls();
             }
@@ -263,6 +263,18 @@
                 aelem = angular.element(elem);
                 // aelem.trigger('return');
             }
+
+            function configureCurrentMapType () {
+                currentMapType.config(null);
+                $scope.map = currentMapType.getMap();
+                // $scope.map.width = mapSize['medium'];
+                // $scope.MapWdth = mapSize['small'];
+                $scope.isMapExpanded = false;
+                console.debug($scope.map);
+                // resizeMap($scope.isMapExpanded, $scope.map);
+            }
+
+            selfMethods.configureCurrentMapType = configureCurrentMapType;
 
             $scope.$on('CollapseSummaryEvent', function (event, args) {
                 // currentMapType.resizeMapPane($scope.isMapExpanded);
@@ -282,6 +294,7 @@
                     console.log("REFRESH LINKER AND MINMAX");
                     refreshLinker();
                     refreshMinMax();
+                    configureCurrentMapType();
                     $scope.safeApply();
                     window.resizeBy(0, 0);
                     // currentMapType.resizeMapPane($scope.isMapExpanded);
@@ -394,13 +407,20 @@
             selfMethods.placeCustomControls();
         };
 
+        MapCtrl.prototype.configureCurrentMapType = function () {
+            console.log("configureCurrentMapType");
+            selfMethods.configureCurrentMapType();
+        };
+
         function init(App) {
             console.log('MapCtrl init');
+            App = angular.module('app');
             App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', MapCtrl]);
             return MapCtrl;
         }
 
-        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls };
+        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls,
+            configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType, ctor : MapCtrl};
 
     });
 

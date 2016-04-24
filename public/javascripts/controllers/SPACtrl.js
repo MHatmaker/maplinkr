@@ -10,12 +10,13 @@
     "use strict";
 
     console.log('SPACtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'lib/utils'], function (angular, AgoNewWindowConfig, utils) {
+    define(['angular', 'lib/AgoNewWindowConfig', 'lib/utils', 'controllers/MapCtrl'],
+        function (angular, AgoNewWindowConfig, utils, MapCtrl) {
         console.log('SPACtrl define');
         var selfMethods = {};
 
         function SPACtrl($scope) {
-            console.debug('SPACtrl - initialize collapsed bool');
+            console.log('SPACtrl - initialize collapsed bool');
             $scope.data = {
                 subsiteExpanded : false,
                 shrinkgrowtext : "Expand Map",
@@ -88,8 +89,12 @@
             }
             $scope.safeApply();
             setTimeout(function () {
+                utils.getMapContainerHeight($scope);
                 window.resizeBy(0,0);
-                $scope.$apply(console.log("Initiating system with Collapsed website."));
+                $scope.safeApply(console.log("Initiating system with Collapsed website."));
+                // var mapctrl = MapCtrl.start();
+                // var ctor = mapctrl();
+                // MapCtrl.configureCurrentMapType(curmapsys);
             }, 1000);
 
             // from ModelessTest project
