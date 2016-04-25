@@ -111,29 +111,29 @@
             });
 
             function refreshLinker() {
-                var lnkrText = document.getElementById("idLinkerText"),
-                    lnkrSymbol = document.getElementById("idLinkerSymbol"),
-                    lnkrTxt,
-                    lnkrSmbl;
-                if (lnkrSymbol && lnkrText) {
-                    lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
-                    lnkrText.innerHTML = lnkrTxt;
-                    console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.verbageExpandCollapse + ".png";
-                    lnkrSymbol.src = lnkrSmbl;
-                    console.log("refresh Linker Symbol with " + lnkrSymbol.src);
-                }
+                // var lnkrText = document.getElementById("idLinkerText"),
+                //     lnkrSymbol = document.getElementById("idLinkerSymbol"),
+                //     lnkrTxt,
+                //     lnkrSmbl;
+                // if (lnkrSymbol && lnkrText) {
+                //     lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
+                //     lnkrText.innerHTML = lnkrTxt;
+                //     console.log("refresh Linker Text with " + lnkrText.innerHTML);
+                //     lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.verbageExpandCollapse + ".png";
+                //     lnkrSymbol.src = lnkrSmbl;
+                //     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
+                // }
             }
 
             function refreshMinMax() {
-                var minMaxText = document.getElementById("idMinMaxText"),
-                    minMaxSymbol = document.getElementById("idMinMaxSymbol");
-                if (minMaxText && minMaxSymbol) {
-                    minMaxText.innerHTML = $scope.$parent.$parent.data.ExpandSite;
-                    console.log("refresh MinMax Text with " + minMaxText.innerHTML);
-                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.$parent.data.webSiteVisible + ".png";
-                    console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
-                }
+                // var minMaxText = document.getElementById("idMinMaxText"),
+                //     minMaxSymbol = document.getElementById("idMinMaxSymbol");
+                // if (minMaxText && minMaxSymbol) {
+                //     minMaxText.innerHTML = $scope.$parent.$parent.data.ExpandSite;
+                //     console.log("refresh MinMax Text with " + minMaxText.innerHTML);
+                //     minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.$parent.data.webSiteVisible + ".png";
+                //     console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
+                // }
             }
 
             function placeCustomControls() {
@@ -145,21 +145,35 @@
                 var contextScope = $scope,
                     cnvs = angular.element(document.getElementById(whichCanvas)),
 
-                    templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
-                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </label> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
-                      </div>',
+                    templateMinMaxr = ' \
+                        <div class="lnkrclass"> \
+                            <button type="button" id="mapmaximizerDirectiveId" class="btn btn-labeled btn-primary" \
+                                    ng-click="$parent.onExpandMapClicked()" \
+                                <span<class=$parent."btn-label"> {{$parent.$parent.$parent.data.shrinkgrowtext}} \
+                                    i<class="fa fa-expand fa-lg" \
+                                    ng-class="{\'fa-expand\': $parent.$parent.data.subsiteExpanded, \
+                                    \'fa-compress\': !$parent.$parent.data.subsiteExpanded}" \
+                                    style="padding-left: 0.5rem"/> \
+                                </span> \
+                            </button> \
+                                <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                        </div>',
 
-                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
-                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </label> \
-                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </div>',
+                    templateLnkr = ' \
+                        <div class="lnkrclass"> \
+                            <button<type="button" id="linkerDirectiveId" class="btn btn-labeled btn-primary" \
+                                    ng-click="$parent.onMapLinkrClicked()" \
+                                span<class="btn-label"> {{$parent.mldata.mapLinkrBtnText}}} \
+                                    i<class="fa fa-expand fa-lg" \
+                                    ng-class="{\'fa-expand\': $parent.$parent.mldata.isOpen, \
+                                    \'fa-compress\': !$parent.$parent.mldata.isOpen}" \
+                                    style="padding-left: 0.5rem"/> \
+                                </span> \
+                            </button> \
+                            <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                        </div>',
 
                     lnkr1 = angular.element(templateLnkr),
                     lnkr = cnvs.append(lnkr1),
@@ -295,17 +309,21 @@
                 setTimeout(function () {
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
-                    refreshLinker();
-                    refreshMinMax();
+                    // refreshLinker();
+                    // refreshMinMax();
                     if(curMapTypeInitialized === false) {
                         configureCurrentMapType();
                     }
+                    if (mptp !== 'arcgis') {
+                        placeCustomControls();
+                    }
+                    /*
                     $scope.safeApply();
                     window.resizeBy(0, 0);
                     // currentMapType.resizeMapPane($scope.isMapExpanded);
                     $scope.safeApply();
                     currentMapType.resizeWebSite($scope.isMapExpanded);
-
+                    */
                 }, refreshDelay);
             });
 

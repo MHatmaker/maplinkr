@@ -247,11 +247,15 @@
 
                 // scope.safeApply();
                 mq = window.matchMedia('@media all and (max-width: 700px)');
-                if(mq.matches) {
+                if(mq.matches  || width < 700) {
                     // the width of browser is more then 700px
-                    height - height - getElemHeight('IDLinkrButtonRow');
+                    console.log("Media might be phone");
+                    console.log(height);
+                    height = height - getElemHeight('IDLinkrButtonRow');
+                    console.log(height);
                 } else {
                     // the width of browser is less then 700px
+                    console.log("Media might be wide browser");
                     height = height - getElemHeight('idMasterSiteControlRow') -
                         getElemHeight('idMasterSiteSummary') -
                         getElemHeight('idSiteTopRow') -
