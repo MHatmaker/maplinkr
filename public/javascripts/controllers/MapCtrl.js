@@ -23,6 +23,7 @@
                     'arcgis' : StartupArcGIS},
             currentMapType = null,
             whichCanvas = 'map_canvas',
+            curMapTypeInitialized = false,
             // mapSize = {
             //     'small' : '40%',
             //     'medium' : '70%',
@@ -271,6 +272,7 @@
                 // $scope.MapWdth = mapSize['small'];
                 $scope.isMapExpanded = false;
                 console.debug($scope.map);
+                curMapTypeInitialized = true;
                 // resizeMap($scope.isMapExpanded, $scope.map);
             }
 
@@ -288,13 +290,16 @@
                 var refreshDelay = 1000;
                 $scope.safeApply();
 
+                // alert("get dimensions and pause");
                 utils.getMapContainerHeight($scope);
                 setTimeout(function () {
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
                     refreshLinker();
                     refreshMinMax();
-                    configureCurrentMapType();
+                    if(curMapTypeInitialized === false) {
+                        configureCurrentMapType();
+                    }
                     $scope.safeApply();
                     window.resizeBy(0, 0);
                     // currentMapType.resizeMapPane($scope.isMapExpanded);

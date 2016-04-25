@@ -106,7 +106,7 @@
                 }
                 setTimeout(function () {
                     $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 500);
+                }, 1000);
             }
 
             $scope.onExpandMapClicked = function () {

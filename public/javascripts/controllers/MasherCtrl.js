@@ -69,8 +69,11 @@
                 }
             });
 
-            $scope.summaryCollapser = function () {
+            $scope.summaryCollapser = function (sumCollapsed) {
                 // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
+                if (sumCollapsed && sumCollapsed.startValue === false) {
+                    $scope.data.isCollapsed = false;
+                }
                 if ($scope.data.isCollapsed === true) {
                     $scope.data.isCollapsed = false;
                     $scope.data.ExpandSum = "Collapse";
@@ -360,8 +363,11 @@
             console.log("startMapSystem");
             isFirstViewing = false;
 
-            if (startupView.summary === true) {
-                selfMethods.summaryCollapser();
+            if (1) { //startupView.summary === true) {
+
+                setTimeout(function () {
+                    selfMethods.summaryCollapser({'startValue' : false});
+                }, 1000);
             }
         }
 
