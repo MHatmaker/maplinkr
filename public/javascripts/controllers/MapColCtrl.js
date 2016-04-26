@@ -87,8 +87,9 @@
                 },
                 'callback' : null,
                 'isOpen' : false,
-                'mapLinkrBtnText' : 'Show MapLinkr',
-                'ExpandPlug' : "Show MapLinkr"
+                'mapLinkrBtnImage' : "Expand",
+                'mapLinkrBtnText' : 'MapLinkr',
+                'ExpandPlug' : "MapLinkr"
             };
 /*
                 itmCollapsed = [
@@ -115,7 +116,8 @@
                 console.log("onMapLinkrClicked");
 
                 $scope.mldata.isOpen = true;
-                $scope.mldata.mapLinkrBtnText = "Hide MapLinkr";
+                $scope.mldata.mapLinkrBtnImage = "Collapse";
+                $scope.mldata.mapLinkrBtnText = "MapLinkr";
                 console.debug($scope.mldata);
 
                 var modalInstance = $uibModal.open({
@@ -134,12 +136,16 @@
                 modalInstance.result.then(function (msg) {
                     console.log("return from showing MapLinkr`dialog");
                     console.log(msg);
-                    $scope.mldata.mapLinkrBtnText = "Show MapLinkr";
+                    $scope.mldata.mapLinkrBtnText = "MapLinkr";
                     $scope.mldata.isOpen = false;
+                    $scope.mldata.mapLinkrBtnImage = "Expand";
+                    $scope.$broadcast("MapLinkrClosedEvent");
                 }, function () {
                     console.log('MapLinkr Modal dismissed at: ' + new Date());
-                    $scope.mldata.mapLinkrBtnText = "Show MapLinkr";
+                    $scope.mldata.mapLinkrBtnText = "MapLinkr";
                     $scope.mldata.isOpen = false;
+                    $scope.mldata.mapLinkrBtnImage = "Expand";
+                    $scope.$broadcast("MapLinkrClosedEvent");
                 });
             };
 

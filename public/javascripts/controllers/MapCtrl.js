@@ -24,6 +24,7 @@
             currentMapType = null,
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
+            lnkrMinMaxInstalled = false,
             // mapSize = {
             //     'small' : '40%',
             //     'medium' : '70%',
@@ -119,11 +120,15 @@
                     lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
                     lnkrText.innerHTML = lnkrTxt;
                     console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.verbageExpandCollapse + ".png";
+                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.mapLinkrBtnImage + ".png";
                     lnkrSymbol.src = lnkrSmbl;
                     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }
             }
+
+            $scope.$on("MapLinkrClosedEvent" , function (event, args) {
+                refreshLinker();
+            });
 
             function refreshMinMax() {
                 var minMaxText = document.getElementById("idMinMaxText"),
@@ -137,98 +142,103 @@
             }
 
             function placeCustomControls() {
-                /*jslint unparam: true*/
-                function stopLintUnusedComplaints(lnkr, minmaxr, aelem) {
-                    console.log("stopLintUnusedComplaints");
-                }
+                //if (lnkrMinMaxInstalled === false) {
+                //    lnkrMinMaxInstalled = true;
+                if (document.getElementById("linkerDirectiveId") === null) {
 
-                var contextScope = $scope,
-                    cnvs = angular.element(document.getElementById(whichCanvas)),
-                    templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
-	                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-	                      </label> \
-	                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
-	                      </div>',
+                    /*jslint unparam: true*/
+                    function stopLintUnusedComplaints(lnkr, minmaxr, aelem) {
+                        console.log("stopLintUnusedComplaints");
+                    }
 
-	                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
-	                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
-	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-	                      </label> \
-	                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-	                      </div>',
-/*
-                    templateMinMaxr = ' \
-                        <div class="lnkrclass"> \
-                            <button type="button" id="mapmaximizerDirectiveId" class="btn btn-labeled btn-primary" \
-                                    ng-click="$parent.onExpandMapClicked()" \
-                                <span<class=$parent."btn-label"> {{$parent.$parent.$parent.data.shrinkgrowtext}} \
-                                    i<class="fa fa-expand fa-lg" \
-                                    ng-class="{\'fa-expand\': $parent.$parent.data.subsiteExpanded, \
-                                    \'fa-compress\': !$parent.$parent.data.subsiteExpanded}" \
-                                    style="padding-left: 0.5rem"/> \
-                                </span> \
-                            </button> \
+                    var contextScope = $scope,
+                        cnvs = angular.element(document.getElementById(whichCanvas)),
+                        templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
+    	                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </label> \
+    	                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
+    	                      </div>',
+
+    	                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
+    	                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </label> \
+    	                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </div>',
+    /*
+                        templateMinMaxr = ' \
+                            <div class="lnkrclass"> \
+                                <button type="button" id="mapmaximizerDirectiveId" class="btn btn-labeled btn-primary" \
+                                        ng-click="$parent.onExpandMapClicked()" \
+                                    <span<class=$parent."btn-label"> {{$parent.$parent.$parent.data.shrinkgrowtext}} \
+                                        i<class="fa fa-expand fa-lg" \
+                                        ng-class="{\'fa-expand\': $parent.$parent.data.subsiteExpanded, \
+                                        \'fa-compress\': !$parent.$parent.data.subsiteExpanded}" \
+                                        style="padding-left: 0.5rem"/> \
+                                    </span> \
+                                </button> \
+                                    <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                        style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            </div>',
+
+                        templateLnkr = ' \
+                            <div class="lnkrclass"> \
+                                <button<type="button" id="linkerDirectiveId" class="btn btn-labeled btn-primary" \
+                                        ng-click="$parent.onMapLinkrClicked()" \
+                                    span<class="btn-label"> {{$parent.mldata.mapLinkrBtnText}}} \
+                                        i<class="fa fa-expand fa-lg" \
+                                        ng-class="{\'fa-expand\': $parent.$parent.mldata.isOpen, \
+                                        \'fa-compress\': !$parent.$parent.mldata.isOpen}" \
+                                        style="padding-left: 0.5rem"/> \
+                                    </span> \
+                                </button> \
                                 <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
                                     style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                        </div>',
+                            </div>',
+    */
+                        lnkr1 = angular.element(templateLnkr),
+                        lnkr = cnvs.append(lnkr1),
 
-                    templateLnkr = ' \
-                        <div class="lnkrclass"> \
-                            <button<type="button" id="linkerDirectiveId" class="btn btn-labeled btn-primary" \
-                                    ng-click="$parent.onMapLinkrClicked()" \
-                                span<class="btn-label"> {{$parent.mldata.mapLinkrBtnText}}} \
-                                    i<class="fa fa-expand fa-lg" \
-                                    ng-class="{\'fa-expand\': $parent.$parent.mldata.isOpen, \
-                                    \'fa-compress\': !$parent.$parent.mldata.isOpen}" \
-                                    style="padding-left: 0.5rem"/> \
-                                </span> \
-                            </button> \
-                            <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                                style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                        </div>',
-*/
-                    lnkr1 = angular.element(templateLnkr),
-                    lnkr = cnvs.append(lnkr1),
+                        minmaxr1 = angular.element(templateMinMaxr),
+                        minmaxr = cnvs.append(minmaxr1),
 
-                    minmaxr1 = angular.element(templateMinMaxr),
-                    minmaxr = cnvs.append(minmaxr1),
+                        lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
+                        mnmxdiv,
+                        lnkrText,
+                        lnkrSymbol,
+                        refreshDelay;
+                    stopLintUnusedComplaints(lnkr, minmaxr, aelem);
 
-                    lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
-                    mnmxdiv,
-                    lnkrText,
-                    lnkrSymbol,
-                    refreshDelay;
-                stopLintUnusedComplaints(lnkr, minmaxr, aelem);
+                    lnkrdiv.addEventListener('click', function (event) {
+                        console.log('lnkr[0].onclick   displayLinkerEvent');
+                        event.stopPropagation();
+                        contextScope.$emit('displayLinkerEvent');
+                    });
 
-                lnkrdiv.addEventListener('click', function (event) {
-                    console.log('lnkr[0].onclick   displayLinkerEvent');
-                    event.stopPropagation();
-                    contextScope.$emit('displayLinkerEvent');
-                });
+                    mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
 
-                mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
+                    mnmxdiv.addEventListener('click', function (event) {
+                        console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                        event.stopPropagation();
+                        contextScope.$emit('mapMaximizerEvent');
+                        contextScope.$apply();
+                        refreshMinMax();
+                    });
 
-                mnmxdiv.addEventListener('click', function (event) {
-                    console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                    event.stopPropagation();
-                    contextScope.$emit('mapMaximizerEvent');
-                    contextScope.$apply();
-                    refreshMinMax();
-                });
-
-                lnkrText = document.getElementById("idLinkerText");
-                lnkrSymbol = document.getElementById("idLinkerSymbol");
-                refreshDelay = 2000;
-                if (lnkrSymbol && lnkrText) {
-                    refreshDelay = 10;
+                    lnkrText = document.getElementById("idLinkerText");
+                    lnkrSymbol = document.getElementById("idLinkerSymbol");
+                    refreshDelay = 2000;
+                    if (lnkrSymbol && lnkrText) {
+                        refreshDelay = 10;
+                    }
+                    setTimeout(function () {
+                        refreshLinker();
+                        refreshMinMax();
+                    }, refreshDelay);
                 }
-                setTimeout(function () {
-                    refreshLinker();
-                    refreshMinMax();
-                }, refreshDelay);
             }
 
             selfMethods.placeCustomControls = placeCustomControls;
