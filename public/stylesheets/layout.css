@@ -199,10 +199,12 @@ svg-menu{
 
 .lnkcontrol_margin {
     margin-top: 80px;
+    margin-right: 20px;
 }
 
 .maxcontrol_margin {
     margin-top: 125px;
+    margin-right: 20px;
 }
 
 .lnkmaxcontrol_symbol {
