@@ -87,7 +87,7 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                             div(class="card")
                                                 div(class="card-header", role="tab", id="destHeader{{key}}")
                                                     button(type="button", class="btn btn-labelled btn-primary", data-toggle="collapse",
-                                                        ng-click="onShowHideDestChoiceClicked(key)", style="padding-left: 0.1rem;",
+                                                        ng-click="onShowHideDestChoiceInstructionsClicked(key)", style="padding-left: 0.1rem;",
                                                         data-target="#destChoice{{key}}", aria-expanded="false",
                                                         aria-controls="destChoice{{key}}")
                                                         span(class="btn-label")
@@ -115,7 +115,7 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
 
                 +collapseGroup('idGroupSearcher', 'idGroupSearcherCard', 'groups', 'AGO Group Search')
 
-                                #SearchGroup
+                                #SearchGroup(ng-controller="SearcherCtrlGrp")
                                     div(id="searchToolWrapperGroup")
                                         span
                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
@@ -124,15 +124,18 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
 
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span
-                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp", ng-enter="findArcGISGroup();")
-                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled', type="submit", value="Submit", id="groupFinderSubmit", class='btn', ng-click="findArcGISGroup();")
+                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp",
+                                                ng-enter="findArcGISGroup();")
+                                            input(name="groupFinderSubmit", ng-disabled='findGrpDisabled',
+                                                type="submit", value="Submit", id="groupFinderSubmit", class='btn',
+                                                ng-click="findArcGISGroup();")
 
-                                        div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
-                                            div(id="grpGridId", ng-grid="gridGrpOptions", ng-style="getGridStyleGroup()", style="margin:1px;")
+                                        div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#6E9096;")
+                                            div(id="grpGridId", ng-grid="gridGrpOptions", style="margin:1px;")
 
                 +collapseGroup('idMapSearcher', 'idMapSearcherCard', 'maps', 'AGO Map Search')
 
-                                #SearchMap
+                                #SearchMap(ng-controller="SearcherCtrlMap")
                                     div(id="searchToolWrapperMap")
                                         span
                                             label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
@@ -149,8 +152,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 value="Submit", id="mapFinderSubmit",
                                                 class='btn', ng-click="findArcGISGroupMaps();")
 
-                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;", ng-style="getGridStyleWrapper()")
-                                            div(id="mapGridId", ng-grid="gridMapOptions", ng-style="getGridStyleMap()", style="margin:1px;")
+                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;")
+                                            div(id="mapGridId", ng-grid="gridMapOptions", style="height: 450px; margin:1px;")
 
                 +collapseGroup('idSharingInstructionsHeader', 'idSharingInstructionsCard', 'shareinst', 'Sharing Overview')
 

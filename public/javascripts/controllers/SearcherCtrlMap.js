@@ -14,8 +14,10 @@ angular.isUndefinedOrNull = function (val) {
         'angular',
         'lib/StartupArcGIS',
         'lib/MapHosterArcGIS',
-        'lib/utils'
-    ], function (angular, StartupArcGIS, MapHosterArcGIS, utils) {
+        'lib/utils',
+        'lib/AgoNewWindowConfig',
+        'lib/StompSetupCtrl'
+    ], function (angular, StartupArcGIS, MapHosterArcGIS, utils, AgoNewWindowConfig, StompSetupCtrl) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
             portalForSearch = null;
@@ -25,6 +27,7 @@ angular.isUndefinedOrNull = function (val) {
             var self = this,
                 selectedWebMapId = "Nada ID",
                 selectedWebMapTitle = "Nada Title",
+                onAcceptDestination,
                 pos;
 
             $scope.findMapDisabled = false;
@@ -54,6 +57,46 @@ angular.isUndefinedOrNull = function (val) {
                         'mapType' : MapHosterArcGIS
                     }
                 );
+            };
+
+/*
+            onAcceptDestination = function (destWnd) {
+                var curmph = self, $inj, evtSvc; //, gmQSvc;
+                if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
+                    StartupArcGIS.prepareWindow();
+                    if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                        $inj = angular.injector(['app']);
+                        evtSvc = $inj.get('StompEventHandlerService');
+                        serv = $inj.get('CurrentMapTypeService');
+                        curmph = serv.getSelectedMapType();
+                        evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                        evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+
+                        // gmQSvc = $inj.get('GoogleQueryService');
+                        // scope = gmQSvc.getPusherDialogScope();
+                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                        // if (StompSetupCtrl.isInstantiated() == false) {
+                        //     new StompSetupCtrl()
+                        // }
+                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                            AgoNewWindowConfig.getUserName(), openNewDisplay);
+                    } else {
+                        openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+                    }
+                    StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
+                }
+            };
+*/
+            onAcceptDestination = function (destWnd) {
+                var
+                    $inj = angular.injector(['app']),
+                    serv = $inj.get('CurrentMapTypeService'),
+                    selMph = serv.getSelectedMapType();
+                console.log("onAcceptDestination " + destWnd);
+                selMph.removeEventListeners();
+
+                console.log("onDestinationWindowSelected " + destWnd);
+                StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
             $scope.onDestinationWindowSelected = function (args) {
@@ -293,7 +336,26 @@ angular.isUndefinedOrNull = function (val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
 
+                var $inj = angular.injector(['app']),
+                    gmQSvc = $inj.get('GoogleQueryService'),
+                    scope = gmQSvc.getQueryDestinationDialogScope('arcgis'),
+                    serv = $inj.get('CurrentMapTypeService'),
+                    selMph = serv.getSelectedMapType();
+                selMph.removeEventListeners();
+
+                scope.showDestDialog(
+                    onAcceptDestination,
+                    scope,
+                    {
+                        'id' : info.id,
+                        'title' : info.title,
+                        'snippet' : info.snippet,
+                        'icon' : info.icon,
+                        'mapType' : info.mapType
+                    }
+                );
                 // $scope.showDestDialog($scope.onDestinationWindowSelected, info);
+                /*
                 $scope.showDestDialog(function (args) {
                     var destWnd = args.dstWnd,
                         $inj = angular.injector(['app']),
@@ -307,6 +369,7 @@ angular.isUndefinedOrNull = function (val) {
                 },
                     info);
                 // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
+                */
             };
         }
 

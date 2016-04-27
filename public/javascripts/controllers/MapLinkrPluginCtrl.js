@@ -37,7 +37,7 @@
                 $scope.mldata[clickedItem].isCollapsed = !$scope.mldata[clickedItem].isCollapsed;
             };
 
-            $scope.onShowHideDestChoiceClicked = function (clickedItem) {
+            $scope.onShowHideDestChoiceInstructionsClicked = function (clickedItem) {
                 var collapseTest = $scope.mldata.using.destchoices[clickedItem].details.isCollapsed,
                     itm = '',
                     strBefore = "test " + clickedItem + " against ",

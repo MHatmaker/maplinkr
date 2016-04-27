@@ -393,45 +393,45 @@
             This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
              */
             if (displayDestination === 'New Pop-up Window' || displayDestination === 'New Tab') {
-
-                $inj = angular.injector(['app']);
-                serv = $inj.get('CurrentMapTypeService');
-                curmph = serv.getSelectedMapType();
-
-                evtSvc = $inj.get('StompEventHandlerService');
-                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                evtSvc.addEvent('client-MapClickEvent', curmph.retrievedClick);
-
-                openNewDisplay = function (channel, userName) {
-                    url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
-                        "&channel=" + channel + "&userName=" + userName +
-                        "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                    if (referringMph) {
-                        url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
-                            "&channel=" + channel + "&userName=" + userName +
-                            "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                    }
-
-                    console.log("open new ArcGIS window with URI " + url);
-                    console.log("using channel " + channel + "with userName " + userName);
-                    AgoNewWindowConfig.setUrl(url);
-                    AgoNewWindowConfig.setUserName(userName);
-                    if (displayDestination === 'New Pop-up Window') {
-                        baseUrl = AgoNewWindowConfig.getbaseurl();
-                        window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
-                    } else {
-                        baseUrl = AgoNewWindowConfig.getbaseurl();
-                        window.open(baseUrl + "arcgis/" + url, '_blank');
-                        window.focus();
-                    }
-                };
-
-                if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                        AgoNewWindowConfig.getUserName(), openNewDisplay);
-                } else {
-                    openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
-                }
+                prepareWindow(newSelectedWebMapId, referringMph, displayDestination);
+                // $inj = angular.injector(['app']);
+                // serv = $inj.get('CurrentMapTypeService');
+                // curmph = serv.getSelectedMapType();
+                //
+                // evtSvc = $inj.get('StompEventHandlerService');
+                // evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                // evtSvc.addEvent('client-MapClickEvent', curmph.retrievedClick);
+                //
+                // openNewDisplay = function (channel, userName) {
+                //     url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                //         "&channel=" + channel + "&userName=" + userName +
+                //         "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                //     if (referringMph) {
+                //         url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
+                //             "&channel=" + channel + "&userName=" + userName +
+                //             "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                //     }
+                //
+                //     console.log("open new ArcGIS window with URI " + url);
+                //     console.log("using channel " + channel + "with userName " + userName);
+                //     AgoNewWindowConfig.setUrl(url);
+                //     AgoNewWindowConfig.setUserName(userName);
+                //     if (displayDestination === 'New Pop-up Window') {
+                //         baseUrl = AgoNewWindowConfig.getbaseurl();
+                //         window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                //     } else {
+                //         baseUrl = AgoNewWindowConfig.getbaseurl();
+                //         window.open(baseUrl + "arcgis/" + url, '_blank');
+                //         window.focus();
+                //     }
+                // };
+                //
+                // if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                //     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                //         AgoNewWindowConfig.getUserName(), openNewDisplay);
+                // } else {
+                //     openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+                // }
             } else {
                 /*
                 This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master site or opening the webmap from a url sent through a publish event.
@@ -442,6 +442,56 @@
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
                 initializePostProc(newSelectedWebMapId);
+            }
+        }
+
+        function prepareWindow(newSelectedWebMapId, referringMph, displayDestination) {
+
+            var curmph = MapHosterArcGIS,
+                $inj,
+                serv,
+                evtSvc,
+                url,
+                baseUrl,
+                openNewDisplay;
+
+            $inj = angular.injector(['app']);
+            serv = $inj.get('CurrentMapTypeService');
+            curmph = serv.getSelectedMapType();
+
+            evtSvc = $inj.get('StompEventHandlerService');
+            evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+            evtSvc.addEvent('client-MapClickEvent', curmph.retrievedClick);
+
+            openNewDisplay = function (channel, userName) {
+                url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                    "&channel=" + channel + "&userName=" + userName +
+                    "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                if (referringMph) {
+                    url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
+                        "&channel=" + channel + "&userName=" + userName +
+                        "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                }
+
+                console.log("open new ArcGIS window with URI " + url);
+                console.log("using channel " + channel + "with userName " + userName);
+                AgoNewWindowConfig.setUrl(url);
+                AgoNewWindowConfig.setUserName(userName);
+                if (displayDestination === 'New Pop-up Window') {
+                    baseUrl = AgoNewWindowConfig.getbaseurl();
+                    window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                } else {
+                    baseUrl = AgoNewWindowConfig.getbaseurl();
+                    window.open(baseUrl + "arcgis/" + url, '_blank');
+                    window.focus();
+                }
+            };
+
+            if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                    AgoNewWindowConfig.getUserName(), openNewDisplay);
+            } else {
+                openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
             }
         }
 
@@ -494,7 +544,8 @@
             replaceWebMap : initialize,
             resizeWebSite: resizeWebSiteVertical,
             resizeVerbage: resizeVerbageHorizontal,
-            resizeMapPane: resizeMapPane
+            resizeMapPane: resizeMapPane,
+            prepareWindow: prepareWindow
         };
 
     });
