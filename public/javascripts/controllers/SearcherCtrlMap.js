@@ -59,34 +59,6 @@ angular.isUndefinedOrNull = function (val) {
                 );
             };
 
-/*
-            onAcceptDestination = function (destWnd) {
-                var curmph = self, $inj, evtSvc; //, gmQSvc;
-                if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                    StartupArcGIS.prepareWindow();
-                    if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                        $inj = angular.injector(['app']);
-                        evtSvc = $inj.get('StompEventHandlerService');
-                        serv = $inj.get('CurrentMapTypeService');
-                        curmph = serv.getSelectedMapType();
-                        evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                        evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-
-                        // gmQSvc = $inj.get('GoogleQueryService');
-                        // scope = gmQSvc.getPusherDialogScope();
-                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        // if (StompSetupCtrl.isInstantiated() == false) {
-                        //     new StompSetupCtrl()
-                        // }
-                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                            AgoNewWindowConfig.getUserName(), openNewDisplay);
-                    } else {
-                        openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
-                    }
-                    StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
-                }
-            };
-*/
             onAcceptDestination = function (destWnd) {
                 var
                     $inj = angular.injector(['app']),
