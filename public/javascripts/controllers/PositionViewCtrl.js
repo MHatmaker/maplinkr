@@ -17,8 +17,12 @@
             evlat : 'evlat'
         };
         var keyToUpdate = 'coords';
+
         function PositionViewCtrl($scope) {
             console.debug('PositionViewCtrl - initialize dropdown for position selections');
+            var $inj = angular.injector(['app']),
+                serv = $inj.get('CurrentMapTypeService');
+            $scope.currentTab = serv.getMapTypeKey();
 
             $scope.viewOptions = [
             {
@@ -110,9 +114,9 @@
             $scope.safeApply();
 
             $scope.$watch($scope.$parent.mldata['positionview'].isCollapsed, function (newValue, oldValue) {
-                if ($scope.$parent.mldata['positionview'].isCollapsed === false) {
-                    $scope.$apply();
-                }
+                //if ($scope.$parent.mldata['positionview'].isCollapsed === false) {
+                    $scope.safeApply(fmtView);
+                //}
             });
         };
 
