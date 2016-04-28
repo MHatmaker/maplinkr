@@ -109,7 +109,9 @@
             };
 
             $scope.$on('displayLinkerEvent', function (event, data) {
-                $scope.onMapLinkrClicked();
+                if (data.visibility !== 'none') {
+                    $scope.onMapLinkrClicked();
+                }
             });
 
             $scope.onMapLinkrClicked = function () {

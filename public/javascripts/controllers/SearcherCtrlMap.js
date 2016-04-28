@@ -95,7 +95,7 @@ angular.isUndefinedOrNull = function (val) {
                 console.log("onAcceptDestination " + destWnd);
                 selMph.removeEventListeners();
 
-                console.log("onDestinationWindowSelected " + destWnd);
+                console.log("onAcceptDestination " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 

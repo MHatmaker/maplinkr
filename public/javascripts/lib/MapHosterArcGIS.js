@@ -417,7 +417,9 @@
                 tmpZm,
                 cntr;
 
-            document.getElementById("mppos").value = view;
+            if (document.getElementById("mppos") !== null) {
+                document.getElementById("mppos").value = view;
+            }
             if (cmp === false) {
                 tmpLon = cntrxG;
                 tmpLat = cntryG;

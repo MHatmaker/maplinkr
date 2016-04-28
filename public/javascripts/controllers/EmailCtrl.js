@@ -12,6 +12,9 @@
             var context = {
                 'fullUrl' : ''
             };
+            $scope.status = {
+                'isCopyMapLinkOpen' : true
+            }
 
             function resizeTextArea() {
                 var textarea = document.getElementById('UrlCopyFieldID');
@@ -47,6 +50,7 @@
                 return updtUrl;
             }
 
+            $scope.status.isCopyMapLinkOpen = false;
             $scope.fetchUrl = function () {
                 resizeTextArea();
                 var docEl = document.getElementById("UrlCopyFieldID"),
@@ -57,6 +61,7 @@
                 console.log("fetchUrl with : " + context.fullUrl);
 
                 labelDiv.css({"display" : "inline-block"});
+                $scope.status.isCopyMapLinkOpen = true;
             };
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
@@ -70,6 +75,7 @@
                     console.log('status.isCopyMapLinkOpen is ' + $scope.status.isCopyMapLinkOpen);
                     resizeTextArea();
                 } else {
+                    $scope.status.isCopyMapLinkOpen = false;
                     labelDiv.css({"display" : "none"});
                 }
             });

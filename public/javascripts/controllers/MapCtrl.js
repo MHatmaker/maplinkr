@@ -213,9 +213,10 @@
                     stopLintUnusedComplaints(lnkr, minmaxr, aelem);
 
                     lnkrdiv.addEventListener('click', function (event) {
+                        var data = {'visibility' : 'block'};
                         console.log('lnkr[0].onclick   displayLinkerEvent');
                         event.stopPropagation();
-                        contextScope.$emit('displayLinkerEvent');
+                        contextScope.$emit('displayLinkerEvent', data);
                     });
 
                     mnmxdiv = document.getElementsByClassName('mnmxclass')[0];

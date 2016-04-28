@@ -107,7 +107,13 @@
             else{
               selfMethods["updatePosition"] = $scope.updatePosition;
             }
+            $scope.safeApply();
 
+            $scope.$watch($scope.$parent.mldata['positionview'].isCollapsed, function (newValue, oldValue) {
+                if ($scope.$parent.mldata['positionview'].isCollapsed === false) {
+                    $scope.$apply();
+                }
+            });
         };
 
         PositionViewCtrl.prototype.updatePosition = function (key, val){

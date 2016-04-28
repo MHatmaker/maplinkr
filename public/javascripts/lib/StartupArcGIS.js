@@ -394,44 +394,6 @@
              */
             if (displayDestination === 'New Pop-up Window' || displayDestination === 'New Tab') {
                 prepareWindow(newSelectedWebMapId, referringMph, displayDestination);
-                // $inj = angular.injector(['app']);
-                // serv = $inj.get('CurrentMapTypeService');
-                // curmph = serv.getSelectedMapType();
-                //
-                // evtSvc = $inj.get('StompEventHandlerService');
-                // evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                // evtSvc.addEvent('client-MapClickEvent', curmph.retrievedClick);
-                //
-                // openNewDisplay = function (channel, userName) {
-                //     url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
-                //         "&channel=" + channel + "&userName=" + userName +
-                //         "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                //     if (referringMph) {
-                //         url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
-                //             "&channel=" + channel + "&userName=" + userName +
-                //             "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-                //     }
-                //
-                //     console.log("open new ArcGIS window with URI " + url);
-                //     console.log("using channel " + channel + "with userName " + userName);
-                //     AgoNewWindowConfig.setUrl(url);
-                //     AgoNewWindowConfig.setUserName(userName);
-                //     if (displayDestination === 'New Pop-up Window') {
-                //         baseUrl = AgoNewWindowConfig.getbaseurl();
-                //         window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
-                //     } else {
-                //         baseUrl = AgoNewWindowConfig.getbaseurl();
-                //         window.open(baseUrl + "arcgis/" + url, '_blank');
-                //         window.focus();
-                //     }
-                // };
-                //
-                // if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                //     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                //         AgoNewWindowConfig.getUserName(), openNewDisplay);
-                // } else {
-                //     openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
-                // }
             } else {
                 /*
                 This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master site or opening the webmap from a url sent through a publish event.
