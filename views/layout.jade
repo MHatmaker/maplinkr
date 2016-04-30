@@ -5,7 +5,6 @@ html(style="height:100%;width:100%;")
         base(href='/')
         title Mashover Viewer
         block stylesblock
-            link(rel='stylesheet', href="http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.css")
             link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css")
             link(rel='stylesheet', href="//serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/dojo/dijit/themes/nihilo/nihilo.css")
             link(rel='stylesheet', href='//js.arcgis.com/3.10/js/esri/css/esri.css')
@@ -20,6 +19,7 @@ html(style="height:100%;width:100%;")
             link(rel='stylesheet', href='stylesheets/octicons/octicons.css')
             link(href="https://rawgit.com/MarkoCen/ngPopup/master/dist/ngPopup.min.css")
             link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css")
+            link(rel="stylesheet", href="stylesheets/angular/ui-grid.css")
 
         block scriptsblock
             script(src='/javascripts/lib/DocDomain.js')
@@ -34,8 +34,7 @@ html(style="height:100%;width:100%;")
 
             script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js')
             script(src='http://code.jquery.com/jquery-2.0.3.min.js')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js')
-            script(src='http://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid-flexible-height.min.js')
+            script(src='/javascripts/lib/angular/ui-grid.js')
             script(src='https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places')
             script(src="https://rawgit.com/MarkoCen/ngPopup/master/dist/ngPopup.min.js")
 

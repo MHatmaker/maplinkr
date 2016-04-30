@@ -18,7 +18,8 @@ mixin collapseGroup(groupId, cardId, groupname, heading)
             div(class="card card-block")
                 div(class="container")
                     block
-
+script(type="text/ng-template" id="subgrid")
+    div(ui-grid="row.entity.subGridOptions", style="height:140px;")
 
 div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
     aria-labelledby="mapLinkrLabel", aria-hidden="true", style="margin-left: -10px; margin-right: -10px;")
@@ -131,7 +132,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 ng-click="findArcGISGroup();")
 
                                         div(id='gridpaneGroup', style="overflow: hidden; padding: 3px;background-color:#6E9096;")
-                                            div(id="grpGridId", ng-grid="gridGrpOptions", style="margin:1px;")
+                                            div(id="grpGridId", ui-grid="gridGrpOptions", ui-grid-pinning, class='grid',
+                                                style="margin:1px;")
 
                 +collapseGroup('idMapSearcher', 'idMapSearcherCard', 'maps', 'AGO Map Search')
 
@@ -152,8 +154,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 value="Submit", id="mapFinderSubmit",
                                                 class='btn', ng-click="findArcGISGroupMaps();")
 
-                                        div(id='gridpaneMap', style="overflow: hidden; padding: 3px;background-color:#6E9096;")
-                                            div(id="mapGridId", ng-grid="gridMapOptions", style="height: 450px; margin:1px;")
+                                        div(id="mapGridId", ui-grid="gridOptions", ui-grid-pinning, ui-grid-expandable, class='gridStyle grid',
+                                            style="margin:1px;")
 
                 +collapseGroup('idSharingInstructionsHeader', 'idSharingInstructionsCard', 'shareinst', 'Sharing Overview')
 
