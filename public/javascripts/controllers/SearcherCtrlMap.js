@@ -42,22 +42,22 @@ angular.isUndefinedOrNull = function (val) {
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
 
-            $scope.mapSelectionChanged = function (rowItem, event) {
-                console.debug(rowItem.entity);
-                console.debug(rowItem.entity.title);
-
-                selectedWebMapId = rowItem.entity.id;
-                selectedWebMapTitle = rowItem.entity.title;
-                $scope.openWindowSelectionDialog(
-                    {
-                        'id' : rowItem.entity.id,
-                        'title' : rowItem.entity.title,
-                        'snippet' : rowItem.entity.snippet,
-                        'icon' : rowItem.entity.thumbnail,
-                        'mapType' : MapHosterArcGIS
-                    }
-                );
-            };
+            // $scope.mapSelectionChanged = function (rowItem, event) {
+            //     console.debug(rowItem.entity);
+            //     console.debug(rowItem.entity.title);
+            //
+            //     selectedWebMapId = rowItem.entity.id;
+            //     selectedWebMapTitle = rowItem.entity.title;
+            //     $scope.openWindowSelectionDialog(
+            //         {
+            //             'id' : rowItem.entity.id,
+            //             'title' : rowItem.entity.title,
+            //             'snippet' : rowItem.entity.snippet,
+            //             'icon' : rowItem.entity.thumbnail,
+            //             'mapType' : MapHosterArcGIS
+            //         }
+            //     );
+            // };
 
             onAcceptDestination = function (destWnd) {
                 var
@@ -99,7 +99,7 @@ angular.isUndefinedOrNull = function (val) {
                 // multiSelect: false,
                 // displayFooter: true,
                 // enableColumnResize : true,
-                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px;"></div>',
+                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>',
 
                 /*
                 expandableRowHeight: 50,
@@ -118,7 +118,8 @@ angular.isUndefinedOrNull = function (val) {
                     },
                     {
                         name : 'title',
-                        displayName : 'Map Title'
+                        displayName : 'Map Title',
+                        width : '90%'
                     }
                 ]
             };
@@ -127,7 +128,8 @@ angular.isUndefinedOrNull = function (val) {
                 var mpdata = [],
                     rsp,
                     i,
-                    mp = {};
+                    mp = {},
+                    mpsub;
                 // utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
@@ -138,6 +140,7 @@ angular.isUndefinedOrNull = function (val) {
                         console.log("showMapResults $apply before loading grid");
                     });
                 }
+
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
                     mpdata = [];
@@ -147,35 +150,20 @@ angular.isUndefinedOrNull = function (val) {
                         mp = {};
                         mp.title = rsp.title;
                         mp.thumbnail = rsp.thumbnailUrl || '';
-                        mp.subGridOptions = {
-                            columnDefs : [
-                                {
-                                    field : 'snip',
-                                    name : 'snippet',
-                                    displayName : 'Description'
-                                },
-                                {
-                                    field : 'uurrll',
-                                    name : 'url'
-                                },
-                                {
-                                    field : 'iidd',
-                                    name : 'id',
-                                    visible : false,
-                                    displayName : 'ID'
-                                },
-                                {
-                                    field : 'oowwnneerr',
-                                    name : 'owner'
-                                }
-                            ],
-                            data : [
-                                {'snippet' : rsp.snippet},
-                                {'url' : rsp.itemUrl},
-                                {'id' : rsp.id},
-                                {'owner' : rsp.owner}
-                            ]
-                        }
+                        // mp.subData = [{
+                        //     'snippet' : rsp.snippet,
+                        //     'url' : rsp.itemUrl,
+                        //     'id' : rsp.id,
+                        //     'owner' : rsp.owner
+                        // }];
+
+                        mp.subData = [];
+                        mpsub = {};
+                        mpsub.snippet = rsp.snippet;
+                        mpsub.url = rsp.itemUrl;
+                        mpsub.id =rsp.id;
+                        mpsub.owner = rsp.owner;
+                        mp.subData.push(mpsub);
                         mpdata.push(mp);
                     }
 
@@ -207,6 +195,44 @@ angular.isUndefinedOrNull = function (val) {
                 utils.hideLoading();
             };
 
+            $scope.gridOptions.onRegisterApi = function (gridApi) {
+                $scope.gridApi = gridApi;
+
+                gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
+                    if (row.isExpanded) {
+                        $scope.expandableRowTemplate = '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>';
+                        row.entity.subGridOptions = {
+                            columnDefs : [
+                                {
+                                    field : 'snip',
+                                    name : 'snippet',
+                                    displayName : 'Description'
+                                },
+                                {
+                                    field : 'uurrll',
+                                    name : 'url'
+                                },
+                                {
+                                    field : 'iidd',
+                                    name : 'id',
+                                    visible : false,
+                                    displayName : 'ID'
+                                },
+                                {
+                                    field : 'oowwnneerr',
+                                    name : 'owner'
+                                }
+                            ]
+                        }
+
+                        setTimeout(function () {
+                            row.entity.subGridOptions.data = row.entity.subData;
+                            $scope.safeApply();
+                        }, 1000);
+                    }
+                });
+            };
+
             console.log("window width " + window.innerWidth);
 
             // pos = $scope.gridMapOptions.columnDefs.map(function (e) { return e.field; }).indexOf('snippet');
@@ -216,25 +242,10 @@ angular.isUndefinedOrNull = function (val) {
             //     $scope.gridMapOptions.columnDefs[pos].visible = false;
             // }
 
-            $scope.gridOptions.onRegisterApi = function (gridApi) {
-                $scope.gridApi = gridApi;
-            };
             setTimeout(function () {
                  $scope.gridApi.grid.handleWindowResize();
                  $scope.safeApply();
              }, 1000);
-
-            $scope.calculateInstructionHeight = function () {
-                var label = angular.element(document.getElementById("mapSearchLabel")),
-                    instructions = document.getElementById("mapSrchInstId"),
-
-                    instructionsHgt = instructions.offsetHeight,
-                    // console.log("instructionsHgt " + instructionsHgt);
-                    srcTerm = angular.element(document.getElementById("mapFinder")),
-                    hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
-                // console.log("Instructions height : " + hgt);
-                return hgt;
-            };
 
             $scope.safeApply = function (fn) {
                 var phase = this.$root.$$phase;
@@ -246,45 +257,6 @@ angular.isUndefinedOrNull = function (val) {
                     this.$apply(fn);
                 }
             };
-
-            $scope.calculateHeights = function () {
-                var vrbg = angular.element(document.getElementById("Verbage")),
-                    accHead = angular.element(document.getElementById("AccdianNews")),
-                    marginborder = (1 + 1) * 2,
-                    accinnermarginborder = (1 + 9) * 2,
-                    instructionsHgt =  $scope.calculateInstructionHeight(),
-                // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
-                    gridTopHgt = 30 + 20, // ngTopPanel + ngViewPort
-                    availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
-                                    4 * (accHead[0].offsetHeight + marginborder),
-                // console.log("availableHgt" + availableHgt);
-                    rowHeight = 50,
-                    headerHeight = 34,
-                    height = +($scope.gridData.length * rowHeight + headerHeight);
-
-                if (height > availableHgt) {
-                    height = availableHgt;
-                }
-                return height;
-            };
-
-            $scope.getGridStyleMap = function () {
-                var height = $scope.calculateHeights() - 8,
-                    heightStr = String(height) + "px";
-                return {
-                    height: heightStr
-                };
-            };
-
-            $scope.getGridStyleWrapper = function () {
-                var height = $scope.calculateHeights(),
-                    heightStr = String(height) + "px";
-                return {
-                    height: heightStr
-                };
-
-            };
-
 
             $scope.redrawGrid = function () {
                 window.setTimeout(function () {
