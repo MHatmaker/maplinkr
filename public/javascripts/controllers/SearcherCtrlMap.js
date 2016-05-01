@@ -99,7 +99,7 @@ angular.isUndefinedOrNull = function (val) {
                 // multiSelect: false,
                 // displayFooter: true,
                 // enableColumnResize : true,
-                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 150px;"></div>',
+                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px;"></div>',
 
                 /*
                 expandableRowHeight: 50,
@@ -121,6 +121,90 @@ angular.isUndefinedOrNull = function (val) {
                         displayName : 'Map Title'
                     }
                 ]
+            };
+
+            $scope.showMapResults = function (response) {
+                var mpdata = [],
+                    rsp,
+                    i,
+                    mp = {};
+                // utils.hideLoading();
+                //clear any existing results
+                console.log("showMapResults");
+                console.debug(response);
+                console.log("response.total " + response.total);
+                if (!$scope.$$phase) {
+                    $scope.$apply(function () {
+                        console.log("showMapResults $apply before loading grid");
+                    });
+                }
+                if (response.total > 0) {
+                    console.log("found array with length " + response.total);
+                    mpdata = [];
+
+                    for (i = 0; i < 4; i++) {
+                        rsp = response.results[i];
+                        mp = {};
+                        mp.title = rsp.title;
+                        mp.thumbnail = rsp.thumbnailUrl || '';
+                        mp.subGridOptions = {
+                            columnDefs : [
+                                {
+                                    field : 'snip',
+                                    name : 'snippet',
+                                    displayName : 'Description'
+                                },
+                                {
+                                    field : 'uurrll',
+                                    name : 'url'
+                                },
+                                {
+                                    field : 'iidd',
+                                    name : 'id',
+                                    visible : false,
+                                    displayName : 'ID'
+                                },
+                                {
+                                    field : 'oowwnneerr',
+                                    name : 'owner'
+                                }
+                            ],
+                            data : [
+                                {'snippet' : rsp.snippet},
+                                {'url' : rsp.itemUrl},
+                                {'id' : rsp.id},
+                                {'owner' : rsp.owner}
+                            ]
+                        }
+                        mpdata.push(mp);
+                    }
+
+                    // $scope.calculateHeights();
+                    //create the grid
+                    // $scope.gridData = [];
+                    $scope.gridData = $scope.gridData.concat(mpdata);
+                    // $scope.gridOptions.data = $scope.gridData;
+                    /*
+                    $scope.redrawGrid();
+                    // $scope.updateLayout();
+                    */
+                    if (!$scope.$$phase) {
+                        $scope.$apply(function () {
+                            $scope.gridOptions.data = $scope.gridData;
+                        });
+                    }
+                    // $scope.getGridStyleMap();
+                    // $scope.getGridStyleWrapper();
+                    // if (!$scope.$$phase) {
+                        // $scope.$apply(function(){
+                                // $scope.gridData = mpdata;
+                            // });
+                    // }
+
+                    // $scope.redrawGrid();
+
+                }
+                utils.hideLoading();
             };
 
             console.log("window width " + window.innerWidth);
@@ -261,86 +345,6 @@ angular.isUndefinedOrNull = function (val) {
 
             //display a list of groups that match the input user name
 
-            $scope.showMapResults = function (response) {
-                var mpdata = [];
-                // utils.hideLoading();
-                //clear any existing results
-                console.log("showMapResults");
-                console.debug(response);
-                console.log("response.total " + response.total);
-                if (!$scope.$$phase) {
-                    $scope.$apply(function () {
-                        console.log("showMapResults $apply before loading grid");
-                    });
-                }
-                if (response.total > 0) {
-                    console.log("found array with length " + response.total);
-                    mpdata = [];
-
-                    mpdata = dojo.map(response.results, function (map) {
-                        return {
-                            'title': map.title,
-                            'thumbnail': map.thumbnailUrl || '',
-                            subGridOptions : {
-                                columnDefs : [
-                                    {
-                                        field : 'snip',
-                                        name : 'snippet',
-                                        displayName : 'Description'
-                                    },
-                                    {
-                                        field : 'uurrll',
-                                        name : 'url',
-                                    },
-                                    {
-                                        field : 'iidd',
-                                        name : 'id',
-                                        visible : false,
-                                        displayName : 'ID'
-                                    },
-                                    {
-                                        field : 'oowwnneerr',
-                                        name : 'owner'
-                                    }
-                                ],
-                                data : {
-                                    'snipet' : map.snippet,
-                                    'url' : map.itemUrl,
-                                    'id' : map.id,
-                                    'owner' : map.owner
-                                }
-                            }
-                        };
-                    });
-
-
-                    // $scope.calculateHeights();
-                    //create the grid
-                    // $scope.gridData = [];
-                    $scope.gridData = $scope.gridData.concat(mpdata);
-                    // $scope.gridOptions.data = $scope.gridData;
-                    /*
-                    $scope.redrawGrid();
-                    // $scope.updateLayout();
-                    */
-                    if (!$scope.$$phase) {
-                        $scope.$apply(function () {
-                            $scope.gridOptions.data = $scope.gridData;
-                        });
-                    }
-                    // $scope.getGridStyleMap();
-                    // $scope.getGridStyleWrapper();
-                    // if (!$scope.$$phase) {
-                        // $scope.$apply(function(){
-                                // $scope.gridData = mpdata;
-                            // });
-                    // }
-
-                    // $scope.redrawGrid();
-
-                }
-                utils.hideLoading();
-            };
 
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
