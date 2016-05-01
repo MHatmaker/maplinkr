@@ -89,8 +89,8 @@ angular.isUndefinedOrNull = function (val) {
                 // {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
                 // {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
                 // ];
-            // $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
-            $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
+            $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
+            // $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
 
             $scope.gridOptions = {
                 // data: 'gridData',
@@ -99,22 +99,22 @@ angular.isUndefinedOrNull = function (val) {
                 // multiSelect: false,
                 // displayFooter: true,
                 // enableColumnResize : true,
-                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 50;"></div>',
+                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 150px;"></div>',
 
                 /*
                 expandableRowHeight: 50,
                 //subGridVariable will be available in subGrid scope
+                */
                 expandableRowScope: {
                     subGridVariable: 'subGridScopeVariable'
                 },
-                */
                 columnDefs: [
                     {
                         name : 'thumbnail',
                         displayName : 'Img',
                         resizable : false,
-                        width : 50,
-                        cellTemplate : $scope.imgWebMapTmplt
+                        width : 60,
+                        cellTemplate : '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>'
                     },
                     {
                         name : 'title',
@@ -280,32 +280,36 @@ angular.isUndefinedOrNull = function (val) {
                     mpdata = dojo.map(response.results, function (map) {
                         return {
                             'title': map.title,
-                            'thumbnail': map.thumbnailUrl || ''
-                            // 'subGridOptions' : {
-                            //     columnDefs : [
-                            //         {
-                            //             name : 'snippet',
-                            //             displayName : 'Description'
-                            //         },
-                            //         {
-                            //             name : 'url',
-                            //         },
-                            //         {
-                            //             name : 'id',
-                            //             visible : false,
-                            //             displayName : 'ID'
-                            //         },
-                            //         {
-                            //             name : 'owner',
-                            //         }
-                            //     ],
-                            //     data : {
-                            //         'snippet': map.snippet,
-                            //         'url': map.itemUrl,
-                            //         'id': map.id,
-                            //         'owner': map.owner
-                            //     }
-                            // }
+                            'thumbnail': map.thumbnailUrl || '',
+                            subGridOptions : {
+                                columnDefs : [
+                                    {
+                                        field : 'snip',
+                                        name : 'snippet',
+                                        displayName : 'Description'
+                                    },
+                                    {
+                                        field : 'uurrll',
+                                        name : 'url',
+                                    },
+                                    {
+                                        field : 'iidd',
+                                        name : 'id',
+                                        visible : false,
+                                        displayName : 'ID'
+                                    },
+                                    {
+                                        field : 'oowwnneerr',
+                                        name : 'owner'
+                                    }
+                                ],
+                                data : {
+                                    'snipet' : map.snippet,
+                                    'url' : map.itemUrl,
+                                    'id' : map.id,
+                                    'owner' : map.owner
+                                }
+                            }
                         };
                     });
 
@@ -315,8 +319,10 @@ angular.isUndefinedOrNull = function (val) {
                     // $scope.gridData = [];
                     $scope.gridData = $scope.gridData.concat(mpdata);
                     // $scope.gridOptions.data = $scope.gridData;
+                    /*
                     $scope.redrawGrid();
                     // $scope.updateLayout();
+                    */
                     if (!$scope.$$phase) {
                         $scope.$apply(function () {
                             $scope.gridOptions.data = $scope.gridData;
