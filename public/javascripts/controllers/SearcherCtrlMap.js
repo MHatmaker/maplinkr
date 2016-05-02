@@ -48,6 +48,7 @@ angular.isUndefinedOrNull = function (val) {
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
                 selMph.removeEventListeners();
+                $scope.$parent.accept();
 
                 console.log("onAcceptDestination " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
@@ -315,22 +316,6 @@ angular.isUndefinedOrNull = function (val) {
                         'mapType' : info.mapType
                     }
                 );
-                // $scope.showDestDialog($scope.onDestinationWindowSelected, info);
-                /*
-                $scope.showDestDialog(function (args) {
-                    var destWnd = args.dstWnd,
-                        $inj = angular.injector(['app']),
-                        serv = $inj.get('CurrentMapTypeService'),
-                        selMph = serv.getSelectedMapType();
-                    console.log("onAcceptDestination " + destWnd);
-                    selMph.removeEventListeners();
-
-                    console.log("onDestinationWindowSelected " + destWnd);
-                    StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
-                },
-                    info);
-                // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
-                */
             };
         }
 
