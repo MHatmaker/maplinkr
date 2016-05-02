@@ -42,23 +42,6 @@ angular.isUndefinedOrNull = function (val) {
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
 
-            // $scope.mapSelectionChanged = function (rowItem, event) {
-            //     console.debug(rowItem.entity);
-            //     console.debug(rowItem.entity.title);
-            //
-            //     selectedWebMapId = rowItem.entity.id;
-            //     selectedWebMapTitle = rowItem.entity.title;
-            //     $scope.openWindowSelectionDialog(
-            //         {
-            //             'id' : rowItem.entity.id,
-            //             'title' : rowItem.entity.title,
-            //             'snippet' : rowItem.entity.snippet,
-            //             'icon' : rowItem.entity.thumbnail,
-            //             'mapType' : MapHosterArcGIS
-            //         }
-            //     );
-            // };
-
             onAcceptDestination = function (destWnd) {
                 var
                     $inj = angular.injector(['app']),
@@ -112,16 +95,68 @@ angular.isUndefinedOrNull = function (val) {
                     //     cellTemplate : '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>'
                     // },
                     {
+                        field : 'title',
                         name : 'title',
                         displayName : 'Map Title'
                     },
                     {
+                        field : 'owner',
                         name : 'owner',
                         displayName : 'The Owner'
                     }
 
                 ]
             };
+
+            function transformResponse(results) {
+                var trnsf = [],
+                rsp,
+                i,
+                mp,
+                mpsub,
+                colDefs = [
+                    {
+                        field : 'snippet',
+                        name : 'snippet',
+                        displayName : 'Description'
+                    },
+                    {
+                        field : 'url',
+                        name : 'url'
+                    },
+                    {
+                        field : 'id',
+                        name : 'id',
+                        visible : false,
+                        displayName : 'ID'
+                    },
+                    {
+                        field : 'owner',
+                        name : 'owner'
+                    }
+                ];
+
+
+                for (i = 0; i < 4; i++) {
+                    rsp = results[i];
+                    mp = {};
+                    mp.title = rsp.title;
+                    mp.owner = rsp.owner;
+
+                    mp.subGridOptions = {};
+                    mp.subGridOptions.columnDefs = colDefs;
+                    mp.subGridOptions.data = [];
+                    mpsub = {};
+                    mpsub.snippet = rsp.snippet;
+                    mpsub.url = rsp.itemUrl;
+                    mpsub.id =rsp.id;
+                    mpsub.owner = rsp.owner;
+                    mp.subGridOptions.data.push(mpsub);
+
+                    trnsf.push(mp);
+                }
+                return trnsf;
+            }
 
             $scope.showMapResults = function (response) {
                 var mpdata = [],
@@ -142,87 +177,27 @@ angular.isUndefinedOrNull = function (val) {
 
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
-                    mpdata = [];
+                    mpdata = transformResponse(response.results);
 
-                    for (i = 0; i < 4; i++) {
-                        rsp = response.results[i];
-                        mp = {};
-                        mp.title = rsp.title;
-                        mp.owner = rsp.owner;                        // mp.thumbnail = rsp.thumbnailUrl || '';
-                        mp.subGridOptions = {};
-                            /*
-                            columnDefs : [
-                                {
-                                    field : 'snip',
-                                    name : 'snippet',
-                                    displayName : 'Description'
-                                },
-                                {
-                                    field : 'uurrll',
-                                    name : 'url'
-                                },
-                                {
-                                    field : 'iidd',
-                                    name : 'id',
-                                    visible : false,
-                                    displayName : 'ID'
-                                },
-                                {
-                                    field : 'oowwnneerr',
-                                    name : 'owner'
-                                }
-                            ],
-                            data :
-                                [{
-                                    'snippet' : rsp.snippet,
-                                    'url' : rsp.url,
-                                    'id' : rsp.id,
-                                    'owner' : rsp.owner
-                                }]
-
-                        }
-                        */
-                        /*
-                        mp.subData = [{
-                            'snippet' : rsp.snippet,
-                            'url' : rsp.itemUrl,
-                            'id' : rsp.id,
-                            'owner' : rsp.owner
-                        }];
-
-                        mp.subData = [];
-                        mpsub = {};
-                        mpsub.snippet = rsp.snippet;
-                        mpsub.url = rsp.itemUrl;
-                        mpsub.id =rsp.id;
-                        mpsub.owner = rsp.owner;
-                        mp.subData.push(mpsub);
-                        */
-                        mpdata.push(mp);
-                    }
-
-                    // $scope.calculateHeights();
-                    //create the grid
-                    // $scope.gridData = [];
-                    // $scope.gridData = $scope.gridData.concat(mpdata);
-                    // $scope.gridOptions.data = $scope.gridData;
-                    $scope.gridOptions.data = [];
+                    $scope.gridOptions.data = mpdata;
                     /*
                     $scope.redrawGrid();
                     // $scope.updateLayout();
                     */
-                    if (!$scope.$$phase) {
-                        $scope.$apply(function () {
-                            $scope.gridOptions.data = $scope.gridOptions.data.concat(mpdata); //$scope.gridData;
-                        });
-                    }
+                    // if (!$scope.$$phase) {
+                    //     $scope.$apply(function () {
+                    //         $scope.gridOptions.data = $scope.gridOptions.data.concat(mpdata); //$scope.gridData;
+                    //     });
+                    // }
                     // $scope.getGridStyleMap();
                     // $scope.getGridStyleWrapper();
-                    // if (!$scope.$$phase) {
-                        // $scope.$apply(function(){
-                                // $scope.gridData = mpdata;
-                            // });
-                    // }
+                    setTimeout(function () {
+                        if (!$scope.$$phase) {
+                            $scope.$apply(function(){
+                                    $scope.gridOptions.data = mpdata;
+                                });
+                            }
+                    });
 
                     // $scope.redrawGrid();
 
@@ -240,22 +215,22 @@ angular.isUndefinedOrNull = function (val) {
                         row.entity.subGridOptions = {
                             columnDefs : [
                                 {
-                                    field : 'snip',
+                                    field : 'snippet',
                                     name : 'snippet',
                                     displayName : 'Description'
                                 },
                                 {
-                                    field : 'uurrll',
+                                    field : 'url',
                                     name : 'url'
                                 },
                                 {
-                                    field : 'iidd',
+                                    field : 'id',
                                     name : 'id',
                                     visible : false,
                                     displayName : 'ID'
                                 },
                                 {
-                                    field : 'oowwnneerr',
+                                    field : 'owner',
                                     name : 'owner'
                                 }
                             ]
