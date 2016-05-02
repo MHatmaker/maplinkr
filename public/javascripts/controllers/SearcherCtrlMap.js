@@ -180,17 +180,7 @@ angular.isUndefinedOrNull = function (val) {
                     mpdata = transformResponse(response.results);
 
                     $scope.gridOptions.data = mpdata;
-                    /*
-                    $scope.redrawGrid();
-                    // $scope.updateLayout();
-                    */
-                    // if (!$scope.$$phase) {
-                    //     $scope.$apply(function () {
-                    //         $scope.gridOptions.data = $scope.gridOptions.data.concat(mpdata); //$scope.gridData;
-                    //     });
-                    // }
-                    // $scope.getGridStyleMap();
-                    // $scope.getGridStyleWrapper();
+
                     setTimeout(function () {
                         if (!$scope.$$phase) {
                             $scope.$apply(function(){
@@ -207,7 +197,7 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.gridOptions.onRegisterApi = function (gridApi) {
                 $scope.gridApi = gridApi;
-
+/*
                 gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                     if (row.isExpanded) {
 
@@ -243,6 +233,7 @@ angular.isUndefinedOrNull = function (val) {
                         }, 500);
                     }
                 });
+*/
             };
 
             console.log("window width " + window.innerWidth);
