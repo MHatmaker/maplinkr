@@ -87,23 +87,26 @@ angular.isUndefinedOrNull = function (val) {
                 },
                 data : [],
                 columnDefs: [
-                    // {
-                    //     name : 'thumbnail',
-                    //     displayName : 'Img',
-                    //     resizable : false,
-                    //     width : 60,
-                    //     cellTemplate : '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>'
-                    // },
+                    {
+                        name : 'thumbnail',
+                        field : 'thumbnail',
+                        displayName : 'Img',
+                        resizable : false,
+                        width : 60,
+                        // cellTemplate : '<img ng-src="{{row.getProperty(col.field)}}" width="50" height="50"/>'
+                        cellTemplate:"<img width=\"50px\" ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>"
+
+                    },
                     {
                         field : 'title',
                         name : 'title',
                         displayName : 'Map Title'
-                    },
-                    {
-                        field : 'owner',
-                        name : 'owner',
-                        displayName : 'The Owner'
                     }
+                    // {
+                    //     field : 'owner',
+                    //     name : 'owner',
+                    //     displayName : 'The Owner'
+                    // }
 
                 ]
             };
@@ -142,6 +145,7 @@ angular.isUndefinedOrNull = function (val) {
                     mp = {};
                     mp.title = rsp.title;
                     mp.owner = rsp.owner;
+                    mp.thumbnail = rsp.thumbnailUrl;
 
                     mp.subGridOptions = {};
                     mp.subGridOptions.columnDefs = colDefs;
