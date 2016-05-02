@@ -84,11 +84,6 @@ angular.isUndefinedOrNull = function (val) {
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
-            $scope.gridData = [];
-
-                // {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
-                // {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
-                // ];
             $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
             // $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
 
@@ -101,26 +96,30 @@ angular.isUndefinedOrNull = function (val) {
                 // enableColumnResize : true,
                 expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>',
 
-                /*
-                expandableRowHeight: 50,
+
+                expandableRowHeight: 95,
+
                 //subGridVariable will be available in subGrid scope
-                */
                 expandableRowScope: {
                     subGridVariable: 'subGridScopeVariable'
                 },
                 columnDefs: [
-                    {
-                        name : 'thumbnail',
-                        displayName : 'Img',
-                        resizable : false,
-                        width : 60,
-                        cellTemplate : '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>'
-                    },
+                    // {
+                    //     name : 'thumbnail',
+                    //     displayName : 'Img',
+                    //     resizable : false,
+                    //     width : 60,
+                    //     cellTemplate : '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>'
+                    // },
                     {
                         name : 'title',
-                        displayName : 'Map Title',
-                        width : '90%'
+                        displayName : 'Map Title'
+                    },
+                    {
+                        name : 'owner',
+                        displayName : 'The Owner'
                     }
+
                 ]
             };
 
@@ -149,13 +148,47 @@ angular.isUndefinedOrNull = function (val) {
                         rsp = response.results[i];
                         mp = {};
                         mp.title = rsp.title;
-                        mp.thumbnail = rsp.thumbnailUrl || '';
-                        // mp.subData = [{
-                        //     'snippet' : rsp.snippet,
-                        //     'url' : rsp.itemUrl,
-                        //     'id' : rsp.id,
-                        //     'owner' : rsp.owner
-                        // }];
+                        mp.owner = rsp.owner;                        // mp.thumbnail = rsp.thumbnailUrl || '';
+                        mp.subGridOptions = {};
+                            /*
+                            columnDefs : [
+                                {
+                                    field : 'snip',
+                                    name : 'snippet',
+                                    displayName : 'Description'
+                                },
+                                {
+                                    field : 'uurrll',
+                                    name : 'url'
+                                },
+                                {
+                                    field : 'iidd',
+                                    name : 'id',
+                                    visible : false,
+                                    displayName : 'ID'
+                                },
+                                {
+                                    field : 'oowwnneerr',
+                                    name : 'owner'
+                                }
+                            ],
+                            data :
+                                [{
+                                    'snippet' : rsp.snippet,
+                                    'url' : rsp.url,
+                                    'id' : rsp.id,
+                                    'owner' : rsp.owner
+                                }]
+
+                        }
+                        */
+                        /*
+                        mp.subData = [{
+                            'snippet' : rsp.snippet,
+                            'url' : rsp.itemUrl,
+                            'id' : rsp.id,
+                            'owner' : rsp.owner
+                        }];
 
                         mp.subData = [];
                         mpsub = {};
@@ -164,21 +197,23 @@ angular.isUndefinedOrNull = function (val) {
                         mpsub.id =rsp.id;
                         mpsub.owner = rsp.owner;
                         mp.subData.push(mpsub);
+                        */
                         mpdata.push(mp);
                     }
 
                     // $scope.calculateHeights();
                     //create the grid
                     // $scope.gridData = [];
-                    $scope.gridData = $scope.gridData.concat(mpdata);
+                    // $scope.gridData = $scope.gridData.concat(mpdata);
                     // $scope.gridOptions.data = $scope.gridData;
+                    $scope.gridOptions.data = [];
                     /*
                     $scope.redrawGrid();
                     // $scope.updateLayout();
                     */
                     if (!$scope.$$phase) {
                         $scope.$apply(function () {
-                            $scope.gridOptions.data = $scope.gridData;
+                            $scope.gridOptions.data = $scope.gridOptions.data.concat(mpdata); //$scope.gridData;
                         });
                     }
                     // $scope.getGridStyleMap();
@@ -200,6 +235,7 @@ angular.isUndefinedOrNull = function (val) {
 
                 gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                     if (row.isExpanded) {
+
                         $scope.expandableRowTemplate = '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>';
                         row.entity.subGridOptions = {
                             columnDefs : [
@@ -226,9 +262,10 @@ angular.isUndefinedOrNull = function (val) {
                         }
 
                         setTimeout(function () {
-                            row.entity.subGridOptions.data = row.entity.subData;
-                            $scope.safeApply();
-                        }, 1000);
+                            row.entity.subGridOptions.data = [];
+                            row.entity.subGridOptions.data = row.entity.subGridOptions.data.concat(row.entity.subData);
+                            // $scope.safeApply();
+                        }, 500);
                     }
                 });
             };
