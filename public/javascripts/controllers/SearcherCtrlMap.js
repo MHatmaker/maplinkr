@@ -66,6 +66,19 @@ angular.isUndefinedOrNull = function (val) {
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
+            $scope.selectWebMap = function(rowItem) {
+                selectedWebMapId = rowItem.entity.id;
+                selectedWebMapTitle = rowItem.entity.title;
+                $scope.openWindowSelectionDialog(
+                    {
+                        'id' : rowItem.entity.id,
+                        'title' : rowItem.entity.title,
+                        'snippet' : rowItem.entity.snippet,
+                        'icon' : rowItem.entity.thumbnail
+                    }
+                );
+            }
+
             $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
             // $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
 
@@ -98,15 +111,31 @@ angular.isUndefinedOrNull = function (val) {
 
                     },
                     {
+                        name : ' ',
+                        cellTemplate : '<div><button ng-click="grid.appScope.selectWebMap(row)">Select</button></div>',
+                        width : 60
+                    },
+                    {
                         field : 'title',
                         name : 'title',
                         displayName : 'Map Title'
-                    }
-                    // {
-                    //     field : 'owner',
-                    //     name : 'owner',
-                    //     displayName : 'The Owner'
-                    // }
+                    },
+                    {
+                        field : 'url',
+                        name : 'url',
+                        visible : false
+                    },
+                    {
+                        field : 'snippet',
+                        name : 'snippet',
+                        visible : false
+                    },
+                    {
+                        field : 'id',
+                        name : 'id',
+                        visible : false,
+                        displayName : 'ID'
+                    },
 
                 ]
             };
@@ -122,20 +151,12 @@ angular.isUndefinedOrNull = function (val) {
                         field : 'snippet',
                         name : 'snippet',
                         displayName : 'Description'
-                    },
-                    {
-                        field : 'url',
-                        name : 'url'
-                    },
-                    {
-                        field : 'id',
-                        name : 'id',
-                        visible : false,
-                        displayName : 'ID'
+//                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
                     },
                     {
                         field : 'owner',
-                        name : 'owner'
+                        name : 'owner',
+                        visible : false
                     }
                 ];
 
@@ -146,13 +167,15 @@ angular.isUndefinedOrNull = function (val) {
                     mp.title = rsp.title;
                     mp.owner = rsp.owner;
                     mp.thumbnail = rsp.thumbnailUrl;
+                    mp.url = rsp.itemUrl;
+                    mp.id = rsp.id;
+                    mp.snippet = rsp.snippet;
 
                     mp.subGridOptions = {};
                     mp.subGridOptions.columnDefs = colDefs;
                     mp.subGridOptions.data = [];
                     mpsub = {};
                     mpsub.snippet = rsp.snippet;
-                    mpsub.url = rsp.itemUrl;
                     mpsub.id =rsp.id;
                     mpsub.owner = rsp.owner;
                     mp.subGridOptions.data.push(mpsub);
