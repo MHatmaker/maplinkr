@@ -42,6 +42,14 @@ angular.isUndefinedOrNull = function (val) {
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
 
+            setTimeout(function () {
+                if (!$scope.$$phase) {
+                    $scope.$apply(function(){
+                            console.log("Calling setTimeout/safeApply upon SearcherCtrlMap invocation");
+                        });
+                    }
+                    });
+
             onAcceptDestination = function (destWnd) {
                 var
                     $inj = angular.injector(['app']),
@@ -86,6 +94,7 @@ angular.isUndefinedOrNull = function (val) {
                 expandableRowScope: {
                     subGridVariable: 'subGridScopeVariable'
                 },
+                data : [],
                 columnDefs: [
                     // {
                     //     name : 'thumbnail',
@@ -169,27 +178,30 @@ angular.isUndefinedOrNull = function (val) {
                 console.log("showMapResults");
                 console.debug(response);
                 console.log("response.total " + response.total);
-                if (!$scope.$$phase) {
-                    $scope.$apply(function () {
-                        console.log("showMapResults $apply before loading grid");
-                    });
-                }
+                // if (!$scope.$$phase) {
+                //     $scope.$apply(function () {
+                //         console.log("showMapResults $apply before loading grid");
+                //     });
+                // }
+                setTimeout(function() {
+                    $scope.safeApply(console.log("showMapResults $apply before loading grid"));
+                });
 
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
                     mpdata = transformResponse(response.results);
 
-                    $scope.gridOptions.data = mpdata;
-
-                    setTimeout(function () {
-                        if (!$scope.$$phase) {
-                            $scope.$apply(function(){
-                                    $scope.gridOptions.data = mpdata;
-                                });
-                            }
+                    setTimeout(function() {
+                        $scope.safeApply(console.log("showMapResults $apply before loading grid"));
                     });
 
-                    // $scope.redrawGrid();
+                    setTimeout(function() {
+                        $scope.gridOptions.data = mpdata;
+                    });
+
+                    setTimeout(function() {
+                        $scope.safeApply(console.log("showMapResults $apply after loading grid"));
+                    });
 
                 }
                 utils.hideLoading();
@@ -197,58 +209,15 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.gridOptions.onRegisterApi = function (gridApi) {
                 $scope.gridApi = gridApi;
-/*
-                gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
-                    if (row.isExpanded) {
-
-                        $scope.expandableRowTemplate = '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>';
-                        row.entity.subGridOptions = {
-                            columnDefs : [
-                                {
-                                    field : 'snippet',
-                                    name : 'snippet',
-                                    displayName : 'Description'
-                                },
-                                {
-                                    field : 'url',
-                                    name : 'url'
-                                },
-                                {
-                                    field : 'id',
-                                    name : 'id',
-                                    visible : false,
-                                    displayName : 'ID'
-                                },
-                                {
-                                    field : 'owner',
-                                    name : 'owner'
-                                }
-                            ]
-                        }
-
-                        setTimeout(function () {
-                            row.entity.subGridOptions.data = [];
-                            row.entity.subGridOptions.data = row.entity.subGridOptions.data.concat(row.entity.subData);
-                            // $scope.safeApply();
-                        }, 500);
-                    }
-                });
-*/
             };
 
             console.log("window width " + window.innerWidth);
 
-            // pos = $scope.gridMapOptions.columnDefs.map(function (e) { return e.field; }).indexOf('snippet');
-            // if (window.innerWidth > 500) {
-            //     $scope.gridMapOptions.columnDefs[pos].visible = true;
-            // } else {
-            //     $scope.gridMapOptions.columnDefs[pos].visible = false;
-            // }
-
-            setTimeout(function () {
-                 $scope.gridApi.grid.handleWindowResize();
-                 $scope.safeApply();
-             }, 1000);
+            //  handleWindowResize() seems to have been the cause of inconsistent display/trashing of rows and columns.
+            // setTimeout(function () {
+            //      $scope.gridApi.grid.handleWindowResize();
+            //      $scope.safeApply();
+            //  }, 1000);
 
             $scope.safeApply = function (fn) {
                 var phase = this.$root.$$phase;
