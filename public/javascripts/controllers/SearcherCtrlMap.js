@@ -21,7 +21,6 @@ angular.isUndefinedOrNull = function (val) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
             portalForSearch = null;
-            // heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
 
         function SearcherCtrlMap($scope, $rootScope) {
             var self = this,
@@ -41,14 +40,6 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
-
-            setTimeout(function () {
-                if (!$scope.$$phase) {
-                    $scope.$apply(function(){
-                            console.log("Calling setTimeout/safeApply upon SearcherCtrlMap invocation");
-                        });
-                    }
-                    });
 
             onAcceptDestination = function (destWnd) {
                 var
@@ -178,14 +169,6 @@ angular.isUndefinedOrNull = function (val) {
                 console.log("showMapResults");
                 console.debug(response);
                 console.log("response.total " + response.total);
-                // if (!$scope.$$phase) {
-                //     $scope.$apply(function () {
-                //         console.log("showMapResults $apply before loading grid");
-                //     });
-                // }
-                setTimeout(function() {
-                    $scope.safeApply(console.log("showMapResults $apply before loading grid"));
-                });
 
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
@@ -193,15 +176,9 @@ angular.isUndefinedOrNull = function (val) {
 
                     setTimeout(function() {
                         $scope.safeApply(console.log("showMapResults $apply before loading grid"));
-                    });
+                    }, 500);
 
-                    setTimeout(function() {
-                        $scope.gridOptions.data = mpdata;
-                    });
-
-                    setTimeout(function() {
-                        $scope.safeApply(console.log("showMapResults $apply after loading grid"));
-                    });
+                    $scope.gridOptions.data = mpdata;
 
                 }
                 utils.hideLoading();
