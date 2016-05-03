@@ -245,7 +245,7 @@
             selfMethods.placeCustomControls = placeCustomControls;
             console.debug(selfMethods);
 
-            $scope.gsearchVisible = mptp === 'google' ?  'block' : 'none';
+            $scope.gsearchVisible = mptp === 'google' || mptp === 'arcgis'?  'block' : 'none';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
 
             if (gmquery !== '') {

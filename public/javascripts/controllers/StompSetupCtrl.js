@@ -20,6 +20,7 @@
             'mph' : null,
             'pusher' : null,
             'callbackFunction' : null,
+            'info' : null,
             'isInitialized' : false,
             'PusherClient' : null,
             'userName' : '',
@@ -78,7 +79,8 @@
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
                     $scope.data.privateChannelMashover,
                     $scope.data.userName,
-                    selfdict.callbackFunction);
+                    selfdict.callbackFunction,
+                    selfdict.info);
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
             };
 
@@ -278,16 +280,22 @@
             selfdict.mph.setUserName(selfdict.userName);
             selfdict.eventDct = selfdict.mph.getEventDictionary();
             if (self.callbackfunction !== null) {
-                self.callbackfunction(self.CHANNEL, selfdict.userName);
+                if (selfdict.info !== null) {
+                    self.callbackfunction(self.CHANNEL, selfdict.userName,
+                        selfdict.info.destination, selfdict.info.currentMapHolder, selfdict.info.newWindowId);
+                } else {
+                    self.callbackfunction(self.CHANNEL, selfdict.userName, mull);
+                }
             }
             return pusher;
         };
         selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
 
-        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn) {
+        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn, nfo) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
             selfdict.callbackFunction = cbfn;
+            selfdict.info = nfo;
             selfdict.displayPusherDialog();
         };
 

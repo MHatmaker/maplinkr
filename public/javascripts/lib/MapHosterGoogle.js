@@ -5,7 +5,7 @@
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterGoogle");
-    require(["lib/utils", 'angular']);
+    require(["lib/utils", 'angular', 'controllers/WindowStarter']);
     // require(["lib/utils", 'angular', 'controllers/MapCtrl']);
 
     define([
@@ -14,8 +14,9 @@
         'controllers/MapCtrl',
         'lib/utils',
         'lib/AgoNewWindowConfig',
-        'controllers/StompSetupCtrl'
-    ], function (angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig, StompSetupCtrl) {
+        'controllers/StompSetupCtrl',
+        'controllers/WindowStarter'
+    ], function (angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig, StompSetupCtrl, WindowStarter) {
 
         var
             mphmap,
@@ -308,14 +309,12 @@
             var
                 self = this,
                 placesFromSearch = [],
-                popups = [],
                 firstCntr,
                 qlat,
                 qlon,
                 qzoom,
                 initZoom = 15,
-                listener,
-                currentVerbVis = false;
+                listener;
 
             if (AgoNewWindowConfig.testUrlArgs()) {
                 qlat = AgoNewWindowConfig.lat();
@@ -365,8 +364,6 @@
                     pacnpt,
                     qtext,
                     service,
-                    openNewDisplay,
-                    setupNewDisplay,
                     onAcceptDestination,
                     scope;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
@@ -432,7 +429,7 @@
                     service = new google.maps.places.PlacesService(mphmap);
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
-
+/*
                 setupNewDisplay = function (channel, userName, wndIndex) {
 
                     var
@@ -487,10 +484,10 @@
                         });
 
                 };
-
+*/
                 onAcceptDestination = function (displayDestination) {
                     destWnd = displayDestination;
-                    var curmph = self, $inj, evtSvc, gmQSvc;
+                    var curmph = self, $inj, evtSvc;
                     if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
                         if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                             $inj = angular.injector(['app']);
@@ -498,16 +495,18 @@
                             evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                             evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
-                            gmQSvc = $inj.get('GoogleQueryService');
+                            // gmQSvc = $inj.get('GoogleQueryService');
                             // scope = gmQSvc.getPusherDialogScope();
                             // currentVerbVis = gmQSvc.setDialogVisibility(true);
                             // if (StompSetupCtrl.isInstantiated() == false) {
                             //     new StompSetupCtrl()
                             // }
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), openNewDisplay);
+                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                                    {'destination' : destWnd, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
                         } else {
-                            openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
+                                AgoNewWindowConfig.getUserName(), destWnd, curmph, newSelectedWebMapId);
                         }
 
                     } else {  //(destWnd == "Same Window")
@@ -726,9 +725,9 @@
                 linkrSvc;
             console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
             // latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
-            $inj = angular.injector(['app']);
-            linkrSvc = $inj.get('LinkrService');
-            linkrSvc.hideLinkr();
+            // $inj = angular.injector(['app']);
+            // linkrSvc = $inj.get('LinkrService');
+            // linkrSvc.hideLinkr();
 
             popPt = new google.maps.LatLng(clickPt.y, clickPt.x);
             content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
@@ -767,9 +766,9 @@
                 tmpLat,
                 tmpZm,
                 cntr,
-                cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat}),
-                view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-            // document.getElementById("mppos").innerHTML = view;
+                cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
+                // view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
+                // document.getElementById("mppos").innerHTML = view;
             if (cmp === false) {
                 tmpLon = cntrxG;
                 tmpLat = cntryG;
