@@ -21,7 +21,6 @@ angular.isUndefinedOrNull = function (val) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
             portalForSearch = null;
-            // heightCalculations = {'wrapHeight' : 200, 'gridHeight' : 180, 'instructionsHeight' : 0};
 
         function SearcherCtrlMap($scope, $rootScope) {
             var self = this,
@@ -42,23 +41,6 @@ angular.isUndefinedOrNull = function (val) {
             $scope.destWindow = 'cancelMashOp';
             $scope.selectedItm = "Nada";
 
-            $scope.mapSelectionChanged = function (rowItem, event) {
-                console.debug(rowItem.entity);
-                console.debug(rowItem.entity.title);
-
-                selectedWebMapId = rowItem.entity.id;
-                selectedWebMapTitle = rowItem.entity.title;
-                $scope.openWindowSelectionDialog(
-                    {
-                        'id' : rowItem.entity.id,
-                        'title' : rowItem.entity.title,
-                        'snippet' : rowItem.entity.snippet,
-                        'icon' : rowItem.entity.thumbnail,
-                        'mapType' : MapHosterArcGIS
-                    }
-                );
-            };
-
             onAcceptDestination = function (destWnd) {
                 var
                     $inj = angular.injector(['app']),
@@ -66,6 +48,7 @@ angular.isUndefinedOrNull = function (val) {
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
                 selMph.removeEventListeners();
+                $scope.$parent.accept();
 
                 console.log("onAcceptDestination " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
@@ -84,69 +67,162 @@ angular.isUndefinedOrNull = function (val) {
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
-            $scope.mapGriddata = [];
+            $scope.selectWebMap = function(rowItem) {
+                selectedWebMapId = rowItem.entity.id;
+                selectedWebMapTitle = rowItem.entity.title;
+                $scope.openWindowSelectionDialog(
+                    {
+                        'id' : rowItem.entity.id,
+                        'title' : rowItem.entity.title,
+                        'snippet' : rowItem.entity.snippet,
+                        'icon' : rowItem.entity.thumbnail
+                    }
+                );
+            }
 
-                // {"id" : "ca8219b99d9442a8b21cd61e71ee48b8","title" : "Somewhere in Chicago", "snippet" : "foo", "thumbnail" : "thumbnail/foo.jpg"},
-                // {"id" : "0ba4d84db84e4564b936ec548ea91575","title" : "2013 Midwest Tornado Outbreak", "snippet" : "bar", "thumbnail" : "thumbnail/bar.jpg"}
-                // ];
-            $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.field)}}" width="50" height="50" />';
+            $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
+            // $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
 
-            $scope.gridMapOptions = {
-                data: 'mapGriddata',
-                rowHeight: '50',
-                afterSelectionChange:  $scope.mapSelectionChanged,
-                multiSelect: false,
-                displayFooter: true,
-                enableColumnResize : true,
+            $scope.gridOptions = {
+                // data: 'gridData',
+                rowHeight: 50,
+                // afterSelectionChange:  $scope.mapSelectionChanged,
+                // multiSelect: false,
+                // displayFooter: true,
+                // enableColumnResize : true,
+                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>',
 
+
+                expandableRowHeight: 95,
+
+                //subGridVariable will be available in subGrid scope
+                expandableRowScope: {
+                    subGridVariable: 'subGridScopeVariable'
+                },
+                data : [],
                 columnDefs: [
                     {
+                        name : 'thumbnail',
                         field : 'thumbnail',
-                        width : '50px',
                         displayName : 'Img',
                         resizable : false,
-                        cellTemplate : $scope.imgWebMapTmplt
+                        width : 60,
+                        // cellTemplate : '<img ng-src="{{row.getProperty(col.field)}}" width="50" height="50"/>'
+                        cellTemplate:"<img width=\"50px\" ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>"
+
                     },
                     {
-                        field : 'snippet',
-                        width : '40%',
-                        displayName : 'Description'
+                        name : ' ',
+                        cellTemplate : '<div><button ng-click="grid.appScope.selectWebMap(row)">Select</button></div>',
+                        width : 60
                     },
                     {
                         field : 'title',
-                        width : '40%',
+                        name : 'title',
                         displayName : 'Map Title'
                     },
                     {
+                        field : 'url',
+                        name : 'url',
+                        visible : false
+                    },
+                    {
+                        field : 'snippet',
+                        name : 'snippet',
+                        visible : false
+                    },
+                    {
                         field : 'id',
+                        name : 'id',
                         visible : false,
-                        width : '0',
                         displayName : 'ID'
-                    }
-                ]
+                    },
 
+                ]
+            };
+
+            function transformResponse(results) {
+                var trnsf = [],
+                rsp,
+                i,
+                mp,
+                mpsub,
+                colDefs = [
+                    {
+                        field : 'snippet',
+                        name : 'snippet',
+                        displayName : 'Description'
+//                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
+                    },
+                    {
+                        field : 'owner',
+                        name : 'owner',
+                        visible : false
+                    }
+                ];
+
+
+                for (i = 0; i < 4; i++) {
+                    rsp = results[i];
+                    mp = {};
+                    mp.title = rsp.title;
+                    mp.owner = rsp.owner;
+                    mp.thumbnail = rsp.thumbnailUrl;
+                    mp.url = rsp.itemUrl;
+                    mp.id = rsp.id;
+                    mp.snippet = rsp.snippet;
+
+                    mp.subGridOptions = {};
+                    mp.subGridOptions.columnDefs = colDefs;
+                    mp.subGridOptions.data = [];
+                    mpsub = {};
+                    mpsub.snippet = rsp.snippet;
+                    mpsub.id =rsp.id;
+                    mpsub.owner = rsp.owner;
+                    mp.subGridOptions.data.push(mpsub);
+
+                    trnsf.push(mp);
+                }
+                return trnsf;
+            }
+
+            $scope.showMapResults = function (response) {
+                var mpdata = [],
+                    rsp,
+                    i,
+                    mp = {},
+                    mpsub;
+                // utils.hideLoading();
+                //clear any existing results
+                console.log("showMapResults");
+                console.debug(response);
+                console.log("response.total " + response.total);
+
+                if (response.total > 0) {
+                    console.log("found array with length " + response.total);
+                    mpdata = transformResponse(response.results);
+
+                    setTimeout(function() {
+                        $scope.safeApply(console.log("showMapResults $apply before loading grid"));
+                    }, 500);
+
+                    $scope.gridOptions.data = mpdata;
+
+                }
+                utils.hideLoading();
+            };
+
+            $scope.gridOptions.onRegisterApi = function (gridApi) {
+                $scope.gridApi = gridApi;
             };
 
             console.log("window width " + window.innerWidth);
 
-            pos = $scope.gridMapOptions.columnDefs.map(function (e) { return e.field; }).indexOf('snippet');
-            if (window.innerWidth > 500) {
-                $scope.gridMapOptions.columnDefs[pos].visible = true;
-            } else {
-                $scope.gridMapOptions.columnDefs[pos].visible = false;
-            }
-
-            $scope.calculateInstructionHeight = function () {
-                var label = angular.element(document.getElementById("mapSearchLabel")),
-                    instructions = document.getElementById("mapSrchInstId"),
-
-                    instructionsHgt = instructions.offsetHeight,
-                    // console.log("instructionsHgt " + instructionsHgt);
-                    srcTerm = angular.element(document.getElementById("mapFinder")),
-                    hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
-                // console.log("Instructions height : " + hgt);
-                return hgt;
-            };
+            //  handleWindowResize() seems to have been the cause of inconsistent display/trashing of rows and columns.
+            // setTimeout(function () {
+            //      $scope.gridApi.grid.handleWindowResize();
+            //      $scope.safeApply();
+            //  }, 1000);
 
             $scope.safeApply = function (fn) {
                 var phase = this.$root.$$phase;
@@ -158,45 +234,6 @@ angular.isUndefinedOrNull = function (val) {
                     this.$apply(fn);
                 }
             };
-
-            $scope.calculateHeights = function () {
-                var vrbg = angular.element(document.getElementById("Verbage")),
-                    accHead = angular.element(document.getElementById("AccdianNews")),
-                    marginborder = (1 + 1) * 2,
-                    accinnermarginborder = (1 + 9) * 2,
-                    instructionsHgt =  $scope.calculateInstructionHeight(),
-                // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
-                    gridTopHgt = 30 + 20, // ngTopPanel + ngViewPort
-                    availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
-                                    4 * (accHead[0].offsetHeight + marginborder),
-                // console.log("availableHgt" + availableHgt);
-                    rowHeight = 50,
-                    headerHeight = 34,
-                    height = +($scope.mapGriddata.length * rowHeight + headerHeight);
-
-                if (height > availableHgt) {
-                    height = availableHgt;
-                }
-                return height;
-            };
-
-            $scope.getGridStyleMap = function () {
-                var height = $scope.calculateHeights() - 8,
-                    heightStr = String(height) + "px";
-                return {
-                    height: heightStr
-                };
-            };
-
-            $scope.getGridStyleWrapper = function () {
-                var height = $scope.calculateHeights(),
-                    heightStr = String(height) + "px";
-                return {
-                    height: heightStr
-                };
-
-            };
-
 
             $scope.redrawGrid = function () {
                 window.setTimeout(function () {
@@ -257,53 +294,6 @@ angular.isUndefinedOrNull = function (val) {
 
             //display a list of groups that match the input user name
 
-            $scope.showMapResults = function (response) {
-                var mpdata = [];
-                // utils.hideLoading();
-                //clear any existing results
-                console.log("showMapResults");
-                console.debug(response);
-                console.log("response.total " + response.total);
-                if (response.total > 0) {
-                    console.log("found array with length " + response.total);
-                    mpdata = [];
-
-                    mpdata = dojo.map(response.results, function (map) {
-                        return {
-                            'snippet': map.snippet,
-                            'title': map.title,
-                            'url': map.itemUrl,
-                            'thumbnail': map.thumbnailUrl || '',
-                            'id': map.id,
-                            'owner': map.owner
-                        };
-                    });
-
-
-                    // $scope.calculateHeights();
-                    //create the grid
-                    $scope.mapGriddata = [];
-                    $scope.mapGriddata = $scope.mapGriddata.concat(mpdata);
-                    // $scope.redrawGrid();
-                    // $scope.updateLayout();
-                    if (!$scope.$$phase) {
-                        $scope.$apply(function () {
-                            $scope.mapGriddata = mpdata;
-                        });
-                    }
-                    // $scope.getGridStyleMap();
-                    // $scope.getGridStyleWrapper();
-                    // if (!$scope.$$phase) {
-                        // $scope.$apply(function(){
-                                // $scope.mapGriddata = mpdata;
-                            // });
-                    // }
-
-                    $scope.redrawGrid();
-
-                }
-                utils.hideLoading();
-            };
 
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
@@ -326,22 +316,6 @@ angular.isUndefinedOrNull = function (val) {
                         'mapType' : info.mapType
                     }
                 );
-                // $scope.showDestDialog($scope.onDestinationWindowSelected, info);
-                /*
-                $scope.showDestDialog(function (args) {
-                    var destWnd = args.dstWnd,
-                        $inj = angular.injector(['app']),
-                        serv = $inj.get('CurrentMapTypeService'),
-                        selMph = serv.getSelectedMapType();
-                    console.log("onAcceptDestination " + destWnd);
-                    selMph.removeEventListeners();
-
-                    console.log("onDestinationWindowSelected " + destWnd);
-                    StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
-                },
-                    info);
-                // scopeDict.rootScope.$broadcast('ShowWindowSelectorModalEvent', info);
-                */
             };
         }
 

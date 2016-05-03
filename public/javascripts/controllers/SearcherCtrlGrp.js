@@ -55,18 +55,18 @@
                 columnDefs: [
                     {
                         field: 'thumbnail',
-                        width: '50px',
+                        width: 50,
                         displayName: 'Img',
                         cellTemplate: $scope.imgTmplt
                     },
                     {
                         field: 'title',
-                        width: '124px',
+                        width: 124,
                         displayName: 'Group'
                     },
                     {
                         field: 'snippet',
-                        width: '124px',
+                        width: 124,
                         displayName: 'Description'
                     },
                     {

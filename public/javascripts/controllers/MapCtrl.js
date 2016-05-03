@@ -416,7 +416,7 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch.query);
             };
 
-            $scope.showDestDialog = function (callback, details) {
+            $scope.showDestDialog = function (callback, details, info) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
                 $scope.preserveState();
 //                var hostElement = $document.find('mashbox').eq(0);
@@ -426,6 +426,13 @@
                 $scope.data.icon = $scope.currentTab.imgSrc;
                 $scope.data.query = $scope.gsearch.query;
                 $scope.data.callback = callback;
+                if (info) {
+                    $scope.data.icon = info.icon;
+                    $scope.data.title = info.title;
+                    $scope.data.snippet = info.snippet;
+                    $scope.data.mapType = info.mapType;
+                    $scope.data.id = info.id;
+                }
 
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
