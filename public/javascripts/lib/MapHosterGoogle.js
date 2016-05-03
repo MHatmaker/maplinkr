@@ -367,7 +367,8 @@
                     service,
                     openNewDisplay,
                     setupNewDisplay,
-                    onAcceptDestination;
+                    onAcceptDestination,
+                    scope;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
                 mapReady = true;
@@ -432,18 +433,6 @@
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
 
-                function setVerbageVisibility(tf) {
-                    var $inj,
-                        gmQSvc;
-                    $inj = angular.injector(['app']);
-                    gmQSvc = $inj.get('GoogleQueryService');
-                    if (currentVerbVis === 'none') {
-                        gmQSvc.setDialogVisibility(tf);
-                    } else {
-                        gmQSvc.setDialogVisibility(tf);
-                    }
-                }
-
                 setupNewDisplay = function (channel, userName, wndIndex) {
 
                     var
@@ -479,13 +468,6 @@
                             window.focus();
                         }
                     }
-                    setVerbageVisibility(false);
-                    // if (currentVerbVis === 'none') {
-                    //     $inj = angular.injector(['app']);
-                    //     gmQSvc = $inj.get('GoogleQueryService');
-                    //     gmQSvc.setDialogVisibility(false);
-                    // }
-
                 };
 
                 openNewDisplay = function (channel, userName) {
@@ -517,28 +499,19 @@
                             evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
                             gmQSvc = $inj.get('GoogleQueryService');
-                            currentVerbVis = gmQSvc.setDialogVisibility(true);
+                            // scope = gmQSvc.getPusherDialogScope();
+                            // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                            // if (StompSetupCtrl.isInstantiated() == false) {
+                            //     new StompSetupCtrl()
+                            // }
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 AgoNewWindowConfig.getUserName(), openNewDisplay);
                         } else {
                             openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
-
-                            setVerbageVisibility(false);
-                            // if (currentVerbVis === 'none') {
-                            //     $inj = angular.injector(['app']);
-                            //     gmQSvc = $inj.get('GoogleQueryService');
-                            //     gmQSvc.setDialogVisibility(false);
-                            // }
                         }
 
                     } else {  //(destWnd == "Same Window")
                         placeMarkers(placesFromSearch);
-                        setVerbageVisibility(false);
-                        // if (currentVerbVis === 'none') {
-                        //     $inj = angular.injector(['app']);
-                        //     gmQSvc = $inj.get('GoogleQueryService');
-                        //     gmQSvc.setDialogVisibility(false);
-                        // }
                     }
                 };
 
@@ -550,8 +523,8 @@
 
                     var checkBounds = searchBox.getBounds(),
                         $inj,
-                        gmQSvc,
-                        scope;
+                        gmQSvc;
+                        // scope;
                     console.log(formatBounds(checkBounds));
                     // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
                     //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
@@ -563,20 +536,16 @@
                         gmQSvc = $inj.get('GoogleQueryService');
                         // currentVerbVis = gmQSvc.setDialogVisibility(true);
                         scope = gmQSvc.getQueryDestinationDialogScope('google');
-                        setTimeout(function () {
-                            scope.$apply(function () {
-                                // rootScope.$broadcast('ShowWindowSelectorModalEvent');
-                                scope.showDestDialog(
-                                    onAcceptDestination,
-                                    {
-                                        'id' : null,
-                                        'title' : searchInput.value,
-                                        'snippet' : 'No snippet available',
-                                        'icon' : 'stylesheets/images/googlemap.png'
-                                    }
-                                );
-                            });
-                        }, 100);
+                        scope.showDestDialog(
+                            onAcceptDestination,
+                            scope,
+                            {
+                                'id' : null,
+                                'title' : searchInput.value,
+                                'snippet' : 'No snippet available',
+                                'icon' : 'stylesheets/images/googlemap.png'
+                            }
+                        );
                     } else {
                         console.log('searchBox.getPlaces() still returned no results');
                     }
@@ -800,7 +769,7 @@
                 cntr,
                 cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat}),
                 view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
-            document.getElementById("mppos").innerHTML = view;
+            // document.getElementById("mppos").innerHTML = view;
             if (cmp === false) {
                 tmpLon = cntrxG;
                 tmpLat = cntryG;

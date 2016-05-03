@@ -166,6 +166,10 @@ svg-menu{
    color: #A2A9B0;
 }
 
+.grid {
+    width: 100%;
+    height: 400px;
+}
     /* Custom dialog/modal headers */
 
 .dialog-header-error { background-color: #d2322d; }
@@ -199,10 +203,12 @@ svg-menu{
 
 .lnkcontrol_margin {
     margin-top: 80px;
+    margin-right: 20px;
 }
 
 .maxcontrol_margin {
     margin-top: 125px;
+    margin-right: 20px;
 }
 
 .lnkmaxcontrol_symbol {

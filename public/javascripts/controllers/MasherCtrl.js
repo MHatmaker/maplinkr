@@ -21,11 +21,12 @@
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = AgoNewWindowConfig.getStartupView();
-            $scope.ExpandSum = startupView.summary === true ? "Collapse" : "Expand";
             $scope.MasterSiteVis = startupView.website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
             $scope.showPopupBlockerDialog = false;
             $scope.data = {
+                'ExpandSum': startupView.summary === true ? "Collapse" : "Expand",
+                'isCollapsed': !startupView.summary,
                 'blockedUrl': 'place holder',
                 'completeUrl': 'completeslashdoturl',
                 'nextWindowName': 'InitialWindowName',
@@ -61,31 +62,71 @@
             $scope.$on('$viewContentLoaded', function () {
                 if (isFirstViewing === false) {
                     if (startupView.summary === true) {
-                        $scope.summmaryCollapser();
+                        $scope.summaryCollapser();
                     }
                 } else {
                     isFirstViewing = false;
                 }
             });
 
-            $scope.summmaryCollapser = function () {
+            $scope.summaryCollapser = function (sumCollapsed) {
                 // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
-                $scope.ExpandSum = $scope.ExpandSum === "Expand" ? "Collapse" : "Expand";
-
-                console.log("MasherCtrl isCollapsed before broadcast " + $scope.isCollapsed);
+                if (sumCollapsed && sumCollapsed.startValue === false) {
+                    $scope.data.isCollapsed = false;
+                }
+                if ($scope.data.isCollapsed === true) {
+                    $scope.data.isCollapsed = false;
+                    $scope.data.ExpandSum = "Collapse";
+                } else {
+                    $scope.data.isCollapsed = true;
+                    $scope.data.ExpandSum = "Expand";
+                }
+                console.log("MasherCtrl isCollapsed before broadcast " + $scope.data.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
-                $scope.isCollapsed = !$scope.isCollapsed;
-                console.log("MasherCtrl isCollapsed after broadcast " + $scope.isCollapsed);
+                // $scope.isCollapsed = !$scope.isCollapsed;
+                console.log("MasherCtrl isCollapsed after broadcast " + $scope.data.isCollapsed);
+                setTimeout(function () {
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                }, 1000);
             };
-            selfMethods.summmaryCollapser = $scope.summmaryCollapser;
-
-
-            console.debug(selfMethods);
-
+            selfMethods.summaryCollapser = $scope.summaryCollapser;
+/*
             $scope.windowResized = function () {
-                $scope.$broadcast('windowResized');
+                var height = document.body.clientHeight,
+                    width = document.body.clientWidth,
+                    mapWrp = angular.element(document.getElementById("map_wrapper")),
+                    rightCol = angular.element(document.getElementById("idRightColOuter")),
+                    hstr = "",
+                    mq;
+
+                console.log(" document.body.client : width " + width + ", height " + height);
+                console.log("map_wrapper height");
+                console.debug(mapWrp);
+                hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
+                console.log(hstr);
+                mapWrp.css({"height": hstr});
+                mq = window.matchMedia('@media all and (max-width: 700px)');
+                if(mq.matches) {
+                    // the width of browser is more then 700px
+                } else {
+                    // the width of browser is less then 700px
+                    rightCol.css({"top": hstr});
+                }
+
             };
-            selfMethods.windowResized = $scope.windowResized;
+*/
+            $scope.windowResized = function () {
+                window.resizeBy(0,0);
+                $scope.safeApply();
+                utils.getMapContainerHeight($scope);
+                setTimeout(function () {
+                    $scope.$apply(console.log("Timer fired"));
+                }, 1000);
+                $scope.safeApply();
+            };
+
+            // selfMethods.windowResized = $scope.windowResized;
+            // window.addEventListener('resize', $scope.windowResized);
 
             $scope.showMeTheMapClicked = function () {
                 // var currentPageTemplate;
@@ -104,7 +145,7 @@
                 // $scope.$apply();
                 // $window.location.href = $scope.currentTab.url;
                 // $window.location.reload();
-                // $scope.summmaryCollapser();
+                // $scope.summaryCollapser();
 
                 // currentPageTemplate = $route.current.loadedTemplateUrl;
                 // console.log("currentPageTemplate : " + currentPageTemplate);
@@ -246,7 +287,7 @@
             App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
 
             //calling tellAngular on resize event
-            window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
+            // window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
 
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService');
@@ -322,8 +363,11 @@
             console.log("startMapSystem");
             isFirstViewing = false;
 
-            if (startupView.summary === true) {
-                selfMethods.summmaryCollapser();
+            if (1) { //startupView.summary === true) {
+
+                setTimeout(function () {
+                    selfMethods.summaryCollapser({'startValue' : false});
+                }, 1000);
             }
         }
 

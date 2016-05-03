@@ -10,8 +10,13 @@
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'controllers/SPACtrl',
+        'controllers/TopRowCtrl',
+        'controllers/LeftColCtrl',
+        'controllers/MapColCtrl',
+        'controllers/RightColCtrl',
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
+        'controllers/MapLinkrPluginCtrl',
         'controllers/VerbageCtrl',
         'controllers/WebSiteDescriptionCtrl',
         'controllers/SearcherCtrlGrp',
@@ -25,8 +30,8 @@
         'lib/GeoCoder',
         'javascripts/lib/AgoNewWindowConfig'
     ],
-        function (angular, MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
-            WebSiteDescriptionCtrl,
+        function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
+            PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, VerbageCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, PusherCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
             console.log('AppController define');
 
@@ -104,7 +109,12 @@
                 MasherCtrl.start(App);
                 TabsCtrl.start(App);
                 SPACtrl.start(App);
+                TopRowCtrl.start(App);
+                LeftColCtrl.start(App);
+                MapColCtrl.start(App);
+                RightColCtrl.start(App);
                 PositionViewCtrl.start(App);
+                MapLinkrPluginCtrl.start(App);
                 // MapCtrl.start(App);
 
                 VerbageCtrl.start(App);

@@ -23,6 +23,8 @@
                     'arcgis' : StartupArcGIS},
             currentMapType = null,
             whichCanvas = 'map_canvas',
+            curMapTypeInitialized = false,
+            lnkrMinMaxInstalled = false,
             // mapSize = {
             //     'small' : '40%',
             //     'medium' : '70%',
@@ -63,7 +65,6 @@
                 mapWrp,
                 hstr,
                 stup,
-                lflt,
                 tmpltName,
                 elem,
                 aelem;
@@ -106,6 +107,9 @@
                 $modalInstance.dismiss('cancel');
             };
 
+            $scope.$on('displayLinkerEvent', function (event, data) {
+                refreshLinker();
+            });
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -113,92 +117,133 @@
                     lnkrTxt,
                     lnkrSmbl;
                 if (lnkrSymbol && lnkrText) {
-                    lnkrTxt =  $scope.$parent.data.ExpandPlug;
+                    lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
                     lnkrText.innerHTML = lnkrTxt;
                     console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.data.verbageExpandCollapse + ".png";
+                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.mapLinkrBtnImage + ".png";
                     lnkrSymbol.src = lnkrSmbl;
                     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }
             }
 
+            $scope.$on("MapLinkrClosedEvent" , function (event, args) {
+                refreshLinker();
+            });
+
             function refreshMinMax() {
                 var minMaxText = document.getElementById("idMinMaxText"),
                     minMaxSymbol = document.getElementById("idMinMaxSymbol");
                 if (minMaxText && minMaxSymbol) {
-                    minMaxText.innerHTML = $scope.$parent.data.ExpandSite;
+                    minMaxText.innerHTML = $scope.$parent.$parent.data.ExpandSite;
                     console.log("refresh MinMax Text with " + minMaxText.innerHTML);
-                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.data.webSiteVisible + ".png";
+                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.$parent.data.webSiteVisible + ".png";
                     console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
                 }
             }
 
             function placeCustomControls() {
-                /*jslint unparam: true*/
-                function stopLintUnusedComplaints(lnkr, minmaxr, lflt, aelem) {
-                    console.log("stopLintUnusedComplaints");
+                //if (lnkrMinMaxInstalled === false) {
+                //    lnkrMinMaxInstalled = true;
+                if (document.getElementById("linkerDirectiveId") === null) {
+
+                    /*jslint unparam: true*/
+                    function stopLintUnusedComplaints(lnkr, minmaxr, aelem) {
+                        console.log("stopLintUnusedComplaints");
+                    }
+
+                    var contextScope = $scope,
+                        cnvs = angular.element(document.getElementById(whichCanvas)),
+                        templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
+    	                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </label> \
+    	                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
+    	                      </div>',
+
+    	                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
+    	                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </label> \
+    	                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                      </div>',
+    /*
+                        templateMinMaxr = ' \
+                            <div class="lnkrclass"> \
+                                <button type="button" id="mapmaximizerDirectiveId" class="btn btn-labeled btn-primary" \
+                                        ng-click="$parent.onExpandMapClicked()" \
+                                    <span<class=$parent."btn-label"> {{$parent.$parent.$parent.data.shrinkgrowtext}} \
+                                        i<class="fa fa-expand fa-lg" \
+                                        ng-class="{\'fa-expand\': $parent.$parent.data.subsiteExpanded, \
+                                        \'fa-compress\': !$parent.$parent.data.subsiteExpanded}" \
+                                        style="padding-left: 0.5rem"/> \
+                                    </span> \
+                                </button> \
+                                    <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                        style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            </div>',
+
+                        templateLnkr = ' \
+                            <div class="lnkrclass"> \
+                                <button<type="button" id="linkerDirectiveId" class="btn btn-labeled btn-primary" \
+                                        ng-click="$parent.onMapLinkrClicked()" \
+                                    span<class="btn-label"> {{$parent.mldata.mapLinkrBtnText}}} \
+                                        i<class="fa fa-expand fa-lg" \
+                                        ng-class="{\'fa-expand\': $parent.$parent.mldata.isOpen, \
+                                        \'fa-compress\': !$parent.$parent.mldata.isOpen}" \
+                                        style="padding-left: 0.5rem"/> \
+                                    </span> \
+                                </button> \
+                                <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            </div>',
+    */
+                        lnkr1 = angular.element(templateLnkr),
+                        lnkr = cnvs.append(lnkr1),
+
+                        minmaxr1 = angular.element(templateMinMaxr),
+                        minmaxr = cnvs.append(minmaxr1),
+
+                        lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
+                        mnmxdiv,
+                        lnkrText,
+                        lnkrSymbol,
+                        refreshDelay;
+                    stopLintUnusedComplaints(lnkr, minmaxr, aelem);
+
+                    lnkrdiv.addEventListener('click', function (event) {
+                        var data = {'visibility' : 'block'};
+                        console.log('lnkr[0].onclick   displayLinkerEvent');
+                        event.stopPropagation();
+                        contextScope.$emit('displayLinkerEvent', data);
+                    });
+
+                    mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
+
+                    mnmxdiv.addEventListener('click', function (event) {
+                        console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                        event.stopPropagation();
+                        contextScope.$emit('mapMaximizerEvent');
+                        contextScope.$apply();
+                        refreshMinMax();
+                    });
+
+                    lnkrText = document.getElementById("idLinkerText");
+                    lnkrSymbol = document.getElementById("idLinkerSymbol");
+                    refreshDelay = 2000;
+                    if (lnkrSymbol && lnkrText) {
+                        refreshDelay = 10;
+                    }
+                    setTimeout(function () {
+                        refreshLinker();
+                        refreshMinMax();
+                    }, refreshDelay);
                 }
-
-                var contextScope = $scope,
-                    cnvs = angular.element(document.getElementById(whichCanvas)),
-
-                    templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
-                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </label> \
-                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
-                      </div>',
-
-                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
-                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </label> \
-                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                      </div>',
-
-                    lnkr1 = angular.element(templateLnkr),
-                    lnkr = cnvs.append(lnkr1),
-
-                    minmaxr1 = angular.element(templateMinMaxr),
-                    minmaxr = cnvs.append(minmaxr1),
-
-                    lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
-                    mnmxdiv,
-                    lnkrText,
-                    lnkrSymbol,
-                    refreshDelay;
-                stopLintUnusedComplaints(lnkr, minmaxr, lflt, aelem);
-
-                lnkrdiv.addEventListener('click', function (event) {
-                    console.log('lnkr[0].onclick   displayLinkerEvent');
-                    event.stopPropagation();
-                    contextScope.$emit('displayLinkerEvent');
-                });
-
-                mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
-
-                mnmxdiv.addEventListener('click', function (event) {
-                    console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                    event.stopPropagation();
-                    contextScope.$emit('mapMaximizerEvent');
-                });
-
-                lnkrText = document.getElementById("idLinkerText");
-                lnkrSymbol = document.getElementById("idLinkerSymbol");
-                refreshDelay = 2000;
-                if (lnkrSymbol && lnkrText) {
-                    refreshDelay = 10;
-                }
-                setTimeout(function () {
-                    refreshLinker();
-                    refreshMinMax();
-                }, refreshDelay);
             }
+
             selfMethods.placeCustomControls = placeCustomControls;
             console.debug(selfMethods);
-
 
             $scope.gsearchVisible = mptp === 'google' ?  'block' : 'none';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
@@ -208,38 +253,45 @@
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
+            // utils.getMapContainerHeight($scope);
+
             currentMapType = mapTypes[mptp];
+            /*
             height = document.body.clientHeight;
             width = document.body.clientWidth;
             console.log(" document.body.client : width " + width + ", height " + height);
-            mapWrp = angular.element(document.getElementById("map_wrapper"));
-            /*
+            mapWrp = angular.element(document.getElementById("IDMapContainerRow"));
+
             console.log("map_wrapper height");
             console.debug(mapWrp);
             var hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
             console.log(hstr);
             mapWrp.css({"height": hstr});
+*/
 
-                 */
             // var parentScope = $scope.$parent;
             // var colHgt = parentScope.bodyColHeight;
             // var mapCnv = angular.element(document.getElementById("map_wrapper"));
             // mapCnv.css({"height": hstr});
             // $scope.MapWdth = mapSize['small'];
+
+            /*
             hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
             console.log(hstr);
             mapWrp.css({"width": hstr});
+            */
 
             stup = currentMapType.start();
             console.debug(stup);
-            lflt = currentMapType.config(null);
-            $scope.map = currentMapType.getMap();
-            // $scope.map.width = mapSize['medium'];
-            // $scope.MapWdth = mapSize['small'];
-            $scope.isMapExpanded = false;
-            console.debug($scope.map);
-            // resizeMap($scope.isMapExpanded, $scope.map);
-            currentMapType.resizeWebSite($scope.isMapExpanded);
+            //
+            // currentMapType.config(null);
+            // $scope.map = currentMapType.getMap();
+            // // $scope.map.width = mapSize['medium'];
+            // // $scope.MapWdth = mapSize['small'];
+            // $scope.isMapExpanded = false;
+            // console.debug($scope.map);
+            // // resizeMap($scope.isMapExpanded, $scope.map);
+            // currentMapType.resizeWebSite($scope.isMapExpanded);
             if (mptp !== 'arcgis') {
                 placeCustomControls();
             }
@@ -253,6 +305,19 @@
                 // aelem.trigger('return');
             }
 
+            function configureCurrentMapType () {
+                currentMapType.config(null);
+                $scope.map = currentMapType.getMap();
+                // $scope.map.width = mapSize['medium'];
+                // $scope.MapWdth = mapSize['small'];
+                $scope.isMapExpanded = false;
+                console.debug($scope.map);
+                curMapTypeInitialized = true;
+                // resizeMap($scope.isMapExpanded, $scope.map);
+            }
+
+            selfMethods.configureCurrentMapType = configureCurrentMapType;
+
             $scope.$on('CollapseSummaryEvent', function (event, args) {
                 // currentMapType.resizeMapPane($scope.isMapExpanded);
                 // currentMapType.resizeWebSite($scope.isMapExpanded);
@@ -261,23 +326,43 @@
 
             $scope.$on('CollapseSummaryCompletionEvent', function (event, args) {
                 console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
-                window.resizeBy(0, 0);
-                // currentMapType.resizeMapPane($scope.isMapExpanded);
-                currentMapType.resizeWebSite($scope.isMapExpanded);
 
-                // var btn = document.getElementById("idExpSiteButton");
-                // btn.click();
-                // refreshLinker();
-                // refreshMinMax();
                 var refreshDelay = 1000;
+                $scope.safeApply();
+
+                // alert("get dimensions and pause");
+                utils.getMapContainerHeight($scope);
                 setTimeout(function () {
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
-                    refreshLinker();
-                    refreshMinMax();
-                // } );
+                    // refreshLinker();
+                    // refreshMinMax();
+                    if(curMapTypeInitialized === false) {
+                        configureCurrentMapType();
+                    }
+                    if (mptp !== 'arcgis') {
+                        placeCustomControls();
+                    }
+                    /*
+                    $scope.safeApply();
+                    window.resizeBy(0, 0);
+                    // currentMapType.resizeMapPane($scope.isMapExpanded);
+                    $scope.safeApply();
+                    currentMapType.resizeWebSite($scope.isMapExpanded);
+                    */
                 }, refreshDelay);
             });
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
 
             $scope.$on('WebSiteVisibilityEvent', function (event, args) {
                 console.log('WebSiteVisibilityEvent');
@@ -295,25 +380,6 @@
                 // resizeMap($scope.isMapExpanded, $scope.map);
                 currentMapType.resizeWebSite($scope.isMapExpanded);
                 refreshMinMax();
-            });
-
-            $scope.$on('CollapseVerbageEvent', function (event, args) {
-                var VerbVis = args.verbage;
-                    // isWebSiteVisible = args.website === 'flex' ? true : false;
-                // $scope.isMapExpanded = ! $scope.isMapExpanded;
-                $scope.isMapExpanded = VerbVis === 'flex' ? false : true;
-                // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
-
-                // if(isWebSiteVisible){
-                     // $scope.MapWdth = VerbVis === 'none' ? mapSize['medium'] : mapSize['small'];
-                // }
-                // else{
-                     // $scope.MapWdth = mapSize['full'];
-                // }
-                // resizeMap($scope.isMapExpanded, $scope.map);
-                currentMapType.resizeVerbage($scope.isMapExpanded);
-                window.resizeBy(0, 0);
-                refreshLinker();
             });
 
             $scope.$on('searchClickEvent', function (event, args) {
@@ -350,7 +416,7 @@
                 AgoNewWindowConfig.setQuery($scope.gsearch.query);
             };
 
-            $scope.showDestDialog = function (callback, details) {
+            $scope.showDestDialog = function (callback, details, info) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
                 $scope.preserveState();
 //                var hostElement = $document.find('mashbox').eq(0);
@@ -360,6 +426,13 @@
                 $scope.data.icon = $scope.currentTab.imgSrc;
                 $scope.data.query = $scope.gsearch.query;
                 $scope.data.callback = callback;
+                if (info) {
+                    $scope.data.icon = info.icon;
+                    $scope.data.title = info.title;
+                    $scope.data.snippet = info.snippet;
+                    $scope.data.mapType = info.mapType;
+                    $scope.data.id = info.id;
+                }
 
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
@@ -390,13 +463,20 @@
             selfMethods.placeCustomControls();
         };
 
+        MapCtrl.prototype.configureCurrentMapType = function () {
+            console.log("configureCurrentMapType");
+            selfMethods.configureCurrentMapType();
+        };
+
         function init(App) {
             console.log('MapCtrl init');
+            App = angular.module('app');
             App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', MapCtrl]);
             return MapCtrl;
         }
 
-        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls };
+        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls,
+            configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType, ctor : MapCtrl};
 
     });
 

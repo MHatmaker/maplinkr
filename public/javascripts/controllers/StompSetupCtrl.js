@@ -6,7 +6,8 @@
     "use strict";
 
     console.log('StompSetup setup');
-    var areWeInitialized = false;
+    var areWeInitialized = false,
+        areWeInstantiated = false;
     define([
         'angular',
         'lib/AgoNewWindowConfig',
@@ -21,7 +22,9 @@
             'callbackFunction' : null,
             'isInitialized' : false,
             'PusherClient' : null,
-            'userName' : ''
+            'userName' : '',
+            'isInstantiated' : false,
+            displayPusherDialog : null
         },
             $inj,
             serv,
@@ -30,6 +33,7 @@
 
         function StompSetupCtrl($scope, $uibModal) {
             console.log("in StompSetupCtrl");
+            selfdict.isInstantiated = areWeInitialized = true;
             $scope.privateChannelMashover = AgoNewWindowConfig.masherChannel();
             selfdict.scope = $scope;
             selfdict.scope.userName = selfdict.userName;
@@ -83,6 +87,7 @@
             };
 
             $scope.displayPusherDialog = function () {
+                // selfdict.scope = $scope;
                 // selfdict.scope.showModal(true);
                 console.log("displayPusherDialog");
                 var tmplt = ' \
@@ -135,6 +140,7 @@
                 selfdict.eventDct = selfdict.mph.getEventDictionary();
 
             };
+            selfdict.displayPusherDialog = $scope.displayPusherDialog;
 
             $scope.hitEnter = function (evt) {
                 if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
@@ -156,6 +162,10 @@
 
         StompSetupCtrl.prototype.isInitialized = function () {
             return areWeInitialized;
+        };
+
+        StompSetupCtrl.prototype.isInstantiated = function () {
+            return areWeInstantiated;
         };
 
         StompSetupCtrl.prototype.PusherClient = function (eventDct, channel, userName, cbfn) {
@@ -277,9 +287,8 @@
         StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
-            selfdict.scope.userName = userName;
             selfdict.callbackFunction = cbfn;
-            selfdict.scope.displayPusherDialog();
+            selfdict.displayPusherDialog();
         };
 
 
@@ -315,7 +324,8 @@
 
         return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient,
                   createPusherClient : StompSetupCtrl.prototype.createPusherClient,
-                  isInitialized : StompSetupCtrl.prototype.isInitialized};
+                  isInitialized : StompSetupCtrl.prototype.isInitialized,
+                  isInstantiated : StompSetupCtrl.prototype.isInstantiated};
 
     });
 

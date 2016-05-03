@@ -14,13 +14,20 @@ var selectedMapType = 'arcgis';
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
         'controllers/SPACtrl',
+        'controllers/TopRowCtrl',
+        'controllers/LeftColCtrl',
+        'controllers/MapColCtrl',
+        'controllers/RightColCtrl',
         'controllers/MapCtrl',
+        'controllers/MapLinkrPluginCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
+
     ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
-            EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+            EmailCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
+            MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {
@@ -50,7 +57,7 @@ var selectedMapType = 'arcgis';
 
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
-                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router', 'ngAnimate'])
+                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngTouch', 'ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning', 'ui.router', 'ngAnimate'])
 
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                         function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
@@ -207,6 +214,13 @@ var selectedMapType = 'arcgis';
                             return scope;
                         },
 
+                        getPusherDialogScope = function () {
+                            var elemID = 'PusherChannelDialog',
+                                e = document.getElementById(elemID),
+                                scope = angular.element(e).scope();
+                            return scope;
+                        },
+
                         setDialogVisibility = function (tf) {
                             var e = document.getElementById('Verbage'),
                                 scope = angular.element(e).scope(),
@@ -229,6 +243,7 @@ var selectedMapType = 'arcgis';
                         getQueryDct: getQueryDct,
                         setQuery : setQuery,
                         getQueryDestinationDialogScope : getQueryDestinationDialogScope,
+                        getPusherDialogScope : getPusherDialogScope,
                         setDialogVisibility : setDialogVisibility,
                         getRootScope : getRootScope
                     };
@@ -307,9 +322,10 @@ var selectedMapType = 'arcgis';
                     searchService.setQuery(gmquery);
                 }
 
-                MasherCtrl.startMapSystem();
+                // MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
                 AgoNewWindowConfig.setHideWebSiteOnStartup(true);
+                MasherCtrl.startMapSystem();
                 // SpaCtrl.hideWebsite();
             }
             return App;

@@ -234,6 +234,56 @@
                 return colHgt;
             }
 
+            function getMapContainerHeight(scope) {
+                var height = document.body.clientHeight,
+                    width = document.body.clientWidth,
+                    mapCon = angular.element(document.getElementById("IDMapContainerRow")),
+                    mapWrap = angular.element(document.getElementById("map_wrapper")),
+                    mapCanvas = angular.element(document.getElementById("map_canvas")),
+                    rightCol = angular.element(document.getElementById("idRightColOuter")),
+                    mapCanRoot = angular.element(document.getElementById("map_canvas_root")),
+                    hstr = "",
+                    mq;
+
+                // scope.safeApply();
+                mq = window.matchMedia('@media all and (max-width: 700px)');
+                if(mq.matches  || width < 700) {
+                    // the width of browser is more then 700px
+                    console.log("Media might be phone");
+                    console.log(height);
+                    height = height - getElemHeight('IDLinkrButtonRow');
+                    console.log(height);
+                } else {
+                    // the width of browser is less then 700px
+                    console.log("Media might be wide browser");
+                    height = height - getElemHeight('idMasterSiteControlRow') -
+                        getElemHeight('idMasterSiteSummary') -
+                        getElemHeight('idSiteTopRow') -
+                        getElemHeight('IDLinkrButtonRow');
+                    console.log(" document.body.client : width " + width + ", height " + height);
+                    console.log("map container height");
+                    console.debug(mapCon);
+                }
+                hstr = String.format("{0}px",toFixedOne(height)); // * 0.7));
+                console.log(hstr);
+                // alert(hstr);
+                mapCon.css({"height": hstr});
+                mapWrap.css({"height": '100%'});
+                mapCanvas.css({"height": '100%'});
+                mapCanRoot.css({"height" : '100%'});
+                // scope.safeApply();
+                /*
+                mq = window.matchMedia('@media all and (max-width: 700px)');
+                if (mq.matches) {
+                    // the width of browser is more then 700px
+                    rightCol.css({"top": 0});
+                } else {
+                    // the width of browser is less then 700px
+                    rightCol.css({"top": hstr});
+                }
+                */
+            };
+
 
             function toFixedOne(val, prec) {
                 var precision = prec || 0,
@@ -281,6 +331,7 @@
                 calculateComponentHeights : calculateComponentHeights,
     //            getComponentHeights : getComponentHeights,
                 getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
+                getMapContainerHeight : getMapContainerHeight,
                 getTopRowHeight : getTopRowHeight,
                 getFooterHeight : getFooterHeight,
                 getMasterSiteHeight : getMasterSiteHeight,

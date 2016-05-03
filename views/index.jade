@@ -4,20 +4,20 @@ extends layout
 block content
 
     #idMasherCtrl(ng-controller="MasherCtrl", ng-cloak, class="ng-cloak")
-        #idMasterSite(class="container-mastersite masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor",
+        #idMasterSite(class="masher_defaultprimarycolor masher_textprimarycolor masher_dividercolor",
             ng-cloak, class="ng-cloak")
 
             #idMasterSiteControlRow(ng-cloak, class="ng-cloak")
 
-                #idMasterSiteExpander(class="mastersitecontrol-expander")
-                    #idExpButtonSum(class="havButton", ng-click="summmaryCollapser()")
-                        span(style='cursor: pointer; cursor: hand;')
-                            figure(style="margin-top: 4px; margin-bottom: 4px; margin-left: 4px;")
-                                img(src="../stylesheets/images/{{ExpandSum}}.png", id='ExpandSumImgId', class="expandoimage", style="margin: 0.01em 0.5em  0.01em  0.05em;")
-                                figcaption(class="btn", style="float: left;  text-align: left;padding: 0.01em 0.01em 0.01em 0.2em;font-weight: 800;") {{ExpandSum}} Summary Master Website Options
+                #idMasterSiteExpander
+                    button(type"button", class="btn btn-labeled",
+                        ng-click="summaryCollapser()")
+                        span(class="btn-label")
+                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isCollapsed, \
+                            'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                            | {{data.ExpandSum}}  MapLinkr Demo Master Website
 
-
-            #idMasterSiteSummary(collapse="isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': isCollapsed, 'mastersite-shown': !isCollapsed}")
+            #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
                 .mashbackground
                     #mashbox(class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")
                         div
@@ -43,5 +43,6 @@ block content
 
 
 
-            div(id="ngview_container", style="position:relative;height:100%;width:100%;", ng-cloak, class="ng-cloak")
+            div(id="ngview_container",
+                style="position:relative;height:100%;width:100%;", ng-cloak, class="ng-cloak")
                 ng-view
