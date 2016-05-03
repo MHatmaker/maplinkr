@@ -37,6 +37,7 @@ public/stylesheets/Leaflet.ie.css
 public/stylesheets/SearchGrid.css
 public/stylesheets/ng-grid.css
 public/stylesheets/Control.Loading.css
+public/stylesheets/ui-grid*
 kdiff3DiffTools.txt
 .git.log
 .git.dot
@@ -53,4 +54,3 @@ public/javascripts/lib/ionic/*
 script.js
 .swp
 gitpass
-
