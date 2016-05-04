@@ -280,11 +280,11 @@
             selfdict.mph.setUserName(selfdict.userName);
             selfdict.eventDct = selfdict.mph.getEventDictionary();
             if (self.callbackfunction !== null) {
-                if (selfdict.info !== null) {
+                if (selfdict.info) {
                     self.callbackfunction(self.CHANNEL, selfdict.userName,
                         selfdict.info.destination, selfdict.info.currentMapHolder, selfdict.info.newWindowId);
                 } else {
-                    self.callbackfunction(self.CHANNEL, selfdict.userName, mull);
+                    self.callbackfunction(self.CHANNEL, selfdict.userName, null);
                 }
             }
             return pusher;
@@ -300,7 +300,7 @@
         };
 
 
-        StompSetupCtrl.prototype.createPusherClient = function (eventDct, pusherChannel, initName, cbfn) {
+        StompSetupCtrl.prototype.createPusherClient = function (eventDct, pusherChannel, initName, cbfn, nfo) {
             console.log("StompSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
             selfdict.userName = initName;
@@ -308,6 +308,7 @@
                 selfdict.scope.data.userName = initName;
             }
             selfdict.callbackFunction = cbfn;
+            selfdict.info = nfo;
             selfdict.pusher = StompSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, initName, cbfn);
             return selfdict.pusher;
         };

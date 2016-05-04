@@ -25,35 +25,7 @@
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
             lnkrMinMaxInstalled = false,
-            // mapSize = {
-            //     'small' : '40%',
-            //     'medium' : '70%',
-            //     'full' : '100%'
-            // },
             selfMethods = {};
-/*
-        function resizeMap(isMapExpanded, map){
-            if(isMapExpanded){
-                angular.element(document.getElementById("map_canvas_container")).addClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).addClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).css({"width": mapSize['full']});
-                angular.element(document.getElementById("map_canvas_layer0")).css({"width": mapSize['full']});
-                // angular.element(document.getElementById("map_canvas")).addClass("max-map-width");
-                angular.element(document.getElementById("map_wrapper")).addClass("max-map-width");
-            }
-            else{
-                angular.element(document.getElementById("map_canvas_container")).removeClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).removeClass("max-map-width");
-                angular.element(document.getElementById("map_canvas_root")).css({"width": mapSize['full']});
-                angular.element(document.getElementById("map_canvas_layer0")).css({"width": mapSize['full']});
-                // angular.element(document.getElementById("map_canvas")).removeClass("max-map-width");
-                angular.element(document.getElementById("map_wrapper")).removeClass("max-map-width");
-            }
-            if(map && map.resize)
-                map.resize();
-            currentMapType.resizeMapPane(isMapExpanded);
-        }
- */
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
@@ -407,6 +379,39 @@
                     // $scope.current = AgoNewWindowConfig.getQuery();
                 // });
             });
+                google.maps.event.addListener(searchBox, 'places_changed', function () {
+                    console.log("MapHosterGoogle 'places_changed' listener");
+                    console.log("before searchBox.getPlaces()");
+
+                    var checkBounds = searchBox.getBounds(),
+                        $inj,
+                        gmQSvc;
+                        // scope;
+                    console.log(formatBounds(checkBounds));
+                    // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
+                    //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
+                    placesFromSearch = searchBox.getPlaces();
+
+                    console.log("after searchBox.getPlaces()");
+                    if (placesFromSearch && placesFromSearch.length > 0) {
+                        $inj = angular.injector(['app']);
+                        gmQSvc = $inj.get('GoogleQueryService');
+                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                        scope = gmQSvc.getQueryDestinationDialogScope('google');
+                        scope.showDestDialog(
+                            onAcceptDestination,
+                            scope,
+                            {
+                                'id' : null,
+                                'title' : searchInput.value,
+                                'snippet' : 'No snippet available',
+                                'icon' : 'stylesheets/images/googlemap.png'
+                            }
+                        );
+                    } else {
+                        console.log('searchBox.getPlaces() still returned no results');
+                    }
+                });
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {
                 refreshMinMax();

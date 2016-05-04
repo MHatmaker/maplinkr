@@ -170,7 +170,8 @@
                         console.log("It was a side effect of the createPusherClient:PusherClient process");
                         AgoNewWindowConfig.setUserName(userName);
                         // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
-                    }
+                    },
+                    {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId}
                 );
 
             } else {
@@ -451,7 +452,8 @@
 
             if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    AgoNewWindowConfig.getUserName(), openNewDisplay);
+                    AgoNewWindowConfig.getUserName(), openNewDisplay,
+                        {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
             } else {
                 openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
             }
