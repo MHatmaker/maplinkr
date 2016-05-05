@@ -49,7 +49,7 @@
                 bounds: null,
                 query: 'what do you want?'
             },
-
+            onAcceptDestination,
             markers = [];
 
         AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - startup');
@@ -301,6 +301,44 @@
             }
         }
 
+        onAcceptDestination = function (displayDestination, mapType) {
+            var curmph = self, destmph, sourceMapType, $inj, evtSvc, gmQSvc, mpTypeSvc, newSelectedWebMapId, destWnd = displayDestination;
+
+            $inj = angular.injector(['app']);
+            if (mapType) {
+                mpTypeSvc = $inj.get("CurrentMapTypeService");
+                destmph = mpTypeSvc.getSpecificMapType(mapType);
+                sourceMapType = mpTypeSvc.getCurrentMapType();
+            }
+            newSelectedWebMapId = "NoId"
+
+            gmQSvc = $inj.get('GoogleQueryService');
+            if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
+                if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                    $inj = angular.injector(['app']);
+                    evtSvc = $inj.get('StompEventHandlerService');
+                    evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                    evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+
+                    // gmQSvc = $inj.get('GoogleQueryService');
+                    // scope = gmQSvc.getPusherDialogScope();
+                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                    // if (StompSetupCtrl.isInstantiated() == false) {
+                    //     new StompSetupCtrl()
+                    // }
+                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                        AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                            {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
+                } else {
+                    WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
+                        AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                }
+
+            } else {  //(destWnd == "Same Window")
+                placeMarkers(placesFromSearch);
+            }
+                };
+
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
             google = goooogle;
@@ -364,7 +402,6 @@
                     pacnpt,
                     qtext,
                     service,
-                    onAcceptDestination,
                     scope;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
@@ -485,34 +522,6 @@
 
                 };
 */
-                onAcceptDestination = function (displayDestination) {
-                    destWnd = displayDestination;
-                    var curmph = self, $inj, evtSvc;
-                    if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                            $inj = angular.injector(['app']);
-                            evtSvc = $inj.get('StompEventHandlerService');
-                            evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                            evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-
-                            // gmQSvc = $inj.get('GoogleQueryService');
-                            // scope = gmQSvc.getPusherDialogScope();
-                            // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                            // if (StompSetupCtrl.isInstantiated() == false) {
-                            //     new StompSetupCtrl()
-                            // }
-                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
-                                    {'destination' : destWnd, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
-                        } else {
-                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
-                                AgoNewWindowConfig.getUserName(), destWnd, curmph, newSelectedWebMapId);
-                        }
-
-                    } else {  //(destWnd == "Same Window")
-                        placeMarkers(placesFromSearch);
-                    }
-                };
 
                 // Listen for the event fired when the user selects an item from the
                 // pick list. Retrieve the matching places for that item.
@@ -972,7 +981,8 @@
             getCenter : getCenter,
             getEventDictionary : getEventDictionary,
             publishPosition : publishPosition,
-            removeEventListeners : removeEventListeners
+            removeEventListeners : removeEventListeners,
+            onAcceptDestination : onAcceptDestination
         };
     });
 

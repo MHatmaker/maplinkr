@@ -20,7 +20,8 @@
                 dstSel : data.dstSel || $scope.destSelections[0],
                 title : data.title,
                 icon : data.icon,
-                snippet : data.snippet
+                snippet : data.snippet,
+                mapType : data.mapType
             };
             $scope.status = {
                 'detailsOpen' : false,
@@ -29,7 +30,7 @@
 
             $scope.accept = function () {
                 console.log("onAcceptDestination " + $scope.data.dstSel);
-                $uibModalInstance.close($scope.data.dstSel);
+                $uibModalInstance.close($scope.data);
             };
 
             $scope.cancel = function () {

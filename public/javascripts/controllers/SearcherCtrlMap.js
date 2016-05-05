@@ -16,7 +16,7 @@ angular.isUndefinedOrNull = function (val) {
         'lib/MapHosterArcGIS',
         'lib/utils',
         'lib/AgoNewWindowConfig',
-        'lib/StompSetupCtrl'
+        'controllers/StompSetupCtrl'
     ], function (angular, StartupArcGIS, MapHosterArcGIS, utils, AgoNewWindowConfig, StompSetupCtrl) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},

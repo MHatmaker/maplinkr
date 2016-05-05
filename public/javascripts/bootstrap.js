@@ -149,6 +149,9 @@ var selectedMapType = 'arcgis';
                                 // mapTypeValues.push(mapTypes[key]);
                             // return mapTypes;
                         },
+                        getSpecificMapType = function (key) {
+                            return mapTypes[key];
+                        },
                         getMapType = function () {
                             return mapTypes[currentMapType];
                         },
@@ -178,7 +181,8 @@ var selectedMapType = 'arcgis';
                         getPreviousMapType : getPreviousMapType,
                         getSelectedMapType : getSelectedMapType,
                         getMapTypeKey : getMapTypeKey,
-                        getMapRestUrl : getMapRestUrl
+                        getMapRestUrl : getMapRestUrl,
+                        getSpecificMapType : getSpecificMapType
                     };
                 }).
 

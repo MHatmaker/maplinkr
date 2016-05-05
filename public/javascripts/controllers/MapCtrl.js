@@ -25,6 +25,10 @@
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
             lnkrMinMaxInstalled = false,
+            searchBox = null,
+            placesFromSearch = null,
+            $inj = null,
+            gmQSvc = null,
             selfMethods = {};
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal) {
@@ -39,7 +43,9 @@
                 stup,
                 tmpltName,
                 elem,
-                aelem;
+                aelem,
+                searchInput,
+                SearchBox;
 
             $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
             $scope.selected = "Same Window";
@@ -358,7 +364,8 @@
                 console.log("MapCtrl 'searchClickEvent' handler");
                 var element = document.getElementById('pac-input'),
                     pacnpt,
-                    paccon;
+                    paccon,
+                    searchBox;
                 if (element) {
                     element.focus();
                 }
@@ -379,39 +386,58 @@
                     // $scope.current = AgoNewWindowConfig.getQuery();
                 // });
             });
-                google.maps.event.addListener(searchBox, 'places_changed', function () {
-                    console.log("MapHosterGoogle 'places_changed' listener");
-                    console.log("before searchBox.getPlaces()");
 
-                    var checkBounds = searchBox.getBounds(),
-                        $inj,
-                        gmQSvc;
-                        // scope;
-                    console.log(formatBounds(checkBounds));
-                    // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
-                    //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
-                    placesFromSearch = searchBox.getPlaces();
+            searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
+            // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+            searchInput.value = '';
+            searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
+                (searchInput));
 
-                    console.log("after searchBox.getPlaces()");
-                    if (placesFromSearch && placesFromSearch.length > 0) {
-                        $inj = angular.injector(['app']);
-                        gmQSvc = $inj.get('GoogleQueryService');
-                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        scope = gmQSvc.getQueryDestinationDialogScope('google');
-                        scope.showDestDialog(
-                            onAcceptDestination,
-                            scope,
-                            {
-                                'id' : null,
-                                'title' : searchInput.value,
-                                'snippet' : 'No snippet available',
-                                'icon' : 'stylesheets/images/googlemap.png'
-                            }
-                        );
-                    } else {
-                        console.log('searchBox.getPlaces() still returned no results');
-                    }
-                });
+            google.maps.event.addListener(searchBox, 'places_changed', function () {
+                var scope = null,
+                    googmph = null,
+                    curmph = null,
+                    curMapType = '',
+                    mpTypeSvc = null;
+                console.log("MapCtrl 'places_changed' listener");
+                console.log("before searchBox.getPlaces()");
+
+/*
+                var checkBounds = searchBox.getBounds(),
+                    $inj,
+                    gmQSvc;
+                    // scope;
+                console.log(formatBounds(checkBounds));
+                // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
+                //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
+*/
+                placesFromSearch = searchBox.getPlaces();
+
+                console.log("after searchBox.getPlaces()");
+                if (placesFromSearch && placesFromSearch.length > 0) {
+                    $inj = angular.injector(['app']);
+                    mpTypeSvc = $inj.get("CurrentMapTypeService");
+                    googmph = mpTypeSvc.getSpecificMapType('google');
+                    curmph = mpTypeSvc.getCurrentMapType();
+                    curMapType = mpTypeSvc.getMapTypeKey();
+                    gmQSvc = $inj.get('GoogleQueryService');
+                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                    scope = gmQSvc.getQueryDestinationDialogScope('google');
+                    $scope.showDestDialog(
+                        googmph.onAcceptDestination,
+                        scope,
+                        {
+                            'id' : null,
+                            'title' : searchInput.value,
+                            'snippet' : 'No snippet available',
+                            'icon' : 'stylesheets/images/googlemap.png',
+                            'mapType' : curMapType
+                        }
+                    );
+                } else {
+                    console.log('searchBox.getPlaces() still returned no results');
+                }
+            });
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {
                 refreshMinMax();
@@ -451,9 +477,9 @@
                     }
                 });
 
-                modalInstance.result.then(function (selectedDestination) {
-                    $scope.updateState(selectedDestination);
-                    $scope.data.callback(selectedDestination);
+                modalInstance.result.then(function (info) {
+                    $scope.updateState(info.dstSel);
+                    $scope.data.callback(info.dstSel, info.mapType);
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();
