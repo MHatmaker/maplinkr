@@ -294,6 +294,9 @@
         StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn, nfo) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
+            if (selfdict.scope) {
+                selfdict.scope.data.userName = userName;
+            }
             selfdict.callbackFunction = cbfn;
             selfdict.info = nfo;
             selfdict.displayPusherDialog();
