@@ -477,7 +477,7 @@
                 AgoNewWindowConfig.setWebmapId(selectedWebMapId);
                 console.log("use " + selectedWebMapId);
                 // pointWebMap = [-87.7, lat=41.8];
-                pointWebMap = [-87.7, 41.8];
+                pointWebMap = [-87.620692, 41.888941];
                 zoomWebMap = 15;
                 initialize(selectedWebMapId, '', '');
             } else {

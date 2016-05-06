@@ -46,6 +46,7 @@
             cntryG = cntry;
             if (mphmap !== null) {
                 bounds = mphmap.geographicExtent;
+                AgoNewWindowConfig.setBounds({'llx' : bounds.xmin, 'lly' : bounds.ymin, 'urx' : bounds.xmax, 'ury' : bounds.ymax});
             }
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
             PositionViewCtrl.update('zm', {
