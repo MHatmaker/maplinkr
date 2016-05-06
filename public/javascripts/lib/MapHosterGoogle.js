@@ -19,6 +19,7 @@
     ], function (angular, PositionViewCtrl, MapCtrl, utils, AgoNewWindowConfig, StompSetupCtrl, WindowStarter) {
 
         var
+            hostName = "MapHosterGoogle",
             mphmap,
             google,
             mapReady = true,
@@ -301,14 +302,13 @@
             }
         }
 
-        onAcceptDestination = function (displayDestination, mapType) {
-            var curmph = self, destmph, sourceMapType, $inj, evtSvc, gmQSvc, mpTypeSvc, newSelectedWebMapId, destWnd = displayDestination;
+        onAcceptDestination = function (info) {
+            var curmph = self, destmph, sourceMapType, $inj, evtSvc, gmQSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
 
             $inj = angular.injector(['app']);
-            if (mapType) {
-                mpTypeSvc = $inj.get("CurrentMapTypeService");
-                destmph = mpTypeSvc.getSpecificMapType(mapType);
-                sourceMapType = mpTypeSvc.getCurrentMapType();
+            if (info) {
+                sourceMapType = info.mapType;
+                destWnd = info.dstSel;
             }
             newSelectedWebMapId = "NoId"
 
@@ -317,8 +317,8 @@
                 if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
                     $inj = angular.injector(['app']);
                     evtSvc = $inj.get('StompEventHandlerService');
-                    evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                    evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+                    evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
+                    evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
 
                     // gmQSvc = $inj.get('GoogleQueryService');
                     // scope = gmQSvc.getPusherDialogScope();
@@ -762,6 +762,10 @@
             }
         }
 
+        function getMapHosterName() {
+            return "hostName is " + hostName;
+        }
+
         function getEventDictionary() {
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService'),
@@ -982,7 +986,8 @@
             getEventDictionary : getEventDictionary,
             publishPosition : publishPosition,
             removeEventListeners : removeEventListeners,
-            onAcceptDestination : onAcceptDestination
+            onAcceptDestination : onAcceptDestination,
+            getMapHosterName : getMapHosterName
         };
     });
 

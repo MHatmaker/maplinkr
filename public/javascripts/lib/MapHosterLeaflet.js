@@ -27,7 +27,9 @@ define('GeoCoder', function () {
 
         function (PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig) {
 
-            var scale2Level = [],
+            var
+                hostName = "MapHosterLeaflet",
+                scale2Level = [],
                 zmG,
                 userZoom = true,
                 // mphmapCenter,
@@ -462,6 +464,10 @@ define('GeoCoder', function () {
                 });
             }
 
+            function getMapHosterName() {
+                return "hostName is " + hostName;
+            }
+
             function getEventDictionary() {
                 var $inj = angular.injector(['app']),
                     evtSvc = $inj.get('StompEventHandlerService'),
@@ -588,7 +594,8 @@ define('GeoCoder', function () {
                 getEventDictionary : getEventDictionary,
                 publishPosition : publishPosition,
                 getCenter : getCenter,
-                removeEventListeners : removeEventListeners
+                removeEventListeners : removeEventListeners,
+                getMapHosterName : getMapHosterName
             };
         });
 }());

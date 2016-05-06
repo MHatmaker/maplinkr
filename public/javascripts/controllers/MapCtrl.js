@@ -431,7 +431,7 @@
                             'title' : searchInput.value,
                             'snippet' : 'No snippet available',
                             'icon' : 'stylesheets/images/googlemap.png',
-                            'mapType' : curMapType
+                            'mapType' : curmph
                         }
                     );
                 } else {
@@ -479,7 +479,7 @@
 
                 modalInstance.result.then(function (info) {
                     $scope.updateState(info.dstSel);
-                    $scope.data.callback(info.dstSel, info.mapType);
+                    $scope.data.callback(info);
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();

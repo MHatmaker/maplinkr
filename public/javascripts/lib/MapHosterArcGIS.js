@@ -13,7 +13,9 @@
         'angular', 'controllers/PositionViewCtrl', 'lib/utils', 'lib/AgoNewWindowConfig'
     ], function (angular, PositionViewCtrl, utils, AgoNewWindowConfig) {
 
-        var mphmap = null,
+        var
+            hostName = "MapHosterArcGIS",
+            mphmap = null,
             mapReady = true,
             scale2Level = [],
             zoomLevels = 0,
@@ -456,6 +458,10 @@
                 pos.maphost, pos.lon, pos.lat, pos.zoom);
         }
 
+        function getMapHosterName() {
+            return "hostName is " + hostName;
+        }
+
         function getEventDictionary() {
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService'),
@@ -657,7 +663,8 @@
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, setUserName : setUserName, getGlobalPositionComponents : getGlobalPositionComponents,
                   publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter,
-                  removeEventListeners : removeEventListeners
+                  removeEventListeners : removeEventListeners,
+                  getMapHosterName : getMapHosterName
                   };
     });
 }());
