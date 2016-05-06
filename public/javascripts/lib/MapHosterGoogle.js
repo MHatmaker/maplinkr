@@ -51,6 +51,7 @@
                 query: 'what do you want?'
             },
             onAcceptDestination,
+            self = this,
             markers = [];
 
         AgoNewWindowConfig.showConfigDetails('MapHosterGoogle - startup');
@@ -551,7 +552,8 @@
                                 'id' : null,
                                 'title' : searchInput.value,
                                 'snippet' : 'No snippet available',
-                                'icon' : 'stylesheets/images/googlemap.png'
+                                'icon' : 'stylesheets/images/googlemap.png',
+                                'mapType' : self
                             }
                         );
                     } else {
