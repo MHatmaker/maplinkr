@@ -277,11 +277,6 @@
             tmpltName = $routeParams.id;
             console.log(tmpltName);
 
-            elem = document.getElementById('pac-input');
-            // aelem = angular.element(elem);
-            elem.style.display = 'block';
-                // aelem.trigger('return');
-
             function configureCurrentMapType () {
                 currentMapType.config(null);
                 $scope.map = currentMapType.getMap();

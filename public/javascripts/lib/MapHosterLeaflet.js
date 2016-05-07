@@ -431,7 +431,8 @@ define('GeoCoder', function () {
                     qlon = AgoNewWindowConfig.lon(),
                     qzoom = AgoNewWindowConfig.zoom(),
                     osmUrl,
-                    lyr;
+                    lyr,
+                    elem;
                 console.debug("ready to show mphmap");
                 mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
                 console.debug(mphmap);
@@ -494,6 +495,9 @@ define('GeoCoder', function () {
                         setBounds('pan', e.latlng);
                     }
                 });
+                elem = document.getElementById('pac-input');
+                // aelem = angular.element(elem);
+                elem.style.display = 'block';
             }
 
             function getMapHosterName() {
