@@ -127,7 +127,9 @@ define('GeoCoder', function () {
                     contextContent = content,
                     container,
                     showSomething,
-                    allContent = '<h4  style="color:#A0743C">' + hint + '</h4><div id="' + contentId + '" >' + content + '</div><br><button class="trigger  btn-primary" id="' + shareBtnId + '">Share</button>',
+                    allContent = '<h4  style="color:#A0743C; visibility: visible">' + hint +
+                        '</h4><div id="' + contentId + '" >' + content +
+                        '</div><br><button class="trigger  btn-primary" id="' + shareBtnId + '">Share</button>',
                     contextPos = pos;
 
                 mrkr = L.marker(pos).addTo(mphmap);
@@ -174,6 +176,11 @@ define('GeoCoder', function () {
                             btnShare.style.visibility = 'hidden';
                         }
 
+                    } else {
+                        if (btnShare) {
+                            console.debug(btnShare);
+                            btnShare.style.visibility = 'visible';
+                        }
                     }
                     if (btnShare) {
                         btnShare.onclick = function () {
@@ -251,23 +258,25 @@ define('GeoCoder', function () {
                     cntr = new L.latLng(r.lat, r.lon, 0);
                     if (marker) {
                         marker.closePopup();
-                        marker.
-                            setLatLng(cntr).
-                            setPopupContent(r.display_name).
-                            openPopup();
+                        markerInfoPopup([cntr.lat, cntr.lng], r.display_name, "The hint");
+                        // marker.
+                        //     setLatLng(cntr).
+                        //     setPopupContent(r.display_name).
+                        //     openPopup();
                     } else {
-                        marker = L.marker(cntr).bindPopup(r.display_name).addTo(mphmap).openPopup();
+                        markerInfoPopup([cntr.lat, cntr.lng], r.display_name, "The hint");
+                        // marker = L.marker(cntr).bindPopup(r.display_name).addTo(mphmap).openPopup();
                     }
-                    if (selfPusherDetails.pusher) {
-                        fixedLL = utils.toFixed(r.lon, r.lat, 6);
-                        referrerId = AgoNewWindowConfig.getUserId();
-                        referrerName = AgoNewWindowConfig.getUserName();
-                        pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                            "referrerId" : referrerId, "referrerName" :  referrerName };
-                        console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                        console.debug(pushLL);
-                        selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-                    }
+                    // if (selfPusherDetails.pusher) {
+                    //     fixedLL = utils.toFixed(r.lon, r.lat, 6);
+                    //     referrerId = AgoNewWindowConfig.getUserId();
+                    //     referrerName = AgoNewWindowConfig.getUserName();
+                    //     pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
+                    //         "referrerId" : referrerId, "referrerName" :  referrerName };
+                    //     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
+                    //     console.debug(pushLL);
+                    //     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
+                    // }
                 }
             }
 
