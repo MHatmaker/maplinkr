@@ -50,7 +50,31 @@
             AgoNewWindowConfig.userName(userName);
             window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
         }
+/*
+        openNewDisplay = function (channel, userName) {
+            url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
+                "&channel=" + channel + "&userName=" + userName +
+                "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+            if (referringMph) {
+                url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
+                    "&channel=" + channel + "&userName=" + userName +
+                    "&maphost=Leaflet" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+            }
 
+            console.log("open new ArcGIS window with URI " + url);
+            console.log("using channel " + channel + "with userName " + userName);
+            AgoNewWindowConfig.setUrl(url);
+            AgoNewWindowConfig.setUserName(userName);
+            if (displayDestination === 'New Pop-up Window') {
+                baseUrl = AgoNewWindowConfig.getbaseurl();
+                window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+            } else {
+                baseUrl = AgoNewWindowConfig.getbaseurl();
+                window.open(baseUrl + "arcgis/" + url, '_blank');
+                window.focus();
+            }
+        };
+*/
         function configure(newMapId) {
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService');
@@ -65,7 +89,8 @@
 
                     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                         AgoNewWindowConfig.getUserName(), function (channel, userName) {
-                            AgoNewWindowConfig.setUserName(userName);
+                            AgoNewWindowConfig.setUserName(userName), openNewDisplay,
+                                {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId};
                             openAGOWindow(channel, userName);
                         });
                 } else {
@@ -99,7 +124,9 @@
                     AgoNewWindowConfig.getUserName(),
                     function (channel, userName) {
                         AgoNewWindowConfig.setUserName(userName);
-                    }
+                    },
+                    null
+                    // {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId}
                 );
                 if (!pusher) {
                     console.log("createPusherClient failed in StartupLeaflet");
@@ -108,7 +135,7 @@
         }
 
         function StartupLeaflet() {
-            console.log("StarupLeaflet unused block");
+            console.log("StartupLeaflet unused block");
         }
 
         function init() {

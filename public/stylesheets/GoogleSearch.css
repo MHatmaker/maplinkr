@@ -12,6 +12,7 @@
   }
 
   #pac-input {
+    display: block;
     background-color: #fff;
     padding: 0 11px 0 13px;
     width: 400px;

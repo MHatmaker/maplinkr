@@ -2,7 +2,7 @@
 /*global define*/
 /*global L*/
 /*global GeoCoder*/
-
+/*global google*/
 // define('leaflet', function () {
     // if (leaflet) {
         // return leaflet;
@@ -23,9 +23,10 @@ define('GeoCoder', function () {
     console.log("ready to require stuff in MapHosterLeaflet");
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig'],
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig',
+        'controllers/StompSetupCtrl', 'controllers/WindowStarter'],
 
-        function (PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig) {
+        function (PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig, StompSetupCtrl, WindowStarter) {
 
             var
                 hostName = "MapHosterLeaflet",
@@ -49,9 +50,14 @@ define('GeoCoder', function () {
                     channel : null,
                     pusher : null
                 },
+                placesFromSearch = [],
                 markers = [],
                 popups = [],
-                mrkr;
+                mrkr,
+                searchBox = null,
+                searchInput = null,
+                onAcceptDestination,
+                self = this;
                 // currentVerbVis = false;
 
             function showLoading() {
@@ -75,6 +81,7 @@ define('GeoCoder', function () {
                     lfltBounds.ymin = sw.lat;
                     lfltBounds.xmax = ne.lng;
                     lfltBounds.ymax = ne.lat;
+                    AgoNewWindowConfig.setBounds({'llx' : sw.lng, 'lly' : sw.lat, 'urx' : ne.lng, 'ury' : ne.lat});
                 }
                 zmG = zm;
                 cntrxG = cntrx;
@@ -274,6 +281,41 @@ define('GeoCoder', function () {
             }
 
 
+            onAcceptDestination = function (info) {
+                var $inj, evtSvc, sourceMapType, newSelectedWebMapId, destWnd;
+
+                $inj = angular.injector(['app']);
+                if (info) {
+                    sourceMapType = info.mapType;
+                    destWnd = info.dstSel;
+                }
+                newSelectedWebMapId = "NoId";
+
+                // gmQSvc = $inj.get('GoogleQueryService');
+                if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
+                    if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                        $inj = angular.injector(['app']);
+                        evtSvc = $inj.get('StompEventHandlerService');
+                        evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
+                        evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
+
+                        // gmQSvc = $inj.get('GoogleQueryService');
+                        // scope = gmQSvc.getPusherDialogScope();
+                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                        // if (StompSetupCtrl.isInstantiated() == false) {
+                        //     new StompSetupCtrl()
+                        // }
+                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                            AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                                {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
+                    } else {
+                        WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
+                            AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                    }
+
+                }
+            };
+
             function extractBounds(action, latlng) {
                 var zm = mphmap.getZoom(),
                     // scale = mphmap.options.crs.scale(zm),
@@ -326,16 +368,6 @@ define('GeoCoder', function () {
                 }
             }
 
-            function setVerbageVisibility(tf) {
-                var $inj,
-                    gmQSvc;
-                // if (currentVerbVis === 'none') {
-                $inj = angular.injector(['app']);
-                gmQSvc = $inj.get('GoogleQueryService');
-                gmQSvc.setDialogVisibility(tf);
-                // }
-            }
-
             function retrievedClick(clickPt) {
                 console.log("Back in retrievedClick - with a click at " +  clickPt.x + ", " + clickPt.y);
                 var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y),
@@ -369,7 +401,7 @@ define('GeoCoder', function () {
                     tmpLat,
                     //tmpZm,
                     cntr;
-                document.getElementById("mppos").innerHTML = view;
+                // document.getElementById("mppos").innerHTML = view;
                 if (cmp === false) {
                     tmpLon = cntrxG;
                     tmpLat = cntryG;
@@ -414,8 +446,8 @@ define('GeoCoder', function () {
                     mphmap.setView([qlat, qlon], qzoom);
                     updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
                 } else {
-                    mphmap.setView([41.8, -87.7], 13);
-                    updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
+                    mphmap.setView([41.888941, -87.620692], 13);
+                    updateGlobals("init with hard-coded values", -87.620692, 41.888941,  13);
                 }
                 console.log(mphmap.getCenter().lng + " " +  mphmap.getCenter().lat);
 

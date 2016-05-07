@@ -1,6 +1,8 @@
 /*global define */
 
-var selectedMapType = 'arcgis';
+var selectedMapType = 'arcgis',
+    currentMapType = 'arcgis',
+    previousMapType = 'arcgis';
 
 (function () {
     "use strict";
@@ -134,9 +136,6 @@ var selectedMapType = 'arcgis';
                             'google' : 'GoogleMap',
                             'arcgis' : 'ArcGIS'
                         },
-
-                        currentMapType = 'arcgis',
-                        previousMapType = 'arcgis',
 
                         getMapTypes = function () {
                             var values = Object.keys(mapTypes).map(function (key) {
