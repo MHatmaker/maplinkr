@@ -88,6 +88,15 @@ function initPlaces() {
             console.log("StartupGoogle.resizeMapPane : invalidateSize stub");
         }
 
+        function showLoading() {
+            console.log("show loading");
+            esri.show(loading);
+        }
+
+        function hideLoading(error) {
+            console.log("hide loading");
+            esri.hide(loading);
+        }
 
         function configure(newMapId) {
             var $inj,
@@ -117,6 +126,7 @@ function initPlaces() {
             console.log("newSelectedWebMapId " + newMapId);
 
             window.loading = dojo.byId("loadingImg");
+            showLoading();
 
             if (newSelectedWebMapId !== null) {
                 if (AgoNewWindowConfig.isNameChannelAccepted() === false) {

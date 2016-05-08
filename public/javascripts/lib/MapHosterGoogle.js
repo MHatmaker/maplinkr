@@ -338,7 +338,12 @@
             } else {  //(destWnd == "Same Window")
                 placeMarkers(placesFromSearch);
             }
-                };
+        };
+
+        function hideLoading(error) {
+            console.log("hide loading");
+            esri.hide(loading);
+        }
 
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
@@ -406,6 +411,7 @@
                     scope;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
+                hideLoading();
                 mapReady = true;
                 center = mphmap.getCenter();
                 // google.maps.event.trigger(mphmap, 'resize');
