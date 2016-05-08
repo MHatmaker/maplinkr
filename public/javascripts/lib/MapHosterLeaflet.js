@@ -173,24 +173,17 @@ define('GeoCoder', function () {
                     if (referrerId && referrerId !== usrId) {
                         if (btnShare) {
                             console.debug(btnShare);
-                            btnShare.style.visibility = 'hidden';
+                            btnShare.style.visibility = 'visible';
+                            btnShare.onclick=function() {showSomething();};
                         }
 
                     } else {
                         if (btnShare) {
                             console.debug(btnShare);
-                            btnShare.style.visibility = 'visible';
+                            btnShare.style.visibility = 'hidden';
                         }
                     }
-                    if (btnShare) {
-                        btnShare.onclick = function () {
-                            showSomething();
-                        };
-                    }
                 });
-
-                // var btnShare = document.getElementById(shareBtnId);
-                // btnShare.onclick=function() {showSomething();};
 
                 // mphmap.on('click', '.trigger', function() {
                     // alert('Hello from Toronto!');
