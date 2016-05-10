@@ -609,21 +609,9 @@ define('GeoCoder', function () {
                 mphmap.zoomControl.removeFrom(mphmap);
             }
 
-            function resizeWebSiteVertical(isMapExpanded) {
-                console.log('resizeWebSiteVertical');
-                mphmap.invalidateSize(false);
-            }
-
-            function resizeVerbageHorizontal(isMapExpanded) {
-                console.log('resizeVerbageHorizontal');
-                mphmap.invalidateSize(false);
-            }
-
             return {
                 start: init,
                 config : configureMap,
-                resizeWebSite: resizeWebSiteVertical,
-                resizeVerbage: resizeVerbageHorizontal,
                 retrievedBounds: retrievedBounds,
                 retrievedClick: retrievedClick,
                 setPusherClient: setPusherClient,

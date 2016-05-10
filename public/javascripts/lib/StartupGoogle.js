@@ -75,19 +75,6 @@ function initPlaces() {
             return gMap;
         }
 
-        function resizeWebSiteVertical(isMapExpanded) {
-            MapHosterGoogle.resizeWebSite(isMapExpanded);
-        }
-
-        function resizeVerbageHorizontal(isMapExpanded) {
-            MapHosterGoogle.resizeVerbage(isMapExpanded);
-        }
-
-        function resizeMapPane(isMapExpanded) {
-
-            console.log("StartupGoogle.resizeMapPane : invalidateSize stub");
-        }
-
         function showLoading() {
             console.log("show loading");
             esri.show(loading);
@@ -193,7 +180,6 @@ function initPlaces() {
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 MapHosterGoogle.start();
                 MapHosterGoogle.config(gMap, google, google.maps.places);
-                MapHosterGoogle.resizeWebSite(true);
 
                 pusherChannel = AgoNewWindowConfig.masherChannel(false);
                 console.debug(pusherChannel);
@@ -258,9 +244,6 @@ function initPlaces() {
             start: init,
             config : configure,
             getMap: getMap,
-            resizeWebSite: resizeWebSiteVertical,
-            resizeVerbage: resizeVerbageHorizontal,
-            resizeMapPane: resizeMapPane
         };
 
     });

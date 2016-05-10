@@ -54,45 +54,6 @@
             return aMap;
         }
 
-        function resizeWebSiteVertical(isMapExpanded) {
-            if (aMap) {
-                MapHosterArcGIS.resizeWebSite(isMapExpanded);
-            }
-        }
-
-        function resizeVerbageHorizontal(isMapExpanded) {
-            if (aMap) {
-                MapHosterArcGIS.resizeVerbage(isMapExpanded);
-
-                // var lnkr = angular.element(document.getElementById("linkerDirectiveId"));
-                //     minmaxr = angular.element(document.getElementById("mapmaximizerDirectiveId"));
-
-                //     cnvs = angular.element(document.getElementById('map_canvas_root'));
-                //     mpcanvas = angular.element(document.getElementById("map_canvas"));
-                //     canElem = document.getElementById("map_canvas");
-                // canElem.resize();
-                //     djtmapcan = dojo.byId("map_wrapper");
-
-                window.setTimeout(function () {
-
-                    // cnvs.css('width', '100%');
-                    MapHosterArcGIS.resizeVerbage(isMapExpanded);
-                    // cnvs.css('width', '100%');
-                    // window.resizeBy(0, 0);
-
-                    // mpcanvas = angular.element(document.getElementById("map_canvas"));
-                    // cnvs = angular.element(document.getElementById('map_canvas_root'));
-                    // cnvs[0].clientWidth = mpcanvas[0].clientWidth;
-                    // cnvs.css('width', '100%');
-                }, 1000);
-            }
-        }
-
-        function resizeMapPane(isMapExpanded) {
-            console.log("StartupArcGIS.resizeMapPane : invalidateSize with current isMapExpanded = "
-                + isMapExpanded);
-        }
-
         function showLoading() {
             utils.showLoading();
             aMap.disableMapNavigation();
@@ -180,7 +141,7 @@
                 currentChannel = channel;
                 selfDetails.mph = MapHosterArcGIS.start();
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
-                resizeWebSiteVertical(true);
+
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
@@ -506,9 +467,6 @@
             config : initializePreProc,
             getMap: getMap,
             replaceWebMap : initialize,
-            resizeWebSite: resizeWebSiteVertical,
-            resizeVerbage: resizeVerbageHorizontal,
-            resizeMapPane: resizeMapPane,
             prepareWindow: prepareWindow
         };
 

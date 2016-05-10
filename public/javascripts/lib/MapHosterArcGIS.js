@@ -342,6 +342,12 @@
                     showClickResult(null);
                 }
             });
+            window.addEventListener("resize", function () {
+                mphmap.resize();
+
+                mpCanRoot.style.width = "100%";
+                mpCanRoot.style.height = "100%";
+            });
             mapReady = true;
             userZoom = true;
 
@@ -614,52 +620,7 @@
             console.log("empty function removeEventListners");
         }
 
-        function resizeWebSiteVertical(isMapExpanded) {
-            console.log('resizeWebSiteVertical');
-            var tmpLon = cntrxG,
-                tmpLat = cntryG,
-                tmpZm = zmG,
-                cntr,
-                mpCanWdth;
-                // mpCanHgt;
-
-            mpWrap = document.getElementById("map_wrapper");
-            mpCan = document.getElementById("map_canvas");
-            mpCanRoot = document.getElementById("map_canvas_root");
-            if (mpCanRoot) {
-                mpCanWdth = mpWrap.clientWidth;
-                // mpCanHgt = mpWrap.clientHeight;
-                console.log(mpCanWdth);
-
-                mpCanRoot.style.height = '100%'; //mpCanHgt;
-                mpCanRoot.style.width = mpCanWdth;
-                mpCan.style.height = '100%'; //mpCanHgt;
-                mpCan.style.width = mpCanWdth;
-
-                if (tmpZm && tmpZm !== 'undefined') {
-                    cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid: 4326}));
-                    mphmap.resize();
-                    mphmap.centerAndZoom(cntr, tmpZm);
-                }
-            } else {
-                console.log("resizeWebSiteVertical cannot resize yet without valid map_canvas_root");
-            }
-        }
-
-        function resizeVerbageHorizontal(isMapExpanded) {
-            console.log('resizeVerbageHorizontal');
-
-            var tmpLon = cntrxG,
-                tmpLat = cntryG,
-                tmpZm = zmG,
-                cntr = new esri.geometry.Point(tmpLon, tmpLat, new esri.SpatialReference({wkid: 4326}));
-
-            mphmap.resize();
-            mphmap.centerAndZoom(cntr, tmpZm);
-        }
-
         return { start: init, config : configureMap,
-                  resizeWebSite: resizeWebSiteVertical, resizeVerbage: resizeVerbageHorizontal,
                   retrievedBounds: retrievedBounds, retrievedClick: retrievedClick,
                   setPusherClient: setPusherClient, getGlobalsForUrl: getGlobalsForUrl,
                   getEventDictionary : getEventDictionary, setUserName : setUserName, getGlobalPositionComponents : getGlobalPositionComponents,

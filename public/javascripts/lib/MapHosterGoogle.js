@@ -625,13 +625,22 @@
                 console.log("resize event hit in MapHosterGoogle");
                                 // mphmap.setZoom(20);
                                 // mphmap.setZoom(13);
+                var center = mphmap.getCenter();
+                google.maps.event.trigger(mphmap, "resize");
+                mphmap.setCenter(center);
                 console.log(mphmap.getBounds());
             }
 
-            google.maps.event.addListener(mphmap, 'resize', gotResize); //function() {
+            // google.maps.event.addListener(mphmap, 'resize', gotResize); //function() {
                 // console.log("resize event hit");
                 // console.log(mphmap.getBounds());
             // });
+
+            google.maps.event.addDomListener(window, 'resize', function() {
+                gotResize();
+                // console.log("resize event hit");
+                // console.log(mphmap.getBounds());
+            });
 
             google.maps.event.addListener(mphmap, "mousemove", function (e) {
                 var ltln = e.latLng,
@@ -945,46 +954,9 @@
             // mphmap.removeListener();
         }
 
-        function resizeWebSiteVertical(isMapExpanded) {
-            console.log('resizeWebSiteVertical');
-            // map.invalidateSize(true);
-            var resizeCenter = mphmap.getCenter(),
-                resizeBounds = mphmap.getBounds();
-            console.debug(resizeBounds);
-            google.maps.event.trigger(mphmap, 'resize');
-            mphmap.setCenter(resizeCenter);
-        }
-
-        function resizeVerbageHorizontal(isMapExpanded) {
-            console.log('resizeVerbageHorizontal');
-            /*
-            var element = 'map_wrapper',
-                wrapWdth = utils.getElementDimension(element, 'width');
-            console.log('reset ' + element + ' width to ' + wrapWdth);
-            utils.setElementDimension(element, 'width', wrapWdth);
-
-            var wrapHgt = utils.getElementDimension(element, 'height') + 1;
-            console.log('reset ' + element + ' height to ' + wrapHgt);
-            utils.setElementDimension(element, 'height', wrapHgt);
-
-            // mphmap.invalidateSize(true);
-
-            var center = mphmap.getCenter();
-            google.maps.event.trigger(mphmap, 'resize');
-            mphmap.setCenter(center);
-
-            element = 'map_canvas';
-            var cnvsWdth = utils.getElementDimension(element, 'width');
-            console.log('reset ' + element + ' width to ' + cnvsWdth);
-            utils.setElementDimension(element, 'width', cnvsWdth);
-            */
-        }
-
         return {
             start: init,
             config : configureMap,
-            resizeWebSite: resizeWebSiteVertical,
-            resizeVerbage: resizeVerbageHorizontal,
             retrievedBounds: retrievedBounds,
             retrievedClick: retrievedClick,
             setPusherClient: setPusherClient,

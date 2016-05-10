@@ -269,7 +269,7 @@
             // $scope.isMapExpanded = false;
             // console.debug($scope.map);
             // // resizeMap($scope.isMapExpanded, $scope.map);
-            // currentMapType.resizeWebSite($scope.isMapExpanded);
+
             if (mptp !== 'arcgis') {
                 placeCustomControls();
             }
@@ -291,8 +291,6 @@
             selfMethods.configureCurrentMapType = configureCurrentMapType;
 
             $scope.$on('CollapseSummaryEvent', function (event, args) {
-                // currentMapType.resizeMapPane($scope.isMapExpanded);
-                // currentMapType.resizeWebSite($scope.isMapExpanded);
                 console.log("unused CollapseSummaryEvent");
             });
 
@@ -315,13 +313,7 @@
                     if (mptp !== 'arcgis') {
                         placeCustomControls();
                     }
-                    /*
-                    $scope.safeApply();
-                    window.resizeBy(0, 0);
-                    // currentMapType.resizeMapPane($scope.isMapExpanded);
-                    $scope.safeApply();
-                    currentMapType.resizeWebSite($scope.isMapExpanded);
-                    */
+
                 }, refreshDelay);
             });
 
@@ -335,24 +327,6 @@
                     this.$apply(fn);
                 }
             };
-
-            $scope.$on('WebSiteVisibilityEvent', function (event, args) {
-                console.log('WebSiteVisibilityEvent');
-                var VerbVis = args.verbage;
-                    // isWebSiteVisible = args.website === 'flex' ? true : false;
-                $scope.isMapExpanded = VerbVis === 'flex' ? false : true;
-                // $scope.isMapExpanded = ! $scope.isMapExpanded;
-                // if(isWebSiteVisible){
-                     // $scope.MapWdth = VerbVis === 'none' ? mapSize['full'] : mapSize['small'];
-                // }
-                // else{
-                     // $scope.MapWdth = mapSize['full'];
-                // }
-                // $scope.MapWdth =  $scope.isMapExpanded ? mapSize['full'] : mapSize['small'];
-                // resizeMap($scope.isMapExpanded, $scope.map);
-                currentMapType.resizeWebSite($scope.isMapExpanded);
-                refreshMinMax();
-            });
 
             $scope.$on('searchClickEvent', function (event, args) {
                 console.log("MapCtrl 'searchClickEvent' handler");

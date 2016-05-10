@@ -30,17 +30,6 @@
             return lMap;
         }
 
-        function resizeWebSiteVertical(isMapExpanded) {
-            MapHosterLeaflet.resizeWebSite(isMapExpanded);
-        }
-        function resizeVerbageHorizontal(isMapExpanded) {
-            MapHosterLeaflet.resizeVerbage(isMapExpanded);
-        }
-        function resizeMapPane(isMapExpanded) {
-            console.log("StartupLeaflet : invalidateSize");
-            // lMap.invalidateSize(true);
-        }
-
         function openAGOWindow(channel, userName) {
             var url = "?id=" + newSelectedWebMapId + MapHosterLeaflet.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName;
             console.log("open new ArcGIS window with URI " + url);
@@ -147,9 +136,6 @@
             start: init,
             config : configure,
             getMap: getMap,
-            resizeWebSite: resizeWebSiteVertical,
-            resizeVerbage: resizeVerbageHorizontal,
-            resizeMapPane: resizeMapPane
         };
 
     });

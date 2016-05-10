@@ -99,13 +99,23 @@
 
             // from ModelessTest project
             $scope.handleMapExpandShrinkEvents = function () {
+                var containerDiv;
                 if ($scope.data.subsiteExpanded === true) {
+                    $scope.data.subsiteExpanded = false;
                     $scope.setDisplayStyles(false);
                 } else {
+                    $scope.data.subsiteExpanded = true;
                     $scope.setDisplayStyles(true);
                 }
+
+                // containerDiv = document.getElementById('map_wrapper');
+                // containerDiv.resize();
                 setTimeout(function () {
-                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                    console.log("After setDisplayStyles");
+                    window.resizeBy(0,0);
+                    window.dispatchEvent(new Event('resize'));
+                    $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
+                    // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
                 }, 1000);
             }
 
