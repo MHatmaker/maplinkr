@@ -146,37 +146,6 @@
     	                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
     	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
     	                      </div>',
-    /*
-                        templateMinMaxr = ' \
-                            <div class="lnkrclass"> \
-                                <button type="button" id="mapmaximizerDirectiveId" class="btn btn-labeled btn-primary" \
-                                        ng-click="$parent.onExpandMapClicked()" \
-                                    <span<class=$parent."btn-label"> {{$parent.$parent.$parent.data.shrinkgrowtext}} \
-                                        i<class="fa fa-expand fa-lg" \
-                                        ng-class="{\'fa-expand\': $parent.$parent.data.subsiteExpanded, \
-                                        \'fa-compress\': !$parent.$parent.data.subsiteExpanded}" \
-                                        style="padding-left: 0.5rem"/> \
-                                    </span> \
-                                </button> \
-                                    <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                                        style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                            </div>',
-
-                        templateLnkr = ' \
-                            <div class="lnkrclass"> \
-                                <button<type="button" id="linkerDirectiveId" class="btn btn-labeled btn-primary" \
-                                        ng-click="$parent.onMapLinkrClicked()" \
-                                    span<class="btn-label"> {{$parent.mldata.mapLinkrBtnText}}} \
-                                        i<class="fa fa-expand fa-lg" \
-                                        ng-class="{\'fa-expand\': $parent.$parent.mldata.isOpen, \
-                                        \'fa-compress\': !$parent.$parent.mldata.isOpen}" \
-                                        style="padding-left: 0.5rem"/> \
-                                    </span> \
-                                </button> \
-                                <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-                            </div>',
-    */
                         lnkr1 = angular.element(templateLnkr),
                         lnkr = cnvs.append(lnkr1),
 
@@ -231,48 +200,15 @@
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
-            // utils.getMapContainerHeight($scope);
 
             currentMapType = mapTypes[mptp];
-            /*
-            height = document.body.clientHeight;
-            width = document.body.clientWidth;
-            console.log(" document.body.client : width " + width + ", height " + height);
-            mapWrp = angular.element(document.getElementById("IDMapContainerRow"));
-
-            console.log("map_wrapper height");
-            console.debug(mapWrp);
-            var hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
-            console.log(hstr);
-            mapWrp.css({"height": hstr});
-*/
-
-            // var parentScope = $scope.$parent;
-            // var colHgt = parentScope.bodyColHeight;
-            // var mapCnv = angular.element(document.getElementById("map_wrapper"));
-            // mapCnv.css({"height": hstr});
-            // $scope.MapWdth = mapSize['small'];
-
-            /*
-            hstr = String.format("{0}px", utils.toFixedOne(width  * 0.7, 0));
-            console.log(hstr);
-            mapWrp.css({"width": hstr});
-            */
 
             stup = currentMapType.start();
             console.debug(stup);
-            //
-            // currentMapType.config(null);
-            // $scope.map = currentMapType.getMap();
-            // // $scope.map.width = mapSize['medium'];
-            // // $scope.MapWdth = mapSize['small'];
-            // $scope.isMapExpanded = false;
-            // console.debug($scope.map);
-            // // resizeMap($scope.isMapExpanded, $scope.map);
 
-            if (mptp !== 'arcgis') {
+            //if (mptp !== 'arcgis') {
                 placeCustomControls();
-            }
+            //}
 
             tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -289,6 +225,12 @@
             }
 
             selfMethods.configureCurrentMapType = configureCurrentMapType;
+
+            function invalidateCurrentMapTypeConfigured () {
+                curMapTypeInitialized = false;
+            }
+
+            selfMethods.invalidateCurrentMapTypeConfigured = invalidateCurrentMapTypeConfigured;
 
             $scope.$on('CollapseSummaryEvent', function (event, args) {
                 console.log("unused CollapseSummaryEvent");
@@ -466,6 +408,12 @@
             console.log("configureCurrentMapType");
             selfMethods.configureCurrentMapType();
         };
+        MapCtrl.prototype.invalidateCurrentMapTypeConfigured = function () {
+            console.log("invalidateCurrentMapTypeConfigured");
+            if (selfMethods.invalidateCurrentMapTypeConfigured) {
+                selfMethods.invalidateCurrentMapTypeConfigured();
+            }
+        }
 
         function init(App) {
             console.log('MapCtrl init');
@@ -475,7 +423,8 @@
         }
 
         return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls,
-            configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType, ctor : MapCtrl};
+            configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType,
+            invalidateCurrentMapTypeConfigured : MapCtrl.prototype.invalidateCurrentMapTypeConfigured};
 
     });
 

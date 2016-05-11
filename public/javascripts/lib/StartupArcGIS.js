@@ -71,16 +71,6 @@
                 ctrlSvc = $inj.get('ControllerService'),
                 mapCtrl = ctrlSvc.getController();
             mapCtrl.placeCustomControls();
-            //
-            //     lnkrText = document.getElementById("idLinkerText");
-            //     lnkrSymbol = document.getElementById("idLinkerSymbol");
-            //     refreshDelay = 2000;
-            // if (lnkrSymbol && lnkrText) {
-            //     refreshDelay = 10;
-            // }
-            // setTimeout(function () {
-            //   mapCtrl.placeCustomControls();
-            // }, refreshDelay);
         }
 
         function initUI() {
@@ -102,13 +92,7 @@
                 attachTo: "top-left"
             });
              */
-             callbackfn =
-                    function (callbackChannel, userName) {
-                        console.log("callback - don't need to setPusherClient");
-                        console.log("It was a side effect of the createPusherClient:PusherClient process");
-                        AgoNewWindowConfig.setUserName(userName);
-                        // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
-                    };
+
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1] + ' zoom ' + zoomWebMap);
             console.log("selfDetails.mph : " + selfDetails.mph);
             if (selfDetails.mph === null) {
@@ -121,13 +105,11 @@
                 console.debug(MapHosterArcGIS);
                 console.debug(pusherChannel);
                 curmph = null;
-                // if (AgoNewWindowConfig.isChannelInitialized() == false) {
+
                 $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
                 curmph = serv.getSelectedMapType();
-                uname = AgoNewWindowConfig.getUserName();
-                    // }
-                placeCustomControls();  // TEST REMOVING THIS ON 3/5
+
                 pusher = StompSetupCtrl.createPusherClient(
                     {
                         'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
@@ -135,16 +117,14 @@
                         'client-NewMapPosition' : curmph.retrievedNewPosition
                     },
                     pusherChannel,
-                    uname,
-                    callbackfn,
-                    /*
+                    AgoNewWindowConfig.getUserName(),
                     function (callbackChannel, userName) {
                         console.log("callback - don't need to setPusherClient");
                         console.log("It was a side effect of the createPusherClient:PusherClient process");
                         AgoNewWindowConfig.setUserName(userName);
                         // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
-                    },*/
-                    {'destination' : "DestPlaceHolder", 'currentMapHolder' : curmph, 'newWindowId' : "windowIdPlaceholder"}
+                    },
+                    {'destination' : "destPlaceHolder", 'currentMapHolder' : curmph, 'newWindowId' : "windowIdPlaceholder"}
                 );
 
             } else {
@@ -159,27 +139,7 @@
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
                 placeCustomControls();  // MOVED TEMPORARILY on 3/15
             }
-
-
-            /*
-            mpDiv = document.getElementById("map_wrapper");
-            // var mpDivNG = angular.element(mpDiv)[0];
-            console.debug(mpDiv);
-            // dojo.connect(mpDivNG, 'resize', function () {  //resize the map if the div is resized
-            mpDiv.onresize( function () {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout( function () {
-                    console.log("resize handler hit");
-                    aMap.resize();
-                    aMap.reposition();
-                }, 500);
-            });
-            console.log("onResize should be hooked to map_wrapper div");
-            console.debug(mpDiv);
-             */
         }
-
-
 
         function initializePostProc(newSelectedWebMapId) {
             var urlparams,
@@ -330,19 +290,7 @@
                 console.log("response title " + response.itemInfo.item.title);
                 dojo.connect(aMap, "onUpdateStart", showLoading);
                 dojo.connect(aMap, "onUpdateEnd", hideLoading);
-               /*
-            var resizeTimer;
-            var mapcan = dijit.byId('map_canvas');
-            console.debug(mapcan);
-            dojo.connect(dijit.byId('map_canvas'), 'resize', function () {  //resize the map if the div is resized
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout( function () {
-                    console.log("resize handler hit");
-                    aMap.resize();
-                    aMap.reposition();
-                }, 500);
-            });
-             */
+
                 if (aMap.loaded) {
                     initUI();
                 } else {
@@ -371,7 +319,8 @@
                 prepareWindow(newSelectedWebMapId, referringMph, displayDestination);
             } else {
                 /*
-                This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master site or opening the webmap from a url sent through a publish event.
+                This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master
+                site or opening the webmap from a url sent through a publish event.
                  */
                 $inj = angular.injector(['app']);
                 evtSvc = $inj.get('StompEventHandlerService');
@@ -486,6 +435,3 @@
     });
 
 }());
-// }).call(this);
-
-// dojo.ready(initializePreProc);

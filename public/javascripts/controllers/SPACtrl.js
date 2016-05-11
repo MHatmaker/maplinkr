@@ -92,9 +92,6 @@
                 utils.getMapContainerHeight($scope);
                 window.resizeBy(0,0);
                 $scope.safeApply(console.log("Initiating system with Collapsed website."));
-                // var mapctrl = MapCtrl.start();
-                // var ctor = mapctrl();
-                // MapCtrl.configureCurrentMapType(curmapsys);
             }, 500);
 
             // from ModelessTest project

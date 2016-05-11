@@ -165,6 +165,7 @@ var selectedMapType = 'arcgis',
                             selectedMapType = mpt;
                             currentMapType = mpt;
                             console.log("selectedMapType set to " + selectedMapType);
+                            MapCtrl.invalidateCurrentMapTypeConfigured();
                         },
                         getPreviousMapType = function () {
                             return mapTypes[previousMapType];
