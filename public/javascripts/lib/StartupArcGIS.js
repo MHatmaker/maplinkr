@@ -91,7 +91,9 @@
                 $inj,
                 serv,
                 currentPusher,
-                currentChannel;
+                currentChannel,
+                uname,
+                callbackfn;
 
             /* Scalebar refuses to appear on map.  It appears outside the map on a bordering control.
             var scalebar = new esri.dijit.Scalebar({
@@ -100,6 +102,13 @@
                 attachTo: "top-left"
             });
              */
+             callbackfn =
+                    function (callbackChannel, userName) {
+                        console.log("callback - don't need to setPusherClient");
+                        console.log("It was a side effect of the createPusherClient:PusherClient process");
+                        AgoNewWindowConfig.setUserName(userName);
+                        // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
+                    };
             console.log("start MapHoster with center " + pointWebMap[0] + ", " + pointWebMap[1] + ' zoom ' + zoomWebMap);
             console.log("selfDetails.mph : " + selfDetails.mph);
             if (selfDetails.mph === null) {
@@ -116,6 +125,7 @@
                 $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
                 curmph = serv.getSelectedMapType();
+                uname = AgoNewWindowConfig.getUserName();
                     // }
                 placeCustomControls();  // TEST REMOVING THIS ON 3/5
                 pusher = StompSetupCtrl.createPusherClient(
@@ -125,14 +135,16 @@
                         'client-NewMapPosition' : curmph.retrievedNewPosition
                     },
                     pusherChannel,
-                    AgoNewWindowConfig.getUserName(),
+                    uname,
+                    callbackfn,
+                    /*
                     function (callbackChannel, userName) {
                         console.log("callback - don't need to setPusherClient");
                         console.log("It was a side effect of the createPusherClient:PusherClient process");
                         AgoNewWindowConfig.setUserName(userName);
                         // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
-                    },
-                    {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId}
+                    },*/
+                    {'destination' : "DestPlaceHolder", 'currentMapHolder' : curmph, 'newWindowId' : "windowIdPlaceholder"}
                 );
 
             } else {
@@ -343,8 +355,9 @@
         }
 
 
-        function initialize(newSelectedWebMapId, displayDestination, selectedMapTitle, referringMph) {
+        function initialize(newSelectedWebMapId, destDetails, selectedMapTitle, referringMph) {
             var curmph = MapHosterArcGIS,
+                displayDestination = destDetails.dstSel,
                 $inj,
                 serv,
                 evtSvc,

@@ -253,7 +253,7 @@ var selectedMapType = 'arcgis',
                 }).
 
                 factory("LinkrService", function ($rootScope) {
-                    var lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
+                    var lnkrdiv = document.getElementById('linkerDirectiveId'),
                         scope = angular.element(lnkrdiv).scope(),
                         getLinkrScope,
                         hideLinkr;
@@ -263,8 +263,9 @@ var selectedMapType = 'arcgis',
                     };
                     hideLinkr = function () {
                         var data = {'visibility' : 'none'};
-
-                        scope.$emit('displayLinkerEvent', data);
+                        if(scope) {
+                            scope.$emit('displayLinkerEvent', data);
+                        }
                     };
 
                     return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr};
