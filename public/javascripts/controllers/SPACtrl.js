@@ -48,7 +48,7 @@
                 utils.getMapContainerHeight($scope);
                 setTimeout(function () {
                     $scope.$apply(console.log("Timer fired"));
-                }, 1000);
+                }, 500);
                 $scope.safeApply();
             };
             selfMethods.windowResized = $scope.windowResized;
@@ -95,7 +95,7 @@
                 // var mapctrl = MapCtrl.start();
                 // var ctor = mapctrl();
                 // MapCtrl.configureCurrentMapType(curmapsys);
-            }, 1000);
+            }, 500);
 
             // from ModelessTest project
             $scope.handleMapExpandShrinkEvents = function () {
@@ -116,7 +116,7 @@
                     window.dispatchEvent(new Event('resize'));
                     $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
                     // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 1000);
+                }, 500);
             }
 
             $scope.onExpandMapClicked = function () {
