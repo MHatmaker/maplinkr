@@ -152,13 +152,14 @@
                         minmaxr1 = angular.element(templateMinMaxr),
                         minmaxr = cnvs.append(minmaxr1),
 
-                        lnkrdiv = document.getElementsByClassName('lnkrclass')[0],
+                        lnkrdiv,
                         mnmxdiv,
                         lnkrText,
                         lnkrSymbol,
                         refreshDelay;
                     stopLintUnusedComplaints(lnkr, minmaxr, aelem);
 
+                    lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
                     lnkrdiv.addEventListener('click', function (event) {
                         var data = {'visibility' : 'block'};
                         console.log('lnkr[0].onclick   displayLinkerEvent');
@@ -206,9 +207,9 @@
             stup = currentMapType.start();
             console.debug(stup);
 
-            //if (mptp !== 'arcgis') {
+            if (mptp !== 'arcgis') {
                 placeCustomControls();
-            //}
+            }
 
             tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -221,6 +222,7 @@
                 $scope.isMapExpanded = false;
                 console.debug($scope.map);
                 curMapTypeInitialized = true;
+
                 // resizeMap($scope.isMapExpanded, $scope.map);
             }
 
@@ -249,7 +251,7 @@
                     console.log("REFRESH LINKER AND MINMAX");
                     // refreshLinker();
                     // refreshMinMax();
-                    if(curMapTypeInitialized === false) {
+                    if(curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
                         configureCurrentMapType();
                     }
                     if (mptp !== 'arcgis') {

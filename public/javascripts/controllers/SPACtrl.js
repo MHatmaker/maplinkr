@@ -87,7 +87,7 @@
                 $scope.data.mapColShowing = 'block';
                 $scope.setDisplayStyles(false);
             }
-            $scope.safeApply();
+            // $scope.safeApply();
             setTimeout(function () {
                 utils.getMapContainerHeight($scope);
                 window.resizeBy(0,0);

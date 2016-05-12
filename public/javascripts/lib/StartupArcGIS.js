@@ -98,7 +98,10 @@
             if (selfDetails.mph === null) {
                 console.log("self.Details.mph is null");
                 // alert("StartupArcGIS.initUI : selfDetails.mph == null");
+
                 selfDetails.mph = MapHosterArcGIS.start();
+                // placeCustomControls();
+
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
@@ -155,10 +158,10 @@
                 mapDeferred;
 
             window.loading = dojo.byId("loadingImg");  //loading image. id
-            console.log("initializePostProc");
+            console.log("");
             if (newSelectedWebMapId && newSelectedWebMapId !== null) {
                 urlparams = dojo.queryToObject(window.location.search);
-                console.log("initializePostProc - urlparams");
+                console.log(" - urlparams");
                 console.log(urlparams);
 
                 // Get the idWebMap from the url if it is present, otherwise return current webmapId
@@ -202,7 +205,7 @@
                     zmw = AgoNewWindowConfig.zoom();
                     pusherChannel = AgoNewWindowConfig.masherChannel(true);
 
-                    // alert("initializePostProc - pusherChannel = " + pusherChannel);
+                    // alert(" - pusherChannel = " + pusherChannel);
                     console.log("initializePostProc - pusherChannel = " + pusherChannel);
                     // AgoNewWindowConfig.setUrl(url);
 
@@ -231,12 +234,13 @@
                     position = curmph.getGlobalPositionComponents();
                     AgoNewWindowConfig.setPosition(position);
                     AgoNewWindowConfig.setWebmapId(newSelectedWebMapId);
-                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - origina.l initialization or replace map');
+                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - original initialization or replace map');
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
             //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications.
-            esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
+            esri.config.defaults.geometryService =
+                new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
 
             //specify any default settings for your map
             //for example a bing maps key or a default web map id
@@ -291,11 +295,13 @@
                 dojo.connect(aMap, "onUpdateStart", showLoading);
                 dojo.connect(aMap, "onUpdateEnd", hideLoading);
 
-                if (aMap.loaded) {
-                    initUI();
-                } else {
-                    dojo.connect(aMap, "onLoad", initUI);
-                }
+                setTimeout( function () {
+                    if (aMap.loaded) {
+                        initUI();
+                    } else {
+                        dojo.connect(aMap, "onLoad", initUI);
+                    }
+                }, 500);
             }, function (error) {
                 alert("Create Map Failed ");
                 console.log('Create Map Failed: ' + dojo.toJson(error));
