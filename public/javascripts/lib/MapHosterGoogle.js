@@ -992,7 +992,8 @@
             setPlacesFromSearch : setPlacesFromSearch,
             getSearchBounds : getSearchBounds,
             setSearchBox : setSearchBox,
-            getMap : getMap
+            getMap : getMap,
+            placeMarkers : placeMarkers
         };
     });
 

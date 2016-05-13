@@ -14,13 +14,17 @@
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
         'lib/utils',
-        'lib/AgoNewWindowConfig'
-    ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
+        'lib/AgoNewWindowConfig',
+        'controllers/StompSetupCtrl',
+        'controllers/WindowStarter'
+    ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
+            AgoNewWindowConfig, StompSetupCtrl, WindowStarter_) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
                     'google' : StartupGoogle,
                     'arcgis' : StartupArcGIS},
+            WindowStarter = WindowStarter_,
             currentMapType = null,
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
@@ -320,13 +324,48 @@
                     searchBounds = null,
                     center,
                     service,
+                    placesSearchResults = [],
+                    onAcceptDestination,
                     queryPlaces = {
                         location: null,
                         bounds: null,
                         query: 'what do you want?'
                     };
                 console.log("MapCtrl 'places_changed' listener");
-                console.log("before searchBox.getPlaces()");
+
+                onAcceptDestination = function (info) {
+                    var googmph, sourceMapType, $inj, evtSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
+
+                    $inj = angular.injector(['app']);
+                    if (info) {
+                        sourceMapType = info.mapType;
+                        destWnd = info.dstSel;
+                    }
+                    newSelectedWebMapId = "NoId"
+
+                    if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
+                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                            $inj = angular.injector(['app']);
+                            evtSvc = $inj.get('StompEventHandlerService');
+                            evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
+                            evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
+
+                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                                    {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
+                        } else {
+                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
+                                AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                        }
+
+                    } else {  //(destWnd == "Same Window")
+                        $inj = angular.injector(['app']);
+                        mpTypeSvc = $inj.get("CurrentMapTypeService");
+                        googmph = mpTypeSvc.getSpecificMapType('google');
+                        googmph.placeMarkers(placesSearchResults);
+                    }
+                };
+
                 function placesQueryCallback(placesFromSearch, status) {
                     var mpTypeSvc,
                     googmph,
@@ -338,18 +377,21 @@
                     console.log('status is ' + status);
 
                     if (placesFromSearch && placesFromSearch.length > 0) {
+                        placesSearchResults = placesFromSearch;
                         $inj = angular.injector(['app']);
                         mpTypeSvc = $inj.get("CurrentMapTypeService");
                         googmph = mpTypeSvc.getSpecificMapType('google');
-                        googmph.setPlacesFromSearch(placesFromSearch);
 
                         curmph = mpTypeSvc.getCurrentMapType();
                         curMapType = mpTypeSvc.getMapTypeKey();
+                        if(mpTypeSvc === 'google') {
+                            googmph.setPlacesFromSearch(placesFromSearch);
+                        }
                         gmQSvc = $inj.get('GoogleQueryService');
                         // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        scope = gmQSvc.getQueryDestinationDialogScope('google');
+                        scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
                         $scope.showDestDialog(
-                            googmph.onAcceptDestination,
+                            onAcceptDestination,
                             scope,
                             {
                                 'id' : null,
