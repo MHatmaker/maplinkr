@@ -51,6 +51,7 @@
                 query: 'what do you want?'
             },
             onAcceptDestination,
+            placesFromSearch = [],
             self = this,
             markers = [];
 
@@ -352,7 +353,6 @@
             geoCoder = new google.maps.Geocoder();
             var
                 self = this,
-                placesFromSearch = [],
                 firstCntr,
                 qlat,
                 qlon,
@@ -529,7 +529,7 @@
 
                 };
 */
-
+/*
                 // Listen for the event fired when the user selects an item from the
                 // pick list. Retrieve the matching places for that item.
                 google.maps.event.addListener(searchBox, 'places_changed', function () {
@@ -566,7 +566,7 @@
                         console.log('searchBox.getPlaces() still returned no results');
                     }
                 });
-
+*/
             });
 
             // var bndsInit = createBounds();
@@ -591,8 +591,9 @@
             searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
             searchInput.value = '';
-            searchBox = new gplaces.SearchBox(/** @type {HTMLInputElement} */
-                (searchInput));
+            // searchBox = new gplaces.SearchBox(/** @type {HTMLInputElement} */
+            //     (searchInput));
+            // searchBox = MapCtrl.getSearchBox();
 
             // Bias the SearchBox results towards places that are within the bounds of the
             // current map's viewport.
@@ -600,7 +601,9 @@
                 var changedBounds = mphmap.getBounds(),
                     convertedBounds;
                 // console.debug(changedBounds);
-                searchBox.setBounds(changedBounds);
+                if (searchBox) {
+                    searchBox.setBounds(changedBounds);
+                }
                 convertedBounds = {'llx' : changedBounds.getSouthWest().lng(), 'lly' : changedBounds.getSouthWest().lat(),
                              'urx' : changedBounds.getNorthEast().lng(), 'ury' : changedBounds.getNorthEast().lat()};
                 AgoNewWindowConfig.setBounds(convertedBounds);
@@ -783,6 +786,10 @@
             return "hostName is " + hostName;
         }
 
+        function getMap() {
+            return mphmap;
+        }
+
         function getEventDictionary() {
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService'),
@@ -940,6 +947,20 @@
             return retrievedBoundsInternal(xj);
         }
 
+        function getSearchBounds() {
+            var bounds = mphmap.getBounds();
+            // console.debug(bounds);
+            return bounds;
+        }
+
+        function setSearchBox(sbox) {
+            searchBox = sbox
+        }
+
+        function setPlacesFromSearch(places) {
+            placesFromSearch = places;
+        }
+
         function MapHosterGoogle() {
             mapReady = false;
             // bounds = null;
@@ -967,7 +988,11 @@
             publishPosition : publishPosition,
             removeEventListeners : removeEventListeners,
             onAcceptDestination : onAcceptDestination,
-            getMapHosterName : getMapHosterName
+            getMapHosterName : getMapHosterName,
+            setPlacesFromSearch : setPlacesFromSearch,
+            getSearchBounds : getSearchBounds,
+            setSearchBox : setSearchBox,
+            getMap : getMap
         };
     });
 

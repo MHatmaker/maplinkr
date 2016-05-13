@@ -59,6 +59,7 @@
         'javascripts/lib/AgoNewWindowConfig',
         'javascripts/bootstrap',
         'lib/GeoCoder',
+        'controllers/MapCtrl',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS',
