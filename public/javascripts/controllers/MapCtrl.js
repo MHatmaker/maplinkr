@@ -320,11 +320,13 @@
                     curMapType = '',
                     mpTypeSvc = null,
                     gmap,
+                    mapOptions,
                     pacnpt,
                     searchBounds = null,
                     mapLinkrBounds,
                     position,
                     center,
+                    googleCenter,
                     service,
                     placesSearchResults = [],
                     onAcceptDestination,
@@ -420,14 +422,24 @@
                 $inj = angular.injector(['app']);
                 mpTypeSvc = $inj.get("CurrentMapTypeService");
                 googmph = mpTypeSvc.getSpecificMapType('google');
-                // googmph.setSearchBox(searchBox);
+
                 mapLinkrBounds = AgoNewWindowConfig.getBounds();
                 searchBounds = new google.maps.LatLngBounds(
                                 new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
                                 new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
                             );
                 position = AgoNewWindowConfig.getPosition();
-                center = {'lat' :position.lat, 'lng' : position.lon};
+                center = {'lat' : position.lat, 'lng' : position.lon};
+                googleCenter = new google.maps.LatLng(position.lat, position.lon);
+                gmap = googmph.getMap();
+                if (!gmap) {
+                    mapOptions = {
+                        center : googleCenter,
+                        zoom : 15,
+                        mapTypeId : google.maps.MapTypeId.ROADMAP
+                    };
+                    gmap = new google.maps.Map(document.getElementById("hiddenmap_canvas"), mapOptions);
+                }
 
                 // placesFromSearch = searchBox.getPlaces();
 
@@ -435,36 +447,8 @@
                 queryPlaces.bounds = searchBounds;
                 queryPlaces.query = pacnpt[0].value;
                 queryPlaces.location = center;
-                service = new google.maps.places.PlacesService(googmph.getMap());
+                service = new google.maps.places.PlacesService(gmap);
                 service.textSearch(queryPlaces, placesQueryCallback);
-/*
-                console.log("after searchBox.getPlaces()");
-                if (placesFromSearch && placesFromSearch.length > 0) {
-                    $inj = angular.injector(['app']);
-                    mpTypeSvc = $inj.get("CurrentMapTypeService");
-                    googmph = mpTypeSvc.getSpecificMapType('google');
-                    googmph.setPlacesFromSearch(placesFromSearch);
-
-                    curmph = mpTypeSvc.getCurrentMapType();
-                    curMapType = mpTypeSvc.getMapTypeKey();
-                    gmQSvc = $inj.get('GoogleQueryService');
-                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                    scope = gmQSvc.getQueryDestinationDialogScope('google');
-                    $scope.showDestDialog(
-                        googmph.onAcceptDestination,
-                        scope,
-                        {
-                            'id' : null,
-                            'title' : searchInput.value,
-                            'snippet' : 'No snippet available',
-                            'icon' : 'stylesheets/images/googlemap.png',
-                            'mapType' : curmph
-                        }
-                    );
-                } else {
-                    console.log('searchBox.getPlaces() still returned no results');
-                }
-*/
             });
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {
