@@ -16,7 +16,8 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
                 uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Select option for new map display", is-open='status.destChoicesOpen')
                     div(class="btn-group btn-group-vertical")
                         span(data-ng-repeat="dest in destSelections")
-                            label(class="btn btn-primary", uib-btn-radio="'{{dest}}'", ng-model="data.dstSel"){{dest}}
+                            label(class="btn btn-primary", uib-btn-radio="'{{dest.option}}'",
+                                ng-model="data.dstSel", class="{{dest.showing}}"){{dest.option}}
 
                             br
                     br

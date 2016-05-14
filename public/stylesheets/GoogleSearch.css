@@ -28,3 +28,13 @@
     padding-left: 14px;  /* Regular padding-left + 1. */
     width: 401px;
   }
+
+.destination-option-showing
+ {
+    display: block;
+ }
+
+.destination-option-hidden
+ {
+    display: none;
+ }

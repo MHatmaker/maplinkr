@@ -50,11 +50,14 @@
                 aelem,
                 searchInput;
 
-            $scope.destSelections = ["Same Window", "New Tab", "New Pop-up Window"];
+            $scope.destSelections = [
+                {'option' : "Same Window", 'showing' : "destination-option-showing"},
+                {'option' : "New Tab", 'showing' : "destination-option-showing"},
+                {'option' : "New Pop-up Window", 'showing' : "destination-option-showing"}];
             $scope.selected = "Same Window";
             $scope.data = {
-                dstSel : $scope.destSelections[0],
-                prevDstSel : $scope.destSelections[0],
+                dstSel : $scope.destSelections[0].option,
+                prevDstSel : $scope.destSelections[0].option,
                 title : 'map has no title',
                 icon : null,
                 snippet : 'nothing in snippet',
@@ -198,6 +201,8 @@
 
             $scope.gsearchVisible = mptp === 'google' || mptp === 'arcgis'?  'block' : 'none';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+            $scope.selected = mptp === 'google' ? 'Same Window' : 'New Pop-up Window';
+            $scope.updateState($scope.selected);
 
             if (gmquery !== '') {
                 $scope.gsearch = {'query' : gmquery};
@@ -388,9 +393,13 @@
 
                         curmph = mpTypeSvc.getCurrentMapType();
                         curMapType = mpTypeSvc.getMapTypeKey();
-                        if(mpTypeSvc === 'google') {
+                        if(curMapType === 'google') {
                             googmph.setPlacesFromSearch(placesFromSearch);
+                            $scope.destSelections[0].showing = 'destination-option-showing';
+                        } else {
+                            $scope.destSelections[0].showing = 'destination-option-hidden';
                         }
+
                         gmQSvc = $inj.get('GoogleQueryService');
                         // currentVerbVis = gmQSvc.setDialogVisibility(true);
                         scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
