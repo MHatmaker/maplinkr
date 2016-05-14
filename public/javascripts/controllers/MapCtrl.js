@@ -322,6 +322,8 @@
                     gmap,
                     pacnpt,
                     searchBounds = null,
+                    mapLinkrBounds,
+                    position,
                     center,
                     service,
                     placesSearchResults = [],
@@ -418,11 +420,14 @@
                 $inj = angular.injector(['app']);
                 mpTypeSvc = $inj.get("CurrentMapTypeService");
                 googmph = mpTypeSvc.getSpecificMapType('google');
-                googmph.setSearchBox(searchBox);
-                searchBounds = googmph.getSearchBounds();
-                searchBox.setBounds(searchBounds);
-                center = googmph.getCenter();
-                gmap = googmph.getMap();
+                // googmph.setSearchBox(searchBox);
+                mapLinkrBounds = AgoNewWindowConfig.getBounds();
+                searchBounds = new google.maps.LatLngBounds(
+                                new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
+                                new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
+                            );
+                position = AgoNewWindowConfig.getPosition();
+                center = {'lat' :position.lat, 'lng' : position.lon};
 
                 // placesFromSearch = searchBox.getPlaces();
 
@@ -430,9 +435,9 @@
                 queryPlaces.bounds = searchBounds;
                 queryPlaces.query = pacnpt[0].value;
                 queryPlaces.location = center;
-                service = new google.maps.places.PlacesService(gmap);
+                service = new google.maps.places.PlacesService(googmph.getMap());
                 service.textSearch(queryPlaces, placesQueryCallback);
-
+/*
                 console.log("after searchBox.getPlaces()");
                 if (placesFromSearch && placesFromSearch.length > 0) {
                     $inj = angular.injector(['app']);
@@ -459,6 +464,7 @@
                 } else {
                     console.log('searchBox.getPlaces() still returned no results');
                 }
+*/
             });
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {

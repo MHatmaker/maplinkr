@@ -203,6 +203,9 @@ var details = {
                 setBounds : function (bnds) {
                     details.bounds = bnds;
                 },
+                getBounds : function () {
+                    return details.bounds;
+                },
                 getBoundsForUrl : function () {
                     var bnds = details.bounds,
                         bndsUrl = "&llx=" + bnds.llx + "&lly=" + bnds.lly + "&urx=" + bnds.urx + "&ury=" + bnds.ury;

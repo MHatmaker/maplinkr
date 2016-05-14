@@ -59,16 +59,17 @@
         function updateGlobals(msg, cntrx, cntry, zm) {
             console.log("updateGlobals ");
             var gmBounds = mphmap.getBounds(),
+                mapLinkrBounds = {},
                 ne,
                 sw;
             if (gmBounds) {
                 ne = gmBounds.getNorthEast();
                 sw = gmBounds.getSouthWest();
                 // bounds = gmBounds;
-                gmBounds.xmin = sw.lng();
-                gmBounds.ymin = sw.lat();
-                gmBounds.xmax = ne.lng();
-                gmBounds.ymax = ne.lat();
+                mapLinkrBounds.llx = gmBounds.xmin = sw.lng();
+                mapLinkrBounds.lly = gmBounds.ymin = sw.lat();
+                mapLinkrBounds.urx = gmBounds.xmax = ne.lng();
+                mapLinkrBounds.ury = gmBounds.ymax = ne.lat();
             }
             zmG = zm;
             cntrxG = cntrx;
@@ -83,6 +84,7 @@
                 'evlat' : cntryG
             });
             AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
+            AgoNewWindowConfig.setBounds(mapLinkrBounds);
         }
 
         function showGlobals(cntxt) {
