@@ -1,7 +1,7 @@
 div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
     div(class="modal-content")
         div(class="modal-header")
-            button(type="button", class="close", data-dismiss="modal", aria-hidden="true", ng-click="cancel()")&times
+            button(type="button", class="close", data-dismiss="modal", aria-hidden="true", ng-click="cancel()") &times
             div(style="color: #17244D; margin-top: 5px;")
                 span
                     img(ng-src="{{data.icon}}", style="height : 3em; width : 3em; margin-right : 1em;")
@@ -11,13 +11,15 @@ div(class="modal-dialog ng-isolate-scope", style="width: 100%;")
         div(class="modal-body", style="background-color: #6E9096")
 
             uib-accordion(close-others="true")
-                uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Details", is-open='status.detailsOpen')
-                    {{data.snippet}}
+                uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup",
+                    heading="Details", is-open='status.detailsOpen')
+                    |{{data.snippet}}
                 uib-accordion-group(template-url="accordion-template.jade", class="accdiongroup", heading="Select option for new map display", is-open='status.destChoicesOpen')
                     div(class="btn-group btn-group-vertical")
                         span(data-ng-repeat="dest in destSelections")
                             label(class="btn btn-primary", uib-btn-radio="'{{dest.option}}'",
-                                ng-model="data.dstSel", class="{{dest.showing}}"){{dest.option}}
+                                ng-model="data.dstSel", class="{{dest.showing}}")
+                                |{{dest.option}}
 
                             br
                     br
