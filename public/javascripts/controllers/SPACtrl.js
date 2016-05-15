@@ -33,13 +33,16 @@
                 serv;
 
             $scope.safeApply = function (fn) {
-                var phase = this.$root.$$phase;
-                if (phase === '$apply' || phase === '$digest') {
-                    if (fn && (typeof fn === 'function')) {
-                        fn();
+                var phase;
+                if (this.$root) {
+                    phase = this.$root.$$phase;
+                    if (phase === '$apply' || phase === '$digest') {
+                        if (fn && (typeof fn === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
                     }
-                } else {
-                    this.$apply(fn);
                 }
             };
             $scope.windowResized = function () {
@@ -109,7 +112,7 @@
                 // containerDiv.resize();
                 setTimeout(function () {
                     console.log("After setDisplayStyles");
-                    window.resizeBy(0,0);
+                    // window.resizeBy(0,0);
                     window.dispatchEvent(new Event('resize'));
                     $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
                     // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});

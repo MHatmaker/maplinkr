@@ -132,7 +132,7 @@
                 EmailCtrl.start(App);
                 GoogleSearchDirective.start(App);
                 // LinkerDisplayDirective.start(App);
-                // MapMaximizerDirective.start(App);
+
                 MapCtrl.start(App);
                 GeoCoder.start(App, $http);
 

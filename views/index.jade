@@ -17,9 +17,11 @@ block content
                             'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                             | {{data.ExpandSum}}  MapLinkr Demo Master Website
 
-            #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary", ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
+            #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary",
+                ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
                 .mashbackground
-                    #mashbox(class="transbox", style="margin: 0px; padding: 0px; font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")
+                    #mashbox(class="transbox", style="margin: 0px; padding: 0px; \
+                        font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")
                         div
                             img(src="../stylesheets/images/LogoSnipBlackText.png", style="height: 30px")
                             div(style="visibility : hidden; font-size : 200%") Do not show this
@@ -36,10 +38,14 @@ block content
                 #mainView(ng-cloak, class="ng-cloak") {{currentTab.content}}
 
                     div(ng-cloak, class="ng-cloak", class="tabselectionview")
-                        div(id="currentTabSelectedId", style="float: left; font-weight: bold; margin-top: 0.5em; padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}}
+                        div(id="currentTabSelectedId", style="float: left; font-weight: bold; margin-top: 0.5em; \
+                            padding: 2px 5px 6px 5px;") Selected Map Type: {{currentTab.title}}
                         img(src='{{currentTab.imgSrc}}', style='margin: 2px 5px 6px 5px')
-                        input(type="button", id="describeTheWebsite", name="describeTheWebsite", ng-click='describeTheWebsiteClicked();', style='margin-left:40px; font-weight: bold;', class='btn', value='Tell  Me About The Website')
-                        input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();', style='margin-left:40px; font-weight: bold;', class='btn', value='Show Me The Website')
+                        input(type="button", id="describeTheWebsite", name="describeTheWebsite",
+                            ng-click='describeTheWebsiteClicked();', style='margin-left:40px; font-weight: bold;',
+                                class='btn', value='Tell  Me About The Website')
+                        input(type="button", id="showMeTheMap", name="showMeTheMap", ng-click='showMeTheMapClicked();',
+                            style='margin-left:40px; font-weight: bold;', class='btn', value='Show Me The Website')
 
 
 

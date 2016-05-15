@@ -133,6 +133,7 @@
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 console.debug($location);
 
+                $scope.summaryCollapser();
                 $location.path($scope.currentTab.url, true);
                 $location.replace();
                 $route.reload();
@@ -363,7 +364,7 @@
             console.log("startMapSystem");
             isFirstViewing = false;
 
-            if (1) { //startupView.summary === true) {
+            if (startupView.summary === true) {
 
                 setTimeout(function () {
                     selfMethods.summaryCollapser({'startValue' : false});
