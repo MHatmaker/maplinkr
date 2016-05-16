@@ -396,6 +396,16 @@
                 gMap.setZoom(oldZoom - 1); //Or whatever
             });
             */
+
+            function placeCustomControls() {
+                var $inj = angular.injector(['app']),
+                    ctrlSvc = $inj.get('ControllerService'),
+                    mapCtrl = ctrlSvc.getController();
+                setTimeout(function() {
+                    mapCtrl.placeCustomControls();
+                }, 500);
+            }
+
             google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function () {
                 var zsvc = new google.maps.MaxZoomService(),
                     cntr = new google.maps.LatLng(cntryG, cntrxG),
@@ -446,11 +456,6 @@
                     }
                 });
 
-                // mphmap.setZoom(20);
-                //
-                // addInitialSymbols();
-                // mphmap.setZoom(initZoom);
-                // wndIndex = 0;
                 console.log('gmQuery contains ' + gmQuery);
                 if (gmQuery !== '') {
                     searchFiredFromUrl = true;
@@ -475,6 +480,8 @@
                     service = new google.maps.places.PlacesService(mphmap);
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
+
+                placeCustomControls();
 /*
                 setupNewDisplay = function (channel, userName, wndIndex) {
 
@@ -584,11 +591,6 @@
                 console.debug(mphmap.getBounds());
                 google.maps.event.removeListener(listener);
             });
-
-            // google.maps.event.trigger(mphmap, 'resize');
-            // var firstZoom = mphmap.getZoom();
-            // console.log('firstZoom is ' + firstZoom);
-            // mphmap.setZoom( firstZoom - 1 );
 
             searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
             mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);

@@ -428,6 +428,13 @@ define('GeoCoder', function () {
                 AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
             }
 
+            function placeCustomControls() {
+                var $inj = angular.injector(['app']),
+                    ctrlSvc = $inj.get('ControllerService'),
+                    mapCtrl = ctrlSvc.getController();
+                mapCtrl.placeCustomControls();
+            }
+
             function configureMap(lmap) {
                 var qlat = AgoNewWindowConfig.lat(),
                     qlon = AgoNewWindowConfig.lon(),
@@ -462,6 +469,7 @@ define('GeoCoder', function () {
                     maxZoom: 18,
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://cloudmade.com">CloudMade</a>'
                 }).addTo(mphmap);
+                lyr.on("load",function() {placeCustomControls() });
 
                 lyr.on("loading", function (e) {
                     showLoading();

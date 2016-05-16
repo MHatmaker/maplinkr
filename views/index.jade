@@ -15,9 +15,9 @@ block content
                         span(class="btn-label")
                             i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isCollapsed, \
                             'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
-                            | {{data.ExpandSum}}  MapLinkr Demo Master Website
+                            | {{data.ExpandSumText}}  MapLinkr Demo Master Website
 
-            #idMasterSiteSummary(collapse="data.isCollapsed", ng-cloak, class="ng-cloak mastersite-summary",
+            #idMasterSiteSummary(ng-cloak, class="ng-cloak mastersite-summary",
                 ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
                 .mashbackground
                     #mashbox(class="transbox", style="margin: 0px; padding: 0px; \

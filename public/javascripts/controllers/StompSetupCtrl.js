@@ -268,7 +268,7 @@
             for (i = 0; i < mptLength; i++) {
                 maptypekey = allMapTypes[i].type;
                 maptypeobj = allMapTypes[i].mph;
-                console.log("set pusher client for hoster type: " + maptypekey);
+                console.log("StompSetupCtrl iteratively setting pusher client for hoster type: " + maptypekey);
                 if (maptypeobj && maptypeobj !== "undefined") {
                     maptypeobj.setPusherClient(pusher, self.CHANNEL);
                     maptypeobj.setUserName(self.userName);

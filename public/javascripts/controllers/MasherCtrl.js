@@ -11,9 +11,16 @@
         console.log('MasherCtrl define');
         var selfMethods = {},
             descriptions = {
-                'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
-                'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
-                'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
+                'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information \
+                    lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, \
+                    this could be the web site for a single organization where one of the web site pages contains \
+                    a Leaflet map of its multiple locations.',
+                'google' : 'A selection of restaurants that were retrieved from a query to a geographic information \
+                    lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  \
+                    Alternatively, this could be the web site for a single organization where one of the web site pages \
+                    contains a Google map of its multiple locations.',
+                'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially \
+                    displayed map is chosen to provide a working environment for this demo.'
             };
 
 
@@ -21,12 +28,12 @@
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = AgoNewWindowConfig.getStartupView();
-            $scope.MasterSiteVis = startupView.website ? "inline" : 'none';
-            $scope.isCollapsed = !startupView.summary;
+            $scope.MasterSiteVis = startupView.websiteDisplayMode ? "inline" : 'none';
+            $scope.isCollapsed = !startupView.summaryShowing;
             $scope.showPopupBlockerDialog = false;
             $scope.data = {
-                'ExpandSum': startupView.summary === true ? "Collapse" : "Expand",
-                'isCollapsed': !startupView.summary,
+                'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
+                'isCollapsed': !startupView.summaryShowing,
                 'blockedUrl': 'place holder',
                 'completeUrl': 'completeslashdoturl',
                 'nextWindowName': 'InitialWindowName',
@@ -61,7 +68,7 @@
 
             $scope.$on('$viewContentLoaded', function () {
                 if (isFirstViewing === false) {
-                    if (startupView.summary === true) {
+                    if (startupView.summaryShowing === true) {
                         $scope.summaryCollapser();
                     }
                 } else {
@@ -70,24 +77,27 @@
             });
 
             $scope.summaryCollapser = function (sumCollapsed) {
-                // $scope.MasterSiteVis = $scope.ExpandSum === "Expand" ? "inline" : "none";
+                // $scope.MasterSiteVis = $scope.ExpandSumText === "Expand" ? "inline" : "none";
+                var previouState = $scope.data.isCollapsed;
                 if (sumCollapsed && sumCollapsed.startValue === false) {
                     $scope.data.isCollapsed = false;
                 }
                 if ($scope.data.isCollapsed === true) {
                     $scope.data.isCollapsed = false;
-                    $scope.data.ExpandSum = "Collapse";
+                    $scope.data.ExpandSumText = "Collapse";
                 } else {
                     $scope.data.isCollapsed = true;
-                    $scope.data.ExpandSum = "Expand";
+                    $scope.data.ExpandSumText = "Expand";
                 }
                 console.log("MasherCtrl isCollapsed before broadcast " + $scope.data.isCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
                 // $scope.isCollapsed = !$scope.isCollapsed;
                 console.log("MasherCtrl isCollapsed after broadcast " + $scope.data.isCollapsed);
-                setTimeout(function () {
-                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                }, 1000);
+                if (previouState === false && $scope.data.isCollapsed) {
+                    setTimeout(function () {
+                        $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                    }, 1000);
+                }
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;
 /*
@@ -131,9 +141,10 @@
             $scope.showMeTheMapClicked = function () {
                 // var currentPageTemplate;
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
+                AgoNewWindowConfig.setMapHost($scope.currentTab.maptype);
                 console.debug($location);
 
-                $scope.summaryCollapser();
+                // $scope.summaryCollapser({'startValue' : false});
                 $location.path($scope.currentTab.url, true);
                 $location.replace();
                 $route.reload();
@@ -364,7 +375,7 @@
             console.log("startMapSystem");
             isFirstViewing = false;
 
-            if (startupView.summary === true) {
+            if (startupView.summaryShowing === true) {
 
                 setTimeout(function () {
                     selfMethods.summaryCollapser({'startValue' : false});

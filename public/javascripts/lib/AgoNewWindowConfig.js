@@ -26,7 +26,7 @@ var details = {
     nextWindowName : 0,
     hideWebSiteOnStartup : false,
     smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570},
-    startupView : {'summary' : true, 'website' : true}
+    startupView : {'summaryShowing' : true, 'websiteDisplayMode' : true}
 };
 
 
@@ -307,8 +307,8 @@ var details = {
                     return ltwh;
                 },
                 setStartupView : function (sum, site) {
-                    details.startupView.summary = sum;
-                    details.startupView.website = site;
+                    details.startupView.summaryShowing = sum;
+                    details.startupView.websiteDisplayMode = site;
                 },
                 getStartupView : function () {
                     return details.startupView;
@@ -331,7 +331,7 @@ var details = {
                             "lon :" + details.lon + '\n' +
                             "lat : " + details.lat + "\n" +
                             "zoom : " + details.zoom +
-                            "startupView.summary : " + details.startupView.summary + ", startupView.website : " + details.startupView.website
+                            "startupView.summaryShowing : " + details.startupView.summaryShowing + ", startupView.websiteDisplayMode : " + details.startupView.websiteDisplayMode
                     );
 
                 }

@@ -103,6 +103,7 @@
                 // placeCustomControls();
 
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
+                placeCustomControls();
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
                 console.debug(MapHosterArcGIS);
@@ -294,6 +295,7 @@
                 console.log("response title " + response.itemInfo.item.title);
                 dojo.connect(aMap, "onUpdateStart", showLoading);
                 dojo.connect(aMap, "onUpdateEnd", hideLoading);
+                dojo.connect(aMap, "onLoad", initUI);
 
                 setTimeout( function () {
                     if (aMap.loaded) {

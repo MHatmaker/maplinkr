@@ -166,6 +166,7 @@
                     stopLintUnusedComplaints(lnkr, minmaxr, aelem);
 
                     lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
+
                     lnkrdiv.addEventListener('click', function (event) {
                         var data = {'visibility' : 'block'};
                         console.log('lnkr[0].onclick   displayLinkerEvent');
@@ -215,14 +216,16 @@
             stup = currentMapType.start();
             console.debug(stup);
 
-            if (mptp !== 'arcgis') {
-                placeCustomControls();
-            }
+            // if (mptp !== 'arcgis') {
+            //     placeCustomControls();
+            // }
 
             tmpltName = $routeParams.id;
             console.log(tmpltName);
 
             function configureCurrentMapType () {
+                mptp = $scope.currentTab.maptype;
+                currentMapType = mapTypes[mptp];
                 currentMapType.config(null);
                 $scope.map = currentMapType.getMap();
                 // $scope.map.width = mapSize['medium'];
@@ -255,7 +258,7 @@
                 console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
 
                 var refreshDelay = 1000;
-                $scope.safeApply();
+                // $scope.safeApply();
 
                 // alert("get dimensions and pause");
                 utils.getMapContainerHeight($scope);
@@ -267,9 +270,9 @@
                     if(curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
                         configureCurrentMapType();
                     }
-                    if (mptp !== 'arcgis') {
-                        placeCustomControls();
-                    }
+                    // if (mptp !== 'arcgis') {
+                    //     placeCustomControls();
+                    // }
 
                 }, refreshDelay);
             });

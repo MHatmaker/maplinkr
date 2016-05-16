@@ -57,7 +57,7 @@
             selfMethods.windowResized = $scope.windowResized;
             window.addEventListener('resize', $scope.windowResized);
 
-            if (startupView.summary === true) {
+            if (startupView.summaryShowing === true) {
                 $scope.MasterSiteVis = "inline";
             } else {
                 $scope.MasterSiteVis = "none";
@@ -81,7 +81,7 @@
                 $scope.data.ExpandSite = ($scope.ExpandSite = tf ? "Max Map" : "Min Map");
                 utils.getMapContainerHeight($scope);
             }
-            if (startupView.website === true) {
+            if (startupView.websiteDisplayMode === true) {
                 $scope.hideWebSiteOnStartup = false;
                 $scope.setDisplayStyles(true);
                 $scope.data.mapColShowing = 'block';
