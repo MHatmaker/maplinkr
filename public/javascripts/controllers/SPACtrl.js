@@ -142,6 +142,7 @@
         }
 
         function hideWebsite() {
+            alert("hideWebsite called");
             console.log("hideWebsite");
             $scope.$emit('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
             selfMethods.summaryCollapser(true);

@@ -56,7 +56,6 @@ define('GeoCoder', function () {
                 mrkr,
                 searchBox = null,
                 searchInput = null,
-                onAcceptDestination,
                 self = this;
                 // currentVerbVis = false;
 
@@ -282,42 +281,6 @@ define('GeoCoder', function () {
                     });
             }
 
-
-            onAcceptDestination = function (info) {
-                var $inj, evtSvc, sourceMapType, newSelectedWebMapId, destWnd;
-
-                $inj = angular.injector(['app']);
-                if (info) {
-                    sourceMapType = info.mapType;
-                    destWnd = info.dstSel;
-                }
-                newSelectedWebMapId = "NoId";
-
-                // gmQSvc = $inj.get('GoogleQueryService');
-                if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                    if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                        $inj = angular.injector(['app']);
-                        evtSvc = $inj.get('StompEventHandlerService');
-                        evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
-                        evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
-
-                        // gmQSvc = $inj.get('GoogleQueryService');
-                        // scope = gmQSvc.getPusherDialogScope();
-                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        // if (StompSetupCtrl.isInstantiated() == false) {
-                        //     new StompSetupCtrl()
-                        // }
-                        StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                            AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
-                                {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
-                    } else {
-                        WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
-                            AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
-                    }
-
-                }
-            };
-
             function extractBounds(action, latlng) {
                 var zm = mphmap.getZoom(),
                     // scale = mphmap.options.crs.scale(zm),
@@ -433,6 +396,7 @@ define('GeoCoder', function () {
                     ctrlSvc = $inj.get('ControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.placeCustomControls();
+                mapCtrl.setupQueryListener();
             }
 
             function configureMap(lmap) {

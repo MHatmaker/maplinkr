@@ -29,7 +29,7 @@
             };
 
             $scope.accept = function () {
-                console.log("onAcceptDestination " + $scope.data.dstSel);
+                console.log("DestWndSetupCtrl.accept handler - onAcceptDestination " + $scope.data.dstSel);
                 $uibModalInstance.close($scope.data);
             };
 

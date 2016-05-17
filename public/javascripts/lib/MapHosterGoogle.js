@@ -50,7 +50,6 @@
                 bounds: null,
                 query: 'what do you want?'
             },
-            onAcceptDestination,
             placesFromSearch = [],
             self = this,
             markers = [];
@@ -306,43 +305,6 @@
             }
         }
 
-        onAcceptDestination = function (info) {
-            var curmph = self, destmph, sourceMapType, $inj, evtSvc, gmQSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
-
-            $inj = angular.injector(['app']);
-            if (info) {
-                sourceMapType = info.mapType;
-                destWnd = info.dstSel;
-            }
-            newSelectedWebMapId = "NoId"
-
-            gmQSvc = $inj.get('GoogleQueryService');
-            if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                    $inj = angular.injector(['app']);
-                    evtSvc = $inj.get('StompEventHandlerService');
-                    evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
-                    evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
-
-                    // gmQSvc = $inj.get('GoogleQueryService');
-                    // scope = gmQSvc.getPusherDialogScope();
-                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                    // if (StompSetupCtrl.isInstantiated() == false) {
-                    //     new StompSetupCtrl()
-                    // }
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                        AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
-                            {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
-                } else {
-                    WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
-                        AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
-                }
-
-            } else {  //(destWnd == "Same Window")
-                placeMarkers(placesFromSearch);
-            }
-        };
-
         function hideLoading(error) {
             console.log("hide loading");
             esri.hide(loading);
@@ -403,6 +365,7 @@
                     mapCtrl = ctrlSvc.getController();
                 setTimeout(function() {
                     mapCtrl.placeCustomControls();
+                    mapCtrl.setupQueryListener();
                 }, 500);
             }
 
@@ -482,100 +445,6 @@
                 }
 
                 placeCustomControls();
-/*
-                setupNewDisplay = function (channel, userName, wndIndex) {
-
-                    var
-                        curmph = self,
-                        wndName = newSelectedWebMapId + wndIndex,
-                        tmpWndName = '',
-                        baseUrl,
-                        displayBnds,
-                        // $inj,
-                        // gmQSvc,
-                        url = "?id=" + wndName + curmph.getGlobalsForUrl() +
-                        "&channel=" + channel + "&userName=" + userName +
-                        "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId();
-
-                    gmQuery = AgoNewWindowConfig.getQuery();
-                    if (gmQuery !== '') {
-                        url += "&gmquery=" + gmQuery;
-                        displayBnds = AgoNewWindowConfig.getBoundsForUrl();
-                        url += displayBnds;
-                    }
-                    console.log("open new Google window with URI " + url);
-                    console.log("using channel " + channel + "with userName " + userName);
-                    AgoNewWindowConfig.setUrl(url);
-                    AgoNewWindowConfig.setUserName(userName);
-                    if (destWnd === "New Pop-up Window") {
-                        baseUrl = AgoNewWindowConfig.getbaseurl();
-                        tmpWndName = window.open(baseUrl + "/google/" + url,  wndName, AgoNewWindowConfig.getSmallFormDimensions());
-                        popups.push(tmpWndName);
-                    } else {
-                        if (destWnd === "New Tab") {
-                            baseUrl = AgoNewWindowConfig.getbaseurl();
-                            window.open(baseUrl + "google/" + url, '_blank');
-                            window.focus();
-                        }
-                    }
-                };
-
-                openNewDisplay = function (channel, userName) {
-                    // wndIndex += 1;
-                    var $inj = angular.injector(['app']),
-                        $http = $inj.get('$http');
-
-                    $http({method: 'GET', url: '/wndseqno'}).
-                        success(function (data, status, headers, config) {
-                            setupNewDisplay(channel, userName, data.wndNameSeqNo);
-                        }).
-                        error(function (data, status, headers, config) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                            console.log('Oops and error', data);
-                            alert('Oops getting next window sequence number ' + data.wndseqno);
-                        });
-
-                };
-*/
-/*
-                // Listen for the event fired when the user selects an item from the
-                // pick list. Retrieve the matching places for that item.
-                google.maps.event.addListener(searchBox, 'places_changed', function () {
-                    console.log("MapHosterGoogle 'places_changed' listener");
-                    console.log("before searchBox.getPlaces()");
-
-                    var checkBounds = searchBox.getBounds(),
-                        $inj,
-                        gmQSvc;
-                        // scope;
-                    console.log(formatBounds(checkBounds));
-                    // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
-                    //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
-                    placesFromSearch = searchBox.getPlaces();
-
-                    console.log("after searchBox.getPlaces()");
-                    if (placesFromSearch && placesFromSearch.length > 0) {
-                        $inj = angular.injector(['app']);
-                        gmQSvc = $inj.get('GoogleQueryService');
-                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        scope = gmQSvc.getQueryDestinationDialogScope('google');
-                        scope.showDestDialog(
-                            onAcceptDestination,
-                            scope,
-                            {
-                                'id' : null,
-                                'title' : searchInput.value,
-                                'snippet' : 'No snippet available',
-                                'icon' : 'stylesheets/images/googlemap.png',
-                                'mapType' : self
-                            }
-                        );
-                    } else {
-                        console.log('searchBox.getPlaces() still returned no results');
-                    }
-                });
-*/
             });
 
             // var bndsInit = createBounds();
@@ -991,7 +860,6 @@
             getEventDictionary : getEventDictionary,
             publishPosition : publishPosition,
             removeEventListeners : removeEventListeners,
-            onAcceptDestination : onAcceptDestination,
             getMapHosterName : getMapHosterName,
             setPlacesFromSearch : setPlacesFromSearch,
             getSearchBounds : getSearchBounds,

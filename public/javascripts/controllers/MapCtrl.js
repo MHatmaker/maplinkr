@@ -33,7 +33,7 @@
             placesFromSearch = null,
             $inj = null,
             gmQSvc = null,
-            selfMethods = {};
+            selfMethods= {};
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
@@ -48,6 +48,7 @@
                 tmpltName,
                 elem,
                 aelem,
+                connectQuery,
                 searchInput;
 
             $scope.destSelections = [
@@ -113,6 +114,135 @@
             $scope.$on("MapLinkrClosedEvent" , function (event, args) {
                 refreshLinker();
             });
+
+            function placesQueryCallback(placesFromSearch, status) {
+                var mpTypeSvc,
+                googmph,
+                curmph,
+                curMapType,
+                gmQSvc,
+                placesSearchResults,
+                onAcceptDestination,
+                scope;
+
+                console.log('status is ' + status);
+
+                onAcceptDestination = function (info) {
+                    var googmph, sourceMapType, $inj, evtSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
+
+                    $inj = angular.injector(['app']);
+                    if (info) {
+                        sourceMapType = info.mapType;
+                        destWnd = info.dstSel;
+                    }
+                    newSelectedWebMapId = "NoId"
+
+                    if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
+                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                            $inj = angular.injector(['app']);
+                            evtSvc = $inj.get('StompEventHandlerService');
+                            evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
+                            evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
+
+                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                                    {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
+                        } else {
+                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
+                                AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                        }
+
+                    } else {  //(destWnd == "Same Window")
+                        $inj = angular.injector(['app']);
+                        mpTypeSvc = $inj.get("CurrentMapTypeService");
+                        googmph = mpTypeSvc.getSpecificMapType('google');
+                        googmph.placeMarkers(placesSearchResults);
+                    }
+                };
+
+                if (placesFromSearch && placesFromSearch.length > 0) {
+                    placesSearchResults = placesFromSearch;
+                    $inj = angular.injector(['app']);
+                    mpTypeSvc = $inj.get("CurrentMapTypeService");
+                    googmph = mpTypeSvc.getSpecificMapType('google');
+
+                    curmph = mpTypeSvc.getCurrentMapType();
+                    curMapType = mpTypeSvc.getMapTypeKey();
+                    if(curMapType === 'google') {
+                        googmph.setPlacesFromSearch(placesFromSearch);
+                        $scope.destSelections[0].showing = 'destination-option-showing';
+                    } else {
+                        $scope.destSelections[0].showing = 'destination-option-hidden';
+                    }
+
+                    gmQSvc = $inj.get('GoogleQueryService');
+                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                    scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
+                    $scope.showDestDialog(
+                        onAcceptDestination,
+                        scope,
+                        {
+                            'id' : null,
+                            'title' : searchInput.value,
+                            'snippet' : 'No snippet available',
+                            'icon' : 'stylesheets/images/googlemap.png',
+                            'mapType' : curmph
+                        }
+                    );
+                } else {
+                    console.log('searchBox.getPlaces() still returned no results');
+                }
+
+            }
+
+            connectQuery = function () {
+                var mpTypeSvc,
+                    googmph,
+                    mapLinkrBounds,
+                    searchBounds,
+                    position,
+                    center,
+                    googleCenter,
+                    gmap,
+                    mapOptions,
+                    pacnpt,
+                    queryPlaces = {},
+                    service;
+
+                $inj = angular.injector(['app']);
+                mpTypeSvc = $inj.get("CurrentMapTypeService");
+                googmph = mpTypeSvc.getSpecificMapType('google');
+
+                mapLinkrBounds = AgoNewWindowConfig.getBounds();
+                searchBounds = new google.maps.LatLngBounds(
+                                new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
+                                new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
+                            );
+                position = AgoNewWindowConfig.getPosition();
+                center = {'lat' : position.lat, 'lng' : position.lon};
+                googleCenter = new google.maps.LatLng(position.lat, position.lon);
+                gmap = googmph.getMap();
+                if (!gmap) {
+                    mapOptions = {
+                        center : googleCenter,
+                        zoom : 15,
+                        mapTypeId : google.maps.MapTypeId.ROADMAP
+                    };
+                    gmap = new google.maps.Map(document.getElementById("hiddenmap_canvas"), mapOptions);
+                }
+
+                // placesFromSearch = searchBox.getPlaces();
+
+                pacnpt = $('#pac-input');
+                queryPlaces.bounds = searchBounds;
+                queryPlaces.query = pacnpt[0].value;
+                queryPlaces.location = center;
+
+                service = new google.maps.places.PlacesService(gmap);
+                if(queryPlaces.query !== '') {
+                    service.textSearch(queryPlaces, placesQueryCallback);
+                }
+            }
 
             function refreshMinMax() {
                 var minMaxText = document.getElementById("idMinMaxText"),
@@ -195,6 +325,7 @@
                         refreshMinMax();
                     }, refreshDelay);
                 }
+                // connectQuery();
             }
 
             selfMethods.placeCustomControls = placeCustomControls;
@@ -241,6 +372,7 @@
 
             function invalidateCurrentMapTypeConfigured () {
                 curMapTypeInitialized = false;
+                // setupQueryListener();
             }
 
             function getSearchBox () {
@@ -315,153 +447,52 @@
                 // });
             });
 
-            searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
-            // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
-            searchInput.value = '';
-            searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
-                (searchInput));
+            function setupQueryListener () {
+                searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
+                // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+                searchInput.value = '';
+                searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
+                    (searchInput));
 
-            google.maps.event.addListener(searchBox, 'places_changed', function () {
-                var scope = null,
-                    googmph = null,
-                    curmph = null,
-                    curMapType = '',
-                    mpTypeSvc = null,
-                    gmap,
-                    mapOptions,
-                    pacnpt,
-                    searchBounds = null,
-                    mapLinkrBounds,
-                    position,
-                    center,
-                    googleCenter,
-                    service,
-                    placesSearchResults = [],
-                    onAcceptDestination,
-                    queryPlaces = {
-                        location: null,
-                        bounds: null,
-                        query: 'what do you want?'
-                    };
-                console.log("MapCtrl 'places_changed' listener");
+                google.maps.event.addListener(searchBox, 'places_changed', function () {
+                    var scope = null,
+                        googmph = null,
+                        curmph = null,
+                        curMapType = '',
+                        mpTypeSvc = null,
+                        gmap,
+                        mapOptions,
+                        pacnpt,
+                        searchBounds = null,
+                        mapLinkrBounds,
+                        position,
+                        center,
+                        googleCenter,
+                        service,
+                        placesSearchResults = [],
+                        queryPlaces = {
+                            location: null,
+                            bounds: null,
+                            query: 'what do you want?'
+                        };
+                    console.log("MapCtrl 'places_changed' listener");
+                    connectQuery();
 
-                onAcceptDestination = function (info) {
-                    var googmph, sourceMapType, $inj, evtSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
+    /*
+                    var checkBounds = searchBox.getBounds(),
+                        $inj,
+                        gmQSvc;
+                        // scope;
+                    console.log(formatBounds(checkBounds));
+                    // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
+                    //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
+    */
+                });
+            }
 
-                    $inj = angular.injector(['app']);
-                    if (info) {
-                        sourceMapType = info.mapType;
-                        destWnd = info.dstSel;
-                    }
-                    newSelectedWebMapId = "NoId"
+            selfMethods.setupQueryListener = setupQueryListener;
 
-                    if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
-                            $inj = angular.injector(['app']);
-                            evtSvc = $inj.get('StompEventHandlerService');
-                            evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
-                            evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
-
-                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
-                                    {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
-                        } else {
-                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
-                                AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
-                        }
-
-                    } else {  //(destWnd == "Same Window")
-                        $inj = angular.injector(['app']);
-                        mpTypeSvc = $inj.get("CurrentMapTypeService");
-                        googmph = mpTypeSvc.getSpecificMapType('google');
-                        googmph.placeMarkers(placesSearchResults);
-                    }
-                };
-
-                function placesQueryCallback(placesFromSearch, status) {
-                    var mpTypeSvc,
-                    googmph,
-                    curmph,
-                    curMapType,
-                    gmQSvc,
-                    scope;
-
-                    console.log('status is ' + status);
-
-                    if (placesFromSearch && placesFromSearch.length > 0) {
-                        placesSearchResults = placesFromSearch;
-                        $inj = angular.injector(['app']);
-                        mpTypeSvc = $inj.get("CurrentMapTypeService");
-                        googmph = mpTypeSvc.getSpecificMapType('google');
-
-                        curmph = mpTypeSvc.getCurrentMapType();
-                        curMapType = mpTypeSvc.getMapTypeKey();
-                        if(curMapType === 'google') {
-                            googmph.setPlacesFromSearch(placesFromSearch);
-                            $scope.destSelections[0].showing = 'destination-option-showing';
-                        } else {
-                            $scope.destSelections[0].showing = 'destination-option-hidden';
-                        }
-
-                        gmQSvc = $inj.get('GoogleQueryService');
-                        // currentVerbVis = gmQSvc.setDialogVisibility(true);
-                        scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
-                        $scope.showDestDialog(
-                            onAcceptDestination,
-                            scope,
-                            {
-                                'id' : null,
-                                'title' : searchInput.value,
-                                'snippet' : 'No snippet available',
-                                'icon' : 'stylesheets/images/googlemap.png',
-                                'mapType' : curmph
-                            }
-                        );
-                    } else {
-                        console.log('searchBox.getPlaces() still returned no results');
-                    }
-
-                }
-/*
-                var checkBounds = searchBox.getBounds(),
-                    $inj,
-                    gmQSvc;
-                    // scope;
-                console.log(formatBounds(checkBounds));
-                // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
-                //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
-*/
-                $inj = angular.injector(['app']);
-                mpTypeSvc = $inj.get("CurrentMapTypeService");
-                googmph = mpTypeSvc.getSpecificMapType('google');
-
-                mapLinkrBounds = AgoNewWindowConfig.getBounds();
-                searchBounds = new google.maps.LatLngBounds(
-                                new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
-                                new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
-                            );
-                position = AgoNewWindowConfig.getPosition();
-                center = {'lat' : position.lat, 'lng' : position.lon};
-                googleCenter = new google.maps.LatLng(position.lat, position.lon);
-                gmap = googmph.getMap();
-                if (!gmap) {
-                    mapOptions = {
-                        center : googleCenter,
-                        zoom : 15,
-                        mapTypeId : google.maps.MapTypeId.ROADMAP
-                    };
-                    gmap = new google.maps.Map(document.getElementById("hiddenmap_canvas"), mapOptions);
-                }
-
-                // placesFromSearch = searchBox.getPlaces();
-
-                pacnpt = $('#pac-input');
-                queryPlaces.bounds = searchBounds;
-                queryPlaces.query = pacnpt[0].value;
-                queryPlaces.location = center;
-                service = new google.maps.places.PlacesService(gmap);
-                service.textSearch(queryPlaces, placesQueryCallback);
-            });
+            setupQueryListener();
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {
                 refreshMinMax();
@@ -526,12 +557,21 @@
             console.log("configureCurrentMapType");
             selfMethods.configureCurrentMapType();
         };
+
         MapCtrl.prototype.invalidateCurrentMapTypeConfigured = function () {
             console.log("invalidateCurrentMapTypeConfigured");
             if (selfMethods.invalidateCurrentMapTypeConfigured) {
                 selfMethods.invalidateCurrentMapTypeConfigured();
             }
         }
+
+        MapCtrl.prototype.setupQueryListener = function () {
+            console.log("MapCtrl.prototype.setupQueryListener");
+            if (selfMethods.setupQueryListener) {
+                selfMethods.setupQueryListener();
+            }
+        }
+
 
         function init(App) {
             console.log('MapCtrl init');
@@ -543,7 +583,7 @@
         return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls,
             configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType,
             invalidateCurrentMapTypeConfigured : MapCtrl.prototype.invalidateCurrentMapTypeConfigured,
-            getSearchBox : MapCtrl.prototype.getSearchBox};
+            getSearchBox : MapCtrl.prototype.getSearchBox, setupQueryListener : MapCtrl.prototype.setupQueryListener};
 
     });
 

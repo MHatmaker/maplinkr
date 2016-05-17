@@ -73,6 +73,13 @@
             mapCtrl.placeCustomControls();
         }
 
+        function setupQueryListener () {
+            var $inj = angular.injector(['app']),
+                ctrlSvc = $inj.get('ControllerService'),
+                mapCtrl = ctrlSvc.getController();
+            mapCtrl.setupQueryListener();
+        }
+
         function initUI() {
           //add scalebar or other components like a legend, overview map etc
             // dojo.parser.parse();
@@ -104,6 +111,7 @@
 
                 MapHosterArcGIS.config(aMap, zoomWebMap, pointWebMap);
                 placeCustomControls();
+                setupQueryListener();
                 // mph = new MapHosterArcGIS(window.map, zoomWebMap, pointWebMap);
                 console.log("StartupArcGIS.initUI : selfDetails.mph as initially null and should now be set");
                 console.debug(MapHosterArcGIS);
@@ -142,6 +150,7 @@
                 console.log("use current pusher - now setPusherClient");
                 MapHosterArcGIS.setPusherClient(currentPusher, currentChannel);
                 placeCustomControls();  // MOVED TEMPORARILY on 3/15
+                setupQueryListener();
             }
         }
 
