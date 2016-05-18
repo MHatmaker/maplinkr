@@ -378,6 +378,7 @@
             if (startupView.summaryShowing === true) {
 
                 setTimeout(function () {
+                    console.log("MasherCtrl startMapSystem - call summaryCollapser");
                     selfMethods.summaryCollapser({'startValue' : false});
                 }, 1000);
             }

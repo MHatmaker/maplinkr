@@ -327,10 +327,10 @@ var selectedMapType = 'arcgis',
                     searchService.setQuery(gmquery);
                 }
 
-                // MasherCtrl.startMapSystem();
+                MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
                 AgoNewWindowConfig.setHideWebSiteOnStartup(true);
-                MasherCtrl.startMapSystem();
+                // MasherCtrl.startMapSystem();
                 // SpaCtrl.hideWebsite();
             }
             return App;

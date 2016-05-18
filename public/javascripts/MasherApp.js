@@ -98,7 +98,7 @@
               AgoNewWindowConfig.setChannel(channel);
               AgoNewWindowConfig.setNameChannelAccepted(true);
             }
-            AgoNewWindowConfig.setStartupView(false, false);
+            AgoNewWindowConfig.setStartupView(true, false);
             console.log("AGONEWWINDOWCONFIG.SETSTARTUPVIEW")
         }
         // console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
