@@ -96,7 +96,7 @@
                 if (previouState === false && $scope.data.isCollapsed) {
                     setTimeout(function () {
                         $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
-                    }, 1000);
+                    }, 500);
                 }
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;
@@ -131,7 +131,7 @@
                 utils.getMapContainerHeight($scope);
                 setTimeout(function () {
                     $scope.$apply(console.log("Timer fired"));
-                }, 1000);
+                }, 500);
                 $scope.safeApply();
             };
 
@@ -380,7 +380,7 @@
                 setTimeout(function () {
                     console.log("MasherCtrl startMapSystem - call summaryCollapser");
                     selfMethods.summaryCollapser({'startValue' : false});
-                }, 1000);
+                }, 500);
             }
         }
 

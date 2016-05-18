@@ -316,7 +316,7 @@
 
                     lnkrText = document.getElementById("idLinkerText");
                     lnkrSymbol = document.getElementById("idLinkerSymbol");
-                    refreshDelay = 2000;
+                    refreshDelay = 500;
                     if (lnkrSymbol && lnkrText) {
                         refreshDelay = 10;
                     }
