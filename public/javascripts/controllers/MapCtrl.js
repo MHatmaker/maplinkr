@@ -492,7 +492,7 @@
 
             selfMethods.setupQueryListener = setupQueryListener;
 
-            setupQueryListener();
+            // setupQueryListener();
 
             $scope.$on('minmaxDirtyEvent', function (event, args) {
                 refreshMinMax();
@@ -523,7 +523,8 @@
                 var modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
                     controller : 'DestWndSetupCtrl',
-                    backdrop : 'false',
+                    backdrop : true,
+                    animation : false,
 
                     resolve : {
                         data: function () {

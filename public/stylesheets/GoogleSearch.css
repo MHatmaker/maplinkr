@@ -32,9 +32,11 @@
 .destination-option-showing
  {
     display: block;
+    text-align: left;
  }
 
 .destination-option-hidden
  {
     display: none;
+    text-align: left;
  }

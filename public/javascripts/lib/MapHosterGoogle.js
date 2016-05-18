@@ -365,6 +365,14 @@
                     mapCtrl = ctrlSvc.getController();
                 setTimeout(function() {
                     mapCtrl.placeCustomControls();
+                }, 500);
+            }
+
+            function setupQueryListener() {
+                var $inj = angular.injector(['app']),
+                    ctrlSvc = $inj.get('ControllerService'),
+                    mapCtrl = ctrlSvc.getController();
+                setTimeout(function() {
                     mapCtrl.setupQueryListener();
                 }, 500);
             }
@@ -445,6 +453,7 @@
                 }
 
                 placeCustomControls();
+                setupQueryListener();
             });
 
             // var bndsInit = createBounds();
