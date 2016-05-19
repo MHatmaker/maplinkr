@@ -36,7 +36,8 @@ var selectedMapType = 'arcgis',
             // var App = angular.module('app', ['ui.bootstrap']);
             console.debug('bootstrap init method');
 
-            // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap', 'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
+            // var App = angular.module("app", ['ngRoute', 'ngGrid', 'ui.bootstrap',
+            //    'ui.bootstrap.transition', 'ui.bootstrap.collapse', 'ui.bootstrap.accordion', 'ui.bootstrap.modal'])
 
             var eventDct = {
                 'client-MapXtntEvent' : null,
@@ -59,7 +60,8 @@ var selectedMapType = 'arcgis',
 
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
-                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngTouch', 'ui.grid', 'ui.grid.expandable', 'ui.grid.selection', 'ui.grid.pinning', 'ui.router', 'ngAnimate'])
+                App = angular.module("app", ['ngRoute', 'ui.bootstrap', 'ngTouch', 'ui.grid', 'ui.grid.expandable',
+                    'ui.grid.selection', 'ui.grid.pinning', 'ui.router', 'ngAnimate'])
 
                 .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
                         function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
@@ -264,7 +266,7 @@ var selectedMapType = 'arcgis',
                     };
                     hideLinkr = function () {
                         var data = {'visibility' : 'none'};
-                        if(scope) {
+                        if (scope) {
                             scope.$emit('displayLinkerEvent', data);
                         }
                     };

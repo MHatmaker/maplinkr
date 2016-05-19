@@ -126,6 +126,7 @@
                 scope;
 
                 console.log('status is ' + status);
+                utils.hideLoading();
 
                 onAcceptDestination = function (info) {
                     var googmph, sourceMapType, $inj, evtSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
@@ -222,6 +223,7 @@
                 center = {'lat' : position.lat, 'lng' : position.lon};
                 googleCenter = new google.maps.LatLng(position.lat, position.lon);
                 gmap = googmph.getMap();
+                utils.showLoading();
                 if (!gmap) {
                     mapOptions = {
                         center : googleCenter,
@@ -525,6 +527,9 @@
                     controller : 'DestWndSetupCtrl',
                     backdrop : true,
                     animation : false,
+                    animate : 'none',
+                    windowClass : 'no-animation-modal',
+                    uibModalAnimationClass : 'none',
 
                     resolve : {
                         data: function () {
