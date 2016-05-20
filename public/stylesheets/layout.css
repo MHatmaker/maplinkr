@@ -109,8 +109,8 @@ map_canvas {
 }
 
 .btn{
-   color: #0202d8;
-   background: #6E90B6;
+   color: #0202FF;
+   background: #9EB0B6;
    font-weight: 800;
 }
 
@@ -163,7 +163,7 @@ svg-menu{
 .modal {
    display: block;
    background-color : transparent;
-   color: #A2A9B0;
+   color: #373ADC;
 }
 
 .grid {
