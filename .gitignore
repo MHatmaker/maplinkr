@@ -1,53 +1,56 @@
-# --------------------
-# OSX Files
-# --------------------
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.Spotlight-V100
-.Trashes
+public/javascripts/lib/angular/*
+public/javascripts/lib/jquery.js
+public/javascripts/lib/leaflet.js
+public/javascripts/lib/proj4js.js
+public/javascripts/lib/Control.Loading.js
+public/javascripts/lib/Orb*
+public/javascripts/lib/jquery*
+public/javascripts/lib/LeafletCloudMade.js
+public/javascripts/lib/ArcGISDojo.js
+public/javascripts/lib/GoogleMap.js
+public/javascripts/lib/proj4js.js
+public/javascripts/lib/searcher.js
+public/javascripts/lib/Startup.js
+public/javascripts/lib/StompSetup.js
+public/javascripts/lib/fsmmin.js
+public/javascripts/EsriSample.js
+public/javascripts/PortalExample.html
+public/javascripts/controllers/TabsInfoCommented.js
+public/javascripts/Incrementer.html
+public/javascripts/*.frags
+public/javascripts/Modal311.js
+public/javascripts/lib/Modal311.js
+public/javascripts/lib/modal330.js
+views/partials/extras/*
+views/partials/CodePenModals/*
+views/partials/header.jade
+templates/*
+node_modules/*
+index.html
+tags
+public/stylesheets/esri.css
+public/stylesheets/FavIcon.css
+public/stylesheets/Grid960.css
+public/stylesheets/LayoutTests.css
+public/stylesheets/Leaflet.css
+public/stylesheets/Leaflet.ie.css
+public/stylesheets/SearchGrid.css
+public/stylesheets/ng-grid.css
+public/stylesheets/Control.Loading.css
+public/stylesheets/ui-grid*
+kdiff3DiffTools.txt
+.git.log
+.git.dot
+GitVersionTree.exe
+GCDR.js
+MPHLflt.js
+views/DestSelectModalDlg.html
 
-# --------------------
-# IntelliJ Files
-# --------------------
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# --------------------
-# Netbeans Files
-# --------------------
-nbproject/private/
-nbbuild/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-
-# --------------------
-# Node Files
-# --------------------
-.nodemonignore
+MapLinkr/*
+hooks/*
 npm-debug.log
-node_modules/
-
-# --------------------
-# SASS Files
-# --------------------
-.sass-cache/
-
-# --------------------
-# Bower Files
-# --------------------
-.bower-*/
-.idea/
-nbproject/
-
-# --------------------
-# App Files
-# --------------------
-test/coverage/
-modules/public/
-modules/views/
+plugins/*
+public/javascripts/lib/ionic/*
+script.js
+.swp
+gitpass

@@ -1,0 +1,11 @@
+rhc create-app -l michael.hatmaker@gmail.com -p y0pkAwXZdo3e -t nodejs-0.10.26 -a MashOver
+
+
+New MapLinkr openshift site
+MongoDB 2.4 database added.  Please make note of these credentials:
+
+   Root User:     admin
+   Root Password: l1lY64SqtGXR
+   Database Name: maplinkr
+
+Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/

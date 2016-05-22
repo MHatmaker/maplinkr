@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Important: This project is currently unmaintained. 
 
 # [![MEAN Logo](http://mean.io/system/assets/img/logos/meanlogo.png)](http://mean.io/) MEAN Stack
@@ -186,3 +187,8 @@ Or you can launch it from the [OpenShift Online QuickStart](https://www.openshif
 
 ## License
 [The MIT License](http://opensource.org/licenses/MIT)
+=======
+The OpenShift `nodejs` cartridge documentation can be found at:
+
+http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+>>>>>>> oldmash/master
