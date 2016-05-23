@@ -30,12 +30,12 @@
     define([
         'lib/MapHosterArcGIS',
         'controllers/StompSetupCtrl',
-        'lib/AgoNewWindowConfig',
+        'lib/MLConfig',
         'lib/utils',
         'controllers/TabsCtrl',
         'angular',
         'esri/map'
-    ], function (MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl) {
+    ], function (MapHosterArcGIS, StompSetupCtrl, MLConfig, utils, TabsCtrl) {
         console.log('StartupArcGIS defined');
 
         var
@@ -129,11 +129,11 @@
                         'client-NewMapPosition' : curmph.retrievedNewPosition
                     },
                     pusherChannel,
-                    AgoNewWindowConfig.getUserName(),
+                    MLConfig.getUserName(),
                     function (callbackChannel, userName) {
                         console.log("callback - don't need to setPusherClient");
                         console.log("It was a side effect of the createPusherClient:PusherClient process");
-                        AgoNewWindowConfig.setUserName(userName);
+                        MLConfig.setUserName(userName);
                         // MapHosterArcGIS.prototype.setPusherClient(pusher, callbackChannel);
                     },
                     {'destination' : "destPlaceHolder", 'currentMapHolder' : curmph, 'newWindowId' : "windowIdPlaceholder"}
@@ -175,16 +175,16 @@
                 console.log(urlparams);
 
                 // Get the idWebMap from the url if it is present, otherwise return current webmapId
-                idWebMap = AgoNewWindowConfig.webmapId(true);
+                idWebMap = MLConfig.webmapId(true);
 
-                AgoNewWindowConfig.setMapHost('ArcGIS');
+                MLConfig.setMapHost('ArcGIS');
                 $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType('arcgis');
 
                 TabsCtrl.forceAGO();
                 /*
-                    Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the AgoNewWindowConfig with ArcGIS-specific attributes.
+                    Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the MLConfig with ArcGIS-specific attributes.
                 */
                 if (idWebMap && idWebMap !== "") {
                     if (idWebMap !== newSelectedWebMapId) {
@@ -194,30 +194,30 @@
                          */
                         curmph = MapHosterArcGIS;
                         selectedWebMapId = newSelectedWebMapId;
-                        AgoNewWindowConfig.setWebmapId(selectedWebMapId);
+                        MLConfig.setWebmapId(selectedWebMapId);
                         url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                         console.log("initialize or replace map in current window with URI " + url);
                         console.log("using channel " + channel);
                         // set up config in the event that this map environment might be published.
-                        AgoNewWindowConfig.setUrl(url);
+                        MLConfig.setUrl(url);
                     } else {
                         console.log("selectedWebMapId == newSelectedWebMapId " + newSelectedWebMapId);
                         selectedWebMapId = idWebMap;
-                        AgoNewWindowConfig.setWebmapId(selectedWebMapId);
+                        MLConfig.setWebmapId(selectedWebMapId);
                     }
 
                     /*
                     These accessors only return values from checking the url.  If it doesn't find them,
                     the value should be an empty string
                     */
-                    lonWebMap = AgoNewWindowConfig.lon();
-                    latWebMap = AgoNewWindowConfig.lat();
-                    zmw = AgoNewWindowConfig.zoom();
-                    pusherChannel = AgoNewWindowConfig.masherChannel(true);
+                    lonWebMap = MLConfig.lon();
+                    latWebMap = MLConfig.lat();
+                    zmw = MLConfig.zoom();
+                    pusherChannel = MLConfig.masherChannel(true);
 
                     // alert(" - pusherChannel = " + pusherChannel);
                     console.log("initializePostProc - pusherChannel = " + pusherChannel);
-                    // AgoNewWindowConfig.setUrl(url);
+                    // MLConfig.setUrl(url);
 
                     if (lonWebMap && latWebMap && zoomWebMap) {
                         /*
@@ -232,19 +232,19 @@
                     }
                 } else {
                     selectedWebMapId = newSelectedWebMapId;
-                    lonWebMap = AgoNewWindowConfig.lon();
-                    latWebMap = AgoNewWindowConfig.lat();
-                    zmw = AgoNewWindowConfig.zoom();
-                    pusherChannel = AgoNewWindowConfig.masherChannel(false);
+                    lonWebMap = MLConfig.lon();
+                    latWebMap = MLConfig.lat();
+                    zmw = MLConfig.zoom();
+                    pusherChannel = MLConfig.masherChannel(false);
                     curmph = MapHosterArcGIS;
                     url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() + "&channel=" + channel;
                     console.log("replace map in current window with URI " + url);
                     console.log("using channel " + channel);
-                    AgoNewWindowConfig.setUrl(url);
+                    MLConfig.setUrl(url);
                     position = curmph.getGlobalPositionComponents();
-                    AgoNewWindowConfig.setPosition(position);
-                    AgoNewWindowConfig.setWebmapId(newSelectedWebMapId);
-                    AgoNewWindowConfig.showConfigDetails('StartupArcGIS : initializePostProc - original initialization or replace map');
+                    MLConfig.setPosition(position);
+                    MLConfig.setWebmapId(newSelectedWebMapId);
+                    MLConfig.showConfigDetails('StartupArcGIS : initializePostProc - original initialization or replace map');
                 }
             }
             console.debug("initializePostProc proceeding with " + selectedWebMapId);
@@ -369,33 +369,33 @@
             openNewDisplay = function (channel, userName) {
                 url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
-                    "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                    "&maphost=ArcGIS" + "&referrerId=" + MLConfig.getUserId();
                 if (referringMph) {
                     url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
                         "&channel=" + channel + "&userName=" + userName +
-                        "&maphost=ArcGIS" + "&referrerId=" + AgoNewWindowConfig.getUserId();
+                        "&maphost=ArcGIS" + "&referrerId=" + MLConfig.getUserId();
                 }
 
                 console.log("open new ArcGIS window with URI " + url);
                 console.log("using channel " + channel + "with userName " + userName);
-                AgoNewWindowConfig.setUrl(url);
-                AgoNewWindowConfig.setUserName(userName);
+                MLConfig.setUrl(url);
+                MLConfig.setUserName(userName);
                 if (displayDestination === 'New Pop-up Window') {
-                    baseUrl = AgoNewWindowConfig.getbaseurl();
-                    window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                    baseUrl = MLConfig.getbaseurl();
+                    window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, MLConfig.getSmallFormDimensions());
                 } else {
-                    baseUrl = AgoNewWindowConfig.getbaseurl();
+                    baseUrl = MLConfig.getbaseurl();
                     window.open(baseUrl + "arcgis/" + url, '_blank');
                     window.focus();
                 }
             };
 
-            if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+            if (MLConfig.isNameChannelAccepted() === false) {
                 StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                    AgoNewWindowConfig.getUserName(), openNewDisplay,
+                    MLConfig.getUserName(), openNewDisplay,
                         {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
             } else {
-                openNewDisplay(AgoNewWindowConfig.masherChannel(false), AgoNewWindowConfig.getUserName());
+                openNewDisplay(MLConfig.masherChannel(false), MLConfig.getUserName());
             }
         }
 
@@ -405,7 +405,7 @@
             // var urlparams=dojo.queryToObject(window.location.search);
             // console.debug(urlparams);
             // var idWebMap=urlparams['?id'];
-            var idWebMap = AgoNewWindowConfig.webmapId(true),
+            var idWebMap = MLConfig.webmapId(true),
                 llon,
                 llat;
 
@@ -414,7 +414,7 @@
             if (!idWebMap) {
                 console.log("no idWebMap");
                 selectedWebMapId = "a4bb8a91ecfb4131aa544eddfbc2f1d0 "; //"e68ab88371e145198215a792c2d3c794";
-                AgoNewWindowConfig.setWebmapId(selectedWebMapId);
+                MLConfig.setWebmapId(selectedWebMapId);
                 console.log("use " + selectedWebMapId);
                 // pointWebMap = [-87.7, lat=41.8];
                 pointWebMap = [-87.620692, 41.888941];
@@ -423,9 +423,9 @@
             } else {
                 console.log("found idWebMap");
                 console.log("use " + idWebMap);
-                zoomWebMap = AgoNewWindowConfig.zoom();
-                llon = AgoNewWindowConfig.lon();
-                llat = AgoNewWindowConfig.lat();
+                zoomWebMap = MLConfig.zoom();
+                llon = MLConfig.lon();
+                llat = MLConfig.lat();
                 pointWebMap = [llon, llat];
                 initialize(idWebMap, '', '');
             }

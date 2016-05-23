@@ -5,7 +5,7 @@
     "use strict";
 
     console.log('EmailCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig'], function (angular, AgoNewWindowConfig) {
+    define(['angular', 'lib/MLConfig'], function (angular, MLConfig) {
         console.log('EmailCtrl define');
 
         function EmailCtrl($scope) {
@@ -25,16 +25,16 @@
 
             function assembleUrl() {
                 console.log("gethref : ");
-                console.log(AgoNewWindowConfig.gethref());
-                var updtUrl = AgoNewWindowConfig.gethref(),
+                console.log(MLConfig.gethref());
+                var updtUrl = MLConfig.gethref(),
                     $inj = angular.injector(['app']),
                     serv = $inj.get('CurrentMapTypeService'),
                     curmapsys = serv.getMapRestUrl(),
-                    gmQuery = AgoNewWindowConfig.getQuery(),
-                    bnds = AgoNewWindowConfig.getBoundsForUrl();
+                    gmQuery = MLConfig.getQuery(),
+                    bnds = MLConfig.getBoundsForUrl();
 
                 if (updtUrl.indexOf('?') < 0) {
-                    updtUrl +=  AgoNewWindowConfig.getUpdatedRawUrl();
+                    updtUrl +=  MLConfig.getUpdatedRawUrl();
                 }
                 console.log("Raw Updated url");
                 console.log(updtUrl);

@@ -9,8 +9,8 @@
     define([
         'angular',
         'lib/utils',
-        'lib/AgoNewWindowConfig'
-    ], function (angular, utils, AgoNewWindowConfig) {
+        'lib/MLConfig'
+    ], function (angular, utils, MLConfig) {
 
         var
             setupNewDisplay = function (channel, userName, wndIndex, destWnd, curmph, newSelectedWebMapId) {
@@ -23,25 +23,25 @@
 
                     url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
-                    "&maphost=GoogleMap" + "&referrerId=" + AgoNewWindowConfig.getUserId(),
-                    gmQuery = AgoNewWindowConfig.getQuery();
+                    "&maphost=GoogleMap" + "&referrerId=" + MLConfig.getUserId(),
+                    gmQuery = MLConfig.getQuery();
                 if (gmQuery !== '') {
                     url += "&gmquery=" + gmQuery;
-                    displayBnds = AgoNewWindowConfig.getBoundsForUrl();
+                    displayBnds = MLConfig.getBoundsForUrl();
                     url += displayBnds;
                 }
                 console.log("open new Google window with URI " + url);
                 console.log("using channel " + channel + "with userName " + userName);
-                AgoNewWindowConfig.setUrl(url);
-                AgoNewWindowConfig.setUserName(userName);
+                MLConfig.setUrl(url);
+                MLConfig.setUserName(userName);
                 if (destWnd === "New Pop-up Window") {
-                    baseUrl = AgoNewWindowConfig.getbaseurl();
+                    baseUrl = MLConfig.getbaseurl();
                     /*tmpWndName = */
-                    window.open(baseUrl + "/google/" + url,  wndName, AgoNewWindowConfig.getSmallFormDimensions());
+                    window.open(baseUrl + "/google/" + url,  wndName, MLConfig.getSmallFormDimensions());
                     // popups.push(tmpWndName);
                 } else {
                     if (destWnd === "New Tab") {
-                        baseUrl = AgoNewWindowConfig.getbaseurl();
+                        baseUrl = MLConfig.getbaseurl();
                         window.open(baseUrl + "google/" + url, '_blank');
                         window.focus();
                     }

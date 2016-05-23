@@ -32,7 +32,7 @@ var details = {
 
 (function () {
     'use strict';
-    console.debug('AgoNewWindowConfig.js setup method');
+    console.debug('MLConfig.js setup method');
     var nextWindowName = 'MishMash ';
    /*
     var locationPath = "/";
@@ -44,7 +44,7 @@ var details = {
  */
     define(['lib/utils'],
         function (utils, Color, Symbol) {
-            console.debug('AgoNewWindowConfig define fn');
+            console.debug('MLConfig define fn');
 
             function search(searchDetails) {
                 console.log("setSearch from " + details.search + " to " + searchDetails);

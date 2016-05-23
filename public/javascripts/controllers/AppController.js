@@ -28,12 +28,12 @@
         'controllers/EmailCtrl',
         'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
-        'javascripts/lib/AgoNewWindowConfig'
+        'javascripts/lib/MLConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, VerbageCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
+            TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, MLConfig) {
             console.log('AppController define');
 
             function AppController($scope) {
@@ -46,16 +46,16 @@
                         // this callback will be called asynchronously
                         // when the response is available.
                         console.log('AppController getUserName: ', data.name);
-                        // AgoNewWindowConfig.setUserId(data.id );
+                        // MLConfig.setUserId(data.id );
                         if (opts.uname) {
-                            AgoNewWindowConfig.setUserName(data.name);
+                            MLConfig.setUserName(data.name);
                         }
                         // alert('got user name ' + data.name);
                         if (opts.uid) {
-                            AgoNewWindowConfig.setUserId(data.id);
+                            MLConfig.setUserId(data.id);
                         }
                         if (opts.refId === -99) {
-                            AgoNewWindowConfig.setReferrerId(data.id);
+                            MLConfig.setReferrerId(data.id);
                         }
                     }).
                     error(function (data, status, headers, config) {
@@ -72,10 +72,10 @@
                         // this callback will be called asynchronously
                         // when the response is available.
                         console.log('userid: ', data.id);
-                        AgoNewWindowConfig.setUserId(data.id);
-                        var refId = AgoNewWindowConfig.getReferrerId();
+                        MLConfig.setUserId(data.id);
+                        var refId = MLConfig.getReferrerId();
                         if (refId === -99) {
-                            AgoNewWindowConfig.setReferrerId(data.id);
+                            MLConfig.setReferrerId(data.id);
                         }
                     }).
                     error(function (data, status, headers, config) {
@@ -90,15 +90,15 @@
                 console.log('AppController init');
                 var $inj = angular.injector(['app']),
                     $http = $inj.get('$http'),
-                    referrerId = AgoNewWindowConfig.getReferrerId(),
+                    referrerId = MLConfig.getReferrerId(),
                     urlUserName;
 
                 console.log("Check if referrerId is -99");
                 if (referrerId === -99) {
                     getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
                 } else {
-                    urlUserName = AgoNewWindowConfig.getUserNameFromUrl();
-                    // AgoNewWindowConfig.getReferrerIdFromUrl();
+                    urlUserName = MLConfig.getUserNameFromUrl();
+                    // MLConfig.getReferrerIdFromUrl();
                     if (urlUserName) {
                         getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
                     } else {

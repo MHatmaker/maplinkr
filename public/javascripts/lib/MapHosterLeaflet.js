@@ -23,10 +23,10 @@ define('GeoCoder', function () {
     console.log("ready to require stuff in MapHosterLeaflet");
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
-    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig',
+    define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/MLConfig',
         'controllers/StompSetupCtrl', 'controllers/WindowStarter'],
 
-        function (PositionViewCtrl, GeoCoder, utils, AgoNewWindowConfig, StompSetupCtrl, WindowStarter) {
+        function (PositionViewCtrl, GeoCoder, utils, MLConfig, StompSetupCtrl, WindowStarter) {
 
             var
                 hostName = "MapHosterLeaflet",
@@ -80,7 +80,7 @@ define('GeoCoder', function () {
                     lfltBounds.ymin = sw.lat;
                     lfltBounds.xmax = ne.lng;
                     lfltBounds.ymax = ne.lat;
-                    AgoNewWindowConfig.setBounds({'llx' : sw.lng, 'lly' : sw.lat, 'urx' : ne.lng, 'ury' : ne.lat});
+                    MLConfig.setBounds({'llx' : sw.lng, 'lly' : sw.lat, 'urx' : ne.lng, 'ury' : ne.lat});
                 }
                 zmG = zm;
                 cntrxG = cntrx;
@@ -94,7 +94,7 @@ define('GeoCoder', function () {
                     'evlng' : cntrxG,
                     'evlat' : cntryG
                 });
-                AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
+                MLConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
             }
 
             function showGlobals(cntxt) {
@@ -141,8 +141,8 @@ define('GeoCoder', function () {
                         pushLL;
                     if (selfPusherDetails.pusher) {
                         fixedLL = utils.toFixed(contextPos[1], contextPos[0], 6);
-                        referrerId = AgoNewWindowConfig.getUserId();
-                        referrerName = AgoNewWindowConfig.getUserName();
+                        referrerId = MLConfig.getUserId();
+                        referrerName = MLConfig.getUserName();
                         pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                             "referrerId" : referrerId, "referrerName" :  referrerName,
                             'address' : contextContent, 'title' : contextHint };
@@ -166,8 +166,8 @@ define('GeoCoder', function () {
                 mphmap.on('popupopen', function () {
                     // alert('pop pop pop');
                     console.debug(popup);
-                    var referrerId = AgoNewWindowConfig.getReferrerId(),
-                        usrId = AgoNewWindowConfig.getUserId(),
+                    var referrerId = MLConfig.getReferrerId(),
+                        usrId = MLConfig.getUserId(),
                         btnShare = document.getElementById(shareBtnId);
                     if (referrerId && referrerId !== usrId) {
                         if (btnShare) {
@@ -261,8 +261,8 @@ define('GeoCoder', function () {
                     }
                     // if (selfPusherDetails.pusher) {
                     //     fixedLL = utils.toFixed(r.lon, r.lat, 6);
-                    //     referrerId = AgoNewWindowConfig.getUserId();
-                    //     referrerName = AgoNewWindowConfig.getUserName();
+                    //     referrerId = MLConfig.getUserId();
+                    //     referrerName = MLConfig.getUserName();
                     //     pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
                     //         "referrerId" : referrerId, "referrerName" :  referrerName };
                     //     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
@@ -349,7 +349,7 @@ define('GeoCoder', function () {
                 if (clickPt.address) {
                     content += '<br>' + clickPt.address;
                 }
-                if (clickPt.referrerId !== AgoNewWindowConfig.getUserId()) {
+                if (clickPt.referrerId !== MLConfig.getUserId()) {
                     popup
                         .setLatLng(latlng)
                         .setContent(content)
@@ -388,7 +388,7 @@ define('GeoCoder', function () {
                     userZoom = true;
                 }
 
-                AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
+                MLConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
             }
 
             function placeCustomControls() {
@@ -408,9 +408,9 @@ define('GeoCoder', function () {
             }
 
             function configureMap(lmap) {
-                var qlat = AgoNewWindowConfig.lat(),
-                    qlon = AgoNewWindowConfig.lon(),
-                    qzoom = AgoNewWindowConfig.zoom(),
+                var qlat = MLConfig.lat(),
+                    qlon = MLConfig.lon(),
+                    qzoom = MLConfig.zoom(),
                     osmUrl,
                     lyr,
                     elem;
@@ -421,10 +421,10 @@ define('GeoCoder', function () {
 
                 geoCoder =  GeoCoder; //.nominatim();
 
-                if (AgoNewWindowConfig.testUrlArgs()) {
-                    qlat = AgoNewWindowConfig.lat();
-                    qlon = AgoNewWindowConfig.lon();
-                    qzoom = AgoNewWindowConfig.zoom();
+                if (MLConfig.testUrlArgs()) {
+                    qlat = MLConfig.lat();
+                    qlon = MLConfig.lon();
+                    qzoom = MLConfig.zoom();
                     mphmap.setView([qlat, qlon], qzoom);
                     updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
                 } else {
@@ -499,7 +499,7 @@ define('GeoCoder', function () {
 
 
             function setUserName(name) {
-                AgoNewWindowConfig.setUserName(name);
+                MLConfig.setUserName(name);
             }
 
             function setPusherClient(pusher, channel) {
@@ -509,7 +509,7 @@ define('GeoCoder', function () {
                     key;
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;
-                AgoNewWindowConfig.setChannel(channel);
+                MLConfig.setChannel(channel);
 
                 $inj = angular.injector(['app']);
                 evtSvc = $inj.get('StompEventHandlerService');
@@ -553,10 +553,10 @@ define('GeoCoder', function () {
 
                         bnds = {'llx' : sw.lng, 'lly' : sw.lat,
                                      'urx' : ne.lng, 'ury' : ne.lat};
-                        AgoNewWindowConfig.setBounds(bnds);
+                        MLConfig.setBounds(bnds);
                     }
 
-                    bnds = AgoNewWindowConfig.getBoundsForUrl();
+                    bnds = MLConfig.getBoundsForUrl();
                     pos.search += bnds;
 
                     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);

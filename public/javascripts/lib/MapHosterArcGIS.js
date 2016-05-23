@@ -10,8 +10,8 @@
     require(["lib/utils", 'angular', "esri/tasks/locator"]);
 
     define([
-        'angular', 'controllers/PositionViewCtrl', 'lib/utils', 'lib/AgoNewWindowConfig'
-    ], function (angular, PositionViewCtrl, utils, AgoNewWindowConfig) {
+        'angular', 'controllers/PositionViewCtrl', 'lib/utils', 'lib/MLConfig'
+    ], function (angular, PositionViewCtrl, utils, MLConfig) {
 
         var
             hostName = "MapHosterArcGIS",
@@ -46,7 +46,7 @@
             cntryG = cntry;
             if (mphmap !== null) {
                 bounds = mphmap.geographicExtent;
-                AgoNewWindowConfig.setBounds({'llx' : bounds.xmin, 'lly' : bounds.ymin, 'urx' : bounds.xmax, 'ury' : bounds.ymax});
+                MLConfig.setBounds({'llx' : bounds.xmin, 'lly' : bounds.ymin, 'urx' : bounds.xmax, 'ury' : bounds.ymax});
             }
             console.log("Updated Globals " + msg + " " + cntrxG + ", " + cntryG + " : " + zmG);
             PositionViewCtrl.update('zm', {
@@ -57,7 +57,7 @@
                 'evlng' : cntrxG,
                 'evlat' : cntryG
             });
-            AgoNewWindowConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
+            MLConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
         }
 
         function showGlobals(cntxt) {
@@ -212,8 +212,8 @@
                     pushLL = {};
 
                 if (selfPusherDetails.pusher) {
-                    referrerId = AgoNewWindowConfig.getUserId();
-                    referrerName = AgoNewWindowConfig.getUserName();
+                    referrerId = MLConfig.getUserId();
+                    referrerName = MLConfig.getUserName();
                     pushLL = {
                         "x" : fixedLLG.lon,
                         "y" : fixedLLG.lat,
@@ -236,8 +236,8 @@
               /*
             if (selfPusherDetails.pusher)
             {
-                var referrerId = AgoNewWindowConfig.getUserId();
-                     referrerName = AgoNewWindowConfig.getUserName();
+                var referrerId = MLConfig.getUserId();
+                     referrerName = MLConfig.getUserName();
                      pushLL = {"x" : fixedLLG.lon, "y" : fixedLLG.lat, "z" : "0",
                         "referrerId" : referrerId, "referrerName" : referrerName,
                             'address' : contextContent };
@@ -257,9 +257,9 @@
                 updateGlobals("init with attributes in args", pointWebMap[0], pointWebMap[1], zoomWebMap);
             } else {
 
-                qlat = AgoNewWindowConfig.lat();
-                qlon = AgoNewWindowConfig.lon();
-                qzoom = AgoNewWindowConfig.zoom();
+                qlat = MLConfig.lat();
+                qlon = MLConfig.lon();
+                qzoom = MLConfig.zoom();
 
                 if (qlat !== '') {
                     updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
@@ -391,7 +391,7 @@
 
             //      screengraphic = new esri.geometry.toScreenGeometry(mphmap.extent,800,600,userdrawlayer.graphics[0].geometry);
 
-            if (clickPt.referrerId !== AgoNewWindowConfig.getUserId()) {
+            if (clickPt.referrerId !== MLConfig.getUserId()) {
                 fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6);
                 content = "Map click at " + fixedLL.lat + ", " + fixedLL.lon;
                 if (clickPt.title) {
@@ -485,7 +485,7 @@
                 pos.maphost = 'arcgis';
                 console.log(pos);
 
-                bnds = AgoNewWindowConfig.getBoundsForUrl();
+                bnds = MLConfig.getBoundsForUrl();
                 pos.search += bnds;
 
                 selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-NewMapPosition', pos);
@@ -557,7 +557,7 @@
         }
 
         function setUserName(name) {
-            AgoNewWindowConfig.setUserName(name);
+            MLConfig.setUserName(name);
         }
 
         // MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
@@ -571,7 +571,7 @@
             if (selfPusherDetails.pusher === null) {
                 selfPusherDetails.pusher = pusher;
                 selfPusherDetails.channel = channel;
-                AgoNewWindowConfig.setChannel(channel);
+                MLConfig.setChannel(channel);
 
                 $inj = angular.injector(['app']);
                 evtSvc = $inj.get('StompEventHandlerService');

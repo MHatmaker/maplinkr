@@ -56,7 +56,7 @@
         "dojo",
         "dojo/domReady",
         "esri/arcgis/Portal",
-        'javascripts/lib/AgoNewWindowConfig',
+        'javascripts/lib/MLConfig',
         'javascripts/bootstrap',
         'lib/GeoCoder',
         'controllers/MapCtrl',
@@ -67,46 +67,46 @@
         'lib/fsm',
         'lib/utils'
     // ], function(dojo, domReady, esriPortal, bootstrap, modal311) {
-    ], function(dojo, domReady, esriPortal, AgoNewWindowConfig, bootstrap ) {
+    ], function(dojo, domReady, esriPortal, MLConfig, bootstrap ) {
         console.debug('call ready');
         console.log(bootstrap);
-        console.log('AgoNewWindowConfig initialization');
-        AgoNewWindowConfig.showConfigDetails('MasherApp startup before modifying default settings');
+        console.log('MLConfig initialization');
+        MLConfig.showConfigDetails('MasherApp startup before modifying default settings');
 
         console.log("before domready, url is " + location.search);
         console.log("before domready, href is " + location.href);
-        AgoNewWindowConfig.setLocationPath(location.origin + location.pathname);
-        AgoNewWindowConfig.setSearch(location.search);
+        MLConfig.setLocationPath(location.origin + location.pathname);
+        MLConfig.setSearch(location.search);
 
         if(location.search == ''){
-            AgoNewWindowConfig.setInitialUserStatus(true);
-            AgoNewWindowConfig.setprotocol(location.protocol);
-            AgoNewWindowConfig.sethost(location.host);
-            AgoNewWindowConfig.sethostport(location.port);
-            AgoNewWindowConfig.setReferrerId(-99);
+            MLConfig.setInitialUserStatus(true);
+            MLConfig.setprotocol(location.protocol);
+            MLConfig.sethost(location.host);
+            MLConfig.sethostport(location.port);
+            MLConfig.setReferrerId(-99);
         }
         else{
-            AgoNewWindowConfig.setprotocol(location.protocol);
-            AgoNewWindowConfig.sethost(location.host);
-            AgoNewWindowConfig.sethostport(location.port);
-            var referrerId = AgoNewWindowConfig.getReferrerIdFromUrl(); // sets id in config object
-            var referrerName = AgoNewWindowConfig.getReferrerNameFromUrl(); // sets id in config object
-            // AgoNewWindowConfig.setUserId(referrerId);
-            AgoNewWindowConfig.setInitialUserStatus(false);
-            var channel = AgoNewWindowConfig.getChannelFromUrl();
+            MLConfig.setprotocol(location.protocol);
+            MLConfig.sethost(location.host);
+            MLConfig.sethostport(location.port);
+            var referrerId = MLConfig.getReferrerIdFromUrl(); // sets id in config object
+            var referrerName = MLConfig.getReferrerNameFromUrl(); // sets id in config object
+            // MLConfig.setUserId(referrerId);
+            MLConfig.setInitialUserStatus(false);
+            var channel = MLConfig.getChannelFromUrl();
             if(channel != ''){
-              AgoNewWindowConfig.setChannel(channel);
-              AgoNewWindowConfig.setNameChannelAccepted(true);
+              MLConfig.setChannel(channel);
+              MLConfig.setNameChannelAccepted(true);
             }
-            AgoNewWindowConfig.setStartupView(true, false);
-            console.log("AGONEWWINDOWCONFIG.SETSTARTUPVIEW")
+            MLConfig.setStartupView(true, false);
+            console.log("MLConfig.SETSTARTUPVIEW")
         }
-        // console.log("userId " + AgoNewWindowConfig.getUserId() + " referrerId " + AgoNewWindowConfig.getReferrerId());
-        console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
-        AgoNewWindowConfig.sethref(location.href);
-        AgoNewWindowConfig.sethostport(location.port);
+        // console.log("userId " + MLConfig.getUserId() + " referrerId " + MLConfig.getReferrerId());
+        console.log("is Initial User ? " + MLConfig.getInitialUserStatus());
+        MLConfig.sethref(location.href);
+        MLConfig.sethostport(location.port);
 
-        AgoNewWindowConfig.showConfigDetails('MasherApp startup after modifying default settings');
+        MLConfig.showConfigDetails('MasherApp startup after modifying default settings');
         domReady(function () {
             var portal, portalUrl = document.location.protocol + '//www.arcgis.com';
             portal = new esri.arcgis.Portal(portalUrl);

@@ -14,11 +14,11 @@
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
         'lib/utils',
-        'lib/AgoNewWindowConfig',
+        'lib/MLConfig',
         'controllers/StompSetupCtrl',
         'controllers/WindowStarter'
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            AgoNewWindowConfig, StompSetupCtrl, WindowStarter_) {
+            MLConfig, StompSetupCtrl, WindowStarter_) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -39,7 +39,7 @@
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
-                gmquery = AgoNewWindowConfig.query(),
+                gmquery = MLConfig.query(),
                 height,
                 width,
                 mapWrp,
@@ -139,18 +139,18 @@
                     newSelectedWebMapId = "NoId"
 
                     if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
-                        if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                        if (MLConfig.isNameChannelAccepted() === false) {
                             $inj = angular.injector(['app']);
                             evtSvc = $inj.get('StompEventHandlerService');
                             evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
                             evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
 
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                                AgoNewWindowConfig.getUserName(), WindowStarter.openNewDisplay,
+                                MLConfig.getUserName(), WindowStarter.openNewDisplay,
                                     {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
                         } else {
-                            WindowStarter.openNewDisplay(AgoNewWindowConfig.masherChannel(false),
-                                AgoNewWindowConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                            WindowStarter.openNewDisplay(MLConfig.masherChannel(false),
+                                MLConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
                         }
 
                     } else {  //(destWnd == "Same Window")
@@ -214,12 +214,12 @@
                 mpTypeSvc = $inj.get("CurrentMapTypeService");
                 googmph = mpTypeSvc.getSpecificMapType('google');
 
-                mapLinkrBounds = AgoNewWindowConfig.getBounds();
+                mapLinkrBounds = MLConfig.getBounds();
                 searchBounds = new google.maps.LatLngBounds(
                                 new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
                                 new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
                             );
-                position = AgoNewWindowConfig.getPosition();
+                position = MLConfig.getPosition();
                 center = {'lat' : position.lat, 'lng' : position.lon};
                 googleCenter = new google.maps.LatLng(position.lat, position.lon);
                 gmap = googmph.getMap();
@@ -445,7 +445,7 @@
 
                 // alert('searchClickEvent in MapCtrl with ' + args);
                 // $scope.$apply(function () {
-                    // $scope.current = AgoNewWindowConfig.getQuery();
+                    // $scope.current = MLConfig.getQuery();
                 // });
             });
 
@@ -501,7 +501,7 @@
             });
 
             $scope.queryChanged = function () {
-                AgoNewWindowConfig.setQuery($scope.gsearch.query);
+                MLConfig.setQuery($scope.gsearch.query);
             };
 
             $scope.showDestDialog = function (callback, details, info) {

@@ -10,8 +10,8 @@
     "use strict";
 
     console.log('SPACtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'lib/utils', 'controllers/MapCtrl'],
-        function (angular, AgoNewWindowConfig, utils, MapCtrl) {
+    define(['angular', 'lib/MLConfig', 'lib/utils', 'controllers/MapCtrl'],
+        function (angular, MLConfig, utils, MapCtrl) {
         console.log('SPACtrl define');
         var selfMethods = {};
 
@@ -27,7 +27,7 @@
                 mapColDef : 'col-xs-12 col-sm-6 col-md-4,'
             };
 
-            var startupView = AgoNewWindowConfig.getStartupView(),
+            var startupView = MLConfig.getStartupView(),
                 curmapsys,
                 $inj,
                 serv;

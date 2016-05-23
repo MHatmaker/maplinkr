@@ -7,7 +7,7 @@
     var isFirstViewing = true;
 
     console.log('MasherCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
+    define(['angular', 'lib/MLConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  MLConfig, WebSiteDescriptionCtrl, utils) {
         console.log('MasherCtrl define');
         var selfMethods = {},
             descriptions = {
@@ -27,7 +27,7 @@
         function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal) {  //$route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
 
-            var startupView = AgoNewWindowConfig.getStartupView();
+            var startupView = MLConfig.getStartupView();
             $scope.MasterSiteVis = startupView.websiteDisplayMode ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summaryShowing;
             $scope.showPopupBlockerDialog = false;
@@ -141,7 +141,7 @@
             $scope.showMeTheMapClicked = function () {
                 // var currentPageTemplate;
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
-                AgoNewWindowConfig.setMapHost($scope.currentTab.maptype);
+                MLConfig.setMapHost($scope.currentTab.maptype);
                 console.debug($location);
 
                 // $scope.summaryCollapser({'startValue' : false});
@@ -258,28 +258,28 @@
                 var pos2prt = String.format('onNewMapPosition handler - framework {0}, referrer {1}, at x {2}, y {3}, zoom {4}',
                     pos.maphost, pos.referrerId, pos.lon, pos.lat, pos.zoom),
 
-                    baseUrl = AgoNewWindowConfig.getbaseurl(),
+                    baseUrl = MLConfig.getbaseurl(),
                     completeUrl = baseUrl + pos.maphost + pos.search,
-                    nextWindowName = AgoNewWindowConfig.getNextWindowName(),
+                    nextWindowName = MLConfig.getNextWindowName(),
                     wnd = null;
                 console.log(pos2prt);
                 console.log("search url :");
                 console.log(pos.search);
                 console.log('completeUrl');
                 console.debug(completeUrl);
-                console.log("userId = " + AgoNewWindowConfig.getUserId() + " referrerId = " + AgoNewWindowConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
-                console.log("is Initial User ? " + AgoNewWindowConfig.getInitialUserStatus());
+                console.log("userId = " + MLConfig.getUserId() + " referrerId = " + MLConfig.getReferrerId() + " pos.referrerId = " + pos.referrerId);
+                console.log("is Initial User ? " + MLConfig.getInitialUserStatus());
                 console.log("Open new window with name " + nextWindowName);
                 $scope.data.blockedUrl = completeUrl;
 
-                // if (pos.referrerId !== AgoNewWindowConfig.getUserId()) {
-                if (pos.referrerName !== AgoNewWindowConfig.getUserName()) {
-                    completeUrl += "&userName=" + AgoNewWindowConfig.getUserName();
+                // if (pos.referrerId !== MLConfig.getUserId()) {
+                if (pos.referrerName !== MLConfig.getUserName()) {
+                    completeUrl += "&userName=" + MLConfig.getUserName();
                     wnd = window.open(completeUrl, nextWindowName,
-                        AgoNewWindowConfig.getSmallFormDimensions());
+                        MLConfig.getSmallFormDimensions());
                     if (!wnd || wnd === 'undefined') {
                         handlePopupBlocked(completeUrl, nextWindowName,
-                            AgoNewWindowConfig.getSmallFormDimensions());
+                            MLConfig.getSmallFormDimensions());
                     }
                     console.log("after call to window.open with initial user status true");
                 } else {
@@ -371,7 +371,7 @@
             return MasherCtrl;
         }
         function startMapSystem() {
-            var startupView = AgoNewWindowConfig.getStartupView();
+            var startupView = MLConfig.getStartupView();
             console.log("startMapSystem");
             isFirstViewing = false;
 

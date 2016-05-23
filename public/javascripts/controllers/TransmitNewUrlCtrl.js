@@ -4,16 +4,16 @@
     "use strict";
 
     console.log('TransmitNewUrlCtrl setup');
-    define(['lib/AgoNewWindowConfig', 'angular'], function(AgoNewWindowConfig) {
+    define(['lib/MLConfig', 'angular'], function(MLConfig) {
         console.log('TransmitNewUrlCtrl define');
         var context = {};
 
         function TransmitNewUrlCtrl($scope) {
-            context.fullUrl = AgoNewWindowConfig.gethref();
+            context.fullUrl = MLConfig.gethref();
             $scope.urlText = context.fullUrl;
 
             $scope.fetchUrl = function(){
-                context.fullUrl = AgoNewWindowConfig.gethref();
+                context.fullUrl = MLConfig.gethref();
                 // context.urlText = $scope.urlText;
                 /*
                 $scope.urlText = context.fullUrl;
@@ -32,23 +32,23 @@
             $scope.publishUrl = function(){
                 console.log("Publish Current URL");
                 console.log(context.fullUrl);
-                AgoNewWindowConfig.showConfigDetails('TransmitNewUrlCtrl - PUBLISH');
-                var updtUrl = AgoNewWindowConfig.getUpdatedUrl();
+                MLConfig.showConfigDetails('TransmitNewUrlCtrl - PUBLISH');
+                var updtUrl = MLConfig.getUpdatedUrl();
                 console.log(updtUrl);
                 var $inj = angular.injector(['app']);
                 var serv = $inj.get('CurrentMapTypeService');
                 var curmph = serv.getSelectedMapType();
                 var curmapsys = serv.getMapRestUrl();
                 updtUrl += '&maphost=' + curmapsys;
-                var referrerId = AgoNewWindowConfig.getReferrerId();
+                var referrerId = MLConfig.getReferrerId();
                 updtUrl += '&referrerId=' + referrerId;
-                var referrerName = AgoNewWindowConfig.getUserName();
+                var referrerName = MLConfig.getUserName();
                 updtUrl += '&referrerName=' + referrerName;
 
                 var nativeCenter = curmph.getCenter();
-                AgoNewWindowConfig.setPosition(nativeCenter);
+                MLConfig.setPosition(nativeCenter);
 
-                var newPos = AgoNewWindowConfig.getPosition();
+                var newPos = MLConfig.getPosition();
                 newPos.search = updtUrl;
                 newPos.maphost = curmapsys;
                 newPos.referrerId = referrerId;

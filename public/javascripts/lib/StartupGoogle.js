@@ -52,15 +52,15 @@ function initPlaces() {
 
 (function () {
     "use strict";
-    // require(['lib/MapHosterGoogle', 'lib/AgoNewWindowConfig']);
+    // require(['lib/MapHosterGoogle', 'lib/MLConfig']);
 
     console.log('StartupGoogle setup');
     define([
         'lib/MapHosterGoogle',
         'controllers/StompSetupCtrl',
-        'lib/AgoNewWindowConfig',
+        'lib/MLConfig',
         'lib/utils'
-    ], function (MapHosterGoogle, StompSetupCtrl, AgoNewWindowConfig, utils) {
+    ], function (MapHosterGoogle, StompSetupCtrl, MLConfig, utils) {
         console.log('StartupGoogle define');
         var
             gMap = null,
@@ -103,10 +103,10 @@ function initPlaces() {
                     var url = "?id=" + newSelectedWebMapId + MapHosterGoogle.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName;
                     console.log("open new ArcGIS window with URI " + url);
                     console.log("using channel " + channel + " with user name " + userName);
-                    AgoNewWindowConfig.setUrl(url);
-                    AgoNewWindowConfig.setChannel(channel);
-                    AgoNewWindowConfig.userName(userName);
-                    window.open(AgoNewWindowConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, AgoNewWindowConfig.getSmallFormDimensions());
+                    MLConfig.setUrl(url);
+                    MLConfig.setChannel(channel);
+                    MLConfig.userName(userName);
+                    window.open(MLConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, MLConfig.getSmallFormDimensions());
                 };
 
             newSelectedWebMapId = newMapId;
@@ -116,20 +116,20 @@ function initPlaces() {
             showLoading();
 
             if (newSelectedWebMapId !== null) {
-                if (AgoNewWindowConfig.isNameChannelAccepted() === false) {
+                if (MLConfig.isNameChannelAccepted() === false) {
                     $inj = angular.injector(['app']);
                     evtSvc = $inj.get('StompEventHandlerService');
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 
                     StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
-                        AgoNewWindowConfig.getUserName(), function (channel, userName) {
-                            AgoNewWindowConfig.setUserName(userName);
+                        MLConfig.getUserName(), function (channel, userName) {
+                            MLConfig.setUserName(userName);
                             openAgoWindow(channel, userName);
                         });
                 } else {
-                    userName = AgoNewWindowConfig.getUserName();
-                    openAgoWindow(AgoNewWindowConfig.masherChannel(false), userName);
+                    userName = MLConfig.getUserName();
+                    openAgoWindow(MLConfig.masherChannel(false), userName);
                 }
             } else {
                 $inj = angular.injector(['app']);
@@ -137,19 +137,19 @@ function initPlaces() {
                 evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 
-                console.debug(AgoNewWindowConfig);
+                console.debug(MLConfig);
                 // var centerLatLng = new google.maps.LatLng(41.8, -87.7);
                 centerLatLng = new google.maps.LatLng(41.888996, -87.623294);
                 initZoom = 15;
 
-                if (AgoNewWindowConfig.testUrlArgs()) {
-                    qlat = AgoNewWindowConfig.lat();
-                    qlon = AgoNewWindowConfig.lon();
+                if (MLConfig.testUrlArgs()) {
+                    qlat = MLConfig.lat();
+                    qlon = MLConfig.lon();
                     centerLatLng = new google.maps.LatLng(qlat, qlon);
-                    bnds = AgoNewWindowConfig.getBoundsFromUrl();
+                    bnds = MLConfig.getBoundsFromUrl();
                     console.log("getBoundsFromUrl..................");
                     console.debug(bnds);
-                    zoomStr = AgoNewWindowConfig.zoom();
+                    zoomStr = MLConfig.zoom();
                     initZoom = parseInt(zoomStr, 10);
                 }
 
@@ -181,7 +181,7 @@ function initPlaces() {
                 MapHosterGoogle.start();
                 MapHosterGoogle.config(gMap, google, google.maps.places);
 
-                pusherChannel = AgoNewWindowConfig.masherChannel(false);
+                pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);
                 pusher = StompSetupCtrl.createPusherClient(
                     {
@@ -190,9 +190,9 @@ function initPlaces() {
                         'client-NewMapPosition' : MapHosterGoogle.retrievedNewPosition
                     },
                     pusherChannel,
-                    AgoNewWindowConfig.getUserName(),
+                    MLConfig.getUserName(),
                     function (channel, userName) {
-                        AgoNewWindowConfig.setUserName(userName);
+                        MLConfig.setUserName(userName);
                     }
                 );
                 if (!pusher) {

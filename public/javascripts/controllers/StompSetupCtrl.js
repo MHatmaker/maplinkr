@@ -10,9 +10,9 @@
         areWeInstantiated = false;
     define([
         'angular',
-        'lib/AgoNewWindowConfig',
+        'lib/MLConfig',
         'controllers/PusherCtrl'
-    ], function (angular, AgoNewWindowConfig, pusherCtrl) {
+    ], function (angular, MLConfig, pusherCtrl) {
         console.log('StompSetupCtrl define');
 
         var selfdict = {
@@ -35,7 +35,7 @@
         function StompSetupCtrl($scope, $uibModal) {
             console.log("in StompSetupCtrl");
             selfdict.isInstantiated = areWeInitialized = true;
-            $scope.privateChannelMashover = AgoNewWindowConfig.masherChannel();
+            $scope.privateChannelMashover = MLConfig.masherChannel();
             selfdict.scope = $scope;
             selfdict.scope.userName = selfdict.userName;
             selfdict.pusher = null;
@@ -44,7 +44,7 @@
 
             $scope.showDialog = selfdict.scope.showDialog = false;
             $scope.data = {
-                privateChannelMashover : AgoNewWindowConfig.masherChannel(),
+                privateChannelMashover : MLConfig.masherChannel(),
                 prevChannel : 'mashchannel',
                 userName : selfdict.userName,
                 prevUserName : selfdict.userName,
@@ -74,8 +74,8 @@
                 console.log("onAcceptChannel " + $scope.data.privateChannelMashover);
                 selfdict.userName = $scope.data.userName;
                 self.CHANNEL = $scope.data.privateChannelMashover;
-                AgoNewWindowConfig.setChannel($scope.data.privateChannelMashover);
-                AgoNewWindowConfig.setNameChannelAccepted(true);
+                MLConfig.setChannel($scope.data.privateChannelMashover);
+                MLConfig.setNameChannelAccepted(true);
                 selfdict.pusher = selfdict.PusherClient(selfdict.eventDct,
                     $scope.data.privateChannelMashover,
                     $scope.data.userName,

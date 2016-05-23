@@ -13,7 +13,7 @@ var selectedMapType = 'arcgis',
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
-        'lib/AgoNewWindowConfig',
+        'lib/MLConfig',
         'controllers/EmailCtrl',
         'controllers/SPACtrl',
         'controllers/TopRowCtrl',
@@ -27,7 +27,7 @@ var selectedMapType = 'arcgis',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
 
-    ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
+    ], function (angular, AppController, MasherCtrl, TabsCtrl, MLConfig,
             EmailCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
             MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
@@ -312,10 +312,10 @@ var selectedMapType = 'arcgis',
             angular.bootstrap(document.body, ['app']);
 
             console.log("url is " + location.search);
-            isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
-            AgoNewWindowConfig.setDestinationPreference('New Pop-up Window');
+            isNewAgoWindow = MLConfig.testUrlArgs();
+            MLConfig.setDestinationPreference('New Pop-up Window');
             if (isNewAgoWindow) {
-                maphost = AgoNewWindowConfig.maphost();
+                maphost = MLConfig.maphost();
                 console.log('maphost : ' + maphost);
 
                 $inj = angular.injector(['app']);
@@ -324,14 +324,14 @@ var selectedMapType = 'arcgis',
                 console.log('maptype' + mapRestUrlToType[maphost]);
 
                 if (maphost === 'GoogleMap') {
-                    gmquery = AgoNewWindowConfig.getQueryFromUrl();
+                    gmquery = MLConfig.getQueryFromUrl();
                     searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
                 }
 
                 MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
-                AgoNewWindowConfig.setHideWebSiteOnStartup(true);
+                MLConfig.setHideWebSiteOnStartup(true);
                 // MasherCtrl.startMapSystem();
                 // SpaCtrl.hideWebsite();
             }
