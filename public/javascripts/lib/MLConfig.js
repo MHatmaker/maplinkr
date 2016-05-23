@@ -47,13 +47,13 @@ var details = {
             console.debug('MLConfig define fn');
 
             function search(searchDetails) {
-                console.log("setSearch from " + details.search + " to " + searchDetails);
+                // console.log("setSearch from " + details.search + " to " + searchDetails);
                 details.search = searchDetails.substring(0);
-                console.log("copied to details : " + details.search);
+                // console.log("copied to details : " + details.search);
                 //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
             }
             function getParameterByName(name) {
-                console.log("get paramater " + name + " from " + details.search);
+                // console.log("get paramater " + name + " from " + details.search);
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                     results = regex.exec(details.search);

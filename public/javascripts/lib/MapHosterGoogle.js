@@ -54,7 +54,7 @@
             self = this,
             markers = [];
 
-        MLConfig.showConfigDetails('MapHosterGoogle - startup');
+        // MLConfig.showConfigDetails('MapHosterGoogle - startup');
         function updateGlobals(msg, cntrx, cntry, zm) {
             console.log("updateGlobals ");
             var gmBounds = mphmap.getBounds(),
@@ -413,7 +413,7 @@
                         maxZoom = response.zoom;
                         zoomLevels = maxZoom - minZoom;
                         collectScales(zoomLevels);
-                        MLConfig.showConfigDetails('MapHosterGoogle zsvc.getMaxZoomAtLatLng - after collectScales');
+                        // MLConfig.showConfigDetails('MapHosterGoogle zsvc.getMaxZoomAtLatLng - after collectScales');
                         showGlobals("after zsvc.getMaxZoomAtLatLng collectScales");
                     } else {
                         if (response) {
