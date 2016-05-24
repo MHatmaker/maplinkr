@@ -74,16 +74,6 @@ var selectedMapType = 'arcgis',
                                 controller : App.MasherCtrl,
                                 reloadOnSearch: true
                             }).
-                            when('/partials/agonewwindow/:id',  {
-                                templateUrl: function (params) {
-                                    console.log("when string is " + '/partials/agonewwindow/:id');
-                                    console.log("params = " + params.id);
-                                    console.log("prepare to return " + '/partials/agonewwindow' + params.id);
-                                    return '/partials/agonewwindow' + params.id;
-                                },
-                                controller: App.MasherCtrl,
-                                reloadOnSearch: true
-                            }).
                             when('/views/partials/:id',  {
                                 templateUrl: function (params) {
                                     console.log("when string is " + '/views/partials/:id');

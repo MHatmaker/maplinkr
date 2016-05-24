@@ -12,11 +12,6 @@ exports.indexchannel = function(req, res){
   res.render('/' + name);
 };
 
-exports.agonewwindow = function(req, res){
-  console.log("exports.agonewwindow");
-  res.render('agonewwindow');
-};
-
 exports.partials = function (req, res) {
   console.log("exports.partials");
   var name = req.params.name;

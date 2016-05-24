@@ -160,7 +160,6 @@ urls = (
             var link = "http://i.imgur.com/kmbjB.png";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
-        self.routes['/agonewwindow*'] = routesJade.agonewwindow;
         self.routes['/'] = routesJade.index;
         //self.routes['partials/SystemSelector'] = routesJade.partials;
         self.routes['/partials/:name'] = routesJade.partials;

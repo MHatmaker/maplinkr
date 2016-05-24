@@ -100,31 +100,7 @@
                 }
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;
-/*
-            $scope.windowResized = function () {
-                var height = document.body.clientHeight,
-                    width = document.body.clientWidth,
-                    mapWrp = angular.element(document.getElementById("map_wrapper")),
-                    rightCol = angular.element(document.getElementById("idRightColOuter")),
-                    hstr = "",
-                    mq;
 
-                console.log(" document.body.client : width " + width + ", height " + height);
-                console.log("map_wrapper height");
-                console.debug(mapWrp);
-                hstr = String.format("{0}px", utils.toFixedOne(height * 0.7));
-                console.log(hstr);
-                mapWrp.css({"height": hstr});
-                mq = window.matchMedia('@media all and (max-width: 700px)');
-                if(mq.matches) {
-                    // the width of browser is more then 700px
-                } else {
-                    // the width of browser is less then 700px
-                    rightCol.css({"top": hstr});
-                }
-
-            };
-*/
             $scope.windowResized = function () {
                 window.resizeBy(0,0);
                 $scope.safeApply();
@@ -135,11 +111,7 @@
                 $scope.safeApply();
             };
 
-            // selfMethods.windowResized = $scope.windowResized;
-            // window.addEventListener('resize', $scope.windowResized);
-
             $scope.showMeTheMapClicked = function () {
-                // var currentPageTemplate;
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 MLConfig.setMapHost($scope.currentTab.maptype);
                 console.debug($location);
@@ -148,22 +120,6 @@
                 $location.path($scope.currentTab.url, true);
                 $location.replace();
                 $route.reload();
-
-                // $scope.$apply(function() {
-                //     $location.path($scope.currentTab.url, true);
-                //     $location.replace();
-                // });
-                // $window.location = $scope.currentTab.url;
-                // $scope.$apply();
-                // $window.location.href = $scope.currentTab.url;
-                // $window.location.reload();
-                // $scope.summaryCollapser();
-
-                // currentPageTemplate = $route.current.loadedTemplateUrl;
-                // console.log("currentPageTemplate : " + currentPageTemplate);
-                // $templateCache.remove(currentPageTemplate);
-                // $route.reload();
-                // $location.path($scope.currentTab.url, true).replace();
             };
 
             $scope.cancel = function () {
@@ -172,8 +128,6 @@
 
             $scope.describeTheWebsiteClicked = function () {
                 console.log("Describe the website for currentTab " + $scope.currentTab.title);
-//                var hostElement = $document.find('mashbox').eq(0);
-                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
                 $scope.data.selfdict.mapType = $scope.currentTab.maptype; //slice(1);
                 $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
@@ -182,7 +136,8 @@
                 var tmplt = ' \
                     <div class="modal-content"> \
                       <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" \
+                            ng-click="cancel()">&times;</button> \
                         <h4>This sample Web Site powered by <img src="{{data.image}}">  {{data.mapType}} is showing us :</h3> \
                       </div> \
                       <div class="modal-body"> \
@@ -205,7 +160,6 @@
                         controller : 'WebSiteDescriptionCtrl',
                         size : 'sm',
                         backdrop : 'false',
-//                        appendTo : hostElement,
                         resolve : {
                             data: function () {
                                 return $scope.data.selfdict;
@@ -221,28 +175,6 @@
                 });
 
             };
-
-        // function showTheMap () {
-        //     console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
-        //     console.debug($location);
-        //     var showElem = document.getElementById('showMeTheMap'),
-        //         showElemA = angular.element(showElem),
-        //         showElem0 = showElemA[0];
-        //
-        //     showElem0.click();
-        //     // $scope.catchClick();  // for testing dialog without an actual popup block event
-        // }
-            // $scope.$on('WebSiteDescriptionEvent', function () {
-            //     console.log("WebSiteDescriptionEvent received, currentTab - url reset to " + $scope.currentTab.url);
-            //     console.debug($location);
-            //     var showElem = document.getElementById('showMeTheMap'),
-            //         showElemA = angular.element(showElem),
-            //         showElem0 = showElemA[0];
-            //
-            //     showElem0.click();
-            //     // $scope.catchClick();  // for testing dialog without an actual popup block event
-            //
-            // });
 
             function handlePopupBlocked(completeUrl, nextWindowName, dimensions) {
                 console.log('in function handlePopupBlocked');
@@ -290,16 +222,9 @@
             selfMethods.onNewMapPosition = $scope.onNewMapPosition;
         }
 
-        // MasherCtrl.prototype.windowResized = function () {
-        //     selfMethods.windowResized();
-        // }
-
         function init(App) {
             console.log('MasherCtrl init');
             App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
-
-            //calling tellAngular on resize event
-            // window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
 
             var $inj = angular.injector(['app']),
                 evtSvc = $inj.get('StompEventHandlerService');

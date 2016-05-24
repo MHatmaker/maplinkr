@@ -193,11 +193,11 @@ define('GeoCoder', function () {
 
             function addInitialSymbols() {
                 var hint = "Seanery Beanery Industrial Row";
-                markerInfoPopup([41.790, -87.735], "Seanery Beanery with spectacular view of abandoned industrial site", hint);
+                markerInfoPopup([41.8933, -87.6258], "Seanery Beanery with spectacular view of abandoned industrial site", hint);
                 hint = "Seanery Beanery For Discriminating Beaners";
-                markerInfoPopup([41.810, -87.715], "Seanery Beanery located adjacent to great entertainment venues", hint);
+                markerInfoPopup([41.8789, -87.6206], "Seanery Beanery located adjacent to great entertainment venues", hint);
                 hint = "Seanery Beanery For Walking Averse";
-                markerInfoPopup([41.785, -87.70], "Seanery Beanery located close to the pedicab terminal", hint);
+                markerInfoPopup([41.8749, -87.6190], "Seanery Beanery located close to the pedicab terminal", hint);
 
                 // L.circle([51.508, -0.11], 500, {
                     // color: 'red',
