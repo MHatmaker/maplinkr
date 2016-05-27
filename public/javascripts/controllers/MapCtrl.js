@@ -16,9 +16,10 @@
         'lib/utils',
         'lib/MLConfig',
         'controllers/StompSetupCtrl',
-        'controllers/WindowStarter'
+        'controllers/WindowStarter',
+        'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            MLConfig, StompSetupCtrl, WindowStarter_) {
+            MLConfig, StompSetupCtrl, WindowStarter_, GoogleSearchDirective) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -333,7 +334,7 @@
             selfMethods.placeCustomControls = placeCustomControls;
             console.debug(selfMethods);
 
-            $scope.gsearchVisible = mptp === 'google' || mptp === 'arcgis'?  'block' : 'none';
+            $scope.gsearchVisible = 'inline-block'; //mptp === 'google' || mptp === 'arcgis'?  'block' : 'none';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
             $scope.selected = mptp === 'google' ? 'Same Window' : 'New Pop-up Window';
             $scope.updateState($scope.selected);
@@ -450,46 +451,78 @@
             });
 
             function setupQueryListener () {
-                searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
-                // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
-                searchInput.value = '';
-                searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
-                    (searchInput));
+                var
+                    cnvs = angular.element(document.getElementById(whichCanvas)),
+                    template = '<div id="gmsearch" class="gmsearchclass"><input id="pac-input" \
+                        class="gmsearchcontrols" className="controls" \
+                        type="text" placeholder="SearchBox"  \
+                        style="display: block; visibility: visible; color: black; z-index: 30"  \
+                        ng-model="gsearch.query" \
+                        ng-change="queryChanged()" auto-focus ></div>',
+                    pcnpt = angular.element(template);
+                    // templategmquery = '<gmsearch style="display: block; visibility: visible;"></gmsearch>',
+                    // q1 = angular.element(templategmquery),
+                    // q2,
+                    // pcnpt = angular.element(document.getElementById('pac_input')),
+                    //
+                    // MlApp = angular.module('app'),
+                    // fnLink;
+                $scope.safeApply();
+                if (1) { // (!pcnpt) {
+                    cnvs.append(pcnpt);
+                    // fnLink = $compile(q1);     // returns a Link function used to bind template to the scope
+                    // fnLink($scope);                  // Bind Scope to the template
+                    // $scope.add();
+                }
+                $scope.safeApply();
 
-                google.maps.event.addListener(searchBox, 'places_changed', function () {
-                    var scope = null,
-                        googmph = null,
-                        curmph = null,
-                        curMapType = '',
-                        mpTypeSvc = null,
-                        gmap,
-                        mapOptions,
-                        pacnpt,
-                        searchBounds = null,
-                        mapLinkrBounds,
-                        position,
-                        center,
-                        googleCenter,
-                        service,
-                        placesSearchResults = [],
-                        queryPlaces = {
-                            location: null,
-                            bounds: null,
-                            query: 'what do you want?'
-                        };
-                    console.log("MapCtrl 'places_changed' listener");
-                    connectQuery();
+                // GoogleSearchDirective.start(MlApp);
 
-    /*
-                    var checkBounds = searchBox.getBounds(),
-                        $inj,
-                        gmQSvc;
-                        // scope;
-                    console.log(formatBounds(checkBounds));
-                    // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
-                    //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
-    */
-                });
+                setTimeout(function () {
+                    searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
+                    if (searchInput) {
+                        // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+                        searchInput.value = '';
+                        searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
+                            (searchInput));
+
+                        google.maps.event.addListener(searchBox, 'places_changed', function () {
+                            var scope = null,
+                                googmph = null,
+                                curmph = null,
+                                curMapType = '',
+                                mpTypeSvc = null,
+                                gmap,
+                                mapOptions,
+                                pacnpt,
+                                searchBounds = null,
+                                mapLinkrBounds,
+                                position,
+                                center,
+                                googleCenter,
+                                service,
+                                placesSearchResults = [],
+                                queryPlaces = {
+                                    location: null,
+                                    bounds: null,
+                                    query: 'what do you want?'
+                                };
+                            console.log("MapCtrl 'places_changed' listener");
+                            connectQuery();
+
+
+        /*
+                        var checkBounds = searchBox.getBounds(),
+                            $inj,
+                            gmQSvc;
+                            // scope;
+                        console.log(formatBounds(checkBounds));
+                        // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
+                        //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
+        */
+                        });
+                    }
+                }, 500);
             }
 
             selfMethods.setupQueryListener = setupQueryListener;

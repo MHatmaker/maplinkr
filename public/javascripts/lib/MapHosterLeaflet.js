@@ -480,9 +480,10 @@ define('GeoCoder', function () {
                         setBounds('pan', e.latlng);
                     }
                 });
-                elem = document.getElementById('pac-input');
-                // aelem = angular.element(elem);
-                elem.style.display = 'block';
+                // setupQueryListener();
+                // elem = document.getElementById('pac-input');
+                //
+                // elem.style.display = 'block';
             }
 
             function getMapHosterName() {

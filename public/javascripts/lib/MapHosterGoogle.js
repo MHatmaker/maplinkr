@@ -456,6 +456,7 @@
                 setupQueryListener();
             });
 
+            setupQueryListener();
             // var bndsInit = createBounds();
             // mphmap.fitBounds(bndsInit);
             listener = google.maps.event.addListener(mphmap, "idle", function () {

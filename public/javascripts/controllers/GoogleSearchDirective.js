@@ -17,7 +17,7 @@
                     template: '<input id="pac-input" \
                         class="gmsearchcontrols" \
                         type="text" placeholder="SearchBox"  \
-                        style="display: {{gsearchVisible}}; color: black;"  \
+                        style="display: {{gsearchVisible}}; visibility: visible; color: black;"  \
                         ng-model="gsearch.query" \
                         ng-change="queryChanged()" auto-focus >',
                     replace: false,
@@ -25,7 +25,7 @@
                         scope.add = function () {
                             console.log("GoogleSearchDirective ----  adding:");
                             console.debug(element);
-                            element.after($compile('<gmsearch></gmsearch>')(scope));
+                            element.after($compile('<gmsearch style="height: 40px; display: block; visibility: visible"></gmsearch>')(scope));
                         };
                         scope.$on('searchClickEvent', function (event, args) {
                             // alert('searchClickEvent in GoogleSearchDirective');
