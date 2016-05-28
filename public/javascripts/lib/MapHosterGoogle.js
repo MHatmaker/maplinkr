@@ -372,9 +372,10 @@
                 var $inj = angular.injector(['app']),
                     ctrlSvc = $inj.get('ControllerService'),
                     mapCtrl = ctrlSvc.getController();
-                setTimeout(function() {
-                    mapCtrl.setupQueryListener();
-                }, 500);
+                mapCtrl.setupQueryListener();
+                // setTimeout(function() {
+                //     mapCtrl.setupQueryListener();
+                // }, 500);
             }
 
             google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function () {

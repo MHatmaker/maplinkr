@@ -453,13 +453,18 @@
             function setupQueryListener () {
                 var
                     cnvs = angular.element(document.getElementById(whichCanvas)),
-                    template = '<div id="gmsearch" class="gmsearchclass"><input id="pac-input" \
+                    template = '<div id="gmsearch" class="gmsearchclass" style="width: 28em; margin-right : 2em;"> \
+                        <input id="pac-input" \
                         class="gmsearchcontrols" className="controls" \
                         type="text" placeholder="SearchBox"  \
-                        style="display: block; visibility: visible; color: black; z-index: 30"  \
+                        style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
                         ng-model="gsearch.query" \
                         ng-change="queryChanged()" auto-focus ></div>',
-                    pcnpt = angular.element(template);
+                        pcnpt = document.getElementById('pac_input');
+                        if (!pcnpt) {
+                            pcnpt = angular.element(template);
+                            cnvs.append(pcnpt);
+                        }
                     // templategmquery = '<gmsearch style="display: block; visibility: visible;"></gmsearch>',
                     // q1 = angular.element(templategmquery),
                     // q2,
@@ -468,12 +473,12 @@
                     // MlApp = angular.module('app'),
                     // fnLink;
                 $scope.safeApply();
-                if (1) { // (!pcnpt) {
-                    cnvs.append(pcnpt);
+                // if (1) { // (!pcnpt) {
+                //     cnvs.append(pcnpt);
                     // fnLink = $compile(q1);     // returns a Link function used to bind template to the scope
                     // fnLink($scope);                  // Bind Scope to the template
                     // $scope.add();
-                }
+                // }
                 $scope.safeApply();
 
                 // GoogleSearchDirective.start(MlApp);

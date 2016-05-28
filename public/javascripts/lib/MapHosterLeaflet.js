@@ -56,6 +56,7 @@ define('GeoCoder', function () {
                 mrkr,
                 searchBox = null,
                 searchInput = null,
+                customControl = null,
                 self = this;
                 // currentVerbVis = false;
 
@@ -391,6 +392,17 @@ define('GeoCoder', function () {
                 MLConfig.setPosition({'lon' : cntrxG, 'lat' : cntryG, 'zoom' : zmG});
             }
 
+            customControl =  L.Control.extend({
+                options: {
+                    position: 'topright'
+                },
+
+                onAdd: function (map) {
+                    var container = document.getElementById('gmsearch');
+                    return container;
+                }
+            });
+
             function placeCustomControls() {
                 var $inj = angular.injector(['app']),
                     ctrlSvc = $inj.get('ControllerService'),
@@ -402,9 +414,10 @@ define('GeoCoder', function () {
                 var $inj = angular.injector(['app']),
                     ctrlSvc = $inj.get('ControllerService'),
                     mapCtrl = ctrlSvc.getController();
-                setTimeout(function() {
-                    mapCtrl.setupQueryListener();
-                }, 500);
+                mapCtrl.setupQueryListener();
+                // setTimeout(function() {
+                //     mapCtrl.setupQueryListener();
+                // }, 500);
             }
 
             function configureMap(lmap) {
@@ -444,14 +457,16 @@ define('GeoCoder', function () {
                 lyr.on("load",function() {
                     placeCustomControls();
                     setupQueryListener();
+                    hideLoading();
+                    mphmap.addControl(new customControl());
                  });
 
                 lyr.on("loading", function (e) {
                     showLoading();
                 });
-                lyr.on("load", function (e) {
-                    hideLoading();
-                });
+                // lyr.on("load", function (e) {
+                //     hideLoading();
+                // });
 
                 minZoom = mphmap.getMinZoom();
                 maxZoom = mphmap.getMaxZoom();
