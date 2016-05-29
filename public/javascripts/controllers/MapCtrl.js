@@ -453,7 +453,8 @@
             function setupQueryListener () {
                 var
                     cnvs = angular.element(document.getElementById(whichCanvas)),
-                    template = '<div id="gmsearch" class="gmsearchclass" style="width: 28em; margin-right : 2em;"> \
+                    template = '<div id="gmsearch" \
+                        class="gmsearchclass" style="width: 28em; margin-left: 7em; margin-right : 2em; position: relative;"> \
                         <input id="pac-input" \
                         class="gmsearchcontrols" className="controls" \
                         type="text" placeholder="SearchBox"  \
