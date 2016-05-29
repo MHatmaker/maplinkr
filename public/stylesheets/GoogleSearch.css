@@ -40,3 +40,13 @@
     display: none;
     text-align: left;
  }
+
+ .gmsearchclass
+ {
+     margin-left: 7em;
+ }
+
+ .gmsearchclass .gmsposition
+ {
+     position: relative;
+ }

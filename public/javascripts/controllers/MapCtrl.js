@@ -453,8 +453,13 @@
             function setupQueryListener () {
                 var
                     cnvs = angular.element(document.getElementById(whichCanvas)),
+                    $inj = angular.injector(['app']),
+                    mpTypeSvc = $inj.get("CurrentMapTypeService"),
+                    curMapType = mpTypeSvc.getMapTypeKey(),
+                    gmsrch,
                     template = '<div id="gmsearch" \
-                        class="gmsearchclass" style="width: 28em; margin-left: 7em; margin-right : 2em; position: relative;"> \
+                        class="gmsearchclass" \
+                        style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
                         <input id="pac-input" \
                         class="gmsearchcontrols" className="controls" \
                         type="text" placeholder="SearchBox"  \
@@ -462,17 +467,19 @@
                         ng-model="gsearch.query" \
                         ng-change="queryChanged()" auto-focus ></div>',
                         pcnpt = document.getElementById('pac_input');
-                        if (!pcnpt) {
-                            pcnpt = angular.element(template);
-                            cnvs.append(pcnpt);
-                        }
-                    // templategmquery = '<gmsearch style="display: block; visibility: visible;"></gmsearch>',
-                    // q1 = angular.element(templategmquery),
-                    // q2,
-                    // pcnpt = angular.element(document.getElementById('pac_input')),
-                    //
-                    // MlApp = angular.module('app'),
-                    // fnLink;
+                    if (!pcnpt) {
+                        pcnpt = angular.element(template);
+                        cnvs.append(pcnpt);
+                    }
+
+                    if(curMapType === 'google') {
+                        gmsrch = angular.element(document.getElementById('gmsearch'));
+                        gmsrch.removeClass('gmsposition')
+                    } else  {
+                        gmsrch = angular.element(document.getElementById('gmsearch'));
+                        gmsrch.addClass('gmsposition')
+                    }
+
                 $scope.safeApply();
                 // if (1) { // (!pcnpt) {
                 //     cnvs.append(pcnpt);
