@@ -5,18 +5,17 @@
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterGoogle");
-    require(["lib/utils", 'angular', 'controllers/WindowStarter']);
+    require(["lib/utils", 'angular']);
     // require(["lib/utils", 'angular', 'controllers/MapCtrl']);
 
     define([
         'angular',
         'controllers/PositionViewCtrl',
-        'controllers/MapCtrl',
         'lib/utils',
         'lib/MLConfig',
         'controllers/StompSetupCtrl',
         'controllers/WindowStarter'
-    ], function (angular, PositionViewCtrl, MapCtrl, utils, MLConfig, StompSetupCtrl, WindowStarter) {
+    ], function (angular, PositionViewCtrl, utils, MLConfig, StompSetupCtrl, WindowStarter) {
 
         var
             hostName = "MapHosterGoogle",
@@ -361,7 +360,7 @@
 
             function placeCustomControls() {
                 var $inj = angular.injector(['app']),
-                    ctrlSvc = $inj.get('ControllerService'),
+                    ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 setTimeout(function() {
                     mapCtrl.placeCustomControls();
@@ -370,12 +369,9 @@
 
             function setupQueryListener() {
                 var $inj = angular.injector(['app']),
-                    ctrlSvc = $inj.get('ControllerService'),
+                    ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.setupQueryListener();
-                // setTimeout(function() {
-                //     mapCtrl.setupQueryListener();
-                // }, 500);
             }
 
             google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function () {

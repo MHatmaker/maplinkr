@@ -457,46 +457,31 @@
                     $inj = angular.injector(['app']),
                     mpTypeSvc = $inj.get("CurrentMapTypeService"),
                     curMapType = mpTypeSvc.getMapTypeKey(),
-                    gmsrch,
                     fnLink,
+                    pcnpt,
                     template = '<div id="gmsearch" \
                         class="gmsearchclass" \
                             style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
                             <input id="pac-input" \
                                 class="gmsearchcontrols" className="controls" \
                                 type="text" placeholder="Search Google Places"  \
-                                style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
+                                ng-class="{\'gmsposition-rel\' : !gsearch.isGoogle, \'gmsposition-abs\' : gsearch.isGoogle}" \
                                 ng-model="gsearch.query" \
                                 ng-change="queryChanged()" auto-focus > \
-                        </div>',
-                    pcnpt = document.getElementById('pac-input');
-                    if (!pcnpt) {
-                        pcnpt = angular.element(template);
-                        cnvs.append(pcnpt);
-                        fnLink = $compile(pcnpt);
-                        fnLink($scope);
-                        $scope.safeApply();
-                        setTimeout(function() {
-                            console.log("try safeApply here");
-                            $scope.safeApply();
-                        }, 500);
-                    }
+                        </div>';
+                if(curMapType === 'google') {
+                    $scope.gsearch.isGoogle = true;
+                } else {
+                    $scope.gsearch.isGoogle = false;
+                }
+                pcnpt = document.getElementById('pac-input');
+                if (!pcnpt) {
+                    pcnpt = angular.element(template);
+                    cnvs.append(pcnpt);
+                    fnLink = $compile(pcnpt);
+                    fnLink($scope);
+                }
 
-                    if(curMapType === 'google') {
-                        gmsrch = angular.element(document.getElementById('gmsearch'));
-                        gmsrch.removeClass('gmsposition')
-                    } else  {
-                        gmsrch = angular.element(document.getElementById('gmsearch'));
-                        gmsrch.addClass('gmsposition')
-                    }
-
-                $scope.safeApply();
-                // if (1) { // (!pcnpt) {
-                //     cnvs.append(pcnpt);
-                    // fnLink = $compile(q1);     // returns a Link function used to bind template to the scope
-                    // fnLink($scope);                  // Bind Scope to the template
-                    // $scope.add();
-                // }
                 $scope.safeApply();
 
                 // GoogleSearchDirective.start(MlApp);
@@ -510,39 +495,8 @@
                             (searchInput));
 
                         google.maps.event.addListener(searchBox, 'places_changed', function () {
-                            var scope = null,
-                                googmph = null,
-                                curmph = null,
-                                curMapType = '',
-                                mpTypeSvc = null,
-                                gmap,
-                                mapOptions,
-                                pacnpt,
-                                searchBounds = null,
-                                mapLinkrBounds,
-                                position,
-                                center,
-                                googleCenter,
-                                service,
-                                placesSearchResults = [],
-                                queryPlaces = {
-                                    location: null,
-                                    bounds: null,
-                                    query: 'what do you want?'
-                                };
                             console.log("MapCtrl 'places_changed' listener");
                             connectQuery();
-
-
-        /*
-                        var checkBounds = searchBox.getBounds(),
-                            $inj,
-                            gmQSvc;
-                            // scope;
-                        console.log(formatBounds(checkBounds));
-                        // var bnds = {'llx' : checkBounds.getSouthWest().lng() , 'lly' : checkBounds.getSouthWest().lat(),
-                        //              'urx' : checkBounds.getNorthEast().lng() , 'ury' : checkBounds.getNorthEast().lat()};
-        */
                         });
                     }
                 }, 500);
@@ -649,4 +603,5 @@
 
     });
 
-}());
+}).call(this);
+// }());

@@ -264,7 +264,7 @@ var selectedMapType = 'arcgis',
                     return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr};
                 }).
 
-                factory("ControllerService", function ($rootScope) {
+                factory("MapControllerService", function ($rootScope) {
                     var getController = function () {
                         return MapCtrl;
                     };

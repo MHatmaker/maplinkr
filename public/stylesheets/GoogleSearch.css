@@ -20,6 +20,8 @@
     font-size: 15px;
     font-weight: 300;
     text-overflow: ellipsis;
+    z-index: 30;
+    color: black;
   }
 
   #pac-input:focus {
@@ -46,7 +48,12 @@
      margin-left: 7em;
  }
 
- .gmsposition
+ .gmsposition-rel
  {
      position: relative;
+ }
+
+ .gmsposition-abs
+ {
+     position: absolute;
  }

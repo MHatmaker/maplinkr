@@ -405,14 +405,14 @@ define('GeoCoder', function () {
 
             function placeCustomControls() {
                 var $inj = angular.injector(['app']),
-                    ctrlSvc = $inj.get('ControllerService'),
+                    ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.placeCustomControls();
             }
 
             function setupQueryListener() {
                 var $inj = angular.injector(['app']),
-                    ctrlSvc = $inj.get('ControllerService'),
+                    ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.setupQueryListener();
                 // setTimeout(function() {
