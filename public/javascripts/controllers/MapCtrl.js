@@ -456,29 +456,37 @@
                     $inj = angular.injector(['app']),
                     mpTypeSvc = $inj.get("CurrentMapTypeService"),
                     curMapType = mpTypeSvc.getMapTypeKey(),
+                    gmsholder,
+                    fnLink,
+                    pcnptholder,
                     gmsrch,
+                    gmsrchd,
                     template = '<div id="gmsearch" \
-                        class="gmsearchclass" \
-                        style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
-                        <input id="pac-input" \
-                        class="gmsearchcontrols" className="controls" \
-                        type="text" placeholder="SearchBox"  \
-                        style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
-                        ng-model="gsearch.query" \
-                        ng-change="queryChanged()" auto-focus ></div>',
-                        pcnpt = document.getElementById('pac_input');
-                    if (!pcnpt) {
-                        pcnpt = angular.element(template);
-                        cnvs.append(pcnpt);
-                    }
+                            class="gmsearchclass" ng-class="{gmsposition: isGoogle}"> \
+                        </div>',
+                    pcnpt = document.getElementById('pac_input');
+                if (!pcnpt) {
+                    pcnptholder = angular.element(template);
+                    $scope.isGoogle = curMapType === 'google';
+                    $scope.safeApply();
+                    gmsholder = cnvs.append(pcnptholder);
+                    setTimeout(function (){
+                        fnLink = $compile(pcnptholder);
+                        fnLink($scope);
+                        gmsrchd = document.getElementById('gmsearch');
+                        gmsrch = angular.element(document.getElementById('gmsearch'));
+                        $scope.add();
+                        $scope.safeApply();
+                    }, 500);
+                }
 
-                    if(curMapType === 'google') {
-                        gmsrch = angular.element(document.getElementById('gmsearch'));
-                        gmsrch.removeClass('gmsposition')
-                    } else  {
-                        gmsrch = angular.element(document.getElementById('gmsearch'));
-                        gmsrch.addClass('gmsposition')
-                    }
+                    // if(curMapType === 'google') {
+                    //     gmsrch = angular.element(document.getElementById('gmsearch'));
+                    //     gmsrch.removeClass('gmsposition')
+                    // } else  {
+                    //     gmsrch = angular.element(document.getElementById('gmsearch'));
+                    //     gmsrch.addClass('gmsposition')
+                    // }
 
                 $scope.safeApply();
                 // if (1) { // (!pcnpt) {
@@ -546,9 +554,9 @@
                 refreshMinMax();
             });
 
-            $scope.queryChanged = function () {
-                MLConfig.setQuery($scope.gsearch.query);
-            };
+            // $scope.queryChanged = function () {
+            //     MLConfig.setQuery($scope.gsearch.query);
+            // };
 
             $scope.showDestDialog = function (callback, details, info) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
@@ -558,7 +566,7 @@
 
                 $scope.data.mapType = $scope.currentTab.maptype;
                 $scope.data.icon = $scope.currentTab.imgSrc;
-                $scope.data.query = $scope.gsearch.query;
+                $scope.data.query = MLConfig.getQuery();
                 $scope.data.callback = callback;
                 if (info) {
                     $scope.data.icon = info.icon;

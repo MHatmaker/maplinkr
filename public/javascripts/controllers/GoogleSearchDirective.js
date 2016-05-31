@@ -14,13 +14,15 @@
             App.directive('gmsearch', function ($compile) {
                 return {
                     restrict: 'E',
-                    template: '<input id="pac-input" \
-                        class="gmsearchcontrols" \
-                        type="text" placeholder="SearchBox"  \
-                        style="display: {{gsearchVisible}}; visibility: visible; color: black;"  \
+                    template: ' \
+                        <input id="pac-input" \
+                        class="gmsearchcontrols" className="controls" \
+                        type="text" placeholder="Search Google Places"  \
+                        style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
                         ng-model="gsearch.query" \
                         ng-change="queryChanged()" auto-focus >',
                     replace: false,
+                    controller: SearcherCtrlGoogle,
                     link: function (scope, element) {
                         scope.add = function () {
                             console.log("GoogleSearchDirective ----  adding:");
