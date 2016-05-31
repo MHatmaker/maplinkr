@@ -57,6 +57,7 @@
                 {'option' : "New Tab", 'showing' : "destination-option-showing"},
                 {'option' : "New Pop-up Window", 'showing' : "destination-option-showing"}];
             $scope.selected = "Same Window";
+            $scope.gsearch = {};
             $scope.data = {
                 dstSel : $scope.destSelections[0].option,
                 prevDstSel : $scope.destSelections[0].option,
@@ -340,7 +341,7 @@
             $scope.updateState($scope.selected);
 
             if (gmquery !== '') {
-                $scope.gsearch = {'query' : gmquery};
+                $scope.gsearch = {'query' : gmquery};  // read from url when opening new window
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
@@ -457,19 +458,28 @@
                     mpTypeSvc = $inj.get("CurrentMapTypeService"),
                     curMapType = mpTypeSvc.getMapTypeKey(),
                     gmsrch,
+                    fnLink,
                     template = '<div id="gmsearch" \
                         class="gmsearchclass" \
-                        style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
-                        <input id="pac-input" \
-                        class="gmsearchcontrols" className="controls" \
-                        type="text" placeholder="SearchBox"  \
-                        style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
-                        ng-model="gsearch.query" \
-                        ng-change="queryChanged()" auto-focus ></div>',
-                        pcnpt = document.getElementById('pac_input');
+                            style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
+                            <input id="pac-input" \
+                                class="gmsearchcontrols" className="controls" \
+                                type="text" placeholder="Search Google Places"  \
+                                style="display: block; visibility: visible; color: black; z-index: 30; width: 90%;"  \
+                                ng-model="gsearch.query" \
+                                ng-change="queryChanged()" auto-focus > \
+                        </div>',
+                    pcnpt = document.getElementById('pac-input');
                     if (!pcnpt) {
                         pcnpt = angular.element(template);
                         cnvs.append(pcnpt);
+                        fnLink = $compile(pcnpt);
+                        fnLink($scope);
+                        $scope.safeApply();
+                        setTimeout(function() {
+                            console.log("try safeApply here");
+                            $scope.safeApply();
+                        }, 500);
                     }
 
                     if(curMapType === 'google') {
