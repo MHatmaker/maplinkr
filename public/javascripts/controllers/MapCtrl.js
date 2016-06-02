@@ -36,7 +36,7 @@
             gmQSvc = null,
             selfMethods= {};
 
-        function MapCtrl($scope, $routeParams, $compile, $uibModal) {
+        function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
@@ -565,6 +565,7 @@
                 modalInstance.result.then(function (info) {
                     $scope.updateState(info.dstSel);
                     $scope.data.callback(info);
+                    $uibModalStack.dismissAll("go away please");
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                     $scope.restoreState();
@@ -606,7 +607,7 @@
         function init(App) {
             console.log('MapCtrl init');
             App = angular.module('app');
-            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack', MapCtrl]);
             return MapCtrl;
         }
 

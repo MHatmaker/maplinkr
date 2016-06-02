@@ -12,7 +12,7 @@
 
         areWeInitialized = false;
 
-        function DestWndSetupCtrl($scope, $uibModalInstance, data) {
+        function DestWndSetupCtrl($scope, $uibModalInstance, $uibModalStack, data) {
             console.log("in DestWndSetupCtrl");
             areWeInitialized = false;
             $scope.destSelections = data.destSelections;
@@ -34,11 +34,13 @@
             };
 
             $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
+                //$uibModalInstance.close($scope.data);
+                // $uibModalInstance.dismiss();
+                $uibModalStack.dismissAll("clear all instances");
             };
 
             $scope.close = function () {
-                $uibModalInstance.close();
+                $uibModalInstance.close($scope.data);
             }
 
             $scope.hitEnter = function (evt) {
@@ -57,7 +59,7 @@
             console.log('DestWndSetupCtrl init');
 
             areWeInitialized = true;
-            App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', 'data', DestWndSetupCtrl]);
+            App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', '$uibModalStack', 'data', DestWndSetupCtrl]);
 
             return DestWndSetupCtrl;
         }
