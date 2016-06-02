@@ -37,6 +37,10 @@
                 $uibModalInstance.dismiss('cancel');
             };
 
+            $scope.close = function () {
+                $uibModalInstance.close();
+            }
+
             $scope.hitEnter = function (evt) {
                 if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
                     $scope.save();

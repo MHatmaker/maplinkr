@@ -464,7 +464,9 @@
                             style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
                             <input id="pac-input" \
                                 class="gmsearchcontrols" className="controls" \
-                                type="text" placeholder="Search Google Places"  \
+                                type="text" onclick="cancelBubble=true;" onmousemove="event.stopPropagation();" \
+                                onmousedown="event.stopPropagation();" onmouseup="event.stopPropagation();" \
+                                placeholder="Search Google Places"  \
                                 ng-class="{\'gmsposition-rel\' : !gsearch.isGoogle, \'gmsposition-abs\' : gsearch.isGoogle}" \
                                 ng-model="gsearch.query" \
                                 ng-change="queryChanged()" auto-focus > \
@@ -482,6 +484,13 @@
                     fnLink($scope);
                 }
 
+                // pcnpt.bind('keyup', function(e){
+                //     var v = e.target.value;
+                //     if (e.keyCode !== '13') {
+                //         e.stopPropagation();
+                //     }
+                // })
+
                 $scope.safeApply();
 
                 // GoogleSearchDirective.start(MlApp);
@@ -497,6 +506,11 @@
                         google.maps.event.addListener(searchBox, 'places_changed', function () {
                             console.log("MapCtrl 'places_changed' listener");
                             connectQuery();
+                            searchInput.blur();
+                            setTimeout(function(){
+                                searchInput.value = '';
+                                // searchInput.focus();},10);
+                            }, 10);
                         });
                     }
                 }, 500);

@@ -57,6 +57,7 @@ define('GeoCoder', function () {
                 searchBox = null,
                 searchInput = null,
                 customControl = null,
+                queryListenerLoaded = false,
                 self = this;
                 // currentVerbVis = false;
 
@@ -456,7 +457,11 @@ define('GeoCoder', function () {
                 }).addTo(mphmap);
                 lyr.on("load",function() {
                     placeCustomControls();
-                    setupQueryListener();
+                    if (queryListenerLoaded === false) {
+                        setupQueryListener();
+                    } else {
+                        queryListenerLoaded = true;
+                    }
                     hideLoading();
                     mphmap.addControl(new customControl());
                  });
