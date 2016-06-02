@@ -92,20 +92,20 @@
             };
 
             $scope.calculateInstructionHeight = function () {
-                var label = angular.element(document.getElementById("grpSearchLabel")),
+                var label = utils.getElemById("grpSearchLabel"),
                     instructions = document.getElementById("grpSrchInstId"),
 
                     instructionsHgt = instructions.offsetHeight,
                     // console.log("instructionsHgt " + instructionsHgt);
-                    srcTerm = angular.element(document.getElementById("groupFinder")),
+                    srcTerm = utils.getElemById("groupFinder"),
                     hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
                 // console.log("Instructions height : " + hgt);
                 return hgt;
             };
 
             $scope.calculateHeights = function () {
-                var vrbg = angular.element(document.getElementById("Verbage")),
-                    accHead = angular.element(document.getElementById("AccdianNews")),
+                var vrbg = utils.getElemById("Verbage"),
+                    accHead = utils.getElemById("AccdianNews"),
                     marginborder = (1 + 1) * 2,
                     accinnermarginborder = (1 + 9) * 2,
                     instructionsHgt =  $scope.calculateInstructionHeight(),

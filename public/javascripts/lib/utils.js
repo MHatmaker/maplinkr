@@ -101,7 +101,7 @@
 
             function setElementHeight(itm, hgt, units) {
                 var elem, hstr;
-                // var elem = angular.element(document.getElementById(itm))[0];
+                // var elem = utils.getElemById(itm)[0];
                 if (units === undefined) {
                     units = 'px';
                 }
@@ -113,7 +113,7 @@
 
             function setElementWidth(itm, wdth, units) {
                 // var elem, wstr;
-                // var elem = angular.element(document.getElementById(itm))[0];
+                // var elem = utils.getElemById(itm)[0];
                 if (units === undefined) {
                     units = 'px';
                 }
@@ -234,14 +234,18 @@
                 return colHgt;
             }
 
+            function getElemById(id) {
+                return angular.element(document.getElementById(id));
+            }
+
             function getMapContainerHeight(scope) {
                 var height = document.body.clientHeight,
                     width = document.body.clientWidth,
-                    mapCon = angular.element(document.getElementById("IDMapContainerRow")),
-                    mapWrap = angular.element(document.getElementById("map_wrapper")),
-                    mapCanvas = angular.element(document.getElementById("map_canvas")),
-                    rightCol = angular.element(document.getElementById("idRightColOuter")),
-                    mapCanRoot = angular.element(document.getElementById("map_canvas_root")),
+                    mapCon = getElemById("IDMapContainerRow"),
+                    mapWrap = getElemById("map_wrapper"),
+                    mapCanvas = getElemById("map_canvas"),
+                    rightCol = getElemById("idRightColOuter"),
+                    mapCanRoot = getElemById("map_canvas_root"),
                     hstr = "",
                     mq;
 
@@ -327,6 +331,7 @@
                 showHeights : showHeights,
                 getDocHeight : getDocHeight,
                 getButtonHeight : getButtonHeight,
+                getElemById : getElemById,
                 displayHeights : displayHeights,
                 calculateComponentHeights : calculateComponentHeights,
     //            getComponentHeights : getComponentHeights,

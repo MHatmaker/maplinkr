@@ -270,7 +270,7 @@
                     }
 
                     var contextScope = $scope,
-                        cnvs = angular.element(document.getElementById(whichCanvas)),
+                        cnvs = utils.getElemById(whichCanvas),
                         templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
     	                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
     	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
@@ -453,7 +453,7 @@
 
             function setupQueryListener () {
                 var
-                    cnvs = angular.element(document.getElementById(whichCanvas)),
+                    cnvs = utils.getElemById(whichCanvas),
                     $inj = angular.injector(['app']),
                     mpTypeSvc = $inj.get("CurrentMapTypeService"),
                     curMapType = mpTypeSvc.getMapTypeKey(),

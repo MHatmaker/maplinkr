@@ -5,7 +5,7 @@
     "use strict";
 
     console.log('EmailCtrl setup');
-    define(['angular', 'lib/MLConfig'], function (angular, MLConfig) {
+    define(['angular', 'lib/MLConfig', 'lib/utils'], function (angular, MLConfig, utils) {
         console.log('EmailCtrl define');
 
         function EmailCtrl($scope) {
@@ -51,13 +51,30 @@
             }
 
             $scope.status.isCopyMapLinkOpen = false;
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+
             $scope.fetchUrl = function () {
                 resizeTextArea();
-                var docEl = document.getElementById("UrlCopyFieldID"),
-                    urlEl = angular.element(docEl),
-                    labelDiv = angular.element(document.getElementById("UrlInstructions"));
+                var urlEl = utils.getElemById("UrlCopyFieldID"),
+                    labelDiv = utils.getElemById("UrlInstructions");
 
+                setTimeout(function() {
+                    $scope.safeApply();
+                }, 50);
                 urlEl[0].select();
+                setTimeout(function() {
+                    $scope.safeApply();
+                }, 50);
                 console.log("fetchUrl with : " + context.fullUrl);
 
                 labelDiv.css({"display" : "inline-block"});
@@ -65,7 +82,7 @@
             };
 
             $scope.$watch("status.isCopyMapLinkOpen", function (newValue, oldValue) {
-                var labelDiv = angular.element(document.getElementById("UrlInstructions"));
+                var labelDiv = utils.getElemById("UrlInstructions");
 
                 if ($scope.status.isCopyMapLinkOpen) {
                     context.fullUrl = assembleUrl();
