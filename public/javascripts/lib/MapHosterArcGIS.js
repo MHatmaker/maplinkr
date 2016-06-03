@@ -264,7 +264,7 @@
                 if (qlat !== '') {
                     updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
                 } else {
-                    updateGlobals("init with hard-coded values", -87.7, 41.8,  13);
+                    updateGlobals("init with hard-coded values", -87.620692, 41.888941, 13);
                 }
 
                 // updateGlobals("init standard", -87.7, 41.8, 13);

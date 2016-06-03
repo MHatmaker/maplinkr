@@ -69,12 +69,10 @@
                     labelDiv = utils.getElemById("UrlInstructions");
 
                 setTimeout(function() {
+                    urlEl[0].select();
                     $scope.safeApply();
                 }, 50);
-                urlEl[0].select();
-                setTimeout(function() {
-                    $scope.safeApply();
-                }, 50);
+                
                 console.log("fetchUrl with : " + context.fullUrl);
 
                 labelDiv.css({"display" : "inline-block"});
