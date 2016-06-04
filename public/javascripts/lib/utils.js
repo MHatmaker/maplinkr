@@ -3,6 +3,18 @@
 /*global esri*/
 /*global loading*/
 
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 (function () {
     "use strict";
     // alert("utils created");
@@ -18,8 +30,8 @@
                     "idMasterSite" : null,
                     "idMasterSiteExpander": null,
                     "idMasterSiteSummary" : null,
-                    "idSiteTopRow" : null,
-                    "idFooter" : null
+                    "idLinkrButtonRow" : null,
+                    "idSiteTopRow" : null
                 };
 
             function showHeights(prev, now) {
@@ -29,11 +41,8 @@
             }
 
             function showRelativeHeights(totTot, tot, elem) {
-                var totTotStr = "grand total height : " + totTot,
-                    totStr = " total height : " + tot,
-                    elemStr = " element height : " + elem;
-                //alert(totTotStr + totStr + elemStr);
-                console.log("showRelativeHeights : " + totTotStr + totStr + elemStr);
+                console.log("showRelativeHeights : grand total height {0} total height {1} element height {2}".
+                    format(totTot, tot, elem));
             }
 
             function displayHeights(purpose) {
@@ -181,10 +190,6 @@
                 return hgtComponents.idSiteTopRow;
             }
 
-            function getFooterHeight() {
-                return hgtComponents.idFooter;
-            }
-
             function getMasterSiteHeight() {
                 return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
             }
@@ -203,11 +208,12 @@
                 totalHgt += hgtComponents.idMasterSiteExpander = getElemHeight("idMasterSiteControlRow");
                 totalHgt += hgtComponents.idMasterSiteSummary = getElemHeight("idMasterSiteSummary");
                 totalHgt += hgtComponents.idSiteTopRow = getElemHeight('idSiteTopRow');
-                totalHgt += hgtComponents.idFooter = getElemHeight("idFooter") + 10;
-                hgtComponents.totalHgt = totalHgt;
+                totalHgt += hgtComponents.idLinkrButtonRow = getElemHeight('IDLinkrButtonRow')
+;                hgtComponents.totalHgt = totalHgt;
                 console.log("calculateComponentHeights : sitevis, " + sitevis);
                 console.log("calculateComponentHeights : master site height, " + hgtComponents.idMasterSite);
                 console.log("calculateComponentHeights : top row height, " + hgtComponents.idSiteTopRow);
+                console.log("calculateComponentHeights : linker button row height, " + hgtComponents.idLinkrButtonRow);
                 // displayHeights("####calculateComponentHeights###");
             }
 
@@ -222,15 +228,15 @@
                     }
                 } else { // sumVis == "none"
                     if (siteVis === 'none') {
-                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
-                            - hgtComponents.idFooter;
+                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
                     } else { // siteVis == "flex, etc."
                         colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
-                            - hgtComponents.idSiteTopRow - hgtComponents.idFooter;
+                            - hgtComponents.idSiteTopRow;
                     }
                 }
+                colHgt -= hgtComponents.idLinkrButtonRow;
                 showRelativeHeights(colHgt, hgtComponents.idMasterSite, hgtComponents.idMasterSiteSummary);
-                // displayHeights("####getAvailableSiteColumnHeights###");
+                displayHeights("####getAvailableSiteColumnHeights###");
                 return colHgt;
             }
 
@@ -255,7 +261,7 @@
                     // the width of browser is more then 700px
                     console.log("Media might be phone");
                     console.log(height);
-                    height = height - getElemHeight('IDLinkrButtonRow');
+                    height = height - getElemById('idMasterSiteControlRow') - getElemHeight('IDLinkrButtonRow');
                     console.log(height);
                 } else {
                     // the width of browser is less then 700px
@@ -338,7 +344,6 @@
                 getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
                 getMapContainerHeight : getMapContainerHeight,
                 getTopRowHeight : getTopRowHeight,
-                getFooterHeight : getFooterHeight,
                 getMasterSiteHeight : getMasterSiteHeight,
                 getElemHeight : getElemHeight,
                 setElementHeight : setElementHeight,

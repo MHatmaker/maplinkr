@@ -75,6 +75,7 @@
 
                 $scope.data.subsiteExpanded = tf;
                 $scope.webSiteVisible = ($scope.data.webSiteVisible = tf ? "Expand" : "Collapse");
+                $scope.WebSiteVis = dsp = tf ? 'inline' : 'none';
                 $scope.leftColShowing = $scope.topRowShowing = $scope.rightColShowing = dsp;
                 $scope.data.leftColShowing = $scope.data.topRowShowing = $scope.data.rightColShowing = dsp;
                 $scope.data.mapColDef = tf ? "col-xs-12 col-sm-6 col-md-4" : "col-xs-12";
@@ -92,6 +93,8 @@
                 $scope.data.mapColShowing = 'block';
                 $scope.setDisplayStyles(false);
             }
+            utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
+            utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.WebSiteVis);
             // $scope.safeApply();
             setTimeout(function () {
                 utils.getMapContainerHeight($scope);
@@ -118,6 +121,8 @@
                     window.dispatchEvent(new Event('resize'));
                     $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
                     // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
+                    utils.displayHeights("after handleMapExpandShrinkEvents");
                 }, 500);
             }
 
