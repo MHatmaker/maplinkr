@@ -75,7 +75,7 @@
 
                 $scope.data.subsiteExpanded = tf;
                 $scope.webSiteVisible = ($scope.data.webSiteVisible = tf ? "Expand" : "Collapse");
-                $scope.WebSiteVis = dsp = tf ? 'inline' : 'none';
+                $scope.WebSiteVis = dsp = tf ? 'inline-block' : 'none';
                 $scope.leftColShowing = $scope.topRowShowing = $scope.rightColShowing = dsp;
                 $scope.data.leftColShowing = $scope.data.topRowShowing = $scope.data.rightColShowing = dsp;
                 $scope.data.mapColDef = tf ? "col-xs-12 col-sm-6 col-md-4" : "col-xs-12";

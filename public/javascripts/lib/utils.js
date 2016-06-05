@@ -278,9 +278,9 @@ if (!String.prototype.format) {
                 console.log(hstr);
                 // alert(hstr);
                 mapCon.css({"height": hstr});
-                mapWrap.css({"height": '100%'});
-                mapCanvas.css({"height": '100%'});
-                mapCanRoot.css({"height" : '100%'});
+                mapWrap.css({"height": "100%"});
+                mapCanvas.css({"height": "100%"});
+                mapCanRoot.css({"height" : "100%"});
                 // scope.safeApply();
                 /*
                 mq = window.matchMedia('@media all and (max-width: 700px)');

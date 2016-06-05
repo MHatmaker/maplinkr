@@ -73,6 +73,19 @@ body {
  /* height: 400px;*/
 }
 
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+.colmarginpad{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+
   @media all and (max-width: 600px) {
   .container-mastersite {
     display: flex; /* or inline-flex */
