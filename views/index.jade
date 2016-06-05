@@ -13,12 +13,12 @@ block content
                     button(type"button", class="btn btn-labeled",
                         ng-click="summaryCollapser()")
                         span(class="btn-label")
-                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isCollapsed, \
-                            'fa-compress': !data.isCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                            i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isSummaryCollapsed, \
+                            'fa-compress': !data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                             | {{data.ExpandSumText}} Master Website
 
             #idMasterSiteSummary(ng-cloak, class="ng-cloak mastersite-summary",
-                ng-class="{'mastersite-hidden': data.isCollapsed, 'mastersite-shown': !data.isCollapsed}")
+                ng-class="{'mastersite-hidden': data.isSummaryCollapsed, 'mastersite-shown': !data.isSummaryCollapsed}")
                 .mashbackground
                     #mashbox(class="transbox", style="margin: 0px; padding: 0px; \
                         font-weight: bold; font-size: 150%; font-family:Arial; margin:auto; text-align: center;")

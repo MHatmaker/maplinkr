@@ -51,7 +51,7 @@
                 $scope.safeApply();
                 utils.getMapContainerHeight($scope);
                 setTimeout(function () {
-                    $scope.$apply(console.log("Timer fired"));
+                    $scope.$apply(console.log("Timer fired on windowResized event"));
                 }, 500);
                 $scope.safeApply();
             };
@@ -96,6 +96,7 @@
             utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
             utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.WebSiteVis);
             // $scope.safeApply();
+            //window.resizeBy(0,0);
             setTimeout(function () {
                 utils.getMapContainerHeight($scope);
                 window.resizeBy(0,0);
@@ -117,9 +118,9 @@
                 // containerDiv.resize();
                 setTimeout(function () {
                     console.log("After setDisplayStyles");
-                    // window.resizeBy(0,0);
+                    window.resizeBy(0,0);
                     window.dispatchEvent(new Event('resize'));
-                    $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
+                    // $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
                     // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                     utils.displayHeights("after handleMapExpandShrinkEvents");

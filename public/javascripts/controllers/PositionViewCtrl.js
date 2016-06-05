@@ -113,7 +113,7 @@
             }
             $scope.safeApply();
 
-            $scope.$watch($scope.$parent.mldata['positionview'].isCollapsed, function (newValue, oldValue) {
+            $scope.$watch($scope.$parent.mldata['positionview'].isSummaryCollapsed, function (newValue, oldValue) {
                 //if ($scope.$parent.mldata['positionview'].isCollapsed === false) {
                     $scope.safeApply(fmtView);
                 //}

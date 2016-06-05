@@ -29,11 +29,11 @@
 
             var startupView = MLConfig.getStartupView();
             $scope.MasterSiteVis = startupView.websiteDisplayMode ? "inline" : 'none';
-            $scope.isCollapsed = !startupView.summaryShowing;
+            $scope.isSummaryCollapsed = !startupView.summaryShowing;
             $scope.showPopupBlockerDialog = false;
             $scope.data = {
                 'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
-                'isCollapsed': !startupView.summaryShowing,
+                'isSummaryCollapsed': !startupView.summaryShowing,
                 'blockedUrl': 'place holder',
                 'completeUrl': 'completeslashdoturl',
                 'nextWindowName': 'InitialWindowName',
@@ -63,7 +63,7 @@
             $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
             $scope.currentTab = null;
-            console.log("init with isCollapsed = " + $scope.isCollapsed);
+            console.log("init with isSummaryCollapsed = " + $scope.isSummaryCollapsed);
             $scope.showDescriptionDialog = false;
 
             $scope.$on('$viewContentLoaded', function () {
@@ -78,22 +78,22 @@
 
             $scope.summaryCollapser = function (sumCollapsed) {
                 // $scope.MasterSiteVis = $scope.ExpandSumText === "Expand" ? "inline" : "none";
-                var previouState = $scope.data.isCollapsed;
+                var previouState = $scope.data.isSummaryCollapsed;
                 if (sumCollapsed && sumCollapsed.startValue === false) {
-                    $scope.data.isCollapsed = false;
+                    $scope.data.isSummaryCollapsed = false;
                 }
-                if ($scope.data.isCollapsed === true) {
-                    $scope.data.isCollapsed = false;
+                if ($scope.data.isSummaryCollapsed === true) {
+                    $scope.data.isSummaryCollapsed = false;
                     $scope.data.ExpandSumText = "Collapse";
                 } else {
-                    $scope.data.isCollapsed = true;
+                    $scope.data.isSummaryCollapsed = true;
                     $scope.data.ExpandSumText = "Expand";
                 }
-                console.log("MasherCtrl isCollapsed before broadcast " + $scope.data.isCollapsed);
+                console.log("MasherCtrl isSummaryCollapsed before broadcast " + $scope.data.isSummaryCollapsed);
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
-                // $scope.isCollapsed = !$scope.isCollapsed;
-                console.log("MasherCtrl isCollapsed after broadcast " + $scope.data.isCollapsed);
-                if (previouState === false && $scope.data.isCollapsed) {
+                // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
+                console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
+                if (previouState === false && $scope.data.isSummaryCollapsed) {
                     setTimeout(function () {
                         $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
                     }, 500);
@@ -119,7 +119,7 @@
                 // $scope.summaryCollapser({'startValue' : false});
                 $location.path($scope.currentTab.url, true);
                 $location.replace();
-                $route.reload();
+                // $route.reload();
             };
 
             $scope.cancel = function () {
