@@ -22,13 +22,11 @@ if (!String.prototype.format) {
 
         function () {
 
-            var alreadyCalculated = false,
-                topRowHeight = 0,
-
-                hgtComponents = {
-                    "totalHgt" : null,
+            var hgtComponents = {
+                    "windowHeight" : null,
+                    "totalComponentHeight" : null,
                     "idMasterSite" : null,
-                    "idMasterSiteExpander": null,
+                    "idMasterSiteControlRow": null,
                     "idMasterSiteSummary" : null,
                     "idLinkrButtonRow" : null,
                     "idSiteTopRow" : null
@@ -96,12 +94,7 @@ if (!String.prototype.format) {
                 // btnHeight = btnHeight; // / 16;
                 return btnHeight;
             }
-            /*
-            function getButtonHeight(id) {
-                var btnHeight = getElemHeight(id);
-                return btnHeight * 0.6;
-            }
-               */
+
             function getElemHeight(itm) {
                 var elem = document.getElementById(itm),
                     elemHeight = elem.clientHeight;
@@ -155,61 +148,21 @@ if (!String.prototype.format) {
                 elem.style.display = flexnone;
             }
 
-            function recalculateTopRow(flexnone) {
-                var topRow = document.getElementById("idSiteTopRow"),
-                    tpr;
-                console.log("initial height : " + getElemHeight("idSiteTopRow") + ", " + topRow.clientHeight);
-                if (flexnone === 'none') {
-                    console.log("recalculateTopRow setting to none");
-                    setVisible('idSiteTopRow', 'flex');
-                    topRowHeight = topRow.clientHeight;
-                    console.log("set topRowHeight to interim value " + topRowHeight);
-                    setVisible('idSiteTopRow', 'none');
-                } else {
-                    console.log("recalculateTopRow setting to flex");
-                    topRowHeight = getElemHeight("idSiteTopRow");
-                    setVisible('idSiteTopRow', 'none');
-                    topRowHeight = topRow.scrollHeight; //getElemHeight("idSiteTopRow");
-                    console.log("set topRowHeight to interim value " + topRowHeight);
-                    console.log("top row while hidden has clientHeight " + topRow.clientHeight);
-                    setVisible('idSiteTopRow', 'flex');
-                    topRow.style.display = 'flex';
-                    // setTimeout(function () {
-                    console.log("???????????? in timeout for recalc");
-                    tpr = document.getElementById("idSiteTopRow");
-                    topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
-                    console.log("top row after reshowing has clientHeight " + tpr.clientHeight);
-                    tpr.style.height = topRowHeight + "px";
-                    // }, 500);
-                }
-                console.log("final height : " + getElemHeight("idSiteTopRow") + ", " + topRow.scrollHeight);
-            }
-
-            function getTopRowHeight() {
-                console.log("top row height ||||||||||||||  " + hgtComponents.idSiteTopRow);
-                return hgtComponents.idSiteTopRow;
-            }
-
             function getMasterSiteHeight() {
-                return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
+                hgtComponents.idMasterSiteControlRow = getElemHeight("idMasterSiteControlRow");
+                return hgtComponents.idMasterSite - hgtComponents.idMasterSiteControlRow;
             }
 
             function calculateComponentHeights(sumvis, sitevis) {
-                var totalHgt = 0;
-                if (alreadyCalculated === false) {
-                    topRowHeight = getElemHeight("idSiteTopRow");
-                    alreadyCalculated = true;
-                }
-                // recalculateTopRow(sitevis);
-                // var tpr = document.getElementById("idSiteTopRow");
-                // topRowHeight = tpr.scrollHeight; //getElemHeight("idSiteTopRow");
-                // currentTopRowHeight = sitevis == 'flex' ? topRowHeight : 0;
+                var totalComponentHeight = 0;
+                hgtComponents.windowHeight = screen.height;
                 hgtComponents.idMasterSite = getDocHeight(); // - 30;
-                totalHgt += hgtComponents.idMasterSiteExpander = getElemHeight("idMasterSiteControlRow");
-                totalHgt += hgtComponents.idMasterSiteSummary = getElemHeight("idMasterSiteSummary");
-                totalHgt += hgtComponents.idSiteTopRow = getElemHeight('idSiteTopRow');
-                totalHgt += hgtComponents.idLinkrButtonRow = getElemHeight('IDLinkrButtonRow')
-;                hgtComponents.totalHgt = totalHgt;
+                totalComponentHeight += hgtComponents.idMasterSiteControlRow = getElemHeight("idMasterSiteControlRow");
+                totalComponentHeight += hgtComponents.idMasterSiteSummary = getElemHeight("idMasterSiteSummary");
+                totalComponentHeight += hgtComponents.idSiteTopRow = getElemHeight('idSiteTopRow');
+                totalComponentHeight += hgtComponents.idLinkrButtonRow = getElemHeight('idLinkrButtonRow');
+                // hgtComponents.idLinkrButtonRow = getElemHeight('idLinkrButtonRow');
+                hgtComponents.totalComponentHeight = totalComponentHeight;
                 console.log("calculateComponentHeights : sitevis, " + sitevis);
                 console.log("calculateComponentHeights : master site height, " + hgtComponents.idMasterSite);
                 console.log("calculateComponentHeights : top row height, " + hgtComponents.idSiteTopRow);
@@ -221,16 +174,16 @@ if (!String.prototype.format) {
                 var colHgt = 0;
                 if (sumVis === "inline") {
                     if (siteVis === 'none') {
-                        colHgt = hgtComponents.idMasterSite -  hgtComponents.idMasterSiteExpander
+                        colHgt = hgtComponents.idMasterSite -  hgtComponents.idMasterSiteControlRow
                             - hgtComponents.idMasterSiteSummary;
                     } else {
-                        colHgt = hgtComponents.idMasterSite - hgtComponents.totalHgt;
+                        colHgt = hgtComponents.idMasterSite - hgtComponents.totalComponentHeight;
                     }
                 } else { // sumVis == "none"
                     if (siteVis === 'none') {
-                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
+                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteControlRow;
                     } else { // siteVis == "flex, etc."
-                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander
+                        colHgt = hgtComponents.idMasterSite - hgtComponents.idMasterSiteControlRow
                             - hgtComponents.idSiteTopRow;
                     }
                 }
@@ -244,15 +197,19 @@ if (!String.prototype.format) {
                 return angular.element(document.getElementById(id));
             }
 
-            function getMapContainerHeight(scope) {
-                var height = document.body.clientHeight,
+            function updateMapContainerHeight(scope) {
+                var height = getDocHeight(), //document.body.clientHeight,
                     width = document.body.clientWidth,
-                    mapCon = getElemById("IDMapContainerRow"),
+                    centerCol = getElemById("idCenterCol"),
+                    mapCon = getElemById("idMapContainerRow"),
                     mapWrap = getElemById("map_wrapper"),
                     mapCanvas = getElemById("map_canvas"),
                     rightCol = getElemById("idRightColOuter"),
                     mapCanRoot = getElemById("map_canvas_root"),
                     hstr = "",
+                    mlctrlRow = getElemById("idLinkrButtonRow"),
+                    centerColHgt = 0,
+                    centercolhstr = "",
                     mq;
 
                 // scope.safeApply();
@@ -261,26 +218,31 @@ if (!String.prototype.format) {
                     // the width of browser is more then 700px
                     console.log("Media might be phone");
                     console.log(height);
-                    height = height - getElemById('idMasterSiteControlRow') - getElemHeight('IDLinkrButtonRow');
+                    height = height - getElemById('idMasterSiteControlRow') - getElemHeight('idLinkrButtonRow');
                     console.log(height);
                 } else {
                     // the width of browser is less then 700px
                     console.log("Media might be wide browser");
-                    height = height - getElemHeight('idMasterSiteControlRow') -
-                        getElemHeight('idMasterSiteSummary') -
-                        getElemHeight('idSiteTopRow') -
-                        getElemHeight('IDLinkrButtonRow');
+                    height = height
+                        - getElemHeight('idMasterSiteControlRow')
+                        - getElemHeight('idMasterSiteSummary')
+                        - getElemHeight('idSiteTopRow');
+                        // - getElemHeight('idLinkrButtonRow');
                     console.log(" document.body.client : width " + width + ", height " + height);
                     console.log("map container height");
                     console.debug(mapCon);
                 }
-                hstr = String.format("{0}px",toFixedOne(height)); // * 0.7));
-                console.log(hstr);
+                hstr = String.format("{0}px", toFixedOne(height)); // * 0.7));
+
+                centerColHgt = height + getElemHeight('idLinkrButtonRow');
+                centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
+                console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
                 // alert(hstr);
+                centerCol.css({"height": centercolhstr});
                 mapCon.css({"height": hstr});
-                mapWrap.css({"height": "100%"});
-                mapCanvas.css({"height": "100%"});
-                mapCanRoot.css({"height" : "100%"});
+                mapWrap.css({"height": hstr});
+                // mapCanvas.css({"height": "100%"});
+                // mapCanRoot.css({"height" : "100%"});
                 // scope.safeApply();
                 /*
                 mq = window.matchMedia('@media all and (max-width: 700px)');
@@ -342,8 +304,7 @@ if (!String.prototype.format) {
                 calculateComponentHeights : calculateComponentHeights,
     //            getComponentHeights : getComponentHeights,
                 getAvailableSiteColumnHeights : getAvailableSiteColumnHeights,
-                getMapContainerHeight : getMapContainerHeight,
-                getTopRowHeight : getTopRowHeight,
+                updateMapContainerHeight : updateMapContainerHeight,
                 getMasterSiteHeight : getMasterSiteHeight,
                 getElemHeight : getElemHeight,
                 setElementHeight : setElementHeight,
@@ -354,8 +315,7 @@ if (!String.prototype.format) {
                 toFixedOne: toFixedOne,
                 showLoading : showLoading,
                 hideLoading : hideLoading,
-                getRandomInt : getRandomInt,
-                recalculateTopRow : recalculateTopRow
+                getRandomInt : getRandomInt
             };
         });
 }());

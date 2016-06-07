@@ -104,7 +104,7 @@
             $scope.windowResized = function () {
                 window.resizeBy(0,0);
                 $scope.safeApply();
-                utils.getMapContainerHeight($scope);
+                utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
                     $scope.$apply(console.log("Timer fired"));
                 }, 500);

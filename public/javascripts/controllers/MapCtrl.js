@@ -397,8 +397,11 @@
                 // $scope.safeApply();
 
                 // alert("get dimensions and pause");
-                utils.getMapContainerHeight($scope);
+                utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
+                    utils.calculateComponentHeights();
+                    utils.updateMapContainerHeight($scope);
+                    utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
                     // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
                     // refreshLinker();
