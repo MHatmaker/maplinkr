@@ -229,16 +229,16 @@ if (!String.prototype.format) {
                     height = height
                         - getElemHeight('idMasterSiteControlRow')
                         - getElemHeight('idMasterSiteSummary')
-                        - getElemHeight('idSiteTopRow');
+                        - getElemHeight('idSiteTopRow')
                         - getElemHeight('idLinkrButtonRow');
                     console.log(" document.body.client : width " + width + ", height " + height);
                     console.log("map container height");
                     console.debug(mapCon);
                 }
-                if (topRowDisplayMode === 'none') {
-                    height -= getElemHeight('idLinkrButtonRow');
-                }
-            
+                // if (topRowDisplayMode === 'none') {
+                //     height -= getElemHeight('idLinkrButtonRow');
+                // }
+
                 hstr = String.format("{0}px", toFixedOne(height)); // * 0.7));
 
                 centerColHgt = height + getElemHeight('idLinkrButtonRow');
