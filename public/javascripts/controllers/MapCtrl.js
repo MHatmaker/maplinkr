@@ -399,7 +399,7 @@
                 // alert("get dimensions and pause");
                 utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
-                    utils.calculateComponentHeights();
+                    utils.calculateComponentHeights(args.mastersitevis, args.websitevis);
                     utils.updateMapContainerHeight($scope);
                     utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
                     // $scope.$apply(function(){

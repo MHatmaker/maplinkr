@@ -49,9 +49,9 @@
             $scope.windowResized = function () {
                 window.resizeBy(0,0);
                 $scope.safeApply();
-                utils.updateMapContainerHeight($scope);
+                // utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
-                    utils.calculateComponentHeights();
+                    utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                     utils.updateMapContainerHeight($scope);
                     utils.displayHeights("Heights window resized event (map display min/max)");
                     $scope.$apply(console.log("Timer fired on windowResized event"));
@@ -85,7 +85,7 @@
                 $scope.data.mapColPad = tf ? "padding-left: 0; padding-right: 0" : "padding-left: 0.875em; padding-right: 0.875em";
                 $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
                 $scope.data.ExpandSite = ($scope.ExpandSite = tf ? "Max Map" : "Min Map");
-                utils.updateMapContainerHeight($scope);
+                // utils.updateMapContainerHeight($scope);
             }
             if (startupView.websiteDisplayMode === true) {
                 $scope.hideWebSiteOnStartup = false;
@@ -144,7 +144,8 @@
                 utils.updateMapContainerHeight($scope);
                 // $scope.onExpSiteClick();
                 setTimeout(function () {
-                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                    var args = {'mastersitevis' :$scope.MasterSiteVis, 'websitevis' : $scope.WebSiteVis};
+                    $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent', { any: args });});
                 }, 500);
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;

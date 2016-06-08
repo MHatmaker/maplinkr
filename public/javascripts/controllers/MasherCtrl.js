@@ -79,6 +79,7 @@
             $scope.summaryCollapser = function (sumCollapsed) {
                 // $scope.MasterSiteVis = $scope.ExpandSumText === "Expand" ? "inline" : "none";
                 var previouState = $scope.data.isSummaryCollapsed;
+
                 if (sumCollapsed && sumCollapsed.startValue === false) {
                     $scope.data.isSummaryCollapsed = false;
                 }
@@ -90,12 +91,13 @@
                     $scope.data.ExpandSumText = "Expand";
                 }
                 console.log("MasherCtrl isSummaryCollapsed before broadcast " + $scope.data.isSummaryCollapsed);
-                $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
+                $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
                 // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
                 console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
                 if (previouState === false && $scope.data.isSummaryCollapsed) {
                     setTimeout(function () {
-                        $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
+                        $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent',
+                                {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});});
                     }, 500);
                 }
             };

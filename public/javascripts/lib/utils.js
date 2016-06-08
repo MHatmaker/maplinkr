@@ -70,7 +70,7 @@ if (!String.prototype.format) {
                 // document.body.offsetHeight, document.documentElement.offsetHeight,
                 // document.body.clientHeight, document.documentElement.clientHeight
             // );
-                return window.innerHeight;
+                return document.documentElement.offsetHeight; //window.innerHeight;
             }
 
             function getRootElementFontSize() {
@@ -210,15 +210,18 @@ if (!String.prototype.format) {
                     mlctrlRow = getElemById("idLinkrButtonRow"),
                     centerColHgt = 0,
                     centercolhstr = "",
+                    topRow = getElemById('idSiteTopRow'),
+                    topRowDisplayMode = topRow[0].style.display,
                     mq;
 
+                console.log("topRowDisplayMode : {0}".format(topRowDisplayMode));
                 // scope.safeApply();
                 mq = window.matchMedia('@media all and (max-width: 700px)');
                 if(mq.matches  || width < 700) {
                     // the width of browser is more then 700px
                     console.log("Media might be phone");
                     console.log(height);
-                    height = height - getElemById('idMasterSiteControlRow') - getElemHeight('idLinkrButtonRow');
+                    height = height - getElemHeight('idMasterSiteControlRow') - getElemHeight('idLinkrButtonRow');
                     console.log(height);
                 } else {
                     // the width of browser is less then 700px
@@ -231,6 +234,9 @@ if (!String.prototype.format) {
                     console.log(" document.body.client : width " + width + ", height " + height);
                     console.log("map container height");
                     console.debug(mapCon);
+                }
+                if (topRowDisplayMode === 'none') {
+                    height -= getElemHeight('idLinkrButtonRow');
                 }
                 hstr = String.format("{0}px", toFixedOne(height)); // * 0.7));
 
