@@ -230,7 +230,7 @@ if (!String.prototype.format) {
                         - getElemHeight('idMasterSiteControlRow')
                         - getElemHeight('idMasterSiteSummary')
                         - getElemHeight('idSiteTopRow');
-                        // - getElemHeight('idLinkrButtonRow');
+                        - getElemHeight('idLinkrButtonRow');
                     console.log(" document.body.client : width " + width + ", height " + height);
                     console.log("map container height");
                     console.debug(mapCon);
@@ -238,6 +238,7 @@ if (!String.prototype.format) {
                 if (topRowDisplayMode === 'none') {
                     height -= getElemHeight('idLinkrButtonRow');
                 }
+            
                 hstr = String.format("{0}px", toFixedOne(height)); // * 0.7));
 
                 centerColHgt = height + getElemHeight('idLinkrButtonRow');
