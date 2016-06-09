@@ -397,7 +397,6 @@
                 // $scope.safeApply();
 
                 // alert("get dimensions and pause");
-                utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
                     utils.calculateComponentHeights(args.mastersitevis, args.websitevis);
                     utils.updateMapContainerHeight($scope);

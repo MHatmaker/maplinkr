@@ -103,16 +103,6 @@
             };
             selfMethods.summaryCollapser = $scope.summaryCollapser;
 
-            $scope.windowResized = function () {
-                window.resizeBy(0,0);
-                $scope.safeApply();
-                utils.updateMapContainerHeight($scope);
-                setTimeout(function () {
-                    $scope.$apply(console.log("Timer fired"));
-                }, 500);
-                $scope.safeApply();
-            };
-
             $scope.showMeTheMapClicked = function () {
                 console.log("currentTab - url reset to " + $scope.currentTab.url);
                 MLConfig.setMapHost($scope.currentTab.maptype);

@@ -52,7 +52,6 @@
             $scope.windowResized = function () {
                 window.resizeBy(0,0);
                 $scope.safeApply();
-                // utils.updateMapContainerHeight($scope);
                 setTimeout(function () {
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                     utils.updateMapContainerHeight($scope);
@@ -88,7 +87,6 @@
                 $scope.data.mapColPad = tf ? "padding-left: 0; padding-right: 0" : "padding-left: 0.875em; padding-right: 0.875em";
                 $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
                 $scope.data.ExpandSite = ($scope.ExpandSite = tf ? "Max Map" : "Min Map");
-                // utils.updateMapContainerHeight($scope);
             }
             if (startupView.websiteDisplayMode === true) {
                 $scope.hideWebSiteOnStartup = false;
@@ -104,7 +102,6 @@
             // $scope.safeApply();
             //window.resizeBy(0,0);
             setTimeout(function () {
-                utils.updateMapContainerHeight($scope);
                 window.resizeBy(0,0);
                 $scope.safeApply(console.log("Initiating system with Collapsed website."));
             }, 500);
@@ -124,6 +121,7 @@
                 // containerDiv.resize();
                 setTimeout(function () {
                     console.log("After setDisplayStyles");
+                    utils.updateMapContainerHeight($scope);
                     window.resizeBy(0,0);
                     window.dispatchEvent(new Event('resize'));
                     // $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
@@ -144,8 +142,6 @@
 
             $scope.summaryCollapser = function (tf) {
                 $scope.hideWebSiteOnStartup = tf;
-                utils.updateMapContainerHeight($scope);
-                // $scope.onExpSiteClick();
                 setTimeout(function () {
                     var args = {'mastersitevis' :$scope.MasterSiteVis, 'websitevis' : $scope.WebSiteVis};
                     $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent', { any: args });});
