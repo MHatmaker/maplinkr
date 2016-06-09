@@ -335,13 +335,13 @@
             selfMethods.placeCustomControls = placeCustomControls;
             console.debug(selfMethods);
 
-            $scope.gsearchVisible = 'inline-block'; //mptp === 'google' || mptp === 'arcgis'?  'block' : 'none';
+            $scope.gsearchVisible = 'inline-block';
             whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
             $scope.selected = mptp === 'google' ? 'Same Window' : 'New Pop-up Window';
             $scope.updateState($scope.selected);
 
             if (gmquery !== '') {
-                $scope.gsearch = {'query' : gmquery};  // read from url when opening new window
+                $scope.gsearch = {'query' : gmquery};  // was read from url when opening new window
             } else {
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
@@ -350,10 +350,6 @@
 
             stup = currentMapType.start();
             console.debug(stup);
-
-            // if (mptp !== 'arcgis') {
-            //     placeCustomControls();
-            // }
 
             tmpltName = $routeParams.id;
             console.log(tmpltName);
@@ -368,15 +364,12 @@
                 $scope.isMapExpanded = false;
                 console.debug($scope.map);
                 curMapTypeInitialized = true;
-
-                // resizeMap($scope.isMapExpanded, $scope.map);
             }
 
             selfMethods.configureCurrentMapType = configureCurrentMapType;
 
             function invalidateCurrentMapTypeConfigured () {
                 curMapTypeInitialized = false;
-                // setupQueryListener();
             }
 
             function getSearchBox () {
@@ -393,24 +386,16 @@
             $scope.$on('CollapseSummaryCompletionEvent', function (event, args) {
                 console.log("MapCtrl handling CollapseSummaryCompletionEvent - resize WindowBy");
 
-                var refreshDelay = 1000;
-                // $scope.safeApply();
-
-                // alert("get dimensions and pause");
+                var refreshDelay = 500;
                 setTimeout(function () {
                     utils.calculateComponentHeights(args.mastersitevis, args.websitevis);
                     utils.updateMapContainerHeight($scope);
                     utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
-                    // $scope.$apply(function(){
                     console.log("REFRESH LINKER AND MINMAX");
-                    // refreshLinker();
-                    // refreshMinMax();
+
                     if(curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
                         configureCurrentMapType();
                     }
-                    // if (mptp !== 'arcgis') {
-                    //     placeCustomControls();
-                    // }
 
                 }, refreshDelay);
             });
@@ -533,8 +518,6 @@
             $scope.showDestDialog = function (callback, details, info) {
                 console.log("showDestDialog for currentTab " + $scope.currentTab.title);
                 $scope.preserveState();
-//                var hostElement = $document.find('mashbox').eq(0);
-                // $scope.$broadcast('ShowWebSiteDescriptionModalEvent');
 
                 $scope.data.mapType = $scope.currentTab.maptype;
                 $scope.data.icon = $scope.currentTab.imgSrc;
@@ -621,4 +604,3 @@
     });
 
 }).call(this);
-// }());

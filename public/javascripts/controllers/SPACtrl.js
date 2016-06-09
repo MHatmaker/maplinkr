@@ -97,16 +97,12 @@
                 $scope.data.mapColShowing = 'block';
                 $scope.setDisplayStyles(false);
             }
-            utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
-            utils.getAvailableSiteColumnHeights($scope.MasterSiteVis, $scope.WebSiteVis);
-            // $scope.safeApply();
-            //window.resizeBy(0,0);
+
             setTimeout(function () {
                 window.resizeBy(0,0);
                 $scope.safeApply(console.log("Initiating system with Collapsed website."));
             }, 500);
 
-            // from ModelessTest project
             $scope.handleMapExpandShrinkEvents = function () {
                 var containerDiv;
                 if ($scope.data.subsiteExpanded === true) {
@@ -117,18 +113,15 @@
                     $scope.setDisplayStyles(true);
                 }
 
-                // containerDiv = document.getElementById('map_wrapper');
-                // containerDiv.resize();
                 setTimeout(function () {
-                    console.log("After setDisplayStyles");
+                    console.log("in handleMapExpandShrinkEvents timeout callback");
+                    // This update appears to be necessary for ArcGIS maps
                     utils.updateMapContainerHeight($scope);
                     window.resizeBy(0,0);
                     window.dispatchEvent(new Event('resize'));
-                    // $scope.safeApply(console.log("safeApply callback after setDisplayStyles"));
-                    // $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent');});
                     utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                     utils.displayHeights("after handleMapExpandShrinkEvents");
-                }, 500);
+                }, 100);
             }
 
             $scope.onExpandMapClicked = function () {
