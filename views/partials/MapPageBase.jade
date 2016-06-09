@@ -63,7 +63,7 @@ block append content
 
                 #idCenterCol(class="{{$parent.data.mapColDef}}",
                     ng-controller="MapColCtrl",
-                    style="display:{{$parent.data.mapColShowing}}; padding-left: 0; padding-right: 0;")
+                    style="display:{{$parent.data.mapColShowing}}; padding-left: 0; padding-right: 0; height: {{$parent.centerColHgt}}px;")
                     include MapCol.jade
 
                 #idRightColOuter(class="col-xs-12 col-sm-6 col-md-4",

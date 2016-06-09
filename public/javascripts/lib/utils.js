@@ -244,12 +244,9 @@ if (!String.prototype.format) {
                 centerColHgt = height + getElemHeight('idLinkrButtonRow');
                 centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
                 console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
-                // alert(hstr);
-                centerCol.css({"height": centercolhstr});
-                mapCon.css({"height": hstr});
-                mapWrap.css({"height": hstr});
-                // mapCanvas.css({"height": "100%"});
-                // mapCanRoot.css({"height" : "100%"});
+                scope.centerColHgt = centerColHgt;
+                scope.mapConRowHgt = height;
+                scope.mapWrapHgt = height;
                 // scope.safeApply();
                 /*
                 mq = window.matchMedia('@media all and (max-width: 700px)');

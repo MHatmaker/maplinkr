@@ -33,6 +33,9 @@
                 $inj,
                 serv;
 
+            $scope.mapConRowHgt = 0;
+            $scope.centerColHgt = 0;
+            $scope.mapWrapHgt = 0;
             $scope.safeApply = function (fn) {
                 var phase;
                 if (this.$root) {
