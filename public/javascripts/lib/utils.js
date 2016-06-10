@@ -200,17 +200,17 @@ if (!String.prototype.format) {
             function updateMapContainerHeight(scope) {
                 var height = getDocHeight(), //document.body.clientHeight,
                     width = document.body.clientWidth,
-                    centerCol = getElemById("idCenterCol"),
-                    mapCon = getElemById("idMapContainerRow"),
-                    mapWrap = getElemById("map_wrapper"),
-                    mapCanvas = getElemById("map_canvas"),
-                    rightCol = getElemById("idRightColOuter"),
-                    mapCanRoot = getElemById("map_canvas_root"),
-                    hstr = "",
-                    mlctrlRow = getElemById("idLinkrButtonRow"),
-                    centerColHgt = 0,
-                    centercolhstr = "",
+                    // centerCol = getElemById("idCenterCol"),
+                    // mapCon = getElemById("idMapContainerRow"),
+                    // mapWrap = getElemById("map_wrapper"),
+                    // mapCanvas = getElemById("map_canvas"),
+                    // rightCol = getElemById("idRightColOuter"),
+                    // mapCanRoot = getElemById("map_canvas_root"),
+                    // mlctrlRow = getElemById("idLinkrButtonRow"),
                     topRow = getElemById('idSiteTopRow'),
+                    centerColHgt = 0,
+                    // centercolhstr = "",
+                    // hstr = "",
                     topRowDisplayMode = topRow[0].style.display,
                     mq;
 
@@ -232,18 +232,16 @@ if (!String.prototype.format) {
                         - getElemHeight('idSiteTopRow')
                         - getElemHeight('idLinkrButtonRow');
                     console.log(" document.body.client : width " + width + ", height " + height);
-                    console.log("map container height");
-                    console.debug(mapCon);
                 }
                 // if (topRowDisplayMode === 'none') {
                 //     height -= getElemHeight('idLinkrButtonRow');
                 // }
 
-                hstr = String.format("{0}px", toFixedOne(height)); // * 0.7));
-
+                // hstr = String.format("{0}px", toFixedOne(height));
                 centerColHgt = height + getElemHeight('idLinkrButtonRow');
-                centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
-                console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
+                // centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
+                // console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
+
                 scope.centerColHgt = centerColHgt;
                 scope.mapConRowHgt = height;
                 scope.mapWrapHgt = height;
