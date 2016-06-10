@@ -204,7 +204,7 @@ var selectedMapType = 'arcgis',
                         return googleQueryDct.rootScope;
                     },
                         getQueryDestinationDialogScope = function (mapsys) {
-                            var elemID = mapsys === 'google' ? 'DestWndDialogGoogle' : 'DestWndDialogArcGIS',
+                            var elemID = 'DestWndDialogNode',
                                 e = document.getElementById(elemID),
                                 scope = angular.element(e).scope();
                             return scope;
