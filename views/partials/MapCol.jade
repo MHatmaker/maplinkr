@@ -1,5 +1,5 @@
 
-#idLinkrButtonRow(class="row controlrow-padding", style="margin-left: 1rem;")
+#idLinkrButtonRow(class="row controlrow-padding", style="margin-left: 1rem; margin-right 0.1rem;")
     div
         button(type="button", class="btn btn-labeled btn-primary",
             ng-click="$parent.onExpandMapClicked()")
@@ -15,10 +15,11 @@
                 i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !mldata.isOpen, \
                 'fa-compress': mldata.isOpen}", style="padding-left: 0.5rem")
 
-#idMapContainerRow(class="row", style="margin-left: -0.5rem; margin-right: -0.5rem; height: {{$parent.mapConRowHgt}}px;")
+#idMapContainerRow(class="row", style="margin-left: 0.1rem; margin-right: 0.1rem; height: {{$parent.mapConRowHgt}}px;")
     #map_wrapper(ng-controller="MapCtrl", class="{{$parent.data.mapColDef}}",
-        style="vertical-align:top; position: absolute; width: 100%; height: {{$parent.mapWrapHgt}}px; {{$parent.data.mapColPad}}")
-
+        style="vertical-align:top; position: absolute; width: 100%; \
+        padding-left: 0.1rem; padding-right: 0.1rem; \
+        margin-left: 0.1rem; margin-right: 0.1rem; height: {{$parent.mapWrapHgt}}px; {{$parent.data.mapColPad}}")
 
         #DestWndDialogNode
 

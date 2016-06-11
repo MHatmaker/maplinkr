@@ -30,12 +30,12 @@ block append scriptsblock
 
 block append content
 
-#idChildWebSite(class="row", ng-cloak, class="ng-cloak", style="margin-left: -0.5rem; margin-right: -0.5rem")
+#idChildWebSite(class="row", ng-cloak, class="ng-cloak", style="margin-left: 0.2rem; margin-right: 0.2rem")
     #spa_window(ng-controller="SPACtrl", ng-cloak, class="ng-cloak")
         #idContainerPrimary(class="subwebsite_defaultprimarycolor \
             subwebsite_textprimarycolor subwebsite_dividercolor")
             #idSiteTopRow(class="row", ng-controller="TopRowCtrl",
-                style="display:{{$parent.topRowShowing}}")
+                style="display:{{$parent.topRowShowing}}; margin-left: 0.1rem; margin-right: 0.1rem;")
                 div(class="container-newscell")
                     div(class="container-newscellhead").
                         This web site embeds MapLinkr using {{curMapSys}}
@@ -54,7 +54,7 @@ block append content
                                     seems to work 100% of the time.  Apartments.com might even
                                     replace their logo with a smiling Golden Retriever.
 
-            div(class="row")
+            div(class="row" style='margin-left: 0.1rem; margin-right: 0.1rem;')
 
                 #idLeftColOuter(class="col-xs-12 col-sm-6 col-md-3",
                     ng-controller="LeftColCtrl",
