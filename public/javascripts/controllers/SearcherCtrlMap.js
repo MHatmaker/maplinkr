@@ -162,7 +162,7 @@ angular.isUndefinedOrNull = function (val) {
                 ];
 
 
-                for (i = 0; i < 4; i++) {
+                for (i = 0; i < 20; i++) {
                     rsp = results[i];
                     mp = {};
                     mp.title = rsp.title;
@@ -251,11 +251,13 @@ angular.isUndefinedOrNull = function (val) {
                 mfa.scope().safeApply();
                 keyword = mf.value; // searchTermMap; //dojo.byId('mapFinder').value;
                 params = {
-                    q: ' type:"Web Map" -type:"Web Mapping Application" ' + keyword,
+                    q: ' type:"Web Map" -type:"Web Mapping Application" access:public ' + keyword,
                     num: 20
                 };
                 portalForSearch.queryItems(params).then(function (data) {
                     $scope.showMapResults(data);
+                },function (error) {  //error so reset sign in link
+                    alert('error returning items');
                 });
             };
 

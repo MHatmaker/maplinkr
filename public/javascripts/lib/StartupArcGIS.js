@@ -273,50 +273,66 @@
 
             // dijit.byId("map_canvas").addChild(cpn).placeAt("map_canvas").startup();
 
-            mapDeferred = esri.arcgis.utils.createMap(configOptions.webmap, "map_canvas", {
-                mapOptions: {
-                    slider: true,
-                    nav: false,
-                    wrapAround180: true
+            try {
+                mapDeferred = esri.arcgis.utils.createMap(configOptions.webmap, "map_canvas", {
+                    mapOptions: {
+                        slider: true,
+                        nav: false,
+                        wrapAround180: true
 
-                },
-                ignorePopups: false,
-                bingMapsKey: configOptions.bingMapsKey,
-                geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
+                    },
+                    ignorePopups: false,
+                    bingMapsKey: configOptions.bingMapsKey,
+                    geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 
-            });
+                });
+            }
+            catch (err) {
+                console.log(err.message);
+                alert(err.message);
+            }
+            finally {
+                console.log("finally???????????????");
+                //alert("why are we in finally?");
+            }
 
             console.log("set up mapDeferred anonymous method");
-            mapDeferred.then(function (response) {
-                console.log("mapDeferred.then");
-                if (previousSelectedWebMapId !== selectedWebMapId) {
-                    previousSelectedWebMapId = selectedWebMapId;
-                    //dojo.destroy(map.container);
-                }
-                if (aMap) {
-                    aMap.destroy();
-                }
-                aMap = response.map;
-                console.log("in mapDeferred anonymous method");
-                console.log("configOptions title " + configOptions.title);
-                console.debug("ItemInfo object " + response.itemInfo);
-                console.log("ItemInfo.item object " + response.itemInfo.item);
-                console.log("response title " + response.itemInfo.item.title);
-                dojo.connect(aMap, "onUpdateStart", showLoading);
-                dojo.connect(aMap, "onUpdateEnd", hideLoading);
-                dojo.connect(aMap, "onLoad", initUI);
-
-                setTimeout( function () {
-                    if (aMap.loaded) {
-                        initUI();
-                    } else {
-                        dojo.connect(aMap, "onLoad", initUI);
+            try {
+                mapDeferred.then(function (response) {
+                    console.log("mapDeferred.then");
+                    if (previousSelectedWebMapId !== selectedWebMapId) {
+                        previousSelectedWebMapId = selectedWebMapId;
+                        //dojo.destroy(map.container);
                     }
-                }, 500);
-            }, function (error) {
-                alert("Create Map Failed ");
-                console.log('Create Map Failed: ' + dojo.toJson(error));
-            });
+                    if (aMap) {
+                        aMap.destroy();
+                    }
+                    aMap = response.map;
+                    console.log("in mapDeferred anonymous method");
+                    console.log("configOptions title " + configOptions.title);
+                    console.debug("ItemInfo object " + response.itemInfo);
+                    console.log("ItemInfo.item object " + response.itemInfo.item);
+                    console.log("response title " + response.itemInfo.item.title);
+                    dojo.connect(aMap, "onUpdateStart", showLoading);
+                    dojo.connect(aMap, "onUpdateEnd", hideLoading);
+                    dojo.connect(aMap, "onLoad", initUI);
+
+                    setTimeout( function () {
+                        if (aMap.loaded) {
+                            initUI();
+                        } else {
+                            dojo.connect(aMap, "onLoad", initUI);
+                        }
+                    }, 300);
+                }, function (error) {
+                    // alert("Create Map Failed ");
+                    console.log('Create Map Failed: ' + dojo.toJson(error));
+                    console.log("Error: ", error.code, " Message: ", error.message);
+                    deferred.cancel();
+                });
+            } catch (err) {
+                console.log("deferred failed with err " + err.message);
+            }
         }
 
 

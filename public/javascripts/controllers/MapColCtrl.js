@@ -136,7 +136,7 @@
                 });
 
                 modalInstance.result.then(function (msg) {
-                    console.log("return from showing MapLinkr`dialog");
+                    console.log("return from showing MapLink dialog");
                     console.log(msg);
                     $scope.mldata.mapLinkrBtnText = "MapLinkr";
                     $scope.mldata.isOpen = false;
