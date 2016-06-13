@@ -14,7 +14,7 @@
 
         function SearcherCtrlGrp($scope) {
             $scope.findGrpDisabled = false;
-            $scope.searchTermGrp = "Chicago Crime";
+            $scope.searchTermGrp = "Chicago";
 
             $scope.isGrpAccPanelOpen = false;
             $scope.signInOutGrp = "Sign In";
@@ -33,7 +33,7 @@
             };
              */
             $scope.selectedItm = "Nada";
-            $scope.selectionChanged = function (rowItem, event) {
+            $scope.selectGroup = function (rowItem) {
                 console.debug(rowItem.entity);
                 console.debug(rowItem.entity.title   + '/' + rowItem.entity.thumbnail);
                 $scope.findMapsForGroup(rowItem.entity.id);
@@ -42,44 +42,60 @@
 
             $scope.imgUrlBase = 'http://www.arcgis.com/sharing/rest/community/groups/';
 
-            $scope.imgTmplt =
-                '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
-
             $scope.gridGrpOptions = {
-                data: 'grpGriddata',
                 // enablePaging: true,
                 rowHeight: '50',
-                // plugins: [layoutPlugin],
-                multiSelect: false,
-                afterSelectionChange:  $scope.selectionChanged,
+
+                expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>',
+
+                expandableRowHeight: 95,
+
+                //subGridVariable will be available in subGrid scope
+                expandableRowScope: {
+                    subGridVariable: 'subGridScopeVariable'
+                },
+
                 columnDefs: [
                     {
+                        name: 'thumbnail',
                         field: 'thumbnail',
-                        width: 50,
+                        width: 60,
                         displayName: 'Img',
-                        cellTemplate: $scope.imgTmplt
+                        resizable: false,
+                        cellTemplate:"<img width=\"50px\" ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>"
+                    },
+                    {
+                        name : ' ',
+                        cellTemplate : '<div><button ng-click="grid.appScope.selectGroup(row)">Select</button></div>',
+                        width : 60
                     },
                     {
                         field: 'title',
-                        width: 124,
+                        name: 'title',
                         displayName: 'Group'
                     },
                     {
+                        field : 'url',
+                        name : 'url',
+                        visible : false
+                    },
+                    {
                         field: 'snippet',
-                        width: 124,
-                        displayName: 'Description'
+                        name: 'snippet',
+                        visible: false,
                     },
                     {
                         field: 'id',
+                        name: 'id',
                         visible: false,
-                        displayName: '#'
+                        displayName: 'ID'
                     }
                 ]
             };
 
-            // portal = null;
-               // find groups based on input keyword
+            // find groups based on input keyword
             $scope.findArcGISGroup = function () {
+                utils.showLoading();
                 console.log('findArcGISGroup');
                 var keyword = $scope.searchTermGrp,
                     params = {
@@ -91,83 +107,90 @@
                 });
             };
 
-            $scope.calculateInstructionHeight = function () {
-                var label = utils.getElemById("grpSearchLabel"),
-                    instructions = document.getElementById("grpSrchInstId"),
+            function transformResponse(results) {
+                var trnsf = [],
+                rsp,
+                i,
+                grp,
+                grpsub,
+                limit = 20,
+                colDefs = [
+                    {
+                        field : 'snippet',
+                        name : 'snippet',
+                        displayName : 'Description'
+//                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
+                    },
+                    {
+                        field : 'owner',
+                        name : 'owner',
+                        visible : false
+                    }
+                ];
 
-                    instructionsHgt = instructions.offsetHeight,
-                    // console.log("instructionsHgt " + instructionsHgt);
-                    srcTerm = utils.getElemById("groupFinder"),
-                    hgt = label[0].offsetHeight + instructionsHgt + srcTerm[0].offsetHeight;
-                // console.log("Instructions height : " + hgt);
-                return hgt;
-            };
-
-            $scope.calculateHeights = function () {
-                var vrbg = utils.getElemById("Verbage"),
-                    accHead = utils.getElemById("AccdianNews"),
-                    marginborder = (1 + 1) * 2,
-                    accinnermarginborder = (1 + 9) * 2,
-                    instructionsHgt =  $scope.calculateInstructionHeight(),
-                // console.log("vrbg : " + vrbg[0].offsetHeight + " instructionsHgt " + instructionsHgt + " accHead " +  4 * (accHead[0].offsetHeight));
-                    gridTopHgt = 30 + 20, // ngTopPanel + ngViewPort
-                    availableHgt = vrbg[0].offsetHeight -  accinnermarginborder - gridTopHgt - instructionsHgt -
-                                    4 * (accHead[0].offsetHeight + marginborder),
-                // console.log("availableHgt" + availableHgt);
-                    rowHeight = 50,
-                    headerHeight = 34,
-                    height = +($scope.grpGriddata.length * rowHeight + headerHeight);
-                if (height > availableHgt) {
-                    height = availableHgt;
+                if (results.length < limit) {
+                    limit = results.length;
                 }
-                if (height < 120) {
-                    height = 120;
+                for (i = 0; i < limit; i++) {
+                    rsp = results[i];
+                    grp = {};
+                    grp.title = rsp.title;
+                    grp.owner = rsp.owner;
+                    grp.thumbnail = rsp.thumbnailUrl;
+                    grp.url = rsp.url;
+                    grp.id = rsp.id;
+                    grp.snippet = rsp.snippet;
+
+                    grp.subGridOptions = {};
+                    grp.subGridOptions.columnDefs = colDefs;
+                    grp.subGridOptions.data = [];
+                    grpsub = {};
+                    grpsub.snippet = rsp.snippet;
+                    // grpsub.id =rsp.id;
+                    grpsub.owner = rsp.owner;
+                    grp.subGridOptions.data.push(grpsub);
+
+                    trnsf.push(grp);
                 }
-                return height;
-            };
-
-            $scope.getGridStyleGroup = function () {
-                var height = $scope.calculateHeights() - 8,
-                    heightStr = String(height) + "px";
-                // console.log("heightStr - getGridStyleGroup : " + heightStr);
-                return {
-                    height: heightStr
-                };
-            };
-
-            $scope.getGridStyleWrapper = function () {
-                var height = $scope.calculateHeights(),
-                    heightStr = String(height) + "px";
-                // console.log("heightStr - getGridStyleWrapper : " + heightStr);
-                return {
-                    height: heightStr
-                };
-            };
-
-            $scope.redrawGrid = function () {
-                window.setTimeout(function () {
-                    $(window).resize();
-                    $(window).resize();
-                }, 250);
-            };
+                return trnsf;
+            }
 
             $scope.showGroupResults = function (response) {
-                //clear any existing results
+                var grpdata = [];
                 console.log('$scope.showGroupResults');
+                console.debug(response);
+                console.log("response.total " + response.total);
 
                 if (response.total > 0) {
-                    //create the grid
-                    $scope.grpGriddata = response.results;
-                    // $scope.gridGrpOptions.data = response.results;
-                    console.debug($scope.grpGriddata);
-                    $scope.redrawGrid();
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
-                    }
-                    $scope.redrawGrid();
+                    console.log("found array with length " + response.total);
+                    grpdata = transformResponse(response.results);
+
+                    setTimeout(function() {
+                        $scope.safeApply(console.log("showGroupResults $apply before loading grid"));
+                    }, 500);
+
+                    $scope.gridGrpOptions.data = grpdata;
+
                 } else {
-                    document.getElementById('groupResults').innerHTML = '<h2>Group Results</h2><p>No groups were found. If the group is not public use the sign-in link to sign in and find private groups.</p>';
+                    document.getElementById('grpGridId').innerHTML = '<h2>Group Results</h2><p>No groups were found. \
+                        If the group is not public use the sign-in link to sign in and find private groups.</p>';
                 }
+                utils.hideLoading();
+            };
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+
+            $scope.gridGrpOptions.onRegisterApi = function (gridApi) {
+                $scope.gridApi = gridApi;
             };
 
             $scope.findArcGISGroupMaps = function (portal, searchTermMap) {

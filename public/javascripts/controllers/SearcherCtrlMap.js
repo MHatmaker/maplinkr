@@ -80,18 +80,10 @@ angular.isUndefinedOrNull = function (val) {
                 );
             }
 
-            $scope.imgWebMapTmplt = '<img ng-src="{{row.getProperty(col.name)}}" width="50" height="50"/>';
-            // $scope.imgWebMapTmplt = '<img ng-src="{{imgUrlBase}}{{row.getProperty(\'id\')}}/info/{{row.getProperty(col.field)}}" width="50" height="50" />';
-
             $scope.gridOptions = {
                 // data: 'gridData',
                 rowHeight: 50,
-                // afterSelectionChange:  $scope.mapSelectionChanged,
-                // multiSelect: false,
-                // displayFooter: true,
-                // enableColumnResize : true,
                 expandableRowTemplate : '<div ui-grid="row.entity.subGridOptions" style="height: 100px; width: 100%;"></div>',
-
 
                 expandableRowHeight: 95,
 
@@ -187,13 +179,7 @@ angular.isUndefinedOrNull = function (val) {
             }
 
             $scope.showMapResults = function (response) {
-                var mpdata = [],
-                    rsp,
-                    i,
-                    mp = {},
-                    mpsub;
-                // utils.hideLoading();
-                //clear any existing results
+                var mpdata = [];
                 console.log("showMapResults");
                 console.debug(response);
                 console.log("response.total " + response.total);
@@ -233,13 +219,6 @@ angular.isUndefinedOrNull = function (val) {
                 } else {
                     this.$apply(fn);
                 }
-            };
-
-            $scope.redrawGrid = function () {
-                window.setTimeout(function () {
-                    $(window).resize();
-                    $(window).resize();
-                }, 250);
             };
 
             $scope.findArcGISGroupMaps = function (portal, searchTermMap) {
