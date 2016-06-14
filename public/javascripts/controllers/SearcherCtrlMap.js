@@ -139,6 +139,7 @@ angular.isUndefinedOrNull = function (val) {
                 i,
                 mp,
                 mpsub,
+                limit = 20,
                 colDefs = [
                     {
                         field : 'snippet',
@@ -154,7 +155,10 @@ angular.isUndefinedOrNull = function (val) {
                 ];
 
 
-                for (i = 0; i < 20; i++) {
+                if (results.length < limit) {
+                    limit = results.length;
+                }
+                for (i = 0; i < limit; i++) {
                     rsp = results[i];
                     mp = {};
                     mp.title = rsp.title;
@@ -188,11 +192,12 @@ angular.isUndefinedOrNull = function (val) {
                     console.log("found array with length " + response.total);
                     mpdata = transformResponse(response.results);
 
+                    $scope.gridOptions.data = mpdata;
                     setTimeout(function() {
                         $scope.safeApply(console.log("showMapResults $apply before loading grid"));
                     }, 500);
 
-                    $scope.gridOptions.data = mpdata;
+                    // $scope.gridOptions.data = mpdata;
 
                 }
                 utils.hideLoading();
@@ -269,7 +274,7 @@ angular.isUndefinedOrNull = function (val) {
                 }
             });
 
-            $scope.$on('OpenMapPaneCommand', function (event, args) {
+            $rootScope.$on('OpenMapPaneCommand', function (event, args) {
                 $scope.showMapResults(args.respData);
             });
 

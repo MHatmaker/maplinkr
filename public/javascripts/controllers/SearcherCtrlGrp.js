@@ -12,7 +12,7 @@
         var selfDict = {'portal': null},
             portalForSearch = null;
 
-        function SearcherCtrlGrp($scope) {
+        function SearcherCtrlGrp($scope, $rootScope) {
             $scope.findGrpDisabled = false;
             $scope.searchTermGrp = "Chicago";
 
@@ -241,26 +241,37 @@
 
                 if ($scope.signInOutGrp.indexOf('In') !== -1) {
                     portalForSearch.signIn().then(function (loggedInUser) {
-                        $scope.$emit('SignInOutEmitEvent', true); //out
+                        // $scope.$emit('SignInOutEmitEvent', true); //
+                        $scope.signOutout(true);
                         $scope.findArcGISGroup(portalForSearch);   // update results
                     }, function (error) { //error so reset sign in link
-                        $scope.$emit('SignInOutEmitEvent', true); //in
+                        $scope.signOutout(true);
+                        // $scope.$emit('SignInOutEmitEvent', true); //in
                     });
                 } else {
                     portalForSearch.signOut().then(function (portalInfo) {
-                        $scope.$emit('SignInOutEmitEvent', false); //in
+                        // $scope.$emit('SignInOutEmitEvent', false); //in
+                        $scope.signOutout(true);
                         $scope.findArcGISGroup(portalForSearch);
                     });
                 }
             };
 
-            $scope.$on('SignInOutBroadcastEvent', function (event, isSignedIn) {
+            $scope.signOut = function(isSignedIn) {
                 if (isSignedIn) {
                     $scope.signInOutGrp = "Sign Out";
                 } else {
                     $scope.signInOutGrp = "Sign In";
                 }
-            });
+            }
+
+            // $scope.$on('SignInOutBroadcastEvent', function (event, isSignedIn) {
+            //     if (isSignedIn) {
+            //         $scope.signInOutGrp = "Sign Out";
+            //     } else {
+            //         $scope.signInOutGrp = "Sign In";
+            //     }
+            // });
 
 
             //display a list of groups that match the input user name
@@ -269,7 +280,7 @@
                 utils.hideLoading();
                 //clear any existing results
                 console.log("showMapResults");
-                $scope.$emit('OpenMapPaneEvent', { 'respData' : response });
+                $rootScope.$emit('OpenMapPaneCommand', { 'respData' : response });
             };
             selfDict.setPortal = function (portal) {
                 portalForSearch = portal;
@@ -281,7 +292,7 @@
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrlGrp',  ['$scope', SearcherCtrlGrp]);
+            App.controller('SearcherCtrlGrp',  ['$scope', '$rootScope', SearcherCtrlGrp]);
             // SearcherCtrlGrp.CurrentWebMapIdService= CurrentWebMapIdService;
             // selfDict.portal = portalForSearch;
             portalForSearch = portal;

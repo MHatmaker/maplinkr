@@ -11,7 +11,7 @@
     ], function (angular, MapLinkrPluginCtrl) {
         console.log('MapColCtrl define');
 
-        function MapColCtrl($scope, $uibModal) {
+        function MapColCtrl($scope, $rootScope, $uibModal) {
             console.log("in MapColCtrl");
 
             $scope.mldata = {
@@ -91,19 +91,13 @@
                 'mapLinkrBtnText' : 'MapLinkr',
                 'ExpandPlug' : "MapLinkr"
             };
-/*
-                itmCollapsed = [
-                    {
-                        'itm' : 'news',
-                        'collapsed' : true
-                    }
-                    {
-                        'itm' : 'using',
-                        'collapsed' : true
-                    }
-                ]
-            }
-*/
+
+            $rootScope.$on('OpenMapPaneCommand', function (event, args) {
+                $scope.mldata.isCollapsed = !$scope.mldata.isCollapsed;
+                $scope.mldata.isCollapsed = !$scope.mldata.isCollapsed;
+                // $scope.$broadcast('OpenMapPaneCommand', args);  // ? args.respData);
+            });
+
             $scope.onExpandMapClicked = function () {
                 alert("onExpandMapClicked");
             };
@@ -159,7 +153,7 @@
         function init(App) {
             console.log('MapColCtrl init');
             console.debug(App);
-            var ctrl = App.controller('MapColCtrl',  ['$scope', '$uibModal', MapColCtrl]);
+            var ctrl = App.controller('MapColCtrl',  ['$scope', '$rootScope', '$uibModal', MapColCtrl]);
             console.debug(ctrl);
 
             return MapColCtrl;
@@ -168,4 +162,5 @@
         return { start: init};
     });
 
-}());
+// }());
+}).call(this);
