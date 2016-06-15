@@ -93,8 +93,8 @@
             };
 
             $rootScope.$on('OpenMapPaneCommand', function (event, args) {
-                $scope.mldata.isCollapsed = !$scope.mldata.isCollapsed;
-                $scope.mldata.isCollapsed = !$scope.mldata.isCollapsed;
+                $scope.mldata.groups.isCollapsed = !$scope.mldata.groups.isCollapsed;
+                $scope.mldata.maps.isCollapsed = !$scope.mldata.maps.isCollapsed;
                 // $scope.$broadcast('OpenMapPaneCommand', args);  // ? args.respData);
             });
 

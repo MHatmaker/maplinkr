@@ -241,20 +241,19 @@
 
                 if ($scope.signInOutGrp.indexOf('In') !== -1) {
                         // LinkrService.hideLinkr();
-                        utils.setVisible('idMapLinkrPlugin', 'none')
+                        utils.setVisible('idMapLinkrPlugin', 'none');   // need to work on $uibModalInstance / $uibModalStack
+                        // LinkrService.hideLinkr();
                         portalForSearch.signIn().then(function (loggedInUser) {
-                        // $scope.$emit('SignInOutEmitEvent', true); //
-                        $scope.signOutout(true);
-                        LinkrService.showLinkr();
-                        $scope.findArcGISGroup(portalForSearch);   // update results
-                    }, function (error) { //error so reset sign in link
-                        $scope.signOutout(true);
-                        // $scope.$emit('SignInOutEmitEvent', true); //in
-                    });
+                            // $scope.$emit('SignInOutEmitEvent', true); //
+                            LinkrService.showLinkr();
+                            $scope.findArcGISGroup(portalForSearch);   // update results
+                        }, function (error) { //error so reset sign in link
+                            $scope.signOutout(true);
+                            // $scope.$emit('SignInOutEmitEvent', true); //in
+                        });
                 } else {
                     portalForSearch.signOut().then(function (portalInfo) {
                         // $scope.$emit('SignInOutEmitEvent', false); //in
-                        $scope.signOutout(true);
                         $scope.findArcGISGroup(portalForSearch);
                     });
                 }
