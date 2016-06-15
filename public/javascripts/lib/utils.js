@@ -144,7 +144,7 @@ if (!String.prototype.format) {
 
             function setVisible(itm, flexnone) {
                 var elem = document.getElementById(itm);
-                elem.visible = flexnone === 'flex' ? 'visible' : 'none';
+                elem.visible = flexnone === 'block' ? 'visible' : 'none';
                 elem.style.display = flexnone;
             }
 
@@ -313,6 +313,7 @@ if (!String.prototype.format) {
                 setElementWidth : setElementWidth,
                 setElementDimension : setElementDimension,
                 getElementDimension : getElementDimension,
+                setVisible : setVisible,
                 toFixed : toFixedTwo,
                 toFixedOne: toFixedOne,
                 showLoading : showLoading,

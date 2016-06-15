@@ -1,6 +1,6 @@
 /*global define */
 /*global $uibModal */
-/*golbal $uibModalInstance */
+/*global $uibModalInstance */
 
 (function () {
     "use strict";

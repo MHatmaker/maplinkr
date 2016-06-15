@@ -12,9 +12,9 @@
         var selfDict = {'portal': null},
             portalForSearch = null;
 
-        function SearcherCtrlGrp($scope, $rootScope) {
+        function SearcherCtrlGrp($scope, $rootScope, LinkrService) {
             $scope.findGrpDisabled = false;
-            $scope.searchTermGrp = "Chicago";
+            $scope.searchTermGrp = "RHUser";
 
             $scope.isGrpAccPanelOpen = false;
             $scope.signInOutGrp = "Sign In";
@@ -240,9 +240,12 @@
                 self.portal = portalForSearch;
 
                 if ($scope.signInOutGrp.indexOf('In') !== -1) {
-                    portalForSearch.signIn().then(function (loggedInUser) {
+                        // LinkrService.hideLinkr();
+                        utils.setVisible('idMapLinkrPlugin', 'none')
+                        portalForSearch.signIn().then(function (loggedInUser) {
                         // $scope.$emit('SignInOutEmitEvent', true); //
                         $scope.signOutout(true);
+                        LinkrService.showLinkr();
                         $scope.findArcGISGroup(portalForSearch);   // update results
                     }, function (error) { //error so reset sign in link
                         $scope.signOutout(true);
@@ -292,7 +295,7 @@
             console.debug(App);
             var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
             console.debug(CurrentWebMapIdService);
-            App.controller('SearcherCtrlGrp',  ['$scope', '$rootScope', SearcherCtrlGrp]);
+            App.controller('SearcherCtrlGrp',  ['$scope', '$rootScope', 'LinkrService', SearcherCtrlGrp]);
             // SearcherCtrlGrp.CurrentWebMapIdService= CurrentWebMapIdService;
             // selfDict.portal = portalForSearch;
             portalForSearch = portal;

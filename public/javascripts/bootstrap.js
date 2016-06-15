@@ -249,7 +249,8 @@ var selectedMapType = 'arcgis',
                     var lnkrdiv = document.getElementById('linkerDirectiveId'),
                         scope = angular.element(lnkrdiv).scope(),
                         getLinkrScope,
-                        hideLinkr;
+                        hideLinkr,
+                        showLinkr;
 
                     getLinkrScope = function () {
                         return scope;
@@ -260,8 +261,14 @@ var selectedMapType = 'arcgis',
                             scope.$emit('displayLinkerEvent', data);
                         }
                     };
+                    showLinkr = function () {
+                        var data = {'visibility' : 'block'};
+                        if (scope) {
+                            scope.$emit('displayLinkerEvent', data);
+                        }
+                    };
 
-                    return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr};
+                    return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
                 }).
 
                 factory("MapControllerService", function ($rootScope) {
