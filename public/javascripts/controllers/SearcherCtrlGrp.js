@@ -166,17 +166,23 @@
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
                     grpdata = transformResponse(response.results);
-
-                    setTimeout(function () {
-                        $scope.safeApply(console.log("showGroupResults $apply before loading grid"));
-                    }, 500);
-
-                    $scope.gridGrpOptions.data = grpdata;
-
                 } else {
-                    document.getElementById('grpGridId').innerHTML = '<h2>Group Results</h2><p>No groups were found. \
-                        If the group is not public use the sign-in link to sign in and find private groups.</p>';
+                    grpdata = [{
+                        'id' : null,
+                        'title' : "No matches",
+                        'owner' : "bad egg",
+                        'url' : "nada",
+                        'thumbnailUrl' : "http://na.support.keysight.com/plts/help/WebHelp/images/td_icon_bad_data.gif",
+                        'snippet' : "Your query returned no results from ArcGIS Online"
+                    }];
+                    grpdata = transformResponse(grpdata);
                 }
+                setTimeout(function () {
+                    $scope.safeApply(console.log("showGroupResults $apply before loading grid"));
+                }, 500);
+
+                $scope.gridGrpOptions.data = grpdata;
+
                 utils.hideLoading();
             };
 
