@@ -9,15 +9,17 @@
         'lib/utils'
     ], function (angular, utils) {
         console.log('SearcherCtrlGrp define');
-        var selfDict = {'portal': null},
+        var selfDict = {'portal': null,
+            'signInOutGrp' : "Sign In",
+            'findGrpDisabled' : false},
             portalForSearch = null;
 
         function SearcherCtrlGrp($scope, $rootScope, LinkrService) {
-            $scope.findGrpDisabled = false;
+            $scope.findGrpDisabled = selfDict.findGrpDisabled;
             $scope.searchTermGrp = "RHUser";
 
             $scope.isGrpAccPanelOpen = false;
-            $scope.signInOutGrp = "Sign In";
+            $scope.signInOutGrp = selfDict.signInOutGrp;
 
             $scope.grpGriddata = [];
 
@@ -62,7 +64,7 @@
                         width: 60,
                         displayName: 'Img',
                         resizable: false,
-                        cellTemplate:"<img width=\"50px\" ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>"
+                        cellTemplate: "<img width=\"50px\" ng-src=\"{{grid.getCellValue(row, col)}}\" lazy-src>"
                     },
                     {
                         name : ' ',
@@ -82,7 +84,7 @@
                     {
                         field: 'snippet',
                         name: 'snippet',
-                        visible: false,
+                        visible: false
                     },
                     {
                         field: 'id',
@@ -109,24 +111,24 @@
 
             function transformResponse(results) {
                 var trnsf = [],
-                rsp,
-                i,
-                grp,
-                grpsub,
-                limit = 20,
-                colDefs = [
-                    {
-                        field : 'snippet',
-                        name : 'snippet',
-                        displayName : 'Description'
-//                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
-                    },
-                    {
-                        field : 'owner',
-                        name : 'owner',
-                        visible : false
-                    }
-                ];
+                    rsp,
+                    i,
+                    grp,
+                    grpsub,
+                    limit = 20,
+                    colDefs = [
+                        {
+                            field : 'snippet',
+                            name : 'snippet',
+                            displayName : 'Description'
+    //                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
+                        },
+                        {
+                            field : 'owner',
+                            name : 'owner',
+                            visible : false
+                        }
+                    ];
 
                 if (results.length < limit) {
                     limit = results.length;
@@ -165,7 +167,7 @@
                     console.log("found array with length " + response.total);
                     grpdata = transformResponse(response.results);
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $scope.safeApply(console.log("showGroupResults $apply before loading grid"));
                     }, 500);
 
@@ -241,16 +243,22 @@
 
                 if ($scope.signInOutGrp.indexOf('In') !== -1) {
                         // LinkrService.hideLinkr();
-                        utils.setVisible('idMapLinkrPlugin', 'none');   // need to work on $uibModalInstance / $uibModalStack
-                        // LinkrService.hideLinkr();
-                        portalForSearch.signIn().then(function (loggedInUser) {
-                            // $scope.$emit('SignInOutEmitEvent', true); //
-                            LinkrService.showLinkr();
-                            $scope.findArcGISGroup(portalForSearch);   // update results
-                        }, function (error) { //error so reset sign in link
-                            $scope.signOutout(true);
-                            // $scope.$emit('SignInOutEmitEvent', true); //in
-                        });
+                    utils.setVisible('idMapLinkrPlugin', 'none');   // need to work on $uibModalInstance / $uibModalStack
+                    // LinkrService.hideLinkr();
+                    portalForSearch.signIn().then(function (loggedInUser) {
+                        // $scope.$emit('SignInOutEmitEvent', true); //
+                        LinkrService.showLinkr();
+                        selfDict.findGrpDisabled = true;
+                        $scope.findGrpDisabled = selfDict.findGrpDisabled;
+                        selfDict.signInOutGrp = "Sign Out";
+                        $scope.signInOutGrp = selfDict.signInOutGrp;
+                        $scope.isSignedIn = selfDict.isSignedIn;
+                        // $scope.safeApply();
+                        $scope.findArcGISGroup(portalForSearch);   // update results
+                    }, function (error) { //error so reset sign in link
+                        // $scope.$emit('SignInOutEmitEvent', true); //in
+                        console.log("Error returned from AGO signin");
+                    });
                 } else {
                     portalForSearch.signOut().then(function (portalInfo) {
                         // $scope.$emit('SignInOutEmitEvent', false); //in
