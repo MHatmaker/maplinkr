@@ -127,15 +127,17 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 style='width:30%;font-size:80%', value='{{signInOutGrp}}')
 
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
-                                        span
+                                        span(style="display: {{findGrpDisabled}};")
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp",
-                                                ng-enter="findArcGISGroup();")
-                                            input(name="groupFinderSubmit", ng-disabled="findGrpDisabled",
-                                                type="submit", value="Submit", id="groupFinderSubmit", class='btn',
-                                                ng-click="findArcGISGroup();")
+                                                ng-enter="findArcGISGroup();",
+                                                style="width: 15rem; ")
+                                            button(name="groupFinderSubmit",
+                                                id="groupFinderSubmit",
+                                                ng-click="findArcGISGroup();", class="btn",
+                                                style="margin-left: 0.2em;") Submit
 
                                         div(id="grpGridId", ui-grid="gridGrpOptions", ui-grid-pinning, ui-grid-expandable,
-                                            class='grid', style="font-size: 0.8rem;")
+                                            class='grid', style="font-size: 0.8rem; display: {{findGrpDisabled}};")
 
                 +collapseGroup('idMapSearcher', 'idMapSearcherCard', 'maps', 'AGO Map Search')
 

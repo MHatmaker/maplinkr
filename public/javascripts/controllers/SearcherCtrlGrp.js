@@ -11,7 +11,7 @@
         console.log('SearcherCtrlGrp define');
         var selfDict = {'portal': null,
             'signInOutGrp' : "Sign In",
-            'findGrpDisabled' : true},
+            'findGrpDisabled' : 'none'},
             portalForSearch = null;
 
         function SearcherCtrlGrp($scope, $rootScope, LinkrService) {
@@ -248,9 +248,9 @@
                     portalForSearch.signIn().then(function (loggedInUser) {
                         // $scope.$emit('SignInOutEmitEvent', true); //
                         LinkrService.showLinkr();
+                        selfDict.findGrpDisabled = 'inline-block';
+                        $scope.findGrpDisabled = selfDict.findGrpDisabled;
                         setTimeout(function () {
-                            selfDict.findGrpDisabled = false;
-                            $scope.findGrpDisabled = selfDict.findGrpDisabled;
                             $scope.safeApply();
                         }, 400);
                         selfDict.signInOutGrp = "Sign Out";
