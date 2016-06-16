@@ -130,7 +130,7 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                         span
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp",
                                                 ng-enter="findArcGISGroup();")
-                                            input(name="groupFinderSubmit", ng-disabled='!findGrpDisabled',
+                                            input(name="groupFinderSubmit", ng-disabled="findGrpDisabled",
                                                 type="submit", value="Submit", id="groupFinderSubmit", class='btn',
                                                 ng-click="findArcGISGroup();")
 

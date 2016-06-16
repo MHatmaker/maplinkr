@@ -11,7 +11,7 @@
         console.log('SearcherCtrlGrp define');
         var selfDict = {'portal': null,
             'signInOutGrp' : "Sign In",
-            'findGrpDisabled' : false},
+            'findGrpDisabled' : true},
             portalForSearch = null;
 
         function SearcherCtrlGrp($scope, $rootScope, LinkrService) {
@@ -248,11 +248,13 @@
                     portalForSearch.signIn().then(function (loggedInUser) {
                         // $scope.$emit('SignInOutEmitEvent', true); //
                         LinkrService.showLinkr();
-                        selfDict.findGrpDisabled = true;
-                        $scope.findGrpDisabled = selfDict.findGrpDisabled;
+                        setTimeout(function () {
+                            selfDict.findGrpDisabled = false;
+                            $scope.findGrpDisabled = selfDict.findGrpDisabled;
+                            $scope.safeApply();
+                        }, 400);
                         selfDict.signInOutGrp = "Sign Out";
                         $scope.signInOutGrp = selfDict.signInOutGrp;
-                        $scope.isSignedIn = selfDict.isSignedIn;
                         // $scope.safeApply();
                         $scope.findArcGISGroup(portalForSearch);   // update results
                     }, function (error) { //error so reset sign in link
@@ -291,9 +293,6 @@
                 //clear any existing results
                 console.log("showMapResults");
                 $rootScope.$emit('OpenMapPaneCommand', { 'respData' : response });
-            };
-            selfDict.setPortal = function (portal) {
-                portalForSearch = portal;
             };
         }
 
