@@ -122,9 +122,9 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                         span
                                             label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
 
-                                            input(type="button", class="btn", id="signInGroup",
+                                            button(class="btn", id="signInGroup",
                                                 name="signInGroup", ng-click='signInFromGroupTab();',
-                                                style='width:30%;font-size:80%', value='{{signInOutGrp}}')
+                                                style='width: 5rem; padding-left: 0.4em; margin-left: 0.1em; font-size:80%') {{signInOutGrp}}
 
                                         h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
                                         span(style="display: {{findGrpDisabled}};")
