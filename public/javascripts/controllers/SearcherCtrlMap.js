@@ -145,7 +145,6 @@ angular.isUndefinedOrNull = function (val) {
                         field : 'snippet',
                         name : 'snippet',
                         displayName : 'Description'
-//                        cellTemplate : '<div style="word-wrap: normal" title="{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</div>',
                     },
                     {
                         field : 'owner',
@@ -191,15 +190,23 @@ angular.isUndefinedOrNull = function (val) {
                 if (response.total > 0) {
                     console.log("found array with length " + response.total);
                     mpdata = transformResponse(response.results);
-
-                    $scope.gridOptions.data = mpdata;
-                    setTimeout(function() {
-                        $scope.safeApply(console.log("showMapResults $apply before loading grid"));
-                    }, 500);
-
-                    // $scope.gridOptions.data = mpdata;
-
+                    $scope.gridOptions.columnDefs[1].visible = true;
+                } else {
+                    mpdata = [{
+                        'id' : null,
+                        'title' : "No matches",
+                        'owner' : "bad egg",
+                        'itemUrl' : "nada",
+                        'thumbnailUrl' : "http://na.support.keysight.com/plts/help/WebHelp/images/td_icon_bad_data.gif",
+                        'snippet' : "Your query returned no results from ArcGIS Online"
+                    }];
+                    $scope.gridOptions.columnDefs[1].visible = false;
+                    mpdata = transformResponse(mpdata);
                 }
+                $scope.gridOptions.data = mpdata;
+                // setTimeout(function () {
+                //     $scope.safeApply(console.log(" $apply before loading grid"));
+                // }, 500);
                 utils.hideLoading();
             };
 
