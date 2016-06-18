@@ -228,7 +228,7 @@
             markerInfoPopup(popPt, "Climate control as nature intended.", hint);
             popPt = new google.maps.LatLng(41.884979, -87.620950);
             hint = "Blank Wall Vistas";
-            markerInfoPopup(popPt, "Panarama views are over-rated if you prefer exposed brick.", hint);
+            markerInfoPopup(popPt, "Panorama views are over-rated if you prefer exposed brick.", hint);
             // this.polygon([
                 // [51.509, -0.08],
                 // [51.503, -0.06],
@@ -291,7 +291,10 @@
                 // runs this code after you finishing the zoom
                 var xtExt = extractBounds(action),
                     xtntJsonStr = JSON.stringify(xtExt),
-                    cmp;
+                    cmp,
+                    service,
+                    qtext,
+                    gBnds;
                 console.log("extracted bounds " + xtntJsonStr);
                 cmp = compareExtents("setBounds", xtExt);
                 if (cmp === false) {
@@ -300,6 +303,20 @@
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
                     updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
+
+                    gBnds = mphmap.getBounds();
+                    console.debug(gBnds);
+                    // ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    // ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    // gBnds = new google.maps.LatLngBounds(ll, ur);
+                    qtext = MLConfig.getQuery();
+                    if (qtext && qtext !== "") {
+                        queryPlaces.bounds = gBnds;
+                        queryPlaces.query = qtext;
+                        queryPlaces.location = mphmap.getCenter();
+                        service = new google.maps.places.PlacesService(mphmap);
+                        service.textSearch(queryPlaces, placesQueryCallback);
+                    }
                 }
             }
         }
@@ -437,7 +454,7 @@
                     gBnds = new google.maps.LatLngBounds(ll, ur);
                     searchFiredFromUrl = false;
 
-                    qtext = MLConfig.query();
+                    qtext = MLConfig.uery();
 
                     pacnpt = $('#pac-input');
                     pacnpt.value = qtext;

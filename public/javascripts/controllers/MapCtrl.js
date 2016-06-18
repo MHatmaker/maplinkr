@@ -241,6 +241,7 @@
                 queryPlaces.bounds = searchBounds;
                 queryPlaces.query = pacnpt[0].value;
                 queryPlaces.location = center;
+                MLConfig.setQuery(queryPlaces.query);
 
                 service = new google.maps.places.PlacesService(gmap);
                 if(queryPlaces.query !== '') {
