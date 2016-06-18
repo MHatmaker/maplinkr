@@ -700,6 +700,9 @@
                 tmpLat,
                 tmpZm,
                 cntr,
+                gBnds,
+                qtext,
+                service,
                 cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat});
                 // view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale;
                 // document.getElementById("mppos").innerHTML = view;
@@ -717,6 +720,20 @@
                         mphmap.setZoom(zm);
                     }
                     mphmap.setCenter(cntr);
+
+                    gBnds = mphmap.getBounds();
+                    console.debug(gBnds);
+                    // ll = new google.maps.LatLng(bnds.lly, bnds.llx);
+                    // ur = new google.maps.LatLng(bnds.ury, bnds.urx);
+                    // gBnds = new google.maps.LatLngBounds(ll, ur);
+                    qtext = MLConfig.getQuery();
+                    if (qtext && qtext !== "") {
+                        queryPlaces.bounds = gBnds;
+                        queryPlaces.query = qtext;
+                        queryPlaces.location = mphmap.getCenter();
+                        service = new google.maps.places.PlacesService(mphmap);
+                        service.textSearch(queryPlaces, placesQueryCallback);
+                    }
                 } else {
                     if (tmpLon !== xj.lon || tmpLat !== xj.lat) {
                         mphmap.setCenter(cntr);
