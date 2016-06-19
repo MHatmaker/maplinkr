@@ -150,6 +150,7 @@
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 MLConfig.getUserName(), WindowStarter.openNewDisplay,
                                     {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
+                            MLConfig.popQuery();
                         } else {
                             WindowStarter.openNewDisplay(MLConfig.masherChannel(false),
                                 MLConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
@@ -513,7 +514,9 @@
             });
 
             $scope.queryChanged = function () {
-                MLConfig.setQuery($scope.gsearch.query);
+                if($scope.gsearch.query.includes(13)) {
+                    MLConfig.setQuery($scope.gsearch.query);
+                }
             };
 
             $scope.showDestDialog = function (callback, details, info) {

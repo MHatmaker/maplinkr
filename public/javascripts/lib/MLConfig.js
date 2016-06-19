@@ -17,7 +17,7 @@ var details = {
     zoom : '',
     destPref : '',
     maphost : '',
-    query : '',
+    query : [],
     bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
     isInitialUser : true,
     userId : null,
@@ -133,8 +133,8 @@ var details = {
                     return getParameterByName('gmquery');
                 },
                 getQueryFromUrl: function () {
-                    details.query = getParameterByName('gmquery');
-                    return details.query;
+                    details.query.push(getParameterByName('gmquery'));
+                    return details.query[0];
                 },
                 setPosition: function (position) {
                     details.lon = position.lon;
@@ -195,10 +195,17 @@ var details = {
                     return details.maphost;
                 },
                 setQuery: function (q) {
-                    details.query = q;
+                    details.query.push(q);
                 },
                 getQuery: function () {
-                    return details.query;
+                    if (details.query.length === 0) {
+                        return "";
+                    } else {
+                        return details.query[0];
+                    }
+                },
+                popQuery : function() {
+                    details.query.pop();
                 },
                 setBounds : function (bnds) {
                     details.bounds = bnds;
