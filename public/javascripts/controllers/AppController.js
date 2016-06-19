@@ -26,14 +26,14 @@
         'controllers/DestWndSetupCtrl',
         'controllers/TransmitNewUrlCtrl',
         'controllers/EmailCtrl',
-        'controllers/GoogleSearchDirective',
+        // 'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
         'javascripts/lib/MLConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, VerbageCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, MLConfig) {
+            TransmitNewUrlCtrl, EmailCtrl, GeoCoder, MLConfig) {
             console.log('AppController define');
 
             function AppController($scope) {
@@ -130,7 +130,7 @@
                 }
                 TransmitNewUrlCtrl.start(App);
                 EmailCtrl.start(App);
-                GoogleSearchDirective.start(App);
+                // GoogleSearchDirective.start(App);
                 // LinkerDisplayDirective.start(App);
 
                 MapCtrl.start(App);

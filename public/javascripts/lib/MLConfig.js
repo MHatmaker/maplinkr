@@ -17,7 +17,7 @@ var details = {
     zoom : '',
     destPref : '',
     maphost : '',
-    query : [],
+    query : '',
     bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
     isInitialUser : true,
     userId : null,
@@ -133,8 +133,8 @@ var details = {
                     return getParameterByName('gmquery');
                 },
                 getQueryFromUrl: function () {
-                    details.query.push(getParameterByName('gmquery'));
-                    return details.query[0];
+                    // details.query.push(getParameterByName('gmquery'));
+                    return details.query;
                 },
                 setPosition: function (position) {
                     details.lon = position.lon;
@@ -195,17 +195,29 @@ var details = {
                     return details.maphost;
                 },
                 setQuery: function (q) {
-                    details.query.push(q);
+                    details.query = q;
+                    // if(details.query.length > 0) {
+                    //     if (details.query[details.query.length-1] !== q) {
+                    //         details.query.push(q);
+                    //     }
+                    // } else {
+                    //     details.query.push(q);
+                    // }
+                    // console.log("details query array on push");
+                    // console.debug(details.query);
                 },
                 getQuery: function () {
-                    if (details.query.length === 0) {
-                        return "";
-                    } else {
-                        return details.query[0];
-                    }
+                    return details.query;
+                    // if (details.query.length === 0) {
+                    //     return "";
+                    // } else {
+                    //     return details.query[0];
+                    // }
                 },
                 popQuery : function() {
                     details.query.pop();
+                    console.log("details query array on pop");
+                    console.debug(details.query);
                 },
                 setBounds : function (bnds) {
                     details.bounds = bnds;

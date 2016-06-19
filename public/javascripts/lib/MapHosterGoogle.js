@@ -454,7 +454,7 @@
                     gBnds = new google.maps.LatLngBounds(ll, ur);
                     searchFiredFromUrl = false;
 
-                    qtext = MLConfig.uery();
+                    qtext = MLConfig.query();
 
                     pacnpt = $('#pac-input');
                     pacnpt.value = qtext;
@@ -467,7 +467,7 @@
                 }
 
                 placeCustomControls();
-                setupQueryListener();
+                // setupQueryListener();
             });
 
             setupQueryListener();

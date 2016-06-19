@@ -282,7 +282,7 @@
             if (self.callbackfunction !== null) {
                 if (selfdict.info) {
                     self.callbackfunction(self.CHANNEL, selfdict.userName,
-                        selfdict.info.destination, selfdict.info.currentMapHolder, selfdict.info.newWindowId);
+                        selfdict.info.destination, selfdict.info.currentMapHolder, selfdict.info.newWindowId, selfdict.info.query);
                 } else {
                     self.callbackfunction(self.CHANNEL, selfdict.userName, null);
                 }

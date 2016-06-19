@@ -17,9 +17,9 @@
         'lib/MLConfig',
         'controllers/StompSetupCtrl',
         'controllers/WindowStarter',
-        'controllers/GoogleSearchDirective',
+        // 'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            MLConfig, StompSetupCtrl, WindowStarter_, GoogleSearchDirective) {
+            MLConfig, StompSetupCtrl, WindowStarter_) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -50,6 +50,7 @@
                 elem,
                 aelem,
                 connectQuery,
+                queryForNewDisplay = "",
                 searchInput;
 
             $scope.destSelections = [
@@ -149,11 +150,16 @@
 
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 MLConfig.getUserName(), WindowStarter.openNewDisplay,
-                                    {'destination' : destWnd, 'currentMapHolder' : sourceMapType, 'newWindowId' : newSelectedWebMapId});
-                            MLConfig.popQuery();
+                                    {
+                                        'destination' : destWnd,
+                                        'currentMapHolder' : sourceMapType,
+                                        'newWindowId' : newSelectedWebMapId,
+                                        'query' : queryForNewDisplay});
+                            queryForNewDisplay = "";
                         } else {
                             WindowStarter.openNewDisplay(MLConfig.masherChannel(false),
-                                MLConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId);
+                                MLConfig.getUserName(), destWnd, sourceMapType, newSelectedWebMapId, queryForNewDisplay);
+                            queryForNewDisplay = "";
                         }
 
                     } else {  //(destWnd == "Same Window")
@@ -514,6 +520,7 @@
             });
 
             $scope.queryChanged = function () {
+                queryForNewDisplay = $scope.gsearch.query;
                 if($scope.gsearch.query.includes(13)) {
                     MLConfig.setQuery($scope.gsearch.query);
                 }

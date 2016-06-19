@@ -13,7 +13,7 @@
     ], function (angular, utils, MLConfig) {
 
         var
-            setupNewDisplay = function (channel, userName, wndIndex, destWnd, curmph, newSelectedWebMapId) {
+            setupNewDisplay = function (channel, userName, wndIndex, destWnd, curmph, newSelectedWebMapId, query) {
 
                 var
                     wndName = newSelectedWebMapId + wndIndex,
@@ -24,7 +24,7 @@
                     url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
                     "&maphost=GoogleMap" + "&referrerId=" + MLConfig.getUserId(),
-                    gmQuery = MLConfig.getQuery();
+                    gmQuery = query; //MLConfig.getQuery();
                 if (gmQuery !== '') {
                     url += "&gmquery=" + gmQuery;
                     displayBnds = MLConfig.getBoundsForUrl();
@@ -48,14 +48,14 @@
                 }
             },
 
-            openNewDisplay = function (channel, userName, destWnd, curmph, newSelectedWebMapId) {
+            openNewDisplay = function (channel, userName, destWnd, curmph, newSelectedWebMapId, query) {
                 // wndIndex += 1;
                 var $inj = angular.injector(['app']),
                     $http = $inj.get('$http');
 
                 $http({method: 'GET', url: '/wndseqno'}).
                     success(function (data, status, headers, config) {
-                        setupNewDisplay(channel, userName, data.wndNameSeqNo, destWnd, curmph, newSelectedWebMapId);
+                        setupNewDisplay(channel, userName, data.wndNameSeqNo, destWnd, curmph, newSelectedWebMapId, query);
                     }).
                     error(function (data, status, headers, config) {
                             // called asynchronously if an error occurs
