@@ -1,6 +1,7 @@
 /*global define */
 /*jslint es5: true */
 /*global jQuery */
+/*global google */
 
 (function () {
     "use strict";
@@ -19,38 +20,32 @@
         'controllers/WindowStarter',
         // 'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            MLConfig, StompSetupCtrl, WindowStarter_) {
+            MLConfig, StompSetupCtrl, WindowStarterArg) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
                     'google' : StartupGoogle,
                     'arcgis' : StartupArcGIS},
-            WindowStarter = WindowStarter_,
+            WindowStarter = WindowStarterArg,
             currentMapType = null,
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
-            lnkrMinMaxInstalled = false,
             searchBox = null,
-            placesFromSearch = null,
             $inj = null,
             gmQSvc = null,
-            selfMethods= {};
+            modalInstance,
+            selfMethods = {};
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
                 gmquery = MLConfig.query(),
-                height,
-                width,
-                mapWrp,
-                hstr,
                 stup,
                 tmpltName,
-                elem,
-                aelem,
                 connectQuery,
                 queryForNewDisplay = "",
+                queryForSameDisplay = "",
                 searchInput;
 
             $scope.destSelections = [
@@ -92,12 +87,9 @@
             };
 
             $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
+                modalInstance.dismiss('cancel');
             };
 
-            $scope.$on('displayLinkerEvent', function (event, data) {
-                refreshLinker();
-            });
 
             function refreshLinker() {
                 var lnkrText = document.getElementById("idLinkerText"),
@@ -114,32 +106,35 @@
                 }
             }
 
-            $scope.$on("MapLinkrClosedEvent" , function (event, args) {
+            $scope.$on('displayLinkerEvent', function (event, data) {
+                refreshLinker();
+            });
+
+            $scope.$on("MapLinkrClosedEvent", function (event, args) {
                 refreshLinker();
             });
 
             function placesQueryCallback(placesFromSearch, status) {
                 var mpTypeSvc,
-                googmph,
-                curmph,
-                curMapType,
-                gmQSvc,
-                placesSearchResults,
-                onAcceptDestination,
-                scope;
+                    googmph,
+                    curmph,
+                    curMapType,
+                    placesSearchResults,
+                    onAcceptDestination,
+                    scope;
 
                 console.log('status is ' + status);
                 utils.hideLoading();
 
                 onAcceptDestination = function (info) {
-                    var googmph, sourceMapType, $inj, evtSvc, mpTypeSvc, newSelectedWebMapId, destWnd;
+                    var sourceMapType, evtSvc, newSelectedWebMapId, destWnd;
 
                     $inj = angular.injector(['app']);
                     if (info) {
                         sourceMapType = info.mapType;
                         destWnd = info.dstSel;
                     }
-                    newSelectedWebMapId = "NoId"
+                    newSelectedWebMapId = "NoId";
 
                     if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
                         if (MLConfig.isNameChannelAccepted() === false) {
@@ -150,11 +145,12 @@
 
                             StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 MLConfig.getUserName(), WindowStarter.openNewDisplay,
-                                    {
-                                        'destination' : destWnd,
-                                        'currentMapHolder' : sourceMapType,
-                                        'newWindowId' : newSelectedWebMapId,
-                                        'query' : queryForNewDisplay});
+                                {
+                                    'destination' : destWnd,
+                                    'currentMapHolder' : sourceMapType,
+                                    'newWindowId' : newSelectedWebMapId,
+                                    'query' : queryForNewDisplay
+                                });
                             queryForNewDisplay = "";
                         } else {
                             WindowStarter.openNewDisplay(MLConfig.masherChannel(false),
@@ -167,6 +163,8 @@
                         mpTypeSvc = $inj.get("CurrentMapTypeService");
                         googmph = mpTypeSvc.getSpecificMapType('google');
                         googmph.placeMarkers(placesSearchResults);
+                        MLConfig.setQuery(queryForNewDisplay);
+                        queryForSameDisplay = queryForNewDisplay;
                     }
                 };
 
@@ -178,7 +176,7 @@
 
                     curmph = mpTypeSvc.getCurrentMapType();
                     curMapType = mpTypeSvc.getMapTypeKey();
-                    if(curMapType === 'google') {
+                    if (curMapType === 'google') {
                         googmph.setPlacesFromSearch(placesFromSearch);
                         $scope.destSelections[0].showing = 'destination-option-showing';
                     } else {
@@ -225,9 +223,9 @@
 
                 mapLinkrBounds = MLConfig.getBounds();
                 searchBounds = new google.maps.LatLngBounds(
-                                new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
-                                new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
-                            );
+                    new google.maps.LatLng({'lat' : mapLinkrBounds.lly, 'lng' : mapLinkrBounds.llx}),
+                    new google.maps.LatLng({'lat' : mapLinkrBounds.ury, 'lng' : mapLinkrBounds.urx})
+                );
                 position = MLConfig.getPosition();
                 center = {'lat' : position.lat, 'lng' : position.lon};
                 googleCenter = new google.maps.LatLng(position.lat, position.lon);
@@ -248,13 +246,13 @@
                 queryPlaces.bounds = searchBounds;
                 queryPlaces.query = pacnpt[0].value;
                 queryPlaces.location = center;
-                MLConfig.setQuery(queryPlaces.query);
+                // MLConfig.setQuery(queryPlaces.query);
 
                 service = new google.maps.places.PlacesService(gmap);
-                if(queryPlaces.query !== '') {
+                if (queryPlaces.query !== '') {
                     service.textSearch(queryPlaces, placesQueryCallback);
                 }
-            }
+            };
 
             function refreshMinMax() {
                 var minMaxText = document.getElementById("idMinMaxText"),
@@ -270,30 +268,30 @@
             function placeCustomControls() {
                 //if (lnkrMinMaxInstalled === false) {
                 //    lnkrMinMaxInstalled = true;
+                /*jslint unparam: true*/
+                function stopLintUnusedComplaints(lnkr, minmaxr) {
+                    console.log("stopLintUnusedComplaints");
+                }
                 if (document.getElementById("linkerDirectiveId") === null) {
 
-                    /*jslint unparam: true*/
-                    function stopLintUnusedComplaints(lnkr, minmaxr, aelem) {
-                        console.log("stopLintUnusedComplaints");
-                    }
 
                     var contextScope = $scope,
                         cnvs = utils.getElemById(whichCanvas),
                         templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
-    	                      <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-    	                      </label> \
-    	                      <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
-    	                      </div>',
+    	                    <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
+    	                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            </label> \
+    	                    <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
+    	                       style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
+    	                    </div>',
 
-    	                    templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
-    	                      <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
-    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-    	                      </label> \
-    	                      <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-    	                          style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-    	                      </div>',
+                        templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
+                            <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
+                                style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                    </label> \
+    	                    <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+    	                         style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+    	                    </div>',
                         lnkr1 = angular.element(templateLnkr),
                         lnkr = cnvs.append(lnkr1),
 
@@ -305,7 +303,7 @@
                         lnkrText,
                         lnkrSymbol,
                         refreshDelay;
-                    stopLintUnusedComplaints(lnkr, minmaxr, aelem);
+                    stopLintUnusedComplaints(lnkr, minmaxr);
 
                     lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
 
@@ -362,7 +360,7 @@
             tmpltName = $routeParams.id;
             console.log(tmpltName);
 
-            function configureCurrentMapType () {
+            function configureCurrentMapType() {
                 mptp = $scope.currentTab.maptype;
                 currentMapType = mapTypes[mptp];
                 currentMapType.config(null);
@@ -376,11 +374,11 @@
 
             selfMethods.configureCurrentMapType = configureCurrentMapType;
 
-            function invalidateCurrentMapTypeConfigured () {
+            function invalidateCurrentMapTypeConfigured() {
                 curMapTypeInitialized = false;
             }
 
-            function getSearchBox () {
+            function getSearchBox() {
                 return searchBox;
             }
             selfMethods.getSearchBox = getSearchBox;
@@ -401,7 +399,7 @@
                     utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
                     console.log("REFRESH LINKER AND MINMAX");
 
-                    if(curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
+                    if (curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
                         configureCurrentMapType();
                     }
 
@@ -423,8 +421,7 @@
                 console.log("MapCtrl 'searchClickEvent' handler");
                 var element = document.getElementById('pac-input'),
                     pacnpt,
-                    paccon,
-                    searchBox;
+                    paccon;
                 if (element) {
                     element.focus();
                 }
@@ -446,15 +443,16 @@
                 // });
             });
 
-            function setupQueryListener () {
+            function setupQueryListener() {
+                $inj = angular.injector(['app']);
                 var
                     cnvs = utils.getElemById(whichCanvas),
-                    $inj = angular.injector(['app']),
                     mpTypeSvc = $inj.get("CurrentMapTypeService"),
                     curMapType = mpTypeSvc.getMapTypeKey(),
                     fnLink,
                     pcnpt,
-                    template = '<div id="gmsearch" \
+                    template = ' \
+                        <div id="gmsearch" \
                         class="gmsearchclass" \
                             style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
                             <input id="pac-input" \
@@ -466,7 +464,7 @@
                                 ng-model="gsearch.query" \
                                 ng-change="queryChanged()" auto-focus > \
                         </div>';
-                if(curMapType === 'google') {
+                if (curMapType === 'google') {
                     $scope.gsearch.isGoogle = true;
                 } else {
                     $scope.gsearch.isGoogle = false;
@@ -502,7 +500,7 @@
                             console.log("MapCtrl 'places_changed' listener");
                             connectQuery();
                             searchInput.blur();
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 searchInput.value = '';
                                 // searchInput.focus();},10);
                             }, 10);
@@ -521,8 +519,11 @@
 
             $scope.queryChanged = function () {
                 queryForNewDisplay = $scope.gsearch.query;
-                if($scope.gsearch.query.includes(13)) {
+                if ($scope.gsearch.query.includes(13)) {
                     MLConfig.setQuery($scope.gsearch.query);
+                    if (queryForSameDisplay === "") {
+                        queryForSameDisplay = queryForNewDisplay;
+                    }
                 }
             };
 
@@ -542,7 +543,7 @@
                     $scope.data.id = info.id;
                 }
 
-                var modalInstance = $uibModal.open({
+                modalInstance = $uibModal.open({
                     templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
                     controller : 'DestWndSetupCtrl',
                     backdrop : true,
@@ -590,14 +591,14 @@
             if (selfMethods.invalidateCurrentMapTypeConfigured) {
                 selfMethods.invalidateCurrentMapTypeConfigured();
             }
-        }
+        };
 
         MapCtrl.prototype.setupQueryListener = function () {
             console.log("MapCtrl.prototype.setupQueryListener");
             if (selfMethods.setupQueryListener) {
                 selfMethods.setupQueryListener();
             }
-        }
+        };
 
 
         function init(App) {

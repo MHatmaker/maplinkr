@@ -444,6 +444,7 @@
                 console.log('gmQuery contains ' + gmQuery);
                 if (gmQuery !== '') {
                     searchFiredFromUrl = true;
+                    MLConfig.setQuery(gmQuery);
                 }
                 if (searchFiredFromUrl === true) {
                     console.log("getBoundsFromUrl.......in MapHosterGoogle 'places_changed' listener");
