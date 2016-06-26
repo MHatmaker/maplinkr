@@ -29,13 +29,13 @@
 
     define([
         'lib/MapHosterArcGIS',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'lib/MLConfig',
         'lib/utils',
         'controllers/TabsCtrl',
         'angular',
         'esri/map'
-    ], function (MapHosterArcGIS, StompSetupCtrl, MLConfig, utils, TabsCtrl) {
+    ], function (MapHosterArcGIS, PusherSetupCtrl, MLConfig, utils, TabsCtrl) {
         console.log('StartupArcGIS defined');
 
         var
@@ -122,7 +122,7 @@
                 serv = $inj.get('CurrentMapTypeService');
                 curmph = serv.getSelectedMapType();
 
-                pusher = StompSetupCtrl.createPusherClient(
+                pusher = PusherSetupCtrl.createPusherClient(
                     {
                         'client-MapXtntEvent' : MapHosterArcGIS.retrievedBounds,
                         'client-MapClickEvent' : MapHosterArcGIS.retrievedClick,
@@ -407,7 +407,7 @@
             };
 
             if (MLConfig.isNameChannelAccepted() === false) {
-                StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                     MLConfig.getUserName(), openNewDisplay,
                         {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
             } else {

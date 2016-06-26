@@ -4,11 +4,11 @@
 (function () {
     "use strict";
 
-    console.log('EmailCtrl setup');
+    console.log('ShareCtrl setup');
     define(['angular', 'lib/MLConfig', 'lib/utils'], function (angular, MLConfig, utils) {
-        console.log('EmailCtrl define');
+        console.log('ShareCtrl define');
 
-        function EmailCtrl($scope) {
+        function ShareCtrl($scope) {
             var context = {
                 'fullUrl' : ''
             };
@@ -72,7 +72,7 @@
                     urlEl[0].select();
                     $scope.safeApply();
                 }, 50);
-                
+
                 console.log("fetchUrl with : " + context.fullUrl);
 
                 labelDiv.css({"display" : "inline-block"});
@@ -98,9 +98,9 @@
 
 
         function init(App) {
-            console.log('EmailCtrl init');
-            App.controller('EmailCtrl', ['$scope', EmailCtrl]);
-            return EmailCtrl;
+            console.log('ShareCtrl init');
+            App.controller('ShareCtrl', ['$scope', ShareCtrl]);
+            return ShareCtrl;
         }
 
 

@@ -13,7 +13,7 @@
         'lib/MLConfig',
         'controllers/PusherCtrl'
     ], function (angular, MLConfig, pusherCtrl) {
-        console.log('StompSetupCtrl define');
+        console.log('PusherSetupCtrl define');
 
         var selfdict = {
             'scope' : null,
@@ -32,8 +32,8 @@
             allMapTypes,
             mptLength;
 
-        function StompSetupCtrl($scope, $uibModal) {
-            console.log("in StompSetupCtrl");
+        function PusherSetupCtrl($scope, $uibModal) {
+            console.log("in PusherSetupCtrl");
             selfdict.isInstantiated = areWeInitialized = true;
             $scope.privateChannelMashover = MLConfig.masherChannel();
             selfdict.scope = $scope;
@@ -162,15 +162,15 @@
             };
         }
 
-        StompSetupCtrl.prototype.isInitialized = function () {
+        PusherSetupCtrl.prototype.isInitialized = function () {
             return areWeInitialized;
         };
 
-        StompSetupCtrl.prototype.isInstantiated = function () {
+        PusherSetupCtrl.prototype.isInstantiated = function () {
             return areWeInstantiated;
         };
 
-        StompSetupCtrl.prototype.PusherClient = function (eventDct, channel, userName, cbfn) {
+        PusherSetupCtrl.prototype.PusherClient = function (eventDct, channel, userName, cbfn) {
             var pusher,
                 channelBind,
                 self = this,
@@ -268,7 +268,7 @@
             for (i = 0; i < mptLength; i++) {
                 maptypekey = allMapTypes[i].type;
                 maptypeobj = allMapTypes[i].mph;
-                console.log("StompSetupCtrl iteratively setting pusher client for hoster type: " + maptypekey);
+                console.log("PusherSetupCtrl iteratively setting pusher client for hoster type: " + maptypekey);
                 if (maptypeobj && maptypeobj !== "undefined") {
                     maptypeobj.setPusherClient(pusher, self.CHANNEL);
                     maptypeobj.setUserName(self.userName);
@@ -289,9 +289,9 @@
             }
             return pusher;
         };
-        selfdict.PusherClient = StompSetupCtrl.prototype.PusherClient;
+        selfdict.PusherClient = PusherSetupCtrl.prototype.PusherClient;
 
-        StompSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn, nfo) {
+        PusherSetupCtrl.prototype.setupPusherClient = function (eventDct, userName, cbfn, nfo) {
             selfdict.eventDct = eventDct;
             selfdict.userName = userName;
             if (selfdict.scope) {
@@ -303,8 +303,8 @@
         };
 
 
-        StompSetupCtrl.prototype.createPusherClient = function (eventDct, pusherChannel, initName, cbfn, nfo) {
-            console.log("StompSetupCtrl.createPusherClient");
+        PusherSetupCtrl.prototype.createPusherClient = function (eventDct, pusherChannel, initName, cbfn, nfo) {
+            console.log("PusherSetupCtrl.createPusherClient");
             selfdict.eventDct = eventDct;
             selfdict.userName = initName;
             if (selfdict.scope) {
@@ -312,7 +312,7 @@
             }
             selfdict.callbackFunction = cbfn;
             selfdict.info = nfo;
-            selfdict.pusher = StompSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, initName, cbfn);
+            selfdict.pusher = PusherSetupCtrl.prototype.PusherClient(eventDct, pusherChannel, initName, cbfn);
             return selfdict.pusher;
         };
 
@@ -327,17 +327,17 @@
                 // return;
             // }
             selfdict.isInitialized = areWeInitialized = true;
-            App.controller('StompSetupCtrl',  ['$scope', '$uibModal', StompSetupCtrl]);
+            App.controller('PusherSetupCtrl',  ['$scope', '$uibModal', PusherSetupCtrl]);
 
-            // StompSetupCtrl.self.scope = StompSetupCtrl.$scope;
+            // PusherSetupCtrl.self.scope = PusherSetupCtrl.$scope;
             // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
-            return StompSetupCtrl;
+            return PusherSetupCtrl;
         }
 
-        return { start: init, setupPusherClient : StompSetupCtrl.prototype.setupPusherClient,
-                  createPusherClient : StompSetupCtrl.prototype.createPusherClient,
-                  isInitialized : StompSetupCtrl.prototype.isInitialized,
-                  isInstantiated : StompSetupCtrl.prototype.isInstantiated};
+        return { start: init, setupPusherClient : PusherSetupCtrl.prototype.setupPusherClient,
+                  createPusherClient : PusherSetupCtrl.prototype.createPusherClient,
+                  isInitialized : PusherSetupCtrl.prototype.isInitialized,
+                  isInstantiated : PusherSetupCtrl.prototype.isInstantiated};
 
     });
 

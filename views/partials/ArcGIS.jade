@@ -1,18 +1,18 @@
 
 extends ./MapPageBase
 
-    
+
 block append scriptsblock
     script(src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js')
     script(src='/javascripts/lib/StartupArcGIS.js')
-    script(src='javascripts/lib/searcher.js') 
-    script(src='javascripts/controllers/StompSetupCtrl.js') 
-    
-//    
-block append content    
+    script(src='javascripts/lib/searcher.js')
+    script(src='javascripts/controllers/PusherSetupCtrl.js')
+
+//
+block append content
     script(type="text/ng-template" id="DestSelectModalDlg.html")
-    
-//    
+
+//
       div(class="modal hide fade", role="dialog")
           div(class="modal-dialog")
             div(class="modal-content")
@@ -29,23 +29,22 @@ block append content
                         button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
                         button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
                         button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
-                
-                
+
+
 //
      script(type="text/ng-template" id="StompChannelerDialog.html")
-        #StompChannelerDialog(ng-controller="StompSetupCtrl")
-            div(class="modal-header")
+        #StompChannelerDialog(ng-controller="PusherSetupCtrl")
+            div(class="modal-header")PusherSetupCtrl
                 h3(Select Name for Synchronization Channel)
             div(class="modal-body")
                     table
                         tr
                             td
-                                label(for='channelName', style='font-size:12pt') 
+                                label(for='channelName', style='font-size:12pt')
                             td
                                 input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
-                            
+
         div(class="modal-footer")
             div(class="btn-group" style="margin: 9px 0;")
                 button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
                 button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
-                

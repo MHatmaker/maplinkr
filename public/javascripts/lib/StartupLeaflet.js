@@ -11,9 +11,9 @@
     console.log('StartupLeaflet setup');
     define([
         'lib/MapHosterLeaflet',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'lib/MLConfig'
-    ], function (MapHosterLeaflet, StompSetupCtrl, MLConfig) {
+    ], function (MapHosterLeaflet, PusherSetupCtrl, MLConfig) {
         console.log('StartupLeaflet define');
         var
             lMap,
@@ -76,7 +76,7 @@
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
 
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                    PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                         MLConfig.getUserName(), function (channel, userName) {
                             MLConfig.setUserName(userName), openNewDisplay,
                                 {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId};
@@ -103,7 +103,7 @@
 
                 pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);
-                pusher = StompSetupCtrl.createPusherClient(
+                pusher = PusherSetupCtrl.createPusherClient(
                     {
                         'client-MapXtntEvent' : MapHosterLeaflet.retrievedBounds,
                         'client-MapClickEvent' : MapHosterLeaflet.retrievedClick,

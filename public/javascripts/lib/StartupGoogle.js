@@ -57,10 +57,10 @@ function initPlaces() {
     console.log('StartupGoogle setup');
     define([
         'lib/MapHosterGoogle',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'lib/MLConfig',
         'lib/utils'
-    ], function (MapHosterGoogle, StompSetupCtrl, MLConfig, utils) {
+    ], function (MapHosterGoogle, PusherSetupCtrl, MLConfig, utils) {
         console.log('StartupGoogle define');
         var
             gMap = null,
@@ -122,7 +122,7 @@ function initPlaces() {
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 
-                    StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                    PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                         MLConfig.getUserName(), function (channel, userName) {
                             MLConfig.setUserName(userName);
                             openAgoWindow(channel, userName);
@@ -183,7 +183,7 @@ function initPlaces() {
 
                 pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);
-                pusher = StompSetupCtrl.createPusherClient(
+                pusher = PusherSetupCtrl.createPusherClient(
                     {
                         'client-MapXtntEvent' : MapHosterGoogle.retrievedBounds,
                         'client-MapClickEvent' : MapHosterGoogle.retrievedClick,

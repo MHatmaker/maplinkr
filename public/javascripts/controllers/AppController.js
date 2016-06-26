@@ -17,23 +17,22 @@
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
         'controllers/MapLinkrPluginCtrl',
-        'controllers/VerbageCtrl',
         'controllers/WebSiteDescriptionCtrl',
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'controllers/PusherCtrl',
         'controllers/DestWndSetupCtrl',
         'controllers/TransmitNewUrlCtrl',
-        'controllers/EmailCtrl',
+        'controllers/ShareCtrl',
         // 'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
         'javascripts/lib/MLConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
-            PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, VerbageCtrl, WebSiteDescriptionCtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, EmailCtrl, GeoCoder, MLConfig) {
+            PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, WebSiteDescriptionCtrl,
+            SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
+            TransmitNewUrlCtrl, ShareCtrl, GeoCoder, MLConfig) {
             console.log('AppController define');
 
             function AppController($scope) {
@@ -118,18 +117,17 @@
                 MapLinkrPluginCtrl.start(App);
                 // MapCtrl.start(App);
 
-                VerbageCtrl.start(App);
                 SearcherCtrlGrp.start(App, portalForSearch);
                 SearcherCtrlMap.start(App, portalForSearch);
-                if (StompSetupCtrl.isInitialized() === false) {
-                    StompSetupCtrl.start(App);
+                if (PusherSetupCtrl.isInitialized() === false) {
+                    PusherSetupCtrl.start(App);
                     PusherCtrl.start(App);
                 }
                 if (DestWndSetupCtrl.isInitialized() === false) {
                     DestWndSetupCtrl.start(App);
                 }
                 TransmitNewUrlCtrl.start(App);
-                EmailCtrl.start(App);
+                ShareCtrl.start(App);
                 // GoogleSearchDirective.start(App);
                 // LinkerDisplayDirective.start(App);
 

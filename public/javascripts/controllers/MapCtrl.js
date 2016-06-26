@@ -16,11 +16,11 @@
         'lib/StartupArcGIS',
         'lib/utils',
         'lib/MLConfig',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'controllers/WindowStarter',
         // 'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            MLConfig, StompSetupCtrl, WindowStarterArg) {
+            MLConfig, PusherSetupCtrl, WindowStarterArg) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -143,7 +143,7 @@
                             evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
                             evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
 
-                            StompSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                            PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                                 MLConfig.getUserName(), WindowStarter.openNewDisplay,
                                 {
                                     'destination' : destWnd,

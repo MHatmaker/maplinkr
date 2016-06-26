@@ -14,7 +14,7 @@ var selectedMapType = 'arcgis',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/MLConfig',
-        'controllers/EmailCtrl',
+        'controllers/ShareCtrl',
         'controllers/SPACtrl',
         'controllers/TopRowCtrl',
         'controllers/LeftColCtrl',
@@ -28,7 +28,7 @@ var selectedMapType = 'arcgis',
         'lib/MapHosterArcGIS'
 
     ], function (angular, AppController, MasherCtrl, TabsCtrl, MLConfig,
-            EmailCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
+            ShareCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
             MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
@@ -96,7 +96,7 @@ var selectedMapType = 'arcgis',
                                 reloadOnSearch: true
                             }).
                             when('/contact', {
-                                controller: EmailCtrl
+                                controller: ShareCtrl
                             }).
                             otherwise({
                                 redirectTo: '/'

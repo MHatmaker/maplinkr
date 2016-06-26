@@ -13,9 +13,9 @@
         'controllers/PositionViewCtrl',
         'lib/utils',
         'lib/MLConfig',
-        'controllers/StompSetupCtrl',
+        'controllers/PusherSetupCtrl',
         'controllers/WindowStarter'
-    ], function (angular, PositionViewCtrl, utils, MLConfig, StompSetupCtrl, WindowStarter) {
+    ], function (angular, PositionViewCtrl, utils, MLConfig, PusherSetupCtrl, WindowStarter) {
 
         var
             hostName = "MapHosterGoogle",
