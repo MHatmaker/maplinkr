@@ -36,9 +36,9 @@
     "socket.io": "*",
     "static-favicon": "~1.0.0"
   },
-  "scripts": {
+  /*"scripts": {
     "start": "node server.js"
-  },
+  },*/
   "devDependencies": {},
   "bundleDependencies": [],
   "private": true,
