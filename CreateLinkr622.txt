@@ -1,0 +1,11 @@
+rhc app create linkr622 \
+  https://raw.githubusercontent.com/icflorescu/openshift-cartridge-nodejs/master/metadata/manifest.yml \
+  --from-code=https://github.com/MHatmaker/maplinkr.git
+
+rhc app create linkr622 nodejs --from-code=git://github.com/ryanj/nodejs-custom-version-openshift.git
+
+remote access:
+ssh 5774315289f5cf4e2c00008a@linkr622-arcadian.rhcloud.com
+
+remote git repository:
+url = ssh://5774315289f5cf4e2c00008a@linkr622-arcadian.rhcloud.com/~/git/linkr622.git/
