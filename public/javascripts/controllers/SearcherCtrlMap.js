@@ -204,9 +204,9 @@ angular.isUndefinedOrNull = function (val) {
                     mpdata = transformResponse(mpdata);
                 }
                 $scope.gridOptions.data = mpdata;
-                // setTimeout(function () {
-                //     $scope.safeApply(console.log(" $apply before loading grid"));
-                // }, 500);
+                setTimeout(function () {
+                    $scope.safeApply(console.log(" $apply before loading grid"));
+                }, 500);
                 utils.hideLoading();
             };
 
