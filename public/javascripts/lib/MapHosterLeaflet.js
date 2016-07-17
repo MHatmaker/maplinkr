@@ -610,7 +610,9 @@ define('GeoCoder', function () {
 
             function removeEventListeners() {
                 mphmap.removeEventListener();
-                mphmap.zoomControl.removeFrom(mphmap);
+                // mphmap.removeControl(mphmap.zoomControl);
+                mphmap.zoomControl._zoomInButton.hidden = true;
+                mphmap.zoomControl._zoomOutButton.hidden = true;
             }
 
             return {

@@ -22,6 +22,7 @@ var selectedMapType = 'arcgis',
         'controllers/RightColCtrl',
         'controllers/MapCtrl',
         'controllers/MapLinkrPluginCtrl',
+        'controllers/MapLinkrMgrCtrl',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
@@ -29,7 +30,7 @@ var selectedMapType = 'arcgis',
 
     ], function (angular, AppController, MasherCtrl, TabsCtrl, MLConfig,
             ShareCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
-            MapLinkrPluginCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+            MapLinkrPluginCtrl, MapLinkrMgrCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {
@@ -245,31 +246,48 @@ var selectedMapType = 'arcgis',
                     };
                 }).
 
-                factory("LinkrService", function ($rootScope) {
+                value('linkrScopes', {
+                    scopes : [],
+                    addScope : function (s) {
+                        this.scopes.push(s);
+                    },
+                    getScopes : function () {
+                        return this.scopes;
+                    }
+                }).
+
+                factory("LinkrService", ['$rootScope', 'linkrScopes', function ($rootScope, linkrScopes) {
                     var lnkrdiv = document.getElementById('linkerDirectiveId'),
                         scope = angular.element(lnkrdiv).scope(),
                         getLinkrScope,
                         hideLinkr,
-                        showLinkr;
+                        showLinkr,
+                        addScope,
+                        scopes = [],
+                        self = this;
 
+                    addScope = function (scope) {
+                        linkrScopes.addScope(scope);
+                    }
                     getLinkrScope = function () {
                         return scope;
                     };
                     hideLinkr = function () {
                         var data = {'visibility' : 'none'};
                         if (scope) {
-                            scope.$emit('displayLinkerEvent', data);
+                            scope.$publish('displayLinkerEvent', data);
                         }
                     };
                     showLinkr = function () {
-                        var data = {'visibility' : 'block'};
+                        var data = {'visibility' : 'block'},
+                            scope = linkrScopes.getScopes()[0];
                         if (scope) {
-                            scope.$emit('displayLinkerEvent', data);
+                            scope.$broadcast('displayLinkerEvent', data);
                         }
                     };
 
-                    return {getLinkrScope: getLinkrScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
-                }).
+                    return {addScope : addScope, getLinkrScope: getLinkrScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
+                }]).
 
                 factory("MapControllerService", function ($rootScope) {
                     var getController = function () {

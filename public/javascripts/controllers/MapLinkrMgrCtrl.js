@@ -4,16 +4,15 @@
 (function () {
     "use strict";
 
-    console.log('MapColCtrl setup');
+    console.log('MapLinkrMgrCtrl setup');
     define([
         'angular',
-        'controllers/MapLinkrMgrCtrl'
-    ], function (angular, MapLinkrMgrCtrl) {
-        console.log('MapColCtrl define');
+        'controllers/MapLinkrPluginCtrl'
+    ], function (angular, MapLinkrPluginCtrl) {
+        console.log('MapLinkrMgrCtrl define');
 
-        function MapColCtrl($scope, $rootScope, $uibModal) {
-            console.log("in MapColCtrl");
-
+        function MapLinkrMgrCtrl($scope, $rootScope, $uibModal, linkrSvc) {
+            console.log("in MapLinkrMgrCtrl");
             $scope.mldata = {
                 'news' : {
                     'isCollapsed' : true,
@@ -91,6 +90,7 @@
                 'mapLinkrBtnText' : 'MapLinkr',
                 'ExpandPlug' : "MapLinkr"
             };
+            linkrSvc.addScope($scope);
 
             $rootScope.$on('OpenMapPaneCommand', function (event, args) {
                 $scope.mldata.groups.isCollapsed = !$scope.mldata.groups.isCollapsed;
@@ -102,48 +102,48 @@
                 alert("onExpandMapClicked");
             };
 
-            // $scope.$on('displayLinkerEvent', function (event, data) {
-            //     if (data.visibility !== 'none') {
-            //         $scope.onMapLinkrClicked();
-            //     }
-            // });
+            $scope.$on('displayLinkerEvent', function (event, data) {
+                if (data.visibility !== 'none') {
+                    $scope.onMapLinkrClicked();
+                }
+            });
 
-            // $scope.onMapLinkrClicked = function () {
-            //     console.log("onMapLinkrClicked");
-            //
-            //     $scope.mldata.isOpen = true;
-            //     $scope.mldata.mapLinkrBtnImage = "Collapse";
-            //     $scope.mldata.mapLinkrBtnText = "MapLinkr";
-            //     console.debug($scope.mldata);
-            //
-            //     var modalInstance = $uibModal.open({
-            //         // template : tmplt,
-            //         templateUrl : '/templates/MapLinkrPlugin',   // .jade will be appended
-            //         controller : 'MapLinkrPluginCtrl',
-            //         backdrop : 'false',
-            //
-            //         resolve : {
-            //             data: function () {
-            //                 return $scope.mldata;
-            //             }
-            //         }
-            //     });
-            //
-            //     modalInstance.result.then(function (msg) {
-            //         console.log("return from showing MapLink dialog");
-            //         console.log(msg);
-            //         $scope.mldata.mapLinkrBtnText = "MapLinkr";
-            //         $scope.mldata.isOpen = false;
-            //         $scope.mldata.mapLinkrBtnImage = "Expand";
-            //         $scope.$broadcast("MapLinkrClosedEvent");
-            //     }, function () {
-            //         console.log('MapLinkr Modal dismissed at: ' + new Date());
-            //         $scope.mldata.mapLinkrBtnText = "MapLinkr";
-            //         $scope.mldata.isOpen = false;
-            //         $scope.mldata.mapLinkrBtnImage = "Expand";
-            //         $scope.$broadcast("MapLinkrClosedEvent");
-            //     });
-            // };
+            $scope.onMapLinkrClicked = function () {
+                console.log("onMapLinkrClicked");
+
+                $scope.mldata.isOpen = true;
+                $scope.mldata.mapLinkrBtnImage = "Collapse";
+                $scope.mldata.mapLinkrBtnText = "MapLinkr";
+                console.debug($scope.mldata);
+
+                var modalInstance = $uibModal.open({
+                    // template : tmplt,
+                    templateUrl : '/templates/MapLinkrPlugin',   // .jade will be appended
+                    controller : 'MapLinkrPluginCtrl',
+                    backdrop : 'false',
+
+                    resolve : {
+                        data: function () {
+                            return $scope.mldata;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (msg) {
+                    console.log("return from showing MapLink dialog");
+                    console.log(msg);
+                    $scope.mldata.mapLinkrBtnText = "MapLinkr";
+                    $scope.mldata.isOpen = false;
+                    $scope.mldata.mapLinkrBtnImage = "Expand";
+                    $scope.$broadcast("MapLinkrClosedEvent");
+                }, function () {
+                    console.log('MapLinkr Modal dismissed at: ' + new Date());
+                    $scope.mldata.mapLinkrBtnText = "MapLinkr";
+                    $scope.mldata.isOpen = false;
+                    $scope.mldata.mapLinkrBtnImage = "Expand";
+                    $scope.$broadcast("MapLinkrClosedEvent");
+                });
+            };
 
             $scope.mldata.callback = function () {
                 return $scope.mldata;
@@ -151,12 +151,12 @@
         }
 
         function init(App) {
-            console.log('MapColCtrl init');
+            console.log('MapLinkrMgrCtrl init');
             console.debug(App);
-            var ctrl = App.controller('MapColCtrl',  ['$scope', '$rootScope', '$uibModal', MapColCtrl]);
+            var ctrl = App.controller('MapLinkrMgrCtrl',  ['$scope', '$rootScope', '$uibModal', 'LinkrService', MapLinkrMgrCtrl]);
             console.debug(ctrl);
 
-            return MapColCtrl;
+            return MapLinkrMgrCtrl;
         }
 
         return { start: init};

@@ -106,13 +106,13 @@
                 }
             }
 
-            $scope.$on('displayLinkerEvent', function (event, data) {
-                refreshLinker();
-            });
-
-            $scope.$on("MapLinkrClosedEvent", function (event, args) {
-                refreshLinker();
-            });
+            // $scope.$on('displayLinkerEvent', function (event, data) {
+            //     refreshLinker();
+            // });
+            //
+            // $scope.$on("MapLinkrClosedEvent", function (event, args) {
+            //     refreshLinker();
+            // });
 
             function placesQueryCallback(placesFromSearch, status) {
                 var mpTypeSvc,
@@ -308,10 +308,13 @@
                     lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
 
                     lnkrdiv.addEventListener('click', function (event) {
-                        var data = {'visibility' : 'block'};
+                        var $inj = angular.injector(['app']),
+                            linkrSvc = $inj.get("LinkrService");
                         console.log('lnkr[0].onclick   displayLinkerEvent');
                         event.stopPropagation();
-                        contextScope.$emit('displayLinkerEvent', data);
+
+                        linkrSvc.showLinkr();
+                        // contextScope.$emit('displayLinkerEvent', data);
                     });
 
                     mnmxdiv = document.getElementsByClassName('mnmxclass')[0];

@@ -17,6 +17,7 @@
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
         'controllers/MapLinkrPluginCtrl',
+        'controllers/MapLinkrMgrCtrl',
         'controllers/WebSiteDescriptionCtrl',
         'controllers/SearcherCtrlGrp',
         'controllers/SearcherCtrlMap',
@@ -30,7 +31,7 @@
         'javascripts/lib/MLConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
-            PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, WebSiteDescriptionCtrl,
+            PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
             TransmitNewUrlCtrl, ShareCtrl, GeoCoder, MLConfig) {
             console.log('AppController define');
@@ -115,6 +116,7 @@
                 RightColCtrl.start(App);
                 PositionViewCtrl.start(App);
                 MapLinkrPluginCtrl.start(App);
+                MapLinkrMgrCtrl.start(App);
                 // MapCtrl.start(App);
 
                 SearcherCtrlGrp.start(App, portalForSearch);
