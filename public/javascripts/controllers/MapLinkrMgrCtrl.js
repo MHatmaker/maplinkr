@@ -5,6 +5,7 @@
     "use strict";
 
     console.log('MapLinkrMgrCtrl setup');
+    var selfMethods = {};
     define([
         'angular',
         'controllers/MapLinkrPluginCtrl'
@@ -148,6 +149,15 @@
             $scope.mldata.callback = function () {
                 return $scope.mldata;
             };
+
+            getData = function() {
+                return $scope.mldata;
+            }
+            selfMethods['getData'] = getData;
+        }
+
+        function getData() {
+            return selfMethods.getData();
         }
 
         function init(App) {
@@ -159,7 +169,7 @@
             return MapLinkrMgrCtrl;
         }
 
-        return { start: init};
+        return { start: init, getLinkrMgrData : getData};
     });
 
 // }());

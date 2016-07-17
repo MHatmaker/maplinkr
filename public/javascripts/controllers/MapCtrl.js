@@ -18,9 +18,10 @@
         'lib/MLConfig',
         'controllers/PusherSetupCtrl',
         'controllers/WindowStarter',
+        'controllers/MapLinkrMgrCtrl'
         // 'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
-            MLConfig, PusherSetupCtrl, WindowStarterArg) {
+            MLConfig, PusherSetupCtrl, WindowStarterArg, MapLinkrMgrCtrl) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,
@@ -97,10 +98,10 @@
                     lnkrTxt,
                     lnkrSmbl;
                 if (lnkrSymbol && lnkrText) {
-                    lnkrTxt =  $scope.$parent.mldata.ExpandPlug;
+                    lnkrTxt =  MapLinkrMgrCtrl.getLinkrMgrData().ExpandPlug;
                     lnkrText.innerHTML = lnkrTxt;
                     console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + $scope.$parent.mldata.mapLinkrBtnImage + ".png";
+                    lnkrSmbl = "../stylesheets/images/" + MapLinkrMgrCtrl.getLinkrMgrData().mapLinkrBtnImage + ".png";
                     lnkrSymbol.src = lnkrSmbl;
                     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }

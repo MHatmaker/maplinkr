@@ -273,9 +273,10 @@ var selectedMapType = 'arcgis',
                         return scope;
                     };
                     hideLinkr = function () {
-                        var data = {'visibility' : 'none'};
+                        var data = {'visibility' : 'none'},
+                            scope = linkrScopes.getScopes()[0];
                         if (scope) {
-                            scope.$publish('displayLinkerEvent', data);
+                            scope.$broadcast('displayLinkerEvent', data);
                         }
                     };
                     showLinkr = function () {
