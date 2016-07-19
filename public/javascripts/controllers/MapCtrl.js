@@ -398,10 +398,10 @@
 
                 var refreshDelay = 500;
                 setTimeout(function () {
-                    utils.calculateComponentHeights(args.mastersitevis, args.websitevis);
-                    utils.updateMapContainerHeight($scope);
-                    utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
-                    console.log("REFRESH LINKER AND MINMAX");
+                    // utils.calculateComponentHeights(args.mastersitevis, args.websitevis);
+                    // utils.updateMapContainerHeight($scope);
+                    // utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
+                    // console.log("REFRESH LINKER AND MINMAX");
 
                     if (curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
                         configureCurrentMapType();

@@ -257,37 +257,29 @@ var selectedMapType = 'arcgis',
                 }).
 
                 factory("LinkrService", ['$rootScope', 'linkrScopes', function ($rootScope, linkrScopes) {
-                    var lnkrdiv = document.getElementById('linkerDirectiveId'),
-                        scope = angular.element(lnkrdiv).scope(),
-                        getLinkrScope,
-                        hideLinkr,
+                    var hideLinkr,
                         showLinkr,
-                        addScope,
-                        scopes = [],
-                        self = this;
+                        addScope;
 
                     addScope = function (scope) {
                         linkrScopes.addScope(scope);
-                    }
-                    getLinkrScope = function () {
-                        return scope;
                     };
                     hideLinkr = function () {
                         var data = {'visibility' : 'none'},
-                            scope = linkrScopes.getScopes()[0];
-                        if (scope) {
-                            scope.$broadcast('displayLinkerEvent', data);
+                            scp = linkrScopes.getScopes()[0];
+                        if (scp) {
+                            scp.$broadcast('displayLinkerEvent', data);
                         }
                     };
                     showLinkr = function () {
                         var data = {'visibility' : 'block'},
-                            scope = linkrScopes.getScopes()[0];
-                        if (scope) {
-                            scope.$broadcast('displayLinkerEvent', data);
+                            scp = linkrScopes.getScopes()[0];
+                        if (scp) {
+                            scp.$broadcast('displayLinkerEvent', data);
                         }
                     };
 
-                    return {addScope : addScope, getLinkrScope: getLinkrScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
+                    return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
                 }]).
 
                 factory("MapControllerService", function ($rootScope) {
