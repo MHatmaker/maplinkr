@@ -65,27 +65,7 @@
                         alert('Oops' + data.name);
                     });
             }
-/*
-            function getUserId($http) {
-                $http({method: 'GET', url: '/userid'}).
-                    success(function (data, status, headers, config) {
-                        // this callback will be called asynchronously
-                        // when the response is available.
-                        console.log('userid: ', data.id);
-                        MLConfig.setUserId(data.id);
-                        var refId = MLConfig.getReferrerId();
-                        if (refId === -99) {
-                            MLConfig.setReferrerId(data.id);
-                        }
-                    }).
-                    error(function (data, status, headers, config) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                        console.log('Oops and error', data);
-                        alert('Oops' + data.name);
-                    });
-            }
-*/
+
             function init(App, portalForSearch) {
                 console.log('AppController init');
                 var $inj = angular.injector(['app']),

@@ -273,10 +273,12 @@ var selectedMapType = 'arcgis',
                     };
                     showLinkr = function () {
                         var data = {'visibility' : 'block'},
-                            scp = linkrScopes.getScopes()[0];
-                        if (scp) {
-                            scp.$broadcast('displayLinkerEvent', data);
-                        }
+                            scp;
+                        angular.forEach(linkrScopes.getScopes(), function(scp){
+                            if (scp) {
+                                scp.$broadcast('displayLinkerEvent', data);
+                            }
+                        });
                     };
 
                     return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};

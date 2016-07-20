@@ -37,7 +37,7 @@
             modalInstance,
             selfMethods = {};
 
-        function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack) {
+        function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, _LinkrSvc) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
@@ -48,6 +48,8 @@
                 queryForNewDisplay = "",
                 queryForSameDisplay = "",
                 searchInput;
+
+            $scope.LinkrSvc = _LinkrSvc;
 
             $scope.destSelections = [
                 {'option' : "Same Window", 'showing' : "destination-option-showing"},
@@ -309,12 +311,12 @@
                     lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
 
                     lnkrdiv.addEventListener('click', function (event) {
-                        var $inj = angular.injector(['app']),
-                            linkrSvc = $inj.get("LinkrService");
+                        // var $inj = angular.injector(['app']),
+                            // linkrSvc = $inj.get("LinkrService");
                         console.log('lnkr[0].onclick   displayLinkerEvent');
                         event.stopPropagation();
 
-                        linkrSvc.showLinkr();
+                        contextScope.LinkrSvc.showLinkr();
                         // contextScope.$emit('displayLinkerEvent', data);
                     });
 
@@ -608,7 +610,7 @@
         function init(App) {
             console.log('MapCtrl init');
             App = angular.module('app');
-            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack', 'LinkrService', MapCtrl]);
             return MapCtrl;
         }
 
