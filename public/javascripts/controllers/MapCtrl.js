@@ -32,12 +32,12 @@
             whichCanvas = 'map_canvas',
             curMapTypeInitialized = false,
             searchBox = null,
-            $inj = null,
             gmQSvc = null,
             modalInstance,
             selfMethods = {};
 
-        function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, _LinkrSvc) {
+        function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, LinkrSvc,
+            CurrentMapTypeService, StompEventHandlerService, GoogleQueryService) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
@@ -49,7 +49,10 @@
                 queryForSameDisplay = "",
                 searchInput;
 
-            $scope.LinkrSvc = _LinkrSvc;
+            $scope.LinkrSvc = LinkrSvc;
+            $scope.CurrentMapTypeService = CurrentMapTypeService;
+            $scope.StompEventHandlerService = StompEventHandlerService;
+            $scope.GoogleQueryService = GoogleQueryService;
 
             $scope.destSelections = [
                 {'option' : "Same Window", 'showing' : "destination-option-showing"},
@@ -118,7 +121,7 @@
             // });
 
             function placesQueryCallback(placesFromSearch, status) {
-                var mpTypeSvc,
+                var mpTypeSvc = $scope.CurrentMapTypeService,
                     googmph,
                     curmph,
                     curMapType,
@@ -130,9 +133,12 @@
                 utils.hideLoading();
 
                 onAcceptDestination = function (info) {
-                    var sourceMapType, evtSvc, newSelectedWebMapId, destWnd;
+                    var sourceMapType,
+                        evtSvc = $scope.StompEventHandlerService,
+                        newSelectedWebMapId,
+                        destWnd;
 
-                    $inj = angular.injector(['app']);
+
                     if (info) {
                         sourceMapType = info.mapType;
                         destWnd = info.dstSel;
@@ -141,8 +147,7 @@
 
                     if (destWnd === 'New Pop-up Window' || destWnd === 'New Tab') {
                         if (MLConfig.isNameChannelAccepted() === false) {
-                            $inj = angular.injector(['app']);
-                            evtSvc = $inj.get('StompEventHandlerService');
+
                             evtSvc.addEvent('client-MapXtntEvent', sourceMapType.retrievedBounds);
                             evtSvc.addEvent('client-MapClickEvent', sourceMapType.retrievedClick);
 
@@ -162,8 +167,6 @@
                         }
 
                     } else {  //(destWnd == "Same Window")
-                        $inj = angular.injector(['app']);
-                        mpTypeSvc = $inj.get("CurrentMapTypeService");
                         googmph = mpTypeSvc.getSpecificMapType('google');
                         googmph.placeMarkers(placesSearchResults);
                         MLConfig.setQuery(queryForNewDisplay);
@@ -173,8 +176,6 @@
 
                 if (placesFromSearch && placesFromSearch.length > 0) {
                     placesSearchResults = placesFromSearch;
-                    $inj = angular.injector(['app']);
-                    mpTypeSvc = $inj.get("CurrentMapTypeService");
                     googmph = mpTypeSvc.getSpecificMapType('google');
 
                     curmph = mpTypeSvc.getCurrentMapType();
@@ -186,8 +187,7 @@
                         $scope.destSelections[0].showing = 'destination-option-hidden';
                     }
 
-                    gmQSvc = $inj.get('GoogleQueryService');
-                    // currentVerbVis = gmQSvc.setDialogVisibility(true);
+                    gmQSvc = $scope.GoogleQueryService;
                     scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
                     $scope.showDestDialog(
                         onAcceptDestination,
@@ -220,8 +220,7 @@
                     queryPlaces = {},
                     service;
 
-                $inj = angular.injector(['app']);
-                mpTypeSvc = $inj.get("CurrentMapTypeService");
+                mpTypeSvc = $scope.CurrentMapTypeService;
                 googmph = mpTypeSvc.getSpecificMapType('google');
 
                 mapLinkrBounds = MLConfig.getBounds();
@@ -311,13 +310,10 @@
                     lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
 
                     lnkrdiv.addEventListener('click', function (event) {
-                        // var $inj = angular.injector(['app']),
-                            // linkrSvc = $inj.get("LinkrService");
                         console.log('lnkr[0].onclick   displayLinkerEvent');
                         event.stopPropagation();
 
-                        contextScope.LinkrSvc.showLinkr();
-                        // contextScope.$emit('displayLinkerEvent', data);
+                        $scope.LinkrSvc.showLinkr();
                     });
 
                     mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
@@ -450,10 +446,9 @@
             });
 
             function setupQueryListener() {
-                $inj = angular.injector(['app']);
                 var
                     cnvs = utils.getElemById(whichCanvas),
-                    mpTypeSvc = $inj.get("CurrentMapTypeService"),
+                    mpTypeSvc = $scope.CurrentMapTypeService,
                     curMapType = mpTypeSvc.getMapTypeKey(),
                     fnLink,
                     pcnpt,
@@ -610,7 +605,8 @@
         function init(App) {
             console.log('MapCtrl init');
             App = angular.module('app');
-            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack', 'LinkrService', MapCtrl]);
+            App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack',
+                'LinkrService', 'CurrentMapTypeService', 'StompEventHandlerService', 'GoogleQueryService', MapCtrl]);
             return MapCtrl;
         }
 
