@@ -1,6 +1,8 @@
 /*global define */
 /*global $uibModal */
 /*global $uibModalInstance */
+/*global $modalInstance */
+/*jslint es5: true */
 
 (function () {
     "use strict";
@@ -96,8 +98,10 @@
                 console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
                 if (previouState === false && $scope.data.isSummaryCollapsed) {
                     setTimeout(function () {
-                        $scope.$apply(function () {$scope.$broadcast('CollapseSummaryCompletionEvent',
-                                {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});});
+                        $scope.$apply(function () {
+                            $scope.$broadcast('CollapseSummaryCompletionEvent',
+                                {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
+                        });
                     }, 500);
                 }
             };

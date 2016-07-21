@@ -2,6 +2,7 @@
 /*jslint es5: true */
 /*global jQuery */
 /*global google */
+/*jslint es5: true */
 
 (function () {
     "use strict";
@@ -279,7 +280,8 @@
 
                     var contextScope = $scope,
                         cnvs = utils.getElemById(whichCanvas),
-                        templateLnkr = '<div id="linkerDirectiveId" class="lnkrclass"> \
+                        templateLnkr = ' \
+                            <div id="linkerDirectiveId" class="lnkrclass"> \
     	                    <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
     	                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                             </label> \
@@ -287,7 +289,8 @@
     	                       style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
     	                    </div>',
 
-                        templateMinMaxr = '<div id="mapmaximizerDirectiveId" class="mnmxclass" > \
+                        templateMinMaxr = ' \
+                            <div id="mapmaximizerDirectiveId" class="mnmxclass" > \
                             <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
                                 style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
     	                    </label> \
@@ -454,7 +457,7 @@
                     pcnpt,
                     template = ' \
                         <div id="gmsearch" \
-                        class="gmsearchclass" \
+                            class="gmsearchclass" \
                             style="width: 28em; margin-left: 7em; margin-right : 2em;"> \
                             <input id="pac-input" \
                                 class="gmsearchcontrols" className="controls" \

@@ -14,6 +14,7 @@
 
         function MapLinkrMgrCtrl($scope, $rootScope, $uibModal, linkrSvc) {
             console.log("in MapLinkrMgrCtrl");
+            var getData;
             $scope.mldata = {
                 'news' : {
                     'isCollapsed' : true,
@@ -51,7 +52,7 @@
                                      a synchronized map viewer.  If  popups are turned off, \
                                      use sequence described under the \'New Tab\' option above.'
                             }
-                        },
+                        }
 
                     }
 
@@ -150,10 +151,10 @@
                 return $scope.mldata;
             };
 
-            getData = function() {
+            getData = function () {
                 return $scope.mldata;
-            }
-            selfMethods['getData'] = getData;
+            };
+            selfMethods.getData = getData;
         }
 
         function getData() {
