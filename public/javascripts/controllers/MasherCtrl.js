@@ -69,6 +69,7 @@
             $scope.showDescriptionDialog = false;
 
             $scope.$on('$viewContentLoaded', function () {
+                // alert("$viewContentLoaded");
                 if (isFirstViewing === false) {
                     if (startupView.summaryShowing === true) {
                         $scope.summaryCollapser();
@@ -77,6 +78,17 @@
                     isFirstViewing = false;
                 }
             });
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
 
             $scope.summaryCollapser = function (sumCollapsed) {
                 // $scope.MasterSiteVis = $scope.ExpandSumText === "Expand" ? "inline" : "none";
@@ -96,6 +108,9 @@
                 $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
                 // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
                 console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
+                $scope.safeApply(function (){
+                    console.log("preliminary collapse event $apply");
+                });
                 if (previouState === false && $scope.data.isSummaryCollapsed) {
                     setTimeout(function () {
                         $scope.$apply(function () {

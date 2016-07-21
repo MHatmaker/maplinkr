@@ -56,10 +56,9 @@ var selectedMapType = 'arcgis',
                 maphost,
                 $inj,
                 serv,
+                $timeout,
                 gmquery,
                 searchService,
-                deferred,
-                promise,
 
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
@@ -274,9 +273,8 @@ var selectedMapType = 'arcgis',
                         }
                     };
                     showLinkr = function () {
-                        var data = {'visibility' : 'block'},
-                            scp;
-                        angular.forEach(linkrScopes.getScopes(), function(scp){
+                        var data = {'visibility' : 'block'};
+                        angular.forEach(linkrScopes.getScopes(), function (scp) {
                             if (scp) {
                                 scp.$broadcast('displayLinkerEvent', data);
                             }
@@ -319,44 +317,38 @@ var selectedMapType = 'arcgis',
                 };
             });
 
-            function startAllControllers() {
-                var $inj = angular.injector(['app']),
-                    $q = $inj.get('$q');
-                deferred = $q.defer();
-                AppController.start(App, portalForSearch);
-                return deferred.promise;
+            AppController.start(App, portalForSearch);
+
+            // need to bootstrap angular since we wait for dojo/DOM to load
+            angular.bootstrap(document.body, ['app']);
+
+            console.log("url is " + location.search);
+            isNewAgoWindow = MLConfig.testUrlArgs();
+            MLConfig.setDestinationPreference('New Pop-up Window');
+            if (isNewAgoWindow) {
+                maphost = MLConfig.maphost();
+                console.log('maphost : ' + maphost);
+
+                $inj = angular.injector(['app']);
+                serv = $inj.get('CurrentMapTypeService');
+                serv.setCurrentMapType(mapRestUrlToType[maphost]);
+                console.log('maptype' + mapRestUrlToType[maphost]);
+
+                if (maphost === 'GoogleMap') {
+                    gmquery = MLConfig.getQueryFromUrl();
+                    searchService = $inj.get('GoogleQueryService');
+                    searchService.setQuery(gmquery);
+                }
+
+                MasherCtrl.startMapSystem();
+                TabsCtrl.forceMapSystem(maphost);
+                MLConfig.setHideWebSiteOnStartup(true);
+                // $timeout = $inj.get('$timeout');
+                // $timeout( function () {
+                //     console.log("bootstrap after forceMapSystem")l
+                // }, 1000);
             }
-            promise = startAllControllers()
-                .then(function () {
 
-                    // need to bootstrap angular since we wait for dojo/DOM to load
-                    angular.bootstrap(document.body, ['app']);
-
-                    console.log("url is " + location.search);
-                    isNewAgoWindow = MLConfig.testUrlArgs();
-                    MLConfig.setDestinationPreference('New Pop-up Window');
-                    if (isNewAgoWindow) {
-                        maphost = MLConfig.maphost();
-                        console.log('maphost : ' + maphost);
-
-                        $inj = angular.injector(['app']);
-                        serv = $inj.get('CurrentMapTypeService');
-                        serv.setCurrentMapType(mapRestUrlToType[maphost]);
-                        console.log('maptype' + mapRestUrlToType[maphost]);
-
-                        if (maphost === 'GoogleMap') {
-                            gmquery = MLConfig.getQueryFromUrl();
-                            searchService = $inj.get('GoogleQueryService');
-                            searchService.setQuery(gmquery);
-                        }
-
-                        MasherCtrl.startMapSystem();
-                        TabsCtrl.forceMapSystem(maphost);
-                        MLConfig.setHideWebSiteOnStartup(true);
-                        // MasherCtrl.startMapSystem();
-                        // SpaCtrl.hideWebsite();
-                    }
-                });
             return App;
         }
 
