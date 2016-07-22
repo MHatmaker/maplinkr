@@ -6,7 +6,7 @@
 
 (function () {
     "use strict";
-    var isFirstViewing = true;
+    var isStartingFromMasterSiteView = true;
 
     console.log('MasherCtrl setup');
     define(['angular', 'lib/MLConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  MLConfig, WebSiteDescriptionCtrl, utils) {
@@ -70,12 +70,12 @@
 
             $scope.$on('$viewContentLoaded', function () {
                 // alert("$viewContentLoaded");
-                if (isFirstViewing === false) {
+                if (isStartingFromMasterSiteView === false) {
                     if (startupView.summaryShowing === true) {
                         $scope.summaryCollapser();
                     }
                 } else {
-                    isFirstViewing = false;
+                    isStartingFromMasterSiteView = false;
                 }
             });
 
@@ -309,7 +309,9 @@
         function startMapSystem() {
             var startupView = MLConfig.getStartupView();
             console.log("startMapSystem");
-            isFirstViewing = false;
+            // Starting in  a new popup window or new tab
+            // Need to prepare for immediate summaryCollapser when content loaded
+            isStartingFromMasterSiteView = false;
 
             if (startupView.summaryShowing === true) {
 
