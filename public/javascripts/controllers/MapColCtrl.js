@@ -19,7 +19,6 @@
             console.log('MapColCtrl init');
             App.controller('MapColCtrl',  ['$scope', MapColCtrl]);
 
-
             return MapColCtrl;
         }
 

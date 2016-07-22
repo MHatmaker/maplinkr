@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    console.log('AppController setup');
+    console.log('ControllerStarter setup');
     define([
         'angular',
         'controllers/MasherCtrl',
@@ -34,10 +34,10 @@
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
             TransmitNewUrlCtrl, ShareCtrl, GeoCoder, MLConfig) {
-            console.log('AppController define');
+            console.log('ControllerStarter define');
 
-            function AppController($scope) {
-                console.log("AppController empty block");
+            function ControllerStarter($scope) {
+                console.log("ControllerStarter empty block");
             }
 
             function getUserName($http, opts) {
@@ -45,7 +45,7 @@
                     success(function (data, status, headers, config) {
                         // this callback will be called asynchronously
                         // when the response is available.
-                        console.log('AppController getUserName: ', data.name);
+                        console.log('ControllerStarter getUserName: ', data.name);
                         // MLConfig.setUserId(data.id );
                         if (opts.uname) {
                             MLConfig.setUserName(data.name);
@@ -67,7 +67,7 @@
             }
 
             function init(App, portalForSearch) {
-                console.log('AppController init');
+                console.log('ControllerStarter init');
                 var $inj = angular.injector(['app']),
                     $http = $inj.get('$http'),
                     referrerId = MLConfig.getReferrerId(),
@@ -117,7 +117,7 @@
                 GeoCoder.start(App, $http);
 
 
-                return AppController;
+                return ControllerStarter;
             }
 
             return { start: init };

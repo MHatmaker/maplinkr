@@ -83,16 +83,11 @@
             return areWeInitialized;
         };
 
-        MapLinkrPluginCtrl.prototype.showDialog = function (data) {
-        };
-
         function init(App) {
             console.log('MapLinkrPluginCtrl init');
 
             areWeInitialized = true;
-            var mthds = App.controller('MapLinkrPluginCtrl',  ['$scope', '$uibModalInstance', 'data', MapLinkrPluginCtrl]);
-            console.log("mthds are here");
-            console.debug(mthds);
+            App.controller('MapLinkrPluginCtrl',  ['$scope', '$uibModalInstance', 'data', MapLinkrPluginCtrl]);
 
             return MapLinkrPluginCtrl;
         }
@@ -100,7 +95,6 @@
         return {
             start: init,
             isInitialized : MapLinkrPluginCtrl.prototype.isInitialized,
-            showDialog : MapLinkrPluginCtrl.prototype.showDialog
         };
     });
 

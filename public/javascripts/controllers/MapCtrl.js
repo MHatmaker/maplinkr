@@ -282,21 +282,21 @@
                         cnvs = utils.getElemById(whichCanvas),
                         templateLnkr = ' \
                             <div id="linkerDirectiveId" class="lnkrclass"> \
-    	                    <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-    	                    style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
+                            style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
                             </label> \
-    	                    <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-    	                       style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
-    	                    </div>',
+                            <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
+                               style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
+                            </div>',
 
                         templateMinMaxr = ' \
                             <div id="mapmaximizerDirectiveId" class="mnmxclass" > \
                             <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
                                 style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-    	                    </label> \
-    	                    <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-    	                         style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
-    	                    </div>',
+                            </label> \
+                            <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
+                                 style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            </div>',
                         lnkr1 = angular.element(templateLnkr),
                         lnkr = cnvs.append(lnkr1),
 

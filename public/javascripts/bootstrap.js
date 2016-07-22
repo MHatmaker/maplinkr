@@ -10,7 +10,7 @@ var selectedMapType = 'arcgis',
     console.debug('bootstrap setup method');
     define([
         'angular',
-        'controllers/AppController',
+        'controllers/ControllerStarter',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/MLConfig',
@@ -28,7 +28,7 @@ var selectedMapType = 'arcgis',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
 
-    ], function (angular, AppController, MasherCtrl, TabsCtrl, MLConfig,
+    ], function (angular, ControllerStarter, MasherCtrl, TabsCtrl, MLConfig,
             ShareCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
             MapLinkrPluginCtrl, MapLinkrMgrCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
@@ -317,7 +317,7 @@ var selectedMapType = 'arcgis',
                 };
             });
 
-            AppController.start(App, portalForSearch);
+            ControllerStarter.start(App, portalForSearch);
 
             // need to bootstrap angular since we wait for dojo/DOM to load
             angular.bootstrap(document.body, ['app']);

@@ -1,5 +1,6 @@
 /*global define */
 /*global console */
+/*jslint es5: true */
 
 (function () {
     "use strict";
@@ -163,9 +164,8 @@
 
         function init(App) {
             console.log('MapLinkrMgrCtrl init');
-            console.debug(App);
-            var ctrl = App.controller('MapLinkrMgrCtrl',  ['$scope', '$rootScope', '$uibModal', 'LinkrService', MapLinkrMgrCtrl]);
-            console.debug(ctrl);
+
+            App.controller('MapLinkrMgrCtrl',  ['$scope', '$rootScope', '$uibModal', 'LinkrService', MapLinkrMgrCtrl]);
 
             return MapLinkrMgrCtrl;
         }

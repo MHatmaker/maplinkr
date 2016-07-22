@@ -1305,7 +1305,7 @@ function encodeUriQuery(val, pctEncodeSpaces) {
  * contain the code. See {@link angular.module} for more information.
  *
  * In the example below if the `ngApp` directive were not placed on the `html` element then the
- * document would not be compiled, the `AppController` would not be instantiated and the `{{ a+b }}`
+ * document would not be compiled, the `ControllerStarter` would not be instantiated and the `{{ a+b }}`
  * would not be resolved to `3`.
  *
  * `ngApp` is the easiest, and most common, way to bootstrap an application.
@@ -13691,7 +13691,7 @@ function $SceDelegateProvider() {
  *
  * <example module="mySceApp" deps="angular-sanitize.js">
  * <file name="index.html">
- *   <div ng-controller="myAppController as myCtrl">
+ *   <div ng-controller="myControllerStarter as myCtrl">
  *     <i ng-bind-html="myCtrl.explicitlyTrustedHtml" id="explicitlyTrustedHtml"></i><br><br>
  *     <b>User comments</b><br>
  *     By default, HTML that isn't explicitly trusted (e.g. Alice's comment) is sanitized when
@@ -13710,7 +13710,7 @@ function $SceDelegateProvider() {
  * <file name="script.js">
  *   var mySceApp = angular.module('mySceApp', ['ngSanitize']);
  *
- *   mySceApp.controller("myAppController", function myAppController($http, $templateCache, $sce) {
+ *   mySceApp.controller("myControllerStarter", function myControllerStarter($http, $templateCache, $sce) {
  *     var self = this;
  *     $http.get("test_data.json", {cache: $templateCache}).success(function(userComments) {
  *       self.userComments = userComments;

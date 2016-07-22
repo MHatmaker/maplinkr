@@ -307,12 +307,10 @@
 
         function init(App, portal) {
             console.log('SearcherCtrlGrp init');
-            console.debug(App);
-            var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
-            console.debug(CurrentWebMapIdService);
+
+            App.service("CurrentWebMapIdService");
             App.controller('SearcherCtrlGrp',  ['$scope', '$rootScope', 'LinkrService', SearcherCtrlGrp]);
-            // SearcherCtrlGrp.CurrentWebMapIdService= CurrentWebMapIdService;
-            // selfDict.portal = portalForSearch;
+
             portalForSearch = portal;
             return SearcherCtrlGrp;
         }

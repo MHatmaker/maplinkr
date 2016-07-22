@@ -14,7 +14,7 @@
             };
             $scope.status = {
                 'isCopyMapLinkOpen' : true
-            }
+            };
 
             function resizeTextArea() {
                 var textarea = document.getElementById('UrlCopyFieldID');
@@ -68,7 +68,7 @@
                 var urlEl = utils.getElemById("UrlCopyFieldID"),
                     labelDiv = utils.getElemById("UrlInstructions");
 
-                setTimeout(function() {
+                setTimeout(function () {
                     urlEl[0].select();
                     $scope.safeApply();
                 }, 50);

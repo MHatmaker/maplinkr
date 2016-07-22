@@ -41,7 +41,7 @@
         'javascripts/bootstrap'
     ], function (dojo, domReady, esriPortal, MLConfig, bootstrap) {
         console.debug('call ready');
-        console.log(bootstrap);
+
         console.log('MLConfig initialization');
         MLConfig.showConfigDetails('MasherApp startup before modifying default settings');
 

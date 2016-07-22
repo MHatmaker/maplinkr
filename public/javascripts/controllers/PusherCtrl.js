@@ -36,7 +36,7 @@
 
         function init(App) {
             console.log('PusherCtrl init');
-            console.debug(App);
+
             App.controller('PusherCtrl',  ['$scope', '$uibModalInstance', 'data', PusherCtrl]);
 
             return PusherCtrl;

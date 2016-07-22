@@ -87,7 +87,7 @@
                     $scope.data.mapColDef = tf ? "col-xs-12 col-sm-6 col-md-5" : "col-xs-12";
                     $scope.data.mapColPad = tf ? "padding-left: 0; padding-right: 0" : "padding-left: 0.875em; padding-right: 0.875em";
                     $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
-                    $scope.data.ExpandSite = ($scope.ExpandSite === tf ? "Max Map" : "Min Map");
+                    $scope.data.ExpandSite = tf ? "Max Map" : "Min Map";
                 };
                 if (startupView.websiteDisplayMode === true) {
                     $scope.hideWebSiteOnStartup = false;
@@ -138,7 +138,7 @@
                     setTimeout(function () {
                         var args = {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : $scope.WebSiteVis};
                         $scope.$apply(function () {
-                            $scope.$broadcast('CollapseSummaryCompletionEvent', { any: args });
+                            $scope.$broadcast('CollapseSummaryCompletionEvent', args); // { any: args });
                         });
                     }, 500);
                 };

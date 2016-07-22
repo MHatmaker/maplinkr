@@ -19,9 +19,8 @@
 
         function init(App) {
             console.log('LeftColCtrl init');
-            console.debug(App);
-            var ctrl = App.controller('LeftColCtrl',  ['$scope', LeftColCtrl]);
-            console.debug(ctrl);
+
+            App.controller('LeftColCtrl',  ['$scope', LeftColCtrl]);
 
             return LeftColCtrl;
         }

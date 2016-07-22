@@ -317,13 +317,11 @@ angular.isUndefinedOrNull = function (val) {
 
         function init(App, portal) {
             console.log('SearcherCtrlMap init');
-            console.debug(App);
-            var CurrentWebMapIdService = App.service("CurrentWebMapIdService");
-            console.debug(CurrentWebMapIdService);
+
+            App.service("CurrentWebMapIdService");
+
             App.controller('SearcherCtrlMap',  ['$scope', '$rootScope', SearcherCtrlMap]);
 
-            // SearcherCtrlMap.CurrentWebMapIdService= CurrentWebMapIdService;
-            // selfDict.portal = portalForSearch;
             portalForSearch = portal;
             return SearcherCtrlMap;
         }
