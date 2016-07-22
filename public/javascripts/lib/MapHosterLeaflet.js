@@ -512,7 +512,7 @@ define('GeoCoder', function () {
 
             function getEventDictionary() {
                 var $inj = angular.injector(['app']),
-                    evtSvc = $inj.get('StompEventHandlerService'),
+                    evtSvc = $inj.get('PusherEventHandlerService'),
                     eventDct = evtSvc.getEventDct();
                 return eventDct;
             }
@@ -525,7 +525,7 @@ define('GeoCoder', function () {
 
             function setPusherClient(pusher, channel) {
                 var $inj = angular.injector(['app']),
-                    evtSvc = $inj.get('StompEventHandlerService'),
+                    evtSvc = $inj.get('PusherEventHandlerService'),
                     evtDct = evtSvc.getEventDct(),
                     key;
                 selfPusherDetails.pusher = pusher;
@@ -533,7 +533,7 @@ define('GeoCoder', function () {
                 MLConfig.setChannel(channel);
 
                 $inj = angular.injector(['app']);
-                evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc = $inj.get('PusherEventHandlerService');
                 evtDct = evtSvc.getEventDct();
                 for (key in evtDct) {
                     if (evtDct.hasOwnProperty(key)) {

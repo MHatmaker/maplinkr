@@ -181,7 +181,7 @@ var selectedMapType = 'arcgis',
                 }).
 
 
-                factory("StompEventHandlerService", function () {
+                factory("PusherEventHandlerService", function () {
                     var getEventDct = function () {
                         return eventDct;
                     },

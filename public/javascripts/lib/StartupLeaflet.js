@@ -66,7 +66,7 @@
 */
         function configure(newMapId) {
             var $inj = angular.injector(['app']),
-                evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc = $inj.get('PusherEventHandlerService');
             newSelectedWebMapId = newMapId;
             window.loading = dojo.byId("loadingImg");
             console.log(window.loading);

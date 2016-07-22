@@ -118,7 +118,7 @@ function initPlaces() {
             if (newSelectedWebMapId !== null) {
                 if (MLConfig.isNameChannelAccepted() === false) {
                     $inj = angular.injector(['app']);
-                    evtSvc = $inj.get('StompEventHandlerService');
+                    evtSvc = $inj.get('PusherEventHandlerService');
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 
@@ -133,7 +133,7 @@ function initPlaces() {
                 }
             } else {
                 $inj = angular.injector(['app']);
-                evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc = $inj.get('PusherEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
 

@@ -38,7 +38,7 @@
             selfMethods = {};
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, LinkrSvc,
-            CurrentMapTypeService, StompEventHandlerService, GoogleQueryService) {
+            CurrentMapTypeService, PusherEventHandlerService, GoogleQueryService) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
             var mptp = $scope.currentTab.maptype,
@@ -52,7 +52,7 @@
 
             $scope.LinkrSvc = LinkrSvc;
             $scope.CurrentMapTypeService = CurrentMapTypeService;
-            $scope.StompEventHandlerService = StompEventHandlerService;
+            $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
 
             $scope.destSelections = [
@@ -135,7 +135,7 @@
 
                 onAcceptDestination = function (info) {
                     var sourceMapType,
-                        evtSvc = $scope.StompEventHandlerService,
+                        evtSvc = $scope.PusherEventHandlerService,
                         newSelectedWebMapId,
                         destWnd;
 
@@ -609,7 +609,7 @@
             console.log('MapCtrl init');
             App = angular.module('app');
             App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack',
-                'LinkrService', 'CurrentMapTypeService', 'StompEventHandlerService', 'GoogleQueryService', MapCtrl]);
+                'LinkrService', 'CurrentMapTypeService', 'PusherEventHandlerService', 'GoogleQueryService', MapCtrl]);
             return MapCtrl;
         }
 

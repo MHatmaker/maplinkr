@@ -32,8 +32,8 @@ block append content
 
 
 //
-     script(type="text/ng-template" id="StompChannelerDialog.html")
-        #StompChannelerDialog(ng-controller="PusherSetupCtrl")
+     script(type="text/ng-template" id="PusherChannelerDialog.html")
+        #PusherChannelerDialog(ng-controller="PusherSetupCtrl")
             div(class="modal-header")PusherSetupCtrl
                 h3(Select Name for Synchronization Channel)
             div(class="modal-body")
@@ -46,5 +46,5 @@ block append content
 
         div(class="modal-footer")
             div(class="btn-group" style="margin: 9px 0;")
-                button(class="btn btn-primary", style='width:25%;', ng-click="acceptStomperChannel()", value="Accept") Accept
-                button(class="btn btn-default", style='width:25%;', ng-click="cancelStomperChannel()", value="Cancel") Cancel
+                button(class="btn btn-primary", style='width:25%;', ng-click="acceptPusherChannel()", value="Accept") Accept
+                button(class="btn btn-default", style='width:25%;', ng-click="cancelPusherChannel()", value="Cancel") Cancel

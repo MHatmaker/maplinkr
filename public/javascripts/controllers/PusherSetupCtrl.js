@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    console.log('StompSetup setup');
+    console.log('PusherSetup setup');
     var areWeInitialized = false,
         areWeInstantiated = false;
     define([
@@ -228,7 +228,7 @@
             channelBind.bind('client-NewMapPosition', function (frame) {
                 console.log('frame is', frame);
                 $inj = angular.injector(['app']);
-                serv = $inj.get('StompEventHandlerService');
+                serv = $inj.get('PusherEventHandlerService');
                 handler = serv.getHandler('client-NewMapPosition');
                 handler(frame);
                 // selfdict.eventDct['client-NewMapPosition'](frame);
@@ -319,7 +319,7 @@
             //selfdict.setupPusherClient = $scope.setupPusherClient;
 
         function init(App) {
-            console.log('StompSetup init');
+            console.log('PusherSetup init');
             // alert("areWeInitialized ?");
             // alert(areWeInitialized);
             // if (areWeInitialized == true) {

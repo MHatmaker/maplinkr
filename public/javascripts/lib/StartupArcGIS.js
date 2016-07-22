@@ -228,7 +228,6 @@
                         console.log("zoomWebMap from URI " + zoomWebMap);
                         pointWebMap = [lonWebMap, latWebMap];
                         console.log(pointWebMap);
-                        // stompChannel = urlparams['channel'];
                     }
                 } else {
                     selectedWebMapId = newSelectedWebMapId;
@@ -356,7 +355,7 @@
                 site or opening the webmap from a url sent through a publish event.
                  */
                 $inj = angular.injector(['app']);
-                evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc = $inj.get('PusherEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 
@@ -378,7 +377,7 @@
             serv = $inj.get('CurrentMapTypeService');
             curmph = serv.getSelectedMapType();
 
-            evtSvc = $inj.get('StompEventHandlerService');
+            evtSvc = $inj.get('PusherEventHandlerService');
             evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
             evtSvc.addEvent('client-MapClickEvent', curmph.retrievedClick);
 

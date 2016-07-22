@@ -238,7 +238,7 @@
             App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
 
             var $inj = angular.injector(['app']),
-                evtSvc = $inj.get('StompEventHandlerService');
+                evtSvc = $inj.get('PusherEventHandlerService');
 
             evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
