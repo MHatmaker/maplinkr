@@ -214,7 +214,7 @@ var details = {
                     //     return details.query[0];
                     // }
                 },
-                popQuery : function() {
+                popQuery : function () {
                     details.query.pop();
                     console.log("details query array on pop");
                     console.debug(details.query);

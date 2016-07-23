@@ -1,9 +1,10 @@
-/*global require*/
-/*global define*/
-/*global L*/
-/*global dojo*/
-/*global google*/
-
+/*global require */
+/*global define */
+/*global L */
+/*global dojo */
+/*global google */
+/*global esri */
+/*global loading */
 
 // define('google', function () {
     // if (google) {
@@ -75,16 +76,6 @@ function initPlaces() {
             return gMap;
         }
 
-        function showLoading() {
-            console.log("show loading");
-            esri.show(loading);
-        }
-
-        function hideLoading(error) {
-            console.log("hide loading");
-            esri.hide(loading);
-        }
-
         function configure(newMapId) {
             var $inj,
                 evtSvc,
@@ -113,7 +104,7 @@ function initPlaces() {
             console.log("newSelectedWebMapId " + newMapId);
 
             window.loading = dojo.byId("loadingImg");
-            showLoading();
+            utils.showLoading();
 
             if (newSelectedWebMapId !== null) {
                 if (MLConfig.isNameChannelAccepted() === false) {
@@ -243,7 +234,7 @@ function initPlaces() {
         return {
             start: init,
             config : configure,
-            getMap: getMap,
+            getMap : getMap
         };
 
     });

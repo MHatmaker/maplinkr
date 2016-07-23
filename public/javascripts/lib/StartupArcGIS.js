@@ -2,6 +2,7 @@
 /*global define */
 /*global require */
 /*global esri */
+/*global deferred */
 
 (function () {
     "use strict";
@@ -73,7 +74,7 @@
             mapCtrl.placeCustomControls();
         }
 
-        function setupQueryListener () {
+        function setupQueryListener() {
             var $inj = angular.injector(['app']),
                 ctrlSvc = $inj.get('MapControllerService'),
                 mapCtrl = ctrlSvc.getController();
@@ -88,9 +89,7 @@
                 $inj,
                 serv,
                 currentPusher,
-                currentChannel,
-                uname,
-                callbackfn;
+                currentChannel;
 
             /* Scalebar refuses to appear on map.  It appears outside the map on a bordering control.
             var scalebar = new esri.dijit.Scalebar({
@@ -285,12 +284,10 @@
                     geometryServiceURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 
                 });
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err.message);
                 alert(err.message);
-            }
-            finally {
+            } finally {
                 console.log("finally???????????????");
                 //alert("why are we in finally?");
             }
@@ -316,7 +313,7 @@
                     dojo.connect(aMap, "onUpdateEnd", hideLoading);
                     dojo.connect(aMap, "onLoad", initUI);
 
-                    setTimeout( function () {
+                    setTimeout(function () {
                         if (aMap.loaded) {
                             initUI();
                         } else {
@@ -331,35 +328,6 @@
                 });
             } catch (err) {
                 console.log("deferred failed with err " + err.message);
-            }
-        }
-
-
-        function initialize(newSelectedWebMapId, destDetails, selectedMapTitle, referringMph) {
-            var curmph = MapHosterArcGIS,
-                displayDestination = destDetails.dstSel,
-                $inj,
-                serv,
-                evtSvc,
-                url,
-                baseUrl,
-                openNewDisplay;
-            /*
-            This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
-             */
-            if (displayDestination === 'New Pop-up Window' || displayDestination === 'New Tab') {
-                prepareWindow(newSelectedWebMapId, referringMph, displayDestination);
-            } else {
-                /*
-                This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master
-                site or opening the webmap from a url sent through a publish event.
-                 */
-                $inj = angular.injector(['app']);
-                evtSvc = $inj.get('PusherEventHandlerService');
-                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
-                evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
-
-                initializePostProc(newSelectedWebMapId);
             }
         }
 
@@ -414,6 +382,29 @@
             }
         }
 
+        function initialize(newSelectedWebMapId, destDetails, selectedMapTitle, referringMph) {
+            var curmph = MapHosterArcGIS,
+                displayDestination = destDetails.dstSel,
+                $inj,
+                evtSvc;
+            /*
+            This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
+             */
+            if (displayDestination === 'New Pop-up Window' || displayDestination === 'New Tab') {
+                prepareWindow(newSelectedWebMapId, referringMph, displayDestination);
+            } else {
+                /*
+                This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master
+                site or opening the webmap from a url sent through a publish event.
+                 */
+                $inj = angular.injector(['app']);
+                evtSvc = $inj.get('PusherEventHandlerService');
+                evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
+                evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
+
+                initializePostProc(newSelectedWebMapId);
+            }
+        }
 
         function initializePreProc() {
             console.log('initializePreProc entered');

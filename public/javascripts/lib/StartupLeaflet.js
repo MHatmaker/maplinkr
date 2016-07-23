@@ -76,6 +76,10 @@
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterLeaflet.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
 
+                    // PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
+                    //     MLConfig.getUserName(), openNewDisplay,
+                    //         {'destination' : displayDestination, 'currentMapHolder' : curmph, 'newWindowId' : newSelectedWebMapId});
+
                     PusherSetupCtrl.setupPusherClient(evtSvc.getEventDct(),
                         MLConfig.getUserName(), function (channel, userName) {
                             MLConfig.setUserName(userName), openNewDisplay,
