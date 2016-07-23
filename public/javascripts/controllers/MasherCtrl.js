@@ -105,9 +105,11 @@
                     $scope.data.ExpandSumText = "Expand";
                 }
                 console.log("MasherCtrl isSummaryCollapsed before broadcast " + $scope.data.isSummaryCollapsed);
-                $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
+                // $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
                 // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
-                console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
+                // console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
+                window.resizeBy(0, 0);
+
                 $scope.safeApply(function () {
                     console.log("preliminary collapse event $apply");
                 });

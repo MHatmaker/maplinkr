@@ -56,7 +56,6 @@ var selectedMapType = 'arcgis',
                 maphost,
                 $inj,
                 serv,
-                $timeout,
                 gmquery,
                 searchService,
 
@@ -257,7 +256,7 @@ var selectedMapType = 'arcgis',
                     }
                 }).
 
-                factory("LinkrService", ['$rootScope', 'linkrScopes', function ($rootScope, linkrScopes) {
+                factory("LinkrService", ['linkrScopes', function (linkrScopes) {
                     var hideLinkr,
                         showLinkr,
                         addScope;
@@ -284,7 +283,7 @@ var selectedMapType = 'arcgis',
                     return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
                 }]).
 
-                factory("MapControllerService", function ($rootScope) {
+                factory("MapControllerService", function () {
                     var getController = function () {
                         return MapCtrl;
                     };
@@ -342,7 +341,7 @@ var selectedMapType = 'arcgis',
 
                 MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
-                MLConfig.setHideWebSiteOnStartup(true);
+                MLConfig.setHideWebSiteOnStartup(true);   /////// Probably never used via getHideWebSiteOnStartup()
                 // $timeout = $inj.get('$timeout');
                 // $timeout( function () {
                 //     console.log("bootstrap after forceMapSystem")l
