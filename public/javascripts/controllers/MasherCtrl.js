@@ -109,6 +109,7 @@
                 // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
                 // console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
                 window.resizeBy(0, 0);
+                window.dispatchEvent(new Event('resize'));
 
                 $scope.safeApply(function () {
                     console.log("preliminary collapse event $apply");
