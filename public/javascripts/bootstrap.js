@@ -339,7 +339,7 @@ var selectedMapType = 'arcgis',
                     searchService.setQuery(gmquery);
                 }
 
-                MasherCtrl.startMapSystem();
+                // MasherCtrl.startMapSystem();
                 TabsCtrl.forceMapSystem(maphost);
                 MLConfig.setHideWebSiteOnStartup(true);   /////// Probably never used via getHideWebSiteOnStartup()
                 // $timeout = $inj.get('$timeout');
