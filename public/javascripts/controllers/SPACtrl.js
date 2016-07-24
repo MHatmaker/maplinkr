@@ -16,7 +16,7 @@
             console.log('SPACtrl define');
             var selfMethods = {};
 
-            function SPACtrl($scope) {
+            function SPACtrl($scope, CurrentMapTypeService) {
                 console.log('SPACtrl - initialize collapsed bool');
                 $scope.data = {
                     subsiteExpanded : false,
@@ -30,9 +30,7 @@
                 };
 
                 var startupView = MLConfig.getStartupView(),
-                    curmapsys,
-                    $inj,
-                    serv;
+                    curmapsys;
 
                 $scope.mapConRowHgt = 0;
                 $scope.centerColHgt = 0;
@@ -70,9 +68,7 @@
                     $scope.MasterSiteVis = "none";
                 }
 
-                $inj = angular.injector(['app']);
-                serv = $inj.get('CurrentMapTypeService');
-                curmapsys = serv.getMapRestUrl();
+                curmapsys = CurrentMapTypeService.getMapRestUrl();
 
                 $scope.curMapSys = curmapsys;
 
@@ -133,35 +129,16 @@
                     $scope.handleMapExpandShrinkEvents();
                 });
 
-                $scope.summaryCollapser = function (tf) {
-                    $scope.hideWebSiteOnStartup = tf;
-                    setTimeout(function () {
-                        var args = {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : $scope.WebSiteVis};
-                        $scope.$apply(function () {
-                            $scope.$broadcast('CollapseSummaryCompletionEvent', args); // { any: args });
-                        });
-                    }, 500);
-                };
-                selfMethods.summaryCollapser = $scope.summaryCollapser;
-
-                $scope.windowResized();
-            }
-
-            function hideWebsite() {
-                alert("hideWebsite called");
-                console.log("hideWebsite");
-                // $scope.$emit('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis});
-                selfMethods.summaryCollapser(true);
             }
 
             function init(App) {
                 console.log('SPACtrl init');
-                App.controller('SPACtrl', ['$scope', SPACtrl]);
+                App.controller('SPACtrl', ['$scope', 'CurrentMapTypeService', SPACtrl]);
 
                 return SPACtrl;
             }
 
-            return { start: init, hideWebsite : hideWebsite };
+            return { start: init};
         });
 
 }());

@@ -1,6 +1,7 @@
 /*global define */
 /*global $uibModal */
 /*global $uibModalInstance */
+/*global Event */
 /*global $modalInstance */
 /*jslint es5: true */
 
@@ -26,7 +27,7 @@
             };
 
 
-        function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal) {  //$route, $routeParams, $window) {
+        function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal, PusherEventHandlerService) {  //$route, $routeParams, $window) {
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = MLConfig.getStartupView();
@@ -46,6 +47,7 @@
                     description : ""
                 }
             };
+            PusherEventHandlerService.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
             $scope.catchClick = function () {
                 // alert("Caught in MasherCtrl");
@@ -239,12 +241,8 @@
 
         function init(App) {
             console.log('MasherCtrl init');
-            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', MasherCtrl]);
-
-            var $inj = angular.injector(['app']),
-                evtSvc = $inj.get('PusherEventHandlerService');
-
-            evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
+            App.controller('MasherCtrl',
+                ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', 'PusherEventHandlerService', MasherCtrl]);
 
             // App.directive('modalshowpopupblockdlg', function () {
             //     return {
