@@ -47,7 +47,6 @@
                     description : ""
                 }
             };
-            PusherEventHandlerService.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
             $scope.catchClick = function () {
                 // alert("Caught in MasherCtrl");
@@ -236,6 +235,9 @@
                 }
 
             };
+
+            PusherEventHandlerService.addEvent('client-NewMapPosition', $scope.onNewMapPosition);
+
             selfMethods.onNewMapPosition = $scope.onNewMapPosition;
         }
 
