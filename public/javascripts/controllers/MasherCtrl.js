@@ -108,6 +108,7 @@
                 // $scope.$broadcast('CollapseSummaryEvent', {'mastersitevis' : $scope.MasterSiteVis, 'websitevis' : 'unknown'});
                 // $scope.isSummaryCollapsed = !$scope.isSummaryCollapsed;
                 // console.log("MasherCtrl isSummaryCollapsed after broadcast " + $scope.data.isSummaryCollapsed);
+                console.log("Force a resize in summaryCollapser");
                 window.resizeBy(0, 0);
                 window.dispatchEvent(new Event('resize'));
 
