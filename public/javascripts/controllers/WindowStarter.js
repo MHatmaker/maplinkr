@@ -24,7 +24,7 @@
                     modalInstance,
                     $inj,
                     $uibModal,
-                    urlToUnblock = MLConfig.gethost(), //'OpenShift.Arcadian.com',
+                    urlToUnblock = MLConfig.gethref(), //'OpenShift.Arcadian.com',
                     url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
                     "&maphost=GoogleMap" + "&referrerId=" + MLConfig.getUserId(),
