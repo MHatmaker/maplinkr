@@ -3,50 +3,51 @@ div(class="modal-dialog", style="width: 100%;")
         div(class="modal-header")
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
 
-            h4 You need to disable your browser's popup blocker for this URL :
+            h4 You need to disable your browser's popup blocker for the MapLinkrURL
         div(class="modal-body")
-            div(style="color: #17244D; margin-top: 10px;") URL: {{$parent.data.blockedUrl}}
+            div(id="divUrlToBlockId", style="color: #17244D; margin-top: 10px;") URL: {{data.urlToUnblock}}
             
-            div.
-                Check the page top or address bar for instructions for allowing a specific site or
-            div.
-                Right Click on the link for browser-specific instructions.
-                
             br
-                
+            div.
+                Check the page top or address bar for instructions for allowing a specific site ...OR...
+            div.
+                Right Click on a link below for browser-specific instructions.
+
+            br
+
             div(style="float: left;")
-                
+
                 a(href='https://support.google.com/chrome/answer/95472?hl=en')
                     div(style="float: left;")
                         img(src='../stylesheets/images/browserimages.jpg', class="browserimg gglchrome")
                     div(style="float: left; margin-top: 20px").
                         Chrome
-                    
-            div            
+
+            div
                 br
                 br
             div
                 br
                 a(href='https://support.mozilla.org/en-US/kb/pop-blocker-settings-exceptions-troubleshooting')
-                    
+
                     div(style="margin-top: 1px;")
                         img(src='../stylesheets/images/browserimages.jpg', class="browserimg mozff")
                     div(style="float: left; margin-top: -30px; margin-left: 60px;").
                         Firefox
-                
+
             div
                 br
                 a(href='http://www.techieshelp.com/turn-off-pop-up-block-in-internet-explorer-9/')
-                    
+
                     div(style="margin-top: 1px;")
                         img(src='../stylesheets/images/browserimages.jpg', class="browserimg msie")
                     div(style="float: left; margin-top: -30px; margin-left: 60px;").
                         Internet Explorer
-    
+
             div
                 br
                 a(href='http://www.technipages.com/safari-enabledisable-pop-up-blocker')
-                    
+
                     div(style="margin-top: 1px;")
                         img(src='../stylesheets/images/browserimages.jpg', class="browserimg sfri")
                     div(style="float: left; margin-top: -30px; margin-left: 60px;").
@@ -54,5 +55,4 @@ div(class="modal-dialog", style="width: 100%;")
 
 
         div(class="modal-footer")
-            button(type="button", class="btn btn-primary", ng-click="$parent.ok()", data-dismiss="modal") Accept
-            button(type="button", class="btn btn-primary", ng-click="$parent.cancel()", data-dismiss="modal")  Cancel
+            button(type="button", class="btn btn-primary", ng-click="ok()") OK

@@ -9,7 +9,8 @@
     define([
         'angular',
         'lib/utils',
-        'lib/MLConfig'
+        'lib/MLConfig',
+        'controllers/PopupBlockerCtrl'
     ], function (angular, utils, MLConfig) {
 
         var
@@ -17,14 +18,18 @@
 
                 var
                     wndName = newSelectedWebMapId + wndIndex,
-                    // tmpWndName = '',
                     baseUrl,
                     displayBnds,
-
+                    popresult,
+                    modalInstance,
+                    $inj,
+                    $uibModal,
+                    urlToUnblock = MLConfig.gethost(), //'OpenShift.Arcadian.com',
                     url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
                     "&maphost=GoogleMap" + "&referrerId=" + MLConfig.getUserId(),
                     gmQuery = query; //MLConfig.getQuery();
+
                 if (gmQuery !== '') {
                     url += "&gmquery=" + gmQuery;
                     displayBnds = MLConfig.getBoundsForUrl();
@@ -34,11 +39,33 @@
                 console.log("using channel " + channel + "with userName " + userName);
                 MLConfig.setUrl(url);
                 MLConfig.setUserName(userName);
+
                 if (destWnd === "New Pop-up Window") {
                     baseUrl = MLConfig.getbaseurl();
-                    /*tmpWndName = */
-                    window.open(baseUrl + "/google/" + url,  wndName, MLConfig.getSmallFormDimensions());
-                    // popups.push(tmpWndName);
+
+                    popresult = window.open(baseUrl + "/google/" + url,  wndName, MLConfig.getSmallFormDimensions());
+                    if (popresult === null) {
+                        $inj = angular.element(document.body).injector();
+                        $uibModal = $inj.get('$uibModal');
+
+                        modalInstance = $uibModal.open({
+
+                            templateUrl : '/templates/ModalDialogPopupBlocked',   // .jade will be appended
+                            controller : 'PopupBlockerCtrl',
+                            backdrop : 'false',
+
+                            resolve: {
+                                data : function () {
+                                    return {'urlToUnblock': urlToUnblock};
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (msg) {
+                            console.log("return from showing PopupBlockerDialog dialog");
+                        });
+                    }
+
                 } else {
                     if (destWnd === "New Tab") {
                         baseUrl = MLConfig.getbaseurl();
@@ -49,7 +76,6 @@
             },
 
             openNewDisplay = function (channel, userName, destWnd, curmph, newSelectedWebMapId, query) {
-                // wndIndex += 1;
                 var $inj = angular.injector(['app']),
                     $http = $inj.get('$http');
 

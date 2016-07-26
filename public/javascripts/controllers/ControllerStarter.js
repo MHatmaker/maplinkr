@@ -26,6 +26,7 @@
         'controllers/DestWndSetupCtrl',
         'controllers/TransmitNewUrlCtrl',
         'controllers/ShareCtrl',
+        'controllers/PopupBlockerCtrl',
         // 'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
         'javascripts/lib/MLConfig'
@@ -33,7 +34,7 @@
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, ShareCtrl, GeoCoder, MLConfig) {
+            TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, GeoCoder, MLConfig) {
             console.log('ControllerStarter define');
 
             function ControllerStarter($scope) {
@@ -110,6 +111,7 @@
                 }
                 TransmitNewUrlCtrl.start(App);
                 ShareCtrl.start(App);
+                PopupBlockerCtrl.start(App);
                 // GoogleSearchDirective.start(App);
                 // LinkerDisplayDirective.start(App);
 
