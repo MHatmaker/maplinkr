@@ -44,6 +44,7 @@ GitVersionTree.exe
 GCDR.js
 MPHLflt.js
 views/DestSelectModalDlg.html
+oddsandends/*
 
 MapLinkr/*
 hooks/*
