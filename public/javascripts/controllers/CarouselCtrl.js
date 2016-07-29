@@ -16,11 +16,8 @@
             console.debug('CarouselCtrl - initialize collapsed bool');
             $scope.SlideInterval = 5000;
             $scope.noWrapSlides = false;
-            $scope.active = 0;
             $scope.slides = [];
-            var slides = $scope.slides,
-                currIndex = 0,
-                url = MLConfig.gethref() + "/stylesheets/images/imagefromtext",
+            var url = MLConfig.gethref() + "/stylesheets/images/imagefromtext",
                 captions = [
                     'first slide caption',
                     'second caption',
@@ -29,18 +26,22 @@
                 ],
                 i;
 
-            $scope.addSlide = function () {
-                var newWidth = slides.length;
-                slides.push({
+            $scope.addSlide = function (i) {
+                var newWidth = i;
+                $scope.slides.push({
                     image: url + newWidth + '.png',
-                    text: captions[currIndex],
-                    id: currIndex++
+                    text: captions[i],
+                    id: i
                 });
             };
 
             for (i = 0; i < 4; i++) {
-                $scope.addSlide();
+                $scope.addSlide(i);
             }
+            $scope.active = 0;
+            setTimeout(function() {
+                $scope.$apply();
+            }, 1000);
         }
 
         function init(App) {

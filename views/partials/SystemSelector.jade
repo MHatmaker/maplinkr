@@ -20,9 +20,9 @@ div( style="height:100%;width:100%;")
         | MapLinkr Web Site Simulator
 
     div(ng-controller="CarouselCtrl")
-        div(style="height: 305px")
-            div(uib-carousel, active="active", interval="SlideInterval", no-wrap="noWrapSlides")
-                div(uib-slide, ng-repeat="slide in slides track by slide.id", index="slide.id")
+        div(style="height: 300px")
+            uib-carousel(active="active", interval="SlideInterval", no-wrap="noWrapSlides")
+                uib-slide(ng-repeat="slide in slides track by slide.id", index="slide.id", active="active")
                     img(ng-src="{{slide.image}}", style="margin:auto;")
                     div(class="carousel-caption")
                         h4
