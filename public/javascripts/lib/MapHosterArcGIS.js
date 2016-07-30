@@ -356,16 +356,6 @@
             mpCanRoot = document.getElementById("map_canvas_root");
         }
 
-        function setVerbageVisibility(tf) {
-            var $inj,
-                gmQSvc;
-            // if (currentVerbVis === 'none') {
-            $inj = angular.injector(['app']);
-            gmQSvc = $inj.get('GoogleQueryService');
-            gmQSvc.setDialogVisibility(tf);
-            // }
-        }
-
         function retrievedClick(clickPt) {
             console.log("Back in retrievedClick");
             // var latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);

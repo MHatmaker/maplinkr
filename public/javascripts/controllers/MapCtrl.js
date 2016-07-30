@@ -217,7 +217,7 @@
                     googleCenter,
                     gmap,
                     mapOptions,
-                    pacnpt,
+                    pacinput,
                     queryPlaces = {},
                     service;
 
@@ -245,9 +245,9 @@
 
                 // placesFromSearch = searchBox.getPlaces();
 
-                pacnpt = $('#pac-input');
+                pacinput = $('#pac-input');
                 queryPlaces.bounds = searchBounds;
-                queryPlaces.query = pacnpt[0].value;
+                queryPlaces.query = pacinput[0].value;
                 queryPlaces.location = center;
                 // MLConfig.setQuery(queryPlaces.query);
 
@@ -339,6 +339,13 @@
                         refreshLinker();
                         refreshMinMax();
                     }, refreshDelay);
+                } else {
+                    refreshDelay = 500;
+                    setTimeout(function () {
+                        setupQueryListener();
+                        refreshLinker();
+                        refreshMinMax();
+                    }, refreshDelay);
                 }
                 // connectQuery();
             }
@@ -425,18 +432,18 @@
             $scope.$on('searchClickEvent', function (event, args) {
                 console.log("MapCtrl 'searchClickEvent' handler");
                 var element = document.getElementById('pac-input'),
-                    pacnpt,
+                    pacinput,
                     paccon;
                 if (element) {
                     element.focus();
                 }
                 // element.trigger({ type : 'keypress', which : 13 });
-                pacnpt = $('#pac-input');
-                if (pacnpt) {
-                    pacnpt.focus();
+                pacinput = $('#pac-input');
+                if (pacinput) {
+                    pacinput.focus();
                 }
                 console.log('trigger keypress event on pac-input');
-                pacnpt.trigger(jQuery.Event('keypress', {which: 13}));
+                pacinput.trigger(jQuery.Event('keypress', {which: 13}));
                 paccon = $('#pac-container');
                 console.log('trigger keydown event on pac_container');
                 paccon.trigger(jQuery.Event('keydown', {keyCode: 40, which: 40}));
@@ -454,7 +461,9 @@
                     mpTypeSvc = $scope.CurrentMapTypeService,
                     curMapType = mpTypeSvc.getMapTypeKey(),
                     fnLink,
-                    pcnpt,
+                    pacinput,
+                    pacinputParent,
+                    pacinputElement,
                     template = ' \
                         <div id="gmsearch" \
                             class="gmsearchclass" \
@@ -472,16 +481,25 @@
                     $scope.gsearch.isGoogle = true;
                 } else {
                     $scope.gsearch.isGoogle = false;
+                    if (curMapType === 'arcgis') {
+                        whichCanvas = 'map_canvas_root';
+                        pacinputElement = document.getElementById('pac-input');
+                        pacinputParent = pacinputElement.parentElement;
+                        pacinputParent.removeChild(pacinputElement);
+                    }
                 }
-                pcnpt = document.getElementById('pac-input');
-                if (!pcnpt) {
-                    pcnpt = angular.element(template);
-                    cnvs.append(pcnpt);
-                    fnLink = $compile(pcnpt);
+
+                // mptp = $scope.currentTab.maptype;
+                whichCanvas = curMapType === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+                pacinput = document.getElementById('pac-input');
+                if (!pacinput) {
+                    pacinput = angular.element(template);
+                    cnvs.append(pacinput);
+                    fnLink = $compile(pacinput);
                     fnLink($scope);
                 }
 
-                // pcnpt.bind('keyup', function(e){
+                // pacinput.bind('keyup', function(e){
                 //     var v = e.target.value;
                 //     if (e.keyCode !== '13') {
                 //         e.stopPropagation();
