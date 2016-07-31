@@ -177,16 +177,9 @@
 
                 if (placesFromSearch && placesFromSearch.length > 0) {
                     placesSearchResults = placesFromSearch;
-                    googmph = mpTypeSvc.getSpecificMapType('google');
 
-                    curmph = mpTypeSvc.getCurrentMapType();
-                    curMapType = mpTypeSvc.getMapTypeKey();
-                    if (curMapType === 'google') {
-                        googmph.setPlacesFromSearch(placesFromSearch);
-                        $scope.destSelections[0].showing = 'destination-option-showing';
-                    } else {
-                        $scope.destSelections[0].showing = 'destination-option-hidden';
-                    }
+
+                    $scope.subsetDestinations(placesFromSearch);
 
                     gmQSvc = $scope.GoogleQueryService;
                     scope = gmQSvc.getQueryDestinationDialogScope(curMapType);
@@ -198,13 +191,29 @@
                             'title' : searchInput.value,
                             'snippet' : 'No snippet available',
                             'icon' : 'stylesheets/images/googlemap.png',
-                            'mapType' : curmph
+                            'mapType' : $scope.CurrentMapTypeService.getCurrentMapType()
                         }
                     );
                 } else {
                     console.log('searchBox.getPlaces() still returned no results');
                 }
 
+            }
+
+            $scope.subsetDestinations = function (placesFromSearch) {
+                var curmph = $scope.CurrentMapTypeService.getCurrentMapType(),
+                    curMapType = $scope.CurrentMapTypeService.getMapTypeKey(),
+                    googmph = $scope.CurrentMapTypeService.getSpecificMapType('google');
+
+                if (curMapType === 'google') {
+                    if (placesFromSearch) {
+                        googmph.setPlacesFromSearch(placesFromSearch);
+                    }
+                    $scope.destSelections[0].showing = 'destination-option-showing';
+                } else {
+                    $scope.destSelections[0].showing = 'destination-option-hidden';
+                    $scope.data.dstSel = $scope.destSelections[2].option;
+                }
             }
 
             connectQuery = function () {
@@ -484,8 +493,10 @@
                     if (curMapType === 'arcgis') {
                         whichCanvas = 'map_canvas_root';
                         pacinputElement = document.getElementById('pac-input');
-                        pacinputParent = pacinputElement.parentElement;
-                        pacinputParent.removeChild(pacinputElement);
+                        if(pacinputElement) {
+                            pacinputParent = pacinputElement.parentElement;
+                            pacinputParent.removeChild(pacinputElement);
+                        }
                     }
                 }
 
