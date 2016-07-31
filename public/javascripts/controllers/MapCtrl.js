@@ -50,8 +50,7 @@
                 queryForSameDisplay = "",
                 searchInput;
 
-            $scope.LinkrSvc = LinkrSvc;
-            $scope.CurrentMapTypeService = CurrentMapTypeService;
+            // $scope.LinkrSvc = LinkrSvc;
             $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
 
@@ -122,8 +121,7 @@
             // });
 
             function placesQueryCallback(placesFromSearch, status) {
-                var mpTypeSvc = $scope.CurrentMapTypeService,
-                    googmph,
+                var googmph,
                     curmph,
                     curMapType,
                     placesSearchResults,
@@ -168,7 +166,7 @@
                         }
 
                     } else {  //(destWnd == "Same Window")
-                        googmph = mpTypeSvc.getSpecificMapType('google');
+                        googmph = CurrentMapTypeService.getSpecificMapType('google');
                         googmph.placeMarkers(placesSearchResults);
                         MLConfig.setQuery(queryForNewDisplay);
                         queryForSameDisplay = queryForNewDisplay;
@@ -191,7 +189,7 @@
                             'title' : searchInput.value,
                             'snippet' : 'No snippet available',
                             'icon' : 'stylesheets/images/googlemap.png',
-                            'mapType' : $scope.CurrentMapTypeService.getCurrentMapType()
+                            'mapType' : CurrentMapTypeService.getCurrentMapType()
                         }
                     );
                 } else {
@@ -201,9 +199,9 @@
             }
 
             $scope.subsetDestinations = function (placesFromSearch) {
-                var curmph = $scope.CurrentMapTypeService.getCurrentMapType(),
-                    curMapType = $scope.CurrentMapTypeService.getMapTypeKey(),
-                    googmph = $scope.CurrentMapTypeService.getSpecificMapType('google');
+                var curmph = CurrentMapTypeService.getCurrentMapType(),
+                    curMapType = CurrentMapTypeService.getMapTypeKey(),
+                    googmph = CurrentMapTypeService.getSpecificMapType('google');
 
                 if (curMapType === 'google') {
                     if (placesFromSearch) {
@@ -217,8 +215,7 @@
             }
 
             connectQuery = function () {
-                var mpTypeSvc,
-                    googmph,
+                var googmph,
                     mapLinkrBounds,
                     searchBounds,
                     position,
@@ -230,8 +227,7 @@
                     queryPlaces = {},
                     service;
 
-                mpTypeSvc = $scope.CurrentMapTypeService;
-                googmph = mpTypeSvc.getSpecificMapType('google');
+                googmph = CurrentMapTypeService.getSpecificMapType('google');
 
                 mapLinkrBounds = MLConfig.getBounds();
                 searchBounds = new google.maps.LatLngBounds(
@@ -325,7 +321,7 @@
                         console.log('lnkr[0].onclick   displayLinkerEvent');
                         event.stopPropagation();
 
-                        $scope.LinkrSvc.showLinkr();
+                        LinkrSvc.showLinkr();
                     });
 
                     mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
@@ -467,8 +463,7 @@
             function setupQueryListener() {
                 var
                     cnvs = utils.getElemById(whichCanvas),
-                    mpTypeSvc = $scope.CurrentMapTypeService,
-                    curMapType = mpTypeSvc.getMapTypeKey(),
+                    curMapType = CurrentMapTypeService.getMapTypeKey(),
                     fnLink,
                     pacinput,
                     pacinputParent,
