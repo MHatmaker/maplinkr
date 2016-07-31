@@ -38,43 +38,7 @@ String.format = function () {
         function TabsCtrl($scope, $location, CurrentMapTypeService) {
             console.debug('TabsCtrl - initialize tabs');
 
-            var contentsText = 'The {0} tab opens a typical web page displaying typical web page stuff, including a div with {1}  programmed with {2} embedded in it.';
-
-            $scope.tabs = [
-                {
-                    maptype : 'google',
-                    title : 'Google Maps',
-                    site : 'Web Site featuring a Google Map',
-                    content : String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
-                    url : "/views/partials/GoogleMap.jade",
-                    imgSrc : "stylesheets/images/googlemap.png",
-                    imgAlt : "Google Map",
-                    active : true,
-                    disabled : false
-                },
-                {
-                    maptype : 'arcgis',
-                    title : 'ArcGIS Web Maps',
-                    site : 'Web Site featuring an ArcGIS Online Map',
-                    content : String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
-                    url : "/views/partials/ArcGIS.jade",
-                    imgSrc : "stylesheets/images/arcgis.png",
-                    imgAlt : "ArcGIS Web Maps",
-                    active : false,
-                    disabled : false
-                },
-                {
-                    maptype : 'leaflet',
-                    title : 'Leaflet/OSM Maps',
-                    site : 'Web Site featuring a Leaflet Map',
-                    content : String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
-                    url : "/views/partials/Leaflet.jade",
-                    imgSrc :  "stylesheets/images/Leaflet.png",
-                    imgAlt : "Leaflet/OSM Maps",
-                    active : false,
-                    disabled : false
-                }
-            ];
+            $scope.tabs = CurrentMapTypeService.getMapConfigurations();
 
             $scope.currentTab = $scope.tabs[0];
             $scope.$parent.currentTab = $scope.currentTab;

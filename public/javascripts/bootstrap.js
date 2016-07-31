@@ -1,4 +1,5 @@
 /*global define */
+/*jslint es5: true */
 
 var selectedMapType = 'arcgis',
     currentMapType = 'arcgis',
@@ -131,13 +132,52 @@ var selectedMapType = 'arcgis',
                             'leaflet': StartupLeaflet,
                             'google' : StartupGoogle,
                             'arcgis' : StartupArcGIS
-                    },
+                        },
 
                         mapRestUrl = {
                             'leaflet': 'Leaflet',
                             'google' : 'GoogleMap',
                             'arcgis' : 'ArcGIS'
                         },
+                        contentsText = ' \
+                            The {0} tab opens a typical web page \
+                            displaying typical web page stuff, including a div with {1} \
+                            programmed with {2} embedded in it.',
+                        mapconfigs = [
+                            {
+                                maptype : 'google',
+                                title : 'Google Maps',
+                                site : 'Web Site featuring a Google Map',
+                                content : String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
+                                url : "/views/partials/GoogleMap.jade",
+                                imgSrc : "stylesheets/images/googlemap.png",
+                                imgAlt : "Google Map",
+                                active : true,
+                                disabled : false
+                            },
+                            {
+                                maptype : 'arcgis',
+                                title : 'ArcGIS Web Maps',
+                                site : 'Web Site featuring an ArcGIS Online Map',
+                                content : String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
+                                url : "/views/partials/ArcGIS.jade",
+                                imgSrc : "stylesheets/images/arcgis.png",
+                                imgAlt : "ArcGIS Web Maps",
+                                active : false,
+                                disabled : false
+                            },
+                            {
+                                maptype : 'leaflet',
+                                title : 'Leaflet/OSM Maps',
+                                site : 'Web Site featuring a Leaflet Map',
+                                content : String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
+                                url : "/views/partials/Leaflet.jade",
+                                imgSrc :  "stylesheets/images/Leaflet.png",
+                                imgAlt : "Leaflet/OSM Maps",
+                                active : false,
+                                disabled : false
+                            }
+                        ],
 
                         getMapTypes = function () {
                             var values = Object.keys(mapTypes).map(function (key) {
@@ -149,6 +189,9 @@ var selectedMapType = 'arcgis',
                             // for (var key in mapTypes){
                                 // mapTypeValues.push(mapTypes[key]);
                             // return mapTypes;
+                        },
+                        getMapConfigurations = function () {
+                            return mapconfigs;
                         },
                         getSpecificMapType = function (key) {
                             return mapTypes[key];
@@ -182,6 +225,7 @@ var selectedMapType = 'arcgis',
                     return {
                         getMapTypes: getMapTypes,
                         getCurrentMapType : getMapType,
+                        getMapConfigurations : getMapConfigurations,
                         getMapStartup : getMapStartup,
                         setCurrentMapType : setMapType,
                         getPreviousMapType : getPreviousMapType,
