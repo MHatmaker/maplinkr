@@ -25,9 +25,10 @@
             MLConfig, PusherSetupCtrl, WindowStarterArg, MapLinkrMgrCtrl) {
         console.log('MapCtrl define');
 
-        var mapTypes = {'leaflet': StartupLeaflet,
-                    'google' : StartupGoogle,
-                    'arcgis' : StartupArcGIS},
+        var
+            // mapTypes = {'leaflet': StartupLeaflet,
+            //         'google' : StartupGoogle,
+            //         'arcgis' : StartupArcGIS},
             WindowStarter = WindowStarterArg,
             currentMapType = null,
             whichCanvas = 'map_canvas',
@@ -41,8 +42,7 @@
             CurrentMapTypeService, PusherEventHandlerService, GoogleQueryService) {
             console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
 
-            var mptp = $scope.currentTab.maptype,
-                gmquery = MLConfig.query(),
+            var gmquery = MLConfig.query(),
                 stup,
                 tmpltName,
                 connectQuery,
@@ -50,7 +50,6 @@
                 queryForSameDisplay = "",
                 searchInput;
 
-            // $scope.LinkrSvc = LinkrSvc;
             $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
 
@@ -122,8 +121,7 @@
 
             function placesQueryCallback(placesFromSearch, status) {
                 var googmph,
-                    curmph,
-                    curMapType,
+                    curMapType = "no map",
                     placesSearchResults,
                     onAcceptDestination,
                     scope;
@@ -199,8 +197,7 @@
             }
 
             $scope.subsetDestinations = function (placesFromSearch) {
-                var curmph = CurrentMapTypeService.getCurrentMapType(),
-                    curMapType = CurrentMapTypeService.getMapTypeKey(),
+                var curMapType = CurrentMapTypeService.getMapTypeKey(),
                     googmph = CurrentMapTypeService.getSpecificMapType('google');
 
                 if (curMapType === 'google') {
@@ -212,7 +209,7 @@
                     $scope.destSelections[0].showing = 'destination-option-hidden';
                     $scope.data.dstSel = $scope.destSelections[2].option;
                 }
-            }
+            };
 
             connectQuery = function () {
                 var googmph,
@@ -282,7 +279,6 @@
                 }
                 if (document.getElementById("linkerDirectiveId") === null) {
 
-
                     var contextScope = $scope,
                         cnvs = utils.getElemById(whichCanvas),
                         templateLnkr = ' \
@@ -344,14 +340,15 @@
                         refreshLinker();
                         refreshMinMax();
                     }, refreshDelay);
-                } else {
-                    refreshDelay = 500;
-                    setTimeout(function () {
-                        setupQueryListener();
-                        refreshLinker();
-                        refreshMinMax();
-                    }, refreshDelay);
                 }
+                // else {
+                //     refreshDelay = 500;
+                //     setTimeout(function () {
+                //         setupQueryListener();
+                //         refreshLinker();
+                //         refreshMinMax();
+                //     }, refreshDelay);
+                // }
                 // connectQuery();
             }
 
@@ -359,8 +356,8 @@
             console.debug(selfMethods);
 
             $scope.gsearchVisible = 'inline-block';
-            whichCanvas = mptp === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
-            $scope.selected = mptp === 'google' ? 'Same Window' : 'New Pop-up Window';
+            whichCanvas = CurrentMapTypeService.getCurrentMapType() === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+            $scope.selected = CurrentMapTypeService.getCurrentMapType() === 'google' ? 'Same Window' : 'New Pop-up Window';
             $scope.updateState($scope.selected);
 
             if (gmquery !== '') {
@@ -369,7 +366,7 @@
                 $scope.gsearch = {'query' : 'SearcherBox'};
             }
 
-            currentMapType = mapTypes[mptp];
+            currentMapType = CurrentMapTypeService.getCurrentMapType();
 
             stup = currentMapType.start();
             console.debug(stup);
@@ -378,8 +375,7 @@
             console.log(tmpltName);
 
             function configureCurrentMapType() {
-                mptp = $scope.currentTab.maptype;
-                currentMapType = mapTypes[mptp];
+                currentMapType = CurrentMapTypeService.getMapStartup();
                 currentMapType.config(null);
                 $scope.map = currentMapType.getMap();
                 // $scope.map.width = mapSize['medium'];
@@ -416,7 +412,7 @@
                     // utils.displayHeights("Heights after CollapseSummaryCompletionEvent");
                     // console.log("REFRESH LINKER AND MINMAX");
 
-                    if (curMapTypeInitialized === false) { //&& mptp !== 'arcgis') {
+                    if (curMapTypeInitialized === false) {
                         configureCurrentMapType();
                     }
 
@@ -488,14 +484,13 @@
                     if (curMapType === 'arcgis') {
                         whichCanvas = 'map_canvas_root';
                         pacinputElement = document.getElementById('pac-input');
-                        if(pacinputElement) {
+                        if (pacinputElement) {
                             pacinputParent = pacinputElement.parentElement;
                             pacinputParent.removeChild(pacinputElement);
                         }
                     }
                 }
 
-                // mptp = $scope.currentTab.maptype;
                 whichCanvas = curMapType === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
                 pacinput = document.getElementById('pac-input');
                 if (!pacinput) {

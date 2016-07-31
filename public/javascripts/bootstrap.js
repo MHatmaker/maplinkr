@@ -26,11 +26,15 @@ var selectedMapType = 'arcgis',
         'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
-        'lib/MapHosterArcGIS'
+        'lib/MapHosterArcGIS',
+        'lib/StartupGoogle',
+        'lib/StartupLeaflet',
+        'lib/StartupArcGIS'
 
     ], function (angular, ControllerStarter, MasherCtrl, TabsCtrl, MLConfig,
             ShareCtrl, SpaCtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl, MapCtrl,
-            MapLinkrPluginCtrl, MapLinkrMgrCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+            MapLinkrPluginCtrl, MapLinkrMgrCtrl, GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS,
+            StartupGoogle, StartupLeaflet, StartupArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {
@@ -123,6 +127,11 @@ var selectedMapType = 'arcgis',
                         'google' : MapHosterGoogle,
                         'arcgis' : MapHosterArcGIS
                     },
+                        mapStartups = {
+                            'leaflet': StartupLeaflet,
+                            'google' : StartupGoogle,
+                            'arcgis' : StartupArcGIS
+                    },
 
                         mapRestUrl = {
                             'leaflet': 'Leaflet',
@@ -147,6 +156,9 @@ var selectedMapType = 'arcgis',
                         getMapType = function () {
                             return mapTypes[currentMapType];
                         },
+                        getMapStartup = function () {
+                            return mapStartups[currentMapType];
+                        },
                         getMapTypeKey = function () {
                             return selectedMapType;
                         },
@@ -170,6 +182,7 @@ var selectedMapType = 'arcgis',
                     return {
                         getMapTypes: getMapTypes,
                         getCurrentMapType : getMapType,
+                        getMapStartup : getMapStartup,
                         setCurrentMapType : setMapType,
                         getPreviousMapType : getPreviousMapType,
                         getSelectedMapType : getSelectedMapType,
