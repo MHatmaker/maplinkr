@@ -132,7 +132,7 @@ var selectedMapType = 'arcgis',
                         return this.scopes;
                     }
                 }).
-                factory("CurrentMapTypeService", ['$location', 'mapsvcScopes', function ($location, mapsvcScopes) {
+                factory("CurrentMapTypeService", ['mapsvcScopes', function (mapsvcScopes) {
                     var mapTypes = {
                         'leaflet': MapHosterLeaflet,
                         'google' : MapHosterGoogle,
@@ -211,7 +211,7 @@ var selectedMapType = 'arcgis',
                         getSpecificMapType = function (key) {
                             return mapTypes[key];
                         },
-                        getMapType = function () {
+                        getCurrentMapType = function () {
                             return mapTypes[currentMapType];
                         },
                         getMapStartup = function () {
@@ -249,11 +249,11 @@ var selectedMapType = 'arcgis',
                                 scp.$broadcast('ForceMapSystemEvent', data);
                             }
                             console.log("forceMapSystem setting path to : " + newPath);
-                            $location.path(newPath);
+                            window.location.path(newPath);
                         };
                     return {
                         getMapTypes: getMapTypes,
-                        getCurrentMapType : getMapType,
+                        getCurrentMapType : getCurrentMapType,
                         getMapConfigurations : getMapConfigurations,
                         getMapStartup : getMapStartup,
                         setCurrentMapType : setMapType,
