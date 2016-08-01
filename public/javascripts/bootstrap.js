@@ -122,7 +122,17 @@ var selectedMapType = 'arcgis',
                         getCurrentWebMapId : function () { return currentWebMapId; }
                     };
                 }).
-                factory("CurrentMapTypeService", function () {
+
+                value('mapsvcScopes', {
+                    scopes : [],
+                    addScope : function (s) {
+                        this.scopes.push(s);
+                    },
+                    getScopes : function () {
+                        return this.scopes;
+                    }
+                }).
+                factory("CurrentMapTypeService", ['$location', 'mapsvcScopes', function ($location, mapsvcScopes) {
                     var mapTypes = {
                         'leaflet': MapHosterLeaflet,
                         'google' : MapHosterGoogle,
@@ -143,6 +153,11 @@ var selectedMapType = 'arcgis',
                             The {0} tab opens a typical web page \
                             displaying typical web page stuff, including a div with {1} \
                             programmed with {2} embedded in it.',
+                        mapSystemDct = {
+                            'GoogleMap' : 0,
+                            'ArcGIS' : 1,
+                            'Leaflet' : 2
+                        },
                         mapconfigs = [
                             {
                                 maptype : 'google',
@@ -221,6 +236,20 @@ var selectedMapType = 'arcgis',
                         getSelectedMapType = function () {
                             console.log("getSelectedMapType : " + selectedMapType);
                             return mapTypes[selectedMapType];
+                        },
+                        forceMapSystem = function (mapSystem) {
+                        // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
+                        // Resets the $locationPath under the ng-view.
+                        // This code should be entered in a new window created by a publish event with the map system // in the url
+
+                            var data = {'whichsystem' : mapSystemDct.mapSystem},
+                                scp = mapsvcScopes.getScopes()[0],
+                                newPath = "/views/partials/" + mapSystem;
+                            if (scp) {
+                                scp.$broadcast('ForceMapSystemEvent', data);
+                            }
+                            console.log("forceMapSystem setting path to : " + newPath);
+                            $location.path(newPath);
                         };
                     return {
                         getMapTypes: getMapTypes,
@@ -232,9 +261,10 @@ var selectedMapType = 'arcgis',
                         getSelectedMapType : getSelectedMapType,
                         getMapTypeKey : getMapTypeKey,
                         getMapRestUrl : getMapRestUrl,
-                        getSpecificMapType : getSpecificMapType
+                        getSpecificMapType : getSpecificMapType,
+                        forceMapSystem : forceMapSystem
                     };
-                }).
+                }]).
 
 
                 factory("PusherEventHandlerService", function () {

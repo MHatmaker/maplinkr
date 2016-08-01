@@ -57,6 +57,10 @@ String.format = function () {
             };
             console.log("onClickTab and isActiveTab defined ");
 
+            $scope.$on('forceMapSystemEvent', function (evt, args) {
+                $scope.currentTab = args.whichsystem;
+            });
+
             $scope.forceMapSystem = function (mapSystem) {
             // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
             // Resets the $locationPath under the ng-view.

@@ -27,7 +27,8 @@
             };
 
 
-        function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal, PusherEventHandlerService) {  //$route, $routeParams, $window) {
+        function MasherCtrl($scope, $location, $window, $route, $templateCache, $uibModal,
+            PusherEventHandlerService, CurrentMapTypeService) {
             console.debug('MasherCtrl - initialize collapsed bool');
 
             var startupView = MLConfig.getStartupView();
@@ -192,6 +193,10 @@
 
             };
 
+            $scope.$on('ForceMapSystemEvent', function (evt, args) {
+                $scope.currentTab = args.whichsystem;
+            });
+
             function handlePopupBlocked(completeUrl, nextWindowName, dimensions) {
                 console.log('in function handlePopupBlocked');
                 alert('in function handlePopupBlocked');
@@ -244,7 +249,8 @@
         function init(App) {
             console.log('MasherCtrl init');
             App.controller('MasherCtrl',
-                ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal', 'PusherEventHandlerService', MasherCtrl]);
+                ['$scope', '$location', '$window', '$route', '$templateCache', '$uibModal',
+                    'PusherEventHandlerService', 'CurrentMapTypeService', MasherCtrl]);
 
             // App.directive('modalshowpopupblockdlg', function () {
             //     return {
