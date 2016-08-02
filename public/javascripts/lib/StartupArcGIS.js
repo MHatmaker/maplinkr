@@ -158,6 +158,7 @@
                 idWebMap,
                 $inj,
                 serv,
+                MapTypeSvc,
                 curmph,
                 url,
                 lonWebMap,
@@ -181,7 +182,11 @@
                 serv = $inj.get('CurrentMapTypeService');
                 serv.setCurrentMapType('arcgis');
 
-                TabsCtrl.forceAGO();
+                // TabsCtrl.forceAGO();
+
+                MapTypeSvc = $inj.get('CurrentMapTypeService'),
+                MapTypeSvc.forceAGO();
+
                 /*
                     Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the MLConfig with ArcGIS-specific attributes.
                 */

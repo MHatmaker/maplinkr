@@ -193,7 +193,12 @@
 
             };
 
+            CurrentMapTypeService.addScope($scope);
             $scope.$on('ForceMapSystemEvent', function (evt, args) {
+                $scope.currentTab = args.whichsystem;
+                $location.path(args.newpath);
+            });
+            $scope.$on('ForceAGOEvent', function (evt, args) {
                 $scope.currentTab = args.whichsystem;
             });
 

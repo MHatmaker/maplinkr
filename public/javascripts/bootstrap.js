@@ -149,6 +149,13 @@ var selectedMapType = 'arcgis',
                             'google' : 'GoogleMap',
                             'arcgis' : 'ArcGIS'
                         },
+
+                        mapType2Config = {
+                            'leaflet': 2,
+                            'google' : 0,
+                            'arcgis' : 1
+                        },
+
                         contentsText = ' \
                             The {0} tab opens a typical web page \
                             displaying typical web page stuff, including a div with {1} \
@@ -208,6 +215,9 @@ var selectedMapType = 'arcgis',
                         getMapConfigurations = function () {
                             return mapconfigs;
                         },
+                        getCurrentMapConfiguration = function () {
+                            return mapconfigs[mapType2Config[currentMapType]];
+                        },
                         getSpecificMapType = function (key) {
                             return mapTypes[key];
                         },
@@ -237,24 +247,47 @@ var selectedMapType = 'arcgis',
                             console.log("getSelectedMapType : " + selectedMapType);
                             return mapTypes[selectedMapType];
                         },
+
+                        addScope = function (scope) {
+                            mapsvcScopes.addScope(scope);
+                        },
+                        forceAGO = function () {
+                        // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
+                        // Resets the $locationPath under the ng-view.
+                        // This code should be entered in a new window created by a publish event with the map system // in the url
+
+                            var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/arcgis"},
+                                scp = mapsvcScopes.getScopes()[0],
+                                newPath = "/views/partials/" + 'arcgis';
+                            if (scp) {
+                                scp.$broadcast('ForceAGOEvent', data);
+                            }
+                            console.log("forceAGO setting path to : " + newPath);
+                            // window.location.pathname += "/views/partials/GoogleMap";
+                            // window.location.reload();
+                        },
+
                         forceMapSystem = function (mapSystem) {
                         // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
                         // Resets the $locationPath under the ng-view.
                         // This code should be entered in a new window created by a publish event with the map system // in the url
 
-                            var data = {'whichsystem' : mapSystemDct.mapSystem},
+                            var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/" + mapSystem},
                                 scp = mapsvcScopes.getScopes()[0],
                                 newPath = "/views/partials/" + mapSystem;
                             if (scp) {
                                 scp.$broadcast('ForceMapSystemEvent', data);
                             }
                             console.log("forceMapSystem setting path to : " + newPath);
-                            window.location.path(newPath);
+                            // window.location.pathname += "/views/partials/GoogleMap";
+                            // window.location.reload();
                         };
                     return {
+                        addScope : addScope,
                         getMapTypes: getMapTypes,
                         getCurrentMapType : getCurrentMapType,
                         getMapConfigurations : getMapConfigurations,
+                        getCurrentMapConfiguration : getCurrentMapConfiguration,
                         getMapStartup : getMapStartup,
                         setCurrentMapType : setMapType,
                         getPreviousMapType : getPreviousMapType,
@@ -262,7 +295,8 @@ var selectedMapType = 'arcgis',
                         getMapTypeKey : getMapTypeKey,
                         getMapRestUrl : getMapRestUrl,
                         getSpecificMapType : getSpecificMapType,
-                        forceMapSystem : forceMapSystem
+                        forceMapSystem : forceMapSystem,
+                        forceAGO : forceAGO
                     };
                 }]).
 
@@ -427,7 +461,7 @@ var selectedMapType = 'arcgis',
                 }
 
                 // MasherCtrl.startMapSystem();
-                TabsCtrl.forceMapSystem(maphost);
+                serv.forceMapSystem(maphost);
                 MLConfig.setHideWebSiteOnStartup(true);   /////// Probably never used via getHideWebSiteOnStartup()
                 // $timeout = $inj.get('$timeout');
                 // $timeout( function () {

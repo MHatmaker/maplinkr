@@ -40,7 +40,7 @@
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, LinkrSvc,
             CurrentMapTypeService, PusherEventHandlerService, GoogleQueryService) {
-            console.log("MapCtrl initializing with maptype " +  $scope.currentTab.maptype);
+
 
             var gmquery = MLConfig.query(),
                 stup,
@@ -49,6 +49,12 @@
                 queryForNewDisplay = "",
                 queryForSameDisplay = "",
                 searchInput;
+
+            // CurrentMapTypeService.addScope($scope);
+            // $scope.$on('ForceMapSystemEvent', function (evt, args) {
+            //     $scope.currentTab = args.whichsystem;
+            // });
+            $scope.currentTab = CurrentMapTypeService.getCurrentMapConfiguration();
 
             $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
