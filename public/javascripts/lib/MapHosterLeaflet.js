@@ -24,9 +24,9 @@ define('GeoCoder', function () {
     require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
 
     define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/MLConfig',
-        'controllers/PusherSetupCtrl', 'controllers/WindowStarter'],
+        'controllers/PusherSetupCtrl'],
 
-        function (PositionViewCtrl, GeoCoder, utils, MLConfig, PusherSetupCtrl, WindowStarter) {
+        function (PositionViewCtrl, GeoCoder, utils, MLConfig, PusherSetupCtrl) {
 
             var
                 hostName = "MapHosterLeaflet",

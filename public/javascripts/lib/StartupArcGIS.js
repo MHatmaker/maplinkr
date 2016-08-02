@@ -33,10 +33,9 @@
         'controllers/PusherSetupCtrl',
         'lib/MLConfig',
         'lib/utils',
-        'controllers/TabsCtrl',
         'angular',
         'esri/map'
-    ], function (MapHosterArcGIS, PusherSetupCtrl, MLConfig, utils, TabsCtrl) {
+    ], function (MapHosterArcGIS, PusherSetupCtrl, MLConfig, utils) {
         console.log('StartupArcGIS defined');
 
         var
@@ -87,7 +86,7 @@
             console.debug(aMap);
             var curmph = null,
                 $inj,
-                serv,
+                mapTypeSvc,
                 currentPusher,
                 currentChannel;
 
@@ -118,8 +117,8 @@
                 curmph = null;
 
                 $inj = angular.injector(['app']);
-                serv = $inj.get('CurrentMapTypeService');
-                curmph = serv.getSelectedMapType();
+                mapTypeSvc = $inj.get('CurrentMapTypeService');
+                curmph = mapTypeSvc.getSelectedMapType();
 
                 pusher = PusherSetupCtrl.createPusherClient(
                     {
@@ -157,8 +156,7 @@
             var urlparams,
                 idWebMap,
                 $inj,
-                serv,
-                MapTypeSvc,
+                mapTypeSvc,
                 curmph,
                 url,
                 lonWebMap,
@@ -179,13 +177,10 @@
 
                 MLConfig.setMapHost('ArcGIS');
                 $inj = angular.injector(['app']);
-                serv = $inj.get('CurrentMapTypeService');
-                serv.setCurrentMapType('arcgis');
+                mapTypeSvc = $inj.get('CurrentMapTypeService');
+                mapTypeSvc.setCurrentMapType('arcgis');
 
-                // TabsCtrl.forceAGO();
-
-                MapTypeSvc = $inj.get('CurrentMapTypeService'),
-                MapTypeSvc.forceAGO();
+                mapTypeSvc.forceAGO();
 
                 /*
                     Force the master site web sub-site to host an AGO webmap.  Prepare to initialize or replace details in the MLConfig with ArcGIS-specific attributes.
@@ -340,15 +335,15 @@
 
             var curmph = MapHosterArcGIS,
                 $inj,
-                serv,
+                mapTypeSvc,
                 evtSvc,
                 url,
                 baseUrl,
                 openNewDisplay;
 
             $inj = angular.injector(['app']);
-            serv = $inj.get('CurrentMapTypeService');
-            curmph = serv.getSelectedMapType();
+            mapTypeSvc = $inj.get('CurrentMapTypeService');
+            curmph = mapTypeSvc.getSelectedMapType();
 
             evtSvc = $inj.get('PusherEventHandlerService');
             evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
