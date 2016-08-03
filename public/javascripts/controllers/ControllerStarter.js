@@ -103,10 +103,10 @@
 
                 SearcherCtrlGrp.start(App, portalForSearch);
                 SearcherCtrlMap.start(App, portalForSearch);
-                if (PusherSetupCtrl.isInitialized() === false) {
+                // if (!PusherSetupCtrl.isInitialized || PusherSetupCtrl.isInitialized() === false) {
                     PusherSetupCtrl.start(App);
                     PusherCtrl.start(App);
-                }
+                // }
                 if (DestWndSetupCtrl.isInitialized() === false) {
                     DestWndSetupCtrl.start(App);
                 }
