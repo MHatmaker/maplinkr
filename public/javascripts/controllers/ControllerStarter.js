@@ -99,17 +99,14 @@
                 PositionViewCtrl.start(App);
                 MapLinkrPluginCtrl.start(App);
                 MapLinkrMgrCtrl.start(App);
-                // MapCtrl.start(App);
 
                 SearcherCtrlGrp.start(App, portalForSearch);
                 SearcherCtrlMap.start(App, portalForSearch);
-                // if (!PusherSetupCtrl.isInitialized || PusherSetupCtrl.isInitialized() === false) {
-                    PusherSetupCtrl.start(App);
-                    PusherCtrl.start(App);
-                // }
-                if (DestWndSetupCtrl.isInitialized() === false) {
-                    DestWndSetupCtrl.start(App);
-                }
+
+                PusherSetupCtrl.start(App);
+                PusherCtrl.start(App);
+                DestWndSetupCtrl.start(App);
+
                 TransmitNewUrlCtrl.start(App);
                 ShareCtrl.start(App);
                 PopupBlockerCtrl.start(App);

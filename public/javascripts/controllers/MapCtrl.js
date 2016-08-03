@@ -601,34 +601,33 @@
 
         }
 
-        MapCtrl.prototype.placeCustomControls = function () {
+        function placeCustomControls () {
             console.log("placeCustomControls");
             selfMethods.placeCustomControls();
-        };
+        }
 
-        MapCtrl.prototype.getSearchBox = function () {
+         function getSearchBox () {
             selfMethods.getSearchBox();
-        };
+        }
 
-        MapCtrl.prototype.configureCurrentMapType = function () {
+        function configureCurrentMapType () {
             console.log("configureCurrentMapType");
             selfMethods.configureCurrentMapType();
-        };
+        }
 
-        MapCtrl.prototype.invalidateCurrentMapTypeConfigured = function () {
+        function invalidateCurrentMapTypeConfigured () {
             console.log("invalidateCurrentMapTypeConfigured");
             if (selfMethods.invalidateCurrentMapTypeConfigured) {
                 selfMethods.invalidateCurrentMapTypeConfigured();
             }
-        };
+        }
 
-        MapCtrl.prototype.setupQueryListener = function () {
-            console.log("MapCtrl.prototype.setupQueryListener");
+        function setupQueryListener () {
+            console.log("setupQueryListener");
             if (selfMethods.setupQueryListener) {
                 selfMethods.setupQueryListener();
             }
-        };
-
+        }
 
         function init(App) {
             console.log('MapCtrl init');
@@ -638,10 +637,10 @@
             return MapCtrl;
         }
 
-        return { start: init, placeCustomControls : MapCtrl.prototype.placeCustomControls,
-            configureCurrentMapType : MapCtrl.prototype.configureCurrentMapType,
-            invalidateCurrentMapTypeConfigured : MapCtrl.prototype.invalidateCurrentMapTypeConfigured,
-            getSearchBox : MapCtrl.prototype.getSearchBox, setupQueryListener : MapCtrl.prototype.setupQueryListener};
+        return { start: init, placeCustomControls : placeCustomControls,
+            configureCurrentMapType : configureCurrentMapType,
+            invalidateCurrentMapTypeConfigured : invalidateCurrentMapTypeConfigured,
+            getSearchBox : getSearchBox, setupQueryListener : setupQueryListener};
 
     });
 

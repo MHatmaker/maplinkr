@@ -117,11 +117,11 @@
             });
         }
 
-        PositionViewCtrl.prototype.updatePosition = function (key, val) {
+        function updatePosition(key, val) {
             if (selfMethods.updatePosition) {
                 selfMethods.updatePosition(key, val);
             }
-        };
+        }
 
         function init(App) {
             console.log('PositionViewCtrl init');
@@ -129,7 +129,7 @@
             return PositionViewCtrl;
         }
 
-        return { start: init, update : PositionViewCtrl.prototype.updatePosition};
+        return { start: init, update : updatePosition};
 
     });
 

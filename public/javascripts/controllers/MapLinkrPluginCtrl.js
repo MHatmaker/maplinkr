@@ -4,25 +4,18 @@
     "use strict";
 
     console.log('MapLinkrPluginCtrl setup');
-    var areWeInitialized = false,
-        self = null;
     define([
         'angular'
     ], function (angular) {
         console.log('MapLinkrPluginCtrl define');
-        var selfMethods = {};
-
-        areWeInitialized = false;
 
         function MapLinkrPluginCtrl($scope, $uibModalInstance, data) {
             console.log("in MapLinkrPluginCtrl");
-            areWeInitialized = false;
-            self = this;
 
             $scope.mldata = {};
 
             $scope.mldata = data.callback();
-            $scope.mldata.using['current'] = { 'Same Window' : true, 'New Tab' : true, 'New Window' : true};
+            $scope.mldata.using.current = { 'Same Window' : true, 'New Tab' : true, 'New Window' : true};
 
             $scope.onShowHideMapLinkrClicked = function (clickedItem) {
                 var collapseTest = $scope.mldata[clickedItem].isCollapsed,
@@ -33,7 +26,7 @@
                             $scope.mldata[itm].isCollapsed = true;
                         }
                     }
-                 }
+                }
                 $scope.mldata[clickedItem].isCollapsed = !$scope.mldata[clickedItem].isCollapsed;
             };
 
@@ -53,12 +46,12 @@
                         }
                         strAfter += " " + itm + " " + $scope.mldata.using.destchoices[itm].details.isCollapsed;
                     }
-                    console.log(strBefore)
+                    console.log(strBefore);
                     console.log(strAfter);
-                 }
+                }
                 $scope.mldata.using.destchoices[clickedItem].details.isCollapsed = !$scope.mldata.using.destchoices[clickedItem].details.isCollapsed;
                 $scope.mldata.using.current[clickedItem] = !$scope.mldata.using.current[clickedItem];
-                console.log("ShowHide " + clickedItem + " is now " + $scope.mldata.using.destchoices[clickedItem].details.isCollapsed)
+                console.log("ShowHide " + clickedItem + " is now " + $scope.mldata.using.destchoices[clickedItem].details.isCollapsed);
             };
 
             $scope.accept = function () {
@@ -76,25 +69,19 @@
                     $scope.save();
                 }
             }; // end hitEnter
-            return selfMethods;
         }
 
-        MapLinkrPluginCtrl.prototype.isInitialized = function () {
-            return areWeInitialized;
-        };
 
         function init(App) {
             console.log('MapLinkrPluginCtrl init');
 
-            areWeInitialized = true;
             App.controller('MapLinkrPluginCtrl',  ['$scope', '$uibModalInstance', 'data', MapLinkrPluginCtrl]);
 
             return MapLinkrPluginCtrl;
         }
 
         return {
-            start: init,
-            isInitialized : MapLinkrPluginCtrl.prototype.isInitialized,
+            start: init
         };
     });
 

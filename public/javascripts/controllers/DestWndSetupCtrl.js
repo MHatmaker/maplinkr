@@ -4,17 +4,19 @@
     "use strict";
 
     console.log('DestWndSetupCtrl setup');
-    var areWeInitialized = false;
+    var selfdict = {
+            'areWeInitialized' : false
+        };
     define([
         'angular'
     ], function (angular) {
         console.log('DestWndSetupCtrl define');
 
-        areWeInitialized = false;
+        selfdict.areWeInitialized = false;
 
         function DestWndSetupCtrl($scope, $uibModalInstance, $uibModalStack, data) {
             console.log("in DestWndSetupCtrl");
-            areWeInitialized = false;
+            selfdict.areWeInitialized = false;
             $scope.destSelections = data.destSelections;
             $scope.data = {
                 dstSel : data.dstSel || $scope.destSelections[0],
@@ -41,7 +43,7 @@
 
             $scope.close = function () {
                 $uibModalInstance.close($scope.data);
-            }
+            };
 
             $scope.hitEnter = function (evt) {
                 if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, ''))) {
@@ -50,23 +52,18 @@
             }; // end hitEnter
         }
 
-        DestWndSetupCtrl.prototype.isInitialized = function () {
-            return areWeInitialized;
-        };
-
-
         function init(App) {
             console.log('DestWndSetupCtrl init');
 
-            areWeInitialized = true;
-            App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', '$uibModalStack', 'data', DestWndSetupCtrl]);
-
+            if (selfdict.areWeInitialized === false) {
+                selfdict.areWeInitialized = true;
+                App.controller('DestWndSetupCtrl',  ['$scope', '$uibModalInstance', '$uibModalStack', 'data', DestWndSetupCtrl]);
+            }
             return DestWndSetupCtrl;
         }
 
         return {
-            start: init,
-            isInitialized : DestWndSetupCtrl.prototype.isInitialized
+            start: init
         };
     });
 
