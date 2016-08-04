@@ -252,35 +252,33 @@ var selectedMapType = 'arcgis',
                             mapsvcScopes.addScope(scope);
                         },
                         forceAGO = function () {
-                        // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
-                        // Resets the $locationPath under the ng-view.
-                        // This code should be entered in a new window created by a publish event with the map system // in the url
+                        // Simulate a click on ArcGIS Ago mapSystem "Show the Map" buttons under the map system tabs.
+                        // The listener resets the $locationPath under the ng-view.
+                        // This code should be entered in a new window created by a publish event with the map system
+                        // in the url
 
                             var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/arcgis"},
-                                scp = mapsvcScopes.getScopes()[0],
-                                newPath = "/views/partials/" + 'arcgis';
+                                scp = mapsvcScopes.getScopes()[0];
                             if (scp) {
                                 scp.$broadcast('ForceAGOEvent', data);
                             }
-                            console.log("forceAGO setting path to : " + newPath);
+                            console.log("forceAGO setting path to : " + data.newpath);
                             // window.location.pathname += "/views/partials/GoogleMap";
                             // window.location.reload();
                         },
 
                         forceMapSystem = function (mapSystem) {
                         // Simulate a click on one of the mapSystem "Show the Map" buttons under the map system tabs.
-                        // Resets the $locationPath under the ng-view.
-                        // This code should be entered in a new window created by a publish event with the map system // in the url
+                        // The listener resets the $locationPath under the ng-view.
+                        // This code should be entered in a new window created by a publish event with the map system
+                        // in the url
 
                             var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/" + mapSystem},
-                                scp = mapsvcScopes.getScopes()[0],
-                                newPath = "/views/partials/" + mapSystem;
+                                scp = mapsvcScopes.getScopes()[0];
                             if (scp) {
                                 scp.$broadcast('ForceMapSystemEvent', data);
                             }
-                            console.log("forceMapSystem setting path to : " + newPath);
-                            // window.location.pathname += "/views/partials/GoogleMap";
-                            // window.location.reload();
+                            console.log("forceMapSystem setting path to : " + data.newpath);
                         };
                     return {
                         addScope : addScope,

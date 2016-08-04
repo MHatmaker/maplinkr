@@ -52,9 +52,9 @@
 
             // CurrentMapTypeService.addScope($scope);
             // $scope.$on('ForceMapSystemEvent', function (evt, args) {
-            //     $scope.currentTab = args.whichsystem;
+            //     $scope.currentMapSystem = args.whichsystem;
             // });
-            $scope.currentTab = CurrentMapTypeService.getCurrentMapConfiguration();
+            $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
 
             $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
@@ -71,8 +71,8 @@
                 title : 'map has no title',
                 icon : null,
                 snippet : 'nothing in snippet',
-                mapType : $scope.currentTab.maptype,
-                imgSrc : $scope.currentTab.imgSrc,
+                mapType : $scope.currentMapSystem.maptype,
+                imgSrc : $scope.currentMapSystem.imgSrc,
                 destSelections : $scope.destSelections,
                 query : "no query yet"
 
@@ -557,11 +557,11 @@
             };
 
             $scope.showDestDialog = function (callback, details, info) {
-                console.log("showDestDialog for currentTab " + $scope.currentTab.title);
+                console.log("showDestDialog for currentMapSystem " + $scope.currentMapSystem.title);
                 $scope.preserveState();
 
-                $scope.data.mapType = $scope.currentTab.maptype;
-                $scope.data.icon = $scope.currentTab.imgSrc;
+                $scope.data.mapType = $scope.currentMapSystem.maptype;
+                $scope.data.icon = $scope.currentMapSystem.imgSrc;
                 $scope.data.query = $scope.gsearch.query;
                 $scope.data.callback = callback;
                 if (info) {

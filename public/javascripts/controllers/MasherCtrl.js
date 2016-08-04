@@ -45,8 +45,7 @@
                     'isSummaryCollapsed': !startupView.summaryShowing,
                     'completeUrl': 'completeslashdoturl',
                     'nextWindowName': 'InitialWindowName',
-                    'popupDimensions': 'popdimensions',
-                    selfdict : {
+                    mapdetailsdict : {
                         mapType : "",
                         imgSrc : "",
                         description : ""
@@ -54,7 +53,7 @@
                 };
                 $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
-                $scope.currentTab = null;
+                $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
                 console.log("init with isSummaryCollapsed = " + $scope.isSummaryCollapsed);
                 $scope.showDescriptionDialog = false;
 
@@ -117,12 +116,9 @@
                 selfMethods.summaryCollapser = $scope.summaryCollapser;
 
                 $scope.showMeTheMapClicked = function () {
-                    console.log("currentTab - url reset to " + $scope.currentTab.url);
-                    MLConfig.setMapHost($scope.currentTab.maptype);
-                    console.debug($location);
+                    console.log("currentMapSystem - url reset to " + $scope.currentMapSystem.url);
 
-                    // $scope.summaryCollapser({'startValue' : false});
-                    $location.path($scope.currentTab.url, true);
+                    $location.path($scope.currentMapSystem.url, true);
                     $location.replace();
                     // $route.reload();
                 };
@@ -132,11 +128,11 @@
                 };
 
                 $scope.describeTheWebsiteClicked = function () {
-                    console.log("Describe the website for currentTab " + $scope.currentTab.title);
+                    console.log("Describe the website for currentMapSystem " + $scope.currentMapSystem.title);
 
-                    $scope.data.selfdict.mapType = $scope.currentTab.maptype; //slice(1);
-                    $scope.data.selfdict.imgSrc = $scope.currentTab.imgSrc;
-                    $scope.data.selfdict.description = descriptions[$scope.currentTab.maptype];
+                    $scope.data.mapdetailsdict.mapType = $scope.currentMapSystem.maptype;
+                    $scope.data.mapdetailsdict.imgSrc = $scope.currentMapSystem.imgSrc;
+                    $scope.data.mapdetailsdict.description = descriptions[$scope.currentMapSystem.maptype];
 
                     var tmplt = ' \
                         <div class="modal-content"> \
@@ -167,7 +163,7 @@
                             backdrop : 'false',
                             resolve : {
                                 data: function () {
-                                    return $scope.data.selfdict;
+                                    return $scope.data.mapdetailsdict;
                                 }
                             }
                         });
@@ -183,11 +179,11 @@
 
                 CurrentMapTypeService.addScope($scope);
                 $scope.$on('ForceMapSystemEvent', function (evt, args) {
-                    $scope.currentTab = args.whichsystem;
+                    $scope.currentMapSystem = args.whichsystem;
                     $location.path(args.newpath);
                 });
                 $scope.$on('ForceAGOEvent', function (evt, args) {
-                    $scope.currentTab = args.whichsystem;
+                    $scope.currentMapSystem = args.whichsystem;
                 });
 
                 $scope.onNewMapPosition = function (pos) {
