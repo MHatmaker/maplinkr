@@ -39,7 +39,7 @@
             selfMethods = {};
 
         function MapCtrl($scope, $routeParams, $compile, $uibModal, $uibModalStack, LinkrSvc,
-            CurrentMapTypeService, PusherEventHandlerService, GoogleQueryService) {
+            CurrentMapTypeService, PusherEventHandlerService, GoogleQueryService, SiteViewService) {
 
 
             var gmquery = MLConfig.query(),
@@ -269,9 +269,9 @@
                 var minMaxText = document.getElementById("idMinMaxText"),
                     minMaxSymbol = document.getElementById("idMinMaxSymbol");
                 if (minMaxText && minMaxSymbol) {
-                    minMaxText.innerHTML = $scope.$parent.$parent.data.ExpandSite;
+                    minMaxText.innerHTML = SiteViewService.getSiteExpansion();
                     console.log("refresh MinMax Text with " + minMaxText.innerHTML);
-                    minMaxSymbol.src = "../stylesheets/images/" + $scope.$parent.$parent.data.webSiteVisible + ".png";
+                    minMaxSymbol.src = "../stylesheets/images/" + SiteViewService.getMinMaxSymbol() + ".png";
                     console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
                 }
             }
@@ -601,28 +601,28 @@
 
         }
 
-        function placeCustomControls () {
+        function placeCustomControls() {
             console.log("placeCustomControls");
             selfMethods.placeCustomControls();
         }
 
-         function getSearchBox () {
+        function getSearchBox() {
             selfMethods.getSearchBox();
         }
 
-        function configureCurrentMapType () {
+        function configureCurrentMapType() {
             console.log("configureCurrentMapType");
             selfMethods.configureCurrentMapType();
         }
 
-        function invalidateCurrentMapTypeConfigured () {
+        function invalidateCurrentMapTypeConfigured() {
             console.log("invalidateCurrentMapTypeConfigured");
             if (selfMethods.invalidateCurrentMapTypeConfigured) {
                 selfMethods.invalidateCurrentMapTypeConfigured();
             }
         }
 
-        function setupQueryListener () {
+        function setupQueryListener() {
             console.log("setupQueryListener");
             if (selfMethods.setupQueryListener) {
                 selfMethods.setupQueryListener();
@@ -633,7 +633,8 @@
             console.log('MapCtrl init');
             App = angular.module('app');
             App.controller('MapCtrl', ['$scope', '$routeParams', '$compile', '$uibModal', '$uibModalStack',
-                'LinkrService', 'CurrentMapTypeService', 'PusherEventHandlerService', 'GoogleQueryService', MapCtrl]);
+                'LinkrService', 'CurrentMapTypeService', 'PusherEventHandlerService',
+                'GoogleQueryService', 'SiteViewService', MapCtrl]);
             return MapCtrl;
         }
 

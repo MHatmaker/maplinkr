@@ -16,7 +16,7 @@
             console.log('SPACtrl define');
             var selfMethods = {};
 
-            function SPACtrl($scope, CurrentMapTypeService) {
+            function SPACtrl($scope, CurrentMapTypeService, SiteViewService) {
                 console.log('SPACtrl - initialize collapsed bool');
                 $scope.data = {
                     subsiteExpanded : false,
@@ -84,6 +84,7 @@
                     $scope.data.mapColPad = tf ? "padding-left: 0; padding-right: 0" : "padding-left: 0.875em; padding-right: 0.875em";
                     $scope.data.shrinkgrowtext = tf ? "Expand Map" : "Shrink Map";
                     $scope.data.ExpandSite = tf ? "Max Map" : "Min Map";
+                    SiteViewService.setSiteExpansion(tf);
                 };
                 if (startupView.websiteDisplayMode === true) {
                     $scope.hideWebSiteOnStartup = false;
@@ -133,7 +134,7 @@
 
             function init(App) {
                 console.log('SPACtrl init');
-                App.controller('SPACtrl', ['$scope', 'CurrentMapTypeService', SPACtrl]);
+                App.controller('SPACtrl', ['$scope', 'CurrentMapTypeService', 'SiteViewService', SPACtrl]);
 
                 return SPACtrl;
             }
