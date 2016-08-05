@@ -54,7 +54,10 @@ var selectedMapType = 'arcgis',
                 mapRestUrlToType = {
                     'leaflet': 'leaflet',
                     'google' : 'google',
-                    'arcgis' : 'arcgis'
+                    'arcgis' : 'arcgis',
+                    'Leaflet': 'leaflet',
+                    'GoogleMap' : 'google',
+                    'ArcGIS' : 'arcgis'
                 },
 
                 isNewAgoWindow,
@@ -164,7 +167,11 @@ var selectedMapType = 'arcgis',
                         mapRestUrl = {
                             'leaflet': 'leaflet',
                             'google' : 'google',
-                            'arcgis' : 'arcgis'
+                            'arcgis' : 'arcgis',
+                            'Leaflet': 'leaflet',
+                            'GoogleMap' : 'google',
+                            'ArcGIS' : 'arcgis'
+
                         },
 
                         mapType2Config = {
@@ -470,7 +477,8 @@ var selectedMapType = 'arcgis',
                 maphost = MLConfig.maphost();
                 console.log('maphost : ' + maphost);
                 //maphost = serv.getMapTypeKey();
-                serv.setCurrentMapType(mapRestUrlToType[maphost]);
+                maphost = mapRestUrlToType[maphost];
+                serv.setCurrentMapType(maphost);
                 console.log('maptype' + mapRestUrlToType[maphost]);
                 maphost = serv.getMapTypeKey();
 
