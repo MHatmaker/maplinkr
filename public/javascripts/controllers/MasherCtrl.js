@@ -208,7 +208,7 @@
                     // if (pos.referrerId !== MLConfig.getUserId()) {
                     if (pos.referrerName !== MLConfig.getUserName()) {
                         completeUrl += "&userName=" + MLConfig.getUserName();
-                        popresult = null; //window.open(completeUrl, nextWindowName, MLConfig.getSmallFormDimensions());
+                        popresult = window.open(completeUrl, nextWindowName, MLConfig.getSmallFormDimensions());
                         if (!popresult || popresult === 'undefined') {
                             $inj = angular.element(document.body).injector();
                             $uibModal = $inj.get('$uibModal');

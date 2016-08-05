@@ -24,10 +24,11 @@
                     modalInstance,
                     $inj,
                     $uibModal,
+                    restUrl,
                     urlToUnblock = MLConfig.gethost(), //'OpenShift.Arcadian.com',
                     url = "?id=" + wndName + curmph.getGlobalsForUrl() +
                     "&channel=" + channel + "&userName=" + userName +
-                    "&maphost=GoogleMap" + "&referrerId=" + MLConfig.getUserId(),
+                    "&maphost=google" + "&referrerId=" + MLConfig.getUserId(),
                     gmQuery = query; //MLConfig.getQuery();
 
                 if (gmQuery !== '') {
@@ -69,7 +70,8 @@
                 } else {
                     if (destWnd === "New Tab") {
                         baseUrl = MLConfig.getbaseurl();
-                        window.open(baseUrl + "google/" + url, '_blank');
+                        restUrl = $inj.get('CurrentMapTypeService').getMapRestUrlForType('google');
+                        window.open(baseUrl + restUrl + url, '_blank');
                         window.focus();
                     }
                 }

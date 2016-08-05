@@ -250,6 +250,9 @@ var selectedMapType = 'arcgis',
                         getMapRestUrl = function () {
                             return mapRestUrl[selectedMapType];
                         },
+                        getMapRestUrlForType = function (tp) {
+                            return mapRestUrl[tp];
+                        },
                         setMapType = function (mpt) {
                             previousMapType = currentMapType;
                             selectedMapType = mpt;
@@ -309,6 +312,7 @@ var selectedMapType = 'arcgis',
                         getSelectedMapType : getSelectedMapType,
                         getMapTypeKey : getMapTypeKey,
                         getMapRestUrl : getMapRestUrl,
+                        getMapRestUrlForType : getMapRestUrlForType,
                         getSpecificMapType : getSpecificMapType,
                         forceMapSystem : forceMapSystem,
                         forceAGO : forceAGO
@@ -469,7 +473,7 @@ var selectedMapType = 'arcgis',
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
                 console.log('maptype' + mapRestUrlToType[maphost]);
 
-                if (maphost === 'GoogleMap') {
+                if (maphost === 'google') {
                     gmquery = MLConfig.getQueryFromUrl();
                     searchService = $inj.get('GoogleQueryService');
                     searchService.setQuery(gmquery);
