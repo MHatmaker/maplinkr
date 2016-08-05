@@ -175,7 +175,7 @@
                 // Get the idWebMap from the url if it is present, otherwise return current webmapId
                 idWebMap = MLConfig.webmapId(true);
 
-                MLConfig.setMapHost('ArcGIS');
+                MLConfig.setMapHost('arcgis');
                 $inj = angular.injector(['app']);
                 mapTypeSvc = $inj.get('CurrentMapTypeService');
                 mapTypeSvc.setCurrentMapType('arcgis');

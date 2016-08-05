@@ -52,9 +52,9 @@ var selectedMapType = 'arcgis',
             },
 
                 mapRestUrlToType = {
-                    'Leaflet': 'leaflet',
-                    'GoogleMap' : 'google',
-                    'ArcGIS' : 'arcgis'
+                    'leaflet': 'leaflet',
+                    'google' : 'google',
+                    'arcgis' : 'arcgis'
                 },
 
                 isNewAgoWindow,
@@ -162,9 +162,9 @@ var selectedMapType = 'arcgis',
                         },
 
                         mapRestUrl = {
-                            'leaflet': 'Leaflet',
-                            'google' : 'GoogleMap',
-                            'arcgis' : 'ArcGIS'
+                            'leaflet': 'leaflet',
+                            'google' : 'google',
+                            'arcgis' : 'arcgis'
                         },
 
                         mapType2Config = {
@@ -178,9 +178,9 @@ var selectedMapType = 'arcgis',
                             displaying typical web page stuff, including a div with {1} \
                             programmed with {2} embedded in it.',
                         mapSystemDct = {
-                            'GoogleMap' : 0,
-                            'ArcGIS' : 1,
-                            'Leaflet' : 2
+                            'google' : 0,
+                            'arcgis`' : 1,
+                            'leaflet' : 2
                         },
                         mapconfigs = [
                             {
@@ -188,7 +188,7 @@ var selectedMapType = 'arcgis',
                                 title : 'Google Maps',
                                 site : 'Web Site featuring a Google Map',
                                 content : String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
-                                url : "/views/partials/GoogleMap.jade",
+                                url : "/views/partials/google.jade",
                                 imgSrc : "stylesheets/images/googlemap.png",
                                 imgAlt : "Google Map",
                                 active : true,
@@ -199,7 +199,7 @@ var selectedMapType = 'arcgis',
                                 title : 'ArcGIS Web Maps',
                                 site : 'Web Site featuring an ArcGIS Online Map',
                                 content : String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
-                                url : "/views/partials/ArcGIS.jade",
+                                url : "/views/partials/arcgis.jade",
                                 imgSrc : "stylesheets/images/arcgis.png",
                                 imgAlt : "ArcGIS Web Maps",
                                 active : false,
@@ -210,7 +210,7 @@ var selectedMapType = 'arcgis',
                                 title : 'Leaflet/OSM Maps',
                                 site : 'Web Site featuring a Leaflet Map',
                                 content : String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
-                                url : "/views/partials/Leaflet.jade",
+                                url : "/views/partials/leaflet.jade",
                                 imgSrc :  "stylesheets/images/Leaflet.png",
                                 imgAlt : "Leaflet/OSM Maps",
                                 active : false,
@@ -465,13 +465,14 @@ var selectedMapType = 'arcgis',
             isNewAgoWindow = MLConfig.testUrlArgs();
             MLConfig.setDestinationPreference('New Pop-up Window');
             if (isNewAgoWindow) {
-                maphost = MLConfig.maphost();
-                console.log('maphost : ' + maphost);
-
                 $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
+                maphost = MLConfig.maphost();
+                console.log('maphost : ' + maphost);
+                //maphost = serv.getMapTypeKey();
                 serv.setCurrentMapType(mapRestUrlToType[maphost]);
                 console.log('maptype' + mapRestUrlToType[maphost]);
+                maphost = serv.getMapTypeKey();
 
                 if (maphost === 'google') {
                     gmquery = MLConfig.getQueryFromUrl();
