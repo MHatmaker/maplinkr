@@ -1,6 +1,9 @@
-/*global require*/
-/*global define*/
-/*global L*/
+/*global require,
+    define,
+    L,
+    esri,
+    loading
+*/
 
 (function () {
     "use strict";
@@ -32,7 +35,6 @@
             // channel,
             userZoom = true,
             geoCoder = null,
-            gplaces = null,
             searchBox = null,
             searchInput = null,
             searchFiredFromUrl = false,
@@ -49,7 +51,6 @@
                 query: 'what do you want?'
             },
             placesFromSearch = [],
-            self = this,
             markers = [];
 
         // MLConfig.showConfigDetails('MapHosterGoogle - startup');
@@ -328,10 +329,8 @@
         function configureMap(gMap, goooogle, googPlaces) {
             mphmap = gMap;
             google = goooogle;
-            gplaces = googPlaces;
             geoCoder = new google.maps.Geocoder();
             var
-                self = this,
                 firstCntr,
                 qlat,
                 qlon,
@@ -378,7 +377,7 @@
                 var $inj = angular.injector(['app']),
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
-                setTimeout(function() {
+                setTimeout(function () {
                     mapCtrl.placeCustomControls();
                 }, 500);
             }
@@ -395,16 +394,13 @@
                     cntr = new google.maps.LatLng(cntryG, cntrxG),
                     center,
                     gmQuery = MLConfig.query(),
-                    destWnd = null,
-                    newSelectedWebMapId = 'SomeID',
                     bnds,
                     gBnds,
                     ll,
                     ur,
                     pacnpt,
                     qtext,
-                    service,
-                    scope;
+                    service;
                 console.log(">>>>>>>>>>>>>> tiles loaded >>>>>>>>>>>>>>>>>>>>");
 
                 hideLoading();
@@ -416,8 +412,6 @@
                 // google.maps.event.trigger(mphmap, 'resize');
                 // mphmap.setCenter(center);
                 gmQuery = MLConfig.query();
-                destWnd = null;
-                newSelectedWebMapId = 'SomeID';
 
                 zsvc.getMaxZoomAtLatLng(cntr, function (response) {
                     console.log("zsvc.getMaxZoomAtLatLng returned response:");
@@ -536,7 +530,7 @@
                 // console.log(mphmap.getBounds());
             // });
 
-            google.maps.event.addDomListener(window, 'resize', function() {
+            google.maps.event.addDomListener(window, 'resize', function () {
                 gotResize();
                 // console.log("resize event hit");
                 // console.log(mphmap.getBounds());
@@ -646,9 +640,7 @@
             var fixedLL = utils.toFixed(clickPt.x, clickPt.y, 6),
                 content,
                 popPt,
-                btnShare,
-                $inj,
-                linkrSvc;
+                btnShare;
             console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
             // latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
             // $inj = angular.injector(['app']);
@@ -868,11 +860,13 @@
         }
 
         function setSearchBox(sbox) {
-            searchBox = sbox
+            searchBox = sbox;
         }
 
         function setPlacesFromSearch(places) {
             placesFromSearch = places;
+            console.log("in setPlacesFromSearch");
+            console.log(placesFromSearch);
         }
 
         function MapHosterGoogle() {
@@ -886,7 +880,7 @@
         }
 
         function removeEventListeners() {
-            // mphmap.removeListener();
+            console.log("empty removeEventListeners block in MapHosterGoogle");
         }
 
         return {
