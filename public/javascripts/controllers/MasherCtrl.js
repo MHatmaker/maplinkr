@@ -116,6 +116,7 @@
                 selfMethods.summaryCollapser = $scope.summaryCollapser;
 
                 $scope.showMeTheMapClicked = function () {
+                    $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
                     console.log("currentMapSystem - url reset to " + $scope.currentMapSystem.url);
 
                     $location.path($scope.currentMapSystem.url, true);

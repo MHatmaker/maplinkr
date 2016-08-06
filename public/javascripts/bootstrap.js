@@ -260,7 +260,7 @@ var selectedMapType = 'arcgis',
                         getMapRestUrlForType = function (tp) {
                             return mapRestUrl[tp];
                         },
-                        setMapType = function (mpt) {
+                        setCurrentMapType = function (mpt) {
                             previousMapType = currentMapType;
                             selectedMapType = mpt;
                             currentMapType = mpt;
@@ -314,7 +314,7 @@ var selectedMapType = 'arcgis',
                         getMapConfigurations : getMapConfigurations,
                         getCurrentMapConfiguration : getCurrentMapConfiguration,
                         getMapStartup : getMapStartup,
-                        setCurrentMapType : setMapType,
+                        setCurrentMapType : setCurrentMapType,
                         getPreviousMapType : getPreviousMapType,
                         getSelectedMapType : getSelectedMapType,
                         getMapTypeKey : getMapTypeKey,

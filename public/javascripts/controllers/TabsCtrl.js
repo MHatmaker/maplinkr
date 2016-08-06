@@ -41,7 +41,7 @@ String.format = function () {
             CurrentMapTypeService.setCurrentMapType($scope.currentTab.maptype);
 
             $scope.onClickTab = function (tb) {
-                $scope.currentTab = $scope.$parent.currentTab = tb;
+                $scope.currentTab = tb;
                 CurrentMapTypeService.setCurrentMapType($scope.currentTab.maptype);
 
                 console.debug("clicked on tab : " + tb.url);
