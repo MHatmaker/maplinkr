@@ -28,7 +28,6 @@
         'controllers/ShareCtrl',
         'controllers/PopupBlockerCtrl',
         'controllers/CarouselCtrl',
-        // 'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
         'javascripts/lib/MLConfig'
     ],
@@ -111,8 +110,6 @@
                 ShareCtrl.start(App);
                 PopupBlockerCtrl.start(App);
                 CarouselCtrl.start(App);
-                // GoogleSearchDirective.start(App);
-                // LinkerDisplayDirective.start(App);
 
                 MapCtrl.start(App);
                 GeoCoder.start(App, $http);

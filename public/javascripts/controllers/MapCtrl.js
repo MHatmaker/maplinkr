@@ -20,7 +20,6 @@
         'controllers/PusherSetupCtrl',
         'controllers/WindowStarter',
         'controllers/MapLinkrMgrCtrl'
-        // 'controllers/GoogleSearchDirective',
     ], function (angular, Map, DestWndSetupCtrl, StartupLeaflet, StartupGoogle, StartupArcGIS, utils,
             MLConfig, PusherSetupCtrl, WindowStarterArg, MapLinkrMgrCtrl) {
         console.log('MapCtrl define');
@@ -515,15 +514,12 @@
 
                 $scope.safeApply();
 
-                // GoogleSearchDirective.start(MlApp);
-
                 setTimeout(function () {
                     searchInput = /** @type {HTMLInputElement} */ (document.getElementById('pac-input'));
                     if (searchInput) {
                         // mphmap.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
                         searchInput.value = '';
-                        searchBox = new google.maps.places.SearchBox(/** @type {HTMLInputElement} */
-                            (searchInput));
+                        searchBox = new google.maps.places.SearchBox(searchInput);
 
                         google.maps.event.addListener(searchBox, 'places_changed', function () {
                             console.log("MapCtrl 'places_changed' listener");
