@@ -391,7 +391,7 @@
 
             google.maps.event.addListenerOnce(mphmap, 'tilesloaded', function () {
                 var zsvc = new google.maps.MaxZoomService(),
-                    cntr = new google.maps.LatLng(cntryG, cntrxG),
+                    cntr = new google.maps.LatLng(cntryG, cntrxG), // {lat: cntryG, lng: cntrxG}, //
                     center,
                     gmQuery = MLConfig.query(),
                     bnds,
@@ -412,6 +412,7 @@
                 // google.maps.event.trigger(mphmap, 'resize');
                 // mphmap.setCenter(center);
                 gmQuery = MLConfig.query();
+                console.log("getMaxZoomAtLatLng for " + cntr.lng + ", " + cntr.lat);
 
                 zsvc.getMaxZoomAtLatLng(cntr, function (response) {
                     console.log("zsvc.getMaxZoomAtLatLng returned response:");

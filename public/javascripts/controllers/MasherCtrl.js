@@ -54,6 +54,7 @@
                 $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
                 $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
+                $scope.previousMapType = $scope.currentMapSystem.maptype;
                 console.log("init with isSummaryCollapsed = " + $scope.isSummaryCollapsed);
                 $scope.showDescriptionDialog = false;
 
@@ -115,12 +116,18 @@
                 };
                 selfMethods.summaryCollapser = $scope.summaryCollapser;
 
-                $scope.showMeTheMapClicked = function () {    this is where the problem gets before ignoring $location.path
+                $scope.showMeTheMapClicked = function () {
+                    $scope.previousMapType = $scope.currentMapSystem.maptype;
                     $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
+                    console.log("MasherCtrl.showMeTheMapClicked");
+                    console.log("previousMapType : " + $scope.previousMapType);
                     console.log("currentMapSystem - url reset to " + $scope.currentMapSystem.url);
 
                     $location.path($scope.currentMapSystem.url, true);
                     $location.replace();
+                    if ($scope.currentMapSystem.maptype !== $scope.previousMapType) {
+                        $route.reload();
+                    }
                     // $route.reload();
                 };
 
@@ -184,11 +191,14 @@
                     $location.path(args.newpath);
                 });
                 $scope.$on('ForceAGOEvent', function (evt, args) {
+                    $scope.previousMapType = $scope.currentMapSystem.maptype;
                     $scope.currentMapSystem = args.whichsystem;
                 });
                 $scope.$on('SwitchedMapSystemEvent', function (evt, args) {
                     console.log("SwitchedMapSystemEvent");
-                    console.log(args.whichsystem.maptype);
+                    console.log("From " + $scope.previousMapType + " to " + args.whichsystem.maptype);
+                    $scope.previousMapType = $scope.currentMapSystem.maptype;
+
                     $scope.currentMapSystem = args.whichsystem;
                 });
 
