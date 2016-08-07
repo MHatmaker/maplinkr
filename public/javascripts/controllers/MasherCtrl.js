@@ -115,7 +115,7 @@
                 };
                 selfMethods.summaryCollapser = $scope.summaryCollapser;
 
-                $scope.showMeTheMapClicked = function () {
+                $scope.showMeTheMapClicked = function () {    this is where the problem gets before ignoring $location.path
                     $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
                     console.log("currentMapSystem - url reset to " + $scope.currentMapSystem.url);
 
@@ -184,6 +184,11 @@
                     $location.path(args.newpath);
                 });
                 $scope.$on('ForceAGOEvent', function (evt, args) {
+                    $scope.currentMapSystem = args.whichsystem;
+                });
+                $scope.$on('SwitchedMapSystemEvent', function (evt, args) {
+                    console.log("SwitchedMapSystemEvent");
+                    console.log(args.whichsystem.maptype);
                     $scope.currentMapSystem = args.whichsystem;
                 });
 

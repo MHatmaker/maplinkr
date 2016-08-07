@@ -386,7 +386,8 @@
             var curmph = MapHosterArcGIS,
                 displayDestination = destDetails.dstSel,
                 $inj,
-                evtSvc;
+                evtSvc,
+                CurrentMapTypeService;
             /*
             This branch should only be encountered after a DestinationSelectorEvent in the AGO group/map search process.  The user desires to open a new popup or tab related to the current map view, without yet publishing the new map environment.
              */
@@ -399,6 +400,8 @@
                  */
                 $inj = angular.injector(['app']);
                 evtSvc = $inj.get('PusherEventHandlerService');
+                CurrentMapTypeService = $inj.get('CurrentMapTypeService');
+                CurrentMapTypeService.setCurrentMapType('arcgis');
                 evtSvc.addEvent('client-MapXtntEvent', curmph.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  curmph.retrievedClick);
 

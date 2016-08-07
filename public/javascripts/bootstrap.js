@@ -186,7 +186,7 @@ var selectedMapType = 'arcgis',
                             programmed with {2} embedded in it.',
                         mapSystemDct = {
                             'google' : 0,
-                            'arcgis`' : 1,
+                            'arcgis' : 1,
                             'leaflet' : 2
                         },
                         mapconfigs = [
@@ -261,11 +261,18 @@ var selectedMapType = 'arcgis',
                             return mapRestUrl[tp];
                         },
                         setCurrentMapType = function (mpt) {
+                            var data = {
+                                'whichsystem' : mapconfigs[mapSystemDct[mpt]],
+                            },
+                                scp = mapsvcScopes.getScopes()[0];
                             previousMapType = currentMapType;
                             selectedMapType = mpt;
                             currentMapType = mpt;
                             console.log("selectedMapType set to " + selectedMapType);
                             MapCtrl.invalidateCurrentMapTypeConfigured();
+                            if (scp) {
+                                scp.$broadcast('SwitchedMapSystemEvent', data);
+                            }
                         },
                         getPreviousMapType = function () {
                             return mapTypes[previousMapType];
@@ -284,7 +291,10 @@ var selectedMapType = 'arcgis',
                         // This code should be entered in a new window created by a publish event with the map system
                         // in the url
 
-                            var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/arcgis"},
+                            var data = {
+                                'whichsystem' : mapconfigs[mapSystemDct.arcgis],
+                                'newpath' : "/views/partials/arcgis"
+                            },
                                 scp = mapsvcScopes.getScopes()[0];
                             if (scp) {
                                 scp.$broadcast('ForceAGOEvent', data);

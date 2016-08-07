@@ -35,7 +35,7 @@ String.format = function () {
             $scope.tabs = CurrentMapTypeService.getMapConfigurations();
 
             $scope.currentTab = $scope.tabs[0];
-            $scope.$parent.currentTab = $scope.currentTab;
+            $scope.$parent.currentMapSystem = $scope.currentTab;
             console.log("currentTab - url initialized to " + $scope.currentTab.url);
 
             CurrentMapTypeService.setCurrentMapType($scope.currentTab.maptype);
@@ -58,7 +58,7 @@ String.format = function () {
                 $scope.currentTab = args.whichsystem;
             });
 
-            $scope.$on('forceAGOEvent', function (evt, args) {
+            $scope.$on('ForceAGOEvent', function (evt, args) {
             // Simulate a click on the ArcGIS mapSystem "Show the Map" button under the map system tabs.
             // Does not reset the $locationPath under the ng-view
             // The ArcGIS map should appear in the map canvas div without replacing the host sub website.
