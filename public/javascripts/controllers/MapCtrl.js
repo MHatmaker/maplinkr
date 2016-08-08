@@ -49,11 +49,19 @@
                 queryForSameDisplay = "",
                 searchInput;
 
+            whichCanvas = CurrentMapTypeService.getMapTypeKey() === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
             // CurrentMapTypeService.addScope($scope);
             // $scope.$on('ForceMapSystemEvent', function (evt, args) {
             //     $scope.currentMapSystem = args.whichsystem;
             // });
             $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
+
+            $scope.$on('SwitchedMapSystemEvent', function (evt, args) {
+                console.log("In MapCtrl ... SwitchedMapSystemEvent");
+
+                $scope.currentMapSystem = args.whichsystem;
+                whichCanvas = $scope.currentMapSystem.maptype === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+            });
 
             $scope.PusherEventHandlerService = PusherEventHandlerService;
             $scope.GoogleQueryService = GoogleQueryService;
@@ -62,7 +70,7 @@
                 {'option' : "Same Window", 'showing' : "destination-option-showing"},
                 {'option' : "New Tab", 'showing' : "destination-option-showing"},
                 {'option' : "New Pop-up Window", 'showing' : "destination-option-showing"}];
-            $scope.selected = "Same Window";
+            $scope.selectedDestination = "Same Window";
             $scope.gsearch = {};
             $scope.data = {
                 dstSel : $scope.destSelections[0].option,
@@ -92,7 +100,7 @@
             };
             $scope.updateState = function (selectedDestination) {
                 console.log("updateState");
-                $scope.selected  = selectedDestination;
+                $scope.selectedDestination  = selectedDestination;
                 $scope.data.dstSel = $scope.data.prevDstSel = selectedDestination;
             };
 
@@ -361,9 +369,9 @@
             console.debug(selfMethods);
 
             $scope.gsearchVisible = 'inline-block';
-            whichCanvas = CurrentMapTypeService.getCurrentMapType() === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
-            $scope.selected = CurrentMapTypeService.getCurrentMapType() === 'google' ? 'Same Window' : 'New Pop-up Window';
-            $scope.updateState($scope.selected);
+            whichCanvas = CurrentMapTypeService.getMapTypeKey() === 'arcgis' ? 'map_canvas_root' : 'map_canvas';
+            $scope.selectedDestination = CurrentMapTypeService.getMapTypeKey() === 'google' ? 'Same Window' : 'New Pop-up Window';
+            $scope.updateState($scope.selectedDestination);
 
             if (gmquery !== '') {
                 $scope.gsearch = {'query' : gmquery};  // was read from url when opening new window
