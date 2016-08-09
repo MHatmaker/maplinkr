@@ -52,7 +52,7 @@
                     window.resizeBy(0, 0);
                     $scope.safeApply();
                     setTimeout(function () {
-                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
+                        // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                         utils.updateMapContainerHeight($scope);
                         utils.displayHeights("Heights window resized event (map display min/max)");
                         $scope.$apply(console.log("Timer fired on windowResized event"));
@@ -113,11 +113,11 @@
                     setTimeout(function () {
                         console.log("in handleMapExpandShrinkEvents timeout callback");
                         // This update appears to be necessary for ArcGIS maps
-                        utils.updateMapContainerHeight($scope);
+                        // utils.updateMapContainerHeight($scope);
                         window.resizeBy(0, 0);
-                        window.dispatchEvent(new Event('resize'));
-                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
-                        utils.displayHeights("after handleMapExpandShrinkEvents");
+                        // window.dispatchEvent(new Event('resize'));
+                        // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
+                        // utils.displayHeights("after handleMapExpandShrinkEvents");
                     }, 100);
                 };
 
