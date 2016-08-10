@@ -54,7 +54,7 @@
                     setTimeout(function () {
                         // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
                         utils.updateMapContainerHeight($scope);
-                        utils.displayHeights("Heights window resized event (map display min/max)");
+                        // utils.displayHeights("Heights window resized event (map display min/max)");
                         $scope.$apply(console.log("Timer fired on windowResized event"));
                     }, 500);
                     $scope.safeApply();
@@ -117,7 +117,8 @@
                         window.resizeBy(0, 0);
                         window.dispatchEvent(new Event('resize'));
                         utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
-                        utils.displayHeights("after handleMapExpandShrinkEvents");
+                        // utils.displayHeights("after handleMapExpandShrinkEvents");
+                        $scope.$broadcast('minmaxDirtyEvent');
                     }, 100);
                 };
 
