@@ -113,11 +113,11 @@
                     setTimeout(function () {
                         console.log("in handleMapExpandShrinkEvents timeout callback");
                         // This update appears to be necessary for ArcGIS maps
-                        // utils.updateMapContainerHeight($scope);
+                        utils.updateMapContainerHeight($scope);
                         window.resizeBy(0, 0);
-                        // window.dispatchEvent(new Event('resize'));
-                        // utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
-                        // utils.displayHeights("after handleMapExpandShrinkEvents");
+                        window.dispatchEvent(new Event('resize'));
+                        utils.calculateComponentHeights($scope.MasterSiteVis, $scope.WebSiteVis);
+                        utils.displayHeights("after handleMapExpandShrinkEvents");
                     }, 100);
                 };
 
