@@ -374,7 +374,7 @@
             */
 
             function placeCustomControls() {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 setTimeout(function () {
@@ -383,7 +383,7 @@
             }
 
             function setupQueryListener() {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.setupQueryListener();
@@ -644,7 +644,7 @@
                 btnShare;
             console.log("Back in retrievedClick - with click at " +  clickPt.x + ", " + clickPt.y);
             // latlng = L.latLng(clickPt.y, clickPt.x, clickPt.y);
-            // $inj = angular.injector(['app']);
+            // $inj = MLConfig.getInjector();
             // linkrSvc = $inj.get('LinkrService');
             // linkrSvc.hideLinkr();
 
@@ -681,7 +681,7 @@
         }
 
         function getEventDictionary() {
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService'),
                 eventDct = evtSvc.getEventDct();
             return eventDct;
@@ -801,7 +801,7 @@
         // MapHosterGoogle.prototype.setPusherClient = function (pusher, channel)
         function setPusherClient(pusher, channel) {
 
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService'),
                 evtDct = evtSvc.getEventDct(),
                 key;

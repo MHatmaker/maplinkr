@@ -26,7 +26,8 @@ var details = {
     nextWindowName : 0,
     hideWebSiteOnStartup : false,
     smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570},
-    startupView : {'summaryShowing' : true, 'websiteDisplayMode' : true}
+    startupView : {'summaryShowing' : true, 'websiteDisplayMode' : true},
+    nginj : null
 };
 
 
@@ -77,7 +78,12 @@ var details = {
                     // alert(details.masherChannel);
                     return newWindow ? getParameterByName('channel') : details.masherChannel;
                 },
-
+                setInjector : function (inj) {
+                    details.nginj = inj;
+                },
+                getInjector : function () {
+                    return details.nginj;
+                },
                 getChannelFromUrl : function () {
                     details.masherChannel = getParameterByName('channel');
                     details.masherChannelInitialized = true;

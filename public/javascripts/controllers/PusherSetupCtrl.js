@@ -114,7 +114,7 @@
 
                 channelBind.bind('client-NewMapPosition', function (frame) {
                     console.log('frame is', frame);
-                    $inj = angular.injector(['app']);
+                    $inj = MLConfig.getInjector();
                     serv = $inj.get('PusherEventHandlerService');
                     handler = serv.getHandler('client-NewMapPosition');
                     handler(frame);
@@ -143,7 +143,7 @@
                 });
 
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
 
@@ -259,7 +259,7 @@
                     console.log('Pusher Modal dismissed at: ' + new Date());
                 });
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 serv = $inj.get('CurrentMapTypeService');
                 selfdict.mph = serv.getSelectedMapType();
 

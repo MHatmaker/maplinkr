@@ -43,7 +43,7 @@ angular.isUndefinedOrNull = function (val) {
 
             onAcceptDestination = function (destWnd) {
                 var
-                    $inj = angular.injector(['app']),
+                    $inj = MLConfig.getInjector(),
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
@@ -56,7 +56,7 @@ angular.isUndefinedOrNull = function (val) {
 
             $scope.onDestinationWindowSelected = function (args) {
                 var destWnd = args.dstWnd,
-                    $inj = angular.injector(['app']),
+                    $inj = MLConfig.getInjector(),
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
@@ -294,7 +294,7 @@ angular.isUndefinedOrNull = function (val) {
             // $scope.openWindowSelectionDialog = function (modal311, selectedWebMapId, selectedMapTitle) {
             $scope.openWindowSelectionDialog = function (info) {
 
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     gmQSvc = $inj.get('GoogleQueryService'),
                     scope = gmQSvc.getQueryDestinationDialogScope('arcgis'),
                     serv = $inj.get('CurrentMapTypeService'),

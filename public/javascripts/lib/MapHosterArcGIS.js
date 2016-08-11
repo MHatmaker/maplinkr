@@ -375,7 +375,7 @@
 
             console.log("screenGeo");
             console.debug(screenGeo);
-            $inj = angular.injector(['app']);
+            $inj = MLConfig.getInjector();
             linkrSvc = $inj.get('LinkrService');
             linkrSvc.hideLinkr();
 
@@ -460,7 +460,7 @@
         }
 
         function getEventDictionary() {
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService'),
                 eventDct = evtSvc.getEventDct();
             return eventDct;
@@ -553,7 +553,7 @@
         // MapHosterArcGIS.prototype.setPusherClient = function (pusher, channel)
         function setPusherClient(pusher, channel) {
             console.log("MapHosterArcGIS setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService'),
                 evtDct = evtSvc.getEventDct(),
                 key;
@@ -563,7 +563,7 @@
                 selfPusherDetails.channel = channel;
                 MLConfig.setChannel(channel);
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 evtSvc = $inj.get('PusherEventHandlerService');
                 evtDct = evtSvc.getEventDct();
                 for (key in evtDct) {

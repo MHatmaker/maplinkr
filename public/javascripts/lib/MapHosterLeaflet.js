@@ -342,7 +342,7 @@ define('GeoCoder', function () {
                     linkrSvc,
                     content = "Received Pushed Click from user " + clickPt.referrerName + ", " + clickPt.referrerId + " at " + latlng.toString();
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 linkrSvc = $inj.get('LinkrService');
                 linkrSvc.hideLinkr();
                 if (clickPt.title) {
@@ -405,14 +405,14 @@ define('GeoCoder', function () {
             });
 
             function placeCustomControls() {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.placeCustomControls();
             }
 
             function setupQueryListener() {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.setupQueryListener();
@@ -511,7 +511,7 @@ define('GeoCoder', function () {
             }
 
             function getEventDictionary() {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     evtSvc = $inj.get('PusherEventHandlerService'),
                     eventDct = evtSvc.getEventDct();
                 return eventDct;
@@ -524,7 +524,7 @@ define('GeoCoder', function () {
             }
 
             function setPusherClient(pusher, channel) {
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     evtSvc = $inj.get('PusherEventHandlerService'),
                     evtDct = evtSvc.getEventDct(),
                     key;
@@ -532,7 +532,7 @@ define('GeoCoder', function () {
                 selfPusherDetails.channel = channel;
                 MLConfig.setChannel(channel);
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 evtSvc = $inj.get('PusherEventHandlerService');
                 evtDct = evtSvc.getEventDct();
                 for (key in evtDct) {

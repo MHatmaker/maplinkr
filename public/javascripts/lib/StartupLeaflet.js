@@ -65,7 +65,7 @@
         };
 */
         function configure(newMapId) {
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService');
             newSelectedWebMapId = newMapId;
             window.loading = dojo.byId("loadingImg");

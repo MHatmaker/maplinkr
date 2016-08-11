@@ -101,7 +101,7 @@ var selectedMapType = 'arcgis',
                                     console.log("prepare to return " + '/templates/' + params.id);
                                     return '/templates/' + params.id;
                                 },
-                                controller: App.DestWndSetupCtrl,
+                                // controller: App.DestWndSetupCtrl,
                                 reloadOnSearch: true
                             }).
                             when('/contact', {
@@ -355,6 +355,15 @@ var selectedMapType = 'arcgis',
                         getHandler : getHandler
                     };
                 }).
+                factory("InjectorSvc", function () {
+                    var injector = angular.injector(['app']),
+                        getInjector = function () {
+                            return injector;
+                        };
+                    return {
+                        getInjector : getInjector
+                    };
+                }).
 
                 factory("GoogleQueryService", function ($rootScope) {
                     googleQueryDct.rootScope = $rootScope;
@@ -481,8 +490,9 @@ var selectedMapType = 'arcgis',
             console.log("url is " + location.search);
             isNewAgoWindow = MLConfig.testUrlArgs();
             MLConfig.setDestinationPreference('New Pop-up Window');
+            $inj = angular.injector(['app']);
+            MLConfig.setInjector($inj);
             if (isNewAgoWindow) {
-                $inj = angular.injector(['app']);
                 serv = $inj.get('CurrentMapTypeService');
                 maphost = MLConfig.maphost();
                 console.log('maphost : ' + maphost);

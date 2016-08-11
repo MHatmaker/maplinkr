@@ -4,7 +4,7 @@
     "use strict";
 
     console.log('PositionViewCtrl setup');
-    define(['angular', 'lib/utils'], function (angular, utils) {
+    define(['angular', 'lib/utils', 'lib/MLConfig'], function (angular, utils, MLConfig) {
         console.log('PositionViewCtrl define');
 
         var selfMethods = {},
@@ -19,7 +19,7 @@
 
         function PositionViewCtrl($scope) {
             console.debug('PositionViewCtrl - initialize dropdown for position selections');
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 serv = $inj.get('CurrentMapTypeService');
             $scope.currentTab = serv.getMapTypeKey();
 

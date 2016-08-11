@@ -27,7 +27,7 @@
                 console.log("gethref : ");
                 console.log(MLConfig.gethref());
                 var updtUrl = MLConfig.gethref(),
-                    $inj = angular.injector(['app']),
+                    $inj = MLConfig.getInjector(),
                     serv = $inj.get('CurrentMapTypeService'),
                     curmapsys = serv.getMapRestUrl(),
                     gmQuery = encodeURIComponent(MLConfig.getQuery()),

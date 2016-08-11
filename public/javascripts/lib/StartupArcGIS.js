@@ -67,14 +67,14 @@
         }
 
         function placeCustomControls() {
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 ctrlSvc = $inj.get('MapControllerService'),
                 mapCtrl = ctrlSvc.getController();
             mapCtrl.placeCustomControls();
         }
 
         function setupQueryListener() {
-            var $inj = angular.injector(['app']),
+            var $inj = MLConfig.getInjector(),
                 ctrlSvc = $inj.get('MapControllerService'),
                 mapCtrl = ctrlSvc.getController();
             mapCtrl.setupQueryListener();
@@ -116,7 +116,7 @@
                 console.debug(pusherChannel);
                 curmph = null;
 
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 mapTypeSvc = $inj.get('CurrentMapTypeService');
                 curmph = mapTypeSvc.getSelectedMapType();
 
@@ -176,7 +176,7 @@
                 idWebMap = MLConfig.webmapId(true);
 
                 MLConfig.setMapHost('arcgis');
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 mapTypeSvc = $inj.get('CurrentMapTypeService');
                 mapTypeSvc.setCurrentMapType('arcgis');
 
@@ -341,7 +341,7 @@
                 baseUrl,
                 openNewDisplay;
 
-            $inj = angular.injector(['app']);
+            $inj = MLConfig.getInjector();
             mapTypeSvc = $inj.get('CurrentMapTypeService');
             curmph = mapTypeSvc.getSelectedMapType();
 
@@ -398,7 +398,7 @@
                 This branch handles a new ArcGIS Online webmap presentation from either selecting the ArcGIS tab in the master
                 site or opening the webmap from a url sent through a publish event.
                  */
-                $inj = angular.injector(['app']);
+                $inj = MLConfig.getInjector();
                 evtSvc = $inj.get('PusherEventHandlerService');
                 CurrentMapTypeService = $inj.get('CurrentMapTypeService');
                 CurrentMapTypeService.setCurrentMapType('arcgis');
