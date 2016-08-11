@@ -310,7 +310,7 @@ var selectedMapType = 'arcgis',
                         // This code should be entered in a new window created by a publish event with the map system
                         // in the url
 
-                            var data = {'whichsystem' : mapSystemDct.mapSystem, 'newpath' : "/views/partials/" + mapSystem},
+                            var data = {'whichsystem' : mapconfigs[mapSystemDct[mapSystem]], 'newpath' : "/views/partials/" + mapSystem},
                                 scp = mapsvcScopes.getScopes()[0];
                             if (scp) {
                                 scp.$broadcast('ForceMapSystemEvent', data);

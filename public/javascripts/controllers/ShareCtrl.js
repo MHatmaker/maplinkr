@@ -30,7 +30,7 @@
                     $inj = angular.injector(['app']),
                     serv = $inj.get('CurrentMapTypeService'),
                     curmapsys = serv.getMapRestUrl(),
-                    gmQuery = MLConfig.getQuery(),
+                    gmQuery = encodeURIComponent(MLConfig.getQuery()),
                     bnds = MLConfig.getBoundsForUrl();
 
                 if (updtUrl.indexOf('?') < 0) {

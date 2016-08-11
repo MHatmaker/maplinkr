@@ -1,50 +1,8 @@
 
 extends ./MapPageBase
 
-
 block append scriptsblock
     script(src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js')
     script(src='/javascripts/lib/StartupArcGIS.js')
     script(src='javascripts/lib/searcher.js')
     script(src='javascripts/controllers/PusherSetupCtrl.js')
-
-//
-block append content
-    script(type="text/ng-template" id="DestSelectModalDlg.html")
-
-//
-      div(class="modal hide fade", role="dialog")
-          div(class="modal-dialog")
-            div(class="modal-content")
-                div(class="modal-header")
-                    h3(Select Destination Window)
-                div(class="modal-body")
-                    ul
-                        li(class="acc li") 1 Open a new web map replacing map in this window
-                        li(class="acc li") 2 Open a new web map in a new tab
-                        li(class="acc li") 3 Open a new web map in a new window
-                div(class="modal-footer")
-                    div(class="btn-group" style="margin: 9px 0;")
-                        button(class="btn btn-primary", style='width:25%;', ng-click="thisWindow()", value="This Window") This Window
-                        button(class="btn btn-default", style='width:25%;', ng-click="newTab()", value=">New Tab") New Tab
-                        button(class="btn btn-default", style='width:25%;', ng-click="newWindow()", value="New Window") New Window
-                        button(class="btn btn-warning", style='width:25%;', ng-click="cancelMash()", value="Cancel") Cancel
-
-
-//
-     script(type="text/ng-template" id="PusherChannelerDialog.html")
-        #PusherChannelerDialog(ng-controller="PusherSetupCtrl")
-            div(class="modal-header")PusherSetupCtrl
-                h3(Select Name for Synchronization Channel)
-            div(class="modal-body")
-                    table
-                        tr
-                            td
-                                label(for='channelName', style='font-size:12pt')
-                            td
-                                input(id="channelName", name="channelName", value='{{privateChannelMashover}}')
-
-        div(class="modal-footer")
-            div(class="btn-group" style="margin: 9px 0;")
-                button(class="btn btn-primary", style='width:25%;', ng-click="acceptPusherChannel()", value="Accept") Accept
-                button(class="btn btn-default", style='width:25%;', ng-click="cancelPusherChannel()", value="Cancel") Cancel
