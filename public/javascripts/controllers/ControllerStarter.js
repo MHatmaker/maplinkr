@@ -69,7 +69,7 @@
 
             function init(App, portalForSearch) {
                 console.log('ControllerStarter init');
-                var $inj = angular.injector(['app']),
+                var $inj = MLConfig.getInjector(),
                     $http = $inj.get('$http'),
                     referrerId = MLConfig.getReferrerId(),
                     urlUserName;

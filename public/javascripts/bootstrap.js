@@ -482,16 +482,16 @@ var selectedMapType = 'arcgis',
                 };
             });
 
-            ControllerStarter.start(App, portalForSearch);
-
-            // need to bootstrap angular since we wait for dojo/DOM to load
-            angular.bootstrap(document.body, ['app']);
-
             console.log("url is " + location.search);
             isNewAgoWindow = MLConfig.testUrlArgs();
             MLConfig.setDestinationPreference('New Pop-up Window');
             $inj = angular.injector(['app']);
             MLConfig.setInjector($inj);
+            ControllerStarter.start(App, portalForSearch);
+
+            // need to bootstrap angular since we wait for dojo/DOM to load
+            angular.bootstrap(document.body, ['app']);
+
             if (isNewAgoWindow) {
                 serv = $inj.get('CurrentMapTypeService');
                 maphost = MLConfig.maphost();
