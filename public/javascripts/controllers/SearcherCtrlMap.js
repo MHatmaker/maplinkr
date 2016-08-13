@@ -47,25 +47,25 @@ angular.isUndefinedOrNull = function (val) {
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
-                selMph.removeEventListeners();
+                selMph.removeEventListeners("Same Window");
                 $scope.$parent.accept();
 
                 console.log("onAcceptDestination " + destWnd);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
-            $scope.onDestinationWindowSelected = function (args) {
-                var destWnd = args.dstWnd,
-                    $inj = MLConfig.getInjector(),
-                    serv = $inj.get('CurrentMapTypeService'),
-                    selMph = serv.getSelectedMapType();
-                console.log("onAcceptDestination " + destWnd);
-                selMph.removeEventListeners();
-
-
-                console.log("onDestinationWindowSelected " + destWnd);
-                StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
-            };
+            // $scope.onDestinationWindowSelected = function (args) {
+            //     var destWnd = args.dstWnd,
+            //         $inj = MLConfig.getInjector(),
+            //         serv = $inj.get('CurrentMapTypeService'),
+            //         selMph = serv.getSelectedMapType();
+            //     console.log("onAcceptDestination " + destWnd);
+            //     selMph.removeEventListeners();
+            //
+            //
+            //     console.log("onDestinationWindowSelected " + destWnd);
+            //     StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
+            // };
 
             $scope.selectWebMap = function(rowItem) {
                 selectedWebMapId = rowItem.entity.id;
@@ -299,7 +299,7 @@ angular.isUndefinedOrNull = function (val) {
                     scope = gmQSvc.getQueryDestinationDialogScope('arcgis'),
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
-                selMph.removeEventListeners();
+                // selMph.removeEventListeners();
 
                 scope.showDestDialog(
                     onAcceptDestination,

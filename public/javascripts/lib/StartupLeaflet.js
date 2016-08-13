@@ -94,14 +94,10 @@
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
 
                 // lMap = new L.Map('map_canvas', {loadingControl: true}); //.setView([41.8, -87.7], 13);
-                lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
-                // console.debug(lMap);
-                // var loadingControl = L.Control.loading({
-                    // spinjs: true
-                // });
-                // lMap.addControl(loadingControl);
-                // var lMap = L.map('map').setView([51.50, -0.09], 13);
-                // mph = new MapHosterLeaflet(lMap);
+                if (!lMap) {
+                    lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
+                }
+
                 MapHosterLeaflet.start();
                 MapHosterLeaflet.config(lMap);
 
