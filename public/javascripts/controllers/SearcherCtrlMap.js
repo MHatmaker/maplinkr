@@ -47,10 +47,10 @@ angular.isUndefinedOrNull = function (val) {
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
                 console.log("onAcceptDestination " + destWnd);
-                selMph.removeEventListeners("Same Window");
+                selMph.removeEventListeners(destWnd.dstSel);
                 $scope.$parent.accept();
 
-                console.log("onAcceptDestination " + destWnd);
+                console.log("onAcceptDestination " + destWnd.dstSel);
                 StartupArcGIS.replaceWebMap(selectedWebMapId,  destWnd, selectedWebMapTitle, selMph);
             };
 
@@ -299,7 +299,7 @@ angular.isUndefinedOrNull = function (val) {
                     scope = gmQSvc.getQueryDestinationDialogScope('arcgis'),
                     serv = $inj.get('CurrentMapTypeService'),
                     selMph = serv.getSelectedMapType();
-                // selMph.removeEventListeners();
+                selMph.removeEventListeners();
 
                 scope.showDestDialog(
                     onAcceptDestination,

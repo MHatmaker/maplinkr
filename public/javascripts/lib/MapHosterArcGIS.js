@@ -136,7 +136,7 @@
                 if (cmp === false) {
                     console.log("MapHoster setBounds pusher send ");
 
-                    if (selfPusherDetails.pusher) {
+                    if (selfPusherDetails.pusher && selfPusherDetails.channel) {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
                     updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);

@@ -48,7 +48,8 @@ define('GeoCoder', function () {
                 mphmap,
                 selfPusherDetails = {
                     channel : null,
-                    pusher : null
+                    pusher : null,
+                    active : true
                 },
                 markers = [],
                 popups = [],
@@ -136,7 +137,7 @@ define('GeoCoder', function () {
                         referrerId,
                         referrerName,
                         pushLL;
-                    if (selfPusherDetails.pusher) {
+                    if (selfPusherDetails.pusher && selfPusherDetails.active) {
                         fixedLL = utils.toFixed(contextPos[1], contextPos[0], 6);
                         referrerId = MLConfig.getUserId();
                         referrerName = MLConfig.getUserName();
@@ -324,7 +325,7 @@ define('GeoCoder', function () {
                 if (cmp === false) {
                     console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
                     // var sendRet = self.pusher.send(xtntJsonStr, channel);
-                    if (selfPusherDetails.pusher) {
+                    if (selfPusherDetails.pusher && selfPusherDetails.active) {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
                     updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
@@ -539,18 +540,19 @@ define('GeoCoder', function () {
                 console.log("reset MapHosterLeaflet setPusherClient, selfPusherDetails.pusher " +  selfPusherDetails.pusher);
             }
 
-            function unsubscripeFromPusher(evt) {
-                selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
-
-                var $inj = MLConfig.getInjector(),
-                    evtSvc = $inj.get('PusherEventHandlerService'),
-                    evtDct = evtSvc.getEventDct(),
-                    key;
-                for (key in evtDct) {
-                    if (evtDct.hasOwnProperty(key)) {
-                        selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
-                    }
-                }
+            function unsubscribeFromPusher() {
+                selfPusherDetails.active = false;
+                // selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
+                //
+                // var $inj = MLConfig.getInjector(),
+                //     evtSvc = $inj.get('PusherEventHandlerService'),
+                //     evtDct = evtSvc.getEventDct(),
+                //     key;
+                // for (key in evtDct) {
+                //     if (evtDct.hasOwnProperty(key)) {
+                //         selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
+                //     }
+                // }
             }
 
 
@@ -626,7 +628,8 @@ define('GeoCoder', function () {
                     mphmap.removeEventListener();
 
                     if (MLConfig.isChannelInitialized() === true) {
-                        selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
+                        // selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
+                        unsubscribeFromPusher();
                         // unsubscripeFromPusher('client-MapXtntEvent');
                         // unsubscripeFromPusher('client-MapClickEvent');
                     }
