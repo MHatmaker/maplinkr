@@ -20,15 +20,8 @@
             // mph = null,
             newSelectedWebMapId = "",
             pusher = null,
-            pusherChannel = null,
-            removeMap = function () {
-                lMap = null;
-            };
-/*
-        function configit(nmpid) {
-            console.log("nmpid " + nmpid);
-        }
-*/
+            pusherChannel = null;
+
         function getMap() {
             return lMap;
         }
@@ -42,31 +35,7 @@
             MLConfig.userName(userName);
             window.open(MLConfig.gethref() + "arcgis/" + url, newSelectedWebMapId, MLConfig.getSmallFormDimensions());
         }
-/*
-        openNewDisplay = function (channel, userName) {
-            url = "?id=" + newSelectedWebMapId + curmph.getGlobalsForUrl() +
-                "&channel=" + channel + "&userName=" + userName +
-                "&maphost=ArcGIS" + "&referrerId=" + MLConfig.getUserId();
-            if (referringMph) {
-                url = "?id=" + newSelectedWebMapId + referringMph.getGlobalsForUrl() +
-                    "&channel=" + channel + "&userName=" + userName +
-                    "&maphost=Leaflet" + "&referrerId=" + MLConfig.getUserId();
-            }
 
-            console.log("open new ArcGIS window with URI " + url);
-            console.log("using channel " + channel + "with userName " + userName);
-            MLConfig.setUrl(url);
-            MLConfig.setUserName(userName);
-            if (displayDestination === 'New Pop-up Window') {
-                baseUrl = MLConfig.getbaseurl();
-                window.open(baseUrl + "/arcgis/" + url, newSelectedWebMapId, MLConfig.getSmallFormDimensions());
-            } else {
-                baseUrl = MLConfig.getbaseurl();
-                window.open(baseUrl + "arcgis/" + url, '_blank');
-                window.focus();
-            }
-        };
-*/
         function configure(newMapId) {
             var $inj = MLConfig.getInjector(),
                 evtSvc = $inj.get('PusherEventHandlerService');
@@ -105,7 +74,7 @@
                 }
 
                 MapHosterLeaflet.start();
-                MapHosterLeaflet.config(lMap, removeMap);
+                MapHosterLeaflet.config(lMap);
 
                 pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);

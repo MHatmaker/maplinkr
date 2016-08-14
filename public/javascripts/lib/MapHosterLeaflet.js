@@ -44,7 +44,6 @@ define('GeoCoder', function () {
                 geoCoder,
                 marker = null,
                 mphmap,
-                removeCallback,
                 selfPusherDetails = {
                     channel : null,
                     pusher : null,
@@ -382,7 +381,7 @@ define('GeoCoder', function () {
                 mapCtrl.setupQueryListener();
             }
 
-            function configureMap(lmap, removeCB) {
+            function configureMap(lmap) {
                 var qlat = MLConfig.lat(),
                     qlon = MLConfig.lon(),
                     qzoom = MLConfig.zoom(),
@@ -390,7 +389,6 @@ define('GeoCoder', function () {
                     lyr;
                 console.debug("ready to show mphmap");
                 mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
-                removeCallback = removeCB;
                 selfPusherDetails.active = true;
                 console.debug(mphmap);
                 showLoading();
