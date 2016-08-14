@@ -40,12 +40,11 @@ define('GeoCoder', function () {
                 minZoom,
                 maxZoom,
                 zoomLevels,
-                // channel,
-                // pusher,
                 popup,
                 geoCoder,
                 marker = null,
                 mphmap,
+                removeCallback,
                 selfPusherDetails = {
                     channel : null,
                     pusher : null,
@@ -150,11 +149,6 @@ define('GeoCoder', function () {
                 };
 
                 container = $('<div />');
-                // container.on('click', function() {
-                    // if (this.id != "") {
-
-                    // }triggerPusher();
-                // });
                 container.html(allContent);
 
                 popup = L.popup().setContent(container[0]);
@@ -183,12 +177,6 @@ define('GeoCoder', function () {
                         }
                     }
                 });
-
-                // mphmap.on('click', '.trigger', function() {
-                    // alert('Hello from Toronto!');
-                    // triggerPusher();
-                // });
-                // mrkr.openPopup();
             }
 
             function addInitialSymbols() {
@@ -241,34 +229,15 @@ define('GeoCoder', function () {
 
             function showClickResult(r) {
                 var cntr;
-                //     fixedLL,
-                //     referrerId,
-                //     referrerName,
-                //     pushLL = {};
                 if (r) {
                     console.log("showClickResultp at " + r.lat + ", " + r.lon);
                     cntr = new L.latLng(r.lat, r.lon, 0);
                     if (marker) {
                         marker.closePopup();
                         markerInfoPopup([cntr.lat, cntr.lng], r.display_name, "The hint");
-                        // marker.
-                        //     setLatLng(cntr).
-                        //     setPopupContent(r.display_name).
-                        //     openPopup();
                     } else {
                         markerInfoPopup([cntr.lat, cntr.lng], r.display_name, "The hint");
-                        // marker = L.marker(cntr).bindPopup(r.display_name).addTo(mphmap).openPopup();
                     }
-                    // if (selfPusherDetails.pusher) {
-                    //     fixedLL = utils.toFixed(r.lon, r.lat, 6);
-                    //     referrerId = MLConfig.getUserId();
-                    //     referrerName = MLConfig.getUserName();
-                    //     pushLL = {"x" : fixedLL.lon, "y" : fixedLL.lat, "z" : "0",
-                    //         "referrerId" : referrerId, "referrerName" :  referrerName };
-                    //     console.log("You, " + referrerName + ", " + referrerId + ", clicked the map at " + fixedLL.lat + ", " + fixedLL.lon);
-                    //     console.debug(pushLL);
-                    //     selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapClickEvent', pushLL);
-                    // }
                 }
             }
 
@@ -324,12 +293,10 @@ define('GeoCoder', function () {
 
                 if (cmp === false) {
                     console.log("MapHoster setBounds pusher send to channel " + selfPusherDetails.channel);
-                    // var sendRet = self.pusher.send(xtntJsonStr, channel);
                     if (selfPusherDetails.pusher && selfPusherDetails.active) {
                         selfPusherDetails.pusher.channel(selfPusherDetails.channel).trigger('client-MapXtntEvent', xtExt);
                     }
                     updateGlobals("setBounds with cmp false", xtExt.lon, xtExt.lat, xtExt.zoom);
-                    //console.debug(sendRet);
                 }
             }
 
@@ -361,16 +328,15 @@ define('GeoCoder', function () {
                 console.log("Back in retrievedBounds");
                 var zm = xj.zoom,
                     cmp = compareExtents("retrievedBounds", {'zoom' : zm, 'lon' : xj.lon, 'lat' : xj.lat}),
-                    // view = xj.lon + ", " + xj.lat + " : " + zm + " " + scale2Level[zm].scale,
+
                     tmpLon,
                     tmpLat,
                     //tmpZm,
                     cntr;
-                // document.getElementById("mppos").innerHTML = view;
+
                 if (cmp === false) {
                     tmpLon = cntrxG;
                     tmpLat = cntryG;
-                    //tmpZm = zmG;
 
                     updateGlobals("retrievedBounds with cmp false", xj.lon, xj.lat, xj.zoom);
                     userZoom = false;
@@ -414,12 +380,9 @@ define('GeoCoder', function () {
                     ctrlSvc = $inj.get('MapControllerService'),
                     mapCtrl = ctrlSvc.getController();
                 mapCtrl.setupQueryListener();
-                // setTimeout(function() {
-                //     mapCtrl.setupQueryListener();
-                // }, 500);
             }
 
-            function configureMap(lmap) {
+            function configureMap(lmap, removeCB) {
                 var qlat = MLConfig.lat(),
                     qlon = MLConfig.lon(),
                     qzoom = MLConfig.zoom(),
@@ -427,6 +390,8 @@ define('GeoCoder', function () {
                     lyr;
                 console.debug("ready to show mphmap");
                 mphmap = lmap; //L.map('map_canvas').setView([51.50, -0.09], 13);
+                removeCallback = removeCB;
+                selfPusherDetails.active = true;
                 console.debug(mphmap);
                 showLoading();
 
@@ -466,9 +431,6 @@ define('GeoCoder', function () {
                 lyr.on("loading", function (e) {
                     showLoading();
                 });
-                // lyr.on("load", function (e) {
-                //     hideLoading();
-                // });
 
                 minZoom = mphmap.getMinZoom();
                 maxZoom = mphmap.getMaxZoom();
@@ -497,10 +459,6 @@ define('GeoCoder', function () {
                         setBounds('pan', e.latlng);
                     }
                 });
-                // setupQueryListener();
-                // elem = document.getElementById('pac-input');
-                //
-                // elem.style.display = 'block';
             }
 
             function getMapHosterName() {
@@ -542,21 +500,8 @@ define('GeoCoder', function () {
 
             function unsubscribeFromPusher() {
                 selfPusherDetails.active = false;
-                // selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
-                //
-                // var $inj = MLConfig.getInjector(),
-                //     evtSvc = $inj.get('PusherEventHandlerService'),
-                //     evtDct = evtSvc.getEventDct(),
-                //     key;
-                // for (key in evtDct) {
-                //     if (evtDct.hasOwnProperty(key)) {
-                //         selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
-                //     }
-                // }
             }
 
-
-            // MapHosterLeaflet.prototype.getGlobalsForUrl = function()
             function getGlobalsForUrl() {
                 console.log(" MapHosterLeaflet.prototype.getGlobalsForUrl");
                 console.log("&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG);
@@ -606,15 +551,8 @@ define('GeoCoder', function () {
             }
 
             function MapHosterLeaflet() {
-                // var self = this;
                 this.pusher = null;
-                // selfPusherDetails.pusher = null;
                 userZoom = true;
-
-                // this.getGlobalsForUrl = function()
-                // {
-                    // return "&lon=" + this.cntrxG + "&lat=" + this.cntryG + "&zoom=" + this.zmG;
-                // }
             }
 
             function init() {
@@ -622,21 +560,22 @@ define('GeoCoder', function () {
             }
 
             function removeEventListeners(destWnd) {
+                var ctrlDiv = document.getElementsByClassName("leaflet-control-container")[0],
+                    paneDiv = document.getElementsByClassName("leaflet-map-pane")[0],
+                    mapDiv = document.getElementById("map_canvas");
                 if (destWnd === "Same Window") {
-                    // var $inj = MLConfig.getInjector(),
-                    //     evtSvc = $inj.get('PusherEventHandlerService');
                     mphmap.removeEventListener();
+                    ctrlDiv.remove();
+                    paneDiv.remove();
+                    mapDiv.classList.remove('leaflet-container');
+                    mapDiv.classList.remove('leaflet-fade-anim');
+                    mapDiv.classList.remove('map');
 
                     if (MLConfig.isChannelInitialized() === true) {
-                        // selfPusherDetails.pusher.unsubscribe(selfPusherDetails.channel);
                         unsubscribeFromPusher();
-                        // unsubscripeFromPusher('client-MapXtntEvent');
-                        // unsubscripeFromPusher('client-MapClickEvent');
+
                     }
                 }
-                // mphmap.removeControl(mphmap.zoomControl);
-                mphmap.zoomControl._zoomInButton.hidden = true;
-                mphmap.zoomControl._zoomOutButton.hidden = true;
             }
 
             return {

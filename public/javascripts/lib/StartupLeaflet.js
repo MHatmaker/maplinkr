@@ -20,7 +20,10 @@
             // mph = null,
             newSelectedWebMapId = "",
             pusher = null,
-            pusherChannel = null;
+            pusherChannel = null,
+            removeMap = function () {
+                lMap = null;
+            };
 /*
         function configit(nmpid) {
             console.log("nmpid " + nmpid);
@@ -94,12 +97,15 @@
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterLeaflet.retrievedClick);
 
                 // lMap = new L.Map('map_canvas', {loadingControl: true}); //.setView([41.8, -87.7], 13);
-                if (!lMap) {
-                    lMap = new L.Map('map_canvas'); //.setView([41.8, -87.7], 13);
+                if (lMap) {
+                    // lMap.remove();
+                    lMap = new L.Map('map_canvas');
+                } else {
+                    lMap = new L.Map('map_canvas');
                 }
 
                 MapHosterLeaflet.start();
-                MapHosterLeaflet.config(lMap);
+                MapHosterLeaflet.config(lMap, removeMap);
 
                 pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);
@@ -135,7 +141,7 @@
         return {
             start: init,
             config : configure,
-            getMap: getMap,
+            getMap: getMap
         };
 
     });

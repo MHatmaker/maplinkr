@@ -18,6 +18,7 @@
         function (angular,  MLConfig, WebSiteDescriptionCtrl, utils, PopupBlockerCtrl) {
             console.log('MasherCtrl define');
             var selfMethods = {},
+                AGOReplacement = false,
                 descriptions = {
                     'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information \
                         lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, \
@@ -125,8 +126,9 @@
 
                     $location.path($scope.currentMapSystem.url, true);
                     $location.replace();
-                    if ($scope.currentMapSystem.maptype !== $scope.previousMapType) {
+                    if ($scope.currentMapSystem.maptype !== $scope.previousMapType || AGOReplacement === true) {
                         $route.reload();
+                        AGOReplacement = false;
                     }
                     // $route.reload();
                 };
@@ -193,11 +195,16 @@
                 $scope.$on('ForceAGOEvent', function (evt, args) {
                     $scope.previousMapType = $scope.currentMapSystem.maptype;
                     $scope.currentMapSystem = args.whichsystem;
+                    AGOReplacement = true;
                 });
                 $scope.$on('SwitchedMapSystemEvent', function (evt, args) {
                     console.log("SwitchedMapSystemEvent");
                     console.log("From " + $scope.previousMapType + " to " + args.whichsystem.maptype);
-                    $scope.previousMapType = $scope.currentMapSystem.maptype;
+                    if (AGOReplacement === true) {
+                        $scope.previousMapType = "prevAGORep";
+                    } else {
+                        $scope.previousMapType = $scope.currentMapSystem.maptype;
+                    }
 
                     $scope.currentMapSystem = args.whichsystem;
                 });
