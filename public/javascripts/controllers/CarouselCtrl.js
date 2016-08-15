@@ -33,6 +33,7 @@
                 $scope.slides.push({
                     image: url + "imagefromtext" + newWidth + '.png',
                     text: captions[i],
+                    pause: "hover",
                     id: i
                 });
             };
@@ -49,12 +50,30 @@
                 });
             };
             for (i = 4; i < 5; i++) {
-                $scope.addVideo(i, 'MapLinkrIntroDemo.mp4');
+                $scope.addVideo(i, '3DUnzoomed.mp4');
             }
 
             setTimeout(function () {
                 $scope.$apply();
             }, 1000);
+/*
+            $('#idCarousel').hover(
+                function () {
+                    $(this).carousel('pause');
+                },
+
+                function () {
+                    $(this).carousel('cycle');
+                }
+            );
+
+            $('#idCarousel').mouseenter(function () {
+                $(this).carousel('pause');
+            })
+                .mouseleave(function () {
+                    $(this).carousel('next');
+                });
+*/
         }
 
         function init(App) {

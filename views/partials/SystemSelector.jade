@@ -20,7 +20,7 @@ div( style="height:100%;width:100%;")
         | MapLinkr Web Site Simulator
 
     div(ng-controller="CarouselCtrl")
-        div(style="height: 300px")
+        div(id="idCarousel", style="height: 400px")
             uib-carousel(active="active", interval="SlideInterval", no-wrap="noWrapSlides")
                 uib-slide(ng-repeat="slide in slides track by slide.id", index="slide.id", active="active")
                     img(ng-src="{{slide.image}}", style="margin:auto;")
@@ -31,4 +31,4 @@ div( style="height:100%;width:100%;")
                             | {{slide.text}}</p>
 
                 uib-slide(ng-repeat="video in videos track by video.id", index="video.id", active="active")
-                    video(ng-src="{{video.vfile}}", style="margin:auto;", type="video.mp4", autoplay, loop)
+                    video(ng-src="{{video.vfile}}", style="margin:auto; height: 500px;", type="video.mp4", autoplay, loop)
