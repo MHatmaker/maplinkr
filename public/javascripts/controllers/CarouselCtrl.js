@@ -17,19 +17,21 @@
             $scope.SlideInterval = 5000;
             $scope.noWrapSlides = false;
             $scope.slides = [];
-            var url = MLConfig.gethref() + "/stylesheets/images/imagefromtext",
+            $scope.videos = [];
+            var url = MLConfig.gethref() + "/stylesheets/images/",
                 captions = [
                     'first slide caption',
                     'second caption',
                     'caption for third slide',
-                    'final caption'
+                    'final caption',
+                    ''
                 ],
                 i;
 
             $scope.addSlide = function (i) {
                 var newWidth = i;
                 $scope.slides.push({
-                    image: url + newWidth + '.png',
+                    image: url + "imagefromtext" + newWidth + '.png',
                     text: captions[i],
                     id: i
                 });
@@ -39,7 +41,18 @@
                 $scope.addSlide(i);
             }
             $scope.active = 0;
-            setTimeout(function() {
+
+            $scope.addVideo = function (i, nm) {
+                $scope.videos.push({
+                    vfile: url + nm,
+                    id: i
+                });
+            };
+            for (i = 4; i < 5; i++) {
+                $scope.addVideo(i, 'MapLinkrIntroDemo.mp4');
+            }
+
+            setTimeout(function () {
                 $scope.$apply();
             }, 1000);
         }

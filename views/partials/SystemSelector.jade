@@ -29,3 +29,6 @@ div( style="height:100%;width:100%;")
                             | Slide {{slide.id}}
                         p
                             | {{slide.text}}</p>
+
+                uib-slide(ng-repeat="video in videos track by video.id", index="video.id", active="active")
+                    video(ng-src="{{video.vfile}}", style="margin:auto;", type="video.mp4", autoplay, loop)
