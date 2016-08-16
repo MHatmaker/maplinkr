@@ -43,7 +43,7 @@
 
                 $scope.data = {
                     'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
-                    'ExpandFeaturesText': "Expand Features Display (pause on hover)",
+                    'ExpandFeaturesText': "Expand Features Display",
                     'isSummaryCollapsed': !startupView.summaryShowing,
                     'completeUrl': 'completeslashdoturl',
                     'nextWindowName': 'InitialWindowName',
@@ -123,12 +123,16 @@
                     if ($scope.data.isSummaryCollapsed === true) {
                         $scope.data.ExpandFeaturesText = "Minimize Features Display";
                     } else {
-                        $scope.data.ExpandFeaturesText = "Expand Features Display (pause on hover)";
+                        $scope.data.ExpandFeaturesText = "Expand Features Display";
                     }
 
                     $scope.safeApply(function () {
                         console.log("preliminary features collapse event $apply");
                     });
+                };
+
+                $scope.pauseSlide = function () {
+                    $scope.$broadcast("SlidePauseEvent");
                 };
 
                 $scope.showMeTheMapClicked = function () {

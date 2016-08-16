@@ -60,47 +60,10 @@
                 $scope.$apply();
             }, 1000);
 
-            $scope.safeApply = function (fn) {
-                var phase = this.$root.$$phase;
-                if (phase === '$apply' || phase === '$digest') {
-                    if (fn && (typeof fn === 'function')) {
-                        fn();
-                    }
-                } else {
-                    this.$apply(fn);
-                }
-            };
+            $scope.$on("SlidePauseEvent", function () {
+                $scope.SlideInterval = $scope.SlideInterval === 5000 ? -1 : 5000
+            });
 
-            $scope.featuresCollapser = function () {
-                $scope.$parent.summaryCollapser();
-                if ($scope.$parent.data.isSummaryCollapsed === true) {
-                    $scope.data.ExpandFeaturesText = "Expand Features Display (pause on hover)";
-                } else {
-                    $scope.data.ExpandFeaturesText = "Minimize Features Display";
-                }
-
-                $scope.safeApply(function () {
-                    console.log("preliminary collapse event $apply");
-                });
-            };
-/*
-            $('#idCarousel').hover(
-                function () {
-                    $(this).carousel('pause');
-                },
-
-                function () {
-                    $(this).carousel('cycle');
-                }
-            );
-
-            $('#idCarousel').mouseenter(function () {
-                $(this).carousel('pause');
-            })
-                .mouseleave(function () {
-                    $(this).carousel('next');
-                });
-*/
         }
 
         function init(App) {

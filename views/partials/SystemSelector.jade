@@ -17,12 +17,18 @@ block append content
 
 div( style="height:100%;width:100%;")
     #idFeatureExpander
-        button(type"button", class="btn btn-labeled",
-            ng-click="featuresCollapser()")
-            span(class="btn-label")
-                i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': $parent.data.isSummaryCollapsed, \
-                'fa-compress': !$parent.data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
-                | {{$parent.data.ExpandFeaturesText}}
+        span
+            button(type"button", class="btn btn-labeled",
+                ng-click="featuresCollapser()")
+                span
+                    span(class="btn-label")
+                        i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isSummaryCollapsed, \
+                        'fa-compress': !data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                        | {{data.ExpandFeaturesText}}
+
+            button(type="button", class="btn", ng-click="pauseSlide()", style="margin-left: 1.0rem; margin-right: 1.0rem;") ||
+
+            |.            Hover over slide to pause
 
     div(ng-controller="CarouselCtrl")
         div(id="idCarousel", style="height: 500px")
