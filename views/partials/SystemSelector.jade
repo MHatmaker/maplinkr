@@ -16,11 +16,16 @@ style.img.
 block append content
 
 div( style="height:100%;width:100%;")
-    h2(align="center")
-        | MapLinkr Web Site Simulator
+    #idFeatureExpander
+        button(type"button", class="btn btn-labeled",
+            ng-click="featuresCollapser()")
+            span(class="btn-label")
+                i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': $parent.data.isSummaryCollapsed, \
+                'fa-compress': !$parent.data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                | {{$parent.data.ExpandFeaturesText}}
 
     div(ng-controller="CarouselCtrl")
-        div(id="idCarousel", style="height: 400px")
+        div(id="idCarousel", style="height: 500px")
             uib-carousel(active="active", interval="SlideInterval", no-wrap="noWrapSlides")
                 uib-slide(ng-repeat="slide in slides track by slide.id", index="slide.id", active="active")
                     img(ng-src="{{slide.image}}", style="margin:auto;")

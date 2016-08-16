@@ -18,6 +18,9 @@
             $scope.noWrapSlides = false;
             $scope.slides = [];
             $scope.videos = [];
+            $scope.data = {
+                'ExpandFeaturesText': "Minimize Features Display"
+            };
             var url = MLConfig.gethref() + "/stylesheets/images/",
                 captions = [
                     'first slide caption',
@@ -56,6 +59,30 @@
             setTimeout(function () {
                 $scope.$apply();
             }, 1000);
+
+            $scope.safeApply = function (fn) {
+                var phase = this.$root.$$phase;
+                if (phase === '$apply' || phase === '$digest') {
+                    if (fn && (typeof fn === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+
+            $scope.featuresCollapser = function () {
+                $scope.$parent.summaryCollapser();
+                if ($scope.$parent.data.isSummaryCollapsed === true) {
+                    $scope.data.ExpandFeaturesText = "Expand Features Display (pause on hover)";
+                } else {
+                    $scope.data.ExpandFeaturesText = "Minimize Features Display";
+                }
+
+                $scope.safeApply(function () {
+                    console.log("preliminary collapse event $apply");
+                });
+            };
 /*
             $('#idCarousel').hover(
                 function () {

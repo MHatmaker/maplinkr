@@ -43,6 +43,7 @@
 
                 $scope.data = {
                     'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
+                    'ExpandFeaturesText': "Expand Features Display (pause on hover)",
                     'isSummaryCollapsed': !startupView.summaryShowing,
                     'completeUrl': 'completeslashdoturl',
                     'nextWindowName': 'InitialWindowName',
@@ -116,6 +117,19 @@
                     }
                 };
                 selfMethods.summaryCollapser = $scope.summaryCollapser;
+
+                $scope.featuresCollapser = function () {
+                    $scope.summaryCollapser();
+                    if ($scope.data.isSummaryCollapsed === true) {
+                        $scope.data.ExpandFeaturesText = "Minimize Features Display";
+                    } else {
+                        $scope.data.ExpandFeaturesText = "Expand Features Display (pause on hover)";
+                    }
+
+                    $scope.safeApply(function () {
+                        console.log("preliminary features collapse event $apply");
+                    });
+                };
 
                 $scope.showMeTheMapClicked = function () {
                     $scope.previousMapType = $scope.currentMapSystem.maptype;
