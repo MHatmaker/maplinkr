@@ -26,9 +26,13 @@ div( style="height:100%;width:100%;")
                         'fa-compress': !data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                         | {{data.ExpandFeaturesText}}
 
-            button(type="button", class="btn", ng-click="pauseSlide()", style="margin-left: 1.0rem; margin-right: 1.0rem;") ||
+            button(type="button", class="btn btn-labeled",
+                ng-click="pauseSlide()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
+                span(class="btn-label")
+                    i(class="fa fa-pause fa-lg", ng-class="{'fa-play': data.isSlidePaused, \
+                    'fa-pause': !data.isSlidePaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                    | {{data.slideShowStatusText}}
 
-            |.            Hover over slide to pause
 
     div(ng-controller="CarouselCtrl")
         div(id="idCarousel", style="height: 500px")

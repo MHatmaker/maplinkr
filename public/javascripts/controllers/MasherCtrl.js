@@ -45,6 +45,8 @@
                     'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
                     'ExpandFeaturesText': "Expand Features Display",
                     'isSummaryCollapsed': !startupView.summaryShowing,
+                    "isSlidePaused": false,
+                    "slideShowStatusText": "Slide Show Playing",
                     'completeUrl': 'completeslashdoturl',
                     'nextWindowName': 'InitialWindowName',
                     mapdetailsdict : {
@@ -132,6 +134,8 @@
                 };
 
                 $scope.pauseSlide = function () {
+                    $scope.data.isSlidePaused = $scope.data.isSlidePaused === true ? false : true;
+                    $scope.data.slideShowStatusText = $scope.data.isSlidePaused ? "Slide Show Paused" : "Slide Show Playing";
                     $scope.$broadcast("SlidePauseEvent");
                 };
 
