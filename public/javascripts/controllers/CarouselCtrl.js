@@ -35,13 +35,12 @@
                 var newWidth = i;
                 $scope.slides.push({
                     image: url + "imagefromtext" + newWidth + '.png',
-                    text: captions[i],
                     pause: "hover",
                     id: i
                 });
             };
 
-            for (i = 0; i < 4; i++) {
+            for (i = 0; i < 5; i++) {
                 $scope.addSlide(i);
             }
             $scope.active = 0;
@@ -52,7 +51,7 @@
                     id: i
                 });
             };
-            for (i = 4; i < 5; i++) {
+            for (i = 5; i < 6; i++) {
                 $scope.addVideo(i, '3DUnzoomed.mp4');
             }
 
