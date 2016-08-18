@@ -33,6 +33,13 @@ div( style="height:100%;width:100%;")
                     'fa-pause': !data.isSlidePaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                     | {{data.slideShowStatusText}}
 
+            button(type="button", class="btn btn-labeled",
+                ng-click="pauseVideo()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
+                span(class="btn-label")
+                    i(class="fa fa-pause fa-lg", ng-class="{'fa-play': data.isVideoPaused, \
+                    'fa-pause': !data.isVideoPaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                    | {{data.videoStatusText}}
+
 
     div(ng-controller="CarouselCtrl")
         div(id="idCarousel", style="height: 500px")
@@ -46,4 +53,4 @@ div( style="height:100%;width:100%;")
                             | {{slide.text}}</p>
 
                 uib-slide(ng-repeat="video in videos track by video.id", index="video.id", active="active")
-                    video(ng-src="{{video.vfile}}", style="margin:auto; height: 500px;", type="video.mp4", autoplay, loop)
+                    video(id="vdo", ng-src="{{video.vfile}}", style="margin:auto; height: 500px;", type="video.mp4", autoplay, loop)

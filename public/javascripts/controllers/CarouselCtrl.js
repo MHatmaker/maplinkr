@@ -9,7 +9,7 @@
     "use strict";
 
     console.log('CarouselCtrl setup');
-    define(['angular', 'lib/MLConfig'], function (angular, MLConfig) {
+    define(['angular', 'lib/MLConfig', 'lib/utils'], function (angular, MLConfig, utils) {
         console.log('CarouselCtrl define');
 
         function CarouselCtrl($scope) {
@@ -18,17 +18,8 @@
             $scope.noWrapSlides = false;
             $scope.slides = [];
             $scope.videos = [];
-            $scope.data = {
-                'ExpandFeaturesText': "Minimize Features Display"
-            };
+
             var url = MLConfig.gethref() + "/stylesheets/images/",
-                captions = [
-                    'first slide caption',
-                    'second caption',
-                    'caption for third slide',
-                    'final caption',
-                    ''
-                ],
                 i;
 
             $scope.addSlide = function (i) {
@@ -63,6 +54,16 @@
                 $scope.SlideInterval = $scope.SlideInterval === 5000 ? -1 : 5000
             });
 
+            $scope.$on("VideoPauseEvent", function (evt, args) {
+                var vdo = document.getElementById('vdo');
+                console.log("VideoPauseEvent");
+                console.debug(args);
+                if (args.playpauseStatus) {
+                    vdo.play();
+                } else {
+                    vdo.pause();
+                }
+            });
         }
 
         function init(App) {
