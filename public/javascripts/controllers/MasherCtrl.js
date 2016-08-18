@@ -47,8 +47,8 @@
                     'isSummaryCollapsed': !startupView.summaryShowing,
                     "isSlidePaused": false,
                     "slideShowStatusText": "Slide Show Playing",
-                    "isVideoPaused": false,
-                    "videoStatusText": "Video Playing",
+                    "isVideoPaused": true,
+                    "videoStatusText": "Video Paused",
                     'completeUrl': 'completeslashdoturl',
                     'nextWindowName': 'InitialWindowName',
                     mapdetailsdict : {
@@ -142,9 +142,21 @@
                 };
 
                 $scope.pauseVideo = function () {
-                    $scope.data.isVideoPaused = $scope.data.isVideoPaused === true ? false : true;
-                    $scope.data.videoStatusText = $scope.data.isVideoPaused ? "Video Paused" : "Video Playing";
-                    $scope.$broadcast("VideoPauseEvent", {'playpauseStatus' : $scope.data.isVideoPaused});
+                    if ($scope.data.isVideoPaused === false) {
+                        $scope.data.isVideoPaused = true;
+                        $scope.data.videoStatusText = "Video Paused";
+                        $scope.data.isSlidePaused = true;
+                        $scope.data.slideShowStatusText = "Slide Show Paused";
+                    } else {
+                        $scope.data.isVideoPaused = false;
+                        $scope.data.videoStatusText = "Video Playing";
+                    }
+                    $scope.$broadcast("VideoPauseEvent",
+                        {
+                            'playpauseStatus' : $scope.data.isVideoPaused,
+                            'slideShowStatus' : $scope.data.isSlidePaused
+                        }
+                     );
                 };
 
                 $scope.showMeTheMapClicked = function () {

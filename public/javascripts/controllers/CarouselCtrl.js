@@ -48,6 +48,8 @@
 
             setTimeout(function () {
                 $scope.$apply();
+                var vdo = document.getElementById('vdo');
+                vdo.pause();
             }, 1000);
 
             $scope.$on("SlidePauseEvent", function () {
@@ -58,8 +60,9 @@
                 var vdo = document.getElementById('vdo');
                 console.log("VideoPauseEvent");
                 console.debug(args);
-                if (args.playpauseStatus) {
+                if (args.playpauseStatus === false) {
                     vdo.play();
+                    $scope.SlideInterval = -1;
                 } else {
                     vdo.pause();
                 }
