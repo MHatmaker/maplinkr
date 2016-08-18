@@ -52,15 +52,15 @@
                 vdo.pause();
             }, 1000);
 
-            $scope.$on("SlidePauseEvent", function () {
+            $scope.$on("SlidePlayPauseEvent", function () {
                 $scope.SlideInterval = $scope.SlideInterval === 5000 ? -1 : 5000
             });
 
-            $scope.$on("VideoPauseEvent", function (evt, args) {
+            $scope.$on("VideoPlayPauseEvent", function (evt, args) {
                 var vdo = document.getElementById('vdo');
-                console.log("VideoPauseEvent");
+                console.log("VideoPlayPauseEvent");
                 console.debug(args);
-                if (args.playpauseStatus === false) {
+                if (args.videoPlayPauseStatus === false) {
                     vdo.play();
                     $scope.SlideInterval = -1;
                 } else {

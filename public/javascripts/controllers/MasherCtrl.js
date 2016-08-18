@@ -138,10 +138,10 @@
                 $scope.pauseSlide = function () {
                     $scope.data.isSlidePaused = $scope.data.isSlidePaused === true ? false : true;
                     $scope.data.slideShowStatusText = $scope.data.isSlidePaused ? "Slide Show Paused" : "Slide Show Playing";
-                    $scope.$broadcast("SlidePauseEvent");
+                    $scope.$broadcast("SlidePlayPauseEvent");
                 };
 
-                $scope.pauseVideo = function () {
+                $scope.playPauseVideo = function () {
                     if ($scope.data.isVideoPaused === false) {
                         $scope.data.isVideoPaused = true;
                         $scope.data.videoStatusText = "Video Paused";
@@ -151,9 +151,9 @@
                         $scope.data.isVideoPaused = false;
                         $scope.data.videoStatusText = "Video Playing";
                     }
-                    $scope.$broadcast("VideoPauseEvent",
+                    $scope.$broadcast("VideoPlayPauseEvent",
                         {
-                            'playpauseStatus' : $scope.data.isVideoPaused,
+                            'videoPlayPauseStatus' : $scope.data.isVideoPaused,
                             'slideShowStatus' : $scope.data.isSlidePaused
                         }
                      );

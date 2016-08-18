@@ -34,9 +34,9 @@ div( style="height:100%;width:100%;")
                     | {{data.slideShowStatusText}}
 
             button(type="button", class="btn btn-labeled",
-                ng-click="pauseVideo()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
+                ng-click="playPauseVideo()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
                 span(class="btn-label")
-                    i(class="fa fa-pause fa-lg", ng-class="{'fa-play': data.isVideoPaused, \
+                    i(class="fa fa-play fa-lg", ng-class="{'fa-play': data.isVideoPaused, \
                     'fa-pause': !data.isVideoPaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                     | {{data.videoStatusText}}
 
