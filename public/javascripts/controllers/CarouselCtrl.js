@@ -53,7 +53,7 @@
             }, 1000);
 
             $scope.$on("SlidePlayPauseEvent", function () {
-                $scope.SlideInterval = $scope.SlideInterval === 5000 ? -1 : 5000
+                $scope.SlideInterval = $scope.SlideInterval === 5000 ? -1 : 5000;
             });
 
             $scope.$on("VideoPlayPauseEvent", function (evt, args) {
@@ -67,6 +67,18 @@
                     vdo.pause();
                 }
             });
+
+            $scope.$watch('active', function (index) {
+                if (angular.isNumber(index) && index === 5) {
+                    console.log("active slide is now 5");
+                    $scope.$parent.disableSlideShowControl(true);
+                    $scope.SlideInterval = -1;
+                } else {
+                    $scope.$parent.disableSlideShowControl(false);
+                    $scope.SlideInterval = 5000;
+                }
+            });
+
         }
 
         function init(App) {

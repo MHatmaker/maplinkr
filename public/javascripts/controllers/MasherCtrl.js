@@ -57,6 +57,7 @@
                         description : ""
                     }
                 };
+                $scope.playPauseVideoDisabled = false;
                 $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
                 $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
@@ -158,6 +159,14 @@
                         }
                      );
                 };
+                $scope.disableSlideShowControl = function (tf) {
+                    console.log("showHideControls");
+                    console.debug($scope.data.isVideoPaused);
+                    console.debug($scope.data.isSlidePaused);
+                    $scope.playPauseVideoDisabled = tf;
+                    $scope.data.isSlidePaused = tf;
+                    $scope.data.slideShowStatusText = tf ? "Slide Show Paused" : "Slide Show Playing";
+                }
 
                 $scope.showMeTheMapClicked = function () {
                     $scope.previousMapType = $scope.currentMapSystem.maptype;
