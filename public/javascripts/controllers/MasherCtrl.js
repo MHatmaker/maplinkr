@@ -57,7 +57,8 @@
                         description : ""
                     }
                 };
-                $scope.playPauseVideoDisabled = false;
+                $scope.playPauseSlideShowDisabled = false;
+                $scope.playPauseVideoHidden = true;
                 $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
 
                 $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
@@ -160,13 +161,14 @@
                      );
                 };
                 $scope.disableSlideShowControl = function (tf) {
-                    console.log("showHideControls");
-                    console.debug($scope.data.isVideoPaused);
-                    console.debug($scope.data.isSlidePaused);
-                    $scope.playPauseVideoDisabled = tf;
+                    $scope.playPauseSlideShowDisabled = tf;
                     $scope.data.isSlidePaused = tf;
                     $scope.data.slideShowStatusText = tf ? "Slide Show Paused" : "Slide Show Playing";
-                }
+                };
+
+                $scope.hideVideoPlayPauseControl = function (tf) {
+                    $scope.playPauseVideoHidden = tf;
+                };
 
                 $scope.showMeTheMapClicked = function () {
                     $scope.previousMapType = $scope.currentMapSystem.maptype;

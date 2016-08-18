@@ -72,9 +72,11 @@
                 if (angular.isNumber(index) && index === 5) {
                     console.log("active slide is now 5");
                     $scope.$parent.disableSlideShowControl(true);
+                    $scope.$parent.hideVideoPlayPauseControl(false);
                     $scope.SlideInterval = -1;
                 } else {
                     $scope.$parent.disableSlideShowControl(false);
+                    $scope.$parent.hideVideoPlayPauseControl(true);
                     $scope.SlideInterval = 5000;
                 }
             });
