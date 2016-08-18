@@ -168,6 +168,12 @@
 
                 $scope.hideVideoPlayPauseControl = function (tf) {
                     $scope.playPauseVideoHidden = tf;
+                    if (tf) {
+                        $scope.data.isVideoPaused = false;
+                        $scope.playPauseVideo();
+                        // $scope.data.isSlidePaused = true;  // set to true before calling toggle function
+                        $scope.pauseSlide();
+                    }
                 };
 
                 $scope.showMeTheMapClicked = function () {

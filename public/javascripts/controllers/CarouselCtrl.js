@@ -75,7 +75,7 @@
                     $scope.$parent.hideVideoPlayPauseControl(false);
                     $scope.SlideInterval = -1;
                 } else {
-                    $scope.$parent.disableSlideShowControl(false);
+                    // $scope.$parent.disableSlideShowControl(false);
                     $scope.$parent.hideVideoPlayPauseControl(true);
                     $scope.SlideInterval = 5000;
                 }
