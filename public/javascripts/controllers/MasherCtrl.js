@@ -158,7 +158,7 @@
                             'videoPlayPauseStatus' : $scope.data.isVideoPaused,
                             'slideShowStatus' : $scope.data.isSlidePaused
                         }
-                     );
+                        );
                 };
                 $scope.disableSlideShowControl = function (tf) {
                     $scope.playPauseSlideShowDisabled = tf;

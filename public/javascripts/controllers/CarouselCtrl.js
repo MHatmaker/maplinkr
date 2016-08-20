@@ -9,13 +9,14 @@
     "use strict";
 
     console.log('CarouselCtrl setup');
-    define(['angular', 'lib/MLConfig', 'lib/utils'], function (angular, MLConfig, utils) {
+    define(['angular', 'lib/MLConfig', 'lib/utils', 'lib/enquire'], function (angular, MLConfig, utils, enquire) {
         console.log('CarouselCtrl define');
 
         function CarouselCtrl($scope) {
             console.debug('CarouselCtrl - initialize collapsed bool');
             $scope.SlideInterval = 5000;
             $scope.noWrapSlides = false;
+            $scope.videoHeight = '400px';
             $scope.slides = [];
             $scope.videos = [];
 
@@ -64,7 +65,9 @@
                     vdo.play();
                     $scope.SlideInterval = -1;
                 } else {
-                    vdo.pause();
+                    if (vdo) {
+                        vdo.pause();
+                    }
                 }
             });
 
@@ -80,6 +83,16 @@
                     $scope.SlideInterval = 5000;
                 }
             });
+
+            enquire
+                .register("screen and (max-width:50em)", function () {
+                    console.log("handler 1 matched");
+                    $scope.videoHeight = '300px';
+                })
+                .register("screen and (max-width:30em)", function () {
+                    console.log("handler 2 matched");
+                    $scope.videoHeight = '180px';
+                });
 
         }
 

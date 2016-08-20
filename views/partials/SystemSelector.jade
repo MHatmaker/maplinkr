@@ -1,6 +1,8 @@
 //
     http://plnkr.co/edit/LlPyVtYwMvAF6ilKUmdD?p=preview              >>>>> plunker
 
+block stylesblock append
+    link(rel='stylesheet', href='/stylesheets/gridstyle.css')
 
 style.
     h2 {
@@ -42,7 +44,7 @@ div( style="height:100%;width:100%;")
 
 
     div(ng-controller="CarouselCtrl")
-        div(id="idCarousel", style="height: 500px")
+        div(id="idCarousel", class="videocontainer")
             uib-carousel(active="active", interval="SlideInterval", no-wrap="noWrapSlides")
                 uib-slide(ng-repeat="slide in slides track by slide.id", index="slide.id", active="active")
                     img(ng-src="{{slide.image}}", style="margin:auto;")
@@ -53,4 +55,4 @@ div( style="height:100%;width:100%;")
                             | {{slide.text}}</p>
 
                 uib-slide(ng-repeat="video in videos track by video.id", index="video.id", active="active")
-                    video(id="vdo", ng-src="{{video.vfile}}", style="margin:auto; height: 500px;", type="video.mp4", autoplay, loop)
+                    video(id="vdo", ng-src="{{video.vfile}}", style="margin:auto; height: {{videoHeight}};", type="video.mp4", autoplay, loop)
