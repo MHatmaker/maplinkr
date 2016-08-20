@@ -85,13 +85,40 @@
             });
 
             enquire
-                .register("screen and (max-width:50em)", function () {
-                    console.log("handler 1 matched");
-                    $scope.videoHeight = '300px';
+                // smartphones portrait and landscape
+                .register("screen and (min-device-width : 320px) and (max-device-width : 480px)", function () {
+                    console.log("smartphone dual handler matched");
+                    $scope.videoHeight = '380px';
                 })
-                .register("screen and (max-width:30em)", function () {
-                    console.log("handler 2 matched");
-                    $scope.videoHeight = '180px';
+                // iphone 4 landscape
+                .register("screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 4 landscape handler matched");
+                    $scope.videoHeight = '200px';
+                })
+                // iphone 4 portrait
+                .register("screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 4 portrait handler matched");
+                    $scope.videoHeight = '220px';
+                })
+                // iphone 5 landscape
+                .register("screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 5 landsape handler matched");
+                    $scope.videoHeight = '200px';
+                })
+                // iphone 5 portrait
+                .register("screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 5 portrait handler matched");
+                    $scope.videoHeight = '190px';
+                })
+                // iphone 6 landscape
+                .register("screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 6 landsape handler matched");
+                    $scope.videoHeight = '250px';
+                })
+                // iphone 6 portrait`
+                .register("screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2)", function () {
+                    console.log("iphone 6 portrait handler matched");
+                    $scope.videoHeight = '190px';
                 });
 
         }
