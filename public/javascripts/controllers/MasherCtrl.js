@@ -37,7 +37,8 @@
                 PusherEventHandlerService, CurrentMapTypeService) {
                 console.debug('MasherCtrl - initialize collapsed bool');
 
-                var startupView = MLConfig.getStartupView();
+                var startupView = MLConfig.getStartupView(),
+                    showingHome = true;
                 $scope.MasterSiteVis = startupView.websiteDisplayMode ? "inline" : 'none';
                 $scope.isSummaryCollapsed = !startupView.summaryShowing;
 
@@ -45,6 +46,7 @@
                     'ExpandSumText': startupView.summaryShowing === true ? "Collapse" : "Expand",
                     'ExpandFeaturesText': "Expand Features Display",
                     'isSummaryCollapsed': !startupView.summaryShowing,
+                    'homeVis' : 'hidden',
                     "isSlidePaused": false,
                     "slideShowStatusText": "Slide Show Playing",
                     "isVideoPaused": true,
@@ -177,6 +179,7 @@
                 };
 
                 $scope.showMeTheMapClicked = function () {
+                    $scope.data.homeVis = 'visible';
                     $scope.previousMapType = $scope.currentMapSystem.maptype;
                     $scope.currentMapSystem = CurrentMapTypeService.getCurrentMapConfiguration();
                     console.log("MasherCtrl.showMeTheMapClicked");
@@ -185,9 +188,10 @@
 
                     $location.path($scope.currentMapSystem.url, true);
                     $location.replace();
-                    if ($scope.currentMapSystem.maptype !== $scope.previousMapType || AGOReplacement === true) {
+                    if ($scope.currentMapSystem.maptype !== $scope.previousMapType || AGOReplacement === true || showingHome === true) {
                         $route.reload();
                         AGOReplacement = false;
+                        showingHome = false;
                     }
                     // $route.reload();
                 };
@@ -247,6 +251,12 @@
                 };
 
                 CurrentMapTypeService.addScope($scope);
+                $scope.home = function () {
+                    $scope.data.homeVis = 'hidden';
+                    showingHome = true;
+
+                    $location.url('/');
+                };
                 $scope.$on('ForceMapSystemEvent', function (evt, args) {
                     $scope.currentMapSystem = args.whichsystem;
                     $location.path(args.newpath);

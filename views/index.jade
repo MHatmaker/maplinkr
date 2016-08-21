@@ -16,6 +16,7 @@ block content
                             i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isSummaryCollapsed, \
                             'fa-compress': !data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
                             | {{data.ExpandSumText}} Master Website
+                    button(type="button", class="btn", ng-click="home()", style="visibility: {{data.homeVis}}") Home
 
             #idMasterSiteSummary(ng-cloak, class="ng-cloak mastersite-summary",
                 ng-class="{'mastersite-hidden': data.isSummaryCollapsed, 'mastersite-shown': !data.isSummaryCollapsed}")

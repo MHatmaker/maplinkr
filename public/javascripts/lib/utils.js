@@ -200,62 +200,53 @@ if (!String.prototype.format) {
             function updateMapContainerHeight(scope) {
                 var height = getDocHeight(), //document.body.clientHeight,
                     width = document.body.clientWidth,
-                    // centerCol = getElemById("idCenterCol"),
-                    // mapCon = getElemById("idMapContainerRow"),
-                    // mapWrap = getElemById("map_wrapper"),
-                    // mapCanvas = getElemById("map_canvas"),
-                    // rightCol = getElemById("idRightColOuter"),
-                    // mapCanRoot = getElemById("map_canvas_root"),
-                    // mlctrlRow = getElemById("idLinkrButtonRow"),
                     topRow = getElemById('idSiteTopRow'),
                     centerColHgt = 0,
-                    // centercolhstr = "",
-                    // hstr = "",
-                    topRowDisplayMode = topRow[0].style.display,
+                    // topRowDisplayMode = topRow[0].style.display,
                     mq;
 
-                console.log("topRowDisplayMode : {0}".format(topRowDisplayMode));
-                // scope.safeApply();
-                mq = window.matchMedia('@media all and (max-width: 700px)');
-                if(mq.matches  || width < 700) {
-                    // the width of browser is more then 700px
-                    console.log("Media might be phone");
-                    console.log(height);
-                    height = height - getElemHeight('idMasterSiteControlRow') - getElemHeight('idLinkrButtonRow');
-                    console.log(height);
-                } else {
-                    // the width of browser is less then 700px
-                    console.log("Media might be wide browser");
-                    height = height
-                        - getElemHeight('idMasterSiteControlRow')
-                        - getElemHeight('idMasterSiteSummary')
-                        - getElemHeight('idSiteTopRow')
-                        - getElemHeight('idLinkrButtonRow');
-                    console.log(" document.body.client : width " + width + ", height " + height);
-                }
-                // if (topRowDisplayMode === 'none') {
-                //     height -= getElemHeight('idLinkrButtonRow');
-                // }
+                if (topRow.length) {
+                    mq = window.matchMedia('@media all and (max-width: 700px)');
+                    if(mq.matches  || width < 700) {
+                        // the width of browser is more then 700px
+                        console.log("Media might be phone");
+                        console.log(height);
+                        height = height - getElemHeight('idMasterSiteControlRow') - getElemHeight('idLinkrButtonRow');
+                        console.log(height);
+                    } else {
+                        // the width of browser is less then 700px
+                        console.log("Media might be wide browser");
+                        height = height
+                            - getElemHeight('idMasterSiteControlRow')
+                            - getElemHeight('idMasterSiteSummary')
+                            - getElemHeight('idSiteTopRow')
+                            - getElemHeight('idLinkrButtonRow');
+                        console.log(" document.body.client : width " + width + ", height " + height);
+                    }
+                    // if (topRowDisplayMode === 'none') {
+                    //     height -= getElemHeight('idLinkrButtonRow');
+                    // }
 
-                // hstr = String.format("{0}px", toFixedOne(height));
-                centerColHgt = height + getElemHeight('idLinkrButtonRow');
-                // centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
-                // console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
+                    // hstr = String.format("{0}px", toFixedOne(height));
+                    centerColHgt = height + getElemHeight('idLinkrButtonRow');
+                    // centercolhstr = String.format("{0}px", toFixedOne(centerColHgt));
+                    // console.log("centerColHgt : {0}, mapConHgt : {1}".format(centercolhstr, hstr));
 
-                scope.centerColHgt = centerColHgt;
-                scope.mapConRowHgt = height;
-                scope.mapWrapHgt = height;
-                // scope.safeApply();
-                /*
-                mq = window.matchMedia('@media all and (max-width: 700px)');
-                if (mq.matches) {
-                    // the width of browser is more then 700px
-                    rightCol.css({"top": 0});
-                } else {
-                    // the width of browser is less then 700px
-                    rightCol.css({"top": hstr});
+                    scope.centerColHgt = centerColHgt;
+                    scope.mapConRowHgt = height;
+                    scope.mapWrapHgt = height;
+                    // scope.safeApply();
+                    /*
+                    mq = window.matchMedia('@media all and (max-width: 700px)');
+                    if (mq.matches) {
+                        // the width of browser is more then 700px
+                        rightCol.css({"top": 0});
+                    } else {
+                        // the width of browser is less then 700px
+                        rightCol.css({"top": hstr});
+                    }
+                    */
                 }
-                */
             };
 
 
