@@ -85,8 +85,23 @@
             });
 
             enquire
-                // smartphones portrait and landscape
-                .register("screen and (min-device-width : 320px) and (max-device-width : 480px)", function () {
+                // smartphones landscape
+                .register("screen and (min-device-width : 320px) and (max-device-width : 400px)  and (orientation : landscape)", function () {
+                    console.log("smartphone landscape handler matched");
+                    $scope.videoHeight = '380px';
+                })
+                // smartphones portrait
+                .register("screen and (min-device-width : 320px) and (max-device-width : 400px)  and (orientation : portrait)", function () {
+                    console.log("smartphone portrait handler matched");
+                    $scope.videoHeight = '180px';
+                })
+                // desktops and laptops
+                .register("screen and (min-device-width : 1224px)", function () {
+                    console.log("smartphone dual handler matched");
+                    $scope.videoHeight = '380px';
+                })
+                // desktops and laptops - large screens
+                .register("screen and (min-device-width : 1824px)", function () {
                     console.log("smartphone dual handler matched");
                     $scope.videoHeight = '380px';
                 })
@@ -102,7 +117,7 @@
                 })
                 // iphone 5 landscape
                 .register("screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2)", function () {
-                    console.log("iphone 5 landsape handler matched");
+                    console.log("iphone 5 landscape handler matched");
                     $scope.videoHeight = '200px';
                 })
                 // iphone 5 portrait
@@ -112,13 +127,25 @@
                 })
                 // iphone 6 landscape
                 .register("screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2)", function () {
-                    console.log("iphone 6 landsape handler matched");
+                    console.log("iphone 6 landscape handler matched");
                     $scope.videoHeight = '250px';
                 })
                 // iphone 6 portrait`
                 .register("screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2)", function () {
                     console.log("iphone 6 portrait handler matched");
                     $scope.videoHeight = '190px';
+                })
+                // nexus 5 landscape
+                .register("screen and (min-device-width : 360px) and (max-device-width : 600px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 3)", function () {
+                    console.log("nexus 5 landscape handler matched");
+                    $scope.videoHeight = '250px';
+                    $scope.$apply();
+                })
+                // nexus 5 portrait`
+                .register("screen and (min-device-width : 360px) and (max-device-width : 640px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 3)", function () {
+                    console.log("nexus 5 portrait handler matched");
+                    $scope.videoHeight = '190px';
+                    $scope.$apply();
                 });
 
         }
