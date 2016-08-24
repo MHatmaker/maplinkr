@@ -50,7 +50,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                 br
                                 h5 Wallace and Gromit Use MapLinkr.
                                 p(style='font-size: 1.2em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
-                                    Wallace and Gromit have improved the efficiency of their window washing service by incorporating community maps of reported dirty windows.
+                                    Wallace and Gromit have improved the efficiency of their window washing service
+                                    by incorporating community maps of reported dirty windows.
                                 br
 
                 +collapseGroup('idUsingMapLinkr', 'idUsingMapLinkrCard', 'using', 'Using MapLinkr')
@@ -73,7 +74,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                 h3( style="text-align:left") Steps for Google and Leaflet maps
                                 p(style='font-size:0.75em;margin:0.3em')
 
-                                    | Pan and zoom a Google or Leaflet map to the desired extent.  In a Google map display, the search tool will appear.  Enter a search category to display search results on the map.
+                                    | Pan and zoom a Google or Leaflet map to the desired extent.  In a Google map display,
+                                    | the search tool will appear.  Enter a search category to display search results on the map.
 
                                 p(style='font-size:1.1em;margin:0.3em')
                                     | Further sharing instructions are provided under the "Sharing Overview" accordion pane.
@@ -83,7 +85,9 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                 ul#StepsList(style="height:100%")
                                     li(class="acc li") 1. Open the accordion pane for group search.  Enter a search term and click the submit button.
                                     li(class="acc li") 2. The group pane displays groups matching the search term.  Click on one of the groups.
-                                    li(class="acc li") 3. The map selection pane opens showing available maps in the group.  Click on a map item.  A dialog opens offering a choice of three possible destination viewers where the selected map can be displayed.  The most convenient option is usually the "New Window" option.
+                                    li(class="acc li") 3. The map selection pane opens showing available maps in the group.  Click
+                                        |on a map item.  A dialog opens offering a choice of three possible destination viewers where
+                                        | the selected map can be displayed.  The most convenient option is usually the "New Window" option.
 
                                         div(id="repeater", ng-repeat="(key, val) in mldata.using.destchoices", class="ng-scope")
                                             div(class="card")
@@ -105,15 +109,21 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                             div(class="container")
                                                             | {{val.details.text}}
 
-                                    li(class="acc li") 4. Create a Pusher channel.  A second dialog opens, requesting a Pusher channel name.  Specify a name that  will be unique for the shared session.
+                                    li(class="acc li") 4. Create a Pusher channel.  A second dialog opens, requesting a Pusher channel name.
+                                        | Specify a name that  will be unique for the shared session.
 
                                 h3( style="text-align:left;") Experiment with synchronized maps:
 
                                 ul#StepsListSynch(style="height:100%;")
 
-                                    li(class="acc li", style="font-weight:bolder") a. Resize and move any open map viewer windows so that they are simultaneously visible.
-                                    li(class="acc li", style="font-weight:bolder") b. Pan and zoom any map.  Maps in other synchronized viewers should pan and zoom to the same location and scale.
-                                    li(class="acc li", style="font-weight:bolder") c. Click on any open map.  A popup will show either information for the item at the map location or the coordinates/address of the click.  A popup will appear at the same location in other map viewers with location information at the same point.
+                                    li(class="acc li", style="font-weight:bolder") a. Resize and move any open map
+                                        | viewer windows so that they are simultaneously visible.
+                                    li(class="acc li", style="font-weight:bolder") b. Pan and zoom any map.  Maps
+                                        | in other synchronized viewers should pan and zoom to the same location and scale.
+                                    li(class="acc li", style="font-weight:bolder") c. Click on any open map.  A
+                                        | popup will show either information for the item at the map location or
+                                        | the coordinates/address of the click.  Clicking the share button will cause a popup
+                                        | to appear at the same location in other map viewers.
 
                 +collapseGroup('idGroupSearcher', 'idGroupSearcherCard', 'groups', 'AGO Group Search')
 
@@ -126,7 +136,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 name="signInGroup", ng-click='signInFromGroupTab();',
                                                 style='width: 5rem; padding-left: 0.4em; margin-left: 0.1em; font-size:80%') {{signInOutGrp}}
 
-                                        h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on search term. Sign-in to search for private groups.
+                                        h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on
+                                            |search term. Sign-in to search for private groups.
                                         span(style="display: {{findGrpDisabled}};")
                                             input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp",
                                                 ng-enter="findArcGISGroup();",
@@ -150,7 +161,8 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                                 name="signInMap", ng-click='signInFromMapTab();',
                                                 style='width:30%;font-size:80%', value='{{signInOutMap}}')
 
-                                        h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on search term. Sign-in to search for private groups.
+                                        h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on
+                                            |search term. Sign-in to search for private groups.
                                         span
                                             input(name="mapFinder", id="mapFinder", ng-model="searchTermMap",
                                                 ng-enter="findArcGISGroupMaps()")
@@ -166,28 +178,35 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                             h3 Concepts and Features
 
                             p(style='font-size:1.25em;margin:0.3em').
-                                Multiple users can view synchronized maps in web browsers on other devices.  After  finding (1) a Google Map or Leaflet Map or (2) an ArcGIS WebMap that you want to share:
+                                Multiple users can view synchronized maps in web browsers on
+                                | other devices.  After  finding (1) a Google Map or Leaflet
+                                | Map or (2) an ArcGIS WebMap that you want to share:
 
                             h5 For Google or Leaflet Map
 
                             p(style='font-size:1.25em;margin:0.3em').
-                                After selecting a map exent and zoom level (and optionally performing a spatial query using the Google search too), perform two steps:
+                                After selecting a map exent and zoom level (and optionally performing a spatial query
+                                | using the Google search too), perform two steps:
 
                             ul#StepsForPublishing(style="height:100%")
 
-                                li(class="acc li") 1. If you haven't subscribed to a Pusher channel or entered a user/collaborator name, open the "Set Pusher Channel" accordion pane, and follow the instructions to enter these details.
-                                li(class="acc li") 2. Open the "Publish Current Url" accordion pane and click the "Publish Url" button.  This will open a new window with the current zoom, extent, and search returns on the publisher's system, and will open the same new window on all collaborators' systems.
+                                li(class="acc li") 1. If you haven't subscribed to a Pusher channel or entered a
+                                    | user/collaborator name, open the "Set Pusher Channel" accordion pane, and follow the instructions to enter these details.
+
+                                li(class="acc li") 2. Open the "Publish Current Url" accordion pane and click the "Publish Url"
+                                    | button.  This will open a new window with the current zoom, extent,
+                                    | and search returns on the publisher's system, and will open the same new window on all collaborators' systems.
 
                             h5 For ArcGIS Online Webmap
 
                             ul#StepsSharing(style="height:100%")
 
                                 li(class="acc li") 1. Open the "Copy MapLinkr Url" accordion pane.
-                                    The url for the current host site will be inserted in the text field
-                                    and will be focused and selected.
+                                    | The url for the current host site will be inserted in the text field
+                                    | and will be focused and selected.
                                 li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard.
                                 li(class="acc li") 3. Paste the link in a text message or email to collaborators
-                                    or in a shared chat window.
+                                    | or in a shared chat window.
 
                             p(style='font-size:1.25em;margin:0.3em').
                                 The url includes the name of the Pusher channel that you have selected.
