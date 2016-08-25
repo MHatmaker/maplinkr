@@ -207,12 +207,12 @@ define('GeoCoder', function () {
 
             function onMouseMove(e) {
                 var ltln = e.latlng,
-                    fixedLL = utils.toFixed(ltln.lng, ltln.lat, 3),
+                    fixedLL = utils.toFixed(ltln.lng, ltln.lat, 4),
                     evlng = fixedLL.lon,
                     evlat = fixedLL.lat,
                     zm = mphmap.getZoom(),
                     cntr = mphmap.getCenter(),
-                    fixedCntrLL = utils.toFixed(cntr.lng, cntr.lat, 3),
+                    fixedCntrLL = utils.toFixed(cntr.lng, cntr.lat, 4),
                     cntrlng = fixedCntrLL.lon,
                     cntrlat = fixedCntrLL.lat;
 

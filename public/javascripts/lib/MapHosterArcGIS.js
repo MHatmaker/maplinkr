@@ -310,13 +310,13 @@
             });
             dojo.connect(mphmap, "onMouseMove", function (e) {
                 var ltln = esri.geometry.webMercatorToGeographic(e.mapPoint),
-                    fixedLL = utils.toFixed(ltln.x, ltln.y, 3),
+                    fixedLL = utils.toFixed(ltln.x, ltln.y, 4),
                     evlng = fixedLL.lon,
                     evlat = fixedLL.lat,
                     zm = mphmap.getLevel(),
                     xtntLoc = mphmap.extent,
                     cntrLoc = esri.geometry.webMercatorToGeographic(xtntLoc.getCenter()),
-                    fixedCntrLL = utils.toFixed(cntrLoc.x, cntrLoc.y, 3),
+                    fixedCntrLL = utils.toFixed(cntrLoc.x, cntrLoc.y, 4),
                     cntrlng = fixedCntrLL.lon,
                     cntrlat = fixedCntrLL.lat;
                 //     view = "Zoom : " + zm + " Center : " + cntrlng + ", " + cntrlat + " Current  : " + evlng + ", " + evlat;      // + selectedWebMapId;

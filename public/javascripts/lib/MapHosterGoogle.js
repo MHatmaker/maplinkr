@@ -539,12 +539,12 @@
 
             google.maps.event.addListener(mphmap, "mousemove", function (e) {
                 var ltln = e.latLng,
-                    fixedLL = utils.toFixed(ltln.lng(), ltln.lat(), 6),
+                    fixedLL = utils.toFixed(ltln.lng(), ltln.lat(), 4),
                     evlng = fixedLL.lon,
                     evlat = fixedLL.lat,
                     zm = mphmap.getZoom(),
                     cntr = mphmap.getCenter(),
-                    fixedCntrLL = utils.toFixed(cntr.lng(), cntr.lat(), 6),
+                    fixedCntrLL = utils.toFixed(cntr.lng(), cntr.lat(), 4),
                     cntrlng = fixedCntrLL.lon,
                     cntrlat = fixedCntrLL.lat;
 

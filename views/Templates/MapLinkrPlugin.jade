@@ -258,20 +258,3 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                     Publish the current map Url to Pusher communications channel subscribers.
                                 button(class="btn", style='width:100%;',
                                     ng-click="publishUrl()", value="Publish Url") Publish Url
-
-                +collapseGroup('idPositionViewHeader', 'idPositionViewCard', 'positionview', 'Current Position')
-                            #idNavPos
-
-                                div(ng-controller="PositionViewCtrl")
-                                    {{currentTab}}
-                                    div(class="posViewVisible flex0pt6")
-                                        input(id = 'mppos', type='text', name='cursPos',
-                                            disabled, ng-model="positionView",
-                                            style='font-size:0.65em;text-align:right;margin-right: 0.5em; \
-                                                padding: 0.01em 0.5em 0.01em 0.5em;')
-                                    div(class="posViewVisible")
-                                      select(ng-model="currentViewOption",
-                                          ng-options="option.type for option in viewOptions",
-                                          ng-change="setPostionDisplayType()",
-                                          style="font-size:0.75em; margin-right: 0.5em; padding: \
-                                              0.01em 0.5em 0.01em 0.5em;")
