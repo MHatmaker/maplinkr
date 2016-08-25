@@ -829,6 +829,21 @@
             return pos;
         }
 
+        function formatCoords (pos) {
+            var fixed = utils.toFixed(pos.lng, pos.lat, 5),
+                formatted  = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+            return formatted;
+        }
+
+        function geoLocate(pos) {
+            var infoWindow = new google.maps.InfoWindow({map: mphmap});
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(formatCoords(pos));
+            mphmap.setCenter(pos);
+            mphmap.setZoom(14);
+            updateGlobals('geoLocate just happened', pos.lng, pos.lat, 15);
+        }
+
         function publishPosition(pos) {
             var gmQuery,
                 pubBounds;
@@ -903,7 +918,8 @@
             getSearchBounds : getSearchBounds,
             setSearchBox : setSearchBox,
             getMap : getMap,
-            placeMarkers : placeMarkers
+            placeMarkers : placeMarkers,
+            geoLocate : geoLocate
         };
     });
 

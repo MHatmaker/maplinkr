@@ -370,7 +370,7 @@
                 screenGeo = new esri.geometry.toScreenGeometry(mphmap.geographicExtent, wdt, hgt, mppt),
                 fixedLL,
                 content,
-                 $inj,
+                $inj,
                 linkrSvc;
 
             console.log("screenGeo");
@@ -466,7 +466,28 @@
             return eventDct;
         }
 
+        function formatCoords (pos) {
+            var fixed = utils.toFixed(pos.lng, pos.lat, 5),
+                formatted  = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+            return formatted;
+        }
 
+        function geoLocate(pos) {
+            var infoWindow = new google.maps.InfoWindow({map: mphmap}),
+                mpDiv = document.getElementById("map_canvas"),
+                mpDivNG = angular.element(mpDiv),
+                wdt = mpDivNG[0].clientWidth,
+                hgt = mpDivNG[0].clientHeight,
+                mppt = new esri.geometry.Point(pos.lng, pos.lat),
+                screenGeo = new esri.geometry.toScreenGeometry(mphmap.geographicExtent, wdt, hgt, mppt);
+
+            mphmap.infoWindow.setTitle("Longitude, Latitude");
+            mphmap.infoWindow.setContent(formatCoords(pos));
+            mphmap.infoWindow.show(mppt, mphmap.getInfoWindowAnchor(screenGeo));
+
+            mphmap.centerAndZoom(mppt, 15);
+            updateGlobals('geoLocate just happened', pos.lng, pos.lat, 15);
+        }
 
         function publishPosition(pos) {
             var bnds;
@@ -616,7 +637,8 @@
                   getEventDictionary : getEventDictionary, setUserName : setUserName, getGlobalPositionComponents : getGlobalPositionComponents,
                   publishPosition : publishPosition, retrievedNewPosition : retrievedNewPosition, getCenter : getCenter,
                   removeEventListeners : removeEventListeners,
-                  getMapHosterName : getMapHosterName
+                  getMapHosterName : getMapHosterName,
+                  geoLocate : geoLocate
                   };
     });
 }());

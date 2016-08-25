@@ -506,6 +506,22 @@ define('GeoCoder', function () {
                 return "&lon=" + cntrxG + "&lat=" + cntryG + "&zoom=" + zmG;
             }
 
+            function formatCoords (pos) {
+                var fixed = utils.toFixed(pos.lng, pos.lat, 5),
+                    formatted  = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+                return formatted;
+            }
+
+            function geoLocate(pos) {
+                var latlng = L.latLng(pos.lat, pos.lng);
+                popup
+                    .setLatLng(latlng)
+                    .setContent(formatCoords(pos))
+                    .openOn(mphmap);
+                updateGlobals('geoLocate just happened', pos.lng, pos.lat, 15);
+                mphmap.setView(latlng, 15);
+                mphmap.panTo(latlng);
+            }
 
             function publishPosition(pos) {
                 if (selfPusherDetails.pusher) {
@@ -588,7 +604,8 @@ define('GeoCoder', function () {
                 publishPosition : publishPosition,
                 getCenter : getCenter,
                 removeEventListeners : removeEventListeners,
-                getMapHosterName : getMapHosterName
+                getMapHosterName : getMapHosterName,
+                geoLocate, geoLocate
             };
         });
 }());

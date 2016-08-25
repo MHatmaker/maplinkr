@@ -13,17 +13,12 @@
             map = null,
             goooogle = null;
 
-        function LocateSelfCtrl($scope) {
+        function LocateSelfCtrl($scope, CurrentMapTypeService, LinkrService) {
             console.log("in LocateSelfCtrl");
 
             $scope.geoLocate = function () {
-                var infoWindow = new goooogle.maps.InfoWindow({map: map});
-
-                function formatCoords (pos) {
-                    var fixed = utils.toFixed(pos.lng, pos.lat, 5),
-                        formatted  = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
-                    return formatted;
-                }
+                var
+                    mph = CurrentMapTypeService.getCurrentMapType();
 
                 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                     infoWindow.setPosition(pos);
@@ -38,11 +33,9 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         };
-
-                        infoWindow.setPosition(pos);
-                        infoWindow.setContent(formatCoords(pos));
-                        map.setCenter(pos);
-                        map.setZoom(14);
+                        // LinkrService.hideLinkr();
+                        mph.geoLocate(pos);
+                        $scope.$parent.cancel();
                     },
                         function () {
                             handleLocationError(true, infoWindow, map.getCenter());
@@ -63,7 +56,7 @@
         function init(App) {
             console.log('LocateSelfCtrl init');
 
-            App.controller('LocateSelfCtrl',  ['$scope', LocateSelfCtrl]);
+            App.controller('LocateSelfCtrl',  ['$scope', 'CurrentMapTypeService', 'LinkrService', LocateSelfCtrl]);
 
             return LocateSelfCtrl;
         }
