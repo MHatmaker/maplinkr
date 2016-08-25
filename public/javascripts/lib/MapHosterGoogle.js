@@ -16,8 +16,9 @@
         'controllers/PositionViewCtrl',
         'lib/utils',
         'lib/MLConfig',
-        'controllers/PusherSetupCtrl'
-    ], function (angular, PositionViewCtrl, utils, MLConfig, PusherSetupCtrl) {
+        'controllers/PusherSetupCtrl',
+        'controllers/LocateSelfCtrl',
+    ], function (angular, PositionViewCtrl, utils, MLConfig, PusherSetupCtrl, LocateSelfCtrl) {
 
         var
             hostName = "MapHosterGoogle",
@@ -350,6 +351,7 @@
             firstCntr = new google.maps.LatLng(cntryG, cntrxG);
             mphmap.panTo(firstCntr);
             mphmap.setCenter(firstCntr);
+            LocateSelfCtrl.setMap(goooogle, mphmap);
 
             // updateGlobals("init", -0.09, 51.50, 13, 0.0);
             showGlobals("Prior to new Map");

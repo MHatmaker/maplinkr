@@ -251,10 +251,9 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                 button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
                             #PusherChannelDialog
 
-                +collapseGroup('idPublishUrlHeader', 'idPublishUrlCard', 'publishurl', 'Publish Url')
-
-                            div(ng-controller="TransmitNewUrlCtrl")
+                +collapseGroup('idLocateSelf', 'idLocateSelfCard', 'locateself', 'Locate Self')
+                            div(ng-controller="LocateSelfCtrl")
                                 p(style='font-size:1.25em;margin:0.3em').
-                                    Publish the current map Url to Pusher communications channel subscribers.
-                                button(class="btn", style='width:100%;',
-                                    ng-click="publishUrl()", value="Publish Url") Publish Url
+                                    Find your location and zoom to a symbol at that location
+                                button(class="btn",
+                                    ng-click="geoLocate()", value="Find My Location") Find My Location

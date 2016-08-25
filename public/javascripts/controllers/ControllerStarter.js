@@ -28,13 +28,14 @@
         'controllers/ShareCtrl',
         'controllers/PopupBlockerCtrl',
         'controllers/CarouselCtrl',
+        'controllers/LocateSelfCtrl',
         'lib/GeoCoder',
         'javascripts/lib/MLConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, TopRowCtrl, LeftColCtrl, MapColCtrl, RightColCtrl,
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl, WebSiteDescriptionCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, CarouselCtrl, GeoCoder, MLConfig) {
+            TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, CarouselCtrl, LocateSelfCtrl, GeoCoder, MLConfig) {
             console.log('ControllerStarter define');
 
             function ControllerStarter($scope) {
@@ -110,6 +111,7 @@
                 ShareCtrl.start(App);
                 PopupBlockerCtrl.start(App);
                 CarouselCtrl.start(App);
+                LocateSelfCtrl.start(App);
 
                 MapCtrl.start(App);
                 GeoCoder.start(App, $http);

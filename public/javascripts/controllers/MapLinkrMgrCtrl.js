@@ -87,6 +87,10 @@
                     'isCollapsed' : true,
                     'subtext' : ""
                 },
+                'locateself' : {
+                    'isCollapsed' : true,
+                    'subtext' : ""
+                },
                 'callback' : null,
                 'isOpen' : false,
                 'mapLinkrBtnImage' : "Expand",
