@@ -38,7 +38,7 @@
                         // $scope.$parent.accept();
                         setTimeout(function () {
                             $scope.$parent.accept();
-                        }, 500);
+                        }, 200);
                     },
                         function () {
                             handleLocationError(true, infoWindow, map.getCenter());

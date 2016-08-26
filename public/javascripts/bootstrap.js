@@ -412,12 +412,12 @@ var selectedMapType = 'arcgis',
                 }).
 
                 value('linkrScopes', {
-                    scopes : [],
+                    lnkrscope : null,
                     addScope : function (s) {
-                        this.scopes.push(s);
+                        this.lnkrscope = s;
                     },
-                    getScopes : function () {
-                        return this.scopes;
+                    getScope : function () {
+                        return this.lnkrscope;
                     }
                 }).
 
@@ -431,19 +431,17 @@ var selectedMapType = 'arcgis',
                     };
                     hideLinkr = function () {
                         var data = {'visibility' : 'none'},
-                            scp = linkrScopes.getScopes()[0];
+                            scp = linkrScopes.getScope();
                         if (scp) {
                             scp.$broadcast('displayLinkerEvent', data);
                         }
                     };
                     showLinkr = function () {
                         var data = {'visibility' : 'block'};
-                        // angular.forEach(linkrScopes.getScopes(), function (scp) {
-                        var scp = linkrScopes.getScopes()[0];
+                        var scp = linkrScopes.getScope();
                         if (scp) {
                             scp.$broadcast('displayLinkerEvent', data);
                         }
-                        // });
                     };
 
                     return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};

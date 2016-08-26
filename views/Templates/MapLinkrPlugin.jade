@@ -125,6 +125,13 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                         | the coordinates/address of the click.  Clicking the share button will cause a popup
                                         | to appear at the same location in other map viewers.
 
+                +collapseGroup('idLocateSelf', 'idLocateSelfCard', 'locateself', 'Locate Self')
+                            div(ng-controller="LocateSelfCtrl")
+                                p(style='font-size:1.25em;margin:0.3em').
+                                    Find your location and zoom to a symbol at that location
+                                button(class="btn",
+                                    ng-click="geoLocate()", value="Find My Location") Find My Location
+
                 +collapseGroup('idGroupSearcher', 'idGroupSearcherCard', 'groups', 'AGO Group Search')
 
                                 #SearchGroup(ng-controller="SearcherCtrlGrp")
@@ -250,10 +257,3 @@ div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
                                     Set or change the Pusher communications channel.
                                 button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
                             #PusherChannelDialog
-
-                +collapseGroup('idLocateSelf', 'idLocateSelfCard', 'locateself', 'Locate Self')
-                            div(ng-controller="LocateSelfCtrl")
-                                p(style='font-size:1.25em;margin:0.3em').
-                                    Find your location and zoom to a symbol at that location
-                                button(class="btn",
-                                    ng-click="geoLocate()", value="Find My Location") Find My Location
