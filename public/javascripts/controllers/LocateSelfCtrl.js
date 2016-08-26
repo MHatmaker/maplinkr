@@ -35,7 +35,10 @@
                         };
                         // LinkrService.hideLinkr();
                         mph.geoLocate(pos);
-                        $scope.$parent.cancel();
+                        // $scope.$parent.accept();
+                        setTimeout(function () {
+                            $scope.$parent.accept();
+                        }, 500);
                     },
                         function () {
                             handleLocationError(true, infoWindow, map.getCenter());

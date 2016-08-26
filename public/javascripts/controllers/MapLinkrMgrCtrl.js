@@ -143,12 +143,14 @@
                     $scope.mldata.isOpen = false;
                     $scope.mldata.mapLinkrBtnImage = "Expand";
                     $scope.$broadcast("MapLinkrClosedEvent");
+                    // modalInstance = null;
                 }, function () {
                     console.log('MapLinkr Modal dismissed at: ' + new Date());
                     $scope.mldata.mapLinkrBtnText = "MapLinkr";
                     $scope.mldata.isOpen = false;
                     $scope.mldata.mapLinkrBtnImage = "Expand";
                     $scope.$broadcast("MapLinkrClosedEvent");
+                    // modalInstance.opened.$$state.value = false;
                 });
             };
 

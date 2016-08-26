@@ -324,24 +324,25 @@
                         refreshDelay;
                     stopLintUnusedComplaints(lnkr, minmaxr);
 
-                    lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
+                    setTimeout(function() {
+                        lnkrdiv = document.getElementsByClassName('lnkrclass')[0];
+                        lnkrdiv.addEventListener('click', function (event) {
+                            console.log('lnkr[0].onclick   display LinkerEvent');
+                            event.stopPropagation();
 
-                    lnkrdiv.addEventListener('click', function (event) {
-                        console.log('lnkr[0].onclick   displayLinkerEvent');
-                        event.stopPropagation();
+                            LinkrSvc.showLinkr();
+                        });
+                        mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
 
-                        LinkrSvc.showLinkr();
-                    });
+                        mnmxdiv.addEventListener('click', function (event) {
+                            console.log('minmaxr[0].onclick   mapMaximizerEvent');
+                            event.stopPropagation();
+                            contextScope.$emit('mapMaximizerEvent');
+                            contextScope.$apply();
+                            refreshMinMax();
+                        });
+                    }, 200);
 
-                    mnmxdiv = document.getElementsByClassName('mnmxclass')[0];
-
-                    mnmxdiv.addEventListener('click', function (event) {
-                        console.log('minmaxr[0].onclick   mapMaximizerEvent');
-                        event.stopPropagation();
-                        contextScope.$emit('mapMaximizerEvent');
-                        contextScope.$apply();
-                        refreshMinMax();
-                    });
 
                     lnkrText = document.getElementById("idLinkerText");
                     lnkrSymbol = document.getElementById("idLinkerSymbol");
