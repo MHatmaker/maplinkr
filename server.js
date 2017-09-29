@@ -64,7 +64,7 @@ MasherNodeApp = function () {
     self.setupVariables = function () {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP  || '127.0.0.1';
-        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 3035;
+        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 3036;
         console.log('listen on:');
         console.log(self.port);
         console.log(self.ipaddress);
